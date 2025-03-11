@@ -69,7 +69,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { fetchAllDevProjects } from '~/utils/api/content';
+import { fetchAllDevProjects, getDirectusImageUrl } from '~/utils/api/directus';
 
 // Define meta tags for the page
 useHead({
@@ -87,6 +87,7 @@ onMounted(async () => {
   try {
     isLoading.value = true;
     const result = await fetchAllDevProjects();
+    console.log('Projects from Directus:', result);
     projects.value = result;
   } catch (err) {
     console.error('Failed to fetch projects:', err);
