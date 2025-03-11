@@ -32,8 +32,8 @@
             <NuxtLink :to="`/dev/blog/${post.slug}`">
               <div class="relative aspect-video bg-gray-200 dark:bg-gray-700">
                 <img 
-                  v-if="post.image" 
-                  :src="getStrapiMedia(post.image)" 
+                  v-if="post.cover_image" 
+                  :src="getImageUrl(post.cover_image)" 
                   :alt="post.title"
                   class="w-full h-full object-cover"
                 >
@@ -46,13 +46,13 @@
               </div>
               <div class="p-4">
                 <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                  {{ new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
+                  {{ new Date(post.date_published).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
                 </div>
                 <h2 class="text-xl font-bold mb-2">{{ post.title }}</h2>
                 <p class="text-gray-600 dark:text-gray-300 line-clamp-2 mb-3">
                   {{ post.excerpt }}
                 </p>
-                <div class="flex flex-wrap gap-2">
+                <div class="flex flex-wrap gap-2" v-if="post.categories && post.categories.length">
                   <span 
                     v-for="category in post.categories" 
                     :key="category.id" 
@@ -114,7 +114,8 @@
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
-import { useStrapi } from '~/composables/useStrapi';
+import { useDirectus } from '~/composables/useDirectus';
+import { fetchAllBlogPosts } from '~/utils/api/directus';
 
 // Ensure site config is set to dev
 const siteConfig = useSiteConfig();
@@ -126,9 +127,8 @@ if (siteConfig.value?.type !== 'dev') {
   };
 }
 
-// Use Strapi composable
-const strapi = useStrapi();
-const { getStrapiMedia } = strapi;
+// Use Directus composable
+const { getImageUrl } = useDirectus();
 
 // State
 const posts = ref([]);
@@ -144,15 +144,22 @@ const fetchPosts = async () => {
   error.value = null;
   
   try {
-    const response = await strapi.getBlogPosts({
-      siteType: 'dev',
+    const response = await fetchAllBlogPosts({
       page: currentPage.value,
-      pageSize
+      limit: pageSize,
+      sort: ['-date_published']
     });
     
+    console.log('Blog posts from Directus:', response);
+    
     if (response) {
-      posts.value = response.data || [];
-      totalPages.value = Math.ceil((response.meta?.pagination?.total || 0) / pageSize);
+      posts.value = response || [];
+      // Update pagination if meta data is available
+      if (response.meta?.filter_count) {
+        totalPages.value = Math.ceil(response.meta.filter_count / pageSize);
+      } else {
+        totalPages.value = response.length > 0 ? Math.ceil(response.length / pageSize) : 1;
+      }
     }
   } catch (err) {
     console.error('Error fetching posts:', err);

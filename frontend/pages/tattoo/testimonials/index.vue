@@ -18,7 +18,7 @@
           </div>
 
           <!-- Loading state -->
-          <div v-if="isLoading" class="flex justify-center items-center py-20">
+          <div v-if="loading" class="flex justify-center items-center py-20">
             <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-dark dark:border-dark-primary"></div>
           </div>
           
@@ -49,45 +49,42 @@
               <div class="flex flex-col items-center text-center mb-6 relative z-10">
                 <div class="w-24 h-24 bg-gray-300 dark:bg-gray-700 rounded-full mb-4 overflow-hidden">
                   <img 
-                    v-if="testimonials[0].clientImage" 
-                    :src="getStrapiMedia(testimonials[0].clientImage)" 
-                    :alt="`${testimonials[0].clientName} photo`"
+                    v-if="testimonials[0].image" 
+                    :src="getImageUrl(testimonials[0].image)" 
+                    :alt="`${testimonials[0].title} photo`"
                     class="w-full h-full object-cover"
                   />
                   <div v-else class="w-full h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
                     Photo
                   </div>
                 </div>
-                <div>
-                  <h3 class="text-2xl font-bold">{{ testimonials[0].clientName || 'Anonymous' }}</h3>
-                  <p class="text-gray-600 dark:text-gray-400">{{ testimonials[0].tattooType }}</p>
+                <div class="text-center mb-6">
+                  <h3 class="text-xl font-semibold mb-1">{{ testimonials[0].title }}</h3>
+                  <div class="text-gray-600 dark:text-gray-400">{{ testimonials[0].category }}</div>
                 </div>
-              </div>
-              
-              <div class="relative z-10">
-                <div class="flex justify-center mb-4">
-                  <div class="flex">
-                    <svg v-for="i in testimonials[0].rating || 5" :key="i" class="w-6 h-6 text-yellow-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
+                
+                <div class="text-center mb-8">
+                  <div class="flex justify-center text-yellow-400 mb-2">
+                    <span v-for="i in 5" :key="i" class="mx-0.5">
+                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                      </svg>
+                    </span>
                   </div>
                 </div>
                 
-                <blockquote class="text-xl italic text-center mb-6">
-                  "{{ testimonials[0].content }}"
+                <blockquote class="text-lg italic text-center mb-6">
+                  "{{ testimonials[0].description }}"
                 </blockquote>
                 
-                <div class="flex justify-center">
-                  <div class="w-48 h-48 bg-gray-300 dark:bg-gray-700 rounded-lg overflow-hidden">
+                <div class="flex justify-center mb-8">
+                  <div class="w-40 h-40 bg-gray-300 dark:bg-gray-700 rounded-lg overflow-hidden">
                     <img 
-                      v-if="testimonials[0].tattooImage" 
-                      :src="getStrapiMedia(testimonials[0].tattooImage)" 
-                      :alt="`${testimonials[0].clientName}'s tattoo`"
+                      v-if="testimonials[0].image" 
+                      :src="getImageUrl(testimonials[0].image)" 
+                      :alt="`${testimonials[0].title}'s tattoo`"
                       class="w-full h-full object-cover"
                     />
-                    <div v-else class="w-full h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
-                      Tattoo Image
-                    </div>
                   </div>
                 </div>
               </div>
@@ -100,53 +97,39 @@
                 :key="testimonial.id" 
                 class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg"
               >
-                <div class="flex items-center mb-4">
+                <div class="flex items-center mb-3">
                   <div class="w-16 h-16 bg-gray-300 dark:bg-gray-700 rounded-full mr-4 overflow-hidden">
                     <img 
-                      v-if="testimonial.clientImage" 
-                      :src="getStrapiMedia(testimonial.clientImage)" 
-                      :alt="`${testimonial.clientName} photo`"
+                      v-if="testimonial.image" 
+                      :src="getImageUrl(testimonial.image)" 
+                      :alt="`${testimonial.title} photo`"
                       class="w-full h-full object-cover"
                     />
-                    <div v-else class="w-full h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
-                      Photo
-                    </div>
                   </div>
                   <div>
-                    <h3 class="font-bold">{{ testimonial.clientName || 'Anonymous' }}</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ testimonial.tattooType }}</p>
-                    <div class="flex mt-1">
-                      <svg 
-                        v-for="star in 5" 
-                        :key="star" 
-                        class="w-4 h-4" 
-                        :class="star <= (testimonial.rating || 5) ? 'text-yellow-500' : 'text-gray-300 dark:text-gray-600'" 
-                        fill="currentColor" 
-                        viewBox="0 0 20 20" 
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                      </svg>
+                    <h3 class="font-semibold">{{ testimonial.title }}</h3>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">{{ testimonial.category }}</div>
+                    <div class="flex text-yellow-400 text-sm mt-1">
+                      <span v-for="i in 5" :key="i" class="mr-0.5">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                      </span>
                     </div>
                   </div>
                 </div>
                 
-                <blockquote class="italic text-gray-700 dark:text-gray-300 mb-4">
-                  "{{ testimonial.content }}"
+                <blockquote class="text-gray-600 dark:text-gray-300 italic text-sm mb-3">
+                  "{{ testimonial.description }}"
                 </blockquote>
                 
-                <div class="flex justify-center">
-                  <div class="w-full h-48 bg-gray-300 dark:bg-gray-700 rounded-lg overflow-hidden">
-                    <img 
-                      v-if="testimonial.tattooImage" 
-                      :src="getStrapiMedia(testimonial.tattooImage)" 
-                      :alt="`${testimonial.clientName}'s tattoo`"
-                      class="w-full h-full object-cover"
-                    />
-                    <div v-else class="w-full h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
-                      Tattoo Image
-                    </div>
-                  </div>
+                <div class="w-24 h-24 bg-gray-300 dark:bg-gray-700 rounded-lg overflow-hidden">
+                  <img 
+                    v-if="testimonial.image" 
+                    :src="getImageUrl(testimonial.image)" 
+                    :alt="`${testimonial.title}'s tattoo`"
+                    class="w-full h-full object-cover"
+                  />
                 </div>
               </div>
             </div>
@@ -171,7 +154,8 @@
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
-import { useStrapi } from '~/composables/useStrapi';
+import { useDirectus } from '~/composables/useDirectus';
+import { fetchAllGalleryItems } from '~/utils/api/directus';
 
 // Ensure site config is set to tattoo
 const siteConfig = useSiteConfig();
@@ -183,25 +167,37 @@ if (siteConfig.value?.type !== 'tattoo') {
   };
 }
 
-// Use Strapi composable
-const strapi = useStrapi();
-const { getStrapiMedia } = strapi;
+// Use Directus composable
+const { getImageUrl } = useDirectus();
 
 // State
 const testimonials = ref([]);
-const isLoading = ref(true);
-const error = ref<string | null>(null);
+const loading = ref(true);
+const error = ref(null);
 
 // Fetch testimonials
 const fetchTestimonials = async () => {
+  loading.value = true;
+  error.value = null;
+  
   try {
-    const result = await strapi.getTestimonials(10);
+    const result = await fetchAllGalleryItems({
+      filter: {
+        category: {
+          _eq: 'testimonial'
+        }
+      },
+      sort: ['sort']
+    });
+    
+    console.log('Testimonials from Directus:', result);
+    
     testimonials.value = result || [];
   } catch (err) {
     console.error('Error fetching testimonials:', err);
     error.value = 'Failed to load testimonials. Please try again.';
   } finally {
-    isLoading.value = false;
+    loading.value = false;
   }
 };
 
@@ -212,9 +208,9 @@ onMounted(() => {
 
 // Meta tags
 useHead({
-  title: `Client Testimonials - ${siteConfig.value?.title || 'Tattoo Portfolio'}`,
+  title: `Testimonials - ${siteConfig.value?.title || 'Tattoo Portfolio'}`,
   meta: [
-    { name: 'description', content: 'Read what clients have to say about their tattoo experiences. Featuring reviews and photos of custom tattoo work.' }
+    { name: 'description', content: 'Read what clients have to say about their tattoo experiences and the quality of my work.' }
   ]
 });
 </script>
