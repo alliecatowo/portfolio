@@ -1,5 +1,6 @@
 // Script to set up collections in Directus
 const { Directus } = require('@directus/sdk');
+const axios = require('axios');
 
 // Configuration
 const config = {
@@ -11,7 +12,7 @@ const config = {
 };
 
 // Collection definitions
-const collections = [
+const collectionDefinitions = [
   {
     collection: 'blog_posts',
     meta: {
@@ -19,44 +20,18 @@ const collections = [
       icon: 'article',
       note: 'Blog posts for the portfolio',
       display_template: '{{title}}',
-      singleton: false,
-      sort_field: 'date_published',
-      sort: -1,
-      archive_field: 'status',
-      archive_value: 'archived',
-      unarchive_value: 'draft',
-      archive_app_filter: true,
-      accountability: 'all'
+      singleton: false
     },
     schema: {
-      name: 'blog_posts',
-      comment: 'Blog posts for the portfolio site'
+      name: 'blog_posts'
     },
     fields: [
-      {
-        field: 'id',
-        type: 'integer',
-        meta: {
-          interface: 'input',
-          readonly: true,
-          hidden: true,
-          special: ['uuid']
-        },
-        schema: {
-          is_primary_key: true,
-          is_nullable: false
-        }
-      },
       {
         field: 'title',
         type: 'string',
         meta: {
           interface: 'input',
-          width: 'full',
-          required: true,
-          options: {
-            placeholder: 'Enter a title...'
-          }
+          required: true
         },
         schema: {
           is_nullable: false
@@ -67,12 +42,7 @@ const collections = [
         type: 'string',
         meta: {
           interface: 'input',
-          width: 'full',
-          required: true,
-          options: {
-            placeholder: 'Enter a slug...',
-            slug: true
-          }
+          required: true
         },
         schema: {
           is_nullable: false
@@ -83,11 +53,7 @@ const collections = [
         type: 'text',
         meta: {
           interface: 'input-rich-text-md',
-          width: 'full',
-          required: true,
-          options: {
-            placeholder: 'Write your blog post content...'
-          }
+          required: true
         },
         schema: {
           is_nullable: false
@@ -97,27 +63,10 @@ const collections = [
         field: 'excerpt',
         type: 'text',
         meta: {
-          interface: 'input-multiline',
-          width: 'full',
-          options: {
-            placeholder: 'A short summary...'
-          }
+          interface: 'input-multiline'
         },
         schema: {
           is_nullable: true
-        }
-      },
-      {
-        field: 'featured_image',
-        type: 'uuid',
-        meta: {
-          interface: 'file-image',
-          width: 'full',
-          special: ['file']
-        },
-        schema: {
-          is_nullable: true,
-          default_value: null
         }
       },
       {
@@ -125,8 +74,6 @@ const collections = [
         type: 'date',
         meta: {
           interface: 'datetime',
-          width: 'half',
-          display: 'datetime',
           required: true
         },
         schema: {
@@ -138,7 +85,6 @@ const collections = [
         type: 'string',
         meta: {
           interface: 'select-dropdown',
-          width: 'half',
           options: {
             choices: [
               { text: 'Published', value: 'published' },
@@ -162,44 +108,18 @@ const collections = [
       icon: 'web',
       note: 'Portfolio projects',
       display_template: '{{title}}',
-      singleton: false,
-      sort_field: 'sort',
-      sort: 1,
-      archive_field: 'status',
-      archive_value: 'archived',
-      unarchive_value: 'draft',
-      archive_app_filter: true,
-      accountability: 'all'
+      singleton: false
     },
     schema: {
-      name: 'projects',
-      comment: 'Portfolio projects'
+      name: 'projects'
     },
     fields: [
-      {
-        field: 'id',
-        type: 'integer',
-        meta: {
-          interface: 'input',
-          readonly: true,
-          hidden: true,
-          special: ['uuid']
-        },
-        schema: {
-          is_primary_key: true,
-          is_nullable: false
-        }
-      },
       {
         field: 'title',
         type: 'string',
         meta: {
           interface: 'input',
-          width: 'full',
-          required: true,
-          options: {
-            placeholder: 'Enter a title...'
-          }
+          required: true
         },
         schema: {
           is_nullable: false
@@ -210,12 +130,7 @@ const collections = [
         type: 'string',
         meta: {
           interface: 'input',
-          width: 'full',
-          required: true,
-          options: {
-            placeholder: 'Enter a slug...',
-            slug: true
-          }
+          required: true
         },
         schema: {
           is_nullable: false
@@ -226,11 +141,7 @@ const collections = [
         type: 'text',
         meta: {
           interface: 'input-multiline',
-          width: 'full',
-          required: true,
-          options: {
-            placeholder: 'A short description...'
-          }
+          required: true
         },
         schema: {
           is_nullable: false
@@ -241,27 +152,10 @@ const collections = [
         type: 'text',
         meta: {
           interface: 'input-rich-text-md',
-          width: 'full',
-          required: true,
-          options: {
-            placeholder: 'Write your project content...'
-          }
+          required: true
         },
         schema: {
           is_nullable: false
-        }
-      },
-      {
-        field: 'featured_image',
-        type: 'uuid',
-        meta: {
-          interface: 'file-image',
-          width: 'full',
-          special: ['file']
-        },
-        schema: {
-          is_nullable: true,
-          default_value: null
         }
       },
       {
@@ -269,7 +163,6 @@ const collections = [
         type: 'string',
         meta: {
           interface: 'select-dropdown',
-          width: 'half',
           options: {
             choices: [
               { text: 'Published', value: 'published' },
@@ -289,11 +182,7 @@ const collections = [
         type: 'integer',
         meta: {
           interface: 'input',
-          width: 'half',
-          required: true,
-          options: {
-            placeholder: 'Sort order...'
-          }
+          required: true
         },
         schema: {
           default_value: 0,
@@ -309,44 +198,18 @@ const collections = [
       icon: 'image',
       note: 'Portfolio gallery items',
       display_template: '{{title}}',
-      singleton: false,
-      sort_field: 'sort',
-      sort: 1,
-      archive_field: 'status',
-      archive_value: 'archived',
-      unarchive_value: 'draft',
-      archive_app_filter: true,
-      accountability: 'all'
+      singleton: false
     },
     schema: {
-      name: 'gallery',
-      comment: 'Portfolio gallery items'
+      name: 'gallery'
     },
     fields: [
-      {
-        field: 'id',
-        type: 'integer',
-        meta: {
-          interface: 'input',
-          readonly: true,
-          hidden: true,
-          special: ['uuid']
-        },
-        schema: {
-          is_primary_key: true,
-          is_nullable: false
-        }
-      },
       {
         field: 'title',
         type: 'string',
         meta: {
           interface: 'input',
-          width: 'full',
-          required: true,
-          options: {
-            placeholder: 'Enter a title...'
-          }
+          required: true
         },
         schema: {
           is_nullable: false
@@ -356,28 +219,10 @@ const collections = [
         field: 'description',
         type: 'text',
         meta: {
-          interface: 'input-multiline',
-          width: 'full',
-          options: {
-            placeholder: 'A short description...'
-          }
+          interface: 'input-multiline'
         },
         schema: {
           is_nullable: true
-        }
-      },
-      {
-        field: 'image',
-        type: 'uuid',
-        meta: {
-          interface: 'file-image',
-          width: 'full',
-          required: true,
-          special: ['file']
-        },
-        schema: {
-          is_nullable: true,
-          default_value: null
         }
       },
       {
@@ -385,7 +230,6 @@ const collections = [
         type: 'string',
         meta: {
           interface: 'select-dropdown',
-          width: 'half',
           options: {
             choices: [
               { text: 'Published', value: 'published' },
@@ -405,11 +249,7 @@ const collections = [
         type: 'integer',
         meta: {
           interface: 'input',
-          width: 'half',
-          required: true,
-          options: {
-            placeholder: 'Sort order...'
-          }
+          required: true
         },
         schema: {
           default_value: 0,
@@ -420,13 +260,106 @@ const collections = [
   }
 ];
 
-// Main function
+// Alternative approach using Axios directly
+async function setupCollectionsWithAxios() {
+  try {
+    console.log('Starting to set up collections with axios...');
+    
+    // Login to get token
+    console.log('Authenticating...');
+    
+    const loginResponse = await axios.post(
+      `${config.url}/auth/login`,
+      {
+        email: config.auth.email,
+        password: config.auth.password
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      }
+    );
+    
+    if (!loginResponse.data || !loginResponse.data.data || !loginResponse.data.data.access_token) {
+      throw new Error('Failed to authenticate: No access token received');
+    }
+    
+    const token = loginResponse.data.data.access_token;
+    console.log('Successfully authenticated!');
+    
+    // Create each collection
+    const authHeaders = {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    };
+    
+    for (const collection of collectionDefinitions) {
+      try {
+        console.log(`Creating collection: ${collection.collection}...`);
+        
+        // Check if collection exists
+        try {
+          await axios.get(`${config.url}/collections/${collection.collection}`, { headers: authHeaders });
+          console.log(`Collection ${collection.collection} already exists, skipping.`);
+          continue;
+        } catch (err) {
+          // 404 means collection doesn't exist, which is what we want
+          if (err.response && err.response.status !== 404) {
+            throw err;
+          }
+        }
+        
+        // Create collection
+        await axios.post(`${config.url}/collections`, collection, { headers: authHeaders });
+        console.log(`Collection ${collection.collection} created successfully.`);
+        
+        // Add fields
+        for (const field of collection.fields) {
+          await axios.post(
+            `${config.url}/fields/${collection.collection}`,
+            field,
+            { headers: authHeaders }
+          );
+          console.log(`Field ${field.field} added to collection ${collection.collection}.`);
+        }
+      } catch (err) {
+        console.error(`Error creating collection ${collection.collection}:`, err.message);
+        if (err.response) {
+          console.error('Server response:', err.response.data);
+        }
+      }
+    }
+    
+    console.log('Collections setup completed!');
+  } catch (error) {
+    console.error('Error in setup process:', error.message);
+    if (error.response) {
+      console.error('Server response:', error.response.data);
+    }
+  }
+}
+
+// Original function using Directus SDK
 async function setupCollections() {
   try {
-    console.log('Starting to set up collections...');
+    console.log('Starting to set up collections with SDK...');
     
-    // Initialize Directus SDK
-    const directus = new Directus(config.url);
+    // Initialize Directus SDK with transport options
+    const directus = new Directus(config.url, {
+      auth: {
+        mode: 'json',
+      },
+      transport: {
+        params: {},
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      },
+    });
     
     // Authenticate
     await directus.auth.login(config.auth);
@@ -437,7 +370,7 @@ async function setupCollections() {
     console.log(`Connected to Directus ${serverInfo.version}`);
     
     // Create collections
-    for (const collection of collections) {
+    for (const collection of collectionDefinitions) {
       try {
         // Check if collection exists
         const exists = await directus.collections.readOne(collection.collection).catch(() => null);
@@ -461,9 +394,19 @@ async function setupCollections() {
     
     console.log('Collection setup completed successfully!');
   } catch (error) {
-    console.error('Error setting up collections:', error);
+    console.error('Error setting up collections with SDK:', error);
   }
 }
 
-// Run the setup function
-setupCollections(); 
+// Run both approaches
+async function main() {
+  try {
+    // Try with SDK first
+    await setupCollections();
+  } catch (sdkError) {
+    console.log('SDK approach failed, trying with axios...');
+    await setupCollectionsWithAxios();
+  }
+}
+
+main(); 
