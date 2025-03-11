@@ -73,6 +73,6 @@ services:
 databases:
   - name: db
     engine: PG
-    production: true
+    production: false
     db_name: directus
     db_user: directus
