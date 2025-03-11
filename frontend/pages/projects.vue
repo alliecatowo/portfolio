@@ -16,12 +16,11 @@
     
     <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <div v-for="project in projects" :key="project.id" class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all hover:shadow-xl">
-        <NuxtImg 
+        <img 
           v-if="project.thumbnail" 
           :src="project.thumbnail.url" 
           :alt="project.title"
           class="w-full h-52 object-cover"
-          format="webp"
           loading="lazy"
         />
         <div v-else class="w-full h-52 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
