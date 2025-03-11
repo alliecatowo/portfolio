@@ -10,11 +10,11 @@
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "node -e \"try { require('nuxt').prepare() } catch (e) { console.warn('Nuxt prepare failed, continuing anyway:', e) }\"",
-        "vercel-build": "node install-deps.js && ROLLUP_SKIP_NATIVES=true npm install --force && nuxt build"
+        "postinstall": "echo 'Skipping nuxt prepare to avoid rollup issues'"
     },
     "overrides": {
-        "rollup": "3.29.4"
+        "rollup": "3.23.0",
+        "@rollup/rollup-linux-x64-gnu": "npm:@rollup/rollup-win32-x64-msvc@4.9.1"
     },
     "dependencies": {
         "@directus/sdk": "^19.0.1",

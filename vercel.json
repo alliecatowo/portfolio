@@ -1,5 +1,5 @@
 {
-    "buildCommand": "cd frontend && rm -rf package-lock.json node_modules && npm install && npm run build",
+    "buildCommand": "cd frontend && rm -rf package-lock.json node_modules && ROLLUP_SKIP_NATIVES=true npm install --no-optional --omit=optional && ROLLUP_SKIP_NATIVES=true npm run build",
     "outputDirectory": "frontend/.output",
     "framework": "nuxtjs",
     "routes": [
