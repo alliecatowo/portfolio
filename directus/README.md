@@ -1,75 +1,96 @@
-# Directus Backend for Allison's Portfolio
+# Directus Portfolio Setup
 
-This directory contains the Directus CMS setup for Allison's portfolio website.
+This repository contains configuration files and instructions for setting up a portfolio website using Directus CMS (v11.5.1) as the backend. The setup process uses **only official Directus CLI tools** without any custom scripts.
 
-## Important Documentation
+## What's Included
 
-- [Setup Instructions](./SETUP_INSTRUCTIONS.md) - **Start here for comprehensive setup instructions**
-- [Manual Permissions Fix](../MANUAL_PERMISSIONS_FIX.md) - Guide for manually fixing permissions
+- `portfolio-schema.yaml`: Complete schema definition for:
+  - Blog posts collection
+  - Projects collection 
+  - Gallery collection
+  - Role and permission configuration
+- `CLI_COMMANDS.md`: Detailed instructions for each CLI command
+- `setup-cli.sh`: Shell script to automate the setup process
+- `package.json`: NPM scripts for common Directus CLI operations
 
-## Setup Scripts
+## Prerequisites
 
-This project includes several scripts to automate the setup process:
+- Node.js v18.17.0 or later
+- Directus v11.5.1
+- Access to your deployed Directus instance
 
-- `setup-directus.js` - All-in-one setup script
-- `create-collections.js` - Creates necessary collections
-- `fix-admin-permissions.js` - Sets up admin permissions
-- `fix-public-permissions.js` - Sets up public permissions
-- `seed-collections.js` - Seeds collections with sample data
+## Quick Start
 
-See the [Setup Instructions](./SETUP_INSTRUCTIONS.md) for details on how to use these scripts.
-
-## Local Development
-
-### Prerequisites
-- Docker and Docker Compose
-
-### Starting Directus Locally
-
-```bash
-cd directus
-docker-compose up -d
-```
-
-Directus will be available at http://localhost:8055
-
-Default admin credentials:
-- Email: admin@example.com
-- Password: Admin123!
-
-## Deployment to DigitalOcean
-
-This project is configured to deploy to DigitalOcean App Platform.
-
-### Manual Deployment
-
-1. Install the Digital Ocean CLI if not already installed:
+1. **Set environment variables for admin user**:
    ```bash
-   brew install doctl
+   export ADMIN_EMAIL="your-admin-email@example.com"
+   export ADMIN_PASSWORD="your-secure-password"
    ```
 
-2. Authenticate with Digital Ocean:
+2. **Run the setup script**:
    ```bash
-   doctl auth init
+   ./setup-cli.sh
    ```
 
-3. Create the app:
+   This script will:
+   - Bootstrap Directus
+   - Apply the schema
+   - Verify collections
+   - Check roles
+   - Create a backup snapshot
+
+3. **Alternatively, use the NPM scripts**:
    ```bash
-   doctl apps create --spec .do/app.yaml
+   # Bootstrap Directus
+   npm run bootstrap
+   
+   # Apply schema (with a dry run first)
+   npm run dry-run
+   npm run apply-schema
+   
+   # List collections, users, and roles
+   npm run list-collections
+   npm run list-users
+   npm run list-roles
+   
+   # Create a snapshot
+   npm run snapshot
    ```
 
-## Environment Configuration
+## Manual Setup
 
-Key environment variables are defined in:
-- `.do/app.yaml` for DigitalOcean deployment
-- `docker-compose.yml` for local development
+If you prefer to run commands individually, follow the instructions in `CLI_COMMANDS.md` for a step-by-step guide.
 
-## File Storage
+## Collection Structure
 
-Directus is configured to use the local file storage adapter with persistent storage on DigitalOcean.
+### Blog Posts
+- Title (required)
+- Content (Markdown, required)
+- Status (published, draft, archived)
+- Creation/update timestamps
 
-## Database
+### Projects
+- Title (required)
+- Description (Markdown, required)
+- URL (optional)
+- Image (optional)
 
-The application uses PostgreSQL for data storage:
-- Local: Runs in a Docker container with data persisted to `./data/database`
-- Production: Uses DigitalOcean Managed PostgreSQL 
+### Gallery
+- Title (required)
+- Description (optional)
+- Image (required)
+
+## Roles and Permissions
+
+- **Administrator**: Full access to all collections
+- **Public**: Read-only access to all collections (for API access)
+
+## Troubleshooting
+
+See the `CLI_COMMANDS.md` file for troubleshooting steps using the CLI.
+
+## Further Reading
+
+- [Directus Documentation](https://docs.directus.io/)
+- [CLI Documentation](https://docs.directus.io/self-hosted/cli.html)
+- [Schema Management](https://docs.directus.io/app/data-model/) 

@@ -1,16 +1,17 @@
 {
-    "name": "directus-seed",
+    "name": "directus-portfolio",
     "version": "1.0.0",
-    "description": "Seed script for Directus CMS",
-    "main": "seed-data.js",
+    "description": "Directus Portfolio Project using CLI",
     "scripts": {
-        "setup": "node setup-collections.js",
-        "seed": "node seed-data.js",
-        "init": "npm run setup && npm run seed"
+        "bootstrap": "directus bootstrap",
+        "apply-schema": "directus schema apply --yes ./portfolio-schema.yaml",
+        "dry-run": "directus schema apply --dry-run ./portfolio-schema.yaml",
+        "snapshot": "directus schema snapshot ./schema-backup-$(date +%Y%m%d).yaml",
+        "list-users": "directus users list",
+        "list-roles": "directus roles list",
+        "list-collections": "directus collections list"
     },
-    "dependencies": {
-        "@directus/sdk": "^10.3.3",
-        "axios": "^1.6.7",
-        "node-fetch": "^3.3.2"
+    "engines": {
+        "node": ">=18.17.0"
     }
 }
