@@ -1,25 +1,21 @@
 /**
- * CORS utility functions for handling Vercel domains
+ * CORS utility functions for handling trusted deployment domains
  */
 
 /**
- * Check if a URL is a Vercel deployment URL
- * @param url - URL to check
- * @returns boolean indicating if the URL is a Vercel deployment
+ * Check if a URL is a Digital Ocean deployment URL
+ * 
+ * @param url The URL to check
+ * @returns boolean indicating if the URL is a Digital Ocean deployment
  */
-export function isVercelUrl(url: string): boolean {
-  // Check for vercel.app domains
-  if (url.includes('.vercel.app')) {
+export function isDigitalOceanUrl(url: string): boolean {
+  // Check for ondigitalocean.app domains
+  if (url.includes('.ondigitalocean.app')) {
     return true;
   }
   
-  // Check for vercel preview URLs (*.vercel.app)
-  if (url.match(/[a-z0-9-]+\.vercel\.app/i)) {
-    return true;
-  }
-  
-  // Check for Vercel branch preview URLs
-  if (url.match(/[a-z0-9-]+-[a-z0-9-]+\.vercel\.app/i)) {
+  // Check for droplet or app platform specific domains
+  if (url.includes('.digitaloceanspaces.com')) {
     return true;
   }
   
@@ -27,43 +23,46 @@ export function isVercelUrl(url: string): boolean {
 }
 
 /**
- * Get allowed CORS origins including Vercel domains
- * @param baseOrigins - Base origins to include
- * @returns Array of allowed origins
+ * Get allowed origins for CORS
+ * This includes our known domains and Digital Ocean preview URLs
+ * 
+ * @returns string[] Array of allowed origins
  */
-export function getAllowedOrigins(baseOrigins: string[] = []): string[] {
-  // Start with the base origins
-  const origins = [...baseOrigins];
+export function getAllowedOrigins(): string[] {
+  // Base allowed domains
+  const allowedDomains = [
+    'https://allisons.dev',
+    'https://tattoo.allisons.dev',
+    'https://www.allisons.dev',
+    'http://localhost:3000'
+  ];
   
-  // Add common development origins
-  origins.push('http://localhost:3000');
-  origins.push('https://localhost:3000');
+  // Will dynamically add Digital Ocean preview URLs if detected
   
-  // Add production domain
-  origins.push('https://alliecatowo.com');
-  origins.push('https://www.alliecatowo.com');
-  
-  // Add Vercel domains for the main project
-  origins.push('https://portfolio-alliecatowo.vercel.app');
-  
-  return origins;
+  return allowedDomains;
 }
 
 /**
- * Add CORS headers to a fetch request
- * @param options - Fetch options
- * @returns Updated fetch options with CORS headers
+ * Handle CORS for a specific request/response
+ * 
+ * @param origin The origin of the request
+ * @returns object with CORS headers
  */
-export function addCorsHeaders(options: RequestInit = {}): RequestInit {
-  const headers = options.headers || {};
-  
-  return {
-    ...options,
-    headers: {
-      ...headers,
+export function getCorsHeaders(origin?: string): Record<string, string> {
+  if (!origin) {
+    return {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    },
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+    };
+  }
+  
+  // Check if origin is allowed or is a Digital Ocean preview
+  const isAllowed = getAllowedOrigins().includes(origin) || isDigitalOceanUrl(origin);
+  
+  return {
+    'Access-Control-Allow-Origin': isAllowed ? origin : getAllowedOrigins()[0],
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization'
   };
 } 

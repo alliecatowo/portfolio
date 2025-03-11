@@ -13,7 +13,7 @@ services:
     envs:
       - key: NUXT_PUBLIC_API_URL
         scope: RUN_TIME
-        value: https://allisons-portfolio-directus-9vxdi.ondigitalocean.app
+        value: https://directus.allisons.dev
       - key: NUXT_PUBLIC_DIRECTUS_TOKEN
         scope: RUN_TIME
         value: 2eEMQA40l35OBtWNH6nDS166k0o800sb

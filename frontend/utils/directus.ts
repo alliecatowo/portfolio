@@ -111,4 +111,50 @@ export function getAssetUrl(fileId: string, params: Record<string, any> = {}) {
   
   // Return URL to asset through our proxy
   return `${baseUrl}/${fileId}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
+}
+
+/**
+ * Fetch wrapper for Directus API calls with authentication
+ * This avoids CORS issues when deployed to Digital Ocean
+ */
+export async function directusFetch(endpoint: string, options: FetchOptions = {}): Promise<any> {
+  const config = useRuntimeConfig()
+  const apiUrl = config.public.directusUrl
+  const token = config.public.directusToken
+
+  const url = `${apiUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`
+
+  // Set up headers with authentication
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`,
+    ...options.headers
+  }
+
+  try {
+    // Make the request
+    const response = await fetch(url, {
+      ...options,
+      headers
+    })
+
+    // Check if the response is OK
+    if (!response.ok) {
+      throw new Error(`Directus API error: ${response.status} ${response.statusText}`)
+    }
+
+    // Parse and return the JSON response
+    return await response.json()
+  } catch (error) {
+    console.error('Error fetching from Directus:', error)
+    throw error
+  }
+}
+
+/**
+ * Helper to get the asset URL for a Directus asset
+ * This avoids CORS issues when deployed to Digital Ocean
+ */
+export function getAssetUrl(assetId: string, options: ImageOptions = {}): string {
+  // ... existing code ...
 } 

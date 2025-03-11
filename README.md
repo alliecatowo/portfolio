@@ -13,8 +13,7 @@ The portfolio consists of two main components:
 
 - Node.js 16 or later
 - npm or yarn
-- A DigitalOcean account (for Directus hosting)
-- A Vercel account (for frontend hosting)
+- A DigitalOcean account (for hosting both frontend and Directus)
 
 ## Local Development Setup
 
@@ -49,7 +48,7 @@ cp .env.example .env
 
 ## Directus Setup
 
-Directus is hosted on DigitalOcean and can be accessed at https://allisons-portfolio-directus-9vxdi.ondigitalocean.app.
+Directus is hosted on DigitalOcean and can be accessed at https://directus.allisons.dev.
 
 ### Database Schema
 
@@ -79,13 +78,13 @@ For manual permission setup, refer to the `MANUAL_PERMISSIONS_FIX.md` file.
 
 ## Deployment
 
-### Frontend (Vercel)
+### Frontend (Digital Ocean)
 
-The frontend is deployed to Vercel. See `VERCEL_DEPLOYMENT.md` for detailed instructions on setting up the environment variables and deploying the frontend.
+The frontend is deployed to Digital Ocean App Platform. See `DIGITAL_OCEAN_DEPLOYMENT.md` for detailed instructions on setting up the environment variables and deploying the frontend.
 
 ### Directus (DigitalOcean)
 
-Directus is deployed to DigitalOcean App Platform. The instance is already configured and running at https://allisons-portfolio-directus-9vxdi.ondigitalocean.app.
+Directus is deployed to DigitalOcean App Platform. The instance is already configured and running at https://directus.allisons.dev.
 
 ## Environment Variables
 
@@ -94,7 +93,7 @@ Directus is deployed to DigitalOcean App Platform. The instance is already confi
 Create a `.env` file in the `frontend` directory with the following variables:
 
 ```
-NUXT_PUBLIC_API_URL=https://allisons-portfolio-directus-9vxdi.ondigitalocean.app
+NUXT_PUBLIC_API_URL=https://directus.allisons.dev
 NUXT_PUBLIC_DIRECTUS_TOKEN=YOUR_DIRECTUS_ACCESS_TOKEN
 DEV_SITE_URL=http://localhost:3000
 TATTOO_SITE_URL=http://localhost:3000
@@ -108,7 +107,7 @@ The Directus instance on DigitalOcean already has the necessary environment vari
 
 - `/frontend` - Nuxt.js frontend application
 - `/directus` - Directus configuration and schema files
-- `VERCEL_DEPLOYMENT.md` - Guide for deploying to Vercel
+- `DIGITAL_OCEAN_DEPLOYMENT.md` - Guide for deploying to Digital Ocean
 - `MANUAL_PERMISSIONS_FIX.md` - Guide for manually fixing permissions in Directus
 - `CLI_COMMANDS.md` - Reference for useful CLI commands
 
@@ -132,7 +131,7 @@ cd directus && npx directus schema apply ./portfolio-schema.yaml
 cd directus && npx directus schema snapshot ./portfolio-schema.yaml
 
 # Check if Directus API is accessible
-curl -s -L "https://allisons-portfolio-directus-9vxdi.ondigitalocean.app/items/blog_posts?access_token=YOUR_TOKEN" | head -20
+curl -s -L "https://directus.allisons.dev/items/blog_posts?access_token=YOUR_TOKEN" | head -20
 ```
 
 ## License

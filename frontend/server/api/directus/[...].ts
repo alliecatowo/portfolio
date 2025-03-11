@@ -8,7 +8,7 @@ import { defineEventHandler, getQuery, readBody } from 'h3'
 
 export default defineEventHandler(async (event) => {
   // Get directus config from environment variables
-  const directusUrl = process.env.NUXT_PUBLIC_API_URL || 'https://allisons-portfolio-directus-9vxdi.ondigitalocean.app'
+  const directusUrl = process.env.NUXT_PUBLIC_API_URL || 'https://directus.allisons.dev'
   const directusToken = process.env.NUXT_PUBLIC_DIRECTUS_TOKEN
   
   // Get the URL path parts after /api/directus/

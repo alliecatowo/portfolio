@@ -1,61 +1,70 @@
 #!/bin/bash
 
-# Manual deployment script for portfolio project
-# This script handles the build and deployment process
+# Exit on any error
+set -e
 
-set -e  # Exit on error
+# Colors for output
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
 
-echo "=== Portfolio Deployment Script ==="
-echo "Starting deployment process..."
+echo -e "${GREEN}Starting deployment process for Portfolio Website${NC}"
 
-# Move to frontend directory
-cd "$(dirname "$0")/frontend"
+# Build the frontend
+echo -e "${YELLOW}Building frontend...${NC}"
+cd frontend
+npm ci
+npm run build
+cd ..
 
-# Clean up node_modules and package-lock
-echo "Cleaning up node modules and lockfile..."
-rm -rf node_modules package-lock.json
+echo -e "${GREEN}Frontend build completed successfully!${NC}"
 
-# Prepare NPM configuration
-echo "Configuring NPM to skip optional dependencies..."
-echo "optional=false" > .npmrc
-echo "omit=optional" >> .npmrc
-echo "# Prevent platform-specific modules for rollup" >> .npmrc
-echo "@rollup:registry=https://registry.npmjs.org/" >> .npmrc
-echo "node-options=--max-old-space-size=4096" >> .npmrc
-
-# Install dependencies without optional packages
-echo "Installing dependencies..."
-npm install --no-optional
-
-# Run the rollup patch script
-echo "Patching rollup to avoid native dependencies..."
-node ./patch-rollup.js
-
-# Build the application with nuxt generate
-echo "Building application..."
-npm run generate
-
-echo "Build completed successfully!"
-
-# If Vercel CLI is installed, offer to deploy
-if command -v vercel &> /dev/null; then
-    echo ""
-    echo "Vercel CLI is installed. Do you want to deploy now? (y/n)"
-    read -r deploy_choice
-    
-    if [[ $deploy_choice == "y" || $deploy_choice == "Y" ]]; then
-        echo "Deploying to Vercel..."
-        cd ..  # Move back to root directory
-        vercel --prod
-        echo "Deployment completed!"
-    else
-        echo "Skipping deployment. You can deploy manually using 'vercel --prod'"
-    fi
+# Check for Docker
+if command -v docker &> /dev/null; then
+    echo -e "${YELLOW}Building Docker image...${NC}"
+    docker build -t portfolio-frontend ./frontend
+    echo -e "${GREEN}Docker image built successfully!${NC}"
 else
-    echo ""
-    echo "Vercel CLI not found. To deploy:"
-    echo "1. Install Vercel CLI: npm i -g vercel"
-    echo "2. Run 'vercel --prod' from the project root"
+    echo -e "${YELLOW}Docker not found. Skipping Docker build.${NC}"
 fi
 
-echo "=== Deployment process finished ===" 
+# If Directus needs to be deployed
+echo -e "${YELLOW}Do you want to deploy Directus backend? (y/n)${NC}"
+read deploy_directus
+
+if [[ "$deploy_directus" =~ ^[Yy]$ ]]; then
+    echo -e "${YELLOW}Deploying Directus backend...${NC}"
+    cd directus
+    # Add your Directus deployment commands here
+    cd ..
+    echo -e "${GREEN}Directus deployment completed!${NC}"
+fi
+
+# Digital Ocean deployment section
+echo -e "${YELLOW}Do you want to deploy to Digital Ocean? (y/n)${NC}"
+read deploy_do
+
+if [[ "$deploy_do" =~ ^[Yy]$ ]]; then
+    if command -v doctl &> /dev/null; then
+        echo -e "${YELLOW}Deploying to Digital Ocean...${NC}"
+        # Authenticate with Digital Ocean if needed
+        doctl auth init
+        
+        # Deploy the app (assuming App Platform)
+        echo -e "${YELLOW}Deploying app to Digital Ocean App Platform...${NC}"
+        doctl apps update YOUR_APP_ID --spec .do/app.yaml
+        
+        echo -e "${GREEN}Digital Ocean deployment initiated!${NC}"
+    else
+        echo -e "${YELLOW}Digital Ocean CLI (doctl) not found. To deploy:${NC}"
+        echo -e "1. Install doctl: https://docs.digitalocean.com/reference/doctl/how-to/install/"
+        echo -e "2. Run 'doctl auth init' to authenticate"
+        echo -e "3. Deploy using 'doctl apps update YOUR_APP_ID --spec .do/app.yaml'"
+    fi
+else
+    echo -e "${YELLOW}Skipping Digital Ocean deployment.${NC}"
+fi
+
+echo -e "${GREEN}Deployment process completed!${NC}"
+echo -e "${YELLOW}Note: Manually verify your deployment in the Digital Ocean dashboard.${NC}" 
