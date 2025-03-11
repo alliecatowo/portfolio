@@ -3,14 +3,15 @@
     "version": "1.0.0",
     "private": true,
     "engines": {
-        "node": "22.x"
+        "node": "18.x"
     },
     "scripts": {
         "build": "nuxt build",
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "nuxt prepare"
+        "postinstall": "nuxt prepare",
+        "vercel-build": "npm cache clean --force && npm install --force && nuxt build"
     },
     "dependencies": {
         "@directus/sdk": "^19.0.1",
