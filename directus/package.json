@@ -1,0 +1,12 @@
+{
+    "name": "directus-seed",
+    "version": "1.0.0",
+    "description": "Seed script for Directus CMS",
+    "main": "seed-data.js",
+    "scripts": {
+        "seed": "node seed-data.js"
+    },
+    "dependencies": {
+        "@directus/sdk": "^10.3.3"
+    }
+}
