@@ -27,6 +27,25 @@ export function isVercelUrl(url: string): boolean {
 }
 
 /**
+ * Check if a URL is a DigitalOcean deployment URL
+ * @param url - URL to check
+ * @returns boolean indicating if the URL is a DigitalOcean deployment
+ */
+export function isDigitalOceanUrl(url: string): boolean {
+  // Check for ondigitalocean.app domains
+  if (url.includes('.ondigitalocean.app')) {
+    return true;
+  }
+  
+  // Check for Digital Ocean App Platform URLs
+  if (url.match(/[a-z0-9-]+\.ondigitalocean\.app/i)) {
+    return true;
+  }
+  
+  return false;
+}
+
+/**
  * Get allowed CORS origins including deployment domains
  * @param baseOrigins - Base origins to include
  * @returns Array of allowed origins
@@ -43,9 +62,13 @@ export function getAllowedOrigins(baseOrigins: string[] = []): string[] {
   origins.push('https://allisons.dev');
   origins.push('https://www.allisons.dev');
   origins.push('https://tattoo.allisons.dev');
+  origins.push('https://directus.allisons.dev');
   
   // Add Vercel domains for the main project
   origins.push('https://portfolio-alliecatowo.vercel.app');
+  
+  // Add DigitalOcean domains
+  origins.push('https://allisons-portfolio-directus-9vxdi.ondigitalocean.app');
   
   return origins;
 }
