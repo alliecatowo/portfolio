@@ -1,6 +1,6 @@
 {
     "buildCommand": "NITRO_PRESET=vercel-edge npm run build",
-    "framework": "nuxt",
+    "framework": "nuxtjs",
     "outputDirectory": ".output/public",
     "regions": [
         "sfo1"
