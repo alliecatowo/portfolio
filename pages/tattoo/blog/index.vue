@@ -36,7 +36,7 @@
               <div class="relative aspect-video bg-gray-200 dark:bg-gray-700">
                 <img 
                   v-if="post.image" 
-                  :src="post.image.url" 
+                  :src="getStrapiMedia(post.image)" 
                   :alt="post.title"
                   class="w-full h-full object-cover"
                 >
@@ -117,7 +117,7 @@
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
-import { getPosts } from '~/utils/api/content';
+import { useStrapi } from '~/composables/useStrapi';
 
 // Ensure site config is set to tattoo
 const siteConfig = useSiteConfig();
@@ -128,6 +128,10 @@ if (siteConfig.value?.type !== 'tattoo') {
     baseRoute: '/tattoo'
   };
 }
+
+// Use Strapi composable
+const strapi = useStrapi();
+const { getStrapiMedia } = strapi;
 
 // State
 const posts = ref([]);
@@ -143,33 +147,15 @@ const fetchPosts = async () => {
   error.value = null;
   
   try {
-    // In a real implementation, this would fetch from Strapi
-    const response = await getPosts(currentPage.value, pageSize, {
-      siteType: {
-        $in: ['tattoo', 'both']
-      }
+    const response = await strapi.getBlogPosts({
+      siteType: 'tattoo',
+      page: currentPage.value,
+      pageSize
     });
     
     if (response) {
       posts.value = response.data || [];
       totalPages.value = Math.ceil((response.meta?.pagination?.total || 0) / pageSize);
-      
-      // For demo purposes, if there's no data from Strapi, use placeholder data
-      if (posts.value.length === 0) {
-        posts.value = Array.from({ length: 6 }, (_, i) => ({
-          id: i + 1,
-          title: `Tattoo Art Story ${i + 1}`,
-          slug: `tattoo-story-${i + 1}`,
-          excerpt: 'This is a sample excerpt for a tattoo blog post. In a real application, this would be fetched from the CMS.',
-          publishedAt: new Date(Date.now() - (i * 1000000000)).toISOString(),
-          categories: [
-            { id: 1, name: 'Tattoo Process' },
-            { id: 2, name: 'Client Stories' }
-          ]
-        }));
-        
-        totalPages.value = 1; // For demo purposes
-      }
     }
   } catch (err) {
     console.error('Error fetching posts:', err);
