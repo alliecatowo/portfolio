@@ -12,6 +12,8 @@ export default defineNuxtPlugin(() => {
     .with(rest());
   
   console.log(`Directus client initialized with URL: ${directusUrl}`);
+  console.log(`Runtime config public keys: ${Object.keys(config.public).join(', ')}`);
+  console.log(`DIRECTUS_URL env value: ${directusUrl}`);
   
   return {
     provide: { 
