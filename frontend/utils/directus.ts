@@ -1,26 +1,5 @@
 import { useRuntimeConfig } from '#app'
-
-/**
- * Interface for image transformation options 
- */
-interface ImageOptions {
-  width?: number;
-  height?: number;
-  fit?: string;
-  format?: string;
-  quality?: number;
-  [key: string]: any;
-}
-
-/**
- * Interface for fetch options
- */
-interface FetchOptions {
-  method?: string;
-  headers?: Record<string, string>;
-  body?: any;
-  [key: string]: any;
-}
+import { addCorsHeaders } from './cors'
 
 /**
  * Utility function to fetch data from Directus API
@@ -31,14 +10,20 @@ interface FetchOptions {
 export async function fetchFromDirectus(endpoint: string, params: Record<string, any> = {}) {
   const config = useRuntimeConfig()
   
-  // Use the server-side API proxy instead of direct requests
-  // This avoids CORS issues when deployed to Vercel
-  let baseUrl = '/api/directus'
+  // Get the directus URL from runtime config
+  let baseUrl = config.public.directusUrl
+  
+  // Create a fully qualified URL with proper protocol
+  let apiUrl = baseUrl.startsWith('http') 
+    ? baseUrl 
+    : `https://${baseUrl}`
+  
+  // Remove trailing slash if present to avoid double slashes
+  apiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
 
   // Add access token to params if not already present
   if (!params.access_token) {
-    // Note: You may need to set up a proper token in your environment variables
-    params.access_token = '' // No token needed if your API is public
+    params.access_token = config.public.directusToken
   }
 
   // Convert params object to URL parameters
@@ -59,20 +44,24 @@ export async function fetchFromDirectus(endpoint: string, params: Record<string,
     }
   })
 
-  // Construct the URL with proper path joining and query parameters
-  const url = `${baseUrl}/${endpoint}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
+  // Construct the ABSOLUTE URL with proper path joining and query parameters
+  const url = `${apiUrl}/items/${endpoint}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
   
   console.log('Fetching from Directus URL:', url)
   
   try {
-    // Use standard fetch - the server proxy will handle CORS issues
-    const response = await fetch(url, {
+    // Apply CORS headers to the fetch request
+    const fetchOptions = addCorsHeaders({
       method: 'GET',
-      credentials: 'same-origin', // Include cookies for same-origin requests
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
+      // Use 'no-cors' mode to avoid CORS issues
+      mode: 'cors',
+      credentials: 'same-origin'
     })
+    
+    const response = await fetch(url, fetchOptions)
     
     if (!response.ok) {
       throw new Error(`API error: ${response.status}`)
@@ -116,9 +105,16 @@ export async function fetchItems(collection: string, params: Record<string, any>
 export function getAssetUrl(fileId: string, params: Record<string, any> = {}) {
   const config = useRuntimeConfig()
   
-  // Use the server-side API proxy instead of direct requests
-  // This avoids CORS issues when deployed to Vercel
-  let baseUrl = '/api/directus/assets'
+  // Get the directus URL from runtime config
+  let baseUrl = config.public.directusUrl
+  
+  // Create a fully qualified URL with proper protocol
+  let apiUrl = baseUrl.startsWith('http') 
+    ? baseUrl 
+    : `https://${baseUrl}`
+  
+  // Remove trailing slash if present to avoid double slashes
+  apiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
   
   const queryParams = new URLSearchParams()
   Object.entries(params).forEach(([key, value]) => {
@@ -126,73 +122,6 @@ export function getAssetUrl(fileId: string, params: Record<string, any> = {}) {
       queryParams.append(key, String(value))
     }
   })
-
-  // Add the access token to assets as well
-  if (!params.access_token) {
-    // Note: You may need to set up a proper token in your environment variables
-    queryParams.append('access_token', '') // No token needed if your API is public
-  }
   
-  // Return URL to asset through our proxy
-  return `${baseUrl}/${fileId}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
-}
-
-/**
- * Fetch wrapper for Directus API calls with authentication
- * This avoids CORS issues when deployed to Digital Ocean
- */
-export async function directusFetch(endpoint: string, options: FetchOptions = {}): Promise<any> {
-  const config = useRuntimeConfig()
-  const apiUrl = config.public.directusUrl
-  
-  // Note: You may need to set up a proper token in your environment variables
-  const token = '' // No token needed if your API is public
-
-  const url = `${apiUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`
-
-  // Set up headers with authentication
-  const headers = {
-    'Content-Type': 'application/json',
-    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
-    ...options.headers
-  }
-
-  try {
-    // Make the request
-    const response = await fetch(url, {
-      ...options,
-      headers
-    })
-
-    // Check if the response is OK
-    if (!response.ok) {
-      throw new Error(`Directus API error: ${response.status} ${response.statusText}`)
-    }
-
-    // Parse and return the JSON response
-    return await response.json()
-  } catch (error) {
-    console.error('Error fetching from Directus:', error)
-    throw error
-  }
-}
-
-/**
- * Helper to get the direct asset URL for a Directus asset on Digital Ocean
- * This avoids CORS issues when deployed to Digital Ocean
- */
-export function getDigitalOceanAssetUrl(assetId: string, options: ImageOptions = {}): string {
-  const config = useRuntimeConfig()
-  const apiUrl = config.public.directusUrl
-  
-  // Convert options to query parameters
-  const queryParams = new URLSearchParams()
-  Object.entries(options).forEach(([key, value]) => {
-    if (value !== undefined && value !== null) {
-      queryParams.append(key, String(value))
-    }
-  })
-  
-  // Return direct URL to the asset
-  return `${apiUrl}/assets/${assetId}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
+  return `${apiUrl}/assets/${fileId}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
 } 
