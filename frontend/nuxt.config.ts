@@ -18,21 +18,11 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: 'node-server',
-    compressPublicAssets: true,
-    // Properly handle native dependencies
-    moduleSideEffects: ['rollup'],
-    externals: {
-      external: ['rollup']
-    }
+    compressPublicAssets: true
   },
   build: {
     transpile: [
       '@directus/sdk'
     ]
-  },
-  // Skip the prepare step to avoid rollup issues
-  hooks: {
-    'prepare:types': () => {},
-    'build:prepare': () => {}
   }
 })

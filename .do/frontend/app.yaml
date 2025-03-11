@@ -5,9 +5,12 @@ services:
       branch: deploy/digital-ocean
       repo_clone_url: https://github.com/alliecatowo/portfolio.git
     build_command: |
-      # Clean installation without optional dependencies
+      # Handle rollup native dependency explicitly
       rm -rf node_modules package-lock.json
-      npm install --no-optional
+      npm install --omit=optional
+      # Explicitly install the needed Linux-specific Rollup binding
+      npm install --no-save @rollup/rollup-linux-x64-gnu
+      # Now build
       npm run build
     environment_slug: node-js
     envs:
