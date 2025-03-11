@@ -63,4 +63,14 @@ useHead({
     { name: 'description', content: 'Allison\'s dual portfolio showcasing work as both a full-stack developer and a tattoo artist.' }
   ]
 });
+
+// Make sure we have the correct site configuration for the landing page
+const config = useSiteConfig();
+// Reset to default state for landing page
+onMounted(() => {
+  config.value = {
+    ...config.value,
+    baseRoute: '/'
+  };
+});
 </script> 
