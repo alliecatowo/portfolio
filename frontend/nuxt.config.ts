@@ -3,15 +3,10 @@ export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
   modules: [
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/color-mode',
-    '@nuxt/image'
+    '@nuxtjs/color-mode'
+    // '@nuxt/image' - removed to fix deployment issues
   ],
-  image: {
-    // Disable image optimization completely
-    provider: 'static',
-    domains: ['directus.allisons.dev'],
-    format: ['webp']
-  },
+  // image configuration removed
   runtimeConfig: {
     public: {
       // Directus API configuration
