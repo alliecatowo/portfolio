@@ -1,5 +1,5 @@
 {
-    "buildCommand": "cd frontend && rm -rf node_modules package-lock.json && npm install && npm install @rollup/rollup-linux-x64-gnu @esbuild/linux-x64 && npm run generate && mkdir -p ../public && (cp -r .output/public/* ../public/ || cp -r .vercel/output/static/* ../public/)",
+    "buildCommand": "cd frontend && chmod +x build-for-vercel.sh && ./build-for-vercel.sh",
     "outputDirectory": "public",
     "framework": "nuxtjs",
     "routes": [
