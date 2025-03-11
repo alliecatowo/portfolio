@@ -1,6 +1,6 @@
 {
-    "buildCommand": "cd frontend && rm -rf package-lock.json node_modules && ROLLUP_SKIP_NATIVES=true npm install --no-optional --omit=optional && ROLLUP_SKIP_NATIVES=true npm run build",
-    "outputDirectory": "frontend/.output",
+    "buildCommand": "cd frontend && rm -rf package-lock.json node_modules && ROLLUP_SKIP_NATIVES=true npm install --no-optional --omit=optional && ROLLUP_SKIP_NATIVES=true npm run vercel-build",
+    "outputDirectory": "frontend/.output/public",
     "framework": "nuxtjs",
     "routes": [
         {

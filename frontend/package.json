@@ -10,7 +10,8 @@
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "echo 'Skipping nuxt prepare to avoid rollup issues'"
+        "postinstall": "echo 'Skipping nuxt prepare to avoid rollup issues'",
+        "vercel-build": "node ./patch-rollup.js && nuxt generate"
     },
     "overrides": {
         "rollup": "3.23.0",
