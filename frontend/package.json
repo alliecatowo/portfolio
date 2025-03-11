@@ -10,7 +10,8 @@
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "echo 'Skipping nuxt prepare to avoid rollup issues'"
+        "postinstall": "echo 'Skipping nuxt prepare to avoid rollup issues'",
+        "vercel-build": "bash ./build-for-vercel.sh"
     },
     "dependencies": {
         "@directus/sdk": "^19.0.1",
