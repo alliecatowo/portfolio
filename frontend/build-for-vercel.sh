@@ -10,6 +10,14 @@ echo "Node version: $(node -v)"
 echo "NPM version: $(npm -v)"
 echo "Environment variables:"
 echo "NUXT_PUBLIC_API_URL: $NUXT_PUBLIC_API_URL"
+
+# Ensure API URL has protocol
+if [ ! -z "$NUXT_PUBLIC_API_URL" ] && [[ ! "$NUXT_PUBLIC_API_URL" =~ ^https?:// ]]; then
+  echo "Adding https:// to API URL"
+  export NUXT_PUBLIC_API_URL="https://$NUXT_PUBLIC_API_URL"
+  echo "Updated NUXT_PUBLIC_API_URL: $NUXT_PUBLIC_API_URL"
+fi
+
 echo "Checking connectivity to API..."
 curl -s -o /dev/null -w "%{http_code}" "$NUXT_PUBLIC_API_URL" || echo "API connectivity check failed"
 

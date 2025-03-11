@@ -11,7 +11,13 @@ console.log('- NUXT_PUBLIC_API_URL:', process.env.NUXT_PUBLIC_API_URL || '(not s
 console.log('- NUXT_PUBLIC_DIRECTUS_TOKEN:', process.env.NUXT_PUBLIC_DIRECTUS_TOKEN ? '(set)' : '(not set)');
 
 // Check API connectivity
-const apiUrl = process.env.NUXT_PUBLIC_API_URL || 'https://allisons-portfolio-directus-9vxdi.ondigitalocean.app';
+let apiUrl = process.env.NUXT_PUBLIC_API_URL || 'https://allisons-portfolio-directus-9vxdi.ondigitalocean.app';
+
+// Ensure the URL has a protocol
+if (!apiUrl.startsWith('http://') && !apiUrl.startsWith('https://')) {
+  apiUrl = `https://${apiUrl}`;
+}
+
 console.log(`\nChecking connectivity to API: ${apiUrl}`);
 
 const client = apiUrl.startsWith('https') ? https : http;
