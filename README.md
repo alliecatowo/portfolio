@@ -138,3 +138,12 @@ curl -s -L "https://allisons-portfolio-directus-9vxdi.ondigitalocean.app/items/b
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Documentation
+
+Detailed documentation is available in the [docs](./docs) directory:
+
+- Project setup and migration
+- Deployment guides
+- Permissions and security
+- Troubleshooting
