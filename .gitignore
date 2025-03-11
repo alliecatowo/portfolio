@@ -1,3 +1,44 @@
+# Root workspace
+node_modules
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Frontend
+frontend/.nuxt
+frontend/.output
+frontend/dist
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+frontend/node_modules
+
+# Backend
+backend/node_modules
+backend/build
+backend/.cache
+backend/.tmp
+backend/dist
+backend/public/uploads
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# Misc
+*.log
+.cache
+.eslintcache
+.idea
+.vscode
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+strapi-docker
+
 # Nuxt dev/build outputs
 .output
 .data
@@ -6,15 +47,11 @@
 .cache
 dist
 
-# Node dependencies
-node_modules
-
 # Logs
 logs
 *.log
 
 # Misc
-.DS_Store
 .fleet
 .idea
 
