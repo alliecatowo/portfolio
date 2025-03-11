@@ -1,35 +1,21 @@
-import { createDirectus, rest, readItem, readItems, authentication, staticToken } from '@directus/sdk';
-import { useRuntimeConfig } from '#app';
+import { createDirectus, rest, readItem, readItems, readSingleton } from '@directus/sdk';
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig();
+  const directusUrl = config.public.directusUrl;
   
-  // Using server proxy to avoid CORS issues
-  const proxyUrl = '/api/directus';
+  // Create a simple Directus client
+  const directus = createDirectus(directusUrl)
+    .with(rest());
   
-  // Create Directus client
-  const directus = createDirectus(proxyUrl)
-    .with(rest({
-      onRequest: (params) => {
-        // Add token to requests
-        params.headers = {
-          ...params.headers,
-          'Content-Type': 'application/json',
-        };
-        return params;
-      }
-    }))
-    .with(authentication())
-    .with(staticToken(config.public.directusToken));
-  
-  // Log the initialization for debugging
-  console.log(`Directus client initialized with URL: ${proxyUrl}`);
+  console.log(`Directus client initialized with URL: ${directusUrl}`);
   
   return {
     provide: { 
       directus, 
       readItem, 
-      readItems 
+      readItems,
+      readSingleton
     },
   };
 }); 
