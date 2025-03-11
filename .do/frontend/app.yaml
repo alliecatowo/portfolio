@@ -3,7 +3,7 @@ services:
   - name: frontend
     git:
       branch: deploy/digital-ocean
-      repo_clone_url: https://github.com/allisonchanykei/portfolio.git
+      repo_clone_url: https://github.com/alliecatowo/portfolio.git
     build_command: NODE_OPTIONS='--unhandled-rejections=strict --no-optional' npm run build
     environment_slug: node-js
     envs:
