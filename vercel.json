@@ -1,5 +1,5 @@
 {
-    "buildCommand": "cd frontend && rm -rf package-lock.json node_modules && npm install --no-optional --omit=optional && NODE_OPTIONS='--no-warnings --loader=./node-loader-patch.js' npm run generate",
+    "buildCommand": "cd frontend && rm -rf node_modules package-lock.json && npm install && npm install @rollup/rollup-linux-x64-gnu && npm run generate",
     "outputDirectory": "frontend/.output/public",
     "framework": "nuxtjs",
     "routes": [
@@ -10,9 +10,7 @@
     ],
     "env": {
         "NUXT_PUBLIC_API_URL": "https://allisons-portfolio-directus-9vxdi.ondigitalocean.app",
-        "NUXT_PUBLIC_DIRECTUS_TOKEN": "2eEMQA40l35OBtWNH6nDS166k0o800sb",
-        "ROLLUP_SKIP_NATIVES": "true",
-        "NODE_OPTIONS": "--no-warnings --loader=./node-loader-patch.js"
+        "NUXT_PUBLIC_DIRECTUS_TOKEN": "2eEMQA40l35OBtWNH6nDS166k0o800sb"
     },
     "git": {
         "deploymentEnabled": {
