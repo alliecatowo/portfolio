@@ -1,4 +1,19 @@
 {
+    "buildCommand": "cd frontend && npm install && node install-deps.js && ROLLUP_SKIP_NATIVES=true npm run build",
+    "outputDirectory": "frontend/.output",
+    "framework": "nuxtjs",
+    "routes": [
+        {
+            "src": "/gallery",
+            "dest": "/tattoo/gallery"
+        }
+    ],
+    "env": {
+        "NUXT_PUBLIC_API_URL": "https://allisons-portfolio-directus-9vxdi.ondigitalocean.app",
+        "NUXT_PUBLIC_DIRECTUS_TOKEN": "2eEMQA40l35OBtWNH6nDS166k0o800sb",
+        "ROLLUP_SKIP_NATIVES": "true",
+        "NODE_OPTIONS": "--no-warnings"
+    },
     "git": {
         "deploymentEnabled": {
             "main": true,
