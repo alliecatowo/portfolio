@@ -10,12 +10,12 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       // Directus API configuration
-      directusUrl: process.env.DIRECTUS_URL || 'http://localhost:8055',
-      apiUrl: process.env.API_URL || 'http://localhost:8055',
+      directusUrl: process.env.NUXT_PUBLIC_DIRECTUS_URL || process.env.DIRECTUS_URL || 'http://localhost:8055',
+      apiUrl: process.env.NUXT_PUBLIC_API_URL || process.env.API_URL || 'http://localhost:8055',
       
       // Site URLs for multi-site navigation
-      devSiteUrl: process.env.DEV_SITE_URL || 'http://localhost:3000',
-      tattooSiteUrl: process.env.TATTOO_SITE_URL || 'http://localhost:3000'
+      devSiteUrl: process.env.NUXT_PUBLIC_DEV_SITE_URL || process.env.DEV_SITE_URL || 'http://localhost:3000',
+      tattooSiteUrl: process.env.NUXT_PUBLIC_TATTOO_SITE_URL || process.env.TATTOO_SITE_URL || 'http://localhost:3000'
     }
   },
   colorMode: {

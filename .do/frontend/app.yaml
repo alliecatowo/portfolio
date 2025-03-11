@@ -28,12 +28,18 @@ services:
       - key: NODE_OPTIONS
         scope: BUILD_TIME
         value: --unhandled-rejections=strict
-      - key: DIRECTUS_URL
+      - key: NUXT_PUBLIC_DIRECTUS_URL
         scope: RUN_TIME
         value: https://allisons-portfolio-directus-9vxdi.ondigitalocean.app
-      - key: API_URL
+      - key: NUXT_PUBLIC_API_URL
         scope: RUN_TIME
         value: https://allisons-portfolio-directus-9vxdi.ondigitalocean.app
+      - key: NUXT_PUBLIC_DEV_SITE_URL
+        scope: RUN_TIME
+        value: https://allisons.dev
+      - key: NUXT_PUBLIC_TATTOO_SITE_URL
+        scope: RUN_TIME
+        value: https://tattoo.allisons.dev
     git:
       branch: deploy/digital-ocean
       repo_clone_url: https://github.com/alliecatowo/portfolio.git
