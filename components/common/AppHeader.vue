@@ -3,7 +3,7 @@
     <div class="container-custom flex justify-between items-center">
       <!-- Logo/Site Title -->
       <div class="flex items-center">
-        <NuxtLink to="/" class="text-2xl font-bold no-underline">
+        <NuxtLink :to="siteConfig.type === 'dev' ? '/dev' : '/tattoo'" class="text-2xl font-bold no-underline">
           <span :class="[
             siteConfig.type === 'dev' ? 'text-primary dark:text-dark-primary' : 'text-primary-dark dark:text-dark-primary'
           ]">
@@ -22,6 +22,14 @@
         >
           {{ item.name }}
         </NuxtLink>
+        
+        <!-- Portfolio Toggle -->
+        <button 
+          @click="togglePortfolioType" 
+          class="px-3 py-1 rounded-full border-2 border-primary dark:border-dark-primary text-primary dark:text-dark-primary text-sm font-medium hover:bg-primary hover:text-white dark:hover:bg-dark-primary dark:hover:text-white transition-colors"
+        >
+          Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }} Portfolio
+        </button>
         
         <!-- Theme toggle -->
         <ThemeToggle />
@@ -56,6 +64,14 @@
           {{ item.name }}
         </NuxtLink>
         
+        <!-- Portfolio Toggle for mobile -->
+        <button 
+          @click="togglePortfolioType" 
+          class="block w-full text-left py-2 font-medium text-primary dark:text-dark-primary"
+        >
+          Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }} Portfolio
+        </button>
+        
         <!-- Theme toggle for mobile -->
         <div class="py-2">
           <ThemeToggle />
@@ -67,9 +83,11 @@
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
+import ThemeToggle from '~/components/common/ThemeToggle.vue';
 
 // Get site configuration
 const siteConfig = useSiteConfig();
+const router = useRouter();
 
 // Mobile menu state
 const isMenuOpen = ref(false);
@@ -80,23 +98,35 @@ watch(() => route.path, () => {
   isMenuOpen.value = false;
 });
 
+// Toggle between developer and tattoo portfolios
+const togglePortfolioType = () => {
+  const currentType = siteConfig.value.type;
+  const newType = currentType === 'dev' ? 'tattoo' : 'dev';
+  const baseRoute = newType === 'dev' ? '/dev' : '/tattoo';
+  
+  // Navigate to the corresponding route in the other portfolio
+  router.push(baseRoute);
+};
+
 // Generate navigation items based on site type
 const navigationItems = computed(() => {
+  const baseRoute = siteConfig.value.baseRoute || (siteConfig.value.type === 'dev' ? '/dev' : '/tattoo');
+  
   const commonItems = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Blog', path: '/blog' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Home', path: `${baseRoute}` },
+    { name: 'About', path: `${baseRoute}/about` },
+    { name: 'Blog', path: `${baseRoute}/blog` },
+    { name: 'Contact', path: `${baseRoute}/contact` },
   ];
 
   const devItems = [
-    { name: 'Projects', path: '/projects' },
-    { name: 'Open Source', path: '/open-source' },
+    { name: 'Projects', path: `${baseRoute}/projects` },
+    { name: 'Open Source', path: `${baseRoute}/open-source` },
   ];
 
   const tattooItems = [
-    { name: 'Gallery', path: '/gallery' },
-    { name: 'Testimonials', path: '/testimonials' },
+    { name: 'Gallery', path: `${baseRoute}/gallery` },
+    { name: 'Testimonials', path: `${baseRoute}/testimonials` },
   ];
 
   if (siteConfig.value.type === 'dev') {

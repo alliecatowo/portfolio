@@ -1,9 +1,10 @@
 interface SiteConfig {
-  domain: string;
+  domain?: string;
   title: string;
   description: string;
   type: 'dev' | 'tattoo';
   themeClass: string;
+  baseRoute?: string;
   socialLinks: {
     github?: string;
     linkedin?: string;
@@ -16,13 +17,7 @@ interface SiteConfig {
 export const DEV_DOMAIN = 'allisons.dev';
 export const TATTOO_DOMAIN = 'allisons.gay';
 
-export function getSiteConfig(hostname: string): SiteConfig {
-  const isDev = hostname.includes(DEV_DOMAIN);
-  const isTattoo = hostname.includes(TATTOO_DOMAIN);
-  
-  // Default to developer site in local development
-  const siteType = isTattoo ? 'tattoo' : 'dev';
-  
+export function getSiteConfig(siteType: 'dev' | 'tattoo'): SiteConfig {
   const configs: Record<'dev' | 'tattoo', SiteConfig> = {
     dev: {
       domain: DEV_DOMAIN,
@@ -55,6 +50,6 @@ export function getSiteConfig(hostname: string): SiteConfig {
 }
 
 export function useSiteConfig() {
-  const config = useState<SiteConfig>('site-config');
+  const config = useState<SiteConfig>('site-config', () => getSiteConfig('dev'));
   return config;
 } 

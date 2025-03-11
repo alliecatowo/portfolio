@@ -1,30 +1,29 @@
-import { getSiteConfig } from '~/utils/site-config';
+import { getSiteConfig, useSiteConfig } from '~/utils/site-config';
 
 export default defineNuxtPlugin({
   name: 'site-config',
-  enforce: 'pre', // Run this plugin before others
+  enforce: 'pre', // Run before other plugins
   setup() {
-    const config = useState('site-config', () => {
-      // Set default config for SSR (this will be replaced on client-side)
-      return getSiteConfig('localhost');
-    });
-
-    // Set the correct config on client-side once we have access to window.location
-    if (process.client) {
-      nextTick(() => {
-        config.value = getSiteConfig(window.location.hostname);
-        
-        // Add theme class to body
-        if (config.value.themeClass) {
-          document.body.classList.add(config.value.themeClass);
-        }
-      });
+    // Initialize site config based on the current route
+    const route = useRoute();
+    const siteConfig = useSiteConfig();
+    
+    // Default to 'dev' if not specified
+    let siteType: 'dev' | 'tattoo' = 'dev';
+    
+    // Check the path to determine the site type
+    if (route.path.startsWith('/tattoo')) {
+      siteType = 'tattoo';
+    } else if (route.path.startsWith('/dev')) {
+      siteType = 'dev';
     }
-
-    return {
-      provide: {
-        siteConfig: config
-      }
-    };
+    
+    // Set the initial site config
+    if (!siteConfig.value) {
+      siteConfig.value = {
+        ...getSiteConfig(siteType),
+        baseRoute: siteType === 'dev' ? '/dev' : '/tattoo'
+      };
+    }
   }
 }); 

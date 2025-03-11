@@ -1,3 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
 # Troubleshooting Guide
 
 ## Common Issues and Solutions
@@ -7,64 +12,64 @@
 #### Build Errors
 - **Issue**: Nuxt fails to build with TypeScript errors
   - **Solution**: Check type definitions, ensure TSConfig is properly configured
-  - **Reference**: [Nuxt TypeScript Guide](https://nuxt.com/docs/guide/concepts/typescript)
+  - **Reference**: [Nuxt TypeScript Guide](mdc:https:/nuxt.com/docs/guide/concepts/typescript)
 
 - **Issue**: Module resolution errors
   - **Solution**: Check import paths, ensure dependencies are installed, restart server
-  - **Reference**: [Nuxt Modules Guide](https://nuxt.com/docs/guide/concepts/modules)
+  - **Reference**: [Nuxt Modules Guide](mdc:https:/nuxt.com/docs/guide/concepts/modules)
 
 #### Runtime Errors
 - **Issue**: Hydration mismatch errors
   - **Solution**: Ensure server and client rendered content matches, use `client-only` or `server-only` components
-  - **Reference**: [Nuxt Rendering](https://nuxt.com/docs/guide/concepts/rendering)
+  - **Reference**: [Nuxt Rendering](mdc:https:/nuxt.com/docs/guide/concepts/rendering)
 
 - **Issue**: Hook errors in lifecycle methods
   - **Solution**: Verify composition API usage, ensure hooks are used at component's top level
-  - **Reference**: [Vue Composition API](https://vuejs.org/guide/extras/composition-api-faq.html)
+  - **Reference**: [Vue Composition API](mdc:https:/vuejs.org/guide/extras/composition-api-faq.html)
 
 ### Strapi Issues
 
 #### Setup Problems
 - **Issue**: Database connection errors
   - **Solution**: Check database credentials, ensure database server is running
-  - **Reference**: [Strapi Database Configuration](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/database.html)
+  - **Reference**: [Strapi Database Configuration](mdc:https:/docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/database.html)
 
 - **Issue**: Content-Type Builder not working
   - **Solution**: Restart Strapi server, check for schema conflicts
-  - **Reference**: [Strapi Content Types](https://docs.strapi.io/developer-docs/latest/development/backend-customization/models.html)
+  - **Reference**: [Strapi Content Types](mdc:https:/docs.strapi.io/developer-docs/latest/development/backend-customization/models.html)
 
 #### API Issues
 - **Issue**: Permissions/Authentication errors
   - **Solution**: Check roles & permissions settings, ensure JWT token is valid
-  - **Reference**: [Strapi Permissions](https://docs.strapi.io/developer-docs/latest/development/plugins/users-permissions.html)
+  - **Reference**: [Strapi Permissions](mdc:https:/docs.strapi.io/developer-docs/latest/development/plugins/users-permissions.html)
 
 - **Issue**: Media uploads failing
   - **Solution**: Check upload provider configuration, file size limits
-  - **Reference**: [Strapi Upload](https://docs.strapi.io/developer-docs/latest/plugins/upload.html)
+  - **Reference**: [Strapi Upload](mdc:https:/docs.strapi.io/developer-docs/latest/plugins/upload.html)
 
 ### Vercel Deployment Issues
 
 - **Issue**: Build fails on Vercel
   - **Solution**: Check build logs, ensure all dependencies are listed, verify environment variables
-  - **Reference**: [Vercel Build Step](https://vercel.com/docs/concepts/deployments/build-step)
+  - **Reference**: [Vercel Build Step](mdc:https:/vercel.com/docs/concepts/deployments/build-step)
 
 - **Issue**: API routes not working
   - **Solution**: Check serverless function configuration, ensure proper path handling
-  - **Reference**: [Vercel Serverless Functions](https://vercel.com/docs/concepts/functions/serverless-functions)
+  - **Reference**: [Vercel Serverless Functions](mdc:https:/vercel.com/docs/concepts/functions/serverless-functions)
 
 - **Issue**: Environment variables not working
   - **Solution**: Verify they're set correctly in Vercel dashboard, check for typos in usage
-  - **Reference**: [Vercel Environment Variables](https://vercel.com/docs/concepts/projects/environment-variables)
+  - **Reference**: [Vercel Environment Variables](mdc:https:/vercel.com/docs/concepts/projects/environment-variables)
 
 ### Domain Configuration Issues
 
 - **Issue**: DNS configuration problems
   - **Solution**: Verify DNS records, check propagation status
-  - **Reference**: [Vercel Domains](https://vercel.com/docs/concepts/projects/domains)
+  - **Reference**: [Vercel Domains](mdc:https:/vercel.com/docs/concepts/projects/domains)
 
 - **Issue**: SSL certificate issues
   - **Solution**: Check domain verification, ensure CNAME records are set correctly
-  - **Reference**: [Vercel SSL](https://vercel.com/docs/concepts/projects/domains#ssl-certificates)
+  - **Reference**: [Vercel SSL](mdc:https:/vercel.com/docs/concepts/projects/domains#ssl-certificates)
 
 ## Debugging Approaches
 

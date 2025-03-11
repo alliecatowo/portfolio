@@ -1,3 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
 # Tech Stack Documentation References
 
 Always consult official documentation when implementing features or resolving issues. Here are the documentation links for our tech stack:
@@ -5,73 +10,73 @@ Always consult official documentation when implementing features or resolving is
 ## Core Technologies
 
 ### Nuxt.js
-- **Official Docs**: [Nuxt.js Documentation](https://nuxt.com/docs)
-- **GitHub**: [nuxt/nuxt](https://github.com/nuxt/nuxt)
-- **Modules**: [Nuxt Modules](https://nuxt.com/modules)
-- **Examples**: [Nuxt Examples](https://nuxt.com/docs/examples/hello-world)
+- **Official Docs**: [Nuxt.js Documentation](mdc:https:/nuxt.com/docs)
+- **GitHub**: [nuxt/nuxt](mdc:https:/github.com/nuxt/nuxt)
+- **Modules**: [Nuxt Modules](mdc:https:/nuxt.com/modules)
+- **Examples**: [Nuxt Examples](mdc:https:/nuxt.com/docs/examples/hello-world)
 
 ### Vue 3 Composition API
-- **Official Docs**: [Vue 3 Documentation](https://vuejs.org/guide/introduction.html)
-- **Composition API**: [Composition API Guide](https://vuejs.org/guide/extras/composition-api-faq.html)
-- **Style Guide**: [Vue Style Guide](https://vuejs.org/style-guide/)
-- **Examples**: [Vue Examples](https://vuejs.org/examples/)
+- **Official Docs**: [Vue 3 Documentation](mdc:https:/vuejs.org/guide/introduction.html)
+- **Composition API**: [Composition API Guide](mdc:https:/vuejs.org/guide/extras/composition-api-faq.html)
+- **Style Guide**: [Vue Style Guide](mdc:https:/vuejs.org/style-guide)
+- **Examples**: [Vue Examples](mdc:https:/vuejs.org/examples)
 
 ### Strapi
-- **Official Docs**: [Strapi Documentation](https://docs.strapi.io/)
-- **API Reference**: [Strapi API Reference](https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html)
-- **GitHub**: [strapi/strapi](https://github.com/strapi/strapi)
-- **Tutorials**: [Strapi Tutorials](https://strapi.io/blog/categories/tutorials)
+- **Official Docs**: [Strapi Documentation](mdc:https:/docs.strapi.io)
+- **API Reference**: [Strapi API Reference](mdc:https:/docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html)
+- **GitHub**: [strapi/strapi](mdc:https:/github.com/strapi/strapi)
+- **Tutorials**: [Strapi Tutorials](mdc:https:/strapi.io/blog/categories/tutorials)
 
 ### Tailwind CSS
-- **Official Docs**: [Tailwind Documentation](https://tailwindcss.com/docs)
-- **Directives**: [Tailwind Directives](https://tailwindcss.com/docs/functions-and-directives)
-- **Customization**: [Tailwind Customization](https://tailwindcss.com/docs/theme)
-- **Plugins**: [Tailwind Plugins](https://tailwindcss.com/docs/plugins)
+- **Official Docs**: [Tailwind Documentation](mdc:https:/tailwindcss.com/docs)
+- **Directives**: [Tailwind Directives](mdc:https:/tailwindcss.com/docs/functions-and-directives)
+- **Customization**: [Tailwind Customization](mdc:https:/tailwindcss.com/docs/theme)
+- **Plugins**: [Tailwind Plugins](mdc:https:/tailwindcss.com/docs/plugins)
 
 ### TypeScript
-- **Official Docs**: [TypeScript Documentation](https://www.typescriptlang.org/docs/)
-- **Handbook**: [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
-- **Playground**: [TypeScript Playground](https://www.typescriptlang.org/play)
+- **Official Docs**: [TypeScript Documentation](mdc:https:/www.typescriptlang.org/docs)
+- **Handbook**: [TypeScript Handbook](mdc:https:/www.typescriptlang.org/docs/handbook/intro.html)
+- **Playground**: [TypeScript Playground](mdc:https:/www.typescriptlang.org/play)
 
 ## Deployment & Infrastructure
 
 ### Vercel
-- **Official Docs**: [Vercel Documentation](https://vercel.com/docs)
-- **CLI Reference**: [Vercel CLI](https://vercel.com/docs/cli)
-- **Deployment**: [Vercel Deployment](https://vercel.com/docs/concepts/deployments/overview)
-- **Custom Domains**: [Vercel Domains](https://vercel.com/docs/concepts/projects/domains)
-- **Environment Variables**: [Vercel Environment Variables](https://vercel.com/docs/concepts/projects/environment-variables)
+- **Official Docs**: [Vercel Documentation](mdc:https:/vercel.com/docs)
+- **CLI Reference**: [Vercel CLI](mdc:https:/vercel.com/docs/cli)
+- **Deployment**: [Vercel Deployment](mdc:https:/vercel.com/docs/concepts/deployments/overview)
+- **Custom Domains**: [Vercel Domains](mdc:https:/vercel.com/docs/concepts/projects/domains)
+- **Environment Variables**: [Vercel Environment Variables](mdc:https:/vercel.com/docs/concepts/projects/environment-variables)
 
 ### Git
-- **Documentation**: [Git Documentation](https://git-scm.com/doc)
-- **Book**: [Pro Git Book](https://git-scm.com/book/en/v2)
-- **Reference**: [Git Reference](https://git-scm.com/docs)
+- **Documentation**: [Git Documentation](mdc:https:/git-scm.com/doc)
+- **Book**: [Pro Git Book](mdc:https:/git-scm.com/book/en/v2)
+- **Reference**: [Git Reference](mdc:https:/git-scm.com/docs)
 
 ## Testing Tools
 
 ### Vitest
-- **Official Docs**: [Vitest Documentation](https://vitest.dev/guide/)
-- **API Reference**: [Vitest API](https://vitest.dev/api/)
+- **Official Docs**: [Vitest Documentation](mdc:https:/vitest.dev/guide)
+- **API Reference**: [Vitest API](mdc:https:/vitest.dev/api)
 
 ### Cypress
-- **Official Docs**: [Cypress Documentation](https://docs.cypress.io/)
-- **API Reference**: [Cypress API](https://docs.cypress.io/api/table-of-contents)
-- **Examples**: [Cypress Examples](https://docs.cypress.io/examples/examples/recipes)
+- **Official Docs**: [Cypress Documentation](mdc:https:/docs.cypress.io)
+- **API Reference**: [Cypress API](mdc:https:/docs.cypress.io/api/table-of-contents)
+- **Examples**: [Cypress Examples](mdc:https:/docs.cypress.io/examples/examples/recipes)
 
 ## Additional Tools
 
 ### Pinia (State Management)
-- **Official Docs**: [Pinia Documentation](https://pinia.vuejs.org/)
-- **Core Concepts**: [Pinia Core Concepts](https://pinia.vuejs.org/core-concepts/)
+- **Official Docs**: [Pinia Documentation](mdc:https:/pinia.vuejs.org)
+- **Core Concepts**: [Pinia Core Concepts](mdc:https:/pinia.vuejs.org/core-concepts)
 
 ### ESLint & Prettier
-- **ESLint Docs**: [ESLint Documentation](https://eslint.org/docs/user-guide/)
-- **Prettier Docs**: [Prettier Documentation](https://prettier.io/docs/en/)
+- **ESLint Docs**: [ESLint Documentation](mdc:https:/eslint.org/docs/user-guide)
+- **Prettier Docs**: [Prettier Documentation](mdc:https:/prettier.io/docs/en)
 
 ### Nuxt Image
-- **Official Docs**: [Nuxt Image Documentation](https://image.nuxtjs.org/)
-- **Examples**: [Nuxt Image Examples](https://image.nuxtjs.org/examples/basic)
+- **Official Docs**: [Nuxt Image Documentation](mdc:https:/image.nuxtjs.org)
+- **Examples**: [Nuxt Image Examples](mdc:https:/image.nuxtjs.org/examples/basic)
 
 ### Nuxt Content
-- **Official Docs**: [Nuxt Content Documentation](https://content.nuxtjs.org/)
-- **API Reference**: [Nuxt Content API](https://content.nuxtjs.org/api/composables) 
+- **Official Docs**: [Nuxt Content Documentation](mdc:https:/content.nuxtjs.org)
+- **API Reference**: [Nuxt Content API](mdc:https:/content.nuxtjs.org/api/composables) 
