@@ -1,18 +1,6 @@
 {
-    "buildCommand": "NITRO_PRESET=vercel-edge npm run build",
     "framework": "nuxtjs",
-    "outputDirectory": ".output/public",
-    "regions": [
-        "sfo1"
-    ],
-    "rewrites": [
-        {
-            "source": "/(.*)",
-            "destination": "/"
-        }
-    ],
     "env": {
-        "NUXT_PUBLIC_API_URL": "https://YOUR_STRAPI_BACKEND_URL.vercel.app"
-    },
-    "nodeVersion": "22.x"
+        "NUXT_PUBLIC_API_URL": "https://portfolio-llwr047xm-alliecatowos-projects.vercel.app"
+    }
 }

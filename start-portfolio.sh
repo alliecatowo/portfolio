@@ -17,20 +17,19 @@ if ! command -v node &> /dev/null; then
     exit 1
 fi
 
-# Check node version
-NODE_VERSION=$(node -v)
-echo -e "${GREEN}Using Node.js version: $NODE_VERSION${NC}"
-
-if [[ ! $NODE_VERSION =~ ^v22\. ]]; then
-    echo -e "${YELLOW}Warning: This application is designed to work with Node.js v22.${NC}"
-    echo -e "${YELLOW}Current version: $NODE_VERSION${NC}"
+# Check if nvm is installed
+if ! command -v nvm &> /dev/null; then
+    echo -e "${YELLOW}NVM is not installed or not in PATH. Make sure NVM is properly set up.${NC}"
     
-    # Check if nvm is installed
-    if command -v nvm &> /dev/null; then
-        echo -e "${GREEN}NVM is available. Attempting to switch to Node.js v22...${NC}"
-        nvm use 22 || echo -e "${YELLOW}Unable to switch to Node.js v22. Continuing with current version.${NC}"
+    # Try to load nvm from common locations
+    if [ -f "$HOME/.nvm/nvm.sh" ]; then
+        source "$HOME/.nvm/nvm.sh"
+        echo -e "${GREEN}Loaded NVM from $HOME/.nvm/nvm.sh${NC}"
+    elif [ -f "/usr/local/opt/nvm/nvm.sh" ]; then
+        source "/usr/local/opt/nvm/nvm.sh"
+        echo -e "${GREEN}Loaded NVM from /usr/local/opt/nvm/nvm.sh${NC}"
     else
-        echo -e "${YELLOW}NVM is not installed or not in PATH. Using current Node.js version.${NC}"
+        echo -e "${YELLOW}Unable to load NVM automatically. Using system Node version.${NC}"
     fi
 fi
 
@@ -40,16 +39,13 @@ echo -e "${BLUE}The frontend will be available at: ${GREEN}http://localhost:3000
 echo -e "${BLUE}The Strapi admin panel will be available at: ${GREEN}http://localhost:1337/admin${NC}"
 echo ""
 
-# Kill any existing processes
-echo -e "${YELLOW}Stopping any existing portfolio processes...${NC}"
-pkill -f "nuxt dev" || true
-pkill -f "strapi develop" || true
-sleep 1
-
 # Function to start the backend
 start_backend() {
     echo -e "${GREEN}Starting Strapi backend...${NC}"
     cd backend
+    if command -v nvm &> /dev/null; then
+        nvm use 22 || echo -e "${YELLOW}Unable to switch to Node 22, using current version${NC}"
+    fi
     npm run develop &
     BACKEND_PID=$!
     cd ..
@@ -60,6 +56,9 @@ start_backend() {
 start_frontend() {
     echo -e "${GREEN}Starting Nuxt frontend...${NC}"
     cd frontend
+    if command -v nvm &> /dev/null; then
+        nvm use 23 || echo -e "${YELLOW}Unable to switch to Node 23, using current version${NC}"
+    fi
     npm run dev &
     FRONTEND_PID=$!
     cd ..
@@ -68,7 +67,7 @@ start_frontend() {
 
 # Start both applications
 start_backend
-sleep 5 # Give backend more time to start
+sleep 2 # Give backend a moment to start
 start_frontend
 
 # Set up trap to kill both processes on script exit

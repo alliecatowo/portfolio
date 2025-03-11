@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: process.env.NODE_ENV === 'development' },
+  devtools: { enabled: process.env.NODE_ENV !== 'production' },
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/color-mode',
@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      strapiUrl: process.env.STRAPI_URL || process.env.NUXT_PUBLIC_API_URL || 'http://localhost:1337',
+      strapiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:1337',
       devSiteUrl: process.env.DEV_SITE_URL || 'http://localhost:3000',
       tattooSiteUrl: process.env.TATTOO_SITE_URL || 'http://localhost:3000'
     }
@@ -45,10 +45,10 @@ export default defineNuxtConfig({
   },
   routeRules: {
     // Use ISR (Incremental Static Regeneration) for blog posts
-    '/blog/**': { swr: 3600 }, // Revalidate every hour
+    '/blog/**': { isr: 3600 }, // Revalidate every hour
     // Use SSR for dynamic pages that need fresh data
-    '/projects/**': { swr: 3600 },
-    '/gallery/**': { swr: 3600 },
+    '/projects/**': { isr: 3600 },
+    '/gallery/**': { isr: 3600 },
   },
   compatibilityDate: '2025-03-10',
   // Disable TTY interactions that cause errors
@@ -59,14 +59,8 @@ export default defineNuxtConfig({
       }
     }
   },
+  // Vercel specific configurations
   nitro: {
-    preset: process.env.NITRO_PRESET || 'node-server',
-    logLevel: process.env.NODE_ENV === 'production' ? 1 : 3,
-  },
-  experimental: {
-    payloadExtraction: false
-  },
-  build: {
-    transpile: process.env.NODE_ENV === 'production' ? ['@nuxt/image', '@nuxtjs/color-mode'] : []
+    preset: 'vercel'
   }
 })

@@ -1,8 +1,9 @@
 {
     "version": 2,
+    "installCommand": "npm install --legacy-peer-deps",
     "builds": [
         {
-            "src": "package.json",
+            "src": "server.js",
             "use": "@vercel/node"
         }
     ],
@@ -13,17 +14,17 @@
         },
         {
             "src": "/(.*)",
-            "dest": "/index.js"
+            "dest": "/server.js"
         }
     ],
     "env": {
         "NODE_ENV": "production",
-        "DATABASE_URL": "YOU_WILL_SET_THIS_IN_VERCEL_DASHBOARD",
-        "ADMIN_JWT_SECRET": "YOU_WILL_SET_THIS_IN_VERCEL_DASHBOARD",
-        "JWT_SECRET": "YOU_WILL_SET_THIS_IN_VERCEL_DASHBOARD",
-        "APP_KEYS": "YOU_WILL_SET_THIS_IN_VERCEL_DASHBOARD",
-        "API_TOKEN_SALT": "YOU_WILL_SET_THIS_IN_VERCEL_DASHBOARD",
-        "TRANSFER_TOKEN_SALT": "YOU_WILL_SET_THIS_IN_VERCEL_DASHBOARD"
-    },
-    "nodeVersion": "22.x"
+        "DATABASE_CLIENT": "sqlite",
+        "DATABASE_FILENAME": ".tmp/data.db",
+        "ADMIN_JWT_SECRET": "your-admin-jwt-secret",
+        "JWT_SECRET": "your-jwt-secret",
+        "APP_KEYS": "key1,key2,key3,key4",
+        "API_TOKEN_SALT": "your-api-token-salt",
+        "TRANSFER_TOKEN_SALT": "your-transfer-token-salt"
+    }
 }

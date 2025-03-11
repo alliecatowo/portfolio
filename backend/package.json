@@ -12,8 +12,7 @@
     "start": "strapi start",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
-    "upgrade:dry": "npx @strapi/upgrade latest --dry",
-    "seed": "node scripts/seed-data.js"
+    "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
     "@strapi/plugin-cloud": "5.11.0",
@@ -33,7 +32,7 @@
     "typescript": "^5"
   },
   "engines": {
-    "node": "^22.0.0",
+    "node": "22.x",
     "npm": ">=6.0.0"
   },
   "strapi": {
