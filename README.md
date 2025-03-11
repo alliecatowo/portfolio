@@ -1,119 +1,99 @@
-# Portfolio Website with Strapi CMS
+# Allison's Portfolio
 
-This is a dual-purpose portfolio website for both development and tattoo artistry, built with Nuxt 3 and Strapi CMS.
-
-## Features
-
-- **Dual Portfolio**: Switch between developer and tattoo artist portfolios
-- **Content Management**: Strapi CMS for managing all content
-- **Admin Interface**: Secure admin area for content management
-- **Responsive Design**: Mobile-friendly interface with dark/light mode
-- **SEO Optimized**: Meta tags and structured data for better search engine visibility
-
-## Tech Stack
-
-- **Frontend**: Nuxt 3, Vue 3, TailwindCSS
-- **Backend**: Strapi CMS (headless)
-- **Authentication**: JWT-based auth with Pinia store
-- **Deployment**: [Your deployment platform]
+A dual portfolio website showcasing both developer and tattoo artist work. Built with Nuxt.js frontend and Strapi backend.
 
 ## Project Structure
 
-```
-portfolio/
-├── components/         # Vue components
-│   ├── common/         # Shared components
-│   ├── dev/            # Developer portfolio components
-│   └── tattoo/         # Tattoo portfolio components
-├── composables/        # Vue composables
-├── layouts/            # Page layouts
-├── middleware/         # Nuxt middleware
-├── pages/              # Application pages
-│   ├── dev/            # Developer portfolio pages
-│   └── tattoo/         # Tattoo portfolio pages
-├── plugins/            # Nuxt plugins
-├── public/             # Static assets
-├── server/             # Server middleware
-├── strapi-portfolio/   # Strapi CMS
-└── utils/              # Utility functions
-```
+This project is organized as a monorepo with two main components:
 
-## Getting Started
+- **Frontend**: A Nuxt.js application (Node v23+)
+- **Backend**: A Strapi CMS (Node v22)
 
-### Prerequisites
+## Prerequisites
 
-- Node.js (v16+)
-- npm or yarn
+- Node.js (v22 and v23 via nvm)
+- npm
 - Git
 
-### Installation
+## Setup
 
 1. Clone the repository:
-   ```bash
-   git clone [repository-url]
-   cd portfolio
-   ```
 
-2. Install frontend dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+git clone https://github.com/alliecatowo/portfolio.git
+cd portfolio
+```
 
-3. Install Strapi dependencies:
-   ```bash
-   cd strapi-portfolio
-   npm install
-   ```
+2. Install dependencies:
 
-4. Set up environment variables:
-   - Create a `.env` file in the root directory based on `.env.example`
-   - Create a `.env` file in the `strapi-portfolio` directory based on `.env.example`
+```bash
+npm install
+```
 
-### Running the Development Server
+3. Set up environment variables:
 
-1. Start the Strapi server:
-   ```bash
-   cd strapi-portfolio
-   npm run develop
-   ```
+```bash
+# Copy example environment files
+cp .env.example .env
+cp frontend/.env.example frontend/.env
+cp backend/.env.example backend/.env
+```
 
-2. In a separate terminal, start the Nuxt server:
-   ```bash
-   # From the root directory
-   npm run dev
-   ```
+4. Update the environment variables in the `.env` files with your own values.
 
-3. Access the application:
-   - Frontend: http://localhost:3000
-   - Strapi Admin: http://localhost:1337/admin
+## Running the Application
 
-## Strapi Content Types
+### Development
 
-The following content types are used in the Strapi CMS:
+To run both the frontend and backend in development mode:
 
-- **Projects**: Developer portfolio projects
-- **Tattoo Works**: Tattoo portfolio works
-- **Articles**: Blog posts for both portfolios
-- **Testimonials**: Client testimonials for tattoo portfolio
-- **Categories**: Categories for projects and articles
-- **Tattoo Styles**: Styles for tattoo works
+```bash
+npm run dev
+```
 
-## Authentication
+This will start:
+- Strapi backend at http://localhost:1337
+- Nuxt frontend at http://localhost:3000
 
-The admin section is protected with JWT authentication. To access the admin area:
+### Running Separately
 
-1. Navigate to `/admin/login`
-2. Log in with your Strapi credentials
-3. Once authenticated, you'll have access to the admin dashboard
+To run the frontend only:
+
+```bash
+npm run dev:frontend
+```
+
+To run the backend only:
+
+```bash
+npm run dev:backend
+```
+
+## Building for Production
+
+```bash
+npm run build
+```
 
 ## Deployment
 
-[Add deployment instructions based on your hosting platform]
+### Frontend (Vercel)
 
-## Contributing
+The frontend can be deployed to Vercel:
 
-[Add contribution guidelines if applicable]
+```bash
+cd frontend
+vercel
+```
+
+### Backend (Your preferred hosting)
+
+The Strapi backend can be deployed to various hosting platforms. See the [Strapi deployment documentation](https://docs.strapi.io/dev-docs/deployment) for more information.
+
+## Content Management
+
+Access the Strapi admin panel at http://localhost:1337/admin to manage content.
 
 ## License
 
-[Add license information]
+MIT
