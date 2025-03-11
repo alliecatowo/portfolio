@@ -147,3 +147,97 @@ Detailed documentation is available in the [docs](./docs) directory:
 - Deployment guides
 - Permissions and security
 - Troubleshooting
+
+# Directus Collections Setup
+
+This repository contains a Python script for automating the setup of Directus collections for Allison's portfolio website.
+
+## Requirements
+
+- Python 3.6+
+- `requests` library
+
+## Installation
+
+The script requires the `requests` library. It's recommended to use a virtual environment:
+
+```bash
+# Create a virtual environment
+python3 -m venv directus-venv
+
+# Activate the virtual environment
+source directus-venv/bin/activate  # On Windows: directus-venv\Scripts\activate
+
+# Install required dependencies
+pip install requests
+```
+
+## Usage
+
+You can run the script in two ways:
+
+### Using an Admin Token
+
+1. Log into the Directus admin panel at https://directus.allisons.dev/admin
+2. Go to your user settings (click on your profile icon)
+3. Navigate to the "Token" tab
+4. Create a new token with admin access
+5. Run the script with the token:
+
+```bash
+# Make sure your virtual environment is activated
+source directus-venv/bin/activate  # On Windows: directus-venv\Scripts\activate
+
+# Run the script
+python setup_directus.py YOUR_ADMIN_TOKEN
+```
+
+### Using Email and Password
+
+Alternatively, you can use your Directus admin email and password:
+
+```bash
+# Make sure your virtual environment is activated
+source directus-venv/bin/activate  # On Windows: directus-venv\Scripts\activate
+
+# Run the script
+python setup_directus.py your_email@example.com your_password
+```
+
+## What the Script Does
+
+The script:
+
+1. Creates the following collections in Directus:
+   - `gallery` - For tattoo works and other visual content
+   - `blog_posts` - For blog articles for both dev and tattoo portfolios
+   - `projects` - For development projects and portfolio items
+   - `categories` - For categorizing blog posts and projects
+   - `styles` - For tattoo styles
+
+2. Sets up appropriate fields for each collection with proper configuration
+
+3. Sets public read permissions for all collections
+
+4. Adds some sample test data to demonstrate the structure
+
+## After Running the Script
+
+After running the script, you'll need to:
+
+1. Log into the Directus admin panel
+2. Upload images for the projects, blog posts, and gallery items 
+3. Customize the sample data as needed
+
+## Troubleshooting
+
+If you encounter issues:
+
+- Check if the collections already exist (the script will skip existing collections)
+- Verify your admin token has not expired
+- Ensure the Directus API is accessible
+- Check the logs for specific error messages
+
+## Notes
+
+This script is intended for initial setup only. If you need to make structural changes later, it's recommended to do so through the Directus admin interface.
