@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@directus/sdk": "^10.3.3",
-        "axios": "^1.6.7"
+        "axios": "^1.6.7",
+        "node-fetch": "^3.3.2"
     }
 }
