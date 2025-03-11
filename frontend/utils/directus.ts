@@ -1,5 +1,23 @@
 import { useRuntimeConfig } from '#app'
-import { addCorsHeaders } from './cors'
+
+/**
+ * Add CORS headers to a fetch request
+ * @param options - Fetch options
+ * @returns Updated fetch options with CORS headers
+ */
+function addCorsHeaders(options: RequestInit = {}): RequestInit {
+  const headers = options.headers || {};
+  
+  return {
+    ...options,
+    headers: {
+      ...headers,
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  };
+}
 
 /**
  * Utility function to fetch data from Directus API
@@ -56,7 +74,7 @@ export async function fetchFromDirectus(endpoint: string, params: Record<string,
       headers: {
         'Content-Type': 'application/json',
       },
-      // Use 'no-cors' mode to avoid CORS issues
+      // Use 'cors' mode for cross-origin requests
       mode: 'cors',
       credentials: 'same-origin'
     })
