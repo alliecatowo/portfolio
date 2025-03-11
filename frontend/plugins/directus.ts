@@ -3,11 +3,9 @@ import { createDirectus, rest, readItem, readItems, readSingleton } from '@direc
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig();
   
-  // Get the Directus URL from the environment variables or runtime config
-  // For production, we'll use directus.allisons.dev
-  const directusUrl = process.env.NODE_ENV === 'production' 
-    ? 'https://directus.allisons.dev'
-    : config.public.directusUrl;
+  // Get the Directus URL from the runtime config
+  // This ensures we're using the proper environment variables
+  const directusUrl = config.public.directusUrl;
   
   // Create a simple Directus client
   const directus = createDirectus(directusUrl)

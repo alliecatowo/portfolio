@@ -4,7 +4,7 @@
     
     <div class="bg-white shadow rounded p-6 mb-6">
       <h2 class="text-xl font-semibold mb-4">Connection Info</h2>
-      <p><strong>Directus URL:</strong> {{ process.env.NODE_ENV === 'production' ? 'https://directus.allisons.dev' : config.public.directusUrl }}</p>
+      <p><strong>Directus URL:</strong> {{ directusUrlDisplay }}</p>
     </div>
     
     <div class="bg-white shadow rounded p-6 mb-6">
@@ -43,6 +43,13 @@
 const nuxtApp = useNuxtApp();
 const directusData = useDirectusData();
 const config = useRuntimeConfig();
+
+// Use a computed property instead of direct template reference to process.env
+const directusUrlDisplay = computed(() => {
+  return process.client && process.env.NODE_ENV === 'production' 
+    ? 'https://directus.allisons.dev' 
+    : config.public.directusUrl;
+});
 
 const posts = ref([]);
 const loading = ref(true);
