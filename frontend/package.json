@@ -6,11 +6,11 @@
         "node": "20.x"
     },
     "scripts": {
-        "build": "nuxt build",
+        "build": "NODE_OPTIONS='--unhandled-rejections=strict --no-optional' nuxt build",
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "nuxt prepare"
+        "postinstall": "echo 'Skipping nuxt prepare to avoid rollup issues'"
     },
     "dependencies": {
         "@directus/sdk": "^19.0.1",

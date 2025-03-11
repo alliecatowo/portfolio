@@ -1,39 +1,34 @@
 name: allisons-portfolio-frontend
-region: nyc
 services:
-  - name: frontend
-    git:
+  - github:
       branch: deploy/digital-ocean
-      repo_clone_url: https://github.com/alliecatowo/portfolio.git
-    source_dir: frontend
+      deploy_on_push: true
+      repo: allisonchanykei/portfolio
+    name: frontend
+    build_command: NODE_OPTIONS='--unhandled-rejections=strict --no-optional' npm run build
+    environment_slug: node-js
     envs:
-      - key: NUXT_PUBLIC_API_URL
-        scope: RUN_TIME
-        value: "https://directus.allisons.dev"
-      - key: NUXT_PUBLIC_DIRECTUS_TOKEN
-        scope: RUN_TIME
-        value: "2eEMQA40l35OBtWNH6nDS166k0o800sb"
-      - key: DEV_SITE_URL
-        scope: RUN_TIME
-        value: "https://allisons.dev"
-      - key: TATTOO_SITE_URL
-        scope: RUN_TIME
-        value: "https://tattoo.allisons.dev"
       - key: NODE_ENV
+        scope: BUILD_AND_RUN_TIME
+        value: production
+      - key: NODE_OPTIONS
+        scope: BUILD_AND_RUN_TIME
+        value: --unhandled-rejections=strict --no-optional
+      - key: DIRECTUS_URL
         scope: RUN_TIME
-        value: "production"
+        value: https://directus.allisons.dev
+      - key: API_URL
+        scope: RUN_TIME
+        value: https://api.allisons.dev
     http_port: 3000
     instance_count: 1
     instance_size_slug: basic-xs
     routes:
       - path: /
-    build_command: npm run build
+    source_dir: frontend
     run_command: node .output/server/index.mjs
-
 domains:
   - domain: allisons.dev
     type: PRIMARY
-    zone: allisons.dev
-  - domain: tattoo.allisons.dev
+  - domain: www.allisons.dev
     type: ALIAS
-    zone: allisons.dev
