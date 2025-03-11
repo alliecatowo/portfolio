@@ -1,0 +1,77 @@
+name: allisons-portfolio-directus
+region: nyc
+services:
+  - name: directus
+    image:
+      registry_type: DOCKER_HUB
+      registry: directus
+      repository: directus
+      tag: latest
+    http_port: 8055
+    instance_count: 1
+    instance_size_slug: basic-xs
+    routes:
+      - path: /
+    envs:
+      - key: KEY
+        value: "255d861b-5ea1-5996-9aa3-922530ec40b1"
+        scope: RUN_TIME
+      - key: SECRET
+        value: "6116487b-cda1-52c2-b5b5-c8022c45e263"
+        scope: RUN_TIME
+      - key: DB_CLIENT
+        value: "pg"
+        scope: RUN_TIME
+      - key: DB_HOST
+        value: "${db.HOSTNAME}"
+        scope: RUN_TIME
+      - key: DB_PORT
+        value: "${db.PORT}"
+        scope: RUN_TIME
+      - key: DB_DATABASE
+        value: "${db.DATABASE}"
+        scope: RUN_TIME
+      - key: DB_USER
+        value: "${db.USERNAME}"
+        scope: RUN_TIME
+      - key: DB_PASSWORD
+        value: "${db.PASSWORD}"
+        scope: RUN_TIME
+      - key: ADMIN_EMAIL
+        value: "admin@example.com"
+        scope: RUN_TIME
+      - key: ADMIN_PASSWORD
+        value: "Admin123!"
+        scope: RUN_TIME
+      - key: PUBLIC_URL
+        value: "https://allisons-portfolio-directus.ondigitalocean.app"
+        scope: RUN_TIME
+      - key: CORS_ENABLED
+        value: "true"
+        scope: RUN_TIME
+      - key: CORS_ORIGIN
+        value: "https://allisons.dev"
+        scope: RUN_TIME
+      - key: CORS_METHODS
+        value: "GET,POST,PATCH,DELETE"
+        scope: RUN_TIME
+      - key: CORS_ALLOWED_HEADERS
+        value: "Content-Type,Authorization"
+        scope: RUN_TIME
+      - key: CORS_EXPOSED_HEADERS
+        value: "Content-Range"
+        scope: RUN_TIME
+      - key: CORS_CREDENTIALS
+        value: "true"
+        scope: RUN_TIME
+      - key: STORAGE_LOCATIONS
+        value: "local"
+        scope: RUN_TIME
+
+databases:
+  - name: db
+    engine: PG
+    production: true
+    cluster_name: allisons-portfolio-db
+    db_name: directus
+    db_user: directus

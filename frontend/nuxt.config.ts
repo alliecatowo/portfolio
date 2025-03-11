@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      strapiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:1337',
+      directusUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:8055',
       devSiteUrl: process.env.DEV_SITE_URL || 'http://localhost:3000',
       tattooSiteUrl: process.env.TATTOO_SITE_URL || 'http://localhost:3000'
     }

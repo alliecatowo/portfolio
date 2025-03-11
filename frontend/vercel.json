@@ -1,6 +1,6 @@
 {
     "framework": "nuxtjs",
     "env": {
-        "NUXT_PUBLIC_API_URL": "https://portfolio-llwr047xm-alliecatowos-projects.vercel.app"
+        "NUXT_PUBLIC_API_URL": "https://allisons-portfolio-directus.ondigitalocean.app"
     }
 }
