@@ -8,10 +8,12 @@ import { useRuntimeConfig } from '#app'
  */
 export async function fetchFromDirectus(endpoint: string, params: Record<string, any> = {}) {
   const config = useRuntimeConfig()
+  
+  // Get the directus URL from runtime config
   const baseUrl = config.public.directusUrl
   
-  // Ensure baseUrl is properly formatted with protocol
-  const baseUrlWithProtocol = baseUrl.startsWith('http') 
+  // Create a fully qualified URL with proper protocol
+  const apiUrl = baseUrl.startsWith('http') 
     ? baseUrl 
     : `https://${baseUrl}`
 
@@ -39,10 +41,17 @@ export async function fetchFromDirectus(endpoint: string, params: Record<string,
   })
 
   // Construct the URL with proper path joining and query parameters
-  const url = `${baseUrlWithProtocol}/items/${endpoint}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
+  const url = `${apiUrl}/items/${endpoint}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
+  
+  console.log('Fetching from Directus URL:', url)
   
   try {
-    const response = await fetch(url)
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
     
     if (!response.ok) {
       throw new Error(`API error: ${response.status}`)
@@ -85,10 +94,12 @@ export async function fetchItems(collection: string, params: Record<string, any>
  */
 export function getAssetUrl(fileId: string, params: Record<string, any> = {}) {
   const config = useRuntimeConfig()
+  
+  // Get the directus URL from runtime config
   const baseUrl = config.public.directusUrl
   
-  // Ensure baseUrl is properly formatted with protocol
-  const baseUrlWithProtocol = baseUrl.startsWith('http') 
+  // Create a fully qualified URL with proper protocol
+  const apiUrl = baseUrl.startsWith('http') 
     ? baseUrl 
     : `https://${baseUrl}`
   
@@ -99,5 +110,5 @@ export function getAssetUrl(fileId: string, params: Record<string, any> = {}) {
     }
   })
   
-  return `${baseUrlWithProtocol}/assets/${fileId}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
+  return `${apiUrl}/assets/${fileId}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
 } 
