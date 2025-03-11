@@ -1,72 +1,6 @@
-# Allison's Portfolio
+# Portfolio Project
 
-A modern portfolio website built with Nuxt 3 and Directus.
-
-## Environments
-
-- **Production**: [allisons.dev](https://allisons.dev)
-- **Staging**: [staging.allisons.dev](https://staging.allisons.dev)
-- **Development**: [dev.allisons.dev](https://dev.allisons.dev)
-
-## Git Branch Structure
-
-- `main`: Production branch, automatically deploys to the production environment
-- `staging`: Staging branch, automatically deploys to the staging environment
-- `develop`: Development branch, automatically deploys to the development environment
-- `feature/*`: Feature branches, should be created from `develop`
-- `hotfix/*`: Hotfix branches, should be created from `main` for urgent fixes
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 20.x or later
-- npm 8.x or later
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/alliecatowo/portfolio.git
-cd portfolio
-
-# Install dependencies
-cd frontend
-npm install
-
-# Start the development server
-npm run dev
-```
-
-## Deployment
-
-The application is automatically deployed to Digital Ocean App Platform based on the branch:
-
-- Pushes to `main` deploy to Production
-- Pushes to `staging` deploy to Staging
-- Pushes to `develop` deploy to Development
-
-You can also manually trigger deployments from GitHub Actions.
-
-## Directory Structure
-
-- `.do/`: Digital Ocean App Platform configuration
-  - `frontend/`: Production environment configuration
-  - `staging/`: Staging environment configuration
-  - `development/`: Development environment configuration
-- `frontend/`: Nuxt 3 application code
-- `.github/workflows/`: GitHub Actions workflow definitions
-
-## Contributing
-
-1. Create a new feature branch from `develop`: `git checkout -b feature/my-feature develop`
-2. Make your changes and commit them
-3. Push your branch: `git push origin feature/my-feature`
-4. Open a pull request to merge into `develop`
-
-## License
-
-This project is licensed under the MIT License.
+This repository contains the code for a multi-site portfolio with a headless CMS.
 
 ## Architecture
 
@@ -200,6 +134,10 @@ cd directus && npx directus schema snapshot ./portfolio-schema.yaml
 # Check if Directus API is accessible
 curl -s -L "https://allisons-portfolio-directus-9vxdi.ondigitalocean.app/items/blog_posts?access_token=YOUR_TOKEN" | head -20
 ```
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Documentation
 

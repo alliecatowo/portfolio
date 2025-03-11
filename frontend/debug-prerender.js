@@ -1,64 +1,62 @@
-/**
- * Debug script for Nuxt prerendering issues
- * 
- * This script is used to debug prerendering issues with Nuxt on Digital Ocean.
- * It simulates fetching data from Directus and verifies the response.
- */
+// Debug script to check API connectivity and environment variables
+// Run this before the build to identify potential issues
 
-// Import fetch for Node.js
-const fetch = require('node-fetch');
+const https = require('https');
+const http = require('http');
 
-// Test the Directus API connection
-async function testDirectusConnection() {
-  console.log('Testing Directus API connection...');
+console.log('=== Prerender Debug Script ===');
+console.log('Node version:', process.version);
+console.log('Environment variables:');
+console.log('- NUXT_PUBLIC_API_URL:', process.env.NUXT_PUBLIC_API_URL || '(not set)');
+console.log('- NUXT_PUBLIC_DIRECTUS_TOKEN:', process.env.NUXT_PUBLIC_DIRECTUS_TOKEN ? '(set)' : '(not set)');
+
+// Check API connectivity
+const apiUrl = process.env.NUXT_PUBLIC_API_URL || 'https://allisons-portfolio-directus-9vxdi.ondigitalocean.app';
+console.log(`\nChecking connectivity to API: ${apiUrl}`);
+
+const client = apiUrl.startsWith('https') ? https : http;
+const request = client.get(apiUrl, (res) => {
+  console.log(`API Status Code: ${res.statusCode}`);
   
-  const apiUrl = process.env.NUXT_PUBLIC_API_URL || 'https://directus.allisons.dev';
-  const apiToken = process.env.NUXT_PUBLIC_DIRECTUS_TOKEN || '2eEMQA40l35OBtWNH6nDS166k0o800sb';
+  if (res.statusCode >= 200 && res.statusCode < 300) {
+    console.log('✓ API connection successful');
+  } else {
+    console.log('⚠️ API returned non-success status code');
+  }
   
-  // Test endpoints
-  const endpoints = [
-    'blog_posts?limit=1',
-    'projects?limit=1',
-    'gallery?limit=1'
-  ];
+  let data = '';
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
   
-  for (const endpoint of endpoints) {
+  res.on('end', () => {
     try {
-      const url = `${apiUrl}/items/${endpoint}`;
-      console.log(`Fetching from: ${url}`);
-      
-      const response = await fetch(url, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiToken}`
-        }
-      });
-      
-      if (!response.ok) {
-        console.error(`Error fetching from ${endpoint}: ${response.status} ${response.statusText}`);
-        continue;
-      }
-      
-      const data = await response.json();
-      console.log(`Successfully fetched from ${endpoint}:`, JSON.stringify(data).substring(0, 100) + '...');
-    } catch (error) {
-      console.error(`Error testing ${endpoint}:`, error.message);
+      // Try to parse as JSON to see if it's a valid API response
+      JSON.parse(data);
+      console.log('✓ API returned valid JSON');
+    } catch (e) {
+      console.log('⚠️ API did not return valid JSON');
+      console.log('First 200 characters of response:', data.substring(0, 200));
     }
-  }
-}
+  });
+});
 
-// Execute tests
-(async () => {
-  try {
-    console.log('*** Starting Debug Prerender Tests ***');
-    console.log('Current environment:', process.env.NODE_ENV);
-    console.log('Current platform:', process.platform);
-    
-    await testDirectusConnection();
-    
-    console.log('*** Debug Prerender Tests Completed ***');
-  } catch (error) {
-    console.error('*** Debug Prerender Tests Failed ***', error);
-    process.exit(1);
-  }
-})(); 
+request.on('error', (error) => {
+  console.error('⚠️ API connection error:', error.message);
+});
+
+request.end();
+
+// Check memory limits
+const memoryUsage = process.memoryUsage();
+console.log('\nMemory Usage:');
+console.log('- RSS:', Math.round(memoryUsage.rss / 1024 / 1024), 'MB');
+console.log('- Heap Total:', Math.round(memoryUsage.heapTotal / 1024 / 1024), 'MB');
+console.log('- Heap Used:', Math.round(memoryUsage.heapUsed / 1024 / 1024), 'MB');
+
+console.log('\nThis script helps identify potential issues with API connectivity and environment variables.');
+console.log('If the API connection is successful but prerendering still fails, the issue might be with:');
+console.log('1. Data fetching during prerendering');
+console.log('2. Memory limits during the build process');
+console.log('3. Timeout issues with API requests');
+console.log('=== End of Debug Script ==='); 

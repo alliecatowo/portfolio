@@ -28,16 +28,13 @@ services:
       - key: NODE_OPTIONS
         scope: BUILD_TIME
         value: --unhandled-rejections=strict
-      - key: NUXT_PUBLIC_DIRECTUS_URL
-        scope: RUN_TIME
-        value: https://directus.allisons.dev
       - key: NUXT_PUBLIC_API_URL
         scope: RUN_TIME
         value: https://directus.allisons.dev
-      - key: NUXT_PUBLIC_DEV_SITE_URL
+      - key: DEV_SITE_URL
         scope: RUN_TIME
         value: https://allisons.dev
-      - key: NUXT_PUBLIC_TATTOO_SITE_URL
+      - key: TATTOO_SITE_URL
         scope: RUN_TIME
         value: https://tattoo.allisons.dev
     git:

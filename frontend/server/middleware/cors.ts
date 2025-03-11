@@ -1,4 +1,4 @@
-import { getAllowedOrigins, isDigitalOceanUrl } from '~/utils/cors';
+import { getAllowedOrigins, isVercelUrl } from '~/utils/cors';
 
 export default defineEventHandler((event) => {
   // Get the request headers
@@ -8,8 +8,8 @@ export default defineEventHandler((event) => {
   // Get allowed origins
   const allowedOrigins = getAllowedOrigins();
   
-  // Check if the origin is allowed or is a Digital Ocean deployment
-  if (allowedOrigins.includes(origin) || isDigitalOceanUrl(origin)) {
+  // Check if the origin is allowed or is a Vercel deployment
+  if (allowedOrigins.includes(origin) || isVercelUrl(origin)) {
     // Set CORS headers
     setResponseHeaders(event, {
       'Access-Control-Allow-Origin': origin,
