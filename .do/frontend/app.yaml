@@ -1,10 +1,18 @@
+domains:
+  - domain: allisons.dev
+    type: PRIMARY
+    zone: allisons.dev
+ingress:
+  rules:
+    - component:
+        name: frontend
+      match:
+        path:
+          prefix: /
 name: allisons-portfolio-frontend
+region: sfo
 services:
-  - name: frontend
-    git:
-      branch: deploy/digital-ocean
-      repo_clone_url: https://github.com/alliecatowo/portfolio.git
-    build_command: |
+  - build_command: |
       # Handle rollup native dependency explicitly
       rm -rf node_modules package-lock.json
       npm install --omit=optional
@@ -22,19 +30,16 @@ services:
         value: --unhandled-rejections=strict
       - key: DIRECTUS_URL
         scope: RUN_TIME
-        value: https://directus.allisons.dev
+        value: https://allisons-portfolio-directus-9vxdi.ondigitalocean.app
       - key: API_URL
         scope: RUN_TIME
-        value: https://api.allisons.dev
+        value: https://allisons-portfolio-directus-9vxdi.ondigitalocean.app
+    git:
+      branch: deploy/digital-ocean
+      repo_clone_url: https://github.com/alliecatowo/portfolio.git
     http_port: 3000
     instance_count: 1
     instance_size_slug: basic-xs
-    routes:
-      - path: /
-    source_dir: frontend
+    name: frontend
     run_command: node .output/server/index.mjs
-domains:
-  - domain: allisons.dev
-    type: PRIMARY
-  - domain: www.allisons.dev
-    type: ALIAS
+    source_dir: frontend
