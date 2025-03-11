@@ -11,5 +11,16 @@
     "env": {
         "NUXT_PUBLIC_API_URL": "https://allisons-portfolio-directus-9vxdi.ondigitalocean.app",
         "NUXT_PUBLIC_DIRECTUS_TOKEN": "2eEMQA40l35OBtWNH6nDS166k0o800sb"
+    },
+    "git": {
+        "deploymentEnabled": {
+            "main": false,
+            "development": true,
+            "production": true
+        }
+    },
+    "github": {
+        "enabled": true,
+        "silent": false
     }
 }
