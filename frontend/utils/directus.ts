@@ -1,6 +1,28 @@
 import { useRuntimeConfig } from '#app'
 
 /**
+ * Interface for image transformation options 
+ */
+interface ImageOptions {
+  width?: number;
+  height?: number;
+  fit?: string;
+  format?: string;
+  quality?: number;
+  [key: string]: any;
+}
+
+/**
+ * Interface for fetch options
+ */
+interface FetchOptions {
+  method?: string;
+  headers?: Record<string, string>;
+  body?: any;
+  [key: string]: any;
+}
+
+/**
  * Utility function to fetch data from Directus API
  * @param endpoint - API endpoint (e.g., 'items/blog')
  * @param params - Query parameters
@@ -15,7 +37,8 @@ export async function fetchFromDirectus(endpoint: string, params: Record<string,
 
   // Add access token to params if not already present
   if (!params.access_token) {
-    params.access_token = config.public.directusToken
+    // Note: You may need to set up a proper token in your environment variables
+    params.access_token = '' // No token needed if your API is public
   }
 
   // Convert params object to URL parameters
@@ -106,7 +129,8 @@ export function getAssetUrl(fileId: string, params: Record<string, any> = {}) {
 
   // Add the access token to assets as well
   if (!params.access_token) {
-    queryParams.append('access_token', config.public.directusToken)
+    // Note: You may need to set up a proper token in your environment variables
+    queryParams.append('access_token', '') // No token needed if your API is public
   }
   
   // Return URL to asset through our proxy
@@ -120,14 +144,16 @@ export function getAssetUrl(fileId: string, params: Record<string, any> = {}) {
 export async function directusFetch(endpoint: string, options: FetchOptions = {}): Promise<any> {
   const config = useRuntimeConfig()
   const apiUrl = config.public.directusUrl
-  const token = config.public.directusToken
+  
+  // Note: You may need to set up a proper token in your environment variables
+  const token = '' // No token needed if your API is public
 
   const url = `${apiUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`
 
   // Set up headers with authentication
   const headers = {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`,
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
     ...options.headers
   }
 
@@ -152,9 +178,21 @@ export async function directusFetch(endpoint: string, options: FetchOptions = {}
 }
 
 /**
- * Helper to get the asset URL for a Directus asset
+ * Helper to get the direct asset URL for a Directus asset on Digital Ocean
  * This avoids CORS issues when deployed to Digital Ocean
  */
-export function getAssetUrl(assetId: string, options: ImageOptions = {}): string {
-  // ... existing code ...
+export function getDigitalOceanAssetUrl(assetId: string, options: ImageOptions = {}): string {
+  const config = useRuntimeConfig()
+  const apiUrl = config.public.directusUrl
+  
+  // Convert options to query parameters
+  const queryParams = new URLSearchParams()
+  Object.entries(options).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      queryParams.append(key, String(value))
+    }
+  })
+  
+  // Return direct URL to the asset
+  return `${apiUrl}/assets/${assetId}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
 } 
