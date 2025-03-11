@@ -10,12 +10,15 @@ export async function fetchFromDirectus(endpoint: string, params: Record<string,
   const config = useRuntimeConfig()
   
   // Get the directus URL from runtime config
-  const baseUrl = config.public.directusUrl
+  let baseUrl = config.public.directusUrl
   
   // Create a fully qualified URL with proper protocol
-  const apiUrl = baseUrl.startsWith('http') 
+  let apiUrl = baseUrl.startsWith('http') 
     ? baseUrl 
     : `https://${baseUrl}`
+  
+  // Remove trailing slash if present to avoid double slashes
+  apiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
 
   // Add access token to params if not already present
   if (!params.access_token) {
@@ -96,12 +99,15 @@ export function getAssetUrl(fileId: string, params: Record<string, any> = {}) {
   const config = useRuntimeConfig()
   
   // Get the directus URL from runtime config
-  const baseUrl = config.public.directusUrl
+  let baseUrl = config.public.directusUrl
   
   // Create a fully qualified URL with proper protocol
-  const apiUrl = baseUrl.startsWith('http') 
+  let apiUrl = baseUrl.startsWith('http') 
     ? baseUrl 
     : `https://${baseUrl}`
+  
+  // Remove trailing slash if present to avoid double slashes
+  apiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
   
   const queryParams = new URLSearchParams()
   Object.entries(params).forEach(([key, value]) => {
