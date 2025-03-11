@@ -18,9 +18,12 @@
     ],
     "env": {
         "NODE_ENV": "production",
-        "DATABASE_URL": "your-production-database-url",
-        "ADMIN_JWT_SECRET": "your-admin-jwt-secret",
-        "JWT_SECRET": "your-jwt-secret"
+        "DATABASE_URL": "YOU_WILL_SET_THIS_IN_VERCEL_DASHBOARD",
+        "ADMIN_JWT_SECRET": "YOU_WILL_SET_THIS_IN_VERCEL_DASHBOARD",
+        "JWT_SECRET": "YOU_WILL_SET_THIS_IN_VERCEL_DASHBOARD",
+        "APP_KEYS": "YOU_WILL_SET_THIS_IN_VERCEL_DASHBOARD",
+        "API_TOKEN_SALT": "YOU_WILL_SET_THIS_IN_VERCEL_DASHBOARD",
+        "TRANSFER_TOKEN_SALT": "YOU_WILL_SET_THIS_IN_VERCEL_DASHBOARD"
     },
     "nodeVersion": "22.x"
 }

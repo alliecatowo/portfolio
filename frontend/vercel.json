@@ -12,7 +12,7 @@
         }
     ],
     "env": {
-        "NUXT_PUBLIC_API_URL": "https://your-strapi-backend-url.com"
+        "NUXT_PUBLIC_API_URL": "https://YOUR_STRAPI_BACKEND_URL.vercel.app"
     },
     "nodeVersion": "22.x"
 }
