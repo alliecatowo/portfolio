@@ -38,7 +38,7 @@ services:
         - Authorization
       expose_headers:
         - Content-Length
-      max_age: "86400"
+      max_age: "86400s"
       allow_credentials: true
 domains:
   - domain: allisons.dev
