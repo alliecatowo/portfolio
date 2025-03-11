@@ -5,11 +5,11 @@
  * adding CORS headers and handling authentication.
  */
 import { defineEventHandler, getQuery, readBody } from 'h3'
-import { useRuntimeConfig } from '#app'
 
 export default defineEventHandler(async (event) => {
-  // Get runtime config
-  const config = useRuntimeConfig()
+  // Get directus config from environment variables
+  const directusUrl = process.env.NUXT_PUBLIC_API_URL || 'https://allisons-portfolio-directus-9vxdi.ondigitalocean.app'
+  const directusToken = process.env.NUXT_PUBLIC_DIRECTUS_TOKEN
   
   // Get the URL path parts after /api/directus/
   const path = event.context.params._?.split('/') || []
@@ -19,17 +19,15 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   
   // Add access token if not provided
-  if (!query.access_token) {
-    query.access_token = config.public.directusToken
+  if (!query.access_token && directusToken) {
+    query.access_token = directusToken
   }
   
   // Build Directus API URL
-  let baseUrl = config.public.directusUrl
-  
   // Create a fully qualified URL with proper protocol
-  let apiUrl = baseUrl.startsWith('http') 
-    ? baseUrl 
-    : `https://${baseUrl}`
+  let apiUrl = directusUrl.startsWith('http') 
+    ? directusUrl 
+    : `https://${directusUrl}`
   
   // Remove trailing slash if present to avoid double slashes
   apiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
@@ -77,7 +75,7 @@ export default defineEventHandler(async (event) => {
     
     return data
   } catch (error) {
-    console.error(`[API Proxy] Error forwarding request: ${error}`)
+    console.error(`[API Proxy] Error forwarding request: ${error.message}`)
     
     return {
       error: true,
