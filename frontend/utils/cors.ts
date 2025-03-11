@@ -39,31 +39,14 @@ export function getAllowedOrigins(baseOrigins: string[] = []): string[] {
   origins.push('http://localhost:3000');
   origins.push('https://localhost:3000');
   
-  // Add production domain
+  // Add production domains
   origins.push('https://alliecatowo.com');
   origins.push('https://www.alliecatowo.com');
+  origins.push('https://allisons.dev');
+  origins.push('https://www.allisons.dev');
   
   // Add Vercel domains for the main project
   origins.push('https://portfolio-alliecatowo.vercel.app');
   
   return origins;
-}
-
-/**
- * Add CORS headers to a fetch request
- * @param options - Fetch options
- * @returns Updated fetch options with CORS headers
- */
-export function addCorsHeaders(options: RequestInit = {}): RequestInit {
-  const headers = options.headers || {};
-  
-  return {
-    ...options,
-    headers: {
-      ...headers,
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    },
-  };
 } 
