@@ -1,21 +1,20 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: false },
+  devtools: { enabled: process.env.NODE_ENV !== 'production' },
   modules: [
     '@nuxtjs/tailwindcss',
-    '@pinia/nuxt',
-    '@nuxt/image',
-    '@nuxtjs/color-mode'
+    '@nuxtjs/color-mode',
+    '@nuxt/image'
   ],
   runtimeConfig: {
     public: {
       // Directus API configuration
-      directusUrl: process.env.NUXT_PUBLIC_DIRECTUS_URL || process.env.DIRECTUS_URL || 'http://localhost:8055',
-      apiUrl: process.env.NUXT_PUBLIC_API_URL || process.env.API_URL || 'http://localhost:8055',
+      directusUrl: process.env.NUXT_PUBLIC_API_URL || 'https://directus.allisons.dev',
+      directusToken: process.env.NUXT_PUBLIC_DIRECTUS_TOKEN || '2eEMQA40l35OBtWNH6nDS166k0o800sb',
       
       // Site URLs for multi-site navigation
-      devSiteUrl: process.env.NUXT_PUBLIC_DEV_SITE_URL || process.env.DEV_SITE_URL || 'http://localhost:3000',
-      tattooSiteUrl: process.env.NUXT_PUBLIC_TATTOO_SITE_URL || process.env.TATTOO_SITE_URL || 'http://localhost:3000'
+      devSiteUrl: process.env.DEV_SITE_URL || 'https://allisons.dev',
+      tattooSiteUrl: process.env.TATTOO_SITE_URL || 'https://tattoo.allisons.dev'
     }
   },
   colorMode: {
@@ -64,21 +63,8 @@ export default defineNuxtConfig({
       }
     }
   },
-  // Vercel specific configurations
+  // Digital Ocean specific configurations
   nitro: {
-    preset: 'node-server',
-    compressPublicAssets: true
-  },
-  build: {
-    transpile: [
-      '@directus/sdk'
-    ]
-  },
-  // Specify Pinia module configuration
-  pinia: {
-    autoImports: [
-      'defineStore',
-      'acceptHMRUpdate',
-    ],
+    preset: 'node-server'
   }
 })
