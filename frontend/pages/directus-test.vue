@@ -8,6 +8,14 @@
     </div>
     
     <div class="bg-white shadow rounded p-6 mb-6">
+      <h2 class="text-xl font-semibold mb-4">Diagnostics</h2>
+      <div class="bg-gray-100 p-3 rounded">
+        <p><strong>Nuxt App Keys:</strong> {{ Object.keys(nuxtApp).join(', ') }}</p>
+        <p><strong>Pinia Plugin Present:</strong> {{ nuxtApp.$pinia ? 'Yes' : 'No' }}</p>
+      </div>
+    </div>
+    
+    <div class="bg-white shadow rounded p-6 mb-6">
       <h2 class="text-xl font-semibold mb-4">Blog Posts</h2>
       <div v-if="loading">Loading...</div>
       <div v-else-if="error" class="text-red-600">{{ error }}</div>
@@ -32,6 +40,7 @@
 </template>
 
 <script setup>
+const nuxtApp = useNuxtApp();
 const directusData = useDirectusData();
 const config = useRuntimeConfig();
 
