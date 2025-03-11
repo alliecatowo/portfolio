@@ -10,12 +10,7 @@
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "echo 'Skipping nuxt prepare to avoid rollup issues'",
-        "vercel-build": "node ./patch-rollup.js && nuxt generate"
-    },
-    "overrides": {
-        "rollup": "3.23.0",
-        "@rollup/rollup-linux-x64-gnu": "npm:@rollup/rollup-win32-x64-msvc@4.9.1"
+        "postinstall": "echo 'Skipping nuxt prepare to avoid rollup issues'"
     },
     "dependencies": {
         "@directus/sdk": "^19.0.1",
