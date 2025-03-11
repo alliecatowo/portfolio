@@ -9,6 +9,11 @@ import { useRuntimeConfig } from '#app'
 export async function fetchFromDirectus(endpoint: string, params: Record<string, any> = {}) {
   const config = useRuntimeConfig()
   const baseUrl = config.public.directusUrl
+  
+  // Ensure baseUrl is properly formatted with protocol
+  const baseUrlWithProtocol = baseUrl.startsWith('http') 
+    ? baseUrl 
+    : `https://${baseUrl}`
 
   // Add access token to params if not already present
   if (!params.access_token) {
@@ -18,9 +23,13 @@ export async function fetchFromDirectus(endpoint: string, params: Record<string,
   // Convert params object to URL parameters
   const queryParams = new URLSearchParams()
   Object.entries(params).forEach(([key, value]) => {
+    if (value === undefined || value === null) {
+      return
+    }
+    
     if (Array.isArray(value)) {
       // Handle array parameters (for filter, fields, etc.)
-      value.forEach(val => queryParams.append(`${key}[]`, val))
+      value.forEach(val => queryParams.append(`${key}[]`, String(val)))
     } else if (typeof value === 'object' && value !== null) {
       // Handle object parameters (deep filters, etc.)
       queryParams.append(key, JSON.stringify(value))
@@ -29,7 +38,8 @@ export async function fetchFromDirectus(endpoint: string, params: Record<string,
     }
   })
 
-  const url = `${baseUrl}/items/${endpoint}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
+  // Construct the URL with proper path joining and query parameters
+  const url = `${baseUrlWithProtocol}/items/${endpoint}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
   
   try {
     const response = await fetch(url)
@@ -77,10 +87,17 @@ export function getAssetUrl(fileId: string, params: Record<string, any> = {}) {
   const config = useRuntimeConfig()
   const baseUrl = config.public.directusUrl
   
+  // Ensure baseUrl is properly formatted with protocol
+  const baseUrlWithProtocol = baseUrl.startsWith('http') 
+    ? baseUrl 
+    : `https://${baseUrl}`
+  
   const queryParams = new URLSearchParams()
   Object.entries(params).forEach(([key, value]) => {
-    queryParams.append(key, String(value))
+    if (value !== undefined && value !== null) {
+      queryParams.append(key, String(value))
+    }
   })
   
-  return `${baseUrl}/assets/${fileId}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
+  return `${baseUrlWithProtocol}/assets/${fileId}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
 } 
