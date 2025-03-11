@@ -19,11 +19,9 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'node-server',
     compressPublicAssets: true,
-    // Explicit configuration to avoid rollup native dependency issues
+    // Properly handle native dependencies
+    moduleSideEffects: ['rollup'],
     externals: {
-      inline: ['rollup']
-    },
-    rollupConfig: {
       external: ['rollup']
     }
   },
