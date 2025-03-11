@@ -1,7 +1,21 @@
 /**
  * Service to fetch and handle content from Strapi
  */
-import { fetchAPI, formatStrapiResponse, formatStrapiResponseItem } from './strapi';
+import { 
+  fetchAPI, 
+  formatStrapiResponse, 
+  formatStrapiResponseItem, 
+  fetchProjects,
+  fetchTattooWorks,
+  fetchArticlesByPortfolioType,
+} from './strapi';
+
+// Import types using type import to prevent runtime errors
+import type { 
+  Project, 
+  TattooWork, 
+  Article 
+} from './strapi';
 
 /**
  * Fetch blog posts with pagination and filtering
@@ -243,5 +257,193 @@ export async function getOpenSourceProjects(limit = 10) {
   } catch (error) {
     console.error('Error fetching open source projects:', error);
     return { data: [], meta: {} };
+  }
+}
+
+/**
+ * Fetch featured projects for the developer portfolio
+ */
+export async function fetchFeaturedDevProjects() {
+  try {
+    const response = await fetchAPI('/projects', {
+      filters: {
+        featured: {
+          $eq: true
+        }
+      },
+      populate: '*',
+      pagination: {
+        limit: 3
+      },
+      sort: ['updatedAt:desc']
+    });
+    
+    return formatStrapiResponse(response);
+  } catch (error) {
+    console.error('Error fetching featured developer projects:', error);
+    return { data: [], meta: {} };
+  }
+}
+
+/**
+ * Fetch all developer projects
+ */
+export async function fetchAllDevProjects(params = {}) {
+  try {
+    const response = await fetchProjects({
+      sort: ['updatedAt:desc'],
+      ...params
+    });
+    
+    return formatStrapiResponse(response);
+  } catch (error) {
+    console.error('Error fetching all developer projects:', error);
+    return { data: [], meta: {} };
+  }
+}
+
+/**
+ * Fetch featured tattoo works
+ */
+export async function fetchFeaturedTattooWorks() {
+  try {
+    const response = await fetchAPI('/tattoo-works', {
+      filters: {
+        featured: {
+          $eq: true
+        }
+      },
+      populate: '*',
+      pagination: {
+        limit: 3
+      },
+      sort: ['date:desc']
+    });
+    
+    return formatStrapiResponse(response);
+  } catch (error) {
+    console.error('Error fetching featured tattoo works:', error);
+    return { data: [], meta: {} };
+  }
+}
+
+/**
+ * Fetch all tattoo works
+ */
+export async function fetchAllTattooWorks(params = {}) {
+  try {
+    const response = await fetchTattooWorks({
+      sort: ['date:desc'],
+      ...params
+    });
+    
+    return formatStrapiResponse(response);
+  } catch (error) {
+    console.error('Error fetching all tattoo works:', error);
+    return { data: [], meta: {} };
+  }
+}
+
+/**
+ * Fetch recent blog posts for a specific portfolio type
+ */
+export async function fetchRecentBlogPosts(portfolioType: 'Developer' | 'Tattoo', limit = 3) {
+  try {
+    const response = await fetchArticlesByPortfolioType(portfolioType, {
+      pagination: {
+        limit
+      },
+      sort: ['publishedAt:desc']
+    });
+    
+    return formatStrapiResponse(response);
+  } catch (error) {
+    console.error('Error fetching recent blog posts:', error);
+    return { data: [], meta: {} };
+  }
+}
+
+/**
+ * Fetch all blog posts for a specific portfolio type
+ */
+export async function fetchAllBlogPosts(portfolioType: 'Developer' | 'Tattoo', params = {}) {
+  try {
+    const response = await fetchArticlesByPortfolioType(portfolioType, {
+      sort: ['publishedAt:desc'],
+      ...params
+    });
+    
+    return formatStrapiResponse(response);
+  } catch (error) {
+    console.error('Error fetching all blog posts:', error);
+    return { data: [], meta: {} };
+  }
+}
+
+/**
+ * Fetch content for the developer landing page
+ */
+export async function fetchDevLandingContent() {
+  try {
+    // Get featured projects
+    let featuredProjects = { data: [] };
+    try {
+      featuredProjects = await fetchFeaturedDevProjects();
+    } catch (error) {
+      console.error('Error fetching featured dev projects:', error);
+    }
+    
+    // Get recent blog posts
+    let recentPosts = { data: [] };
+    try {
+      recentPosts = await fetchRecentBlogPosts('Developer');
+    } catch (error) {
+      console.error('Error fetching recent developer blog posts:', error);
+    }
+    
+    return {
+      featuredProjects,
+      recentPosts
+    };
+  } catch (error) {
+    console.error('Error fetching dev landing page content:', error);
+    return {
+      featuredProjects: { data: [] },
+      recentPosts: { data: [] }
+    };
+  }
+}
+
+/**
+ * Fetch content for the tattoo landing page
+ */
+export async function fetchTattooLandingContent() {
+  try {
+    // Get featured tattoo works
+    let featuredWorks = { data: [] };
+    try {
+      featuredWorks = await fetchFeaturedTattooWorks();
+    } catch (error) {
+      console.error('Error fetching featured tattoo works:', error);
+    }
+    
+    // Get recent blog posts
+    let recentPosts = { data: [] };
+    try {
+      recentPosts = await fetchRecentBlogPosts('Tattoo');
+    } catch (error) {
+      console.error('Error fetching recent tattoo blog posts:', error);
+    }
+    
+    return {
+      featuredWorks,
+      recentPosts
+    };
+  } catch (error) {
+    console.error('Error fetching tattoo landing page content:', error);
+    return {
+      featuredWorks: { data: [] },
+      recentPosts: { data: [] }
+    };
   }
 } 

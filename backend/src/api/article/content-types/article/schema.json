@@ -1,0 +1,63 @@
+{
+    "kind": "collectionType",
+    "collectionName": "articles",
+    "info": {
+        "singularName": "article",
+        "pluralName": "articles",
+        "displayName": "Article",
+        "description": "Blog posts for both developer and tattoo portfolios"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "content": {
+            "type": "richtext",
+            "required": true
+        },
+        "slug": {
+            "type": "string",
+            "required": true,
+            "unique": true
+        },
+        "coverImage": {
+            "type": "media",
+            "multiple": false,
+            "required": true,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "summary": {
+            "type": "text",
+            "required": true
+        },
+        "portfolioType": {
+            "type": "enumeration",
+            "enum": [
+                "Developer",
+                "Tattoo",
+                "Both"
+            ],
+            "default": "Both",
+            "required": true
+        },
+        "publishedAt": {
+            "type": "datetime"
+        },
+        "featured": {
+            "type": "boolean",
+            "default": false
+        },
+        "category": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "api::category.category",
+            "inversedBy": "articles"
+        }
+    }
+}

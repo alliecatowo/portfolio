@@ -114,29 +114,31 @@ const togglePortfolioType = () => {
 
 // Generate navigation items based on site type
 const navigationItems = computed(() => {
-  const baseRoute = siteConfig.value.baseRoute || (siteConfig.value.type === 'dev' ? '/dev' : '/tattoo');
-  
-  const commonItems = [
-    { name: 'Home', path: `${baseRoute}` },
-    { name: 'About', path: `${baseRoute}/about` },
-    { name: 'Blog', path: `${baseRoute}/blog` },
-    { name: 'Contact', path: `${baseRoute}/contact` },
-  ];
-
-  const devItems = [
-    { name: 'Projects', path: `${baseRoute}/projects` },
-    { name: 'Open Source', path: `${baseRoute}/open-source` },
-  ];
-
-  const tattooItems = [
-    { name: 'Gallery', path: `${baseRoute}/gallery` },
-    { name: 'Testimonials', path: `${baseRoute}/testimonials` },
-  ];
-
   if (siteConfig.value.type === 'dev') {
-    return [...commonItems, ...devItems];
+    return [
+      { name: 'Home', path: '/dev' },
+      { name: 'About', path: '/dev/about' },
+      { name: 'Blog', path: '/dev/blog' },
+      { name: 'Contact', path: '/dev/contact' },
+      { name: 'Projects', path: '/dev/projects' },
+      { name: 'Open Source', path: '/dev/open-source' },
+    ];
+  } else if (siteConfig.value.type === 'tattoo') {
+    return [
+      { name: 'Home', path: '/tattoo' },
+      { name: 'About', path: '/tattoo/about' },
+      { name: 'Blog', path: '/tattoo/blog' },
+      { name: 'Contact', path: '/tattoo/contact' },
+      { name: 'Gallery', path: '/tattoo/gallery' },
+      { name: 'Testimonials', path: '/tattoo/testimonials' },
+    ];
   } else {
-    return [...commonItems, ...tattooItems];
+    // Dual mode - landing page
+    return [
+      { name: 'Home', path: '/' },
+      { name: 'About', path: '/about' },
+      { name: 'Contact', path: '/contact' },
+    ];
   }
 });
 </script> 

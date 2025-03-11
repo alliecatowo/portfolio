@@ -1,197 +1,225 @@
 <template>
-  <div>
-    <section class="py-12 md:py-20 bg-gradient-to-br from-primary/5 to-primary/10 dark:from-dark-primary/10 dark:to-dark-primary/20">
-      <div class="container-custom">
-        <div class="flex flex-col md:flex-row items-center gap-12">
-          <div class="flex-1 order-2 md:order-1">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">Full-Stack Developer</h1>
-            <h2 class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-6">Building elegant solutions with modern technologies</h2>
-            <p class="text-lg mb-8">
-              I'm Allison, a passionate developer with expertise in Vue.js, Nuxt, and full-stack development. I create responsive, 
-              accessible, and scalable web applications with a focus on user experience and performance.
+  <div class="min-h-screen bg-white dark:bg-gray-900">
+    <div class="container-custom py-12">
+      <!-- Hero Section -->
+      <section class="py-16 md:py-24">
+        <div class="flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 mb-10 md:mb-0 md:pr-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-primary dark:text-dark-primary">
+              Allison's Developer Portfolio
+            </h1>
+            <p class="text-lg md:text-xl mb-8 text-gray-700 dark:text-gray-300">
+              Full-stack developer specializing in modern web technologies, creative solutions, and clean, efficient code.
             </p>
             <div class="flex flex-wrap gap-4">
-              <NuxtLink to="/dev/projects" class="btn btn-primary">
-                View My Projects
+              <NuxtLink to="/projects" class="btn btn-primary">
+                View Projects
               </NuxtLink>
-              <NuxtLink to="/dev/contact" class="btn btn-outline">
-                Get In Touch
+              <NuxtLink to="/contact" class="btn btn-outline">
+                Contact Me
               </NuxtLink>
             </div>
           </div>
-          <div class="flex-1 order-1 md:order-2">
-            <div class="aspect-square max-w-md mx-auto bg-white dark:bg-gray-800 rounded-full shadow-lg overflow-hidden">
-              <!-- Placeholder for profile image -->
-              <div class="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500">
-                Developer Profile Image
-              </div>
+          <div class="md:w-1/2 rounded-xl overflow-hidden shadow-lg">
+            <div class="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+              <img src="/placeholder-dev.jpg" alt="Developer Hero Image" class="object-cover w-full h-full" />
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Featured Projects Section -->
-    <FeaturedProjects />
-
-    <!-- Skills Section -->
-    <section class="py-16 bg-gray-50 dark:bg-gray-800">
-      <div class="container-custom">
-        <h2 class="text-3xl font-bold mb-12 text-center">Technical Skills</h2>
-        
-        <div class="grid gap-8 md:grid-cols-3">
-          <!-- Frontend -->
-          <div class="p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md">
-            <h3 class="text-xl font-bold mb-4">Frontend</h3>
-            <ul class="space-y-2">
-              <li class="flex items-center">
-                <span class="w-2 h-2 bg-primary dark:bg-dark-primary rounded-full mr-2"></span>
-                Vue.js / Nuxt.js
-              </li>
-              <li class="flex items-center">
-                <span class="w-2 h-2 bg-primary dark:bg-dark-primary rounded-full mr-2"></span>
-                React / Next.js
-              </li>
-              <li class="flex items-center">
-                <span class="w-2 h-2 bg-primary dark:bg-dark-primary rounded-full mr-2"></span>
-                TypeScript
-              </li>
-              <li class="flex items-center">
-                <span class="w-2 h-2 bg-primary dark:bg-dark-primary rounded-full mr-2"></span>
-                Tailwind CSS
-              </li>
-              <li class="flex items-center">
-                <span class="w-2 h-2 bg-primary dark:bg-dark-primary rounded-full mr-2"></span>
-                Responsive Design
-              </li>
-            </ul>
-          </div>
-          
-          <!-- Backend -->
-          <div class="p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md">
-            <h3 class="text-xl font-bold mb-4">Backend</h3>
-            <ul class="space-y-2">
-              <li class="flex items-center">
-                <span class="w-2 h-2 bg-primary dark:bg-dark-primary rounded-full mr-2"></span>
-                Node.js / Express
-              </li>
-              <li class="flex items-center">
-                <span class="w-2 h-2 bg-primary dark:bg-dark-primary rounded-full mr-2"></span>
-                REST API Design
-              </li>
-              <li class="flex items-center">
-                <span class="w-2 h-2 bg-primary dark:bg-dark-primary rounded-full mr-2"></span>
-                GraphQL
-              </li>
-              <li class="flex items-center">
-                <span class="w-2 h-2 bg-primary dark:bg-dark-primary rounded-full mr-2"></span>
-                PostgreSQL / MongoDB
-              </li>
-              <li class="flex items-center">
-                <span class="w-2 h-2 bg-primary dark:bg-dark-primary rounded-full mr-2"></span>
-                Authentication & Authorization
-              </li>
-            </ul>
-          </div>
-          
-          <!-- DevOps & Tools -->
-          <div class="p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md">
-            <h3 class="text-xl font-bold mb-4">DevOps & Tools</h3>
-            <ul class="space-y-2">
-              <li class="flex items-center">
-                <span class="w-2 h-2 bg-primary dark:bg-dark-primary rounded-full mr-2"></span>
-                Git / GitHub
-              </li>
-              <li class="flex items-center">
-                <span class="w-2 h-2 bg-primary dark:bg-dark-primary rounded-full mr-2"></span>
-                Docker / Containerization
-              </li>
-              <li class="flex items-center">
-                <span class="w-2 h-2 bg-primary dark:bg-dark-primary rounded-full mr-2"></span>
-                CI/CD Pipelines
-              </li>
-              <li class="flex items-center">
-                <span class="w-2 h-2 bg-primary dark:bg-dark-primary rounded-full mr-2"></span>
-                Cloud Services (AWS, Vercel)
-              </li>
-              <li class="flex items-center">
-                <span class="w-2 h-2 bg-primary dark:bg-dark-primary rounded-full mr-2"></span>
-                Testing (Jest, Cypress)
-              </li>
-            </ul>
-          </div>
+      <!-- Featured Projects Section -->
+      <section class="py-12 md:py-16">
+        <div class="mb-12">
+          <h2 class="text-3xl font-bold text-primary dark:text-dark-primary">Featured Projects</h2>
+          <p class="text-gray-600 dark:text-gray-400 mt-2">Check out some of my recent work</p>
         </div>
-      </div>
-    </section>
 
-    <!-- Recent Blog Posts -->
-    <section class="py-16 bg-white dark:bg-gray-900">
-      <div class="container-custom">
-        <h2 class="text-3xl font-bold mb-12 text-center">Recent Articles</h2>
-        
-        <div class="grid gap-8 md:grid-cols-3">
-          <div v-for="i in 3" :key="i" class="card overflow-hidden">
-            <div class="relative aspect-video bg-gray-200 dark:bg-gray-700 mb-4">
-              <div class="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-500">
-                Blog Image {{ i }}
-              </div>
+        <div v-if="featuredProjects.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div 
+            v-for="project in featuredProjects" 
+            :key="project.id" 
+            class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all"
+          >
+            <div class="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-700">
+              <img 
+                :src="project.attributes.featuredImage?.data?.attributes?.url || '/placeholder-project.jpg'" 
+                :alt="project.attributes.title" 
+                class="object-cover w-full h-full"
+              />
             </div>
-            <div class="p-4">
-              <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                {{ new Date(Date.now() - i * 1000000000).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
-              </div>
-              <h3 class="text-xl font-bold mb-2">Development Article {{ i }}</h3>
-              <p class="text-gray-600 dark:text-gray-300 mb-4">
-                A technical article exploring development concepts, best practices, and innovative approaches to software challenges.
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-primary dark:text-dark-primary">
+                {{ project.attributes.title }}
+              </h3>
+              <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
+                {{ project.attributes.description }}
               </p>
-              <NuxtLink :to="`/dev/blog/${i}`" class="text-primary dark:text-dark-primary font-medium">
-                Read More →
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span 
+                  v-for="(tech, index) in project.attributes.technologies" 
+                  :key="index"
+                  class="px-2 py-1 bg-primary/10 dark:bg-dark-primary/20 text-primary dark:text-dark-primary text-xs rounded-full"
+                >
+                  {{ tech }}
+                </span>
+              </div>
+              <NuxtLink :to="`/projects/${project.attributes.slug}`" class="btn btn-primary btn-sm w-full">
+                View Project
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+
+        <div v-else class="py-8 flex justify-center">
+          <p class="text-gray-500 dark:text-gray-400">Featured projects will appear here when added.</p>
+        </div>
+
+        <div class="mt-8 text-center">
+          <NuxtLink to="/projects" class="btn btn-outline">
+            View All Projects
+          </NuxtLink>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section class="py-12 md:py-16 bg-gray-50 dark:bg-gray-800 rounded-xl">
+        <div class="container mx-auto px-4">
+          <div class="mb-12 text-center">
+            <h2 class="text-3xl font-bold text-primary dark:text-dark-primary">My Skills</h2>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">Technologies and tools I work with</p>
+          </div>
+          
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="flex flex-col items-center">
+              <div class="w-16 h-16 bg-primary/10 dark:bg-dark-primary/20 rounded-full flex items-center justify-center mb-4">
+                <span class="text-2xl text-primary dark:text-dark-primary">🚀</span>
+              </div>
+              <h3 class="text-lg font-semibold mb-2">Frontend</h3>
+              <p class="text-center text-gray-600 dark:text-gray-300">Vue, Nuxt, React, TypeScript, Tailwind CSS</p>
+            </div>
+            
+            <div class="flex flex-col items-center">
+              <div class="w-16 h-16 bg-primary/10 dark:bg-dark-primary/20 rounded-full flex items-center justify-center mb-4">
+                <span class="text-2xl text-primary dark:text-dark-primary">⚙️</span>
+              </div>
+              <h3 class="text-lg font-semibold mb-2">Backend</h3>
+              <p class="text-center text-gray-600 dark:text-gray-300">Node.js, Express, Strapi, PostgreSQL, MongoDB</p>
+            </div>
+            
+            <div class="flex flex-col items-center">
+              <div class="w-16 h-16 bg-primary/10 dark:bg-dark-primary/20 rounded-full flex items-center justify-center mb-4">
+                <span class="text-2xl text-primary dark:text-dark-primary">📱</span>
+              </div>
+              <h3 class="text-lg font-semibold mb-2">Mobile</h3>
+              <p class="text-center text-gray-600 dark:text-gray-300">React Native, Progressive Web Apps</p>
+            </div>
+            
+            <div class="flex flex-col items-center">
+              <div class="w-16 h-16 bg-primary/10 dark:bg-dark-primary/20 rounded-full flex items-center justify-center mb-4">
+                <span class="text-2xl text-primary dark:text-dark-primary">🔄</span>
+              </div>
+              <h3 class="text-lg font-semibold mb-2">DevOps</h3>
+              <p class="text-center text-gray-600 dark:text-gray-300">Git, GitHub Actions, Docker, Vercel, AWS</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recent Blog Posts -->
+      <section class="py-12 md:py-16">
+        <div class="mb-12">
+          <h2 class="text-3xl font-bold text-primary dark:text-dark-primary">Recent Articles</h2>
+          <p class="text-gray-600 dark:text-gray-400 mt-2">Thoughts and insights about development</p>
+        </div>
+
+        <div v-if="recentPosts.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div 
+            v-for="post in recentPosts" 
+            :key="post.id" 
+            class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all"
+          >
+            <div class="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-700">
+              <img 
+                :src="post.attributes.coverImage?.data?.attributes?.url || '/placeholder-blog.jpg'" 
+                :alt="post.attributes.title" 
+                class="object-cover w-full h-full"
+              />
+            </div>
+            <div class="p-6">
+              <div class="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                {{ new Date(post.attributes.publishedAt).toLocaleDateString() }}
+              </div>
+              <h3 class="text-xl font-bold mb-2 text-primary dark:text-dark-primary">
+                {{ post.attributes.title }}
+              </h3>
+              <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
+                {{ post.attributes.summary }}
+              </p>
+              <NuxtLink :to="`/blog/${post.attributes.slug}`" class="btn btn-primary btn-sm w-full">
+                Read More
               </NuxtLink>
             </div>
           </div>
         </div>
         
-        <div class="mt-12 text-center">
-          <NuxtLink to="/dev/blog" class="btn btn-primary">
+        <div v-else class="py-8 flex justify-center">
+          <p class="text-gray-500 dark:text-gray-400">Blog posts will appear here when published.</p>
+        </div>
+
+        <div class="mt-8 text-center">
+          <NuxtLink to="/blog" class="btn btn-outline">
             View All Articles
           </NuxtLink>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Call to Action -->
-    <section class="py-20 bg-primary/10 dark:bg-dark-primary/10">
-      <div class="container-custom text-center">
-        <h2 class="text-3xl font-bold mb-6">Let's Work Together</h2>
-        <p class="text-lg max-w-2xl mx-auto mb-8">
-          Looking for a developer to bring your ideas to life? I'm currently available for freelance work and new opportunities.
+      <!-- Contact CTA -->
+      <section class="py-12 md:py-16 bg-primary/10 dark:bg-dark-primary/10 rounded-xl text-center">
+        <h2 class="text-3xl font-bold text-primary dark:text-dark-primary mb-4">Let's Work Together</h2>
+        <p class="text-gray-700 dark:text-gray-300 max-w-2xl mx-auto mb-8">
+          Have a project idea or need a developer for your team? I'm always open to discussing new opportunities and challenges.
         </p>
-        <NuxtLink to="/dev/contact" class="btn btn-primary">
-          Get In Touch
+        <NuxtLink to="/contact" class="btn btn-primary">
+          Get in Touch
         </NuxtLink>
-      </div>
-    </section>
+      </section>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useSiteConfig } from '~/utils/site-config';
+import { fetchDevLandingContent } from '~/utils/api/content';
+import type { Project, Article } from '~/utils/api/strapi';
 
-// Ensure site config is set to dev
-const siteConfig = useSiteConfig();
-if (siteConfig.value?.type !== 'dev') {
-  siteConfig.value = {
-    ...siteConfig.value,
-    type: 'dev',
-    baseRoute: '/dev'
-  };
-}
+// Site Configuration
+const config = useSiteConfig();
+config.value = {
+  ...config.value,
+  title: "Allison's Developer Portfolio",
+  description: "Full-stack developer specializing in modern web technologies, creative solutions, and clean, efficient code.",
+  type: 'dev'
+};
 
-// Meta tags
+// Page meta
 useHead({
-  title: `${siteConfig.value?.title || 'Allison\'s Developer Portfolio'} - Home`,
+  title: "Allison's Developer Portfolio",
   meta: [
-    { name: 'description', content: 'Full-stack developer specializing in Vue.js, Nuxt, and modern web technologies.' }
+    { name: 'description', content: 'Full-stack developer specializing in modern web technologies, creative solutions, and clean, efficient code.' }
   ]
+});
+
+// Fetch content from Strapi
+const featuredProjects = ref<Project[]>([]);
+const recentPosts = ref<Article[]>([]);
+
+onMounted(async () => {
+  try {
+    const content = await fetchDevLandingContent();
+    featuredProjects.value = content.featuredProjects.data || [];
+    recentPosts.value = content.recentPosts.data || [];
+  } catch (error) {
+    console.error('Error fetching landing page content:', error);
+  }
 });
 </script> 

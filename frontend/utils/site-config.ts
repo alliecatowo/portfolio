@@ -2,9 +2,8 @@ interface SiteConfig {
   domain?: string;
   title: string;
   description: string;
-  type: 'dev' | 'tattoo';
+  type: 'dev' | 'tattoo' | 'dual';
   themeClass: string;
-  baseRoute?: string;
   socialLinks: {
     github?: string;
     linkedin?: string;
@@ -17,8 +16,8 @@ interface SiteConfig {
 export const DEV_DOMAIN = 'allisons.dev';
 export const TATTOO_DOMAIN = 'allisons.gay';
 
-export function getSiteConfig(siteType: 'dev' | 'tattoo'): SiteConfig {
-  const configs: Record<'dev' | 'tattoo', SiteConfig> = {
+export function getSiteConfig(siteType: 'dev' | 'tattoo' | 'dual'): SiteConfig {
+  const configs: Record<'dev' | 'tattoo' | 'dual', SiteConfig> = {
     dev: {
       domain: DEV_DOMAIN,
       title: "Allison's Developer Portfolio",
@@ -43,6 +42,15 @@ export function getSiteConfig(siteType: 'dev' | 'tattoo'): SiteConfig {
         twitter: 'https://twitter.com/allison.tattoo',
         email: 'ink@allisons.gay',
       }
+    },
+    dual: {
+      title: "Allison's Portfolio",
+      description: "Software developer and tattoo artist portfolio",
+      type: 'dual',
+      themeClass: 'theme-dual',
+      socialLinks: {
+        email: 'hello@allisons.dev',
+      }
     }
   };
   
@@ -50,6 +58,7 @@ export function getSiteConfig(siteType: 'dev' | 'tattoo'): SiteConfig {
 }
 
 export function useSiteConfig() {
-  const config = useState<SiteConfig>('site-config', () => getSiteConfig('dev'));
+  // Use the siteConfig state that's set in the middleware
+  const config = useState<SiteConfig>('siteConfig', () => getSiteConfig('dual'));
   return config;
 } 

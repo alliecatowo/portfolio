@@ -1,0 +1,46 @@
+{
+    "kind": "collectionType",
+    "collectionName": "tattoo_works",
+    "info": {
+        "singularName": "tattoo-work",
+        "pluralName": "tattoo-works",
+        "displayName": "Tattoo Work",
+        "description": "Portfolio of tattoo works"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "description": {
+            "type": "text"
+        },
+        "image": {
+            "type": "media",
+            "multiple": false,
+            "required": true,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "featured": {
+            "type": "boolean",
+            "default": false
+        },
+        "clientTestimonial": {
+            "type": "text"
+        },
+        "date": {
+            "type": "date"
+        },
+        "style": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "api::tattoo-style.tattoo-style",
+            "inversedBy": "tattooWorks"
+        }
+    }
+}

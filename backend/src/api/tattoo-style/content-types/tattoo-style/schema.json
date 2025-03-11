@@ -1,0 +1,28 @@
+{
+    "kind": "collectionType",
+    "collectionName": "tattoo_styles",
+    "info": {
+        "singularName": "tattoo-style",
+        "pluralName": "tattoo-styles",
+        "displayName": "Tattoo Style",
+        "description": "Different tattoo styles for categorizing works"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "name": {
+            "type": "string",
+            "required": true
+        },
+        "description": {
+            "type": "text"
+        },
+        "tattooWorks": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::tattoo-work.tattoo-work",
+            "mappedBy": "style"
+        }
+    }
+}
