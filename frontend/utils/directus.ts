@@ -9,16 +9,9 @@ import { useRuntimeConfig } from '#app'
 export async function fetchFromDirectus(endpoint: string, params: Record<string, any> = {}) {
   const config = useRuntimeConfig()
   
-  // Get the directus URL from runtime config
-  let baseUrl = config.public.directusUrl
-  
-  // Create a fully qualified URL with proper protocol
-  let apiUrl = baseUrl.startsWith('http') 
-    ? baseUrl 
-    : `https://${baseUrl}`
-  
-  // Remove trailing slash if present to avoid double slashes
-  apiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
+  // Use the server-side API proxy instead of direct requests
+  // This avoids CORS issues when deployed to Vercel
+  let baseUrl = '/api/directus'
 
   // Add access token to params if not already present
   if (!params.access_token) {
@@ -49,16 +42,15 @@ export async function fetchFromDirectus(endpoint: string, params: Record<string,
   }
 
   // Construct the URL with proper path joining and query parameters
-  const url = `${apiUrl}/${endpoint}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
+  const url = `${baseUrl}/${endpoint}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
   
   console.log('Fetching from Directus URL:', url)
   
   try {
-    // Use standard fetch without any custom headers that trigger CORS preflight
+    // Use standard fetch - the server proxy will handle CORS issues
     const response = await fetch(url, {
       method: 'GET',
-      credentials: 'omit', // Don't send cookies
-      mode: 'cors',
+      credentials: 'same-origin', // Include cookies for same-origin requests
       headers: {
         'Content-Type': 'application/json'
       }
@@ -106,16 +98,9 @@ export async function fetchItems(collection: string, params: Record<string, any>
 export function getAssetUrl(fileId: string, params: Record<string, any> = {}) {
   const config = useRuntimeConfig()
   
-  // Get the directus URL from runtime config
-  let baseUrl = config.public.directusUrl
-  
-  // Create a fully qualified URL with proper protocol
-  let apiUrl = baseUrl.startsWith('http') 
-    ? baseUrl 
-    : `https://${baseUrl}`
-  
-  // Remove trailing slash if present to avoid double slashes
-  apiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
+  // Use the server-side API proxy instead of direct requests
+  // This avoids CORS issues when deployed to Vercel
+  let baseUrl = '/api/directus/assets'
   
   const queryParams = new URLSearchParams()
   Object.entries(params).forEach(([key, value]) => {
@@ -129,6 +114,6 @@ export function getAssetUrl(fileId: string, params: Record<string, any> = {}) {
     queryParams.append('access_token', config.public.directusToken)
   }
   
-  // Return direct URL to asset
-  return `${apiUrl}/assets/${fileId}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
+  // Return URL to asset through our proxy
+  return `${baseUrl}/${fileId}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
 } 
