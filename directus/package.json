@@ -4,7 +4,9 @@
     "description": "Seed script for Directus CMS",
     "main": "seed-data.js",
     "scripts": {
-        "seed": "node seed-data.js"
+        "setup": "node setup-collections.js",
+        "seed": "node seed-data.js",
+        "init": "npm run setup && npm run seed"
     },
     "dependencies": {
         "@directus/sdk": "^10.3.3"
