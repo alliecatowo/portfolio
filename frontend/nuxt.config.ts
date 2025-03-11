@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       // Directus API configuration
-      directusUrl: process.env.NUXT_PUBLIC_API_URL || 'https://directus.allisons.dev',
+      directusUrl: process.env.NUXT_PUBLIC_DIRECTUS_URL || 'https://directus.allisons.dev',
       directusToken: process.env.NUXT_PUBLIC_DIRECTUS_TOKEN || '2eEMQA40l35OBtWNH6nDS166k0o800sb',
       
       // Site URLs for multi-site navigation
