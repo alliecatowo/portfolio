@@ -1,0 +1,6 @@
+# Exclude everything
+*
+
+# Include only what's needed
+!directus.config.js
+!extensions/ 

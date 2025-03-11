@@ -1,0 +1,14 @@
+# Database data
+data/
+
+# Uploads
+uploads/
+
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+*.log 
