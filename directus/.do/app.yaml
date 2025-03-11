@@ -51,6 +51,9 @@ services:
       - key: DB_SSL__REJECT_UNAUTHORIZED
         scope: RUN_TIME
         value: "false"
+      - key: NODE_TLS_REJECT_UNAUTHORIZED
+        scope: RUN_TIME
+        value: "0"
       - key: PUBLIC_URL
         scope: RUN_TIME
         value: "https://allisons-portfolio-directus.ondigitalocean.app"
