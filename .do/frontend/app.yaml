@@ -9,10 +9,10 @@ services:
     environment_slug: node-js
     envs:
       - key: NODE_ENV
-        scope: BUILD_AND_RUN_TIME
+        scope: BUILD_TIME
         value: production
       - key: NODE_OPTIONS
-        scope: BUILD_AND_RUN_TIME
+        scope: BUILD_TIME
         value: --unhandled-rejections=strict --no-optional
       - key: DIRECTUS_URL
         scope: RUN_TIME
