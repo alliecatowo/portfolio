@@ -74,6 +74,5 @@ databases:
   - name: db
     engine: PG
     production: true
-    cluster_name: allisons-portfolio-db
     db_name: directus
     db_user: directus
