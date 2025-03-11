@@ -45,6 +45,9 @@ services:
       - key: DB_DATABASE
         scope: RUN_TIME
         value: ${db.DATABASE}
+      - key: DB_SSL
+        scope: RUN_TIME
+        value: "true"
       - key: PUBLIC_URL
         scope: RUN_TIME
         value: "https://allisons-portfolio-directus.ondigitalocean.app"
