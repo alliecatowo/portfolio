@@ -1,27 +1,14 @@
 import { useRuntimeConfig } from '#app'
-import { addCorsHeaders } from './cors'
 
 /**
- * Utility function to fetch data from Directus API
+ * Utility function to fetch data from Directus API via our proxy API
  * @param endpoint - API endpoint (e.g., 'items/blog')
  * @param params - Query parameters
  * @returns Fetched data
  */
 export async function fetchFromDirectus(endpoint: string, params: Record<string, any> = {}) {
+  // Add an access token to params if not already present
   const config = useRuntimeConfig()
-  
-  // Get the directus URL from runtime config
-  let baseUrl = config.public.directusUrl
-  
-  // Create a fully qualified URL with proper protocol
-  let apiUrl = baseUrl.startsWith('http') 
-    ? baseUrl 
-    : `https://${baseUrl}`
-  
-  // Remove trailing slash if present to avoid double slashes
-  apiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl
-
-  // Add access token to params if not already present
   if (!params.access_token) {
     params.access_token = config.public.directusToken
   }
@@ -44,28 +31,28 @@ export async function fetchFromDirectus(endpoint: string, params: Record<string,
     }
   })
 
-  // Construct the URL with proper path joining and query parameters
-  const url = `${apiUrl}/items/${endpoint}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
+  // Normalize endpoint to remove 'items/' prefix if present since our proxy will add it
+  const normalizedEndpoint = endpoint.startsWith('items/') ? endpoint.substring(6) : endpoint
+
+  // Construct the URL to our internal proxy API
+  const url = `/api/directus/${normalizedEndpoint}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
   
-  console.log('Fetching from Directus URL:', url)
+  console.log('Fetching from Directus via proxy:', url)
   
   try {
-    // Apply CORS headers to the fetch request
-    const fetchOptions = addCorsHeaders({
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       }
     })
     
-    const response = await fetch(url, fetchOptions)
-    
     if (!response.ok) {
       throw new Error(`API error: ${response.status}`)
     }
     
     const data = await response.json()
-    return data.data
+    return data.data // Return the data property from the response
   } catch (error) {
     console.error(`Error fetching from Directus: ${error}`)
     return null
@@ -100,6 +87,7 @@ export async function fetchItems(collection: string, params: Record<string, any>
  * @returns Asset URL
  */
 export function getAssetUrl(fileId: string, params: Record<string, any> = {}) {
+  // For assets, we'll continue to use the direct URL since these are static files
   const config = useRuntimeConfig()
   
   // Get the directus URL from runtime config
@@ -120,5 +108,6 @@ export function getAssetUrl(fileId: string, params: Record<string, any> = {}) {
     }
   })
   
-  return `${apiUrl}/assets/${fileId}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
+  // For assets, we can proxy through our API to avoid CORS issues
+  return `/api/directus/assets/${fileId}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
 } 
