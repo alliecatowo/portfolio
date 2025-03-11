@@ -2,6 +2,9 @@ name: allisons-portfolio-frontend
 region: nyc
 services:
   - name: nuxt-frontend
+    github:
+      repo: alliecatowo/portfolio
+      branch: deploy/digital-ocean
     source_dir: frontend
     dockerfile_path: Dockerfile
     http_port: 8080
