@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: process.env.NODE_ENV === 'development' },
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/color-mode',
@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      strapiUrl: process.env.STRAPI_URL || 'http://localhost:1337',
+      strapiUrl: process.env.STRAPI_URL || process.env.NUXT_PUBLIC_API_URL || 'http://localhost:1337',
       devSiteUrl: process.env.DEV_SITE_URL || 'http://localhost:3000',
       tattooSiteUrl: process.env.TATTOO_SITE_URL || 'http://localhost:3000'
     }
@@ -58,5 +58,15 @@ export default defineNuxtConfig({
         noErrorTruncation: false
       }
     }
+  },
+  nitro: {
+    preset: process.env.NITRO_PRESET || 'node-server',
+    logLevel: process.env.NODE_ENV === 'production' ? 1 : 3,
+  },
+  experimental: {
+    payloadExtraction: false
+  },
+  build: {
+    transpile: process.env.NODE_ENV === 'production' ? ['@nuxt/image', '@nuxtjs/color-mode'] : []
   }
 })
