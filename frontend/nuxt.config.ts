@@ -63,8 +63,8 @@ export default defineNuxtConfig({
       }
     }
   },
-  // Vercel specific configurations
+  // Digital Ocean deployment configuration
   nitro: {
-    preset: 'vercel'
+    preset: 'node-server'
   }
 })
