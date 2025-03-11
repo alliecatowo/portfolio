@@ -1,11 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss'],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
+
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
     configPath: 'tailwind.config.js',
   },
+
   runtimeConfig: {
     public: {
       strapiUrl: process.env.STRAPI_URL || 'http://localhost:1337',
@@ -14,6 +16,7 @@ export default defineNuxtConfig({
     },
     strapiToken: process.env.STRAPI_TOKEN || '',
   },
+
   routeRules: {
     // Use ISR (Incremental Static Regeneration) for blog posts
     '/blog/**': { swr: 3600 }, // Revalidate every hour
@@ -21,4 +24,6 @@ export default defineNuxtConfig({
     '/projects/**': { swr: 3600 },
     '/gallery/**': { swr: 3600 },
   },
+
+  compatibilityDate: '2025-03-10',
 })

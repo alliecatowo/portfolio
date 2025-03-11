@@ -112,6 +112,28 @@ Users can switch between portfolios using the toggle in the header.
 
 Content is managed through a Strapi CMS. See `docs/strapi-setup.md` for setup instructions and content type definitions.
 
+## Strapi Integration
+
+This portfolio uses Strapi as a headless CMS to manage all content. The integration involves:
+
+1. **API Configuration**: 
+   - Utility functions in `utils/api/strapi.ts` handle API requests
+   - Each content type has specific API functions in `utils/api/content.ts`
+
+2. **Content Types**:
+   - Developer content: Projects, Open Source contributions, Blog posts
+   - Tattoo content: Gallery items, Testimonials, Blog posts
+
+3. **Authentication**:
+   - API token-based authentication with Strapi
+   - Set the token in your `.env` file after generating it in Strapi
+
+4. **Content Fetching**:
+   - Data fetching is done in the pages using the API utilities
+   - Response formatting helpers ensure consistent data structure
+
+For complete Strapi setup instructions and content type definitions, see `docs/strapi-setup.md`.
+
 ## Deployment
 
 See `docs/deployment.md` for deployment instructions.

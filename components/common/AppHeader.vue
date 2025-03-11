@@ -31,6 +31,9 @@
           Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }} Portfolio
         </button>
         
+        <!-- Admin Navigation -->
+        <AdminNav />
+        
         <!-- Theme toggle -->
         <ThemeToggle />
       </nav>
@@ -84,6 +87,7 @@
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
 import ThemeToggle from '~/components/common/ThemeToggle.vue';
+import AdminNav from '~/components/common/AdminNav.vue';
 
 // Get site configuration
 const siteConfig = useSiteConfig();
