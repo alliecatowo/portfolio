@@ -1,5 +1,5 @@
 {
-    "buildCommand": "cd frontend && rm -rf node_modules package-lock.json && npm install && npm install @rollup/rollup-linux-x64-gnu && npm run generate",
+    "buildCommand": "cd frontend && rm -rf node_modules package-lock.json && npm install && npm install @rollup/rollup-linux-x64-gnu @esbuild/linux-x64 && npm run generate",
     "outputDirectory": "frontend/.output/public",
     "framework": "nuxtjs",
     "routes": [
