@@ -23,10 +23,10 @@ services:
         value: "6116487b-cda1-52c2-b5b5-c8022c45e263"
       - key: ADMIN_EMAIL
         scope: RUN_TIME
-        value: { get_env: "ADMIN_EMAIL" }
+        value: "admin@example.com"
       - key: ADMIN_PASSWORD
         scope: RUN_TIME
-        value: { get_env: "ADMIN_PASSWORD" }
+        value: "Admin123!"
       - key: DB_CLIENT
         scope: RUN_TIME
         value: "pg"
@@ -61,13 +61,13 @@ services:
         value: "true"
         scope: RUN_TIME
       - key: CORS_ORIGIN
-        value: "https://allisons.dev,https://tattoo.allisons.dev"
+        value: "https://allisons.dev,https://*.allisons.dev,https://localhost:3000"
         scope: RUN_TIME
       - key: CORS_METHODS
-        value: "GET,POST,PATCH,DELETE"
+        value: "GET,POST,PATCH,DELETE,OPTIONS"
         scope: RUN_TIME
       - key: CORS_ALLOWED_HEADERS
-        value: "Content-Type,Authorization"
+        value: "Content-Type,Authorization,Accept,Origin,X-Requested-With"
         scope: RUN_TIME
       - key: CORS_EXPOSED_HEADERS
         value: "Content-Range"
@@ -83,3 +83,8 @@ databases:
   - name: db
     engine: PG
     production: false
+
+domains:
+  - domain: directus.allisons.dev
+    type: PRIMARY
+    zone: allisons.dev
