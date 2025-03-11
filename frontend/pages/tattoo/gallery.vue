@@ -22,8 +22,13 @@
         class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105"
       >
         <div class="aspect-w-1 aspect-h-1 bg-gray-200 dark:bg-gray-700">
-          <!-- Image placeholder (replace with actual image when available) -->
-          <div class="w-full h-full bg-gradient-to-br from-purple-200 to-pink-200 dark:from-purple-900 dark:to-pink-900"></div>
+          <img 
+            v-if="work.image" 
+            :src="getAssetUrl(work.image)" 
+            :alt="work.title" 
+            class="w-full h-full object-cover"
+          >
+          <div v-else class="w-full h-full bg-gradient-to-br from-purple-200 to-pink-200 dark:from-purple-900 dark:to-pink-900"></div>
         </div>
         <div class="p-4">
           <h3 class="text-xl font-semibold mb-2">{{ work.title }}</h3>
@@ -38,8 +43,8 @@
             </span>
           </div>
           
-          <blockquote v-if="work.clientTestimonial" class="italic text-sm text-gray-500 dark:text-gray-400 border-l-2 border-purple-300 dark:border-purple-700 pl-3 mt-4">
-            "{{ work.clientTestimonial }}"
+          <blockquote v-if="work.client_testimonial" class="italic text-sm text-gray-500 dark:text-gray-400 border-l-2 border-purple-300 dark:border-purple-700 pl-3 mt-4">
+            "{{ work.client_testimonial }}"
           </blockquote>
         </div>
       </div>
@@ -49,7 +54,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { fetchTattooWorks } from '~/utils/api/strapi';
+import { getTattooWorks, getAssetUrl } from '~/utils/api/content';
 import LoadingSpinner from '~/components/common/LoadingSpinner.vue';
 
 const tattooWorks = ref([]);
@@ -58,8 +63,8 @@ const error = ref(null);
 
 onMounted(async () => {
   try {
-    const works = await fetchTattooWorks();
-    tattooWorks.value = works;
+    const response = await getTattooWorks();
+    tattooWorks.value = response.data || [];
   } catch (err) {
     console.error('Error fetching tattoo works:', err);
     error.value = 'Failed to load tattoo works. Please try again later.';

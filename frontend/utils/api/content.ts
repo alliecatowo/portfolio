@@ -1,21 +1,45 @@
 /**
- * Service to fetch and handle content from Strapi
+ * Service to fetch and handle content
  */
-import { 
-  fetchAPI, 
-  formatStrapiResponse, 
-  formatStrapiResponseItem, 
-  fetchProjects,
-  fetchTattooWorks,
-  fetchArticlesByPortfolioType,
-} from './strapi';
+import { useDirectus } from '~/composables/useDirectus';
 
-// Import types using type import to prevent runtime errors
-import type { 
-  Project, 
-  TattooWork, 
-  Article 
-} from './strapi';
+// Types
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  slug: string;
+  cover_image?: any;
+  technologies?: any[];
+  github?: string;
+  live_url?: string;
+  featured?: boolean;
+  category?: any;
+}
+
+export interface TattooWork {
+  id: string;
+  title: string;
+  description: string;
+  image?: any;
+  featured?: boolean;
+  client_testimonial?: string;
+  date?: string;
+  style?: any;
+}
+
+export interface Article {
+  id: string;
+  title: string;
+  content: string;
+  slug: string;
+  cover_image?: any;
+  excerpt?: string;
+  portfolio_type?: 'dev' | 'tattoo' | 'both';
+  date_published?: string;
+  featured?: boolean;
+  category?: any;
+}
 
 /**
  * Fetch blog posts with pagination and filtering
@@ -25,29 +49,25 @@ import type {
  * @returns Paginated list of blog posts
  */
 export async function getPosts(page = 1, pageSize = 10, filters = {}) {
-  // Construct the query parameters
-  const params = {
-    populate: ['image', 'categories', 'author.avatar'],
-    sort: ['publishedAt:desc'],
-    pagination: {
-      page,
-      pageSize,
-    },
-    ...filters,
-  };
-
   try {
-    const response = await fetchAPI('/posts', {
-      populate: '*',
-      pagination: {
-        page: params.pagination.page,
-        pageSize: params.pagination.pageSize,
-      },
-      sort: params.sort,
-      filters: filters,
+    const { fetchBlogPosts } = useDirectus();
+    
+    const response = await fetchBlogPosts({
+      filter: filters,
+      page,
+      limit: pageSize
     });
 
-    return formatStrapiResponse(response);
+    return {
+      data: response.data || [],
+      meta: {
+        pagination: {
+          page: page,
+          pageSize: pageSize,
+          total: response.meta?.total_count || 0
+        }
+      }
+    };
   } catch (error) {
     console.error('Error fetching posts:', error);
     return { data: [], meta: { pagination: { page: 1, pageSize: 10, total: 0 } } };
@@ -61,17 +81,18 @@ export async function getPosts(page = 1, pageSize = 10, filters = {}) {
  */
 export async function getPostBySlug(slug: string) {
   try {
-    const response = await fetchAPI('/posts', {
-      filters: {
+    const { fetchBlogPosts } = useDirectus();
+    
+    const response = await fetchBlogPosts({
+      filter: {
         slug: {
-          $eq: slug,
-        },
-      },
-      populate: '*',
+          _eq: slug
+        }
+      }
     });
 
     if (response && response.data && response.data.length > 0) {
-      return formatStrapiResponseItem({ data: response.data[0] });
+      return response.data[0];
     }
     return null;
   } catch (error) {
@@ -88,29 +109,25 @@ export async function getPostBySlug(slug: string) {
  * @returns Paginated list of projects
  */
 export async function getProjects(page = 1, pageSize = 10, filters = {}) {
-  // Construct the query parameters
-  const params = {
-    populate: ['images', 'technologies', 'category'],
-    sort: ['publishedAt:desc'],
-    pagination: {
-      page,
-      pageSize,
-    },
-    ...filters,
-  };
-
   try {
-    const response = await fetchAPI('/projects', {
-      populate: '*',
-      pagination: {
-        page: params.pagination.page,
-        pageSize: params.pagination.pageSize,
-      },
-      sort: params.sort,
-      filters: filters,
+    const { fetchProjects } = useDirectus();
+    
+    const response = await fetchProjects({
+      filter: filters,
+      page,
+      limit: pageSize
     });
 
-    return formatStrapiResponse(response);
+    return {
+      data: response.data || [],
+      meta: {
+        pagination: {
+          page: page,
+          pageSize: pageSize,
+          total: response.meta?.total_count || 0
+        }
+      }
+    };
   } catch (error) {
     console.error('Error fetching projects:', error);
     return { data: [], meta: { pagination: { page: 1, pageSize: 10, total: 0 } } };
@@ -124,17 +141,18 @@ export async function getProjects(page = 1, pageSize = 10, filters = {}) {
  */
 export async function getProjectBySlug(slug: string) {
   try {
-    const response = await fetchAPI('/projects', {
-      filters: {
+    const { fetchProjects } = useDirectus();
+    
+    const response = await fetchProjects({
+      filter: {
         slug: {
-          $eq: slug,
-        },
-      },
-      populate: '*',
+          _eq: slug
+        }
+      }
     });
 
     if (response && response.data && response.data.length > 0) {
-      return formatStrapiResponseItem({ data: response.data[0] });
+      return response.data[0];
     }
     return null;
   } catch (error) {
@@ -151,29 +169,30 @@ export async function getProjectBySlug(slug: string) {
  * @returns Paginated list of tattoo works
  */
 export async function getTattooWorks(page = 1, pageSize = 10, filters = {}) {
-  // Construct the query parameters
-  const params = {
-    populate: ['images', 'styles', 'details'],
-    sort: ['publishedAt:desc'],
-    pagination: {
-      page,
-      pageSize,
-    },
-    ...filters,
-  };
-
   try {
-    const response = await fetchAPI('/tattoo-works', {
-      populate: '*',
-      pagination: {
-        page: params.pagination.page,
-        pageSize: params.pagination.pageSize,
+    const { fetchGalleryItems } = useDirectus();
+    
+    const response = await fetchGalleryItems({
+      filter: {
+        type: {
+          _eq: 'tattoo'
+        },
+        ...filters
       },
-      sort: params.sort,
-      filters: filters,
+      page,
+      limit: pageSize
     });
 
-    return formatStrapiResponse(response);
+    return {
+      data: response.data || [],
+      meta: {
+        pagination: {
+          page: page,
+          pageSize: pageSize,
+          total: response.meta?.total_count || 0
+        }
+      }
+    };
   } catch (error) {
     console.error('Error fetching tattoo works:', error);
     return { data: [], meta: { pagination: { page: 1, pageSize: 10, total: 0 } } };
@@ -187,17 +206,21 @@ export async function getTattooWorks(page = 1, pageSize = 10, filters = {}) {
  */
 export async function getTattooWorkBySlug(slug: string) {
   try {
-    const response = await fetchAPI('/tattoo-works', {
-      filters: {
-        slug: {
-          $eq: slug,
+    const { fetchGalleryItems } = useDirectus();
+    
+    const response = await fetchGalleryItems({
+      filter: {
+        type: {
+          _eq: 'tattoo'
         },
-      },
-      populate: '*',
+        slug: {
+          _eq: slug
+        }
+      }
     });
 
     if (response && response.data && response.data.length > 0) {
-      return formatStrapiResponseItem({ data: response.data[0] });
+      return response.data[0];
     }
     return null;
   } catch (error) {
@@ -213,20 +236,21 @@ export async function getTattooWorkBySlug(slug: string) {
  */
 export async function getTestimonials(limit = 10) {
   try {
-    const response = await fetchAPI('/testimonials', {
-      populate: ['client_image', 'tattoo_image'],
-      sort: ['rating:desc'],
-      pagination: {
-        limit,
-      },
-      filters: {
+    const { fetchItems } = useDirectus();
+    
+    const response = await fetchItems('testimonials', {
+      filter: {
         featured: {
-          $eq: true,
-        },
+          _eq: true
+        }
       },
+      limit
     });
 
-    return formatStrapiResponse(response);
+    return {
+      data: response.data || [],
+      meta: response.meta || {}
+    };
   } catch (error) {
     console.error('Error fetching testimonials:', error);
     return { data: [], meta: {} };
@@ -234,53 +258,69 @@ export async function getTestimonials(limit = 10) {
 }
 
 /**
- * Fetch open source projects
- * @param limit - Number of projects to fetch
- * @returns List of open source projects
+ * Get asset URL for images
+ * @param fileId - The file ID
+ * @param params - Optional parameters for transformations
+ * @returns The asset URL
  */
-export async function getOpenSourceProjects(limit = 10) {
+export function getAssetUrl(fileId: string, params = {}) {
+  const { getImageUrl } = useDirectus();
+  return getImageUrl(fileId, params);
+}
+
+/**
+ * Fetch articles by portfolio type
+ * @param type - The portfolio type (dev, tattoo, both)
+ * @param limit - Number of articles to fetch
+ * @returns List of articles
+ */
+export async function getArticlesByPortfolioType(type: 'dev' | 'tattoo' | 'both', limit = 3) {
   try {
-    const response = await fetchAPI('/open-source-projects', {
-      populate: ['image'],
-      sort: ['stars:desc'],
-      pagination: {
-        limit,
+    const { fetchBlogPosts } = useDirectus();
+    
+    const response = await fetchBlogPosts({
+      filter: {
+        portfolio_type: {
+          _eq: type
+        }
       },
-      filters: {
-        featured: {
-          $eq: true,
-        },
-      },
+      limit
     });
 
-    return formatStrapiResponse(response);
+    return {
+      data: response.data || [],
+      meta: response.meta || {}
+    };
   } catch (error) {
-    console.error('Error fetching open source projects:', error);
+    console.error(`Error fetching ${type} articles:`, error);
     return { data: [], meta: {} };
   }
 }
 
 /**
- * Fetch featured projects for the developer portfolio
+ * Fetch featured developer projects
+ * @param limit - Number of projects to fetch
+ * @returns List of featured projects
  */
-export async function fetchFeaturedDevProjects() {
+export async function fetchFeaturedDevProjects(limit = 3) {
   try {
-    const response = await fetchAPI('/projects', {
-      filters: {
+    const { fetchProjects } = useDirectus();
+    
+    const response = await fetchProjects({
+      filter: {
         featured: {
-          $eq: true
+          _eq: true
         }
       },
-      populate: '*',
-      pagination: {
-        limit: 3
-      },
-      sort: ['updatedAt:desc']
+      limit
     });
-    
-    return formatStrapiResponse(response);
+
+    return {
+      data: response.data || [],
+      meta: response.meta || {}
+    };
   } catch (error) {
-    console.error('Error fetching featured developer projects:', error);
+    console.error('Error fetching featured dev projects:', error);
     return { data: [], meta: {} };
   }
 }
@@ -346,17 +386,28 @@ export async function fetchAllTattooWorks(params = {}) {
 
 /**
  * Fetch recent blog posts for a specific portfolio type
+ * @param type - The portfolio type (dev, tattoo, both)
+ * @param limit - Number of posts to fetch
+ * @returns List of recent blog posts
  */
-export async function fetchRecentBlogPosts(portfolioType: 'Developer' | 'Tattoo', limit = 3) {
+export async function fetchRecentBlogPosts(type: 'dev' | 'tattoo' | 'both', limit = 3) {
   try {
-    const response = await fetchArticlesByPortfolioType(portfolioType, {
-      pagination: {
-        limit
-      },
-      sort: ['publishedAt:desc']
-    });
+    const { fetchBlogPosts } = useDirectus();
     
-    return formatStrapiResponse(response);
+    const response = await fetchBlogPosts({
+      filter: {
+        portfolio_type: {
+          _eq: type
+        }
+      },
+      sort: ['-date_published'],
+      limit
+    });
+
+    return {
+      data: response.data || [],
+      meta: response.meta || {}
+    };
   } catch (error) {
     console.error('Error fetching recent blog posts:', error);
     return { data: [], meta: {} };
@@ -366,17 +417,34 @@ export async function fetchRecentBlogPosts(portfolioType: 'Developer' | 'Tattoo'
 /**
  * Fetch all blog posts for a specific portfolio type
  */
-export async function fetchAllBlogPosts(portfolioType: 'Developer' | 'Tattoo', params = {}) {
+export async function fetchAllBlogPosts(portfolioType: 'dev' | 'tattoo' | 'both', page = 1, pageSize = 10) {
   try {
-    const response = await fetchArticlesByPortfolioType(portfolioType, {
-      sort: ['publishedAt:desc'],
-      ...params
+    const { fetchBlogPosts } = useDirectus();
+    
+    const response = await fetchBlogPosts({
+      filter: {
+        portfolio_type: {
+          _eq: portfolioType
+        }
+      },
+      sort: ['-date_published'],
+      page,
+      limit: pageSize
     });
     
-    return formatStrapiResponse(response);
+    return {
+      data: response.data || [],
+      meta: {
+        pagination: {
+          page: page,
+          pageSize: pageSize,
+          total: response.meta?.total_count || 0
+        }
+      }
+    };
   } catch (error) {
     console.error('Error fetching all blog posts:', error);
-    return { data: [], meta: {} };
+    return { data: [], meta: { pagination: { page: 1, pageSize: 10, total: 0 } } };
   }
 }
 
@@ -396,7 +464,7 @@ export async function fetchDevLandingContent() {
     // Get recent blog posts
     let recentPosts = { data: [] };
     try {
-      recentPosts = await fetchRecentBlogPosts('Developer');
+      recentPosts = await fetchRecentBlogPosts('dev');
     } catch (error) {
       console.error('Error fetching recent developer blog posts:', error);
     }
@@ -422,7 +490,24 @@ export async function fetchTattooLandingContent() {
     // Get featured tattoo works
     let featuredWorks = { data: [] };
     try {
-      featuredWorks = await fetchFeaturedTattooWorks();
+      const { fetchGalleryItems } = useDirectus();
+      
+      const response = await fetchGalleryItems({
+        filter: {
+          type: {
+            _eq: 'tattoo'
+          },
+          featured: {
+            _eq: true
+          }
+        },
+        limit: 6
+      });
+      
+      featuredWorks = {
+        data: response.data || [],
+        meta: response.meta || {}
+      };
     } catch (error) {
       console.error('Error fetching featured tattoo works:', error);
     }
@@ -430,20 +515,30 @@ export async function fetchTattooLandingContent() {
     // Get recent blog posts
     let recentPosts = { data: [] };
     try {
-      recentPosts = await fetchRecentBlogPosts('Tattoo');
+      recentPosts = await fetchRecentBlogPosts('tattoo');
     } catch (error) {
       console.error('Error fetching recent tattoo blog posts:', error);
     }
     
+    // Get testimonials
+    let testimonials = { data: [] };
+    try {
+      testimonials = await getTestimonials(3);
+    } catch (error) {
+      console.error('Error fetching testimonials:', error);
+    }
+    
     return {
       featuredWorks,
-      recentPosts
+      recentPosts,
+      testimonials
     };
   } catch (error) {
     console.error('Error fetching tattoo landing page content:', error);
     return {
       featuredWorks: { data: [] },
-      recentPosts: { data: [] }
+      recentPosts: { data: [] },
+      testimonials: { data: [] }
     };
   }
 } 

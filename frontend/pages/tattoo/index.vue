@@ -286,7 +286,7 @@
 
 <script setup lang="ts">
 import { fetchTattooLandingContent } from '~/utils/api/content';
-import type { TattooWork, Article } from '~/utils/api/strapi';
+import type { TattooWork, Article } from '~/utils/api/content';
 
 // Site Configuration
 const config = useSiteConfig();
@@ -305,9 +305,10 @@ useHead({
   ]
 });
 
-// Fetch content from Strapi
+// Fetch content from Directus
 const featuredWorks = ref<TattooWork[]>([]);
 const recentPosts = ref<Article[]>([]);
+const testimonials = ref<any[]>([]);
 const selectedWork = ref<TattooWork | null>(null);
 
 // Computed property for works with testimonials

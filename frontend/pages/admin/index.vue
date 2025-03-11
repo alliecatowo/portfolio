@@ -6,16 +6,16 @@
         
         <div v-if="auth.authenticated">
           <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
-            Welcome to the admin area. You can manage your content using the Strapi CMS.
+            Welcome to the admin area. You can manage your content using the Directus CMS.
           </p>
           
           <div class="flex flex-col sm:flex-row gap-4">
             <a 
-              href="http://localhost:1337/admin" 
+              :href="directusUrl + '/admin'" 
               target="_blank"
               class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary-dark dark:bg-dark-primary dark:hover:bg-dark-primary-light"
             >
-              Go to Strapi Admin
+              Go to Directus Admin
             </a>
             
             <button 
@@ -46,7 +46,10 @@
 
 <script setup lang="ts">
 import { useAuth } from '~/composables/useAuth';
+import { useRuntimeConfig } from '#app';
 
+const config = useRuntimeConfig();
+const directusUrl = config.public.directusUrl;
 const auth = useAuth();
 const router = useRouter();
 

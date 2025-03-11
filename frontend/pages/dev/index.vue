@@ -190,7 +190,7 @@
 
 <script setup lang="ts">
 import { fetchDevLandingContent } from '~/utils/api/content';
-import type { Project, Article } from '~/utils/api/strapi';
+import type { Project, Article } from '~/utils/api/content';
 
 // Site Configuration
 const config = useSiteConfig();
@@ -209,7 +209,7 @@ useHead({
   ]
 });
 
-// Fetch content from Strapi
+// Fetch content from Directus
 const featuredProjects = ref<Project[]>([]);
 const recentPosts = ref<Article[]>([]);
 
