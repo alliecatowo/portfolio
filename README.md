@@ -160,3 +160,31 @@ MIT
 - [Strapi](https://strapi.io)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Vue.js](https://vuejs.org)
+
+## CMS Setup
+
+This portfolio uses [Directus](https://directus.io/) as a headless CMS to manage content. The CMS is deployed on DigitalOcean App Platform.
+
+### Setup Documentation
+
+- [Directus Setup Instructions](./directus/SETUP_INSTRUCTIONS.md) - Comprehensive guide for setting up Directus
+- [Manual Permissions Fix](./MANUAL_PERMISSIONS_FIX.md) - Guide for manually fixing permissions in Directus
+- [Troubleshooting Guide](./TROUBLESHOOTING.md) - Solutions for common issues with Directus and frontend integration
+
+### Scripts
+
+The following scripts are available to automate the Directus setup:
+
+- `directus/create-collections.js` - Creates necessary collections in Directus
+- `directus/fix-admin-permissions.js` - Fixes admin permissions
+- `directus/fix-public-permissions.js` - Sets up public permissions
+- `directus/seed-collections.js` - Seeds collections with sample data
+- `directus/setup-directus.js` - All-in-one setup script
+
+### Updating Directus
+
+To update Directus to a newer version:
+
+1. Update the base image in `directus/Dockerfile`
+2. Update the image tag in `directus/.do/app.yaml`
+3. Redeploy to DigitalOcean
