@@ -1,39 +1,41 @@
-# Allison's Dual Portfolio Website
+# Portfolio Website with Strapi CMS
 
-A Nuxt.js 3 website that showcases both developer and tattoo artist portfolios in one codebase.
+This is a dual-purpose portfolio website for both development and tattoo artistry, built with Nuxt 3 and Strapi CMS.
 
 ## Features
 
-- Dual portfolio functionality
-- Route-based portfolio selection (`/dev` and `/tattoo` routes)
-- Strapi CMS integration
-- Responsive design with Tailwind CSS
-- Dark/light mode toggle
-- Blog functionality
-- Project/gallery showcase
+- **Dual Portfolio**: Switch between developer and tattoo artist portfolios
+- **Content Management**: Strapi CMS for managing all content
+- **Admin Interface**: Secure admin area for content management
+- **Responsive Design**: Mobile-friendly interface with dark/light mode
+- **SEO Optimized**: Meta tags and structured data for better search engine visibility
+
+## Tech Stack
+
+- **Frontend**: Nuxt 3, Vue 3, TailwindCSS
+- **Backend**: Strapi CMS (headless)
+- **Authentication**: JWT-based auth with Pinia store
+- **Deployment**: [Your deployment platform]
 
 ## Project Structure
 
 ```
-├── assets/           # Static assets (CSS, images)
-├── components/       # Vue components
-│   ├── common/       # Shared components
-│   ├── dev/          # Developer portfolio components
-│   └── tattoo/       # Tattoo portfolio components
-├── composables/      # Vue composables
-├── docs/             # Documentation
-├── layouts/          # Page layouts
-├── middleware/       # Nuxt middleware
-├── pages/            # Page components
-│   ├── dev/          # Developer portfolio pages
-│   ├── tattoo/       # Tattoo portfolio pages
-│   └── index.vue     # Landing page with portfolio choice
-├── plugins/          # Nuxt plugins
-├── public/           # Public static files
-├── server/           # Server-side code
-├── types/            # TypeScript type definitions
-└── utils/            # Utility functions
-    └── api/          # API utilities for Strapi
+portfolio/
+├── components/         # Vue components
+│   ├── common/         # Shared components
+│   ├── dev/            # Developer portfolio components
+│   └── tattoo/         # Tattoo portfolio components
+├── composables/        # Vue composables
+├── layouts/            # Page layouts
+├── middleware/         # Nuxt middleware
+├── pages/              # Application pages
+│   ├── dev/            # Developer portfolio pages
+│   └── tattoo/         # Tattoo portfolio pages
+├── plugins/            # Nuxt plugins
+├── public/             # Static assets
+├── server/             # Server middleware
+├── strapi-portfolio/   # Strapi CMS
+└── utils/              # Utility functions
 ```
 
 ## Getting Started
@@ -41,107 +43,77 @@ A Nuxt.js 3 website that showcases both developer and tattoo artist portfolios i
 ### Prerequisites
 
 - Node.js (v16+)
-- Strapi CMS (see docs/strapi-setup.md)
+- npm or yarn
+- Git
 
 ### Installation
 
 1. Clone the repository:
-   ```
-   git clone <repository-url>
+   ```bash
+   git clone [repository-url]
    cd portfolio
    ```
 
-2. Install dependencies:
-   ```
+2. Install frontend dependencies:
+   ```bash
    npm install
    ```
 
-3. Create a `.env` file based on `.env.example`:
-   ```
-   cp .env.example .env
-   ```
-
-4. Update the environment variables in `.env`:
-   ```
-   STRAPI_URL=http://localhost:1337
-   STRAPI_TOKEN=your_api_token_here
+3. Install Strapi dependencies:
+   ```bash
+   cd strapi-portfolio
+   npm install
    ```
 
-### Development
+4. Set up environment variables:
+   - Create a `.env` file in the root directory based on `.env.example`
+   - Create a `.env` file in the `strapi-portfolio` directory based on `.env.example`
 
-Start the development server:
+### Running the Development Server
 
-```
-npm run dev
-```
+1. Start the Strapi server:
+   ```bash
+   cd strapi-portfolio
+   npm run develop
+   ```
 
-The site will be available at:
-- http://localhost:3000 - Landing page
-- http://localhost:3000/dev - Developer portfolio
-- http://localhost:3000/tattoo - Tattoo portfolio
+2. In a separate terminal, start the Nuxt server:
+   ```bash
+   # From the root directory
+   npm run dev
+   ```
 
-### Build for Production
+3. Access the application:
+   - Frontend: http://localhost:3000
+   - Strapi Admin: http://localhost:1337/admin
 
-```
-npm run build
-```
+## Strapi Content Types
 
-### Preview Production Build
+The following content types are used in the Strapi CMS:
 
-```
-npm run preview
-```
+- **Projects**: Developer portfolio projects
+- **Tattoo Works**: Tattoo portfolio works
+- **Articles**: Blog posts for both portfolios
+- **Testimonials**: Client testimonials for tattoo portfolio
+- **Categories**: Categories for projects and articles
+- **Tattoo Styles**: Styles for tattoo works
 
-## Portfolio Navigation
+## Authentication
 
-The website has two distinct portfolios:
+The admin section is protected with JWT authentication. To access the admin area:
 
-1. **Developer Portfolio** (`/dev`)
-   - Projects showcase
-   - Open source contributions
-   - Technical blog posts
-
-2. **Tattoo Artist Portfolio** (`/tattoo`)
-   - Tattoo gallery
-   - Client testimonials
-   - Tattoo-related blog posts
-
-Users can switch between portfolios using the toggle in the header.
-
-## Content Management
-
-Content is managed through a Strapi CMS. See `docs/strapi-setup.md` for setup instructions and content type definitions.
-
-## Strapi Integration
-
-This portfolio uses Strapi as a headless CMS to manage all content. The integration involves:
-
-1. **API Configuration**: 
-   - Utility functions in `utils/api/strapi.ts` handle API requests
-   - Each content type has specific API functions in `utils/api/content.ts`
-
-2. **Content Types**:
-   - Developer content: Projects, Open Source contributions, Blog posts
-   - Tattoo content: Gallery items, Testimonials, Blog posts
-
-3. **Authentication**:
-   - API token-based authentication with Strapi
-   - Set the token in your `.env` file after generating it in Strapi
-
-4. **Content Fetching**:
-   - Data fetching is done in the pages using the API utilities
-   - Response formatting helpers ensure consistent data structure
-
-For complete Strapi setup instructions and content type definitions, see `docs/strapi-setup.md`.
+1. Navigate to `/admin/login`
+2. Log in with your Strapi credentials
+3. Once authenticated, you'll have access to the admin dashboard
 
 ## Deployment
 
-See `docs/deployment.md` for deployment instructions.
+[Add deployment instructions based on your hosting platform]
 
-## Testing
+## Contributing
 
-See `docs/testing.md` for testing information.
+[Add contribution guidelines if applicable]
 
 ## License
 
-[MIT](LICENSE)
+[Add license information]
