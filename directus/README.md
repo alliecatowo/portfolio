@@ -2,6 +2,23 @@
 
 This directory contains the Directus CMS setup for Allison's portfolio website.
 
+## Important Documentation
+
+- [Setup Instructions](./SETUP_INSTRUCTIONS.md) - **Start here for comprehensive setup instructions**
+- [Manual Permissions Fix](../MANUAL_PERMISSIONS_FIX.md) - Guide for manually fixing permissions
+
+## Setup Scripts
+
+This project includes several scripts to automate the setup process:
+
+- `setup-directus.js` - All-in-one setup script
+- `create-collections.js` - Creates necessary collections
+- `fix-admin-permissions.js` - Sets up admin permissions
+- `fix-public-permissions.js` - Sets up public permissions
+- `seed-collections.js` - Seeds collections with sample data
+
+See the [Setup Instructions](./SETUP_INSTRUCTIONS.md) for details on how to use these scripts.
+
 ## Local Development
 
 ### Prerequisites
