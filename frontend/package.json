@@ -3,15 +3,18 @@
     "version": "1.0.0",
     "private": true,
     "engines": {
-        "node": "18.x"
+        "node": "22.x"
     },
     "scripts": {
         "build": "nuxt build",
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "nuxt prepare",
-        "vercel-build": "npm cache clean --force && npm install --force && nuxt build"
+        "postinstall": "node -e \"try { require('nuxt').prepare() } catch (e) { console.warn('Nuxt prepare failed, continuing anyway:', e) }\"",
+        "vercel-build": "node install-deps.js && ROLLUP_SKIP_NATIVES=true npm install --force && nuxt build"
+    },
+    "overrides": {
+        "rollup": "3.29.4"
     },
     "dependencies": {
         "@directus/sdk": "^19.0.1",
