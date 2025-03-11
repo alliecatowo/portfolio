@@ -1,0 +1,59 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Portfolio Project Overview
+
+## Project Vision
+You are helping to build a dual-purpose portfolio website for a professional who is both a tattoo artist and a developer.
+
+- **Developer Portfolio**: Hosted on allisons.dev
+- **Tattoo Portfolio**: Hosted on allisons.gay
+
+## Design Theme
+- **Primary Colors**: Predominantly pink
+- **Accent Colors**: White and baby blue
+- **Dark Mode**: Pink and black theme
+- **Aesthetic**: Modern, clean, artistic for the tattoo site; professional but creative for the dev site
+
+## Tech Stack
+- **CMS**: Strapi
+- **Frontend**: Nuxt.js with Vue Composition API
+- **Deployment**: Vercel
+- **Version Control**: Git
+
+## Core Features (Both Sites)
+- Responsive design for all devices
+- Blog with categories and tags
+- Portfolio section with projects/works
+- Contact form
+- SEO optimization
+- Dark/Light mode toggle
+- Fast loading and performance
+
+## Developer Site Features
+- Open source tools directory
+- GitHub integration and activity display
+- LinkedIn integration
+- Skills and technologies showcase
+- Projects with descriptions and links
+- Resume/CV section (optional)
+
+## Tattoo Artist Site Features
+- Gallery of tattoo works categorized by style
+- Client testimonials
+- Artist bio and journey
+- Design style overview
+- Future: Scheduling integration with Setmore (not in v1)
+
+## Project Phases
+1. Setup and Configuration
+2. Strapi Backend Development
+3. Nuxt.js Frontend Structure
+4. Developer Portfolio Implementation
+5. Tattoo Portfolio Implementation
+6. Deployment and Testing
+7. Domain Configuration
+
+Remember: These two sites should share a codebase but have different styles and content focus. Code must be modular, reusable, and well-documented. 

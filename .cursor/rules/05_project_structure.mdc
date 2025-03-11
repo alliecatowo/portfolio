@@ -1,0 +1,289 @@
+# Project Structure Guide
+
+## Repository Organization
+
+The project will follow this high-level structure:
+
+```
+portfolio/
+├── README.md              # Project documentation
+├── package.json           # NPM dependencies and scripts
+├── tsconfig.json          # TypeScript configuration
+├── .gitignore             # Git ignore file
+├── .env                   # Environment variables (gitignored)
+├── .env.example           # Example environment variables
+├── nuxt.config.ts         # Nuxt configuration
+├── app.vue                # Main application component
+├── app/                   # Frontend application
+│   ├── assets/            # Static assets (images, fonts, etc.)
+│   │   ├── css/           # Global CSS files
+│   │   └── images/        # Image assets
+│   ├── components/        # Vue components
+│   │   ├── common/        # Shared components
+│   │   ├── dev/           # Developer portfolio components
+│   │   └── tattoo/        # Tattoo portfolio components
+│   ├── composables/       # Vue composables
+│   ├── content/           # Markdown content for Nuxt Content
+│   │   ├── blog/          # Blog posts
+│   │   ├── projects/      # Project descriptions
+│   │   └── pages/         # Static page content
+│   ├── layouts/           # Nuxt layouts
+│   │   ├── default.vue    # Default layout
+│   │   ├── dev.vue        # Developer site layout
+│   │   └── tattoo.vue     # Tattoo site layout
+│   ├── middleware/        # Nuxt middleware
+│   ├── pages/             # Nuxt pages
+│   │   ├── index.vue      # Landing page
+│   │   ├── dev/           # Developer site pages
+│   │   └── tattoo/        # Tattoo site pages
+│   ├── plugins/           # Nuxt plugins
+│   ├── public/            # Public static files
+│   ├── server/            # Server middleware and API routes
+│   │   ├── api/           # API endpoints
+│   │   └── middleware/    # Server middleware
+│   ├── stores/            # Pinia stores
+│   └── utils/             # Utility functions
+├── strapi/                # Strapi CMS
+│   ├── config/            # Strapi configuration
+│   ├── src/               # Strapi source code
+│   │   ├── api/           # Content types and controllers
+│   │   ├── extensions/    # Extensions for built-in features
+│   │   └── plugins/       # Custom plugins
+│   └── public/            # Public Strapi files
+└── tests/                 # Test files
+    ├── components/        # Component tests
+    ├── e2e/               # End-to-end tests
+    └── utils/             # Utility test helpers
+```
+
+## Component Organization
+
+### Component File Structure
+
+Components should follow this structure:
+
+```typescript
+<script setup lang="ts">
+// Imports
+import { ref, computed, onMounted } from 'vue'
+import type { PropType } from 'vue'
+
+// Props definition
+const props = defineProps({
+  propName: {
+    type: String as PropType<string>,
+    required: true,
+    default: '',
+  },
+})
+
+// Emits definition
+const emit = defineEmits(['event-name'])
+
+// Composables
+const { useComposable } = useMyComposable()
+
+// Refs, computed properties and reactive state
+const localState = ref('')
+const computedValue = computed(() => localState.value.toUpperCase())
+
+// Methods
+function handleEvent() {
+  emit('event-name', localState.value)
+}
+
+// Lifecycle hooks
+onMounted(() => {
+  // Initialization logic
+})
+</script>
+
+<template>
+  <div class="component-class">
+    <!-- Component template -->
+  </div>
+</template>
+
+<style lang="scss" scoped>
+/* Component-specific styles */
+.component-class {
+  /* styles */
+}
+</style>
+```
+
+## API Design
+
+### Strapi Content Types
+
+Define content types in Strapi with clear relationships:
+
+```
+Blog Post
+├── title: string
+├── slug: string (unique)
+├── content: richtext
+├── excerpt: text
+├── featured_image: media
+├── categories: relation (many-to-many)
+├── tags: relation (many-to-many)
+├── author: relation (one-to-one)
+├── published_at: datetime
+└── seo: component
+
+Project
+├── title: string
+├── slug: string (unique)
+├── description: richtext
+├── short_description: text
+├── featured_image: media
+├── gallery: media (multiple)
+├── technologies: relation (many-to-many)
+├── github_url: string
+├── live_url: string
+├── order: integer
+├── published_at: datetime
+└── seo: component
+
+Tattoo Work
+├── title: string
+├── slug: string (unique)
+├── description: text
+├── image: media
+├── style: relation (many-to-many)
+├── client_testimonial: text
+├── created_at: datetime
+└── featured: boolean
+```
+
+## Page Structure
+
+Each page should follow this general structure:
+
+```
+<PageLayout>
+  <PageHeader title="Page Title" />
+  
+  <PageContent>
+    <!-- Page-specific content -->
+  </PageContent>
+  
+  <PageFooter />
+</PageLayout>
+```
+
+## URL Paths
+
+Design URL paths to be clean, memorable, and SEO-friendly:
+
+```
+# Developer Portfolio
+/                       # Landing page with site selector
+/dev                    # Developer portfolio home
+/dev/about              # About me as a developer
+/dev/projects           # Projects listing
+/dev/projects/:slug     # Individual project page
+/dev/tools              # Open source tools
+/dev/blog               # Blog listing
+/dev/blog/:slug         # Individual blog post
+/dev/contact            # Contact form
+
+# Tattoo Portfolio
+/tattoo                 # Tattoo portfolio home
+/tattoo/about           # About me as a tattoo artist
+/tattoo/work            # Gallery of work
+/tattoo/work/:slug      # Individual tattoo piece
+/tattoo/styles          # Tattoo styles
+/tattoo/blog            # Blog listing
+/tattoo/blog/:slug      # Individual blog post
+/tattoo/contact         # Contact info
+```
+
+## State Management
+
+Use Pinia stores for global state, organized by domain:
+
+```typescript
+// stores/theme.ts
+export const useThemeStore = defineStore('theme', {
+  state: () => ({
+    isDarkMode: false,
+    currentTheme: 'dev', // 'dev' or 'tattoo'
+  }),
+  actions: {
+    toggleDarkMode() {
+      this.isDarkMode = !this.isDarkMode
+    },
+    setTheme(theme: 'dev' | 'tattoo') {
+      this.currentTheme = theme
+    },
+  },
+})
+
+// stores/blog.ts
+export const useBlogStore = defineStore('blog', {
+  state: () => ({
+    posts: [],
+    isLoading: false,
+    error: null,
+  }),
+  actions: {
+    async fetchPosts() {
+      this.isLoading = true
+      try {
+        // API call logic
+      } catch (error) {
+        this.error = error
+      } finally {
+        this.isLoading = false
+      }
+    },
+  },
+})
+```
+
+## API Integration
+
+Use API composables for data fetching:
+
+```typescript
+// composables/useApi.ts
+export function useApi() {
+  const config = useRuntimeConfig()
+  const baseURL = config.public.apiBase
+
+  const get = async (endpoint: string) => {
+    try {
+      const response = await fetch(`${baseURL}${endpoint}`)
+      if (!response.ok) throw new Error(`API Error: ${response.status}`)
+      return await response.json()
+    } catch (error) {
+      console.error('API Error:', error)
+      throw error
+    }
+  }
+
+  const post = async (endpoint: string, data: any) => {
+    try {
+      const response = await fetch(`${baseURL}${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      if (!response.ok) throw new Error(`API Error: ${response.status}`)
+      return await response.json()
+    } catch (error) {
+      console.error('API Error:', error)
+      throw error
+    }
+  }
+
+  return {
+    get,
+    post,
+    // Add other methods as needed
+  }
+}
+``` 

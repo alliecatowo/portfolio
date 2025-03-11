@@ -1,0 +1,140 @@
+# Agent Workflow Guidelines
+
+## Development Workflow
+
+Follow this structured approach when implementing features:
+
+1. **Planning Phase**
+   - Understand the requirements completely
+   - Break down the task into smaller subtasks
+   - Create a checklist for implementation
+   - Document design decisions
+
+2. **Implementation Phase**
+   - Create atomic Git commits with descriptive messages
+   - Follow the established code style and naming conventions
+   - Add comments for complex logic
+   - Update documentation as you progress
+
+3. **Testing Phase**
+   - Write tests for the implemented feature
+   - Perform manual testing across different viewports
+   - Test both light and dark modes
+   - Validate accessibility
+
+4. **Refinement Phase**
+   - Optimize for performance
+   - Refactor code for readability and maintainability
+   - Address any technical debt incurred during implementation
+
+5. **Documentation Phase**
+   - Document the feature for future reference
+   - Update the README if necessary
+   - Create usage examples
+   - Document any gotchas or edge cases
+
+## Progress Tracking
+
+Maintain a structured approach to tracking progress:
+
+```markdown
+# Project Progress Tracker
+
+## Current Phase: [Phase Name]
+
+### Completed Tasks
+- [x] Task 1
+- [x] Task 2
+
+### In Progress
+- [ ] Current Task 1 (XX% complete)
+- [ ] Current Task 2 (XX% complete)
+
+### Up Next
+- [ ] Upcoming Task 1
+- [ ] Upcoming Task 2
+
+### Blockers
+- Blocker 1: [Description and potential solutions]
+- Blocker 2: [Description and potential solutions]
+
+### Notes
+- Important observation 1
+- Important observation 2
+```
+
+## Self-Monitoring Checklist
+
+Before considering a task complete, verify:
+
+### Code Quality
+- [ ] Code follows established patterns and conventions
+- [ ] No unnecessary complexity
+- [ ] No duplicate code
+- [ ] Proper error handling
+- [ ] Proper type definitions
+
+### Performance
+- [ ] No unnecessary re-renders
+- [ ] Assets are optimized
+- [ ] Lazy loading implemented where appropriate
+- [ ] API calls are efficient and cached when possible
+
+### Accessibility
+- [ ] Proper semantic HTML
+- [ ] Keyboard navigation works
+- [ ] Color contrast meets WCAG standards
+- [ ] All interactive elements have proper focus states
+- [ ] All images have alt text
+
+### Cross-Browser/Device
+- [ ] Works on mobile devices
+- [ ] Works on desktop browsers
+- [ ] Responsive design functions correctly
+- [ ] Touch targets are appropriately sized
+
+### User Experience
+- [ ] UI is intuitive and easy to understand
+- [ ] Loading states are handled gracefully
+- [ ] Error states provide helpful information
+- [ ] Animations enhance rather than hinder experience
+
+## Version Control Best Practices
+
+### Commit Message Format
+Follow the Conventional Commits format:
+
+```
+<type>(<scope>): <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+Types:
+- feat: A new feature
+- fix: A bug fix
+- docs: Documentation changes
+- style: Changes that do not affect code meaning
+- refactor: Code change that neither fixes a bug nor adds a feature
+- perf: Code change that improves performance
+- test: Adding missing tests or correcting existing tests
+- chore: Changes to the build process or auxiliary tools
+
+### Branch Naming Convention
+Use the following format:
+`<type>/<short-description>`
+
+Examples:
+- feature/blog-component
+- fix/mobile-navigation
+- refactor/api-calls
+
+## When to Human Input
+Ask for human help when:
+- Making infrastructure decisions requiring account credentials
+- Resolving complex bugs with no clear solution after troubleshooting
+- Setting up external services requiring authentication
+- Domain configuration and DNS setup
+- Confirming design decisions that significantly impact user experience 

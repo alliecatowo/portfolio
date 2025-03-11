@@ -1,0 +1,460 @@
+# Design System Guidelines
+
+## Color Palette
+
+### Light Mode
+
+```css
+:root {
+  /* Primary Colors */
+  --primary-pink: #FF80AB; /* Main pink color */
+  --primary-pink-light: #FFB2DD;
+  --primary-pink-dark: #C94F7C;
+  
+  /* Accent Colors */
+  --accent-blue: #80D8FF; /* Baby blue accent */
+  --accent-blue-light: #B5EAFF;
+  --accent-blue-dark: #49A7CC;
+  
+  /* Neutral Colors */
+  --white: #FFFFFF;
+  --gray-100: #F8F9FA;
+  --gray-200: #E9ECEF;
+  --gray-300: #DEE2E6;
+  --gray-400: #CED4DA;
+  --gray-500: #ADB5BD;
+  --gray-600: #6C757D;
+  --gray-700: #495057;
+  --gray-800: #343A40;
+  --gray-900: #212529;
+  --black: #000000;
+  
+  /* Functional Colors */
+  --success: #28A745;
+  --warning: #FFC107;
+  --danger: #DC3545;
+  --info: #17A2B8;
+  
+  /* Background Colors */
+  --bg-primary: var(--white);
+  --bg-secondary: var(--gray-100);
+  --bg-tertiary: var(--gray-200);
+  
+  /* Text Colors */
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-700);
+  --text-tertiary: var(--gray-600);
+  --text-on-primary: var(--white);
+  
+  /* Border Colors */
+  --border-light: var(--gray-200);
+  --border-medium: var(--gray-300);
+  --border-dark: var(--gray-400);
+}
+```
+
+### Dark Mode
+
+```css
+.dark-mode {
+  /* Primary Colors */
+  --primary-pink: #FF80AB; /* Keeping the main pink */
+  --primary-pink-light: #FF4081;
+  --primary-pink-dark: #C94F7C;
+  
+  /* Accent Colors */
+  --accent-blue: #80D8FF;
+  --accent-blue-light: #40C4FF;
+  --accent-blue-dark: #00B0FF;
+  
+  /* Background Colors */
+  --bg-primary: #121212;
+  --bg-secondary: #1E1E1E;
+  --bg-tertiary: #2D2D2D;
+  
+  /* Text Colors */
+  --text-primary: var(--gray-100);
+  --text-secondary: var(--gray-300);
+  --text-tertiary: var(--gray-400);
+  
+  /* Border Colors */
+  --border-light: #2D2D2D;
+  --border-medium: #3D3D3D;
+  --border-dark: #4D4D4D;
+}
+```
+
+## Typography
+
+```css
+:root {
+  /* Font Families */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-secondary: 'Playfair Display', Georgia, serif;
+  --font-code: 'Fira Code', monospace;
+  
+  /* Font Sizes */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem;  /* 30px */
+  --text-4xl: 2.25rem;   /* 36px */
+  --text-5xl: 3rem;      /* 48px */
+  --text-6xl: 3.75rem;   /* 60px */
+  
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+  
+  /* Letter Spacing */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+  
+  /* Font Weights */
+  --font-thin: 100;
+  --font-extralight: 200;
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  --font-black: 900;
+}
+```
+
+## Spacing
+
+```css
+:root {
+  /* Spacing Scale */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+  --space-32: 8rem;     /* 128px */
+  --space-40: 10rem;    /* 160px */
+  --space-48: 12rem;    /* 192px */
+  --space-56: 14rem;    /* 224px */
+  --space-64: 16rem;    /* 256px */
+}
+```
+
+## Borders & Shadows
+
+```css
+:root {
+  /* Border Radius */
+  --radius-none: 0;
+  --radius-sm: 0.125rem;   /* 2px */
+  --radius-md: 0.25rem;    /* 4px */
+  --radius-lg: 0.5rem;     /* 8px */
+  --radius-xl: 0.75rem;    /* 12px */
+  --radius-2xl: 1rem;      /* 16px */
+  --radius-3xl: 1.5rem;    /* 24px */
+  --radius-full: 9999px;
+  
+  /* Border Widths */
+  --border-0: 0;
+  --border-1: 1px;
+  --border-2: 2px;
+  --border-4: 4px;
+  --border-8: 8px;
+  
+  /* Box Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  --shadow-outline: 0 0 0 3px rgba(255, 128, 171, 0.5);  /* Pink outline */
+  --shadow-none: none;
+}
+```
+
+## Component Specific Styles
+
+### Buttons
+
+```css
+/* Base Button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-normal);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Primary Button */
+.btn-primary {
+  background-color: var(--primary-pink);
+  color: var(--white);
+  border: var(--border-1) solid var(--primary-pink);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-pink-dark);
+  border-color: var(--primary-pink-dark);
+}
+
+/* Secondary Button */
+.btn-secondary {
+  background-color: var(--accent-blue);
+  color: var(--gray-900);
+  border: var(--border-1) solid var(--accent-blue);
+}
+
+.btn-secondary:hover {
+  background-color: var(--accent-blue-dark);
+  border-color: var(--accent-blue-dark);
+}
+
+/* Outline Button */
+.btn-outline {
+  background-color: transparent;
+  color: var(--primary-pink);
+  border: var(--border-1) solid var(--primary-pink);
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-pink-light);
+  color: var(--white);
+}
+
+/* Button Sizes */
+.btn-sm {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.btn-lg {
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-lg);
+}
+```
+
+### Cards
+
+```css
+.card {
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+  padding: var(--space-4);
+  border-bottom: var(--border-1) solid var(--border-light);
+}
+
+.card-body {
+  padding: var(--space-4);
+}
+
+.card-footer {
+  padding: var(--space-4);
+  border-top: var(--border-1) solid var(--border-light);
+}
+```
+
+### Forms
+
+```css
+.form-group {
+  margin-bottom: var(--space-4);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  border: var(--border-1) solid var(--border-medium);
+  border-radius: var(--radius-md);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: var(--primary-pink);
+  box-shadow: var(--shadow-outline);
+  outline: 0;
+}
+
+.form-control::placeholder {
+  color: var(--gray-500);
+  opacity: 1;
+}
+```
+
+## Site Specific Styles
+
+### Developer Portfolio
+
+```css
+:root.dev-theme {
+  /* Slightly more professional/tech feeling */
+  --primary-pink: #FF4081; /* More saturated */
+  --primary-pink-light: #FF80AB;
+  --primary-pink-dark: #C2185B;
+  
+  /* Font adjustments */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-secondary: 'Roboto Slab', Georgia, serif;
+  
+  /* Dev-specific colors */
+  --dev-code-bg: #2D2D2D;
+  --dev-code-text: #F8F8F2;
+  --dev-syntax-comment: #75715E;
+  --dev-syntax-keyword: #F92672;
+  --dev-syntax-string: #A6E22E;
+  --dev-syntax-number: #AE81FF;
+  --dev-syntax-type: #66D9EF;
+}
+```
+
+### Tattoo Portfolio
+
+```css
+:root.tattoo-theme {
+  /* More artistic feeling */
+  --primary-pink: #FF80AB; /* Softer */
+  --primary-pink-light: #FFB2DD;
+  --primary-pink-dark: #C94F7C;
+  
+  /* Font adjustments */
+  --font-primary: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-secondary: 'Playfair Display', Georgia, serif;
+  
+  /* Tattoo-specific colors */
+  --tattoo-gallery-bg: #1A1A1A;
+  --tattoo-caption: #CCC;
+}
+```
+
+## Animations
+
+```css
+:root {
+  /* Transition Durations */
+  --duration-75: 75ms;
+  --duration-100: 100ms;
+  --duration-150: 150ms;
+  --duration-200: 200ms;
+  --duration-300: 300ms;
+  --duration-500: 500ms;
+  --duration-700: 700ms;
+  --duration-1000: 1000ms;
+  
+  /* Transition Timing Functions */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animation Classes */
+.fade-in {
+  animation: fadeIn var(--duration-300) var(--ease-in-out);
+}
+
+.slide-up {
+  animation: slideUp var(--duration-500) var(--ease-out);
+}
+
+.pulse {
+  animation: pulse var(--duration-1000) var(--ease-in-out) infinite;
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+```
+
+## Responsive Breakpoints
+
+```css
+:root {
+  /* Breakpoints */
+  --screen-sm: 640px;
+  --screen-md: 768px;
+  --screen-lg: 1024px;
+  --screen-xl: 1280px;
+  --screen-2xl: 1536px;
+}
+
+/* Media Queries */
+@media (min-width: 640px) {
+  /* Small screens and up */
+}
+
+@media (min-width: 768px) {
+  /* Medium screens and up */
+}
+
+@media (min-width: 1024px) {
+  /* Large screens and up */
+}
+
+@media (min-width: 1280px) {
+  /* Extra large screens and up */
+}
+
+@media (min-width: 1536px) {
+  /* 2x Extra large screens and up */
+}
+``` 
