@@ -53,8 +53,8 @@ export async function fetchFromDirectus(endpoint: string, params: Record<string,
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-      },
-      credentials: 'include'  // Include cookies if needed
+      }
+      // Do not include credentials - this can cause CORS issues
     })
     
     if (!response.ok) {
