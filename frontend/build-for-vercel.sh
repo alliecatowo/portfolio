@@ -11,6 +11,11 @@ echo "NPM version: $(npm -v)"
 echo "Environment variables:"
 echo "NUXT_PUBLIC_API_URL: $NUXT_PUBLIC_API_URL"
 
+# Detect platform
+PLATFORM=$(uname -s)
+ARCH=$(uname -m)
+echo "Running on platform: $PLATFORM, architecture: $ARCH"
+
 # Ensure API URL has protocol
 if [ ! -z "$NUXT_PUBLIC_API_URL" ] && [[ ! "$NUXT_PUBLIC_API_URL" =~ ^https?:// ]]; then
   echo "Adding https:// to API URL"
@@ -29,9 +34,22 @@ rm -rf node_modules package-lock.json
 echo "Installing dependencies..."
 npm install 
 
-# Install native modules needed for Linux
-echo "Installing native modules..."
-npm install @rollup/rollup-linux-x64-gnu @esbuild/linux-x64
+# Install platform-specific native modules
+echo "Installing platform-specific modules..."
+if [ "$PLATFORM" = "Linux" ]; then
+  echo "Installing native modules for Linux..."
+  npm install @rollup/rollup-linux-x64-gnu @esbuild/linux-x64
+elif [ "$PLATFORM" = "Darwin" ]; then
+  if [ "$ARCH" = "arm64" ]; then
+    echo "Installing native modules for macOS arm64..."
+    npm install @rollup/rollup-darwin-arm64
+  else
+    echo "Installing native modules for macOS x64..."
+    npm install @rollup/rollup-darwin-x64
+  fi
+else
+  echo "Unsupported platform: $PLATFORM. Skipping platform-specific modules."
+fi
 
 # Run debug script
 echo "Running prerender debug script..."
