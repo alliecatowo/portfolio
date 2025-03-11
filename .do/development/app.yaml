@@ -1,6 +1,6 @@
-name: allisons-portfolio-dev
+name: allisons-portfolio-development
 services:
-  - name: frontend-dev
+  - name: frontend-development
     git:
       branch: develop
       repo_clone_url: https://github.com/alliecatowo/portfolio.git
@@ -20,12 +20,18 @@ services:
       - key: NODE_OPTIONS
         scope: BUILD_TIME
         value: --unhandled-rejections=strict
-      - key: DIRECTUS_URL
+      - key: NUXT_PUBLIC_DIRECTUS_URL
         scope: RUN_TIME
-        value: https://directus-dev.allisons.dev
-      - key: API_URL
+        value: https://directus.allisons.dev
+      - key: NUXT_PUBLIC_API_URL
         scope: RUN_TIME
-        value: https://api-dev.allisons.dev
+        value: https://directus.allisons.dev
+      - key: NUXT_PUBLIC_DEV_SITE_URL
+        scope: RUN_TIME
+        value: https://allisons.dev
+      - key: NUXT_PUBLIC_TATTOO_SITE_URL
+        scope: RUN_TIME
+        value: https://tattoo.allisons.dev
     http_port: 3000
     instance_count: 1
     instance_size_slug: basic-xs
@@ -33,6 +39,9 @@ services:
       - path: /
     source_dir: frontend
     run_command: node .output/server/index.mjs
+    # Auto-destroy after 24 hours of inactivity to reduce vulnerability surface
+    auto_destroy: true
+    auto_destroy_timeout: 24h
 domains:
-  - domain: dev.allisons.dev
+  - domain: develop.allisons.dev
     type: PRIMARY

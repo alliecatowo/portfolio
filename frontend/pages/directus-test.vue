@@ -4,7 +4,7 @@
     
     <div class="bg-white shadow rounded p-6 mb-6">
       <h2 class="text-xl font-semibold mb-4">Connection Info</h2>
-      <p><strong>Directus URL:</strong> {{ config.public.directusUrl }}</p>
+      <p><strong>Directus URL:</strong> {{ process.env.NODE_ENV === 'production' ? 'https://directus.allisons.dev' : config.public.directusUrl }}</p>
     </div>
     
     <div class="bg-white shadow rounded p-6 mb-6">

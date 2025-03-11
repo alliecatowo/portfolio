@@ -30,10 +30,10 @@ services:
         value: --unhandled-rejections=strict
       - key: NUXT_PUBLIC_DIRECTUS_URL
         scope: RUN_TIME
-        value: https://allisons-portfolio-directus-9vxdi.ondigitalocean.app
+        value: https://directus.allisons.dev
       - key: NUXT_PUBLIC_API_URL
         scope: RUN_TIME
-        value: https://allisons-portfolio-directus-9vxdi.ondigitalocean.app
+        value: https://directus.allisons.dev
       - key: NUXT_PUBLIC_DEV_SITE_URL
         scope: RUN_TIME
         value: https://allisons.dev
