@@ -7,7 +7,7 @@ services:
       registry_type: DOCKER_HUB
       registry: directus
       repository: directus
-      tag: 10.6.2
+      tag: 11.5.1
     source_dir: directus
     http_port: 8055
     instance_count: 1
@@ -56,12 +56,12 @@ services:
         value: "0"
       - key: PUBLIC_URL
         scope: RUN_TIME
-        value: "https://allisons-portfolio-directus.ondigitalocean.app"
+        value: "https://allisons-portfolio-directus-9vxdi.ondigitalocean.app"
       - key: CORS_ENABLED
         value: "true"
         scope: RUN_TIME
       - key: CORS_ORIGIN
-        value: "https://allisons.dev"
+        value: "https://allisons.dev,https://portfolio-ismolrarb-alliecatowos-projects.vercel.app"
         scope: RUN_TIME
       - key: CORS_METHODS
         value: "GET,POST,PATCH,DELETE"

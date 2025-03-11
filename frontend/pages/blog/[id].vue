@@ -9,70 +9,60 @@
         Back to Blog
       </NuxtLink>
       
+      <!-- Loading state -->
+      <div v-if="loading" class="flex justify-center items-center py-20">
+        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-dark-primary"></div>
+      </div>
+      
+      <!-- Error state -->
+      <div v-else-if="error" class="bg-red-100 text-red-800 p-4 rounded-lg">
+        <p>{{ error }}</p>
+        <button @click="loadBlogPost" class="mt-4 text-primary dark:text-dark-primary font-medium">
+          Try Again
+        </button>
+      </div>
+      
+      <!-- Not found state -->
+      <div v-else-if="!post" class="text-center py-16">
+        <svg class="w-16 h-16 mx-auto text-gray-300 dark:text-gray-700 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <h2 class="text-xl font-semibold mb-2">Blog post not found</h2>
+        <p class="text-gray-500 dark:text-gray-400 mb-4">The article you're looking for doesn't exist or has been removed.</p>
+        <NuxtLink to="/blog" class="text-primary dark:text-dark-primary font-medium">
+          Return to Blog
+        </NuxtLink>
+      </div>
+      
       <!-- Blog post content -->
-      <article>
+      <article v-else>
         <div class="mb-8">
           <div class="text-sm text-gray-500 dark:text-gray-400 mb-2">
-            {{ new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
+            {{ formatDate(post.date_published) }}
           </div>
-          <h1 class="mb-6">
-            {{ siteConfig.type === 'dev' ? 'Development Article' : 'Tattoo Art Story' }} #{{ id }}
-          </h1>
+          <h1 class="mb-6">{{ post.title }}</h1>
           
           <!-- Post image -->
-          <div class="relative aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-8">
+          <div v-if="post.cover_image" class="relative aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-8">
+            <img 
+              :src="getImageUrl(post.cover_image)" 
+              :alt="post.title"
+              class="w-full h-full object-cover rounded-lg"
+            >
+          </div>
+          <div v-else class="relative aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-8">
             <div class="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-500">
-              Blog Post Image
+              No Image Available
             </div>
           </div>
           
           <!-- Post content -->
-          <div class="prose dark:prose-invert max-w-none">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, velit vel bibendum bibendum, 
-              nisl nisl bibendum nisl, vel bibendum nisl nisl vel nisl. Sed euismod, velit vel bibendum bibendum,
-              nisl nisl bibendum nisl, vel bibendum nisl nisl vel nisl.
-            </p>
-            
-            <p>
-              Integer faucibus magna vitae augue ultricies, vitae efficitur lorem finibus. Suspendisse potenti. 
-              Mauris sit amet ex vel magna dignissim facilisis. Quisque tempus libero vel lectus maximus, 
-              vel egestas arcu faucibus. Vivamus laoreet dui in nisi hendrerit, at iaculis massa finibus.
-            </p>
-            
-            <h2>Section Title</h2>
-            
-            <p>
-              Praesent consectetur lectus vel turpis blandit, vel eleifend nisl faucibus. Nullam sed magna vel 
-              nisi dictum venenatis. Morbi convallis justo in ipsum eleifend, vel mattis risus dictum. Vivamus 
-              a consequat justo. Suspendisse potenti. Nulla facilisi.
-            </p>
-            
-            <ul>
-              <li>List item one with some details</li>
-              <li>List item two with additional information</li>
-              <li>List item three with extra content for context</li>
-            </ul>
-            
-            <p>
-              Fusce ultricies diam vel lorem tempor, a gravida orci vulputate. Donec vel neque vel ipsum 
-              consectetur dapibus. Sed faucibus, lorem vel sagittis ultrices, nunc mauris scelerisque mauris, 
-              vel euismod purus purus vel neque.
-            </p>
-            
-            <h2>Another Section</h2>
-            
-            <p>
-              Morbi auctor sit amet magna vel dapibus. Integer euismod tellus vel velit varius, vel fermentum 
-              magna rutrum. Phasellus vel magna vel risus vehicula varius. Aenean vel magna vel nisl varius 
-              tincidunt.
-            </p>
-          </div>
+          <div class="prose dark:prose-invert max-w-none" v-html="post.content"></div>
         </div>
       </article>
       
       <!-- Author info -->
-      <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+      <div v-if="post" class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
         <div class="flex items-center">
           <div class="w-12 h-12 bg-gray-300 dark:bg-gray-600 rounded-full mr-4"></div>
           <div>
@@ -88,20 +78,73 @@
 </template>
 
 <script setup lang="ts">
+import { useDirectus } from '~/composables/useDirectus';
 import { useSiteConfig } from '~/utils/site-config';
 
 // Get site configuration
 const siteConfig = useSiteConfig();
 
-// Get post ID from route
+// Use Directus composable
+const { fetchBlogPost, getImageUrl } = useDirectus();
+
+// Get post slug from route
 const route = useRoute();
-const id = route.params.id;
+const slug = route.params.id;
+
+// State
+const post = ref(null);
+const loading = ref(true);
+const error = ref(null);
+
+// Methods
+const loadBlogPost = async () => {
+  loading.value = true;
+  error.value = null;
+  
+  try {
+    const response = await fetchBlogPost(slug.toString(), {
+      fields: ['id', 'title', 'slug', 'content', 'date_published', 'cover_image', 'excerpt']
+    });
+    
+    if (response) {
+      post.value = response;
+    } else {
+      post.value = null;
+    }
+  } catch (err) {
+    console.error('Error fetching blog post:', err);
+    error.value = 'Failed to load blog post. Please try again.';
+  } finally {
+    loading.value = false;
+  }
+};
+
+// Helper functions
+const formatDate = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { 
+    month: 'long', 
+    day: 'numeric', 
+    year: 'numeric' 
+  });
+};
+
+// Load data
+onMounted(() => {
+  loadBlogPost();
+});
 
 // Meta tags
-useHead({
-  title: `${siteConfig.type === 'dev' ? 'Development Article' : 'Tattoo Art Story'} #${id} - ${siteConfig.value?.title || 'Allison\'s Portfolio'}`,
+useHead(() => ({
+  title: post.value 
+    ? `${post.value.title} - ${siteConfig.value?.title || 'Allison\'s Portfolio'}`
+    : `Blog - ${siteConfig.value?.title || 'Allison\'s Portfolio'}`,
   meta: [
-    { name: 'description', content: 'Detailed article with insights and information.' }
+    { 
+      name: 'description', 
+      content: post.value?.excerpt || 'Detailed article with insights and information.' 
+    }
   ]
-});
+}));
 </script> 
