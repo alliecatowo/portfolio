@@ -1,10 +1,9 @@
 name: allisons-portfolio-frontend
 services:
-  - github:
+  - name: frontend
+    git:
       branch: deploy/digital-ocean
-      deploy_on_push: true
-      repo: allisonchanykei/portfolio
-    name: frontend
+      repo_clone_url: https://github.com/allisonchanykei/portfolio.git
     build_command: NODE_OPTIONS='--unhandled-rejections=strict --no-optional' npm run build
     environment_slug: node-js
     envs:
