@@ -1,6 +1,18 @@
 {
-    "framework": "nuxtjs",
-    "env": {
-        "NUXT_PUBLIC_API_URL": "https://allisons-portfolio-directus-9vxdi.ondigitalocean.app"
-    }
+    "version": 2,
+    "builds": [
+        {
+            "src": "nuxt.config.ts",
+            "use": "@nuxtjs/vercel-builder"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/sw.js",
+            "continue": true,
+            "headers": {
+                "Cache-Control": "public, max-age=0, must-revalidate"
+            }
+        }
+    ]
 }

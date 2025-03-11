@@ -12,7 +12,7 @@
               Specializing in custom designs that blend fine art with self-expression, creating a unique tattoo experience for every client.
             </p>
             <div class="flex flex-wrap gap-4">
-              <NuxtLink to="/gallery" class="btn btn-primary">
+              <NuxtLink to="/tattoo/gallery" class="btn btn-primary">
                 View Gallery
               </NuxtLink>
               <NuxtLink to="/contact" class="btn btn-outline">
@@ -73,7 +73,7 @@
         </div>
 
         <div class="mt-8 text-center">
-          <NuxtLink to="/gallery" class="btn btn-outline">
+          <NuxtLink to="/tattoo/gallery" class="btn btn-outline">
             View Full Gallery
           </NuxtLink>
         </div>
