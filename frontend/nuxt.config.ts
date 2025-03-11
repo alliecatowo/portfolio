@@ -65,6 +65,12 @@ export default defineNuxtConfig({
   },
   // Digital Ocean deployment configuration
   nitro: {
-    preset: 'node-server'
+    preset: 'node-server',
+    // Digital Ocean specific options
+    compressPublicAssets: true,
+    // Disable bundling native node modules
+    bundledDependencies: {
+      'rollup': false
+    }
   }
 })
