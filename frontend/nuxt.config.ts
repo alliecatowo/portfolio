@@ -6,6 +6,12 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@nuxt/image'
   ],
+  image: {
+    // Disable image optimization completely
+    provider: 'static',
+    domains: ['directus.allisons.dev'],
+    format: ['webp']
+  },
   runtimeConfig: {
     public: {
       // Directus API configuration
