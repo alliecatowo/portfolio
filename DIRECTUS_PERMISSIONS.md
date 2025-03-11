@@ -10,65 +10,157 @@ In Directus, access to collections is controlled through roles and permissions. 
 
 Even if you have an admin token, if the collections don't have the right permissions set up, the frontend won't be able to access them.
 
-## Setting Up Collection Permissions
+## Setting Up Collection Permissions Manually
 
-1. **Log in to your Directus admin panel** at https://allisons-portfolio-directus-9vxdi.ondigitalocean.app/admin
+### Step 1: Access the Directus Admin Panel
 
-2. **Navigate to Settings > Roles & Permissions**
+1. Navigate to your Directus instance at https://allisons-portfolio-directus-9vxdi.ondigitalocean.app/admin
+2. Log in with your administrator credentials
 
-3. **Select the 'Public' role** (or create a specific API role if you prefer)
+### Step 2: Navigate to Roles & Permissions
 
-4. **Set up permissions for each collection**:
-   
-   For each of your collections (`blog_posts`, `projects`, `gallery`), you need to:
-   
+1. Click on the gear icon (⚙️) in the sidebar to access Settings
+2. Select "Roles & Permissions" from the settings menu
+
+### Step 3: Configure the Public Role
+
+1. In the Roles & Permissions section, find and click on the "Public" role
+2. You'll see a list of all collections in your Directus instance
+3. For each collection that needs to be accessible to your frontend, you need to configure permissions
+
+### Step 4: Set Up Permissions for Content Collections
+
+For each of these essential collections:
+- `blog_posts`
+- `projects`
+- `gallery`
+
+Follow these detailed steps:
+
+1. **Enable Read Access**:
    - Find the collection in the list
-   - Click the checkboxes to enable the appropriate permissions:
-     - ✅ **Read**: Enable this to allow the frontend to read items
-     - ❌ **Create**: Keep disabled unless you want to allow public creation
-     - ❌ **Update**: Keep disabled for security
-     - ❌ **Delete**: Keep disabled for security
-   
-   - Click on the "..." menu next to each permission to configure field-level permissions:
-     - Make sure all fields you want to expose to the frontend have read access
-     - Pay special attention to fields like `cover_image`, `content`, `title`, etc.
+   - Click the checkbox in the "Read" column to enable read access
+   - A permissions sidebar will open on the right
 
-5. **Configure permissions for `directus_files`**:
-   - This collection needs read access so your frontend can access images
-   - Find `directus_files` in the list and enable Read permissions
+2. **Configure Read Permissions**:
+   - In the permissions sidebar, you'll see several tabs:
+   - **Fields**: Ensure all required fields are selected (or use "Select All")
+   - **Permissions**: You can leave this as the default (no conditions)
+   - **Validation**: You can leave this as the default (no validation)
+   - **Presets**: Not needed for read access
 
-6. **Save your changes**
+3. **Save Permissions**:
+   - Click the "Save" button at the bottom of the sidebar
 
-## Testing Your Permissions
+### Step 5: Set Up Permissions for System Collections
 
-After setting up permissions, you can test them using these API endpoints:
+For the Directus system collections, you need to set up permissions:
 
-- Test blog posts: `https://allisons-portfolio-directus-9vxdi.ondigitalocean.app/items/blog_posts`
-- Test projects: `https://allisons-portfolio-directus-9vxdi.ondigitalocean.app/items/projects`
-- Test gallery: `https://allisons-portfolio-directus-9vxdi.ondigitalocean.app/items/gallery`
+1. **Enable Read Access for `directus_files`**:
+   - Find `directus_files` in the list (it might be under System Collections)
+   - Click the checkbox in the "Read" column
+   - In the sidebar that opens, ensure at least these fields are selected:
+     - `id`
+     - `filename_disk`
+     - `filename_download`
+     - `type`
+     - `filesize`
+     - `width`
+     - `height`
+   - Click "Save"
 
-You should be able to access these endpoints directly in your browser or using a tool like curl, and receive a JSON response with your data.
+2. **Additional System Collections** (if needed):
+   - If your content references other system collections, make sure to set up read access for those as well
 
-## Troubleshooting
+### Step 6: Verify Permissions
 
-If you're still having issues:
+After setting up all permissions, it's a good idea to verify they are working correctly:
 
-1. **Check Network Requests**: In your browser's developer tools, look at the network requests from your frontend to Directus. Check for 403 Forbidden errors.
+1. **Test API Access Directly**:
+   - Open a new browser tab and navigate to:
+   - `https://allisons-portfolio-directus-9vxdi.ondigitalocean.app/items/blog_posts`
+   - You should see a JSON response with your blog posts data
+   - Test other collections similarly
 
-2. **Verify Collection Names**: Make sure the collection names in Directus match exactly what your frontend is requesting.
+2. **Check Permissions in the UI**:
+   - In the Roles & Permissions section, the "Public" role should now show read access for your collections
 
-3. **Check Field Names**: Ensure the field names your frontend is requesting match the field names in Directus.
+## Testing Your API with an Access Token
 
-4. **API Token Permissions**: If you're using a custom API token (not the admin token), make sure it's associated with a role that has the necessary permissions.
+If you want to test your API with an access token:
 
-5. **CORS Settings**: Verify CORS is properly configured in your Directus instance to allow requests from your frontend domain.
+### Option 1: Using Browser
 
-## Working with the Admin API
+1. Open your browser to:
+   ```
+   https://allisons-portfolio-directus-9vxdi.ondigitalocean.app/items/blog_posts
+   ```
 
-If you prefer not to expose certain collections or fields to the public, but still need them in your frontend, you can:
+2. If you get a JSON response with data, permissions are working correctly
 
-1. Create a custom role with specific permissions
-2. Generate an API token for that role
-3. Use that token in your frontend requests
+### Option 2: Using curl
 
-Remember: Be careful about what you expose publicly versus what should require authentication. 
+Run this command in your terminal:
+```bash
+curl -H "Authorization: Bearer 2eEMQA40l35OBtWNH6nDS166k0o800sb" https://allisons-portfolio-directus-9vxdi.ondigitalocean.app/items/blog_posts
+```
+
+## Common Permission Issues and Solutions
+
+### 403 Forbidden Errors
+
+If you're seeing 403 Forbidden errors:
+
+1. **Check Collection Permissions**:
+   - Ensure the "Public" role has read access to the collection
+   - Make sure all fields you're trying to access have read permissions
+
+2. **Check API Token**:
+   - If using a custom token, ensure it's associated with a role that has the necessary permissions
+   - The admin token should work if the public role has proper permissions
+
+3. **Check Collection Names**:
+   - Collection names are case-sensitive
+   - Make sure API requests use the exact collection names as in Directus
+
+### Empty Responses
+
+If you're getting empty arrays in responses:
+
+1. **Check Content Exists**:
+   - Make sure you've created content in the collections you're accessing
+   - Verify content is not in draft state (if using publication status)
+
+2. **Check Field Permissions**:
+   - Ensure all fields you're trying to access have read permissions
+
+## Advanced Permissions (If Needed)
+
+For more sophisticated permission rules:
+
+1. **Field-Level Permissions**:
+   - You can allow access to specific fields while restricting others
+   - In the "Fields" tab of the permissions sidebar, select only the fields you want to expose
+
+2. **Conditional Permissions**:
+   - Use the "Permissions" tab to set conditions for when items can be accessed
+   - Example: Only show published blog posts by setting a condition where `status = "published"`
+
+3. **API Hooks**:
+   - For complex permission logic, you might need to use custom API hooks
+   - This requires developing custom extensions for Directus
+
+## Next Steps After Setting Permissions
+
+Once permissions are correctly set up:
+
+1. **Test the Frontend**:
+   - Visit your deployed frontend at https://portfolio-pe6h5b9lm-alliecatowos-projects.vercel.app
+   - Verify that data from Directus is properly displayed
+
+2. **Add Content in Directus**:
+   - Create blog posts, projects, and gallery items in Directus
+   - Make sure to fill in all required fields
+
+3. **Fine-tune Permissions**:
+   - As your application grows, you may need to adjust permissions for new collections or fields 
