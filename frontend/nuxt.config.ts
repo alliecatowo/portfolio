@@ -19,17 +19,22 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'node-server',
     compressPublicAssets: true,
-    experimental: {
-      // Explicitly disable native node module bundling
-      bundleNativeModules: false
+    // Explicit configuration to avoid rollup native dependency issues
+    externals: {
+      inline: ['rollup']
     },
     rollupConfig: {
-      external: ['rollup'] // Exclude rollup from bundling
+      external: ['rollup']
     }
   },
   build: {
     transpile: [
       '@directus/sdk'
     ]
+  },
+  // Skip the prepare step to avoid rollup issues
+  hooks: {
+    'prepare:types': () => {},
+    'build:prepare': () => {}
   }
 })

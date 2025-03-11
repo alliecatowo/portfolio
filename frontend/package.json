@@ -10,7 +10,7 @@
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "echo 'Skipping nuxt prepare to avoid rollup issues'"
+        "postinstall": "echo 'Skipping standard nuxt prepare'"
     },
     "dependencies": {
         "@directus/sdk": "^19.0.1",

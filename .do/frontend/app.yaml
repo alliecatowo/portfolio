@@ -4,7 +4,12 @@ services:
     git:
       branch: deploy/digital-ocean
       repo_clone_url: https://github.com/alliecatowo/portfolio.git
-    build_command: NODE_OPTIONS='--unhandled-rejections=strict' npm run build
+    build_command: |
+      # Create empty rollup module to bypass the native dependency issue
+      mkdir -p node_modules/@rollup/rollup-linux-x64-gnu
+      echo "module.exports = {};" > node_modules/@rollup/rollup-linux-x64-gnu/index.js
+      # Then run the build
+      NODE_OPTIONS='--unhandled-rejections=strict' npm run build
     environment_slug: node-js
     envs:
       - key: NODE_ENV
