@@ -1,6 +1,72 @@
-# Portfolio Project
+# Allison's Portfolio
 
-This repository contains the code for a multi-site portfolio with a headless CMS.
+A modern portfolio website built with Nuxt 3 and Directus.
+
+## Environments
+
+- **Production**: [allisons.dev](https://allisons.dev)
+- **Staging**: [staging.allisons.dev](https://staging.allisons.dev)
+- **Development**: [dev.allisons.dev](https://dev.allisons.dev)
+
+## Git Branch Structure
+
+- `main`: Production branch, automatically deploys to the production environment
+- `staging`: Staging branch, automatically deploys to the staging environment
+- `develop`: Development branch, automatically deploys to the development environment
+- `feature/*`: Feature branches, should be created from `develop`
+- `hotfix/*`: Hotfix branches, should be created from `main` for urgent fixes
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20.x or later
+- npm 8.x or later
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/alliecatowo/portfolio.git
+cd portfolio
+
+# Install dependencies
+cd frontend
+npm install
+
+# Start the development server
+npm run dev
+```
+
+## Deployment
+
+The application is automatically deployed to Digital Ocean App Platform based on the branch:
+
+- Pushes to `main` deploy to Production
+- Pushes to `staging` deploy to Staging
+- Pushes to `develop` deploy to Development
+
+You can also manually trigger deployments from GitHub Actions.
+
+## Directory Structure
+
+- `.do/`: Digital Ocean App Platform configuration
+  - `frontend/`: Production environment configuration
+  - `staging/`: Staging environment configuration
+  - `development/`: Development environment configuration
+- `frontend/`: Nuxt 3 application code
+- `.github/workflows/`: GitHub Actions workflow definitions
+
+## Contributing
+
+1. Create a new feature branch from `develop`: `git checkout -b feature/my-feature develop`
+2. Make your changes and commit them
+3. Push your branch: `git push origin feature/my-feature`
+4. Open a pull request to merge into `develop`
+
+## License
+
+This project is licensed under the MIT License.
 
 ## Architecture
 
@@ -13,7 +79,8 @@ The portfolio consists of two main components:
 
 - Node.js 16 or later
 - npm or yarn
-- A DigitalOcean account (for hosting both frontend and Directus)
+- A DigitalOcean account (for Directus hosting)
+- A Vercel account (for frontend hosting)
 
 ## Local Development Setup
 
@@ -48,7 +115,7 @@ cp .env.example .env
 
 ## Directus Setup
 
-Directus is hosted on DigitalOcean and can be accessed at https://directus.allisons.dev.
+Directus is hosted on DigitalOcean and can be accessed at https://allisons-portfolio-directus-9vxdi.ondigitalocean.app.
 
 ### Database Schema
 
@@ -78,13 +145,13 @@ For manual permission setup, refer to the `MANUAL_PERMISSIONS_FIX.md` file.
 
 ## Deployment
 
-### Frontend (Digital Ocean)
+### Frontend (Vercel)
 
-The frontend is deployed to Digital Ocean App Platform. See `DIGITAL_OCEAN_DEPLOYMENT.md` for detailed instructions on setting up the environment variables and deploying the frontend.
+The frontend is deployed to Vercel. See `VERCEL_DEPLOYMENT.md` for detailed instructions on setting up the environment variables and deploying the frontend.
 
 ### Directus (DigitalOcean)
 
-Directus is deployed to DigitalOcean App Platform. The instance is already configured and running at https://directus.allisons.dev.
+Directus is deployed to DigitalOcean App Platform. The instance is already configured and running at https://allisons-portfolio-directus-9vxdi.ondigitalocean.app.
 
 ## Environment Variables
 
@@ -93,7 +160,7 @@ Directus is deployed to DigitalOcean App Platform. The instance is already confi
 Create a `.env` file in the `frontend` directory with the following variables:
 
 ```
-NUXT_PUBLIC_API_URL=https://directus.allisons.dev
+NUXT_PUBLIC_API_URL=https://allisons-portfolio-directus-9vxdi.ondigitalocean.app
 NUXT_PUBLIC_DIRECTUS_TOKEN=YOUR_DIRECTUS_ACCESS_TOKEN
 DEV_SITE_URL=http://localhost:3000
 TATTOO_SITE_URL=http://localhost:3000
@@ -107,7 +174,7 @@ The Directus instance on DigitalOcean already has the necessary environment vari
 
 - `/frontend` - Nuxt.js frontend application
 - `/directus` - Directus configuration and schema files
-- `DIGITAL_OCEAN_DEPLOYMENT.md` - Guide for deploying to Digital Ocean
+- `VERCEL_DEPLOYMENT.md` - Guide for deploying to Vercel
 - `MANUAL_PERMISSIONS_FIX.md` - Guide for manually fixing permissions in Directus
 - `CLI_COMMANDS.md` - Reference for useful CLI commands
 
@@ -131,12 +198,8 @@ cd directus && npx directus schema apply ./portfolio-schema.yaml
 cd directus && npx directus schema snapshot ./portfolio-schema.yaml
 
 # Check if Directus API is accessible
-curl -s -L "https://directus.allisons.dev/items/blog_posts?access_token=YOUR_TOKEN" | head -20
+curl -s -L "https://allisons-portfolio-directus-9vxdi.ondigitalocean.app/items/blog_posts?access_token=YOUR_TOKEN" | head -20
 ```
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Documentation
 

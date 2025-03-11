@@ -1,0 +1,38 @@
+name: allisons-portfolio-dev
+services:
+  - name: frontend-dev
+    git:
+      branch: develop
+      repo_clone_url: https://github.com/alliecatowo/portfolio.git
+    build_command: |
+      # Handle rollup native dependency explicitly
+      rm -rf node_modules package-lock.json
+      npm install --omit=optional
+      # Explicitly install the needed Linux-specific Rollup binding
+      npm install --no-save @rollup/rollup-linux-x64-gnu
+      # Now build
+      npm run build
+    environment_slug: node-js
+    envs:
+      - key: NODE_ENV
+        scope: BUILD_TIME
+        value: production
+      - key: NODE_OPTIONS
+        scope: BUILD_TIME
+        value: --unhandled-rejections=strict
+      - key: DIRECTUS_URL
+        scope: RUN_TIME
+        value: https://directus-dev.allisons.dev
+      - key: API_URL
+        scope: RUN_TIME
+        value: https://api-dev.allisons.dev
+    http_port: 3000
+    instance_count: 1
+    instance_size_slug: basic-xs
+    routes:
+      - path: /
+    source_dir: frontend
+    run_command: node .output/server/index.mjs
+domains:
+  - domain: dev.allisons.dev
+    type: PRIMARY

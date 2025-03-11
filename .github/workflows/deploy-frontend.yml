@@ -1,0 +1,64 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches:
+      - main            # Production deployment
+      - staging         # Staging deployment
+      - develop         # Development deployment
+  
+  # Allow manual triggers
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'development'
+        type: choice
+        options:
+          - production
+          - staging
+          - development
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    # Set environment based on branch or manual input
+    environment:
+      name: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production') || (github.ref == 'refs/heads/staging' && 'staging') || 'development' }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      
+      - name: Set app spec path
+        id: set-spec
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "spec_path=.do/frontend/app.yaml" >> $GITHUB_OUTPUT
+            echo "app_id=${{ secrets.DO_APP_ID_PROD }}" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == "refs/heads/staging" ]]; then
+            echo "spec_path=.do/staging/app.yaml" >> $GITHUB_OUTPUT
+            echo "app_id=${{ secrets.DO_APP_ID_STAGING }}" >> $GITHUB_OUTPUT
+          else
+            echo "spec_path=.do/development/app.yaml" >> $GITHUB_OUTPUT
+            echo "app_id=${{ secrets.DO_APP_ID_DEV }}" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Validate App Spec
+        run: doctl apps spec validate ${{ steps.set-spec.outputs.spec_path }}
+      
+      - name: Deploy to DigitalOcean App Platform
+        run: doctl apps update ${{ steps.set-spec.outputs.app_id }} --spec ${{ steps.set-spec.outputs.spec_path }}
+      
+      - name: Create Deployment
+        run: doctl apps create-deployment ${{ steps.set-spec.outputs.app_id }}
+      
+      - name: Output Deployment URL
+        run: echo "Deployed to $(doctl apps get ${{ steps.set-spec.outputs.app_id }} --format DefaultIngress)" 
