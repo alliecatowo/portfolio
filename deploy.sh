@@ -1,89 +1,61 @@
 #!/bin/bash
-set -e
 
-# Colors for output
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+# Manual deployment script for portfolio project
+# This script handles the build and deployment process
 
-echo -e "${GREEN}=== Portfolio Deployment to Vercel ===${NC}"
+set -e  # Exit on error
 
-# Check Node.js version
-NODE_VERSION=$(node -v)
-echo -e "${BLUE}Using Node.js version:${NC} ${GREEN}$NODE_VERSION${NC}"
+echo "=== Portfolio Deployment Script ==="
+echo "Starting deployment process..."
 
-if [[ ! $NODE_VERSION =~ ^v22\. ]]; then
-    echo -e "${YELLOW}Warning: This application requires Node.js v22.${NC}"
-    echo -e "${YELLOW}Please run: nvm use 22${NC}"
-    exit 1
+# Move to frontend directory
+cd "$(dirname "$0")/frontend"
+
+# Clean up node_modules and package-lock
+echo "Cleaning up node modules and lockfile..."
+rm -rf node_modules package-lock.json
+
+# Prepare NPM configuration
+echo "Configuring NPM to skip optional dependencies..."
+echo "optional=false" > .npmrc
+echo "omit=optional" >> .npmrc
+echo "# Prevent platform-specific modules for rollup" >> .npmrc
+echo "@rollup:registry=https://registry.npmjs.org/" >> .npmrc
+echo "node-options=--max-old-space-size=4096" >> .npmrc
+
+# Install dependencies without optional packages
+echo "Installing dependencies..."
+npm install --no-optional
+
+# Run the rollup patch script
+echo "Patching rollup to avoid native dependencies..."
+node ./patch-rollup.js
+
+# Build the application with nuxt generate
+echo "Building application..."
+npm run generate
+
+echo "Build completed successfully!"
+
+# If Vercel CLI is installed, offer to deploy
+if command -v vercel &> /dev/null; then
+    echo ""
+    echo "Vercel CLI is installed. Do you want to deploy now? (y/n)"
+    read -r deploy_choice
+    
+    if [[ $deploy_choice == "y" || $deploy_choice == "Y" ]]; then
+        echo "Deploying to Vercel..."
+        cd ..  # Move back to root directory
+        vercel --prod
+        echo "Deployment completed!"
+    else
+        echo "Skipping deployment. You can deploy manually using 'vercel --prod'"
+    fi
+else
+    echo ""
+    echo "Vercel CLI not found. To deploy:"
+    echo "1. Install Vercel CLI: npm i -g vercel"
+    echo "2. Run 'vercel --prod' from the project root"
 fi
 
-# Check for Vercel CLI
-if ! command -v vercel &> /dev/null; then
-    echo -e "${YELLOW}Vercel CLI is not installed. Installing now...${NC}"
-    npm install -g vercel
-fi
-
-# Deploy backend
-echo -e "\n${GREEN}=== Deploying Strapi Backend ===${NC}"
-cd backend
-
-# Create .env file for Vercel deployment if it doesn't exist
-if [ ! -f .env ]; then
-    echo -e "${YELLOW}Creating .env file for backend deployment${NC}"
-    cat > .env << EOL
-NODE_ENV=production
-ADMIN_JWT_SECRET=$(openssl rand -hex 32)
-JWT_SECRET=$(openssl rand -hex 32)
-APP_KEYS=$(openssl rand -hex 16),$(openssl rand -hex 16),$(openssl rand -hex 16),$(openssl rand -hex 16)
-API_TOKEN_SALT=$(openssl rand -hex 32)
-TRANSFER_TOKEN_SALT=$(openssl rand -hex 32)
-EOL
-    echo -e "${GREEN}Created .env file with secure random values${NC}"
-fi
-
-echo -e "${BLUE}Deploying backend to Vercel...${NC}"
-vercel --prod
-
-if [ $? -ne 0 ]; then
-    echo -e "${YELLOW}Backend deployment failed. Please check the error messages.${NC}"
-    exit 1
-fi
-
-BACKEND_URL=$(vercel --prod --confirm)
-echo -e "${GREEN}Backend deployed to:${NC} $BACKEND_URL"
-
-# Deploy frontend
-echo -e "\n${GREEN}=== Deploying Nuxt Frontend ===${NC}"
-cd ../frontend
-
-# Update the frontend environment with the backend URL
-echo -e "${BLUE}Updating frontend configuration with backend URL...${NC}"
-cat > .env << EOL
-NUXT_PUBLIC_API_URL=$BACKEND_URL
-EOL
-
-echo -e "${BLUE}Deploying frontend to Vercel...${NC}"
-vercel --prod --env NUXT_PUBLIC_API_URL=$BACKEND_URL
-
-if [ $? -ne 0 ]; then
-    echo -e "${YELLOW}Frontend deployment failed. Please check the error messages.${NC}"
-    exit 1
-fi
-
-FRONTEND_URL=$(vercel --prod --confirm)
-echo -e "${GREEN}Frontend deployed to:${NC} $FRONTEND_URL"
-
-# Return to project root
-cd ..
-
-echo -e "\n${GREEN}=== Deployment Complete ===${NC}"
-echo -e "${BLUE}Backend URL:${NC} $BACKEND_URL"
-echo -e "${BLUE}Frontend URL:${NC} $FRONTEND_URL"
-echo -e "\n${YELLOW}Next steps:${NC}"
-echo -e "1. Set up your Strapi admin account at $BACKEND_URL/admin"
-echo -e "2. Create an API token in Strapi admin panel"
-echo -e "3. Run the seed script to populate your database:"
-echo -e "   ${GREEN}cd backend && ./scripts/run-seed.sh YOUR_API_TOKEN${NC}"
-echo -e "4. Set up a custom domain in Vercel dashboard if needed" 
+echo "=== Deployment process finished ===" 
