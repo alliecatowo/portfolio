@@ -104,6 +104,32 @@ export function useStrapi() {
     }
   };
 
+  /**
+   * Get testimonials
+   */
+  const getTestimonials = async (limit = 10) => {
+    isLoading.value = true;
+    error.value = null;
+    
+    try {
+      const response = await fetchAPI('/testimonials', {
+        sort: ['createdAt:desc'],
+        pagination: {
+          limit,
+        },
+        populate: ['clientImage', 'tattooImage'],
+      });
+      
+      return formatStrapiResponse(response);
+    } catch (err) {
+      console.error('Error fetching testimonials:', err);
+      error.value = 'Failed to load testimonials';
+      return { data: [], meta: {} };
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
   return {
     isLoading,
     error,
@@ -111,5 +137,6 @@ export function useStrapi() {
     getFeaturedProjects,
     getFeaturedTattooWorks,
     getBlogPosts,
+    getTestimonials,
   };
 } 
