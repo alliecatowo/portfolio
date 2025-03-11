@@ -3,6 +3,11 @@ region: nyc
 services:
   - dockerfile_path: Dockerfile
     name: directus
+    image:
+      registry_type: DOCKER_HUB
+      registry: directus
+      repository: directus
+      tag: 10.6.2
     source_dir: directus
     http_port: 8055
     instance_count: 1
