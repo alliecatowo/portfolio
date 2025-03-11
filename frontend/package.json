@@ -6,7 +6,7 @@
         "node": "20.x"
     },
     "scripts": {
-        "build": "nuxt build",
+        "build": "node ./patch-rollup.js && nuxt build",
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
