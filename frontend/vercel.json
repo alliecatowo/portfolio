@@ -1,0 +1,17 @@
+{
+    "buildCommand": "NITRO_PRESET=vercel-edge npm run build",
+    "framework": "nuxt",
+    "outputDirectory": ".output/public",
+    "regions": [
+        "sfo1"
+    ],
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/"
+        }
+    ],
+    "env": {
+        "NUXT_PUBLIC_API_URL": "https://your-strapi-backend-url.com"
+    }
+}

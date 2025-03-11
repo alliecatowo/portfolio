@@ -1,0 +1,25 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "package.json",
+            "use": "@vercel/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/uploads/(.*)",
+            "dest": "/uploads/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/index.js"
+        }
+    ],
+    "env": {
+        "NODE_ENV": "production",
+        "DATABASE_URL": "your-production-database-url",
+        "ADMIN_JWT_SECRET": "your-admin-jwt-secret",
+        "JWT_SECRET": "your-jwt-secret"
+    }
+}
