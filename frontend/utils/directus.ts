@@ -57,6 +57,13 @@ export async function fetchFromDirectus(endpoint: string, params: Record<string,
       // Do not include credentials - this can cause CORS issues
     })
     
+    if (response.status === 403) {
+      // Handle permission errors gracefully
+      console.warn(`Permission denied for ${endpoint}. This collection might not be publicly accessible.`)
+      // Return empty array for collections or null for single items
+      return endpoint.includes('/') ? null : []
+    }
+    
     if (!response.ok) {
       throw new Error(`API error: ${response.status}`)
     }
@@ -65,7 +72,8 @@ export async function fetchFromDirectus(endpoint: string, params: Record<string,
     return data.data
   } catch (error) {
     console.error(`Error fetching from Directus: ${error}`)
-    return null
+    // Return empty array for collections or null for single items
+    return endpoint.includes('/') ? null : []
   }
 }
 

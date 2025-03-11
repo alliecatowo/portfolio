@@ -286,7 +286,6 @@
 
 <script setup lang="ts">
 import { fetchTattooLandingContent } from '~/utils/api/content';
-import type { TattooWork, Article } from '~/utils/api/content';
 
 // Site Configuration
 const config = useSiteConfig();
@@ -306,26 +305,33 @@ useHead({
 });
 
 // Fetch content from Directus
-const featuredWorks = ref<TattooWork[]>([]);
-const recentPosts = ref<Article[]>([]);
-const testimonials = ref<any[]>([]);
-const selectedWork = ref<TattooWork | null>(null);
+const featuredWorks = ref([]);
+const recentPosts = ref([]);
+const testimonials = ref([]);
+const selectedWork = ref(null);
 
 // Computed property for works with testimonials
 const featuredWorksWithTestimonials = computed(() => {
-  return featuredWorks.value.filter(work => work.attributes.clientTestimonial);
+  return featuredWorks.value.filter(work => work.client_testimonial);
 });
 
 // Method to open tattoo details modal
-function openTattooDetails(work: TattooWork) {
+function openTattooDetails(work) {
   selectedWork.value = work;
 }
 
 onMounted(async () => {
   try {
     const content = await fetchTattooLandingContent();
-    featuredWorks.value = content.featuredWorks.data || [];
-    recentPosts.value = content.recentPosts.data || [];
+    featuredWorks.value = content.featuredWorks || [];
+    recentPosts.value = content.recentPosts || [];
+    testimonials.value = content.testimonials || [];
+    
+    console.log('Tattoo landing page data:', {
+      featuredWorks: featuredWorks.value,
+      recentPosts: recentPosts.value,
+      testimonials: testimonials.value
+    });
   } catch (error) {
     console.error('Error fetching landing page content:', error);
   }

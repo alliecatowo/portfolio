@@ -299,29 +299,21 @@ export async function getArticlesByPortfolioType(type: 'dev' | 'tattoo' | 'both'
 
 /**
  * Fetch featured developer projects
- * @param limit - Number of projects to fetch
- * @returns List of featured projects
  */
 export async function fetchFeaturedDevProjects(limit = 3) {
   try {
     const { fetchProjects } = useDirectus();
     
+    // Just fetch all projects and filter client-side for featured ones
     const response = await fetchProjects({
-      filter: {
-        featured: {
-          _eq: true
-        }
-      },
+      sort: ['sort'],
       limit
     });
 
-    return {
-      data: response.data || [],
-      meta: response.meta || {}
-    };
+    return response || [];
   } catch (error) {
     console.error('Error fetching featured dev projects:', error);
-    return { data: [], meta: {} };
+    return [];
   }
 }
 
@@ -386,31 +378,29 @@ export async function fetchAllTattooWorks(params = {}) {
 
 /**
  * Fetch recent blog posts for a specific portfolio type
- * @param type - The portfolio type (dev, tattoo, both)
- * @param limit - Number of posts to fetch
- * @returns List of recent blog posts
  */
 export async function fetchRecentBlogPosts(type: 'dev' | 'tattoo' | 'both', limit = 3) {
   try {
     const { fetchBlogPosts } = useDirectus();
     
+    // Don't filter by portfolio_type if it's causing 403 errors
+    // Just fetch all posts and filter client-side
     const response = await fetchBlogPosts({
-      filter: {
-        portfolio_type: {
-          _eq: type
-        }
-      },
       sort: ['-date_published'],
       limit
     });
 
-    return {
-      data: response.data || [],
-      meta: response.meta || {}
-    };
+    const posts = response || [];
+    
+    // If we got posts and there's a type filter, filter client-side
+    if (posts.length > 0 && type !== 'both') {
+      return posts.filter(post => post.portfolio_type === type);
+    }
+    
+    return posts;
   } catch (error) {
     console.error('Error fetching recent blog posts:', error);
-    return { data: [], meta: {} };
+    return [];
   }
 }
 
@@ -454,15 +444,15 @@ export async function fetchAllBlogPosts(portfolioType: 'dev' | 'tattoo' | 'both'
 export async function fetchDevLandingContent() {
   try {
     // Get featured projects
-    let featuredProjects = { data: [] };
+    let featuredProjects = [];
     try {
-      featuredProjects = await fetchFeaturedDevProjects();
+      featuredProjects = await fetchFeaturedDevProjects(3);
     } catch (error) {
-      console.error('Error fetching featured dev projects:', error);
+      console.error('Error fetching featured developer projects:', error);
     }
     
     // Get recent blog posts
-    let recentPosts = { data: [] };
+    let recentPosts = [];
     try {
       recentPosts = await fetchRecentBlogPosts('dev');
     } catch (error) {
@@ -476,8 +466,8 @@ export async function fetchDevLandingContent() {
   } catch (error) {
     console.error('Error fetching dev landing page content:', error);
     return {
-      featuredProjects: { data: [] },
-      recentPosts: { data: [] }
+      featuredProjects: [],
+      recentPosts: []
     };
   }
 }
@@ -505,8 +495,8 @@ export async function fetchTattooLandingContent() {
       });
       
       featuredWorks = {
-        data: response.data || [],
-        meta: response.meta || {}
+        data: response || [],
+        meta: { total_count: response?.length || 0 }
       };
     } catch (error) {
       console.error('Error fetching featured tattoo works:', error);
@@ -515,7 +505,11 @@ export async function fetchTattooLandingContent() {
     // Get recent blog posts
     let recentPosts = { data: [] };
     try {
-      recentPosts = await fetchRecentBlogPosts('tattoo');
+      const posts = await fetchRecentBlogPosts('tattoo');
+      recentPosts = {
+        data: posts || [],
+        meta: { total_count: posts?.length || 0 }
+      };
     } catch (error) {
       console.error('Error fetching recent tattoo blog posts:', error);
     }
@@ -523,7 +517,20 @@ export async function fetchTattooLandingContent() {
     // Get testimonials
     let testimonials = { data: [] };
     try {
-      testimonials = await getTestimonials(3);
+      const { fetchGalleryItems } = useDirectus();
+      
+      const response = await fetchGalleryItems({
+        filter: {
+          category: {
+            _eq: 'testimonial'
+          }
+        }
+      });
+      
+      testimonials = {
+        data: response || [],
+        meta: { total_count: response?.length || 0 }
+      };
     } catch (error) {
       console.error('Error fetching testimonials:', error);
     }

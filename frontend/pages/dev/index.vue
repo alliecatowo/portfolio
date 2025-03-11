@@ -190,7 +190,6 @@
 
 <script setup lang="ts">
 import { fetchDevLandingContent } from '~/utils/api/content';
-import type { Project, Article } from '~/utils/api/content';
 
 // Site Configuration
 const config = useSiteConfig();
@@ -210,14 +209,19 @@ useHead({
 });
 
 // Fetch content from Directus
-const featuredProjects = ref<Project[]>([]);
-const recentPosts = ref<Article[]>([]);
+const featuredProjects = ref([]);
+const recentPosts = ref([]);
 
 onMounted(async () => {
   try {
     const content = await fetchDevLandingContent();
-    featuredProjects.value = content.featuredProjects.data || [];
-    recentPosts.value = content.recentPosts.data || [];
+    featuredProjects.value = content.featuredProjects || [];
+    recentPosts.value = content.recentPosts || [];
+    
+    console.log('Dev landing page data:', {
+      featuredProjects: featuredProjects.value,
+      recentPosts: recentPosts.value
+    });
   } catch (error) {
     console.error('Error fetching landing page content:', error);
   }
