@@ -1,190 +1,140 @@
-# Dual Portfolio - Developer & Tattoo Artist
+# Portfolio Project
 
-A full-stack portfolio application that showcases both developer and tattoo artist work in a unified platform. This project consists of a Nuxt 3 frontend and a Strapi CMS backend.
+This repository contains the code for a multi-site portfolio with a headless CMS.
 
-## Features
+## Architecture
 
-- **Dual Mode**: Toggle between developer and tattoo artist portfolios
-- **Developer Portfolio**: Showcase projects, blog posts, and open source contributions
-- **Tattoo Portfolio**: Display tattoo works, gallery, and testimonials
-- **Content Management**: Full CMS capabilities with Strapi
-- **Responsive Design**: Mobile-first approach with dark mode support
+The portfolio consists of two main components:
 
-## Tech Stack
+1. **Frontend** - Built with Nuxt.js, provides the user-facing sites
+2. **Directus** - Headless CMS that stores and manages content
+
+## Prerequisites
+
+- Node.js 16 or later
+- npm or yarn
+- A DigitalOcean account (for Directus hosting)
+- A Vercel account (for frontend hosting)
+
+## Local Development Setup
 
 ### Frontend
-- **Nuxt 3**: Vue-based framework for server-side rendering and static site generation
-- **Vue 3**: Progressive JavaScript framework
-- **Tailwind CSS**: Utility-first CSS framework
-- **TypeScript**: Type-safe JavaScript
 
-### Backend
-- **Strapi**: Headless CMS for content management
-- **Node.js**: JavaScript runtime
-- **PostgreSQL**: Relational database (configurable)
-
-## Getting Started
-
-### Prerequisites
-- Node.js (v18+)
-- npm or yarn
-- PostgreSQL (optional, SQLite works for development)
-
-### Installation
-
-1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/portfolio.git
-cd portfolio
-```
-
-2. Install dependencies for both frontend and backend
-```bash
-# Install frontend dependencies
+# Navigate to the frontend directory
 cd frontend
+
+# Install dependencies
 npm install
 
-# Install backend dependencies
-cd ../backend
-npm install
-```
-
-3. Set up environment variables
-```bash
-# In the backend directory
-cp .env.example .env
-# Edit .env with your database credentials and other settings
-
-# In the frontend directory
-cp .env.example .env
-# Edit .env with your API URL and other settings
-```
-
-4. Start the development servers
-```bash
-# Use the convenient startup script from the root directory
-./start-portfolio.sh
-```
-
-Or start each service individually:
-
-```bash
-# Start Strapi backend
-cd backend
-npm run develop
-
-# Start Nuxt frontend
-cd frontend
+# Start the development server
 npm run dev
 ```
 
-5. Access the applications:
-   - Frontend: http://localhost:3000
-   - Strapi Admin: http://localhost:1337/admin
+The frontend will be available at http://localhost:3000.
 
-## Seeding Data
+### Directus
 
-To populate the database with sample data:
+For local development with the Directus API, you need to have the proper environment variables set up in the `.env` file:
+
+```
+# Navigate to the directus directory
+cd directus
+
+# Copy the example environment file
+cp .env.example .env
+
+# Edit the .env file with your database credentials and admin user details
+```
+
+## Directus Setup
+
+Directus is hosted on DigitalOcean and can be accessed at https://allisons-portfolio-directus-9vxdi.ondigitalocean.app.
+
+### Database Schema
+
+The database schema is defined in `directus/portfolio-schema.yaml`. This file can be used to apply changes to the Directus instance:
 
 ```bash
-cd backend
-npm run seed
+cd directus
+npx directus schema apply ./portfolio-schema.yaml
 ```
+
+### Collections
+
+The portfolio uses the following main collections:
+
+- **blog_posts** - Blog articles
+- **projects** - Portfolio projects
+- **gallery** - Image gallery items
+
+### Permissions
+
+Permissions are defined in the schema file. There are two main roles:
+
+1. **Administrator** - Full access to all collections
+2. **Public** - Read-only access to specific collections for the frontend
+
+For manual permission setup, refer to the `MANUAL_PERMISSIONS_FIX.md` file.
 
 ## Deployment
 
-### Vercel Deployment
+### Frontend (Vercel)
 
-1. Install Vercel CLI
+The frontend is deployed to Vercel. See `VERCEL_DEPLOYMENT.md` for detailed instructions on setting up the environment variables and deploying the frontend.
+
+### Directus (DigitalOcean)
+
+Directus is deployed to DigitalOcean App Platform. The instance is already configured and running at https://allisons-portfolio-directus-9vxdi.ondigitalocean.app.
+
+## Environment Variables
+
+### Frontend Environment Variables
+
+Create a `.env` file in the `frontend` directory with the following variables:
+
+```
+NUXT_PUBLIC_API_URL=https://allisons-portfolio-directus-9vxdi.ondigitalocean.app
+NUXT_PUBLIC_DIRECTUS_TOKEN=YOUR_DIRECTUS_ACCESS_TOKEN
+DEV_SITE_URL=http://localhost:3000
+TATTOO_SITE_URL=http://localhost:3000
+```
+
+### Directus Environment Variables
+
+The Directus instance on DigitalOcean already has the necessary environment variables configured. For local development, see the section above.
+
+## Files and Directories
+
+- `/frontend` - Nuxt.js frontend application
+- `/directus` - Directus configuration and schema files
+- `VERCEL_DEPLOYMENT.md` - Guide for deploying to Vercel
+- `MANUAL_PERMISSIONS_FIX.md` - Guide for manually fixing permissions in Directus
+- `CLI_COMMANDS.md` - Reference for useful CLI commands
+
+## Troubleshooting
+
+If you encounter issues, refer to the `TROUBLESHOOTING.md` file for common problems and solutions.
+
+## Useful Commands
+
 ```bash
-npm install -g vercel
+# Start frontend development server
+cd frontend && npm run dev
+
+# Build frontend for production
+cd frontend && npm run build
+
+# Apply Directus schema
+cd directus && npx directus schema apply ./portfolio-schema.yaml
+
+# Export Directus schema
+cd directus && npx directus schema snapshot ./portfolio-schema.yaml
+
+# Check if Directus API is accessible
+curl -s -L "https://allisons-portfolio-directus-9vxdi.ondigitalocean.app/items/blog_posts?access_token=YOUR_TOKEN" | head -20
 ```
-
-2. Deploy the frontend
-```bash
-cd frontend
-vercel
-```
-
-3. Deploy the backend
-```bash
-cd backend
-vercel
-```
-
-4. Connect your frontend to the deployed backend by updating the environment variables in the Vercel dashboard or using the following command:
-```bash
-vercel env add NUXT_PUBLIC_API_URL https://your-strapi-backend-url.com
-```
-
-## Project Structure
-
-```
-portfolio/
-├── backend/              # Strapi CMS
-│   ├── api/              # Content types and routes
-│   ├── config/           # Configuration files
-│   ├── scripts/          # Utility scripts
-│   └── public/           # Public assets
-├── frontend/             # Nuxt 3 application
-│   ├── assets/           # Static assets
-│   ├── components/       # Vue components
-│   ├── layouts/          # Page layouts
-│   ├── pages/            # Application pages
-│   ├── public/           # Public directory
-│   ├── utils/            # Utility functions
-│   │   └── api/          # API integration
-│   └── middleware/       # Route middleware
-└── start-portfolio.sh    # Convenience script to start both services
-```
-
-## Content Type Structure
-
-### Developer Portfolio
-- **Projects**: Development projects with details and technologies
-- **Articles**: Blog posts for development topics
-- **Categories**: For organizing projects and articles
-
-### Tattoo Portfolio
-- **Tattoo Works**: Showcase of tattoo designs
-- **Styles**: Different tattoo styles
-- **Testimonials**: Client testimonials
 
 ## License
 
-MIT
-
-## Acknowledgements
-
-- [Nuxt.js](https://nuxt.com)
-- [Strapi](https://strapi.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Vue.js](https://vuejs.org)
-
-## CMS Setup
-
-This portfolio uses [Directus](https://directus.io/) as a headless CMS to manage content. The CMS is deployed on DigitalOcean App Platform.
-
-### Setup Documentation
-
-- [Directus Setup Instructions](./directus/SETUP_INSTRUCTIONS.md) - Comprehensive guide for setting up Directus
-- [Manual Permissions Fix](./MANUAL_PERMISSIONS_FIX.md) - Guide for manually fixing permissions in Directus
-- [Troubleshooting Guide](./TROUBLESHOOTING.md) - Solutions for common issues with Directus and frontend integration
-
-### Scripts
-
-The following scripts are available to automate the Directus setup:
-
-- `directus/create-collections.js` - Creates necessary collections in Directus
-- `directus/fix-admin-permissions.js` - Fixes admin permissions
-- `directus/fix-public-permissions.js` - Sets up public permissions
-- `directus/seed-collections.js` - Seeds collections with sample data
-- `directus/setup-directus.js` - All-in-one setup script
-
-### Updating Directus
-
-To update Directus to a newer version:
-
-1. Update the base image in `directus/Dockerfile`
-2. Update the image tag in `directus/.do/app.yaml`
-3. Redeploy to DigitalOcean
+This project is licensed under the MIT License - see the LICENSE file for details.

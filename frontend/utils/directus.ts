@@ -10,6 +10,11 @@ export async function fetchFromDirectus(endpoint: string, params: Record<string,
   const config = useRuntimeConfig()
   const baseUrl = config.public.directusUrl
 
+  // Add access token to params if not already present
+  if (!params.access_token) {
+    params.access_token = config.public.directusToken
+  }
+
   // Convert params object to URL parameters
   const queryParams = new URLSearchParams()
   Object.entries(params).forEach(([key, value]) => {
