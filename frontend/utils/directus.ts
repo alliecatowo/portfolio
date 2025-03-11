@@ -1,4 +1,5 @@
 import { useRuntimeConfig } from '#app'
+import { addCorsHeaders } from './cors'
 
 /**
  * Utility function to fetch data from Directus API
@@ -49,12 +50,15 @@ export async function fetchFromDirectus(endpoint: string, params: Record<string,
   console.log('Fetching from Directus URL:', url)
   
   try {
-    const response = await fetch(url, {
+    // Apply CORS headers to the fetch request
+    const fetchOptions = addCorsHeaders({
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       }
     })
+    
+    const response = await fetch(url, fetchOptions)
     
     if (!response.ok) {
       throw new Error(`API error: ${response.status}`)
