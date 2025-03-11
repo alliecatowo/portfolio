@@ -3,10 +3,6 @@ region: nyc
 services:
   - dockerfile_path: Dockerfile
     name: directus
-    github:
-      branch: feat/directus
-      repo: alliecatowo/portfolio
-      deploy_on_push: true
     source_dir: directus
     http_port: 8055
     instance_count: 1
