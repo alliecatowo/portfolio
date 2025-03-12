@@ -294,26 +294,36 @@ const fetchTattoos = async () => {
   try {
     // Use Directus API directly
     const response = await fetchGalleryItems({
+      // No filter to get all gallery items
       page: currentPage.value,
       limit: pageSize
     });
     
     console.log('Gallery items from Directus:', response);
     
-    if (response && response.length > 0) {
-      tattoos.value = response.map(item => ({
+    if (response && (Array.isArray(response) ? response.length > 0 : response.data?.length > 0)) {
+      // Handle both array response and object with data property
+      const items = Array.isArray(response) ? response : (response.data || []);
+      
+      tattoos.value = items.map(item => ({
         id: item.id,
-        title: item.title,
-        description: item.description,
+        title: item.title || 'Untitled',
+        description: item.description || '',
         style: item.category || 'artwork', // Use category as style
         images: item.image ? [{ url: getImageUrl(item.image) }] : [],
-        placement: 'Various',
-        size: 'Medium',
-        sessionTime: '4-6 hours',
-        year: new Date().getFullYear(),
-        story: item.description
+        placement: item.placement || 'Various',
+        size: item.size || 'Medium',
+        sessionTime: item.session_time || '4-6 hours',
+        year: item.year || new Date().getFullYear(),
+        story: item.story || item.description || ''
       }));
-      totalPages.value = Math.ceil(response.length / pageSize);
+      
+      // Calculate total pages based on response metadata or length
+      if (!Array.isArray(response) && response.meta?.total_count) {
+        totalPages.value = Math.ceil(response.meta.total_count / pageSize);
+      } else {
+        totalPages.value = Math.ceil(items.length / pageSize);
+      }
     } else {
       // For demo purposes, if there's no data from Directus, use placeholder data
       tattoos.value = [

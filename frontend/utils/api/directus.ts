@@ -111,14 +111,29 @@ export async function fetchAllGalleryItems(params = {}) {
   const { fetchGalleryItems } = useDirectus();
   
   try {
-    const items = await fetchGalleryItems({
-      ...params
-    });
+    // Make sure we have a properly formatted params object
+    const apiParams = { ...params };
+    
+    // Properly await the fetchGalleryItems call
+    const response = await fetchGalleryItems(apiParams);
     
     // Log for debugging
-    console.log('Fetched gallery items from Directus:', items);
+    console.log('Fetched gallery items from Directus:', response);
     
-    return items || [];
+    // Handle different response formats
+    if (!response) {
+      return [];
+    }
+    
+    // Handle both array and object responses
+    if (Array.isArray(response)) {
+      return response;
+    } else if (typeof response === 'object') {
+      // If API returns an object with data property, use that
+      return response.data || [];
+    }
+    
+    return [];
   } catch (error) {
     console.error('Error fetching all gallery items from Directus:', error);
     return [];
