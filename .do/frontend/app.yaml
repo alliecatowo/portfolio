@@ -2,13 +2,6 @@ domains:
   - domain: allisons.dev
     type: PRIMARY
     zone: allisons.dev
-ingress:
-  rules:
-    - component:
-        name: frontend
-      match:
-        path:
-          prefix: /
 name: allisons-portfolio-frontend
 region: sfo
 services:
