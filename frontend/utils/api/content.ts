@@ -174,9 +174,6 @@ export async function getTattooWorks(page = 1, pageSize = 10, filters = {}) {
     
     const response = await fetchGalleryItems({
       filter: {
-        type: {
-          _eq: 'tattoo'
-        },
         ...filters
       },
       page,
@@ -210,9 +207,6 @@ export async function getTattooWorkBySlug(slug: string) {
     
     const response = await fetchGalleryItems({
       filter: {
-        type: {
-          _eq: 'tattoo'
-        },
         slug: {
           _eq: slug
         }
@@ -372,12 +366,10 @@ export async function fetchFeaturedTattooWorks() {
  */
 export async function fetchAllTattooWorks(params = {}) {
   try {
-    const response = await fetchTattooWorks({
-      sort: ['date:desc'],
-      ...params
-    });
+    // Use getTattooWorks which is already using Directus
+    const response = await getTattooWorks(1, 100, params);
     
-    return formatStrapiResponse(response);
+    return response;
   } catch (error) {
     console.error('Error fetching all tattoo works:', error);
     return { data: [], meta: {} };
@@ -494,9 +486,6 @@ export async function fetchTattooLandingContent() {
       
       const response = await fetchGalleryItems({
         filter: {
-          type: {
-            _eq: 'tattoo'
-          },
           featured: {
             _eq: true
           }
