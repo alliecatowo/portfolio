@@ -19,9 +19,7 @@ export default defineNuxtConfig({
       
       // Development settings
       enableDevtools: process.env.NUXT_PUBLIC_ENABLE_DEVTOOLS === 'true'
-    },
-    // SERVER_PRESET required for Digital Ocean
-    serverPreset: process.env.SERVER_PRESET || 'digital-ocean'
+    }
   },
   colorMode: {
     preference: 'system',
@@ -71,7 +69,7 @@ export default defineNuxtConfig({
   },
   // Digital Ocean specific configurations
   nitro: {
-    preset: process.env.NITRO_PRESET || 'digital-ocean',
+    preset: 'digital-ocean',
     // Enable error handler for better debugging
     errorHandler: '~/server/error-handler.ts',
     // Enable source maps in development

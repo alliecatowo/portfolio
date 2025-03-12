@@ -11,14 +11,15 @@ services:
       branch: fix/portfolio-optimization
       repo: alliecatowo/portfolio
     source_dir: frontend
+    run_command: npm run start
     envs:
       - key: NODE_ENV
         scope: RUN_TIME
         value: production
-      - key: NITRO_PRESET
-        scope: BUILD_TIME
-        value: digital-ocean
       - key: SERVER_PRESET
+        scope: RUN_TIME
+        value: digital-ocean
+      - key: NITRO_PRESET
         scope: BUILD_TIME
         value: digital-ocean
       - key: NUXT_PUBLIC_DIRECTUS_URL

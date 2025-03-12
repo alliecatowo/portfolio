@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Local development script using Digital Ocean's doctl CLI
-# This script creates a local development environment that matches production
+# This script creates a local development environment that matches the recommended approach
 
 echo "Setting up local development environment with Digital Ocean..."
 
@@ -33,11 +33,14 @@ services:
     source_dir: frontend
     envs:
 $(grep -v '^#' "$ENV_FILE" 2>/dev/null | sed 's/\(.*\)=\(.*\)/      - key: \1\n        scope: RUN_TIME\n        value: "\2"/')
+      - key: SERVER_PRESET
+        scope: RUN_TIME
+        value: digital-ocean
       - key: NITRO_PRESET
         scope: BUILD_TIME
         value: digital-ocean
       - key: NODE_ENV
-        scope: BUILD_TIME
+        scope: RUN_TIME
         value: development
     http_port: 3000
 EOL
