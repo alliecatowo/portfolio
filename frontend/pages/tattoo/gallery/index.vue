@@ -230,6 +230,7 @@
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
 import { getTattooWorks } from '~/utils/api/content';
+import { useDirectus } from '~/composables/useDirectus';
 
 // Ensure site config is set to tattoo
 const siteConfig = useSiteConfig();
@@ -250,6 +251,9 @@ const activeStyle = ref('all');
 const currentPage = ref(1);
 const totalPages = ref(1);
 const pageSize = 9;
+
+// Get Directus functions
+const { fetchGalleryItems, getImageUrl } = useDirectus();
 
 // Tattoo styles
 const tattooStyles = [
@@ -288,86 +292,100 @@ const fetchTattoos = async () => {
   error.value = null;
   
   try {
-    // In a real implementation, this would fetch from Strapi
-    const response = await getTattooWorks(currentPage.value, pageSize);
+    // Use Directus API directly
+    const response = await fetchGalleryItems({
+      page: currentPage.value,
+      limit: pageSize
+    });
     
-    if (response) {
-      tattoos.value = response.data || [];
-      totalPages.value = Math.ceil((response.meta?.pagination?.total || 0) / pageSize);
+    console.log('Gallery items from Directus:', response);
+    
+    if (response && response.length > 0) {
+      tattoos.value = response.map(item => ({
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        style: item.category || 'artwork', // Use category as style
+        images: item.image ? [{ url: getImageUrl(item.image) }] : [],
+        placement: 'Various',
+        size: 'Medium',
+        sessionTime: '4-6 hours',
+        year: new Date().getFullYear(),
+        story: item.description
+      }));
+      totalPages.value = Math.ceil(response.length / pageSize);
+    } else {
+      // For demo purposes, if there's no data from Directus, use placeholder data
+      tattoos.value = [
+        {
+          id: 1,
+          title: 'Floral Sleeve',
+          description: 'Full sleeve featuring botanical elements with delicate line work and subtle shading.',
+          style: 'blackwork',
+          placement: 'Full arm sleeve',
+          size: 'Large (full sleeve)',
+          sessionTime: '12 hours (multiple sessions)',
+          year: 2023,
+          story: 'This client wanted to celebrate their love for nature with a botanical sleeve. We incorporated meaningful plants and flowers that represented different aspects of their life journey.'
+        },
+        {
+          id: 2,
+          title: 'Wolf and Moon',
+          description: 'Neo-traditional wolf howling at the moon with vibrant colors and bold lines.',
+          style: 'neotraditional',
+          placement: 'Upper back',
+          size: 'Medium (8×10 inches)',
+          sessionTime: '6 hours (single session)',
+          year: 2023,
+          story: 'Inspired by the client\'s connection to wolves and their spiritual journey, this piece symbolizes inner strength and the cycles of life.'
+        },
+        {
+          id: 3,
+          title: 'Abstract Watercolor Birds',
+          description: 'Flock of birds in watercolor style with splashes of vibrant colors.',
+          style: 'watercolor',
+          placement: 'Ribcage',
+          size: 'Medium (6×8 inches)',
+          sessionTime: '4 hours (single session)',
+          year: 2022,
+          story: 'The client wanted a representation of freedom and transformation. The birds breaking away from their flock symbolize their personal journey toward independence.'
+        },
+        {
+          id: 4,
+          title: 'Geometric Mountain Range',
+          description: 'Precise geometric interpretation of a mountain landscape with dotwork shading.',
+          style: 'blackwork',
+          placement: 'Forearm',
+          size: 'Medium (7×5 inches)',
+          sessionTime: '5 hours (single session)',
+          year: 2022,
+          story: 'This design represents the client\'s love for hiking and the specific mountain range where they had a life-changing experience.'
+        },
+        {
+          id: 5,
+          title: 'Botanical Fine Line',
+          description: 'Delicate fine line work featuring herbs and botanical elements.',
+          style: 'fineline',
+          placement: 'Inner forearm',
+          size: 'Small (4×6 inches)',
+          sessionTime: '3 hours (single session)',
+          year: 2023,
+          story: 'For a client who is a herbalist, these plants represent healing and the ancient knowledge they work to preserve.'
+        },
+        {
+          id: 6,
+          title: 'Illustrative Fox',
+          description: 'Storytelling piece with a fox as the main character in a whimsical forest scene.',
+          style: 'illustrative',
+          placement: 'Thigh',
+          size: 'Large (10×12 inches)',
+          sessionTime: '8 hours (single session)',
+          year: 2022,
+          story: 'Based on a childhood story that was meaningful to the client, this piece captures the essence of wonder and curiosity.'
+        }
+      ];
       
-      // For demo purposes, if there's no data from Strapi, use placeholder data
-      if (tattoos.value.length === 0) {
-        tattoos.value = [
-          {
-            id: 1,
-            title: 'Floral Sleeve',
-            description: 'Full sleeve featuring botanical elements with delicate line work and subtle shading.',
-            style: 'blackwork',
-            placement: 'Full arm sleeve',
-            size: 'Large (full sleeve)',
-            sessionTime: '12 hours (multiple sessions)',
-            year: 2023,
-            story: 'This client wanted to celebrate their love for nature with a botanical sleeve. We incorporated meaningful plants and flowers that represented different aspects of their life journey.'
-          },
-          {
-            id: 2,
-            title: 'Wolf and Moon',
-            description: 'Neo-traditional wolf howling at the moon with vibrant colors and bold lines.',
-            style: 'neotraditional',
-            placement: 'Upper back',
-            size: 'Medium (8×10 inches)',
-            sessionTime: '6 hours (single session)',
-            year: 2023,
-            story: 'Inspired by the client\'s connection to wolves and their spiritual journey, this piece symbolizes inner strength and the cycles of life.'
-          },
-          {
-            id: 3,
-            title: 'Abstract Watercolor Birds',
-            description: 'Flock of birds in watercolor style with splashes of vibrant colors.',
-            style: 'watercolor',
-            placement: 'Ribcage',
-            size: 'Medium (6×8 inches)',
-            sessionTime: '4 hours (single session)',
-            year: 2022,
-            story: 'The client wanted a representation of freedom and transformation. The birds breaking away from their flock symbolize their personal journey toward independence.'
-          },
-          {
-            id: 4,
-            title: 'Geometric Mountain Range',
-            description: 'Precise geometric interpretation of a mountain landscape with dotwork shading.',
-            style: 'blackwork',
-            placement: 'Forearm',
-            size: 'Medium (7×5 inches)',
-            sessionTime: '5 hours (single session)',
-            year: 2022,
-            story: 'This design represents the client\'s love for hiking and the specific mountain range where they had a life-changing experience.'
-          },
-          {
-            id: 5,
-            title: 'Botanical Fine Line',
-            description: 'Delicate fine line work featuring herbs and botanical elements.',
-            style: 'fineline',
-            placement: 'Inner forearm',
-            size: 'Small (4×6 inches)',
-            sessionTime: '3 hours (single session)',
-            year: 2023,
-            story: 'For a client who is a herbalist, these plants represent healing and the ancient knowledge they work to preserve.'
-          },
-          {
-            id: 6,
-            title: 'Illustrative Fox',
-            description: 'Storytelling piece with a fox as the main character in a whimsical forest scene.',
-            style: 'illustrative',
-            placement: 'Thigh',
-            size: 'Large (10×12 inches)',
-            sessionTime: '8 hours (single session)',
-            year: 2022,
-            story: 'Based on a childhood story that was meaningful to the client, this piece captures the essence of wonder and curiosity.'
-          }
-        ];
-        
-        totalPages.value = 1; // For demo purposes
-      }
+      totalPages.value = 1; // For demo purposes
     }
   } catch (err) {
     console.error('Error fetching tattoo works:', err);
