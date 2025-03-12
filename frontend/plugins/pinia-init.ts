@@ -1,16 +1,10 @@
 /**
- * Plugin to initialize Pinia store for server-side rendering
- * This fixes the "Cannot read properties of undefined (reading '_s')" error
+ * Plugin to initialize auth for server-side rendering
+ * This is a dummy plugin that doesn't do anything since we've removed Pinia dependency
  */
 import { defineNuxtPlugin } from '#app';
-import { useAuthStore } from '~/composables/useAuth';
 
-export default defineNuxtPlugin(({ $pinia }) => {
-  // Initialize the auth store with default values for SSR
-  const authStore = useAuthStore($pinia);
-  
-  // Set default values for server-side rendering
-  if (process.server) {
-    authStore.setAuth(false, false, null);
-  }
+export default defineNuxtPlugin(() => {
+  // No initialization needed with our new approach
+  console.log('Auth initialization plugin loaded (no-op)');
 }); 

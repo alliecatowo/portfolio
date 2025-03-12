@@ -1,88 +1,74 @@
-import { defineStore } from 'pinia';
-import { onMounted } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
+
+// Simple reactive state without Pinia
+const authState = reactive({
+  isAuthenticated: false,
+  isAdmin: false,
+  user: null as { username: string; role: string } | null,
+});
 
 /**
- * Authentication store for managing admin access
+ * Simple auth composable that doesn't rely on Pinia
+ * This avoids SSR issues with Pinia store initialization
  */
-export const useAuthStore = defineStore('auth', {
-  state: () => ({
-    isAuthenticated: false,
-    isAdmin: false,
-    user: null as { username: string; role: string } | null,
-  }),
+export const useAuth = () => {
+  // Initialize auth on client-side only
+  if (process.client) {
+    onMounted(() => {
+      try {
+        const authData = localStorage.getItem('auth');
+        if (authData) {
+          const { isAuthenticated, isAdmin, user } = JSON.parse(authData);
+          authState.isAuthenticated = isAuthenticated;
+          authState.isAdmin = isAdmin;
+          authState.user = user;
+        }
+      } catch (error) {
+        console.error('Error initializing auth from localStorage:', error);
+      }
+    });
+  }
 
-  getters: {
-    // Check if user is authenticated
-    authenticated: (state) => state.isAuthenticated,
-    
-    // Check if user has admin privileges
-    hasAdminAccess: (state) => state.isAdmin,
-    
-    // Get current user
-    currentUser: (state) => state.user,
-  },
-
-  actions: {
-    // Set authentication state
-    setAuth(isAuthenticated: boolean, isAdmin: boolean, user: { username: string; role: string } | null) {
-      this.isAuthenticated = isAuthenticated;
-      this.isAdmin = isAdmin;
-      this.user = user;
+  const login = (username: string, password: string) => {
+    // For demo purposes, hardcoded admin credentials
+    // In a production app, this would call an authentication API
+    if (username === 'admin' && password === 'admin123') {
+      authState.isAuthenticated = true;
+      authState.isAdmin = true;
+      authState.user = { username: 'admin', role: 'admin' };
       
       // Save auth state to localStorage (persist through page refresh)
       if (process.client && typeof localStorage !== 'undefined') {
-        if (isAuthenticated && user) {
-          localStorage.setItem('auth', JSON.stringify({ isAuthenticated, isAdmin, user }));
-        } else {
-          localStorage.removeItem('auth');
-        }
+        localStorage.setItem('auth', JSON.stringify(authState));
       }
-    },
-    
-    // Login action
-    login(username: string, password: string) {
-      // For demo purposes, hardcoded admin credentials
-      // In a production app, this would call an authentication API
-      if (username === 'admin' && password === 'admin123') {
-        this.setAuth(true, true, { username: 'admin', role: 'admin' });
-        return true;
-      }
-      return false;
-    },
-    
-    // Logout action
-    logout() {
-      this.setAuth(false, false, null);
-    },
-    
-    // Initialize auth state from localStorage
-    initAuth() {
-      if (process.client && typeof localStorage !== 'undefined') {
-        try {
-          const authData = localStorage.getItem('auth');
-          if (authData) {
-            const { isAuthenticated, isAdmin, user } = JSON.parse(authData);
-            this.setAuth(isAuthenticated, isAdmin, user);
-          }
-        } catch (error) {
-          console.error('Error initializing auth from localStorage:', error);
-          this.setAuth(false, false, null);
-        }
-      }
+      return true;
     }
-  }
-});
+    return false;
+  };
 
-// Composable to use the auth store
-export const useAuth = () => {
-  const authStore = useAuthStore();
-  
-  // Initialize auth on client-side
-  if (process.client) {
-    onMounted(() => {
-      authStore.initAuth();
-    });
-  }
-  
-  return authStore;
+  const logout = () => {
+    authState.isAuthenticated = false;
+    authState.isAdmin = false;
+    authState.user = null;
+    
+    // Remove auth state from localStorage
+    if (process.client && typeof localStorage !== 'undefined') {
+      localStorage.removeItem('auth');
+    }
+  };
+
+  // Return a simpler API that matches what components expect
+  return {
+    authenticated: authState.isAuthenticated,
+    hasAdminAccess: authState.isAdmin,
+    currentUser: authState.user,
+    login,
+    logout
+  };
+};
+
+// Keep this for backward compatibility
+// but it doesn't actually use Pinia anymore
+export const useAuthStore = () => {
+  return useAuth();
 }; 
