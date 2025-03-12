@@ -11,7 +11,8 @@
         "generate": "nuxt generate",
         "preview": "nuxt preview",
         "start": "node .output/server/index.mjs",
-        "postinstall": "echo 'Skipping nuxt prepare to avoid rollup issues'"
+        "postinstall": "echo 'Skipping nuxt prepare to avoid rollup issues'",
+        "heroku-prebuild": "rm -rf node_modules package-lock.json && npm install @rollup/rollup-linux-x64-gnu@4.6.1 --no-save"
     },
     "dependencies": {
         "@directus/sdk": "^19.0.1",
