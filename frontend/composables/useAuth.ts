@@ -30,7 +30,7 @@ export const useAuthStore = defineStore('auth', {
       this.user = user;
       
       // Save auth state to localStorage (persist through page refresh)
-      if (process.client) {
+      if (process.client && typeof localStorage !== 'undefined') {
         if (isAuthenticated && user) {
           localStorage.setItem('auth', JSON.stringify({ isAuthenticated, isAdmin, user }));
         } else {
@@ -57,11 +57,16 @@ export const useAuthStore = defineStore('auth', {
     
     // Initialize auth state from localStorage
     initAuth() {
-      if (process.client) {
-        const authData = localStorage.getItem('auth');
-        if (authData) {
-          const { isAuthenticated, isAdmin, user } = JSON.parse(authData);
-          this.setAuth(isAuthenticated, isAdmin, user);
+      if (process.client && typeof localStorage !== 'undefined') {
+        try {
+          const authData = localStorage.getItem('auth');
+          if (authData) {
+            const { isAuthenticated, isAdmin, user } = JSON.parse(authData);
+            this.setAuth(isAuthenticated, isAdmin, user);
+          }
+        } catch (error) {
+          console.error('Error initializing auth from localStorage:', error);
+          this.setAuth(false, false, null);
         }
       }
     }
