@@ -3,8 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/color-mode',
-    '@pinia/nuxt'
+    '@nuxtjs/color-mode'
     // '@nuxt/image' - removed to fix deployment issues
   ],
   // image configuration removed
