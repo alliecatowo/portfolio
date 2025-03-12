@@ -12,40 +12,36 @@ ingress:
 name: allisons-portfolio-frontend
 region: sfo
 services:
-  - build_command: |
-      # Handle rollup native dependency explicitly
-      rm -rf node_modules package-lock.json
-      npm install --omit=optional
-      # Explicitly install the needed Linux-specific Rollup binding
-      npm install --no-save @rollup/rollup-linux-x64-gnu
-      # Now build
-      npm run build
+  - name: frontend
     environment_slug: node-js
+    github:
+      branch: fix/portfolio-optimization
+      repo: alliecatowo/portfolio
+    source_dir: frontend
     envs:
       - key: NODE_ENV
-        scope: BUILD_TIME
-        value: production
-      - key: NODE_OPTIONS
-        scope: BUILD_TIME
-        value: --unhandled-rejections=strict
-      - key: NUXT_PUBLIC_API_URL
         scope: RUN_TIME
-        value: https://directus.allisons.dev
+        value: production
+      - key: NITRO_PRESET
+        scope: BUILD_TIME
+        value: digital-ocean
+      - key: SERVER_PRESET
+        scope: BUILD_TIME
+        value: digital-ocean
       - key: NUXT_PUBLIC_DIRECTUS_URL
         scope: RUN_TIME
         value: https://directus.allisons.dev
+      - key: NUXT_PUBLIC_DIRECTUS_TOKEN
+        scope: RUN_TIME
+        value: 2eEMQA40l35OBtWNH6nDS166k0o800sb
       - key: DEV_SITE_URL
         scope: RUN_TIME
         value: https://allisons.dev
       - key: TATTOO_SITE_URL
         scope: RUN_TIME
         value: https://tattoo.allisons.dev
-    git:
-      branch: deploy/digital-ocean
-      repo_clone_url: https://github.com/alliecatowo/portfolio.git
     http_port: 3000
     instance_count: 1
     instance_size_slug: basic-xs
-    name: frontend
-    run_command: node .output/server/index.mjs
-    source_dir: frontend
+    routes:
+      - path: /

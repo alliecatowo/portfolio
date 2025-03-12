@@ -19,7 +19,9 @@ export default defineNuxtConfig({
       
       // Development settings
       enableDevtools: process.env.NUXT_PUBLIC_ENABLE_DEVTOOLS === 'true'
-    }
+    },
+    // SERVER_PRESET required for Digital Ocean
+    serverPreset: process.env.SERVER_PRESET || 'digital-ocean'
   },
   colorMode: {
     preference: 'system',
@@ -69,27 +71,15 @@ export default defineNuxtConfig({
   },
   // Digital Ocean specific configurations
   nitro: {
-    preset: 'node-server',
-    // Enable better error handling
+    preset: process.env.NITRO_PRESET || 'digital-ocean',
+    // Enable error handler for better debugging
     errorHandler: '~/server/error-handler.ts',
-    // Development configuration
-    devProxy: {
-      '/api': {
-        target: 'https://directus.allisons.dev',
-        changeOrigin: true,
-        prependPath: true
-      }
-    },
-    // Enable source maps
+    // Enable source maps in development
     typescript: {
-      generateSourceMap: true
+      generateSourceMap: process.env.NODE_ENV !== 'production'
     }
   },
   // Development flags
-  dev: process.env.NODE_ENV !== 'production',
   debug: process.env.NODE_ENV !== 'production',
-  sourcemap: process.env.NODE_ENV !== 'production' || true,
-  build: {
-    transpile: []
-  }
+  sourcemap: process.env.NODE_ENV !== 'production'
 })

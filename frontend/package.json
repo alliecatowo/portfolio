@@ -10,6 +10,7 @@
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
+        "start": "node .output/server/index.mjs",
         "postinstall": "echo 'Skipping nuxt prepare to avoid rollup issues'"
     },
     "dependencies": {
