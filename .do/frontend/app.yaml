@@ -6,10 +6,10 @@ name: allisons-portfolio-frontend
 region: sfo
 services:
   - name: frontend
-    build_command: npm install --no-save @rollup/rollup-linux-x64-gnu && npm run build
+    build_command: npm run build
     environment_slug: node-js
     github:
-      branch: fix/portfolio-optimization
+      branch: fix/remove-pinia
       repo: alliecatowo/portfolio
     source_dir: frontend
     run_command: npm run start
@@ -17,6 +17,9 @@ services:
       - key: NODE_ENV
         scope: RUN_TIME
         value: production
+      - key: HOST
+        scope: RUN_TIME
+        value: 0.0.0.0
       - key: SERVER_PRESET
         scope: RUN_TIME
         value: digital-ocean
@@ -35,6 +38,9 @@ services:
       - key: TATTOO_SITE_URL
         scope: RUN_TIME
         value: https://tattoo.allisons.dev
+      - key: SERVER_PRESET
+        scope: RUN_TIME
+        value: digital-ocean
     http_port: 3000
     instance_count: 1
     instance_size_slug: basic-xs
