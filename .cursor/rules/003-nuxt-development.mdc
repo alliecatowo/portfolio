@@ -1,0 +1,89 @@
+---
+name: Nuxt.js Development
+description: Nuxt.js development guidelines and best practices
+globs:
+  - "frontend/**/*.{ts,js,vue}"
+  - "frontend/nuxt.config.ts"
+triggers:
+  - file_change
+  - chat
+---
+
+# Nuxt.js Development Guidelines
+
+Best practices and configuration guidelines for the Nuxt.js frontend application.
+
+## Local Development
+
+Use the following commands for local development:
+
+```bash
+# Navigate to frontend directory
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## Configuration Best Practices
+
+The Nuxt configuration should include:
+
+```typescript
+// nuxt.config.ts
+export default defineNuxtConfig({
+  // Enable development tools when needed
+  devtools: { enabled: process.env.NODE_ENV !== 'production' || true },
+  
+  // Runtime config with environment variables
+  runtimeConfig: {
+    public: {
+      // Public variables available to the browser
+      apiUrl: process.env.API_URL,
+      // Enable development tools conditionally
+      enableDevtools: process.env.ENABLE_DEVTOOLS === 'true'
+    }
+  },
+  
+  // Error handling
+  nitro: {
+    errorHandler: '~/server/error-handler.ts',
+  },
+  
+  // Development flags
+  dev: process.env.NODE_ENV !== 'production',
+  debug: process.env.NODE_ENV !== 'production',
+})
+```
+
+## Error Handling
+
+Implement robust error handling in:
+
+1. API calls in composables
+2. Component lifecycle hooks
+3. Server middleware
+4. Async data fetching
+
+## Component Best Practices
+
+- Use composables for reusable logic
+- Implement defensive programming practices
+- Add proper error boundaries
+- Use TypeScript for better type safety
+- Include console logging during development
+
+## Development & Production Modes
+
+Configure the application to work well in both modes:
+- Development: Show detailed errors, enable source maps
+- Production: Optimize for performance, minimize error details 

@@ -1,0 +1,103 @@
+---
+name: Directus CMS Integration
+description: Guidelines for integrating with Directus headless CMS
+globs:
+  - "frontend/composables/useDirectus.ts"
+  - "frontend/composables/usePortfolioContent.ts"
+  - "directus/**"
+triggers:
+  - file_change
+  - chat
+---
+
+# Directus CMS Integration Guidelines
+
+Best practices for working with the Directus headless CMS and integrating it with the frontend.
+
+## API Connection
+
+The Directus API should be accessed through composables:
+
+```typescript
+// useDirectus.ts
+export function useDirectus() {
+  const config = useRuntimeConfig();
+  const baseUrl = config.public.directusUrl || 'https://directus.allisons.dev';
+  const token = config.public.directusToken;
+
+  // API access functions
+  const fetchCollection = async (collection, params = {}) => {
+    try {
+      const response = await $fetch(`${baseUrl}/items/${collection}`, {
+        method: 'GET',
+        params,
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      return response;
+    } catch (error) {
+      console.error(`Error fetching ${collection}:`, error);
+      throw error;
+    }
+  };
+
+  return {
+    // Exposed functions
+    fetchCollection,
+    // Other methods...
+  };
+}
+```
+
+## Content Types
+
+The main collections in Directus are:
+
+- `projects`: Developer portfolio projects
+- `gallery`: Artwork and tattoo gallery items
+- `blog_posts`: Blog content for both portfolios
+- `testimonials`: Client testimonials
+
+## Error Handling
+
+Always implement robust error handling when fetching from Directus:
+
+```typescript
+try {
+  const response = await directus.fetchCollection('collection_name', params);
+  // Process response
+} catch (error) {
+  console.error('Error fetching data:', error);
+  // Handle the error appropriately
+  return { data: [], meta: {} }; // Return safe fallback
+}
+```
+
+## Testing the API
+
+Use these commands to test the Directus API directly:
+
+```bash
+# Test gallery endpoint
+curl -s "https://directus.allisons.dev/items/gallery?access_token=YOUR_TOKEN" | jq
+
+# Test collections
+curl -s "https://directus.allisons.dev/collections?access_token=YOUR_TOKEN" | jq
+```
+
+## Seeding and Management
+
+For Directus management, use the CLI tools in the directus folder:
+
+```bash
+cd directus
+node seed-collections.js
+node seed-data.js
+```
+
+## Development Preferences
+
+- Always use the composables for data fetching
+- Add proper error handling and data validation
+- Implement defensive programming when accessing API data 

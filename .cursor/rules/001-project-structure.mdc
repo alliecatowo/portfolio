@@ -1,0 +1,48 @@
+---
+name: Portfolio Project Structure
+description: Overall project structure and tooling guidelines
+globs:
+  - "**/*.{ts,js,vue,md,yaml,scss,css,json}"
+triggers:
+  - file_change
+  - chat
+---
+
+# Portfolio Project Structure
+
+This Nuxt.js and Directus-based portfolio project has a specific structure and tooling preferences.
+
+## Project Overview
+
+The portfolio consists of two main components:
+- `frontend/`: A Nuxt.js application that serves the portfolio website
+- `directus/`: A Directus headless CMS for content management
+
+## Development Tools
+
+Always prefer using these tools:
+
+- **doctl**: Digital Ocean CLI for managing deployments
+- **Nuxt CLI**: For local development and testing
+- **Directus API**: For content management and testing
+
+## Deployment Preferences
+
+- **Build on Deploy**: The application should be built during deployment on Digital Ocean, NOT locally
+- **Development Mode**: Enable dev tools when debugging issues with the deployment
+- **Error Handling**: Add robust error handling for API calls and data processing
+
+## Documentation References
+
+- @Nuxt Documentation: https://nuxt.com/docs
+- @Directus Documentation: https://docs.directus.io/
+- @Digital Ocean Docs: https://docs.digitalocean.com/products/app-platform/
+
+## File Structure Conventions
+
+- `frontend/components/`: Vue components organized by feature
+- `frontend/composables/`: Shared composition functions
+- `frontend/pages/`: Nuxt page components
+- `frontend/public/`: Static assets
+- `frontend/server/`: Server middleware and API routes
+- `directus/`: Directus configuration and extensions 

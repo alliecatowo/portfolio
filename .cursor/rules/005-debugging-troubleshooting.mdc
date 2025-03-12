@@ -1,0 +1,102 @@
+---
+name: Debugging and Troubleshooting
+description: Guidelines for debugging and troubleshooting the portfolio application
+globs:
+  - "**/*.{ts,js,vue}"
+  - "**/.env*"
+triggers:
+  - chat
+---
+
+# Debugging and Troubleshooting Guidelines
+
+Strategies and tools for debugging and troubleshooting issues in the portfolio application.
+
+## Development Mode
+
+Enable development mode for better debugging:
+
+```bash
+# .env file
+NODE_ENV=development
+NUXT_PUBLIC_ENABLE_DEVTOOLS=true
+NUXT_DEV_TOOLS_ENABLED=true
+NUXT_LOG_LEVEL=debug
+```
+
+## Browser Developer Tools
+
+Use Chrome DevTools effectively:
+
+1. **Console**: Check for JavaScript errors and log output
+2. **Network**: Monitor API calls to Directus and response errors
+3. **Vue DevTools**: Inspect component state and props
+4. **Sources**: Debug with breakpoints in source-mapped files
+
+## Server-Side Debugging
+
+For server-side issues:
+
+1. **Log Viewing**:
+   ```bash
+   doctl apps logs APP_ID --follow=false | grep -i "error"
+   ```
+
+2. **Server Error Handler**:
+   ```typescript
+   // server/error-handler.ts
+   export default function(error) {
+     console.error('Server error:', error);
+     
+     const isDev = process.env.NODE_ENV !== 'production';
+     
+     return {
+       statusCode: error.statusCode || 500,
+       statusMessage: error.statusMessage || 'Internal Server Error',
+       stack: isDev ? error.stack : undefined,
+       data: {
+         message: error.message,
+         ...(isDev ? { name: error.name, cause: error.cause } : {})
+       }
+     };
+   }
+   ```
+
+## Common Issues and Solutions
+
+### API Connection Issues
+
+1. **CORS Errors**:
+   - Check that the Directus API allows requests from your domain
+   - Verify API endpoint URLs are correct
+
+2. **Authentication Errors**:
+   - Verify API token is valid
+   - Check token expiration
+
+### Rendering Issues
+
+1. **"_s of undefined" Error**:
+   - Implement defensive coding with optional chaining
+   - Check that reactive data is properly initialized
+
+2. **"r is not a function" Error**:
+   - Verify function references before using them
+   - Use typeof checks before calling functions
+
+### Deployment Issues
+
+1. **Build Skipped**:
+   - Ensure the App Spec includes proper build_command
+   - Use the new Node.js buildpack feature
+
+2. **500 Server Errors**:
+   - Enable development mode for detailed error messages
+   - Check server logs for detailed error information
+
+## Preferred Debugging Tools
+
+- Console logging with clear messages
+- Source maps for easier debugging
+- Vue DevTools for component inspection
+- doctl for deployment and log management 

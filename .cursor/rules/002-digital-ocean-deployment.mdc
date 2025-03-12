@@ -1,0 +1,70 @@
+---
+name: Digital Ocean Deployment
+description: Digital Ocean App Platform deployment guidelines and commands
+globs:
+  - "**/*.yaml"
+  - "**/nuxt.config.ts"
+  - "**/.do/**"
+triggers:
+  - chat
+  - file_change
+---
+
+# Digital Ocean Deployment Configuration
+
+Guidelines and preferred commands for managing deployments on Digital Ocean App Platform.
+
+## Deployment Commands
+
+Always use doctl for deployment operations:
+
+```bash
+# Get app info
+doctl apps get APP_ID
+
+# Create a new deployment (with build)
+doctl apps create-deployment APP_ID --wait
+
+# Check logs
+doctl apps logs APP_ID --follow=false | grep -i "error"
+
+# Update app spec
+doctl apps update APP_ID --spec app-spec.yaml
+```
+
+## App Spec Configuration
+
+Important settings to include in DO App Spec:
+
+```yaml
+features:
+  - new-nodejs-buildpack=true  # Use latest Node.js buildpack
+services:
+  - name: web
+    build_command: npm run build
+    run_command: npm start
+    source_dir: /frontend
+    environment_slug: node-js
+    envs:
+      - key: NODE_ENV
+        scope: RUN_TIME
+        value: "production"
+```
+
+## Build Preferences
+
+- **ALWAYS build on deployment**: The code should be built during deployment on Digital Ocean
+- Application should be configured to allow both development and production mode
+- Use the latest Node.js buildpack with proper build commands
+
+## Troubleshooting
+
+- Always check logs with `doctl apps logs APP_ID` when issues occur
+- Enable development tools during debugging
+- Use detailed error handlers that expose information in development mode
+
+## Common Issues
+
+- Build skipped: Make sure build_command is properly configured
+- 500 errors: Check the application logs and enable development mode for debugging
+- First visit failures: Implement proper error handling and check initialization 
