@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: process.env.NODE_ENV !== 'production' },
+  devtools: { enabled: true },
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/color-mode'
@@ -15,7 +15,10 @@ export default defineNuxtConfig({
       
       // Site URLs for multi-site navigation
       devSiteUrl: process.env.DEV_SITE_URL || 'https://allisons.dev',
-      tattooSiteUrl: process.env.TATTOO_SITE_URL || 'https://tattoo.allisons.dev'
+      tattooSiteUrl: process.env.TATTOO_SITE_URL || 'https://tattoo.allisons.dev',
+      
+      // Development settings
+      enableDevtools: process.env.NUXT_PUBLIC_ENABLE_DEVTOOLS === 'true'
     }
   },
   colorMode: {
@@ -66,6 +69,27 @@ export default defineNuxtConfig({
   },
   // Digital Ocean specific configurations
   nitro: {
-    preset: 'node-server'
+    preset: 'node-server',
+    // Enable better error handling
+    errorHandler: '~/server/error-handler.ts',
+    // Development configuration
+    devProxy: {
+      '/api': {
+        target: 'https://directus.allisons.dev',
+        changeOrigin: true,
+        prependPath: true
+      }
+    },
+    // Enable source maps
+    typescript: {
+      generateSourceMap: true
+    }
+  },
+  // Development flags
+  dev: process.env.NODE_ENV !== 'production',
+  debug: process.env.NODE_ENV !== 'production',
+  sourcemap: process.env.NODE_ENV !== 'production' || true,
+  build: {
+    transpile: []
   }
 })

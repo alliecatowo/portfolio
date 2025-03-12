@@ -98,8 +98,24 @@ const fetchFeaturedWorks = async () => {
   error.value = null;
   
   try {
-    const response = await portfolioContent.getFeaturedGalleryItems(6);
-    works.value = response.data;
+    console.log('Fetching featured gallery items...');
+    
+    // Wrap in try/catch to get more details on errors
+    try {
+      const response = await portfolioContent.getFeaturedGalleryItems(6);
+      console.log('Raw response from getFeaturedGalleryItems:', response);
+      
+      // Make sure response has expected format 
+      if (!response || !response.data) {
+        console.error('Invalid response format from getFeaturedGalleryItems', response);
+        throw new Error('Invalid response format');
+      }
+      
+      works.value = response.data;
+    } catch (innerErr) {
+      console.error('Inner error in fetchFeaturedWorks:', innerErr);
+      throw innerErr;
+    }
   } catch (err) {
     console.error('Error fetching featured works:', err);
     error.value = 'Failed to load featured works';

@@ -9,7 +9,30 @@ import { fetchAllBlogPosts, fetchAllGalleryItems } from '~/utils/api/directus';
 export function usePortfolioContent() {
   const isLoading = ref(false);
   const error = ref<string | null>(null);
-  const { getImageUrl } = useDirectus();
+  
+  // Safe access to useDirectus
+  let imageUrlFunction: (fileId: string, params?: any) => string;
+  
+  try {
+    const directus = useDirectus();
+    
+    // Verify that getImageUrl exists and is a function
+    if (directus && typeof directus.getImageUrl === 'function') {
+      imageUrlFunction = directus.getImageUrl;
+    } else {
+      console.error('getImageUrl is not available or not a function in useDirectus');
+      // Fallback function
+      imageUrlFunction = (fileId: string, params = {}) => {
+        return `https://directus.allisons.dev/assets/${fileId}`;
+      };
+    }
+  } catch (err) {
+    console.error('Error accessing useDirectus:', err);
+    // Fallback function
+    imageUrlFunction = (fileId: string, params = {}) => {
+      return `https://directus.allisons.dev/assets/${fileId}`;
+    };
+  }
 
   /**
    * Get featured projects for the developer portfolio
@@ -19,7 +42,19 @@ export function usePortfolioContent() {
     error.value = null;
     
     try {
-      const { fetchProjects } = useDirectus();
+      let fetchProjects;
+      
+      try {
+        const directus = useDirectus();
+        fetchProjects = directus.fetchProjects;
+        
+        if (typeof fetchProjects !== 'function') {
+          throw new Error('fetchProjects is not a function');
+        }
+      } catch (err) {
+        console.error('Error accessing fetchProjects:', err);
+        return { data: [], meta: {} };
+      }
       
       const response = await fetchProjects({
         filter: {
@@ -47,7 +82,7 @@ export function usePortfolioContent() {
           description: project.description,
           slug: project.slug,
           featured: project.featured,
-          image: project.featured_image ? getImageUrl(project.featured_image) : null,
+          image: project.featured_image ? imageUrlFunction(project.featured_image) : null,
           github_url: project.github_url,
           demo_url: project.demo_url,
           technologies: project.technologies || []
@@ -71,7 +106,19 @@ export function usePortfolioContent() {
     error.value = null;
     
     try {
-      const { fetchGalleryItems } = useDirectus();
+      let fetchGalleryItems;
+      
+      try {
+        const directus = useDirectus();
+        fetchGalleryItems = directus.fetchGalleryItems;
+        
+        if (typeof fetchGalleryItems !== 'function') {
+          throw new Error('fetchGalleryItems is not a function');
+        }
+      } catch (err) {
+        console.error('Error accessing fetchGalleryItems:', err);
+        return { data: [], meta: {} };
+      }
       
       const response = await fetchGalleryItems({
         filter: {
@@ -99,7 +146,7 @@ export function usePortfolioContent() {
           description: item.description,
           slug: item.slug,
           featured: item.featured,
-          image: item.image ? getImageUrl(item.image) : null,
+          image: item.image ? imageUrlFunction(item.image) : null,
           style: item.category
         })),
         meta: { pagination: { page: 1, pageSize: limit, total: items.length } }
@@ -121,7 +168,19 @@ export function usePortfolioContent() {
     error.value = null;
     
     try {
-      const { fetchBlogPosts } = useDirectus();
+      let fetchBlogPosts;
+      
+      try {
+        const directus = useDirectus();
+        fetchBlogPosts = directus.fetchBlogPosts;
+        
+        if (typeof fetchBlogPosts !== 'function') {
+          throw new Error('fetchBlogPosts is not a function');
+        }
+      } catch (err) {
+        console.error('Error accessing fetchBlogPosts:', err);
+        return { data: [], meta: {} };
+      }
       
       const filter: any = {};
       
@@ -156,7 +215,7 @@ export function usePortfolioContent() {
           summary: post.summary,
           slug: post.slug,
           date_published: post.date_published,
-          featured_image: post.featured_image ? getImageUrl(post.featured_image) : null,
+          featured_image: post.featured_image ? imageUrlFunction(post.featured_image) : null,
           portfolio_type: post.portfolio_type
         })),
         meta: { pagination: { page, pageSize, total: posts.length } }
@@ -178,7 +237,19 @@ export function usePortfolioContent() {
     error.value = null;
     
     try {
-      const { fetchGalleryItems } = useDirectus();
+      let fetchGalleryItems;
+      
+      try {
+        const directus = useDirectus();
+        fetchGalleryItems = directus.fetchGalleryItems;
+        
+        if (typeof fetchGalleryItems !== 'function') {
+          throw new Error('fetchGalleryItems is not a function');
+        }
+      } catch (err) {
+        console.error('Error accessing fetchGalleryItems for testimonials:', err);
+        return { data: [], meta: {} };
+      }
       
       const response = await fetchGalleryItems({
         filter: {
@@ -188,6 +259,8 @@ export function usePortfolioContent() {
         },
         limit
       });
+      
+      console.log('Raw testimonials response:', response);
       
       // Handle different response formats
       let testimonials = [];
@@ -205,7 +278,7 @@ export function usePortfolioContent() {
           client_name: testimonial.title,
           text: testimonial.description,
           rating: testimonial.rating || 5,
-          image: testimonial.image ? getImageUrl(testimonial.image) : null
+          image: testimonial.image ? imageUrlFunction(testimonial.image) : null
         })),
         meta: { pagination: { page: 1, pageSize: limit, total: testimonials.length } }
       };
@@ -228,7 +301,7 @@ export function usePortfolioContent() {
     if (typeof media === 'string') return media;
     
     // If it's a Directus file ID, get the URL
-    if (media.id) return getImageUrl(media.id);
+    if (media.id) return imageUrlFunction(media.id);
     
     // Fallback
     return '';
