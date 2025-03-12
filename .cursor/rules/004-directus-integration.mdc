@@ -14,6 +14,113 @@ triggers:
 
 Best practices for working with the Directus headless CMS and integrating it with the frontend.
 
+## Directus Deployment Information
+
+- **App ID**: `106f3fa1-b968-41f4-b474-80262cdd1a44`
+- **URL**: `https://directus.allisons.dev` (Custom domain)
+- **Default URL**: `https://allisons-portfolio-directus-9vxdi.ondigitalocean.app`
+- **Region**: `nyc`
+- **Directus Version**: `11.5.1`
+- **HTTP Port**: `8055`
+- **Instance Size**: `basic-xs`
+
+## Directus App Spec Configuration
+
+```yaml
+databases:
+- engine: PG
+  name: db
+domains:
+- domain: directus.allisons.dev
+  type: PRIMARY
+  zone: allisons.dev
+ingress:
+  rules:
+  - component:
+      name: directus
+    match:
+      path:
+        prefix: /
+name: allisons-portfolio-directus
+region: nyc
+services:
+- dockerfile_path: Dockerfile
+  envs:
+  - key: KEY
+    scope: RUN_TIME
+    value: 255d861b-5ea1-5996-9aa3-922530ec40b1
+  - key: SECRET
+    scope: RUN_TIME
+    value: 6116487b-cda1-52c2-b5b5-c8022c45e263
+  - key: ADMIN_EMAIL
+    scope: RUN_TIME
+    value: admin@example.com
+  - key: ADMIN_PASSWORD
+    scope: RUN_TIME
+    value: Admin123!
+  - key: DB_CLIENT
+    scope: RUN_TIME
+    value: pg
+  - key: DB_HOST
+    scope: RUN_TIME
+    value: ${db.HOSTNAME}
+  - key: DB_PORT
+    scope: RUN_TIME
+    value: ${db.PORT}
+  - key: DB_USER
+    scope: RUN_TIME
+    value: ${db.USERNAME}
+  - key: DB_PASSWORD
+    scope: RUN_TIME
+    value: ${db.PASSWORD}
+  - key: DB_DATABASE
+    scope: RUN_TIME
+    value: ${db.DATABASE}
+  - key: DB_SSL
+    scope: RUN_TIME
+    value: "true"
+  - key: DB_SSL__REJECT_UNAUTHORIZED
+    scope: RUN_TIME
+    value: "false"
+  - key: NODE_TLS_REJECT_UNAUTHORIZED
+    scope: RUN_TIME
+    value: "0"
+  - key: PUBLIC_URL
+    scope: RUN_TIME
+    value: https://directus.allisons.dev
+  - key: CORS_ENABLED
+    scope: RUN_TIME
+    value: "true"
+  - key: CORS_ORIGIN
+    scope: RUN_TIME
+    value: https://allisons.dev,https://*.allisons.dev,https://localhost:3000
+  - key: CORS_METHODS
+    scope: RUN_TIME
+    value: GET,POST,PATCH,DELETE,OPTIONS
+  - key: CORS_ALLOWED_HEADERS
+    scope: RUN_TIME
+    value: Content-Type,Authorization,Accept,Origin,X-Requested-With
+  - key: CORS_EXPOSED_HEADERS
+    scope: RUN_TIME
+    value: Content-Range
+  - key: CORS_CREDENTIALS
+    scope: RUN_TIME
+    value: "true"
+  - key: STORAGE_LOCATIONS
+    scope: RUN_TIME
+    value: local
+  http_port: 8055
+  image:
+    registry: directus
+    registry_type: DOCKER_HUB
+    repository: directus
+    tag: 11.5.1
+  instance_count: 1
+  instance_size_slug: basic-xs
+  name: directus
+  source_dir: directus
+```
+
 ## API Connection
 
 The Directus API should be accessed through composables:
@@ -59,6 +166,26 @@ The main collections in Directus are:
 - `blog_posts`: Blog content for both portfolios
 - `testimonials`: Client testimonials
 
+## CORS Configuration
+
+Directus is configured with the following CORS settings:
+
+- **Allowed Origins**: `https://allisons.dev`, `https://*.allisons.dev`, `https://localhost:3000`
+- **Allowed Methods**: `GET`, `POST`, `PATCH`, `DELETE`, `OPTIONS`
+- **Allowed Headers**: `Content-Type`, `Authorization`, `Accept`, `Origin`, `X-Requested-With`
+- **Exposed Headers**: `Content-Range`
+- **Credentials**: Enabled
+
+If you encounter CORS issues, verify these settings match your needs.
+
+## Database Configuration
+
+Directus uses a PostgreSQL database with the following configuration:
+
+- **DB Client**: `pg` (PostgreSQL)
+- **SSL**: Enabled with unauthorized rejection disabled
+- **Connection**: Linked to Digital Ocean managed database
+
 ## Error Handling
 
 Always implement robust error handling when fetching from Directus:
@@ -80,24 +207,30 @@ Use these commands to test the Directus API directly:
 
 ```bash
 # Test gallery endpoint
-curl -s "https://directus.allisons.dev/items/gallery?access_token=YOUR_TOKEN" | jq
+curl -s "https://directus.allisons.dev/items/gallery?access_token=2eEMQA40l35OBtWNH6nDS166k0o800sb" | jq
 
 # Test collections
-curl -s "https://directus.allisons.dev/collections?access_token=YOUR_TOKEN" | jq
+curl -s "https://directus.allisons.dev/collections?access_token=2eEMQA40l35OBtWNH6nDS166k0o800sb" | jq
 ```
 
-## Seeding and Management
+## Directus Management
 
-For Directus management, use the CLI tools in the directus folder:
+For Directus management, use the following commands:
 
 ```bash
-cd directus
-node seed-collections.js
-node seed-data.js
+# Get Directus app details
+doctl apps get 106f3fa1-b968-41f4-b474-80262cdd1a44
+
+# Check Directus logs
+doctl apps logs 106f3fa1-b968-41f4-b474-80262cdd1a44 --follow=false | grep -i "error"
+
+# Create new deployment
+doctl apps create-deployment 106f3fa1-b968-41f4-b474-80262cdd1a44 --wait
 ```
 
 ## Development Preferences
 
 - Always use the composables for data fetching
 - Add proper error handling and data validation
-- Implement defensive programming when accessing API data 
+- Implement defensive programming when accessing API data
+- Test API endpoints directly when troubleshooting 

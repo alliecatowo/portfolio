@@ -1,18 +1,78 @@
 ---
-name: Digital Ocean Deployment
-description: Digital Ocean App Platform deployment guidelines and commands
-globs:
-  - "**/*.yaml"
-  - "**/nuxt.config.ts"
-  - "**/.do/**"
-triggers:
-  - chat
-  - file_change
+description: Digital Ocean App Platform deployment guidelines and commands.a
+globs: 
+alwaysApply: false
 ---
 
 # Digital Ocean Deployment Configuration
 
 Guidelines and preferred commands for managing deployments on Digital Ocean App Platform.
+
+## Application Information
+
+- **Frontend App ID**: `50a97355-ec4a-40b4-a3ec-62f4eb46c3c7`
+- **Frontend URL**: `https://allisons-portfolio-frontend-l8ebf.ondigitalocean.app`
+- **Directus App ID**: `106f3fa1-b968-41f4-b474-80262cdd1a44`
+- **Directus URL**: `https://directus.allisons.dev`
+- **Custom Domain**: `allisons.dev`
+
+## Existing App YAML Configuration
+
+The frontend application uses the following App Spec configuration:
+
+```yaml
+domains:
+  - domain: allisons.dev
+    type: PRIMARY
+    zone: allisons.dev
+ingress:
+  rules:
+    - component:
+        name: frontend
+      match:
+        path:
+          prefix: /
+name: allisons-portfolio-frontend
+region: sfo
+services:
+  - build_command: |
+      # Handle rollup native dependency explicitly
+      rm -rf node_modules package-lock.json
+      npm install --omit=optional
+      # Explicitly install the needed Linux-specific Rollup binding
+      npm install --no-save @rollup/rollup-linux-x64-gnu
+      # Now build
+      npm run build
+    environment_slug: node-js
+    envs:
+      - key: NODE_ENV
+        scope: BUILD_TIME
+        value: production
+      - key: NODE_OPTIONS
+        scope: BUILD_TIME
+        value: --unhandled-rejections=strict
+      - key: NUXT_PUBLIC_API_URL
+        scope: RUN_TIME
+        value: https://directus.allisons.dev
+      - key: NUXT_PUBLIC_DIRECTUS_URL
+        scope: RUN_TIME
+        value: https://directus.allisons.dev
+      - key: DEV_SITE_URL
+        scope: RUN_TIME
+        value: https://allisons.dev
+      - key: TATTOO_SITE_URL
+        scope: RUN_TIME
+        value: https://tattoo.allisons.dev
+    git:
+      branch: deploy/digital-ocean
+      repo_clone_url: https://github.com/alliecatowo/portfolio.git
+    http_port: 3000
+    instance_count: 1
+    instance_size_slug: basic-xs
+    name: frontend
+    run_command: node .output/server/index.mjs
+    source_dir: frontend
+```
 
 ## Deployment Commands
 
@@ -20,46 +80,55 @@ Always use doctl for deployment operations:
 
 ```bash
 # Get app info
-doctl apps get APP_ID
+doctl apps get 50a97355-ec4a-40b4-a3ec-62f4eb46c3c7
 
 # Create a new deployment (with build)
-doctl apps create-deployment APP_ID --wait
+doctl apps create-deployment 50a97355-ec4a-40b4-a3ec-62f4eb46c3c7 --wait
 
 # Check logs
-doctl apps logs APP_ID --follow=false | grep -i "error"
+doctl apps logs 50a97355-ec4a-40b4-a3ec-62f4eb46c3c7 --follow=false | grep -i "error"
 
 # Update app spec
-doctl apps update APP_ID --spec app-spec.yaml
+doctl apps update 50a97355-ec4a-40b4-a3ec-62f4eb46c3c7 --spec app.yaml
 ```
 
-## App Spec Configuration
+## Build Configuration
 
-Important settings to include in DO App Spec:
+The current build configuration uses several important steps:
 
-```yaml
-features:
-  - new-nodejs-buildpack=true  # Use latest Node.js buildpack
-services:
-  - name: web
-    build_command: npm run build
-    run_command: npm start
-    source_dir: /frontend
-    environment_slug: node-js
-    envs:
-      - key: NODE_ENV
-        scope: RUN_TIME
-        value: "production"
-```
+1. **Clean Installation**: Removes existing node_modules and package-lock.json
+2. **Optimized Install**: Uses `npm install --omit=optional` for faster installation
+3. **Platform-specific Dependencies**: Installs the Linux-specific Rollup binding
+4. **Build Process**: Executes `npm run build` to create production assets
+5. **Runtime Command**: Uses `node .output/server/index.mjs` to serve the application
 
-## Build Preferences
+## Environment Variables
 
-- **ALWAYS build on deployment**: The code should be built during deployment on Digital Ocean
-- Application should be configured to allow both development and production mode
-- Use the latest Node.js buildpack with proper build commands
+Key environment variables used in the deployment:
+
+- **NODE_ENV** (BUILD_TIME): `production` - Sets build mode
+- **NODE_OPTIONS** (BUILD_TIME): `--unhandled-rejections=strict` - Strict error handling
+- **NUXT_PUBLIC_API_URL** (RUN_TIME): Points to Directus API
+- **NUXT_PUBLIC_DIRECTUS_URL** (RUN_TIME): Points to Directus CMS
+- **DEV_SITE_URL** and **TATTOO_SITE_URL** (RUN_TIME): Custom domain URLs
+
+## Development Mode Configuration
+
+To enable development mode on Digital Ocean:
+
+1. Update the NODE_ENV environment variable:
+   ```bash
+   doctl apps update-env 50a97355-ec4a-40b4-a3ec-62f4eb46c3c7 --set NODE_ENV=development,NUXT_PUBLIC_ENABLE_DEVTOOLS=true
+   ```
+
+2. Create a new deployment to apply changes:
+   ```bash
+   doctl apps create-deployment 50a97355-ec4a-40b4-a3ec-62f4eb46c3c7 --wait
+   ```
 
 ## Troubleshooting
 
-- Always check logs with `doctl apps logs APP_ID` when issues occur
+- Always check logs with `doctl apps logs 50a97355-ec4a-40b4-a3ec-62f4eb46c3c7` when issues occur
 - Enable development tools during debugging
 - Use detailed error handlers that expose information in development mode
 
