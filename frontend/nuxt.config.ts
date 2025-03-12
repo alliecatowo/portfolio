@@ -3,7 +3,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/color-mode'
+    '@nuxtjs/color-mode',
+    '@pinia/nuxt'
     // '@nuxt/image' - removed to fix deployment issues
   ],
   // image configuration removed
@@ -72,10 +73,6 @@ export default defineNuxtConfig({
     preset: 'digital-ocean',
     // Enable error handler for better debugging
     errorHandler: '~/server/error-handler.ts',
-    // Enable source maps in development
-    typescript: {
-      generateSourceMap: process.env.NODE_ENV !== 'production'
-    }
   },
   // Development flags
   debug: process.env.NODE_ENV !== 'production',
