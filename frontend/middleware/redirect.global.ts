@@ -43,4 +43,41 @@ export default defineNuxtRouteMiddleware((to, from) => {
       return navigateTo(`/dev${to.path}`);
     }
   }
+
+  // Redirect old routes to new routes
+  
+  // Main home page redirects
+  if (to.path === '/strapi') {
+    return navigateTo('/');
+  }
+  
+  // Redirect old /api routes 
+  if (to.path.startsWith('/api/')) {
+    console.warn('Deprecated API route accessed:', to.path);
+    return navigateTo('/');
+  }
+  
+  // Redirect old portfolio path to dev
+  if (to.path.match(/^\/portfolio\/?/) && !to.path.match(/^\/dev\/?/)) {
+    return navigateTo(to.path.replace(/^\/portfolio/, '/dev'));
+  }
+  
+  // Redirect old gallery path
+  if (to.path.match(/^\/gallery\/?/) && !to.path.match(/^\/tattoo\/gallery\/?/)) {
+    return navigateTo(to.path.replace(/^\/gallery/, '/tattoo/gallery'));
+  }
+  
+  // Redirect old testimonials path
+  if (to.path.match(/^\/testimonials\/?/) && !to.path.match(/^\/tattoo\/testimonials\/?/)) {
+    return navigateTo(to.path.replace(/^\/testimonials/, '/tattoo/testimonials'));
+  }
+  
+  // Redirect old blog paths
+  if (to.path.match(/^\/blog\/?/)) {
+    if (to.query.type === 'dev') {
+      return navigateTo(to.path.replace(/^\/blog/, '/dev/blog'));
+    } else if (to.query.type === 'tattoo') {
+      return navigateTo(to.path.replace(/^\/blog/, '/tattoo/blog'));
+    }
+  }
 }); 

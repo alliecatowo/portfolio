@@ -3,33 +3,9 @@
  */
 
 /**
- * Check if a URL is a Vercel deployment URL
+ * Check if a URL is a Digital Ocean deployment URL
  * @param url - URL to check
- * @returns boolean indicating if the URL is a Vercel deployment
- */
-export function isVercelUrl(url: string): boolean {
-  // Check for vercel.app domains
-  if (url.includes('.vercel.app')) {
-    return true;
-  }
-  
-  // Check for vercel preview URLs (*.vercel.app)
-  if (url.match(/[a-z0-9-]+\.vercel\.app/i)) {
-    return true;
-  }
-  
-  // Check for Vercel branch preview URLs
-  if (url.match(/[a-z0-9-]+-[a-z0-9-]+\.vercel\.app/i)) {
-    return true;
-  }
-  
-  return false;
-}
-
-/**
- * Check if a URL is a DigitalOcean deployment URL
- * @param url - URL to check
- * @returns boolean indicating if the URL is a DigitalOcean deployment
+ * @returns boolean indicating if the URL is a Digital Ocean deployment
  */
 export function isDigitalOceanUrl(url: string): boolean {
   // Check for ondigitalocean.app domains
@@ -64,10 +40,8 @@ export function getAllowedOrigins(baseOrigins: string[] = []): string[] {
   origins.push('https://tattoo.allisons.dev');
   origins.push('https://directus.allisons.dev');
   
-  // Add Vercel domains for the main project
-  origins.push('https://portfolio-alliecatowo.vercel.app');
-  
   // Add DigitalOcean domains
+  origins.push('https://allisons-portfolio-frontend-l8ebf.ondigitalocean.app');
   origins.push('https://allisons-portfolio-directus-9vxdi.ondigitalocean.app');
   
   return origins;

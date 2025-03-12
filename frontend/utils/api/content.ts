@@ -230,24 +230,35 @@ export async function getTattooWorkBySlug(slug: string) {
  */
 export async function getTestimonials(limit = 10) {
   try {
-    const { fetchItems } = useDirectus();
+    // Using galleryItems with testimonial category is more reliable than a separate collection
+    const { fetchGalleryItems } = useDirectus();
     
-    const response = await fetchItems('testimonials', {
+    const response = await fetchGalleryItems({
       filter: {
-        featured: {
-          _eq: true
+        category: {
+          _eq: 'testimonial'
         }
       },
       limit
     });
 
+    // Handle different response formats safely
+    let data = [];
+    if (response) {
+      if (Array.isArray(response)) {
+        data = response;
+      } else if (typeof response === 'object') {
+        data = response.data || [];
+      }
+    }
+
     return {
-      data: response.data || [],
-      meta: response.meta || {}
+      data,
+      meta: { pagination: { page: 1, pageSize: limit, total: data.length } }
     };
   } catch (error) {
     console.error('Error fetching testimonials:', error);
-    return { data: [], meta: {} };
+    return { data: [], meta: { pagination: { page: 1, pageSize: limit, total: 0 } } };
   }
 }
 

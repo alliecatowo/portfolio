@@ -155,7 +155,7 @@
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
 import { useDirectus } from '~/composables/useDirectus';
-import { fetchAllGalleryItems } from '~/utils/api/directus';
+import { usePortfolioContent } from '~/composables/usePortfolioContent';
 
 // Ensure site config is set to tattoo
 const siteConfig = useSiteConfig();
@@ -167,8 +167,11 @@ if (siteConfig.value?.type !== 'tattoo') {
   };
 }
 
-// Use Directus composable
+// Use Directus composable for image URLs
 const { getImageUrl } = useDirectus();
+
+// Use portfolio content API
+const portfolioContent = usePortfolioContent();
 
 // State
 const testimonials = ref([]);
@@ -181,18 +184,11 @@ const fetchTestimonials = async () => {
   error.value = null;
   
   try {
-    const result = await fetchAllGalleryItems({
-      filter: {
-        category: {
-          _eq: 'testimonial'
-        }
-      },
-      sort: ['sort']
-    });
+    const result = await portfolioContent.getTestimonials();
     
-    console.log('Testimonials from Directus:', result);
+    console.log('Testimonials from Directus:', result.data);
     
-    testimonials.value = result || [];
+    testimonials.value = result.data || [];
   } catch (err) {
     console.error('Error fetching testimonials:', err);
     error.value = 'Failed to load testimonials. Please try again.';

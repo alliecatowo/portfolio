@@ -26,7 +26,7 @@
           <div class="h-64 overflow-hidden">
             <img 
               v-if="work.images && work.images.data && work.images.data.length > 0" 
-              :src="getStrapiMedia(work.images.data[0].attributes.url)" 
+              :src="getMediaUrl(work.images.data[0].attributes.url)" 
               :alt="work.title" 
               class="w-full h-full object-cover"
             />
@@ -81,31 +81,32 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useStrapi } from '~/composables/useStrapi';
+import { usePortfolioContent } from '~/composables/usePortfolioContent';
 
-const strapi = useStrapi();
+// Portfolio API
+const portfolioContent = usePortfolioContent();
 const works = ref<any[]>([]);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
 
-// Fetch featured tattoo works from Strapi
+// Get media URL helper
+const { getMediaUrl } = portfolioContent;
+
+// Fetch featured gallery items
 const fetchFeaturedWorks = async () => {
   isLoading.value = true;
   error.value = null;
   
   try {
-    const response = await strapi.getFeaturedTattooWorks(3);
+    const response = await portfolioContent.getFeaturedGalleryItems(6);
     works.value = response.data;
   } catch (err) {
-    console.error('Error fetching featured tattoo works:', err);
-    error.value = 'Failed to load tattoo works. Please try again later.';
+    console.error('Error fetching featured works:', err);
+    error.value = 'Failed to load featured works';
   } finally {
     isLoading.value = false;
   }
 };
-
-// Get Strapi media helper
-const { getStrapiMedia } = strapi;
 
 onMounted(() => {
   fetchFeaturedWorks();

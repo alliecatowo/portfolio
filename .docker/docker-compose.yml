@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ..
+      dockerfile: .docker/Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NUXT_PUBLIC_DIRECTUS_URL=http://directus:8055
+      - NUXT_PUBLIC_DIRECTUS_TOKEN=2eEMQA40l35OBtWNH6nDS166k0o800sb
+      - DEV_SITE_URL=http://localhost:3000
+      - TATTOO_SITE_URL=http://localhost:3000/tattoo
+    depends_on:
+      - directus
+    volumes:
+      - ../frontend:/app
+      - /app/node_modules
+    command: npm run dev
+
+  directus:
+    image: directus/directus:latest
+    ports:
+      - "8055:8055"
+    volumes:
+      - directus_uploads:/directus/uploads
+      - directus_database:/directus/database
+    environment:
+      KEY: '255d861b-5ea1-5996-9aa3-922530ec40b1'
+      SECRET: '6116487b-cda1-52c2-b5b5-c8022c45e263'
+      DB_CLIENT: 'sqlite3'
+      DB_FILENAME: '/directus/database/data.db'
+      ADMIN_EMAIL: 'admin@example.com'
+      ADMIN_PASSWORD: 'Admin123!'
+      PUBLIC_URL: 'http://localhost:8055'
+      CORS_ENABLED: 'true'
+      CORS_ORIGIN: 'http://localhost:3000'
+      CORS_METHODS: 'GET,POST,PATCH,DELETE'
+      CORS_ALLOWED_HEADERS: 'Content-Type,Authorization'
+      CORS_EXPOSED_HEADERS: 'Content-Range'
+      CORS_CREDENTIALS: 'true'
+
+volumes:
+  directus_uploads:
+  directus_database: 

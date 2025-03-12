@@ -1,13 +1,12 @@
 import { ref } from 'vue';
 import { useDirectus } from '~/composables/useDirectus';
-import { fetchAllBlogPosts, fetchAllDevProjects, fetchAllGalleryItems } from '~/utils/api/directus';
+import { fetchAllBlogPosts, fetchAllGalleryItems } from '~/utils/api/directus';
 
 /**
- * Compatibility layer for Strapi API using Directus
- * This allows components that were originally built for Strapi to work with Directus
- * without requiring major refactoring
+ * Content management API for the portfolio
+ * Provides functionality for fetching different types of content
  */
-export function useStrapi() {
+export function usePortfolioContent() {
   const isLoading = ref(false);
   const error = ref<string | null>(null);
   const { getImageUrl } = useDirectus();
@@ -20,7 +19,9 @@ export function useStrapi() {
     error.value = null;
     
     try {
-      const projects = await fetchAllDevProjects({
+      const { fetchProjects } = useDirectus();
+      
+      const response = await fetchProjects({
         filter: {
           featured: {
             _eq: true
@@ -29,7 +30,16 @@ export function useStrapi() {
         limit
       });
       
-      // Format response to match Strapi format
+      // Handle different response formats
+      let projects = [];
+      if (response) {
+        if (Array.isArray(response)) {
+          projects = response;
+        } else if (typeof response === 'object') {
+          projects = response.data || [];
+        }
+      }
+      
       return {
         data: projects.map(project => ({
           id: project.id,
@@ -54,41 +64,49 @@ export function useStrapi() {
   };
 
   /**
-   * Get featured tattoo works for the tattoo portfolio
+   * Get featured gallery items for the tattoo portfolio
    */
-  const getFeaturedTattooWorks = async (limit = 3) => {
+  const getFeaturedGalleryItems = async (limit = 3) => {
     isLoading.value = true;
     error.value = null;
     
     try {
-      const works = await fetchAllGalleryItems({
+      const { fetchGalleryItems } = useDirectus();
+      
+      const response = await fetchGalleryItems({
         filter: {
           featured: {
             _eq: true
-          },
-          type: {
-            _eq: 'tattoo'
           }
         },
         limit
       });
       
-      // Format response to match Strapi format
+      // Handle different response formats
+      let items = [];
+      if (response) {
+        if (Array.isArray(response)) {
+          items = response;
+        } else if (typeof response === 'object') {
+          items = response.data || [];
+        }
+      }
+      
       return {
-        data: works.map(work => ({
-          id: work.id,
-          title: work.title,
-          description: work.description,
-          slug: work.slug,
-          featured: work.featured,
-          image: work.image ? getImageUrl(work.image) : null,
-          style: work.category
+        data: items.map(item => ({
+          id: item.id,
+          title: item.title,
+          description: item.description,
+          slug: item.slug,
+          featured: item.featured,
+          image: item.image ? getImageUrl(item.image) : null,
+          style: item.category
         })),
-        meta: { pagination: { page: 1, pageSize: limit, total: works.length } }
+        meta: { pagination: { page: 1, pageSize: limit, total: items.length } }
       };
     } catch (err) {
-      console.error('Error fetching featured tattoo works:', err);
-      error.value = 'Failed to load tattoo works';
+      console.error('Error fetching featured gallery items:', err);
+      error.value = 'Failed to load gallery items';
       return { data: [], meta: {} };
     } finally {
       isLoading.value = false;
@@ -103,6 +121,8 @@ export function useStrapi() {
     error.value = null;
     
     try {
+      const { fetchBlogPosts } = useDirectus();
+      
       const filter: any = {};
       
       if (siteType !== 'both') {
@@ -111,14 +131,23 @@ export function useStrapi() {
         };
       }
       
-      const posts = await fetchAllBlogPosts({
+      const response = await fetchBlogPosts({
         filter,
         sort: ['-date_published'],
         page,
         limit: pageSize
       });
       
-      // Format response to match Strapi format
+      // Handle different response formats
+      let posts = [];
+      if (response) {
+        if (Array.isArray(response)) {
+          posts = response;
+        } else if (typeof response === 'object') {
+          posts = response.data || [];
+        }
+      }
+      
       return {
         data: posts.map(post => ({
           id: post.id,
@@ -142,14 +171,16 @@ export function useStrapi() {
   };
 
   /**
-   * Get testimonials
+   * Get testimonials from gallery items with testimonial category
    */
   const getTestimonials = async (limit = 10) => {
     isLoading.value = true;
     error.value = null;
     
     try {
-      const testimonials = await fetchAllGalleryItems({
+      const { fetchGalleryItems } = useDirectus();
+      
+      const response = await fetchGalleryItems({
         filter: {
           category: {
             _eq: 'testimonial'
@@ -158,7 +189,16 @@ export function useStrapi() {
         limit
       });
       
-      // Format response to match Strapi format
+      // Handle different response formats
+      let testimonials = [];
+      if (response) {
+        if (Array.isArray(response)) {
+          testimonials = response;
+        } else if (typeof response === 'object') {
+          testimonials = response.data || [];
+        }
+      }
+      
       return {
         data: testimonials.map(testimonial => ({
           id: testimonial.id,
@@ -179,9 +219,9 @@ export function useStrapi() {
   };
 
   /**
-   * Get media URL (compatibility function)
+   * Get image URL from file ID
    */
-  const getStrapiMedia = (media: any) => {
+  const getMediaUrl = (media: any) => {
     if (!media) return '';
     
     // If it's already a string URL, return it
@@ -197,9 +237,9 @@ export function useStrapi() {
   return {
     isLoading,
     error,
-    getStrapiMedia,
+    getMediaUrl,
     getFeaturedProjects,
-    getFeaturedTattooWorks,
+    getFeaturedGalleryItems,
     getBlogPosts,
     getTestimonials,
   };

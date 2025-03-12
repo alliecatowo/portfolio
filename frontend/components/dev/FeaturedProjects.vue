@@ -26,7 +26,7 @@
           <div class="h-48 overflow-hidden">
             <img 
               v-if="project.images && project.images.data && project.images.data.length > 0" 
-              :src="getStrapiMedia(project.images.data[0].attributes.url)" 
+              :src="getMediaUrl(project.images.data[0].attributes.url)" 
               :alt="project.title" 
               class="w-full h-full object-cover"
             />
@@ -110,31 +110,32 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useStrapi } from '~/composables/useStrapi';
+import { usePortfolioContent } from '~/composables/usePortfolioContent';
 
-const strapi = useStrapi();
+// Use portfolio content API
+const portfolioContent = usePortfolioContent();
 const projects = ref<any[]>([]);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
 
-// Fetch featured projects from Strapi
+// Get media URL helper
+const { getMediaUrl } = portfolioContent;
+
+// Fetch featured projects from API
 const fetchFeaturedProjects = async () => {
   isLoading.value = true;
   error.value = null;
   
   try {
-    const response = await strapi.getFeaturedProjects(3);
+    const response = await portfolioContent.getFeaturedProjects(3);
     projects.value = response.data;
   } catch (err) {
     console.error('Error fetching featured projects:', err);
-    error.value = 'Failed to load projects. Please try again later.';
+    error.value = 'Failed to load projects';
   } finally {
     isLoading.value = false;
   }
 };
-
-// Get Strapi media helper
-const { getStrapiMedia } = strapi;
 
 onMounted(() => {
   fetchFeaturedProjects();

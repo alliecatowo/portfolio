@@ -11,7 +11,10 @@ export default defineNuxtPlugin(() => {
   
   // Make sure we have a properly formatted URL with https:// prefix
   let formattedUrl = directusUrl;
-  if (!formattedUrl.startsWith('http')) {
+  if (!formattedUrl || typeof formattedUrl !== 'string') {
+    console.warn('Invalid Directus URL provided:', directusUrl);
+    formattedUrl = 'https://directus.allisons.dev'; // Fallback URL
+  } else if (!formattedUrl.startsWith('http')) {
     formattedUrl = `https://${formattedUrl}`;
   }
   
@@ -24,8 +27,15 @@ export default defineNuxtPlugin(() => {
   // Log the initialization for debugging
   console.log(`Directus client initialized with URL: ${formattedUrl}`);
   
-  // Manually expose the API interface to avoid undefined errors
-  const api = directus.api || {};
+  // Safe access to API
+  const getApi = () => {
+    try {
+      return directus.api || {};
+    } catch (err) {
+      console.error('Error accessing Directus API:', err);
+      return {};
+    }
+  };
   
   // Provide all Directus SDK functions to avoid 'undefined' errors
   return {
@@ -33,7 +43,7 @@ export default defineNuxtPlugin(() => {
       directus, 
       readItem, 
       readItems,
-      restClient: api,
+      restClient: getApi(),
       directusUrl: formattedUrl,
       directusToken: config.public.directusToken || '2eEMQA40l35OBtWNH6nDS166k0o800sb'
     },
