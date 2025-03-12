@@ -6,7 +6,6 @@ name: allisons-portfolio-frontend
 region: sfo
 services:
   - name: frontend
-    build_command: npm ci && npm run build
     environment_slug: node-js
     github:
       branch: fix/remove-pinia
