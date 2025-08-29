@@ -164,7 +164,7 @@ const form = reactive({
 });
 
 const submitting = ref(false);
-const formStatus = ref(null);
+const formStatus = ref<{ success: boolean; message: string } | null>(null);
 
 // Form submission handler - in a real app, this would connect to an API
 const submitForm = async () => {

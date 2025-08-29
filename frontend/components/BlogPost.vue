@@ -3,7 +3,7 @@
     <div class="blog-header">
       <h1 class="text-3xl font-bold mb-3">{{ post.title }}</h1>
       <div class="text-gray-600 mb-4">
-        {{ formatDate(post.date_published) }}
+        {{ formatDate(post.date_published || post.date) }}
       </div>
       <div v-if="post.featured_image" class="featured-image mb-6">
         <img 
@@ -56,7 +56,8 @@ function getImageUrl(image: any, options?: any) {
   return image?.url || image
 }
 
-function formatDate(dateString: string) {
+function formatDate(dateString?: string) {
+  if (!dateString) return ''
   const date = new Date(dateString)
   return new Intl.DateTimeFormat('en-US', { 
     year: 'numeric', 

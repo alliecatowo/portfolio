@@ -11,17 +11,13 @@
             <p class="text-lg md:text-xl mb-8 text-gray-700 dark:text-gray-300">
               Full-stack developer specializing in modern web technologies, creative solutions, and clean, efficient code.
             </p>
-            <div class="flex flex-wrap gap-4">
-              <NuxtLink to="/projects" class="btn btn-primary">
-                View Projects
-              </NuxtLink>
-              <NuxtLink to="/contact" class="btn btn-outline">
-                Contact Me
-              </NuxtLink>
+            <div class="flex flex-wrap gap-3">
+              <UButton to="/projects" color="primary">View Projects</UButton>
+              <UButton to="/contact" color="primary" variant="soft">Contact Me</UButton>
             </div>
           </div>
           <div class="md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-            <div class="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+            <div class="aspect-video bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
               <img src="/placeholder-dev.jpg" alt="Developer Hero Image" class="object-cover w-full h-full" />
             </div>
           </div>
@@ -38,10 +34,10 @@
         <div v-if="featuredProjects && featuredProjects.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div 
             v-for="project in featuredProjects" 
-            :key="project._id" 
+            :key="project.slug || project.path || project.title" 
             class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all"
           >
-            <div class="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-700">
+            <div class="aspect-video bg-gray-100 dark:bg-gray-700">
               <img 
                 :src="project.image || '/placeholder-project.jpg'" 
                 :alt="project.title" 
@@ -64,9 +60,9 @@
                   {{ tech }}
                 </span>
               </div>
-              <NuxtLink :to="`/projects/${project._path.split('/').pop()}`" class="btn btn-primary btn-sm w-full">
+              <UButton :to="`/dev/projects/${project.slug || project.path?.split('/').pop()}`" color="primary" size="sm" block>
                 View Project
-              </NuxtLink>
+              </UButton>
             </div>
           </div>
         </div>
@@ -76,9 +72,7 @@
         </div>
 
         <div class="mt-8 text-center">
-          <NuxtLink to="/projects" class="btn btn-outline">
-            View All Projects
-          </NuxtLink>
+          <UButton to="/projects" color="primary" variant="soft">View All Projects</UButton>
         </div>
       </section>
 
@@ -136,12 +130,12 @@
         <div v-if="recentPosts && recentPosts.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div 
             v-for="post in recentPosts" 
-            :key="post._id" 
+            :key="post.slug || post.path" 
             class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all"
           >
-            <div class="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-700">
+            <div class="aspect-video bg-gray-100 dark:bg-gray-700">
               <img 
-                :src="post.image || '/placeholder-blog-dev.jpg'" 
+                :src="post.featured_image || '/placeholder-blog-dev.jpg'" 
                 :alt="post.title" 
                 class="object-cover w-full h-full"
               />
@@ -156,9 +150,9 @@
               <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
                 {{ post.description }}
               </p>
-              <NuxtLink :to="`/blog/${post._path.split('/').pop()}`" class="btn btn-primary btn-sm w-full">
+              <UButton :to="`/blog/${post.slug || post.path?.split('/').pop()}`" color="primary" size="sm" block>
                 Read More
-              </NuxtLink>
+              </UButton>
             </div>
           </div>
         </div>
@@ -168,9 +162,7 @@
         </div>
 
         <div class="mt-8 text-center">
-          <NuxtLink to="/blog" class="btn btn-outline">
-            View All Articles
-          </NuxtLink>
+          <UButton to="/blog" color="primary" variant="soft">View All Articles</UButton>
         </div>
       </section>
 
@@ -180,9 +172,7 @@
         <p class="text-gray-700 dark:text-gray-300 max-w-2xl mx-auto mb-8">
           Have a project idea or need a developer for your team? I'm always open to discussing new opportunities and challenges.
         </p>
-        <NuxtLink to="/contact" class="btn btn-primary">
-          Get in Touch
-        </NuxtLink>
+        <UButton to="/contact" color="primary">Get in Touch</UButton>
       </section>
     </div>
   </div>

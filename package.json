@@ -8,7 +8,10 @@
     "scripts": {
         "build": "pnpm --filter portfolio-frontend build",
         "dev": "pnpm --filter portfolio-frontend dev",
-        "generate": "pnpm --filter portfolio-frontend generate", 
+        "generate": "pnpm --filter portfolio-frontend generate",
         "preview": "pnpm --filter portfolio-frontend preview"
+    },
+    "devDependencies": {
+        "nuxi": "^3.28.0"
     }
 }

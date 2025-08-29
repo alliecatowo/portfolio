@@ -5,23 +5,19 @@
       <section class="py-16 md:py-24">
         <div class="flex flex-col md:flex-row items-center">
           <div class="md:w-1/2 mb-10 md:mb-0 md:pr-12">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-primary-700 dark:text-primary-400">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-primary dark:text-primary-400">
               Allison's Tattoo Art
             </h1>
             <p class="text-lg md:text-xl mb-8 text-gray-700 dark:text-gray-300">
               Specializing in custom designs that blend fine art with self-expression, creating a unique tattoo experience for every client.
             </p>
-            <div class="flex flex-wrap gap-4">
-              <NuxtLink to="/tattoo/gallery" class="btn btn-primary">
-                View Gallery
-              </NuxtLink>
-              <NuxtLink to="/contact" class="btn btn-outline">
-                Book a Session
-              </NuxtLink>
+            <div class="flex flex-wrap gap-3">
+              <UButton to="/tattoo/gallery" color="primary">View Gallery</UButton>
+              <UButton to="/contact" color="primary" variant="soft">Book a Session</UButton>
             </div>
           </div>
           <div class="md:w-1/2 rounded-xl overflow-hidden shadow-lg">
-            <div class="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+            <div class="aspect-video bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
               <img src="/placeholder-tattoo.jpg" alt="Tattoo Artist Hero Image" class="object-cover w-full h-full" />
             </div>
           </div>
@@ -31,7 +27,7 @@
       <!-- Featured Works Section -->
       <section class="py-12 md:py-16">
         <div class="mb-12">
-          <h2 class="text-3xl font-bold text-primary-700 dark:text-primary-400">Featured Works</h2>
+          <h2 class="text-3xl font-bold text-primary dark:text-primary-400">Featured Works</h2>
           <p class="text-gray-600 dark:text-gray-400 mt-2">A sample of my recent tattoo designs</p>
         </div>
 
@@ -49,7 +45,7 @@
               />
             </div>
             <div class="p-6">
-              <h3 class="text-xl font-bold mb-2 text-primary-700 dark:text-primary-400">
+              <h3 class="text-xl font-bold mb-2 text-primary dark:text-primary-400">
                 {{ work.title }}
               </h3>
               <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
@@ -57,13 +53,11 @@
               </p>
               <div class="flex items-center mb-4">
                 <span class="text-sm text-gray-500 dark:text-gray-400">Style: </span>
-                <span class="ml-2 px-2 py-1 bg-primary-700/10 dark:bg-primary-400/20 text-primary-700 dark:text-primary-400 text-xs rounded-full">
+                <span class="ml-2 px-2 py-1 bg-primary/10 dark:bg-primary-400/20 text-primary dark:text-primary-400 text-xs rounded-full">
                   {{ work.style || 'Custom' }}
                 </span>
               </div>
-              <button @click="openTattooDetails(work)" class="btn btn-primary btn-sm w-full">
-                View Details
-              </button>
+              <UButton @click="openTattooDetails(work)" color="primary" size="sm" block>View Details</UButton>
             </div>
           </div>
         </div>
@@ -73,9 +67,7 @@
         </div>
 
         <div class="mt-8 text-center">
-          <NuxtLink to="/tattoo/gallery" class="btn btn-outline">
-            View Full Gallery
-          </NuxtLink>
+          <UButton to="/tattoo/gallery" color="primary" variant="soft">View Full Gallery</UButton>
         </div>
       </section>
 
@@ -83,14 +75,14 @@
       <section class="py-12 md:py-16 bg-gray-50 dark:bg-gray-800 rounded-xl">
         <div class="container mx-auto px-4">
           <div class="mb-12 text-center">
-            <h2 class="text-3xl font-bold text-primary-700 dark:text-primary-400">Tattoo Styles</h2>
+            <h2 class="text-3xl font-bold text-primary dark:text-primary-400">Tattoo Styles</h2>
             <p class="text-gray-600 dark:text-gray-400 mt-2">Artistic approaches I specialize in</p>
           </div>
           
           <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
             <div class="flex flex-col items-center">
-              <div class="w-16 h-16 bg-primary-700/10 dark:bg-primary-400/20 rounded-full flex items-center justify-center mb-4">
-                <span class="text-2xl text-primary-700 dark:text-primary-400">🖌️</span>
+              <div class="w-16 h-16 bg-primary/10 dark:bg-primary-400/20 rounded-full flex items-center justify-center mb-4">
+                <span class="text-2xl text-primary dark:text-primary-400">🖌️</span>
               </div>
               <h3 class="text-lg font-semibold mb-2">Fine Line</h3>
               <p class="text-center text-gray-600 dark:text-gray-300">Delicate, precise lines for intricate, detailed designs</p>
@@ -189,9 +181,9 @@
             :key="post.id" 
             class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all"
           >
-            <div class="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-700">
+            <div class="aspect-video bg-gray-100 dark:bg-gray-700">
               <img 
-                :src="post.image || '/placeholder-blog.jpg'" 
+                :src="post.featured_image || '/placeholder-blog.jpg'" 
                 :alt="post.title" 
                 class="object-cover w-full h-full"
               />
@@ -206,9 +198,7 @@
               <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
                 {{ post.description || post.summary }}
               </p>
-              <NuxtLink :to="`/tattoo/blog/${post._path.split('/').pop()}`" class="btn btn-primary btn-sm w-full">
-                Read More
-              </NuxtLink>
+              <UButton :to="`/tattoo/blog/${post.slug || post.path?.split('/').pop()}`" color="primary" size="sm" block>Read More</UButton>
             </div>
           </div>
         </div>
@@ -218,9 +208,7 @@
         </div>
 
         <div class="mt-8 text-center">
-          <NuxtLink to="/tattoo/blog" class="btn btn-outline">
-            View All Articles
-          </NuxtLink>
+          <UButton to="/tattoo/blog" color="primary" variant="soft">View All Articles</UButton>
         </div>
       </section>
 
@@ -230,9 +218,7 @@
         <p class="text-gray-700 dark:text-gray-300 max-w-2xl mx-auto mb-8">
           Let's create something beautiful together. Contact me to discuss your ideas and schedule a consultation.
         </p>
-        <NuxtLink to="/contact" class="btn btn-primary">
-          Book a Consultation
-        </NuxtLink>
+        <UButton to="/contact" color="primary">Book a Consultation</UButton>
       </section>
     </div>
 
@@ -305,10 +291,10 @@ useHead({
 });
 
 // Content data
-const featuredWorks = ref([]);
-const recentPosts = ref([]);
-const testimonials = ref([]);
-const selectedWork = ref(null);
+const featuredWorks = ref<any[]>([]);
+const recentPosts = ref<any[]>([]);
+const testimonials = ref<any[]>([]);
+const selectedWork = ref<any | null>(null);
 
 // Computed property for works with testimonials
 const featuredWorksWithTestimonials = computed(() => {

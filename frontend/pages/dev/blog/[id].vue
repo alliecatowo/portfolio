@@ -1,29 +1,19 @@
 <template>
   <div>
-    <section class="py-12 md:py-20 bg-gradient-to-br from-primary/5 to-primary-50 dark:from-primary-400/10 dark:to-primary-400/20">
-      <div class="container-custom">
+    <section class="py-12 md:py-20">
+      <UContainer>
         <!-- Loading state -->
         <div v-if="loading" class="flex justify-center items-center py-20">
-          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-primary-400"></div>
+          <USkeleton class="h-12 w-12 rounded-full" />
         </div>
         
         <!-- Error state -->
-        <div v-else-if="error" class="bg-red-100 text-red-800 p-4 rounded-lg max-w-2xl mx-auto">
-          <p>{{ error }}</p>
-          <NuxtLink to="/dev/blog" class="mt-4 text-primary dark:text-primary-400 font-medium inline-block">
-            Back to Blog
-          </NuxtLink>
-        </div>
+        <UAlert v-else-if="error" color="error" variant="subtle" title="Failed to load post" class="max-w-xl mx-auto" />
         
         <!-- Blog post content -->
         <div v-else-if="post" class="max-w-3xl mx-auto">
           <div class="mb-8">
-            <NuxtLink to="/dev/blog" class="inline-flex items-center text-primary dark:text-primary-400 hover:underline mb-4">
-              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-              </svg>
-              Back to Blog
-            </NuxtLink>
+            <UButton to="/dev/blog" variant="ghost" color="primary" icon="i-heroicons-arrow-left" class="mb-4">Back to Blog</UButton>
             
             <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ post.title }}</h1>
             
@@ -41,13 +31,7 @@
             </div>
             
             <div class="flex flex-wrap gap-2 mb-8">
-              <span 
-                v-for="tag in post.tags" 
-                :key="tag" 
-                class="px-3 py-1 text-sm rounded-full bg-primary-50 dark:bg-primary-400/20 text-primary dark:text-primary-400"
-              >
-                {{ tag }}
-              </span>
+              <UBadge v-for="tag in post.tags" :key="tag" color="primary" variant="soft">{{ tag }}</UBadge>
             </div>
           </div>
           
@@ -59,18 +43,11 @@
           <!-- Post content -->
           <div class="prose dark:prose-invert max-w-none mb-12">
             <ContentRenderer v-if="post" :value="post" />
-            <div v-else>
-              <p>{{ post?.description }}</p>
-              <!-- Placeholder content for demo -->
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, 
-                nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl.
-              </p>
-            </div>
+            <div v-else></div>
           </div>
           
           <!-- Author bio -->
-          <div v-if="post.author" class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md mb-12">
+          <div v-if="post.author" class="bg-white dark:bg-gray-900/60 rounded-lg p-6 shadow-md mb-12 border border-gray-200/60 dark:border-gray-800/60">
             <div class="flex items-start">
               <div class="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700 mr-4 flex-shrink-0 flex items-center justify-center text-gray-500">
                 Author
@@ -129,12 +106,7 @@
                   class="flex-grow px-4 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-primary dark:focus:ring-primary-400 focus:border-primary dark:focus:border-primary-400"
                   required
                 >
-                <button 
-                  type="submit" 
-                  class="px-6 py-2 bg-primary dark:bg-primary-400 text-white rounded-md hover:bg-primary-700 dark:hover:bg-primary-400-700 transition-colors"
-                >
-                  Subscribe
-                </button>
+                <UButton type="submit" color="primary">Subscribe</UButton>
               </div>
             </form>
           </div>
@@ -142,16 +114,12 @@
         
         <!-- Not found state -->
         <div v-else class="text-center py-16">
-          <svg class="w-16 h-16 mx-auto text-gray-300 dark:text-gray-700 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
+          <UIcon name="i-heroicons-document-magnifying-glass" class="w-14 h-14 mx-auto text-gray-300 dark:text-gray-700 mb-4" />
           <h3 class="text-xl font-semibold mb-2">Post Not Found</h3>
           <p class="text-gray-500 dark:text-gray-400 mb-6">The article you're looking for doesn't exist or has been removed.</p>
-          <NuxtLink to="/dev/blog" class="inline-block px-6 py-3 bg-primary dark:bg-primary-400 text-white rounded-md hover:bg-primary-700 dark:hover:bg-primary-400-700 transition-colors">
-            View All Articles
-          </NuxtLink>
+          <UButton to="/dev/blog" color="primary">View All Articles</UButton>
         </div>
-      </div>
+      </UContainer>
     </section>
   </div>
 </template>
@@ -204,17 +172,10 @@ useHead(() => ({
 </script>
 
 <style scoped>
-.container-custom {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-</style> 
+</style>

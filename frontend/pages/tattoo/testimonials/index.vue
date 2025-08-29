@@ -26,7 +26,7 @@
           <div v-else-if="error" class="bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 px-4 py-3 rounded-lg mb-12">
             <p>{{ error }}</p>
             <button 
-              @click="fetchTestimonials" 
+              @click="retryLoad" 
               class="mt-2 bg-red-800 text-white dark:bg-red-700 px-4 py-2 rounded-md text-sm hover:bg-red-700 dark:hover:bg-red-600 transition-colors"
             >
               Try Again
@@ -34,7 +34,7 @@
           </div>
 
           <!-- No testimonials -->
-          <div v-else-if="testimonials.length === 0" class="text-center py-16">
+          <div v-else-if="testimonials && testimonials.length === 0" class="text-center py-16">
             <p class="text-lg text-gray-600 dark:text-gray-400">No testimonials available at the moment. Check back soon!</p>
           </div>
           
@@ -49,9 +49,9 @@
               <div class="flex flex-col items-center text-center mb-6 relative z-10">
                 <div class="w-24 h-24 bg-gray-300 dark:bg-gray-700 rounded-full mb-4 overflow-hidden">
                   <img 
-                    v-if="testimonials[0].image" 
-                    :src="getImageUrl(testimonials[0].image)" 
-                    :alt="`${testimonials[0].title} photo`"
+                    v-if="testimonials?.[0]?.image" 
+                    :src="getImageUrl(testimonials?.[0]?.image)" 
+                    :alt="`${testimonials?.[0]?.title} photo`"
                     class="w-full h-full object-cover"
                   />
                   <div v-else class="w-full h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
@@ -59,8 +59,8 @@
                   </div>
                 </div>
                 <div class="text-center mb-6">
-                  <h3 class="text-xl font-semibold mb-1">{{ testimonials[0].title }}</h3>
-                  <div class="text-gray-600 dark:text-gray-400">{{ testimonials[0].category }}</div>
+                  <h3 class="text-xl font-semibold mb-1">{{ testimonials?.[0]?.title }}</h3>
+                  <div class="text-gray-600 dark:text-gray-400">{{ testimonials?.[0]?.category }}</div>
                 </div>
                 
                 <div class="text-center mb-8">
@@ -74,15 +74,15 @@
                 </div>
                 
                 <blockquote class="text-lg italic text-center mb-6">
-                  "{{ testimonials[0].description }}"
+                  "{{ testimonials?.[0]?.description }}"
                 </blockquote>
                 
                 <div class="flex justify-center mb-8">
                   <div class="w-40 h-40 bg-gray-300 dark:bg-gray-700 rounded-lg overflow-hidden">
                     <img 
-                      v-if="testimonials[0].image" 
-                      :src="getImageUrl(testimonials[0].image)" 
-                      :alt="`${testimonials[0].title}'s tattoo`"
+                      v-if="testimonials?.[0]?.image" 
+                      :src="getImageUrl(testimonials?.[0]?.image)" 
+                      :alt="`${testimonials?.[0]?.title}'s tattoo`"
                       class="w-full h-full object-cover"
                     />
                   </div>
@@ -91,7 +91,7 @@
             </div>
             
             <!-- Testimonial grid (remaining testimonials) -->
-            <div v-if="testimonials.length > 1" class="grid md:grid-cols-2 gap-8">
+            <div v-if="testimonials && testimonials.length > 1" class="grid md:grid-cols-2 gap-8">
               <div 
                 v-for="(testimonial, index) in testimonials.slice(1)" 
                 :key="testimonial.id" 
@@ -174,6 +174,12 @@ const { data: testimonials, pending: loading, error } = await useAsyncData(
 const getImageUrl = (image: any) => {
   return image?.url || image || '/placeholder-gallery.jpg';
 };
+
+function retryLoad() {
+  if (process.client) {
+    window.location.reload()
+  }
+}
 
 // Meta tags
 useHead({

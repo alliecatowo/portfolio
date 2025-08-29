@@ -4,4 +4,84 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+/* Base theme: white & pink (light), greyish-black & pink (dark) */
+html, body {
+  @apply bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100;
+}
+
+/* Shared container used across pages/components */
+.container-custom {
+  @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Utility for preview text clamping */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* Additional custom styles can be added here if needed */
+
+/* Refined typography for markdown content */
+.prose {
+  @apply max-w-none;
+}
+.prose h1 {
+  @apply mt-10 mb-4 text-4xl font-extrabold tracking-tight;
+}
+.prose h2 {
+  @apply mt-8 mb-3 text-3xl font-bold tracking-tight;
+}
+.prose h3 {
+  @apply mt-6 mb-2 text-2xl font-semibold;
+}
+.prose p {
+  @apply my-4 leading-7;
+}
+.prose ul,
+.prose ol {
+  @apply my-4 pl-6;
+}
+.prose li {
+  @apply leading-7;
+}
+.prose blockquote {
+  @apply my-6 pl-4 border-l-4 border-pink-500/60 text-gray-700 dark:text-gray-300 italic;
+}
+.prose hr {
+  @apply my-10 border-gray-200 dark:border-gray-800;
+}
+.prose pre {
+  @apply my-3 p-4 rounded-xl ring-1 ring-gray-200 dark:ring-gray-800/60 overflow-x-auto bg-gray-50 dark:bg-gray-900/60;
+}
+.prose code:not(pre code) {
+  @apply px-1.5 py-0.5 rounded-md bg-gray-100 dark:bg-gray-900/70 text-pink-600 dark:text-pink-400;
+}
+
+/* Bridge Nuxt UI tokens to utility-like classes for consistency */
+/* These map to @nuxt/ui CSS variables so "primary" accents follow app.config.ts */
+.text-primary { color: var(--ui-primary); }
+.bg-primary { background-color: var(--ui-primary); }
+.border-primary { border-color: var(--ui-primary); }
+
+/* Common patterns used in the app that relied on palette steps */
+.text-primary-700 { color: var(--ui-primary); }
+.text-primary-500 { color: var(--ui-primary); }
+.dark .text-primary-400 { color: var(--ui-primary); }
+.bg-primary-700 { background-color: var(--ui-primary); }
+.ring-primary { --tw-ring-color: var(--ui-primary) !important; }
+
+/* Opacity variants approximated via color-mix */
+.bg-primary-700\/10 { background-color: color-mix(in oklab, var(--ui-primary) 10%, transparent); }
+.bg-primary-700\/20 { background-color: color-mix(in oklab, var(--ui-primary) 20%, transparent); }
+.bg-primary-700\/30 { background-color: color-mix(in oklab, var(--ui-primary) 30%, transparent); }
+
+/* Explicitly set which shade feeds --ui-primary for visibility */
+:root {
+  --ui-primary: var(--ui-color-primary-600);
+}
+.dark {
+  --ui-primary: var(--ui-color-primary-400);
+}

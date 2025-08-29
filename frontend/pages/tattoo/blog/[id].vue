@@ -1,29 +1,19 @@
 <template>
   <div>
-    <section class="py-12 md:py-20 bg-gradient-to-br from-primary-700/10 to-primary-700/20 dark:from-primary-400/20 dark:to-primary-400/30">
-      <div class="container-custom">
+    <section class="py-12 md:py-20">
+      <UContainer>
         <!-- Loading state -->
         <div v-if="loading" class="flex justify-center items-center py-20">
-          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-700 dark:border-primary-400"></div>
+          <USkeleton class="h-12 w-12 rounded-full" />
         </div>
         
         <!-- Error state -->
-        <div v-else-if="error" class="bg-red-100 text-red-800 p-4 rounded-lg max-w-2xl mx-auto">
-          <p>{{ error }}</p>
-          <NuxtLink to="/tattoo/blog" class="mt-4 text-primary-700 dark:text-primary-400 font-medium inline-block">
-            Back to Blog
-          </NuxtLink>
-        </div>
+        <UAlert v-else-if="error" color="error" variant="subtle" title="Failed to load post" class="max-w-xl mx-auto" />
         
         <!-- Blog post content -->
         <div v-else-if="post" class="max-w-3xl mx-auto">
           <div class="mb-8">
-            <NuxtLink to="/tattoo/blog" class="inline-flex items-center text-primary-700 dark:text-primary-400 hover:underline mb-4">
-              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-              </svg>
-              Back to Blog
-            </NuxtLink>
+            <UButton to="/tattoo/blog" variant="ghost" color="primary" icon="i-heroicons-arrow-left" class="mb-4">Back to Blog</UButton>
             
             <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ post.title }}</h1>
             
@@ -58,19 +48,12 @@
           
           <!-- Post content -->
           <div class="prose dark:prose-invert max-w-none mb-12">
-            <ContentRenderer v-if="post" :value="post" />
-            <div v-else>
-              <p>{{ post?.description }}</p>
-              <!-- Placeholder content for demo -->
-              <p>
-                As a tattoo artist, I've had the privilege of creating permanent art on countless individuals, 
-                each with their own unique story and vision.
-              </p>
-            </div>
+          <ContentRenderer v-if="post" :value="post" />
+          <div v-else></div>
           </div>
           
           <!-- Author bio -->
-          <div v-if="post.author" class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md mb-12">
+          <div v-if="post.author" class="bg-white dark:bg-gray-900/60 rounded-lg p-6 shadow-md mb-12 border border-gray-200/60 dark:border-gray-800/60">
             <div class="flex items-start">
               <div class="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700 mr-4 flex-shrink-0 flex items-center justify-center text-gray-500">
                 Author
@@ -115,7 +98,7 @@
           </div>
           
           <!-- CTA -->
-          <div class="mt-16 p-8 bg-white dark:bg-gray-800 rounded-lg shadow-xl text-center relative overflow-hidden">
+          <div class="mt-16 p-8 bg-white dark:bg-gray-900/60 rounded-lg shadow-xl text-center relative overflow-hidden border border-gray-200/60 dark:border-gray-800/60">
             <!-- Decorative elements -->
             <div class="absolute top-0 right-0 h-32 w-32 bg-primary-700/10 dark:bg-primary-400/10 rounded-bl-full"></div>
             <div class="absolute bottom-0 left-0 h-24 w-24 bg-primary-700/10 dark:bg-primary-400/10 rounded-tr-full"></div>
@@ -126,25 +109,19 @@
                 If you're inspired by this story and would like to discuss your own tattoo idea, I'd love to hear from you.
                 Let's create something meaningful together.
               </p>
-              <NuxtLink to="/tattoo/contact" class="inline-block px-6 py-3 bg-primary-700 dark:bg-primary-400 text-white rounded-full shadow-lg transform transition-transform hover:scale-105">
-                Book a Consultation
-              </NuxtLink>
+              <UButton to="/tattoo/contact" color="primary" size="lg" class="rounded-full">Book a Consultation</UButton>
             </div>
           </div>
         </div>
         
         <!-- Not found state -->
         <div v-else class="text-center py-16">
-          <svg class="w-16 h-16 mx-auto text-gray-300 dark:text-gray-700 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
+          <UIcon name="i-heroicons-document-magnifying-glass" class="w-14 h-14 mx-auto text-gray-300 dark:text-gray-700 mb-4" />
           <h3 class="text-xl font-semibold mb-2">Post Not Found</h3>
           <p class="text-gray-500 dark:text-gray-400 mb-6">The article you're looking for doesn't exist or has been removed.</p>
-          <NuxtLink to="/tattoo/blog" class="inline-block px-6 py-3 bg-primary-700 dark:bg-primary-400 text-white rounded-full shadow-lg">
-            View All Stories
-          </NuxtLink>
+          <UButton to="/tattoo/blog" color="primary">View All Stories</UButton>
         </div>
-      </div>
+      </UContainer>
     </section>
   </div>
 </template>
@@ -187,17 +164,10 @@ useHead(() => ({
 </script>
 
 <style scoped>
-.container-custom {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-</style> 
+</style>

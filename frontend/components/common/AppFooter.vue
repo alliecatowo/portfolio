@@ -1,6 +1,6 @@
 <template>
-  <footer class="bg-gray-100 dark:bg-gray-900 py-12 mt-16">
-    <div class="container-custom">
+  <footer class="py-12 mt-16 border-t border-gray-200/60 dark:border-gray-800/60 bg-gray-50 dark:bg-gray-950">
+    <UContainer>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- Site Information -->
         <div>
@@ -68,15 +68,15 @@
         </div>
       </div>
 
-      <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700 text-center text-gray-500 dark:text-gray-400">
+      <div class="mt-12 pt-8 border-t border-gray-200/60 dark:border-gray-800/60 text-center text-gray-500 dark:text-gray-400">
         <p>&copy; {{ new Date().getFullYear() }} {{ siteConfig?.title || 'Portfolio' }}. All rights reserved.</p>
         <p class="mt-2 text-sm">
           Built with 
           <span class="text-primary dark:text-primary-400">❤</span> 
-          using Nuxt.js and Tailwind CSS
+          using Nuxt, Nuxt UI, and Tailwind CSS
         </p>
       </div>
-    </div>
+    </UContainer>
   </footer>
 </template>
 

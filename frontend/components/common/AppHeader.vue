@@ -1,93 +1,87 @@
 <template>
-  <header class="relative py-4 shadow-md dark:shadow-gray-800">
-    <div class="container-custom flex justify-between items-center">
-      <!-- Logo/Site Title -->
-      <div class="flex items-center">
-        <NuxtLink :to="siteConfig.type === 'dev' ? '/dev' : '/tattoo'" class="text-2xl font-bold no-underline">
-          <span :class="[
-            siteConfig.type === 'dev' ? 'text-primary dark:text-primary-400' : 'text-primary-700 dark:text-primary-400'
-          ]">
+  <header class="sticky top-0 z-40 backdrop-blur border-b border-gray-200/60 dark:border-gray-800/60 bg-white/70 dark:bg-gray-950/70">
+    <UContainer class="py-3">
+      <div class="flex items-center justify-between gap-3">
+        <!-- Logo / Title -->
+        <NuxtLink :to="siteConfig.type === 'dev' ? '/dev' : siteConfig.type === 'tattoo' ? '/tattoo' : '/'" class="no-underline">
+          <span class="text-xl sm:text-2xl font-bold text-primary">
             {{ siteConfig.title }}
           </span>
         </NuxtLink>
-      </div>
 
-      <!-- Navigation -->
-      <nav class="hidden md:flex space-x-8 items-center">
-        <NuxtLink 
-          v-for="(item, index) in navigationItems" 
-          :key="index" 
-          :to="item.path" 
-          class="no-underline hover:text-primary-700 dark:hover:text-primary-400-light font-medium transition-colors"
-        >
-          {{ item.name }}
-        </NuxtLink>
-        
-        <!-- Portfolio Toggle -->
-        <button 
-          @click="togglePortfolioType" 
-          class="px-3 py-1 rounded-full border-2 border-primary dark:border-primary-400 text-primary dark:text-primary-400 text-sm font-medium hover:bg-primary hover:text-white dark:hover:bg-primary-400 dark:hover:text-white transition-colors"
-        >
-          Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }} Portfolio
-        </button>
-        
-        <!-- Admin Navigation -->
-        <AdminNav />
-        
-        <!-- Theme toggle -->
-        <ThemeToggle />
-      </nav>
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-3">
+          <div class="flex items-center gap-1">
+            <UButton
+              v-for="(item, index) in navigationItems"
+              :key="index"
+              :to="item.path"
+              variant="link"
+              color="primary"
+              class="text-sm"
+            >
+              {{ item.name }}
+            </UButton>
+          </div>
 
-      <!-- Mobile menu button -->
-      <button 
-        class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-400"
-        @click="isMenuOpen = !isMenuOpen"
-        aria-label="Toggle menu"
-      >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path v-if="!isMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
-      </button>
-    </div>
+          <UButton
+            color="primary"
+            variant="solid"
+            size="sm"
+            class="text-white bg-gradient-to-r from-[--ui-primary] to-pink-600 dark:to-pink-400 border-0 shadow-sm hover:opacity-90"
+            @click="togglePortfolioType"
+          >
+            Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }}
+          </UButton>
 
-    <!-- Mobile menu -->
-    <div 
-      v-if="isMenuOpen" 
-      class="md:hidden absolute top-full left-0 right-0 bg-background dark:bg-dark-background shadow-md z-10"
-    >
-      <div class="container-custom py-4 space-y-4">
-        <NuxtLink 
-          v-for="(item, index) in navigationItems" 
-          :key="index" 
-          :to="item.path" 
-          class="block py-2 no-underline hover:text-primary-700 dark:hover:text-primary-400-light font-medium transition-colors"
-          @click="isMenuOpen = false"
-        >
-          {{ item.name }}
-        </NuxtLink>
-        
-        <!-- Portfolio Toggle for mobile -->
-        <button 
-          @click="togglePortfolioType" 
-          class="block w-full text-left py-2 font-medium text-primary dark:text-primary-400"
-        >
-          Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }} Portfolio
-        </button>
-        
-        <!-- Theme toggle for mobile -->
-        <div class="py-2">
-          <ThemeToggle />
+          <AdminNav />
+          <ClientOnly>
+            <ThemeToggle />
+          </ClientOnly>
+        </nav>
+
+        <!-- Mobile Controls -->
+        <div class="md:hidden flex items-center gap-2">
+          <ClientOnly>
+            <ThemeToggle />
+          </ClientOnly>
+          <UButton icon="i-heroicons-bars-3" variant="ghost" color="primary" @click="isMenuOpen = !isMenuOpen" aria-label="Toggle menu" />
         </div>
       </div>
+    </UContainer>
+
+    <!-- Mobile Menu -->
+    <div v-if="isMenuOpen" class="md:hidden border-t border-gray-200/60 dark:border-gray-800/60 bg-white dark:bg-gray-950">
+      <UContainer class="py-3">
+        <div class="flex flex-col gap-2">
+          <NuxtLink
+            v-for="(item, index) in navigationItems"
+            :key="index"
+            :to="item.path"
+            class="py-2 no-underline text-primary hover:opacity-80"
+            @click="isMenuOpen = false"
+          >
+            {{ item.name }}
+          </NuxtLink>
+
+          <div class="pt-2">
+            <UButton block color="primary" variant="soft" @click="togglePortfolioType">
+              Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }}
+            </UButton>
+          </div>
+          <div class="pt-1">
+            <AdminNav />
+          </div>
+        </div>
+      </UContainer>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
-import ThemeToggle from '~/components/common/ThemeToggle.vue';
 import AdminNav from '~/components/common/AdminNav.vue';
+import ThemeToggle from '~/components/common/ThemeToggle.vue';
 
 // Get site configuration
 const siteConfig = useSiteConfig();
@@ -107,8 +101,6 @@ const togglePortfolioType = () => {
   const currentType = siteConfig.value.type;
   const newType = currentType === 'dev' ? 'tattoo' : 'dev';
   const baseRoute = newType === 'dev' ? '/dev' : '/tattoo';
-  
-  // Navigate to the corresponding route in the other portfolio
   router.push(baseRoute);
 };
 
@@ -118,27 +110,29 @@ const navigationItems = computed(() => {
     return [
       { name: 'Home', path: '/dev' },
       { name: 'About', path: '/dev/about' },
-      { name: 'Blog', path: '/dev/blog' },
-      { name: 'Contact', path: '/dev/contact' },
       { name: 'Projects', path: '/dev/projects' },
       { name: 'Open Source', path: '/dev/open-source' },
+      { name: 'Blog', path: '/dev/blog' },
+      { name: 'Contact', path: '/dev/contact' }
     ];
   } else if (siteConfig.value.type === 'tattoo') {
     return [
       { name: 'Home', path: '/tattoo' },
       { name: 'About', path: '/tattoo/about' },
-      { name: 'Blog', path: '/tattoo/blog' },
-      { name: 'Contact', path: '/tattoo/contact' },
       { name: 'Gallery', path: '/tattoo/gallery' },
       { name: 'Testimonials', path: '/tattoo/testimonials' },
+      { name: 'Blog', path: '/tattoo/blog' },
+      { name: 'Contact', path: '/tattoo/contact' }
     ];
   } else {
-    // Dual mode - landing page
     return [
       { name: 'Home', path: '/' },
       { name: 'About', path: '/about' },
-      { name: 'Contact', path: '/contact' },
+      { name: 'Contact', path: '/contact' }
     ];
   }
 });
-</script> 
+
+// Map to Nuxt UI navigation format
+const navLinks = computed(() => navigationItems.value.map(i => ({ label: i.name, to: i.path })));
+</script>

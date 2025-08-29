@@ -1,4 +1,4 @@
-interface SiteConfig {
+export interface SiteConfig {
   domain?: string;
   title: string;
   description: string;

@@ -26,7 +26,7 @@
           <div class="h-64 overflow-hidden">
             <img 
               v-if="work.images" 
-              :src="work.images" 
+              :src="primaryImage(work.images)" 
               :alt="work.title" 
               class="w-full h-full object-cover"
             />
@@ -44,9 +44,9 @@
               {{ work.description }}
             </p>
             
-            <div class="flex flex-wrap gap-2 mb-4" v-if="work.style">
+            <div class="flex flex-wrap gap-2 mb-4" v-if="work.styles">
               <span class="inline-block px-2 py-1 text-xs font-medium bg-primary-50 text-primary dark:bg-primary-400/20 dark:text-primary-400 rounded-md">
-                {{ work.style }}
+                {{ Array.isArray(work.styles) ? work.styles[0] : work.styles }}
               </span>
             </div>
             
@@ -63,7 +63,7 @@
       <div class="mt-10 text-center">
         <NuxtLink 
           to="/tattoo/gallery" 
-          class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-700 dark:bg-primary-400 dark:hover:bg-primary-400-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-primary-400"
+          class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:opacity-90 dark:bg-primary-400 dark:hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-primary-400"
         >
           View All Works
           <svg class="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -81,6 +81,8 @@ const { data: works, pending: isLoading, error } = await useAsyncData(
   'featured-tattoo-works',
   () => queryCollection('gallery').where('featured', '=', true).order('date', 'DESC').limit(3).all()
 );
+
+const primaryImage = (images: any) => Array.isArray(images) ? images[0] : images
 
 // Get media helper function
 const getStrapiMedia = (url: string) => {

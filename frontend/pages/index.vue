@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gradient-to-br from-purple-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
     <div class="container max-w-5xl px-6 py-20">
       <div class="text-center mb-16">
-        <h1 class="text-5xl md:text-6xl font-bold mb-6 text-primary-700 dark:text-primary-400">
+        <h1 class="text-5xl md:text-6xl font-bold mb-6 text-primary dark:text-primary-400">
           Allison's Portfolio
         </h1>
         <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
@@ -16,7 +16,7 @@
           <NuxtLink to="/dev" class="absolute inset-0 z-10">
             <span class="sr-only">Go to Developer Portfolio</span>
           </NuxtLink>
-          <div class="aspect-w-16 aspect-h-9 bg-blue-50 dark:bg-blue-900">
+          <div class="aspect-video bg-blue-50 dark:bg-blue-900">
             <img src="/placeholder-developer.jpg" alt="Developer Portfolio" class="object-cover w-full h-full" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 pointer-events-none">
               <h2 class="text-2xl md:text-3xl font-bold text-white">Developer Portfolio</h2>
@@ -46,7 +46,7 @@
           <NuxtLink to="/tattoo" class="absolute inset-0 z-10">
             <span class="sr-only">Go to Tattoo Portfolio</span>
           </NuxtLink>
-          <div class="aspect-w-16 aspect-h-9 bg-rose-50 dark:bg-rose-900">
+          <div class="aspect-video bg-rose-50 dark:bg-rose-900">
             <img src="/placeholder-tattoo.jpg" alt="Tattoo Portfolio" class="object-cover w-full h-full" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6 pointer-events-none">
               <h2 class="text-2xl md:text-3xl font-bold text-white">Tattoo Portfolio</h2>
@@ -74,7 +74,7 @@
 
       <div class="mt-20 text-center">
         <p class="text-gray-600 dark:text-gray-400">
-          Want to know more about me? <NuxtLink to="/about" class="text-primary-700 dark:text-primary-400 font-medium">View my about page</NuxtLink>
+          Want to know more about me? <NuxtLink to="/about" class="text-primary dark:text-primary-400 font-medium">View my about page</NuxtLink>
         </p>
       </div>
     </div>
@@ -96,6 +96,7 @@ useHead({
 // Use a neutral site config for the landing page
 const config = useSiteConfig();
 config.value = {
+  ...config.value,
   title: "Allison's Portfolio",
   description: "Software developer and tattoo artist portfolio",
   type: 'dual',

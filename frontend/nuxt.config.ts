@@ -1,3 +1,4 @@
+import { defineNuxtConfig } from 'nuxt/config'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
@@ -14,10 +15,6 @@ export default defineNuxtConfig({
       tattooSiteUrl: process.env.TATTOO_SITE_URL || 'http://localhost:3000'
     }
   },
-  // NuxtUI includes Tailwind and color mode by default
-  ui: {
-    safelistColors: ['primary', 'secondary', 'accent', 'gray', 'green', 'blue', 'red', 'yellow']
-  },
   content: {
     highlight: {
       theme: 'github-dark'
@@ -25,7 +22,6 @@ export default defineNuxtConfig({
     markdown: {
       anchorLinks: false
     },
-    // Use experimental native SQLite to avoid better-sqlite3 dependency
     experimental: {
       nativeSqlite: true
     }

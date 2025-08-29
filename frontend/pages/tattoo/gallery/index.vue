@@ -185,7 +185,20 @@ const { data: galleryData, pending: loading, error } = await useAsyncData(
 );
 
 // Map gallery data to tattoos format
-const tattoos = computed(() => {
+interface TattooItem {
+  id: number
+  title: string
+  description: string
+  style: string
+  placement: string
+  size: string
+  sessionTime: string
+  year: number
+  story: string
+  image: string
+}
+
+const tattoos = computed<TattooItem[]>(() => {
   if (!galleryData.value || !Array.isArray(galleryData.value)) {
     return [];
   }
@@ -194,18 +207,18 @@ const tattoos = computed(() => {
     id: index + 1,
     title: item.title || 'Untitled',
     description: item.description || '',
-    style: item.style?.[0] || 'custom',
-    placement: item.placement || '',
-    size: item.size || '',
-    sessionTime: item.session_time || '',
+    style: (Array.isArray(item.styles) ? item.styles[0] : (item.styles as any)) || 'custom',
+    placement: (item as any).placement || '',
+    size: (item as any).size || '',
+    sessionTime: (item as any).session_time || '',
     year: new Date(item.date).getFullYear() || new Date().getFullYear(),
     story: item.description || '',
-    image: item.image || '/placeholder-tattoo.jpg'
+    image: (Array.isArray(item.images) ? item.images[0] : (item.images as any)) || '/placeholder-tattoo.jpg'
   }));
 });
 
 // State
-const selectedTattoo = ref(null);
+const selectedTattoo = ref<TattooItem | null>(null);
 const activeStyle = ref('all');
 
 // Tattoo styles
@@ -227,7 +240,7 @@ const filteredTattoos = computed(() => {
 });
 
 // Methods
-const openTattooModal = (tattoo) => {
+const openTattooModal = (tattoo: TattooItem) => {
   selectedTattoo.value = tattoo;
   document.body.style.overflow = 'hidden';
 };

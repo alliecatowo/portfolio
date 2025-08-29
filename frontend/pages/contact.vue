@@ -140,7 +140,7 @@
             <UAlert 
               v-if="formSubmitSuccess" 
               icon="i-lucide-check-circle"
-              color="green"
+              color="success"
               variant="soft"
               title="Success!"
               description="Your message has been sent successfully! I'll get back to you soon."
@@ -149,7 +149,7 @@
             <UAlert 
               v-if="formSubmitError" 
               icon="i-lucide-alert-circle"
-              color="red"
+              color="error"
               variant="soft"
               title="Error"
               description="There was an error sending your message. Please try again."

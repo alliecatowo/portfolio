@@ -8,16 +8,16 @@
       </div>
       
       <div v-else-if="error" class="max-w-2xl mx-auto">
-        <UAlert color="red" :title="error.message || 'Error loading blog posts'" />
+        <UAlert color="error" :title="error.message || 'Error loading blog posts'" />
       </div>
       
       <div v-else-if="posts && posts.length > 0" class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <UCard v-for="post in posts" :key="post._path">
+        <UCard v-for="post in posts" :key="post.path">
           <template #header>
             <div class="relative aspect-video bg-gray-100 dark:bg-gray-800">
               <img 
-                v-if="post.image" 
-                :src="post.image" 
+                v-if="post.featured_image" 
+                :src="post.featured_image" 
                 :alt="post.title"
                 class="w-full h-full object-cover rounded-t-lg"
               >
@@ -46,18 +46,18 @@
               <UBadge 
                 v-for="tag in post.tags" 
                 :key="tag"
-                color="gray"
+                color="neutral"
                 variant="subtle"
                 size="xs"
               >
                 {{ tag }}
               </UBadge>
-            </div>
+          </div>
           </div>
           
           <template #footer>
             <UButton 
-              :to="`/blog/${post._path.split('/').pop()}`"
+              :to="`/blog/${post.slug || post.path?.split('/').pop()}`"
               variant="link"
               color="primary"
               trailing-icon="i-heroicons-arrow-right"

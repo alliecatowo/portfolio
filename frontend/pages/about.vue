@@ -114,7 +114,7 @@
               : 'Interested in getting a tattoo? I\'d love to discuss your ideas and create something unique for you.'
             }}
           </p>
-          <NuxtLink to="/contact" class="btn btn-primary">Contact Me</NuxtLink>
+          <UButton to="/contact" color="primary">Contact Me</UButton>
         </div>
       </div>
     </div>

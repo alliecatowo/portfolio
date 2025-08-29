@@ -149,9 +149,9 @@
             <p class="mb-4 text-gray-600 dark:text-gray-300">
               Let's discuss your ideas and create something unique for you.
             </p>
-            <NuxtLink to="/contact" class="btn btn-primary">
+            <UButton to="/contact" color="primary">
               Contact Me
-            </NuxtLink>
+            </UButton>
           </div>
         </div>
       </div>
@@ -179,10 +179,22 @@ const tattooStyles = [
 const activeStyle = ref('all');
 
 // Modal state
-const selectedTattoo = ref(null);
+interface TattooItem {
+  id: number
+  title: string
+  description: string
+  style: string
+  placement: string
+  size: string
+  sessionTime: string
+  year: number
+  story: string
+}
+
+const selectedTattoo = ref<TattooItem | null>(null);
 
 // Open tattoo modal
-const openTattooModal = (tattoo) => {
+const openTattooModal = (tattoo: TattooItem) => {
   selectedTattoo.value = tattoo;
 };
 
