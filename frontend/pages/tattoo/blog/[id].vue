@@ -28,13 +28,12 @@
             <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ post.title }}</h1>
             
             <div class="flex items-center mb-6">
-              <div v-if="post.author?.avatar" class="w-10 h-10 rounded-full overflow-hidden mr-3">
-                <img :src="post.author.avatar.url" :alt="post.author.name" class="w-full h-full object-cover">
+              <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 mr-3 flex items-center justify-center text-gray-500 text-xs">
+                A
               </div>
-              <div v-else class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 mr-3"></div>
               
               <div>
-                <div class="font-medium">{{ post.author?.name || 'Anonymous' }}</div>
+                <div class="font-medium">{{ post.author || 'Anonymous' }}</div>
                 <div class="text-sm text-gray-500 dark:text-gray-400">
                   {{ new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
                 </div>
@@ -43,70 +42,44 @@
             
             <div class="flex flex-wrap gap-2 mb-8">
               <span 
-                v-for="category in post.categories" 
-                :key="category" 
+                v-for="tag in post.tags" 
+                :key="tag" 
                 class="px-3 py-1 text-sm rounded-full bg-primary-700/10 dark:bg-primary-400/20 text-primary-700 dark:text-primary-400"
               >
-                {{ category }}
+                {{ tag }}
               </span>
             </div>
           </div>
           
           <!-- Featured image -->
-          <div v-if="post.image" class="mb-8 rounded-lg overflow-hidden">
-            <img :src="post.image" :alt="post.title" class="w-full h-auto">
+          <div v-if="post.featured_image" class="mb-8 rounded-lg overflow-hidden">
+            <img :src="post.featured_image" :alt="post.title" class="w-full h-auto">
           </div>
           
           <!-- Post content -->
           <div class="prose dark:prose-invert max-w-none mb-12">
-            <!-- In a real app, this would be rendered HTML from the CMS -->
-            <p>{{ post.body || post.content || post.description }}</p>
-            
-            <!-- Placeholder paragraphs for demo -->
-            <p v-if="!post.content">
-              As a tattoo artist, I've had the privilege of creating permanent art on countless individuals, 
-              each with their own unique story and vision. This particular piece was especially meaningful 
-              because it represented a significant transformation in the client's life.
-            </p>
-            <p v-if="!post.content">
-              The design process began with several consultations where we discussed the symbolism important 
-              to them. We explored various artistic styles before settling on this approach that blended 
-              traditional elements with contemporary techniques.
-            </p>
-            <h2 v-if="!post.content">The Tattoo Process</h2>
-            <p v-if="!post.content">
-              The session itself took approximately five hours. We started with outlining the main elements, 
-              then moved to shading and finally added the color work that brings the piece to life. Throughout 
-              the process, we took breaks to ensure comfort and optimal results.
-            </p>
-            <p v-if="!post.content">
-              What made this piece particularly special was how it evolved during our session. While we had 
-              a solid design to begin with, allowing for some organic development during the tattooing process 
-              resulted in a more dynamic and personalized piece.
-            </p>
-            <h2 v-if="!post.content">Aftercare and Healing</h2>
-            <p v-if="!post.content">
-              After completing the tattoo, I provided detailed aftercare instructions. The healing process is 
-              just as important as the application, and proper care ensures the longevity and vibrancy of the art.
-            </p>
-            <p v-if="!post.content">
-              Two weeks later, the client returned for a follow-up appointment. The tattoo had healed beautifully, 
-              and seeing their reaction to the fully healed piece was incredibly rewarding.
-            </p>
+            <ContentRenderer v-if="post" :value="post" />
+            <div v-else>
+              <p>{{ post?.description }}</p>
+              <!-- Placeholder content for demo -->
+              <p>
+                As a tattoo artist, I've had the privilege of creating permanent art on countless individuals, 
+                each with their own unique story and vision.
+              </p>
+            </div>
           </div>
           
           <!-- Author bio -->
           <div v-if="post.author" class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md mb-12">
             <div class="flex items-start">
-              <div v-if="post.author.avatar" class="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                <img :src="post.author.avatar" :alt="post.author.name" class="w-full h-full object-cover">
+              <div class="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700 mr-4 flex-shrink-0 flex items-center justify-center text-gray-500">
+                Author
               </div>
-              <div v-else class="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700 mr-4 flex-shrink-0"></div>
               
               <div>
-                <h3 class="text-xl font-bold mb-2">About {{ post.author.name }}</h3>
+                <h3 class="text-xl font-bold mb-2">About {{ post.author }}</h3>
                 <p class="text-gray-600 dark:text-gray-300">
-                  {{ post.author.bio || 'Tattoo artist specializing in fine line work, watercolor, and custom designs. Passionate about creating meaningful art that tells personal stories.' }}
+                  Tattoo artist specializing in fine line work, watercolor, and custom designs. Passionate about creating meaningful art that tells personal stories.
                 </p>
               </div>
             </div>
@@ -178,15 +151,13 @@
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
-import { useContent } from '~/composables/useContent';
 
 // Ensure site config is set to tattoo
 const siteConfig = useSiteConfig();
 if (siteConfig.value?.type !== 'tattoo') {
   siteConfig.value = {
     ...siteConfig.value,
-    type: 'tattoo',
-    baseRoute: '/tattoo'
+    type: 'tattoo'
   };
 }
 
@@ -194,50 +165,14 @@ if (siteConfig.value?.type !== 'tattoo') {
 const route = useRoute();
 const postId = route.params.id as string;
 
-// State
-const post = ref(null);
-const loading = ref(true);
-const error = ref(null);
-
-// Use content composable
-const { fetchBlogPost } = useContent();
-
-// Fetch data using useAsyncData for SSR support
-const { data, pending, error: fetchError } = await useAsyncData(`tattoo-blog-${postId}`, () => 
-  fetchBlogPost('tattoo', postId)
+// Fetch blog post using queryCollection directly
+const { data: post, pending: loading, error } = await useAsyncData(
+  `tattoo-blog-${postId}`,
+  () => queryCollection('blog')
+    .where('category', '=', 'tattoo')
+    .where('slug', '=', postId)
+    .first()
 );
-
-// Set reactive data
-post.value = data.value;
-loading.value = pending.value;
-if (fetchError.value) {
-  error.value = 'Failed to load article. Please try again.';
-}
-
-// For demo purposes, if no data exists, use placeholder data
-if (!post.value) {
-  post.value = {
-    id: 1,
-    title: 'The Story Behind This Custom Watercolor Tattoo',
-    _path: `/blog/tattoo/${postId}`,
-    description: 'This is a sample excerpt for a tattoo blog post. In a real application, this would be fetched from the CMS.',
-    date: new Date().toISOString(),
-    categories: ['Tattoo Process', 'Client Stories'],
-    author: {
-      name: 'Allison Ink',
-      bio: 'Tattoo artist specializing in watercolor and fine line work. Creating custom designs that tell personal stories through art.',
-      avatar: null
-    }
-  };
-}
-
-// Watch for route changes to refetch data
-watch(() => route.params.id, async (newId) => {
-  if (newId && newId !== postId) {
-    const { data: newData } = await refreshCookie(`tattoo-blog-${newId}`);
-    post.value = newData || null;
-  }
-});
 
 // Meta tags
 useHead(() => ({
@@ -245,7 +180,7 @@ useHead(() => ({
   meta: [
     { 
       name: 'description', 
-      content: post.value?.excerpt || 'Read this tattoo story about the creative process, client experience, and the meaning behind the art.'
+      content: post.value?.description || 'Read this tattoo story about the creative process, client experience, and the meaning behind the art.'
     }
   ]
 }));

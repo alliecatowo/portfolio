@@ -30,6 +30,10 @@ export default defineNuxtConfig({
       nativeSqlite: true
     }
   },
+  // Ensure content auto-imports work
+  imports: {
+    autoImport: true
+  },
   app: {
     head: {
       htmlAttrs: {

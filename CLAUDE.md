@@ -14,18 +14,25 @@ cd frontend && npm run dev
 ```
 
 ### Build Commands
+**IMPORTANT: Always use pnpm, not npm**
+
 ```bash
 # Build for production (from root)
 pnpm build
 
-# Build from frontend directory
-cd frontend && npm run build
+# Build from frontend directory using workspace filter
+pnpm --filter portfolio-frontend build
 
 # Generate static site
-cd frontend && npm run generate
+pnpm --filter portfolio-frontend generate
 
 # Preview production build
-cd frontend && npm run preview
+pnpm --filter portfolio-frontend preview
+
+# Type checking
+pnpm --filter portfolio-frontend typecheck
+# OR from frontend directory
+cd frontend && npm run typecheck
 ```
 
 ### Deployment

@@ -2,10 +2,12 @@
 title: "Getting Started with Modern Web Development"
 date: "2024-03-15"
 description: "A comprehensive guide to starting your journey in modern web development, covering essential tools, frameworks, and best practices."
+category: "dev"
 tags: ["web-development", "beginners", "javascript", "frontend", "tutorial"]
 author: "Allie"
 published: true
 featured: false
+slug: "getting-started"
 ---
 
 # Getting Started with Modern Web Development

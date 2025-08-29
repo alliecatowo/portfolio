@@ -13,7 +13,7 @@
         <p>{{ error }}</p>
       </div>
       
-      <div v-else-if="projects.length === 0" class="text-center py-8">
+      <div v-else-if="!projects || projects.length === 0" class="text-center py-8">
         <p class="text-gray-500 dark:text-gray-400">No featured projects available yet.</p>
       </div>
       
@@ -25,8 +25,8 @@
         >
           <div class="h-48 overflow-hidden">
             <img 
-              v-if="project.images && project.images.data && project.images.data.length > 0" 
-              :src="getStrapiMedia(project.images.data[0].attributes.url)" 
+              v-if="project.image" 
+              :src="project.image" 
               :alt="project.title" 
               class="w-full h-full object-cover"
             />
@@ -44,13 +44,13 @@
               {{ project.description }}
             </p>
             
-            <div class="flex flex-wrap gap-2 mb-4">
+            <div class="flex flex-wrap gap-2 mb-4" v-if="project.technologies && project.technologies.length">
               <span 
-                v-for="tech in project.technologies?.data" 
-                :key="tech.id" 
+                v-for="tech in project.technologies" 
+                :key="tech" 
                 class="inline-block px-2 py-1 text-xs font-medium bg-primary-50 text-primary dark:bg-primary-400/20 dark:text-primary-400 rounded-md"
               >
-                {{ tech.attributes.name }}
+                {{ tech }}
               </span>
             </div>
             
@@ -76,8 +76,8 @@
                   </svg>
                 </a>
                 <a 
-                  v-if="project.liveDemo" 
-                  :href="project.liveDemo" 
+                  v-if="project.demo" 
+                  :href="project.demo" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary-400"
@@ -109,27 +109,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-
-const projects = ref<any[]>([]);
-const isLoading = ref(true);
-const error = ref<string | null>(null);
-
-// Fetch featured projects from API
-const fetchFeaturedProjects = async () => {
-  isLoading.value = true;
-  error.value = null;
-  
-  try {
-    const { data } = await $fetch('/api/content/projects?featured=true&limit=3');
-    projects.value = data || [];
-  } catch (err) {
-    console.error('Error fetching featured projects:', err);
-    error.value = 'Failed to load projects. Please try again later.';
-  } finally {
-    isLoading.value = false;
-  }
-};
+// Fetch featured projects directly with queryCollection
+const { data: projects, pending: isLoading, error } = await useAsyncData(
+  'featured-dev-projects',
+  () => queryCollection('projects').where('featured', '=', true).order('date', 'DESC').limit(3).all()
+);
 
 // Get media helper function
 const getStrapiMedia = (url: string) => {
@@ -137,8 +121,4 @@ const getStrapiMedia = (url: string) => {
   // Later this can be enhanced with proper image optimization
   return url;
 };
-
-onMounted(() => {
-  fetchFeaturedProjects();
-});
 </script> 

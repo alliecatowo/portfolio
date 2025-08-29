@@ -99,6 +99,5 @@ config.value = {
   title: "Allison's Portfolio",
   description: "Software developer and tattoo artist portfolio",
   type: 'dual',
-  baseRoute: '/'
 };
 </script> 

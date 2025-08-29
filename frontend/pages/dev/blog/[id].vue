@@ -28,13 +28,12 @@
             <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ post.title }}</h1>
             
             <div class="flex items-center mb-6">
-              <div v-if="post.author?.avatar" class="w-10 h-10 rounded-full overflow-hidden mr-3">
-                <img :src="post.author.avatar.url" :alt="post.author.name" class="w-full h-full object-cover">
+              <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 mr-3 flex items-center justify-center text-gray-500 text-xs">
+                A
               </div>
-              <div v-else class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 mr-3"></div>
               
               <div>
-                <div class="font-medium">{{ post.author?.name || 'Anonymous' }}</div>
+                <div class="font-medium">{{ post.author || 'Anonymous' }}</div>
                 <div class="text-sm text-gray-500 dark:text-gray-400">
                   {{ new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
                 </div>
@@ -43,60 +42,44 @@
             
             <div class="flex flex-wrap gap-2 mb-8">
               <span 
-                v-for="category in post.categories" 
-                :key="category" 
+                v-for="tag in post.tags" 
+                :key="tag" 
                 class="px-3 py-1 text-sm rounded-full bg-primary-50 dark:bg-primary-400/20 text-primary dark:text-primary-400"
               >
-                {{ category }}
+                {{ tag }}
               </span>
             </div>
           </div>
           
           <!-- Featured image -->
-          <div v-if="post.image" class="mb-8 rounded-lg overflow-hidden">
-            <img :src="post.image" :alt="post.title" class="w-full h-auto">
+          <div v-if="post.featured_image" class="mb-8 rounded-lg overflow-hidden">
+            <img :src="post.featured_image" :alt="post.title" class="w-full h-auto">
           </div>
           
           <!-- Post content -->
           <div class="prose dark:prose-invert max-w-none mb-12">
-            <!-- In a real app, this would be rendered HTML from the CMS -->
-            <p>{{ post.body || post.content || post.description }}</p>
-            
-            <!-- Placeholder paragraphs for demo -->
-            <p v-if="!post.content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, 
-              nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia,
-              nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl.
-            </p>
-            <p v-if="!post.content">
-              Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl.
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia,
-              nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl.
-            </p>
-            <h2 v-if="!post.content">Key Takeaways</h2>
-            <ul v-if="!post.content">
-              <li>First important point about this topic</li>
-              <li>Second key insight that readers should remember</li>
-              <li>Third valuable piece of information</li>
-              <li>Final thought to conclude the article</li>
-            </ul>
-            <p v-if="!post.content">
-              In conclusion, this article has covered the essential aspects of this topic. The key points to remember are...
-            </p>
+            <ContentRenderer v-if="post" :value="post" />
+            <div v-else>
+              <p>{{ post?.description }}</p>
+              <!-- Placeholder content for demo -->
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, 
+                nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl.
+              </p>
+            </div>
           </div>
           
           <!-- Author bio -->
           <div v-if="post.author" class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md mb-12">
             <div class="flex items-start">
-              <div v-if="post.author.avatar" class="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                <img :src="post.author.avatar" :alt="post.author.name" class="w-full h-full object-cover">
+              <div class="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700 mr-4 flex-shrink-0 flex items-center justify-center text-gray-500">
+                Author
               </div>
-              <div v-else class="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700 mr-4 flex-shrink-0"></div>
               
               <div>
-                <h3 class="text-xl font-bold mb-2">About {{ post.author.name }}</h3>
+                <h3 class="text-xl font-bold mb-2">About {{ post.author }}</h3>
                 <p class="text-gray-600 dark:text-gray-300">
-                  {{ post.author.bio || 'Developer and writer passionate about web technologies and creating user-friendly experiences.' }}
+                  Developer and writer passionate about web technologies and creating user-friendly experiences.
                 </p>
               </div>
             </div>
@@ -175,15 +158,13 @@
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
-import { useContent } from '~/composables/useContent';
 
 // Ensure site config is set to dev
 const siteConfig = useSiteConfig();
 if (siteConfig.value?.type !== 'dev') {
   siteConfig.value = {
     ...siteConfig.value,
-    type: 'dev',
-    baseRoute: '/dev'
+    type: 'dev'
   };
 }
 
@@ -192,42 +173,16 @@ const route = useRoute();
 const postId = route.params.id as string;
 
 // State
-const post = ref(null);
-const loading = ref(true);
-const error = ref(null);
 const newsletterEmail = ref('');
 
-// Use content composable
-const { fetchBlogPost } = useContent();
-
-// Fetch data using useAsyncData for SSR support
-const { data, pending, error: fetchError } = await useAsyncData(`dev-blog-${postId}`, () => 
-  fetchBlogPost('dev', postId)
+// Fetch blog post using queryCollection directly
+const { data: post, pending: loading, error } = await useAsyncData(
+  `dev-blog-${postId}`,
+  () => queryCollection('blog')
+    .where('category', '=', 'dev')
+    .where('slug', '=', postId)
+    .first()
 );
-
-// Set reactive data
-post.value = data.value;
-loading.value = pending.value;
-if (fetchError.value) {
-  error.value = 'Failed to load article. Please try again.';
-}
-
-// For demo purposes, if no data exists, use placeholder data
-if (!post.value) {
-  post.value = {
-    id: 1,
-    title: 'Sample Development Article',
-    _path: `/blog/dev/${postId}`,
-    description: 'This is a sample excerpt for a development blog post. In a real application, this would be fetched from the CMS.',
-    date: new Date().toISOString(),
-    categories: ['Web Development', 'JavaScript'],
-    author: {
-      name: 'Allison Dev',
-      bio: 'Full-stack developer with a passion for creating intuitive and performant web applications.',
-      avatar: null
-    }
-  };
-}
 
 // Newsletter subscription
 const subscribeToNewsletter = () => {
@@ -236,21 +191,13 @@ const subscribeToNewsletter = () => {
   newsletterEmail.value = '';
 };
 
-// Watch for route changes to refetch data
-watch(() => route.params.id, async (newId) => {
-  if (newId && newId !== postId) {
-    const { data: newData } = await refreshCookie(`dev-blog-${newId}`);
-    post.value = newData || null;
-  }
-});
-
 // Meta tags
 useHead(() => ({
   title: post.value ? `${post.value.title} - ${siteConfig.value?.title || 'Developer Portfolio'}` : 'Blog Post',
   meta: [
     { 
       name: 'description', 
-      content: post.value?.excerpt || 'Read this development article on web development, programming, and technology.'
+      content: post.value?.description || 'Read this development article on web development, programming, and technology.'
     }
   ]
 }));

@@ -2,10 +2,12 @@
 title: "TypeScript Best Practices for Vue and Nuxt Applications"
 date: "2024-03-10"
 description: "Essential TypeScript patterns, configurations, and best practices for building maintainable Vue.js and Nuxt.js applications."
+category: "dev"
 tags: ["typescript", "vue", "nuxt", "best-practices", "development"]
 author: "Allie"
 published: true
 featured: true
+slug: "typescript-best-practices"
 ---
 
 # TypeScript Best Practices for Vue and Nuxt Applications

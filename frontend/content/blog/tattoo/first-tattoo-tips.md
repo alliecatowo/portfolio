@@ -6,7 +6,8 @@ tags: ["first-tattoo", "tattoo-tips", "aftercare", "beginner-guide", "tattoo-adv
 author: "Allie"
 published: true
 featured: true
-category: "advice"
+category: "tattoo"
+slug: "first-tattoo-tips"
 ---
 
 # Essential Tips for Your First Tattoo Experience

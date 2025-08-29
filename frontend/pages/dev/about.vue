@@ -109,8 +109,7 @@ const siteConfig = useSiteConfig();
 if (siteConfig.value?.type !== 'dev') {
   siteConfig.value = {
     ...siteConfig.value,
-    type: 'dev',
-    baseRoute: '/dev'
+    type: 'dev'
   };
 }
 

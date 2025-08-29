@@ -35,16 +35,20 @@ const props = defineProps<{
   postId: string
 }>()
 
-const post = ref(null)
-
-onMounted(async () => {
-  try {
-    const { data } = await $fetch(`/api/content/blog/${props.postId}`)
-    post.value = data
-  } catch (error) {
-    console.error('Failed to fetch blog post:', error)
-  }
+// Determine category based on current route
+const route = useRoute()
+const category = computed(() => {
+  return route.path.includes('/tattoo/') ? 'tattoo' : 'dev'
 })
+
+// Fetch the blog post directly with queryCollection
+const { data: post } = await useAsyncData(
+  () => `blog-post-${category.value || 'dev'}-${props.postId || 'unknown'}`,
+  () => queryCollection('blog')
+    .where('category', '=', category.value || 'dev')
+    .where('_path', 'LIKE', `%${props.postId || 'unknown'}%`)
+    .first()
+)
 
 function getImageUrl(image: any, options?: any) {
   // For now, return the image URL directly

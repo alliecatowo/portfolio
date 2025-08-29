@@ -17,9 +17,6 @@
         <!-- Error state -->
         <div v-else-if="error" class="bg-red-100 text-red-800 p-4 rounded-lg max-w-2xl mx-auto">
           <p>{{ error }}</p>
-          <button @click="fetchPosts" class="mt-4 text-primary dark:text-primary-400 font-medium">
-            Try Again
-          </button>
         </div>
         
         <!-- Blog posts grid -->
@@ -32,8 +29,8 @@
             <NuxtLink :to="`/dev/blog/${post.slug}`">
               <div class="relative aspect-video bg-gray-200 dark:bg-gray-700">
                 <img 
-                  v-if="post.cover_image" 
-                  :src="getImageUrl(post.cover_image)" 
+                  v-if="post.featured_image" 
+                  :src="post.featured_image" 
                   :alt="post.title"
                   class="w-full h-full object-cover"
                 >
@@ -46,19 +43,19 @@
               </div>
               <div class="p-4">
                 <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                  {{ new Date(post.date_published).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
+                  {{ new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
                 </div>
                 <h2 class="text-xl font-bold mb-2">{{ post.title }}</h2>
                 <p class="text-gray-600 dark:text-gray-300 line-clamp-2 mb-3">
-                  {{ post.excerpt }}
+                  {{ post.description }}
                 </p>
-                <div class="flex flex-wrap gap-2" v-if="post.categories && post.categories.length">
+                <div class="flex flex-wrap gap-2" v-if="post.tags && post.tags.length">
                   <span 
-                    v-for="category in post.categories" 
-                    :key="category.id" 
+                    v-for="tag in post.tags" 
+                    :key="tag" 
                     class="px-2 py-1 text-xs rounded-full bg-primary-50 dark:bg-primary-400/20 text-primary dark:text-primary-400"
                   >
-                    {{ category.name }}
+                    {{ tag }}
                   </span>
                 </div>
               </div>
@@ -67,45 +64,12 @@
         </div>
         
         <!-- Empty state -->
-        <div v-if="!loading && !error && posts.length === 0" class="text-center py-16">
+        <div v-if="!loading && !error && (!posts || posts.length === 0)" class="text-center py-16">
           <svg class="w-16 h-16 mx-auto text-gray-300 dark:text-gray-700 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
           <h3 class="text-xl font-semibold mb-2">No posts found</h3>
           <p class="text-gray-500 dark:text-gray-400">Check back later for new content.</p>
-        </div>
-        
-        <!-- Pagination -->
-        <div v-if="totalPages > 1" class="flex justify-center mt-12">
-          <div class="flex space-x-2">
-            <button 
-              @click="currentPage > 1 && (currentPage--)" 
-              :disabled="currentPage === 1"
-              class="px-4 py-2 rounded-md bg-white dark:bg-gray-800 shadow disabled:opacity-50"
-            >
-              Previous
-            </button>
-            <button 
-              v-for="page in totalPages" 
-              :key="page" 
-              @click="currentPage = page"
-              :class="[
-                'px-4 py-2 rounded-md shadow',
-                currentPage === page ? 
-                  'bg-primary dark:bg-primary-400 text-white' : 
-                  'bg-white dark:bg-gray-800'
-              ]"
-            >
-              {{ page }}
-            </button>
-            <button 
-              @click="currentPage < totalPages && (currentPage++)" 
-              :disabled="currentPage === totalPages"
-              class="px-4 py-2 rounded-md bg-white dark:bg-gray-800 shadow disabled:opacity-50"
-            >
-              Next
-            </button>
-          </div>
         </div>
       </div>
     </section>
@@ -120,55 +84,20 @@ const siteConfig = useSiteConfig();
 if (siteConfig.value?.type !== 'dev') {
   siteConfig.value = {
     ...siteConfig.value,
-    type: 'dev',
-    baseRoute: '/dev'
+    type: 'dev'
   };
 }
+
+// Fetch dev blog posts directly with queryCollection
+const { data: posts, pending: loading, error } = await useAsyncData(
+  'dev-blog-posts',
+  () => queryCollection('blog').where('category', '=', 'dev').where('published', '=', true).order('date', 'DESC').all()
+);
 
 // Image helper function
 const getImageUrl = (image: any) => {
   return image?.url || image || '/placeholder-blog.jpg';
 };
-
-// State
-const posts = ref([]);
-const loading = ref(true);
-const error = ref(null);
-const currentPage = ref(1);
-const totalPages = ref(1);
-const pageSize = 9;
-
-// Fetch posts
-const fetchPosts = async () => {
-  loading.value = true;
-  error.value = null;
-  
-  try {
-    const { data, total } = await $fetch(`/api/content/blog?page=${currentPage.value}&limit=${pageSize}&category=dev`);
-    
-    console.log('Blog posts from API:', data);
-    
-    posts.value = data || [];
-    totalPages.value = Math.ceil((total || data?.length || 0) / pageSize);
-  } catch (err) {
-    console.error('Error fetching posts:', err);
-    error.value = 'Failed to load blog posts. Please try again.';
-  } finally {
-    loading.value = false;
-  }
-};
-
-// Watchers
-watch(currentPage, () => {
-  fetchPosts();
-  // Scroll to top when changing pages
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-// Lifecycle
-onMounted(() => {
-  fetchPosts();
-});
 
 // Meta tags
 useHead({

@@ -2,10 +2,12 @@
 title: "Migrating from Directus to Nuxt Content: A Complete Guide"
 date: "2024-03-20"
 description: "Learn how to migrate from a headless CMS like Directus to Nuxt Content for better performance, developer experience, and reduced complexity."
+category: "dev"
 tags: ["nuxt", "nuxt-content", "cms", "migration", "directus", "performance"]
 author: "Allie"
 published: true
 featured: true
+slug: "nuxt-content-migration"
 ---
 
 # Migrating from Directus to Nuxt Content: A Complete Guide

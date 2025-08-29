@@ -13,7 +13,7 @@
         <p>{{ error }}</p>
       </div>
       
-      <div v-else-if="works.length === 0" class="text-center py-8">
+      <div v-else-if="!works || works.length === 0" class="text-center py-8">
         <p class="text-gray-500 dark:text-gray-400">No featured tattoo works available yet.</p>
       </div>
       
@@ -25,8 +25,8 @@
         >
           <div class="h-64 overflow-hidden">
             <img 
-              v-if="work.images && work.images.data && work.images.data.length > 0" 
-              :src="getStrapiMedia(work.images.data[0].attributes.url)" 
+              v-if="work.images" 
+              :src="work.images" 
               :alt="work.title" 
               class="w-full h-full object-cover"
             />
@@ -44,13 +44,9 @@
               {{ work.description }}
             </p>
             
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span 
-                v-for="style in work.styles?.data" 
-                :key="style.id" 
-                class="inline-block px-2 py-1 text-xs font-medium bg-primary-50 text-primary dark:bg-primary-400/20 dark:text-primary-400 rounded-md"
-              >
-                {{ style.attributes.name }}
+            <div class="flex flex-wrap gap-2 mb-4" v-if="work.style">
+              <span class="inline-block px-2 py-1 text-xs font-medium bg-primary-50 text-primary dark:bg-primary-400/20 dark:text-primary-400 rounded-md">
+                {{ work.style }}
               </span>
             </div>
             
@@ -80,27 +76,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-
-const works = ref<any[]>([]);
-const isLoading = ref(true);
-const error = ref<string | null>(null);
-
-// Fetch featured tattoo works from API
-const fetchFeaturedWorks = async () => {
-  isLoading.value = true;
-  error.value = null;
-  
-  try {
-    const { data } = await $fetch('/api/content/tattoo/gallery?featured=true&limit=3');
-    works.value = data || [];
-  } catch (err) {
-    console.error('Error fetching featured tattoo works:', err);
-    error.value = 'Failed to load tattoo works. Please try again later.';
-  } finally {
-    isLoading.value = false;
-  }
-};
+// Fetch featured gallery items directly with queryCollection
+const { data: works, pending: isLoading, error } = await useAsyncData(
+  'featured-tattoo-works',
+  () => queryCollection('gallery').where('featured', '=', true).order('date', 'DESC').limit(3).all()
+);
 
 // Get media helper function
 const getStrapiMedia = (url: string) => {
@@ -108,8 +88,4 @@ const getStrapiMedia = (url: string) => {
   // Later this can be enhanced with proper image optimization
   return url;
 };
-
-onMounted(() => {
-  fetchFeaturedWorks();
-});
 </script> 

@@ -41,7 +41,7 @@
           <!-- Testimonials content -->
           <template v-else>
             <!-- Featured testimonial (first one) -->
-            <div v-if="testimonials.length > 0" class="mb-16 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-xl relative overflow-hidden">
+            <div v-if="testimonials && testimonials.length > 0" class="mb-16 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-xl relative overflow-hidden">
               <!-- Decorative elements -->
               <div class="absolute top-0 right-0 h-32 w-32 bg-primary-700/10 dark:bg-primary-400/10 rounded-bl-full"></div>
               <div class="absolute bottom-0 left-0 h-24 w-24 bg-primary-700/10 dark:bg-primary-400/10 rounded-tr-full"></div>
@@ -160,44 +160,20 @@ const siteConfig = useSiteConfig();
 if (siteConfig.value?.type !== 'tattoo') {
   siteConfig.value = {
     ...siteConfig.value,
-    type: 'tattoo',
-    baseRoute: '/tattoo'
+    type: 'tattoo'
   };
 }
+
+// Fetch testimonials directly with queryCollection
+const { data: testimonials, pending: loading, error } = await useAsyncData(
+  'tattoo-testimonials',
+  () => queryCollection('testimonials').where('verified', '=', true).order('featured', 'DESC').order('date', 'DESC').all()
+);
 
 // Image helper function
 const getImageUrl = (image: any) => {
   return image?.url || image || '/placeholder-gallery.jpg';
 };
-
-// State
-const testimonials = ref([]);
-const loading = ref(true);
-const error = ref(null);
-
-// Fetch testimonials
-const fetchTestimonials = async () => {
-  loading.value = true;
-  error.value = null;
-  
-  try {
-    const { data } = await $fetch('/api/content/tattoo/testimonials');
-    
-    console.log('Testimonials from API:', data);
-    
-    testimonials.value = data || [];
-  } catch (err) {
-    console.error('Error fetching testimonials:', err);
-    error.value = 'Failed to load testimonials. Please try again.';
-  } finally {
-    loading.value = false;
-  }
-};
-
-// Lifecycle
-onMounted(() => {
-  fetchTestimonials();
-});
 
 // Meta tags
 useHead({

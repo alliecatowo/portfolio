@@ -1,170 +1,133 @@
 <template>
-  <div>
-    <section class="py-12 md:py-20 bg-gradient-to-br from-primary/5 to-primary-50 dark:from-primary-400/10 dark:to-primary-400/20">
-      <div class="container-custom">
-        <div class="max-w-4xl mx-auto text-center">
-          <h1 class="text-4xl md:text-5xl font-bold mb-6">My Projects</h1>
-          <p class="text-lg mb-12">
-            A collection of my recent development projects, from web applications to utility tools.
-          </p>
-        </div>
-        
-        <!-- Project Filters -->
-        <div class="mb-12">
-          <div class="flex flex-wrap justify-center gap-3 mb-6">
-            <button 
-              @click="selectedCategory = null" 
-              :class="[
-                'px-4 py-2 rounded-full text-sm font-medium transition-colors',
-                !selectedCategory ? 
-                  'bg-primary dark:bg-primary-400 text-white' : 
-                  'bg-gray-100 dark:bg-gray-800 hover:bg-primary-50 dark:hover:bg-primary-400/10'
-              ]"
-            >
-              All Projects
-            </button>
-            <button 
-              v-for="category in categories" 
-              :key="category.id" 
-              @click="selectedCategory = category.id" 
-              :class="[
-                'px-4 py-2 rounded-full text-sm font-medium transition-colors',
-                selectedCategory === category.id ? 
-                  'bg-primary dark:bg-primary-400 text-white' : 
-                  'bg-gray-100 dark:bg-gray-800 hover:bg-primary-50 dark:hover:bg-primary-400/10'
-              ]"
-            >
-              {{ category.name }}
-            </button>
-          </div>
-        </div>
-        
-        <!-- Loading State -->
-        <div v-if="loading" class="flex justify-center items-center py-20">
-          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-primary-400"></div>
-        </div>
-        
-        <!-- Error State -->
-        <div v-else-if="error" class="bg-red-100 text-red-800 p-4 rounded-lg max-w-2xl mx-auto">
-          <p>{{ error }}</p>
-          <button @click="fetchProjects" class="mt-4 text-primary dark:text-primary-400 font-medium">
-            Try Again
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div class="container-custom py-12">
+      <!-- Header -->
+      <section class="mb-12 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 text-primary dark:text-primary-400">My Projects</h1>
+        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+          Explore my web development projects, from responsive websites to interactive applications, built with modern technologies.
+        </p>
+      </section>
+
+      <!-- Category Filters -->
+      <section class="mb-8">
+        <div class="flex flex-wrap justify-center gap-4">
+          <button
+            @click="selectedCategory = null"
+            :class="[
+              'px-4 py-2 rounded-full font-medium transition-all',
+              !selectedCategory ? 
+                'bg-primary dark:bg-primary-400 text-white' : 
+                'bg-gray-100 dark:bg-gray-800 hover:bg-primary-50 dark:hover:bg-primary-400/10'
+            ]"
+          >
+            All Projects
+          </button>
+          <button
+            v-for="category in categories"
+            :key="category.id"
+            @click="selectedCategory = category.name"
+            :class="[
+              'px-4 py-2 rounded-full font-medium transition-all',
+              selectedCategory === category.name ? 
+                'bg-primary dark:bg-primary-400 text-white' : 
+                'bg-gray-100 dark:bg-gray-800 hover:bg-primary-50 dark:hover:bg-primary-400/10'
+            ]"
+          >
+            {{ category.name }}
           </button>
         </div>
-        
-        <!-- Projects Grid -->
-        <div v-else class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <div 
-            v-for="project in filteredProjects" 
-            :key="project.id" 
-            class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-          >
-            <div class="relative aspect-video bg-gray-200 dark:bg-gray-700">
-              <img 
-                v-if="project.cover_image" 
-                :src="project.cover_image.url" 
-                :alt="project.title"
-                class="w-full h-full object-cover"
-              >
-              <div 
-                v-else 
-                class="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-500"
-              >
-                Project Image
-              </div>
+      </section>
+
+      <!-- Loading State -->
+      <div v-if="loading" class="flex justify-center py-20">
+        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-primary-400"></div>
+      </div>
+
+      <!-- Error State -->
+      <div v-else-if="error" class="bg-red-100 text-red-800 p-4 rounded-lg text-center max-w-md mx-auto">
+        <p>{{ error }}</p>
+      </div>
+
+      <!-- Projects Grid -->
+      <div v-else-if="filteredProjects && filteredProjects.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          v-for="project in filteredProjects"
+          :key="project.id"
+          class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all"
+        >
+          <!-- Project Image -->
+          <div class="aspect-video bg-gray-200 dark:bg-gray-700 overflow-hidden">
+            <img
+              :src="project.image || '/placeholder-project.jpg'"
+              :alt="project.title"
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            >
+          </div>
+
+          <!-- Project Info -->
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ project.title }}</h3>
+              <span v-if="project.featured" class="px-2 py-1 bg-primary-100 dark:bg-primary-400/20 text-primary dark:text-primary-400 text-xs rounded-full">
+                Featured
+              </span>
             </div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-2">{{ project.title }}</h3>
-              <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm line-clamp-3">
-                {{ project.description }}
-              </p>
-              <div class="flex flex-wrap gap-2 mb-4">
-                <span 
-                  v-for="tech in project.technologies" 
-                  :key="tech.id"
-                  class="px-2 py-1 text-xs rounded-full bg-primary-50 dark:bg-primary-400/20 text-primary dark:text-primary-400"
+
+            <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">{{ project.description }}</p>
+
+            <!-- Technologies -->
+            <div v-if="project.technologies && project.technologies.length > 0" class="mb-4">
+              <div class="flex flex-wrap gap-2">
+                <span
+                  v-for="tech in project.technologies.slice(0, 3)"
+                  :key="tech"
+                  class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded-full"
                 >
-                  {{ tech.name }}
+                  {{ tech }}
+                </span>
+                <span v-if="project.technologies.length > 3" class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-xs rounded-full">
+                  +{{ project.technologies.length - 3 }}
                 </span>
               </div>
-              <div class="flex justify-between items-center mt-4">
-                <NuxtLink :to="`/dev/projects/${project.slug}`" class="text-primary dark:text-primary-400 font-medium">
-                  View Details →
-                </NuxtLink>
-                <div class="flex space-x-3">
-                  <a 
-                    v-if="project.github" 
-                    :href="project.github" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    class="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary-400"
-                    title="GitHub Repository"
-                  >
-                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
-                    </svg>
-                  </a>
-                  <a 
-                    v-if="project.live_url" 
-                    :href="project.live_url" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    class="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary-400"
-                    title="Live Demo"
-                  >
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                    </svg>
-                  </a>
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
-        
-        <!-- Empty State -->
-        <div v-if="!loading && !error && filteredProjects.length === 0" class="text-center py-16">
-          <svg class="w-16 h-16 mx-auto text-gray-300 dark:text-gray-700 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <h3 class="text-xl font-semibold mb-2">No projects found</h3>
-          <p class="text-gray-500 dark:text-gray-400">Try changing your filter or check back later.</p>
-        </div>
-        
-        <!-- Pagination -->
-        <div v-if="totalPages > 1" class="flex justify-center mt-12">
-          <div class="flex space-x-2">
-            <button 
-              @click="currentPage > 1 && (currentPage--)" 
-              :disabled="currentPage === 1"
-              class="px-4 py-2 rounded-md bg-white dark:bg-gray-800 disabled:opacity-50"
-            >
-              Previous
-            </button>
-            <button 
-              v-for="page in totalPages" 
-              :key="page" 
-              @click="currentPage = page"
-              :class="[
-                'px-4 py-2 rounded-md',
-                currentPage === page ? 
-                  'bg-primary dark:bg-primary-400 text-white' : 
-                  'bg-white dark:bg-gray-800'
-              ]"
-            >
-              {{ page }}
-            </button>
-            <button 
-              @click="currentPage < totalPages && (currentPage++)" 
-              :disabled="currentPage === totalPages"
-              class="px-4 py-2 rounded-md bg-white dark:bg-gray-800 disabled:opacity-50"
-            >
-              Next
-            </button>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-3">
+              <NuxtLink
+                :to="`/dev/projects/${project._path?.split('/').pop()}`"
+                class="flex-1 bg-primary hover:bg-primary-600 dark:bg-primary-400 dark:hover:bg-primary-500 text-white text-center py-2 px-4 rounded-lg transition-colors"
+              >
+                View Details
+              </NuxtLink>
+              <a
+                v-if="project.github"
+                :href="project.github"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="p-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-colors"
+                title="View Code"
+              >
+                <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+
+      <!-- Empty State -->
+      <div v-else class="text-center py-16">
+        <div class="w-16 h-16 mx-auto text-gray-300 dark:text-gray-700 mb-4">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">No projects found</h3>
+        <p class="text-gray-500 dark:text-gray-400">Check back later for new projects or try a different category.</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -177,104 +140,37 @@ const siteConfig = useSiteConfig();
 if (siteConfig.value?.type !== 'dev') {
   siteConfig.value = {
     ...siteConfig.value,
-    type: 'dev',
-    baseRoute: '/dev'
+    type: 'dev'
   };
 }
 
-// Use content composable
-const { fetchProjects } = useContent();
-
-// Fetch projects
-const { data: projects, pending: loading } = await useAsyncData(
+// Fetch projects directly with queryCollection
+const { data: projects, pending: loading, error } = await useAsyncData(
   'dev-projects',
-  () => fetchProjects()
+  () => queryCollection('projects').where('status', '<>', 'draft').order('featured', 'DESC').order('date', 'DESC').all()
 );
 
 // State
-const categories = ref([]);
 const selectedCategory = ref(null);
-const error = ref(null);
-const currentPage = ref(1);
-const totalPages = ref(1);
-const pageSize = 9;
+
+// Categories from projects
+const categories = computed(() => {
+  if (!projects.value) return [];
+  const uniqueCategories = [...new Set(projects.value.map(p => p.category).filter(Boolean))];
+  return uniqueCategories.map((cat, index) => ({ id: index + 1, name: cat }));
+});
 
 // Computed
 const filteredProjects = computed(() => {
-  if (!selectedCategory.value) return projects.value;
+  if (!selectedCategory.value || !projects.value) return projects.value || [];
   return projects.value.filter(project => 
-    project.category && project.category.id === selectedCategory.value
+    project.category === selectedCategory.value
   );
-});
-
-// Methods
-const fetchProjects = async () => {
-  loading.value = true;
-  error.value = null;
-  
-  try {
-    // In a real implementation, this would fetch from Strapi
-    // For demo purposes, we'll use placeholder data
-    const response = await getProjects(currentPage.value, pageSize);
-    
-    if (response) {
-      projects.value = response.data || [];
-      totalPages.value = Math.ceil((response.meta?.pagination?.total || 0) / pageSize);
-      
-      // For demo, if there's no data, create placeholder projects
-      if (projects.value.length === 0) {
-        projects.value = Array.from({ length: 6 }, (_, i) => ({
-          id: i + 1,
-          title: `Project ${i + 1}`,
-          slug: `project-${i + 1}`,
-          description: 'This is a placeholder project description. It simulates what would be fetched from a CMS.',
-          technologies: [
-            { id: 1, name: 'Vue.js' },
-            { id: 2, name: 'TypeScript' },
-            { id: 3, name: 'Tailwind' },
-          ],
-          category: { id: i % 2 === 0 ? 1 : 2, name: i % 2 === 0 ? 'Frontend' : 'Backend' },
-          github: 'https://github.com/allison',
-          live_url: 'https://example.com',
-        }));
-        
-        // Simulate categories
-        categories.value = [
-          { id: 1, name: 'Frontend' },
-          { id: 2, name: 'Backend' },
-          { id: 3, name: 'Full Stack' },
-        ];
-        
-        totalPages.value = 2; // For demo purposes
-      }
-    }
-  } catch (err) {
-    console.error('Error fetching projects:', err);
-    error.value = 'Failed to load projects. Please try again.';
-  } finally {
-    loading.value = false;
-  }
-};
-
-// Watchers
-watch(currentPage, () => {
-  fetchProjects();
-  // Scroll to top when changing pages
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-watch(selectedCategory, () => {
-  currentPage.value = 1;
-});
-
-// Lifecycle
-onMounted(() => {
-  fetchProjects();
 });
 
 // Meta tags
 useHead({
-  title: `Projects - ${siteConfig.value?.title || 'Developer Portfolio'}`,
+  title: `Projects - ${siteConfig.value?.title || 'Allison\'s Portfolio'}`,
   meta: [
     { name: 'description', content: 'Explore my web development projects, from responsive websites to interactive applications, built with modern technologies.' }
   ]
@@ -295,4 +191,4 @@ useHead({
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-</style> 
+</style>

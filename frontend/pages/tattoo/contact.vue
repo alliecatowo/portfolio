@@ -286,8 +286,7 @@ const siteConfig = useSiteConfig();
 if (siteConfig.value?.type !== 'tattoo') {
   siteConfig.value = {
     ...siteConfig.value,
-    type: 'tattoo',
-    baseRoute: '/tattoo'
+    type: 'tattoo'
   };
 }
 

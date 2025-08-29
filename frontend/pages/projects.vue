@@ -68,7 +68,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+// Fetch all projects directly with queryCollection
+const { data: projects, pending: isLoading, error } = await useAsyncData(
+  'all-projects',
+  () => queryCollection('projects').where('status', '<>', 'draft').order('featured', 'DESC').order('date', 'DESC').all()
+);
 
 // Define meta tags for the page
 useHead({
@@ -76,23 +80,5 @@ useHead({
   meta: [
     { name: 'description', content: 'Browse through my development projects and see what I\'ve been working on.' }
   ]
-});
-
-const projects = ref([]);
-const isLoading = ref(true);
-const error = ref('');
-
-onMounted(async () => {
-  try {
-    isLoading.value = true;
-    const { data } = await $fetch('/api/content/projects');
-    console.log('Projects from API:', data);
-    projects.value = data || [];
-  } catch (err) {
-    console.error('Failed to fetch projects:', err);
-    error.value = 'Failed to load projects. Please try again later.';
-  } finally {
-    isLoading.value = false;
-  }
 });
 </script> 

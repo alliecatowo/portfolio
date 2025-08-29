@@ -7,6 +7,7 @@ author: "Allie"
 published: true
 featured: true
 category: "tattoo"
+slug: "watercolor-techniques"
 ---
 
 # Mastering Watercolor Tattoo Techniques: A Artist's Journey
