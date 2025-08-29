@@ -90,7 +90,7 @@
             
             <div class="flex flex-col items-center">
               <div class="w-16 h-16 bg-primary-700/10 dark:bg-primary-400/20 rounded-full flex items-center justify-center mb-4">
-                <span class="text-2xl text-primary-700 dark:text-primary-400">🎨</span>
+                <span class="text-2xl text-primary">🎨</span>
               </div>
               <h3 class="text-lg font-semibold mb-2">Watercolor</h3>
               <p class="text-center text-gray-600 dark:text-gray-300">Vibrant, fluid colors that mimic watercolor paintings</p>
@@ -98,7 +98,7 @@
             
             <div class="flex flex-col items-center">
               <div class="w-16 h-16 bg-primary-700/10 dark:bg-primary-400/20 rounded-full flex items-center justify-center mb-4">
-                <span class="text-2xl text-primary-700 dark:text-primary-400">🌿</span>
+                <span class="text-2xl text-primary">🌿</span>
               </div>
               <h3 class="text-lg font-semibold mb-2">Botanical</h3>
               <p class="text-center text-gray-600 dark:text-gray-300">Nature-inspired designs with detailed flora elements</p>
@@ -106,7 +106,7 @@
             
             <div class="flex flex-col items-center">
               <div class="w-16 h-16 bg-primary-700/10 dark:bg-primary-400/20 rounded-full flex items-center justify-center mb-4">
-                <span class="text-2xl text-primary-700 dark:text-primary-400">✨</span>
+                <span class="text-2xl text-primary">✨</span>
               </div>
               <h3 class="text-lg font-semibold mb-2">Minimalist</h3>
               <p class="text-center text-gray-600 dark:text-gray-300">Simple, clean designs with powerful meaning</p>
@@ -114,7 +114,7 @@
             
             <div class="flex flex-col items-center">
               <div class="w-16 h-16 bg-primary-700/10 dark:bg-primary-400/20 rounded-full flex items-center justify-center mb-4">
-                <span class="text-2xl text-primary-700 dark:text-primary-400">🖤</span>
+                <span class="text-2xl text-primary">🖤</span>
               </div>
               <h3 class="text-lg font-semibold mb-2">Blackwork</h3>
               <p class="text-center text-gray-600 dark:text-gray-300">Bold black ink with strong contrasts and patterns</p>
@@ -122,7 +122,7 @@
             
             <div class="flex flex-col items-center">
               <div class="w-16 h-16 bg-primary-700/10 dark:bg-primary-400/20 rounded-full flex items-center justify-center mb-4">
-                <span class="text-2xl text-primary-700 dark:text-primary-400">🧠</span>
+                <span class="text-2xl text-primary">🧠</span>
               </div>
               <h3 class="text-lg font-semibold mb-2">Custom</h3>
               <p class="text-center text-gray-600 dark:text-gray-300">Unique designs tailored to your personal vision</p>
@@ -134,7 +134,7 @@
       <!-- Client Testimonials -->
       <section class="py-12 md:py-16">
         <div class="mb-12">
-          <h2 class="text-3xl font-bold text-primary-700 dark:text-primary-400">Client Testimonials</h2>
+          <h2 class="text-3xl font-bold text-primary">Client Testimonials</h2>
           <p class="text-gray-600 dark:text-gray-400 mt-2">What my clients are saying</p>
         </div>
 
@@ -171,7 +171,7 @@
       <!-- Blog Posts Preview -->
       <section class="py-12 md:py-16">
         <div class="mb-12">
-          <h2 class="text-3xl font-bold text-primary-700 dark:text-primary-400">Tattoo Articles</h2>
+          <h2 class="text-3xl font-bold text-primary">Tattoo Articles</h2>
           <p class="text-gray-600 dark:text-gray-400 mt-2">Insights and stories from my tattoo journey</p>
         </div>
 
@@ -192,7 +192,7 @@
               <div class="text-sm text-gray-500 dark:text-gray-400 mb-2">
                 {{ new Date(post.date).toLocaleDateString() }}
               </div>
-              <h3 class="text-xl font-bold mb-2 text-primary-700 dark:text-primary-400">
+              <h3 class="text-xl font-bold mb-2 text-primary">
                 {{ post.title }}
               </h3>
               <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
@@ -214,7 +214,7 @@
 
       <!-- Booking CTA -->
       <section class="py-12 md:py-16 bg-primary-700/10 dark:bg-primary-400/10 rounded-xl text-center">
-        <h2 class="text-3xl font-bold text-primary-700 dark:text-primary-400 mb-4">Ready for Your New Tattoo?</h2>
+        <h2 class="text-3xl font-bold text-primary mb-4">Ready for Your New Tattoo?</h2>
         <p class="text-gray-700 dark:text-gray-300 max-w-2xl mx-auto mb-8">
           Let's create something beautiful together. Contact me to discuss your ideas and schedule a consultation.
         </p>
@@ -246,7 +246,7 @@
           </button>
         </div>
         <div class="p-6">
-          <h3 class="text-2xl font-bold mb-2 text-primary-700 dark:text-primary-400">
+          <h3 class="text-2xl font-bold mb-2 text-primary">
             {{ selectedWork.title }}
           </h3>
           <div class="flex items-center mb-4 text-sm text-gray-500 dark:text-gray-400">

@@ -137,7 +137,12 @@ const projectId = route.params.id as string;
 // Fetch the project directly with queryCollection
 const { data: project, pending: loading, error } = await useAsyncData(
   `dev-project-${projectId || 'unknown'}`,
-  () => queryCollection('projects').where('_path', 'LIKE', `%${projectId || 'unknown'}%`).first()
+  async () => {
+    const bySlug = await queryCollection('projects').where('slug', '=', projectId || 'unknown').first()
+    if (bySlug) return bySlug
+    // Fallback to exact path match
+    return await queryCollection('projects').where('path', '=', `/projects/${projectId || 'unknown'}`).first()
+  }
 );
 
 // Meta tags

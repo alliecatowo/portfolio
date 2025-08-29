@@ -44,10 +44,18 @@ const category = computed(() => {
 // Fetch the blog post directly with queryCollection
 const { data: post } = await useAsyncData(
   () => `blog-post-${category.value || 'dev'}-${props.postId || 'unknown'}`,
-  () => queryCollection('blog')
-    .where('category', '=', category.value || 'dev')
-    .where('_path', 'LIKE', `%${props.postId || 'unknown'}%`)
-    .first()
+  async () => {
+    // Prefer slug match; fall back to path suffix
+    const bySlug = await queryCollection('blog')
+      .where('category', '=', category.value || 'dev')
+      .where('slug', '=', props.postId || 'unknown')
+      .first()
+    if (bySlug) return bySlug
+    return await queryCollection('blog')
+      .where('category', '=', category.value || 'dev')
+      .where('path', '=', `/blog/${category.value || 'dev'}/${props.postId || 'unknown'}`)
+      .first()
+  }
 )
 
 function getImageUrl(image: any, options?: any) {
