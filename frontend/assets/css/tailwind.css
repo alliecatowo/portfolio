@@ -1,50 +1,6 @@
+/* Custom styles for portfolio */
+/* @nuxt/ui provides all Tailwind CSS and components */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  body {
-    @apply bg-background text-text dark:bg-dark-background dark:text-dark-text;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-sans font-bold;
-  }
-  h1 {
-    @apply text-4xl md:text-5xl;
-  }
-  h2 {
-    @apply text-3xl md:text-4xl;
-  }
-  h3 {
-    @apply text-2xl md:text-3xl;
-  }
-  h4 {
-    @apply text-xl md:text-2xl;
-  }
-  a {
-    @apply text-primary hover:text-primary-dark dark:text-dark-primary dark:hover:text-dark-primary-light transition-colors;
-  }
-  code {
-    @apply font-mono bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded;
-  }
-}
-
-@layer components {
-  .btn {
-    @apply px-4 py-2 rounded-md font-medium transition-colors;
-  }
-  .btn-primary {
-    @apply bg-primary text-white hover:bg-primary-dark dark:bg-dark-primary dark:hover:bg-dark-primary-dark;
-  }
-  .btn-outline {
-    @apply border-2 border-primary text-primary hover:bg-primary hover:text-white dark:border-dark-primary dark:text-dark-primary dark:hover:bg-dark-primary;
-  }
-  .card {
-    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md p-6;
-  }
-  .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
-  }
-} 
+/* Additional custom styles can be added here if needed */ 
