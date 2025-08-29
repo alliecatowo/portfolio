@@ -7,12 +7,12 @@
         Sorry, the page you are looking for doesn't exist or has been moved.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <button @click="$router.go(-1)" class="btn btn-outline">
+        <UButton @click="$router.go(-1)" variant="outline" color="primary">
           Go Back
-        </button>
-        <NuxtLink to="/" class="btn btn-primary">
+        </UButton>
+        <UButton to="/" color="primary">
           Back to Home
-        </NuxtLink>
+        </UButton>
       </div>
     </div>
   </div>

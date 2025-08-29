@@ -34,9 +34,9 @@
               <span class="px-3 py-1 text-xs rounded-full bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-100">TypeScript</span>
             </div>
             <div class="relative z-20">
-              <NuxtLink to="/dev" class="btn btn-primary w-full">
+              <UButton to="/dev" color="primary" class="w-full">
                 Explore Developer Work
-              </NuxtLink>
+              </UButton>
             </div>
           </div>
         </div>
@@ -64,9 +64,9 @@
               <span class="px-3 py-1 text-xs rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-100">Custom</span>
             </div>
             <div class="relative z-20">
-              <NuxtLink to="/tattoo" class="btn btn-primary w-full">
+              <UButton to="/tattoo" color="primary" class="w-full">
                 Explore Tattoo Work
-              </NuxtLink>
+              </UButton>
             </div>
           </div>
         </div>

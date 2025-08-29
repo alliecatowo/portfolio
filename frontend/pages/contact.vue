@@ -151,13 +151,15 @@
             </div>
             
             <div>
-              <button 
+              <UButton 
                 type="submit" 
-                class="btn btn-primary w-full"
+                color="primary"
+                class="w-full"
+                :loading="formSubmitting"
                 :disabled="formSubmitting"
               >
                 {{ formSubmitting ? 'Sending...' : 'Send Message' }}
-              </button>
+              </UButton>
             </div>
             
             <div v-if="formSubmitSuccess" class="p-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-md">
