@@ -43,22 +43,22 @@
           >
             <div class="aspect-square bg-gray-100 dark:bg-gray-700">
               <img 
-                :src="work.attributes.image?.data?.attributes?.url || '/placeholder-tattoo-work.jpg'" 
-                :alt="work.attributes.title" 
+                :src="work.image || '/placeholder-tattoo-work.jpg'" 
+                :alt="work.title" 
                 class="object-cover w-full h-full"
               />
             </div>
             <div class="p-6">
               <h3 class="text-xl font-bold mb-2 text-primary-700 dark:text-primary-400">
-                {{ work.attributes.title }}
+                {{ work.title }}
               </h3>
               <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
-                {{ work.attributes.description }}
+                {{ work.description }}
               </p>
               <div class="flex items-center mb-4">
                 <span class="text-sm text-gray-500 dark:text-gray-400">Style: </span>
                 <span class="ml-2 px-2 py-1 bg-primary-700/10 dark:bg-primary-400/20 text-primary-700 dark:text-primary-400 text-xs rounded-full">
-                  {{ work.attributes.style?.data?.attributes?.name || 'Custom' }}
+                  {{ work.style || 'Custom' }}
                 </span>
               </div>
               <button @click="openTattooDetails(work)" class="btn btn-primary btn-sm w-full">
@@ -155,18 +155,18 @@
             <div class="flex items-start mb-4">
               <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 mr-4">
                 <img 
-                  :src="work.attributes.image?.data?.attributes?.url || '/placeholder-client.jpg'" 
+                  :src="work.image || '/placeholder-client.jpg'" 
                   alt="Client" 
                   class="w-full h-full object-cover"
                 />
               </div>
               <div>
                 <h3 class="font-semibold text-lg">Client {{ index + 1 }}</h3>
-                <p class="text-gray-500 dark:text-gray-400 text-sm">{{ new Date(work.attributes.date).toLocaleDateString() }}</p>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">{{ new Date(work.date).toLocaleDateString() }}</p>
               </div>
             </div>
             <p class="text-gray-600 dark:text-gray-300 italic">
-              "{{ work.attributes.clientTestimonial }}"
+              "{{ work.clientTestimonial }}"
             </p>
           </div>
         </div>
@@ -191,22 +191,22 @@
           >
             <div class="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-700">
               <img 
-                :src="post.attributes.coverImage?.data?.attributes?.url || '/placeholder-blog.jpg'" 
-                :alt="post.attributes.title" 
+                :src="post.image || '/placeholder-blog.jpg'" 
+                :alt="post.title" 
                 class="object-cover w-full h-full"
               />
             </div>
             <div class="p-6">
               <div class="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                {{ new Date(post.attributes.publishedAt).toLocaleDateString() }}
+                {{ new Date(post.date).toLocaleDateString() }}
               </div>
               <h3 class="text-xl font-bold mb-2 text-primary-700 dark:text-primary-400">
-                {{ post.attributes.title }}
+                {{ post.title }}
               </h3>
               <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
-                {{ post.attributes.summary }}
+                {{ post.description || post.summary }}
               </p>
-              <NuxtLink :to="`/tattoo/blog/${post.attributes.slug}`" class="btn btn-primary btn-sm w-full">
+              <NuxtLink :to="`/tattoo/blog/${post._path.split('/').pop()}`" class="btn btn-primary btn-sm w-full">
                 Read More
               </NuxtLink>
             </div>
@@ -248,8 +248,8 @@
       >
         <div class="relative">
           <img 
-            :src="selectedWork.attributes.image?.data?.attributes?.url || '/placeholder-tattoo-full.jpg'" 
-            :alt="selectedWork.attributes.title" 
+            :src="selectedWork.image || '/placeholder-tattoo-full.jpg'" 
+            :alt="selectedWork.title" 
             class="w-full aspect-square object-cover"
           />
           <button 
@@ -261,21 +261,21 @@
         </div>
         <div class="p-6">
           <h3 class="text-2xl font-bold mb-2 text-primary-700 dark:text-primary-400">
-            {{ selectedWork.attributes.title }}
+            {{ selectedWork.title }}
           </h3>
           <div class="flex items-center mb-4 text-sm text-gray-500 dark:text-gray-400">
-            <span>{{ new Date(selectedWork.attributes.date).toLocaleDateString() }}</span>
+            <span>{{ new Date(selectedWork.date).toLocaleDateString() }}</span>
             <span class="mx-2">•</span>
-            <span>Style: {{ selectedWork.attributes.style?.data?.attributes?.name || 'Custom' }}</span>
+            <span>Style: {{ selectedWork.style || 'Custom' }}</span>
           </div>
           <p class="text-gray-600 dark:text-gray-300 mb-6">
-            {{ selectedWork.attributes.description }}
+            {{ selectedWork.description }}
           </p>
           
-          <div v-if="selectedWork.attributes.clientTestimonial" class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+          <div v-if="selectedWork.clientTestimonial" class="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
             <h4 class="font-medium mb-2">Client Testimonial</h4>
             <p class="text-gray-600 dark:text-gray-300 italic">
-              "{{ selectedWork.attributes.clientTestimonial }}"
+              "{{ selectedWork.clientTestimonial }}"
             </p>
           </div>
         </div>
@@ -285,8 +285,7 @@
 </template>
 
 <script setup lang="ts">
-import { fetchTattooLandingContent } from '~/utils/api/content';
-import type { TattooWork, Article } from '~/utils/api/content';
+import { useContent } from '~/composables/useContent';
 
 // Site Configuration
 const config = useSiteConfig();
@@ -305,29 +304,38 @@ useHead({
   ]
 });
 
-// Fetch content from Directus
-const featuredWorks = ref<TattooWork[]>([]);
-const recentPosts = ref<Article[]>([]);
-const testimonials = ref<any[]>([]);
-const selectedWork = ref<TattooWork | null>(null);
+// Content data
+const featuredWorks = ref([]);
+const recentPosts = ref([]);
+const testimonials = ref([]);
+const selectedWork = ref(null);
 
 // Computed property for works with testimonials
 const featuredWorksWithTestimonials = computed(() => {
-  return featuredWorks.value.filter(work => work.attributes.clientTestimonial);
+  return featuredWorks.value.filter(work => work.clientTestimonial);
 });
 
 // Method to open tattoo details modal
-function openTattooDetails(work: TattooWork) {
+function openTattooDetails(work: any) {
   selectedWork.value = work;
 }
 
-onMounted(async () => {
-  try {
-    const content = await fetchTattooLandingContent();
-    featuredWorks.value = content.featuredWorks.data || [];
-    recentPosts.value = content.recentPosts.data || [];
-  } catch (error) {
-    console.error('Error fetching landing page content:', error);
-  }
-});
+// Use content composable
+const { fetchGalleryItems, fetchBlogPosts, fetchTestimonials } = useContent();
+
+// Fetch data using useAsyncData for SSR support
+const { data: galleryData } = await useAsyncData('tattoo-gallery-featured', () => 
+  fetchGalleryItems(3)
+);
+const { data: blogData } = await useAsyncData('tattoo-blog-recent', () => 
+  fetchBlogPosts('tattoo', 3)
+);
+const { data: testimonialData } = await useAsyncData('tattoo-testimonials', () => 
+  fetchTestimonials(4)
+);
+
+// Set reactive data
+featuredWorks.value = galleryData.value || [];
+recentPosts.value = blogData.value || [];
+testimonials.value = testimonialData.value || [];
 </script> 

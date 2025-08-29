@@ -205,7 +205,7 @@
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
-import { getProjectBySlug } from '~/utils/api/content';
+import { useContent }; const { fetchProject } from '~/composables/useContent';
 
 // Ensure site config is set to dev
 const siteConfig = useSiteConfig();

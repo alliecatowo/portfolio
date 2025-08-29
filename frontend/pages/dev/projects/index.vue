@@ -170,7 +170,7 @@
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
-import { getProjects } from '~/utils/api/content';
+import { useContent } from '~/composables/useContent';
 
 // Ensure site config is set to dev
 const siteConfig = useSiteConfig();
@@ -182,11 +182,18 @@ if (siteConfig.value?.type !== 'dev') {
   };
 }
 
+// Use content composable
+const { fetchProjects } = useContent();
+
+// Fetch projects
+const { data: projects, pending: loading } = await useAsyncData(
+  'dev-projects',
+  () => fetchProjects()
+);
+
 // State
-const projects = ref([]);
 const categories = ref([]);
 const selectedCategory = ref(null);
-const loading = ref(true);
 const error = ref(null);
 const currentPage = ref(1);
 const totalPages = ref(1);

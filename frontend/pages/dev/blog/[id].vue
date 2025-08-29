@@ -36,7 +36,7 @@
               <div>
                 <div class="font-medium">{{ post.author?.name || 'Anonymous' }}</div>
                 <div class="text-sm text-gray-500 dark:text-gray-400">
-                  {{ new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
+                  {{ new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
                 </div>
               </div>
             </div>
@@ -44,23 +44,23 @@
             <div class="flex flex-wrap gap-2 mb-8">
               <span 
                 v-for="category in post.categories" 
-                :key="category.id" 
+                :key="category" 
                 class="px-3 py-1 text-sm rounded-full bg-primary-50 dark:bg-primary-400/20 text-primary dark:text-primary-400"
               >
-                {{ category.name }}
+                {{ category }}
               </span>
             </div>
           </div>
           
           <!-- Featured image -->
           <div v-if="post.image" class="mb-8 rounded-lg overflow-hidden">
-            <img :src="post.image.url" :alt="post.title" class="w-full h-auto">
+            <img :src="post.image" :alt="post.title" class="w-full h-auto">
           </div>
           
           <!-- Post content -->
           <div class="prose dark:prose-invert max-w-none mb-12">
             <!-- In a real app, this would be rendered HTML from the CMS -->
-            <p>{{ post.content || post.excerpt }}</p>
+            <p>{{ post.body || post.content || post.description }}</p>
             
             <!-- Placeholder paragraphs for demo -->
             <p v-if="!post.content">
@@ -89,7 +89,7 @@
           <div v-if="post.author" class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md mb-12">
             <div class="flex items-start">
               <div v-if="post.author.avatar" class="w-16 h-16 rounded-full overflow-hidden mr-4 flex-shrink-0">
-                <img :src="post.author.avatar.url" :alt="post.author.name" class="w-full h-full object-cover">
+                <img :src="post.author.avatar" :alt="post.author.name" class="w-full h-full object-cover">
               </div>
               <div v-else class="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700 mr-4 flex-shrink-0"></div>
               
@@ -175,7 +175,7 @@
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
-import { getPostBySlug } from '~/utils/api/content';
+import { useContent } from '~/composables/useContent';
 
 // Ensure site config is set to dev
 const siteConfig = useSiteConfig();
@@ -197,46 +197,37 @@ const loading = ref(true);
 const error = ref(null);
 const newsletterEmail = ref('');
 
-// Methods
-const fetchPost = async () => {
-  loading.value = true;
-  error.value = null;
-  
-  try {
-    // In a real implementation, this would fetch from Strapi
-    const response = await getPostBySlug(postId);
-    
-    if (response) {
-      post.value = response;
-      
-      // For demo purposes, if there's no data from Strapi, use placeholder data
-      if (!post.value) {
-        // This is just for demo purposes - in a real app, we'd show a 404
-        post.value = {
-          id: 1,
-          title: 'Sample Development Article',
-          slug: postId,
-          excerpt: 'This is a sample excerpt for a development blog post. In a real application, this would be fetched from the CMS.',
-          publishedAt: new Date().toISOString(),
-          categories: [
-            { id: 1, name: 'Web Development' },
-            { id: 2, name: 'JavaScript' }
-          ],
-          author: {
-            name: 'Allison Dev',
-            bio: 'Full-stack developer with a passion for creating intuitive and performant web applications.',
-            avatar: null
-          }
-        };
-      }
+// Use content composable
+const { fetchBlogPost } = useContent();
+
+// Fetch data using useAsyncData for SSR support
+const { data, pending, error: fetchError } = await useAsyncData(`dev-blog-${postId}`, () => 
+  fetchBlogPost('dev', postId)
+);
+
+// Set reactive data
+post.value = data.value;
+loading.value = pending.value;
+if (fetchError.value) {
+  error.value = 'Failed to load article. Please try again.';
+}
+
+// For demo purposes, if no data exists, use placeholder data
+if (!post.value) {
+  post.value = {
+    id: 1,
+    title: 'Sample Development Article',
+    _path: `/blog/dev/${postId}`,
+    description: 'This is a sample excerpt for a development blog post. In a real application, this would be fetched from the CMS.',
+    date: new Date().toISOString(),
+    categories: ['Web Development', 'JavaScript'],
+    author: {
+      name: 'Allison Dev',
+      bio: 'Full-stack developer with a passion for creating intuitive and performant web applications.',
+      avatar: null
     }
-  } catch (err) {
-    console.error('Error fetching post:', err);
-    error.value = 'Failed to load article. Please try again.';
-  } finally {
-    loading.value = false;
-  }
-};
+  };
+}
 
 // Newsletter subscription
 const subscribeToNewsletter = () => {
@@ -245,15 +236,11 @@ const subscribeToNewsletter = () => {
   newsletterEmail.value = '';
 };
 
-// Lifecycle
-onMounted(() => {
-  fetchPost();
-});
-
-// Watch for route changes to fetch new post data
-watch(() => route.params.id, (newId) => {
+// Watch for route changes to refetch data
+watch(() => route.params.id, async (newId) => {
   if (newId && newId !== postId) {
-    fetchPost();
+    const { data: newData } = await refreshCookie(`dev-blog-${newId}`);
+    post.value = newData || null;
   }
 });
 

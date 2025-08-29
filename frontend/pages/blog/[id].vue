@@ -38,14 +38,14 @@
       <article v-else>
         <div class="mb-8">
           <div class="text-sm text-gray-500 dark:text-gray-400 mb-2">
-            {{ formatDate(post.date_published) }}
+            {{ formatDate(post.date) }}
           </div>
           <h1 class="mb-6">{{ post.title }}</h1>
           
           <!-- Post image -->
-          <div v-if="post.cover_image" class="relative aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-8">
+          <div v-if="post.image" class="relative aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-8">
             <img 
-              :src="getImageUrl(post.cover_image)" 
+              :src="getImageUrl(post.image)" 
               :alt="post.title"
               class="w-full h-full object-cover rounded-lg"
             >
@@ -57,7 +57,10 @@
           </div>
           
           <!-- Post content -->
-          <div class="prose dark:prose-invert max-w-none" v-html="post.content"></div>
+          <ContentRenderer v-if="post.body" :value="post" class="prose dark:prose-invert max-w-none" />
+          <div v-else class="prose dark:prose-invert max-w-none">
+            <p>{{ post.description }}</p>
+          </div>
         </div>
       </article>
       
@@ -78,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { getPostBySlug } from '~/utils/api/content';
+import { useContent } from '~/composables/useContent';
 import { useSiteConfig } from '~/utils/site-config';
 
 // Get site configuration
@@ -86,36 +89,24 @@ const siteConfig = useSiteConfig();
 
 // Get post slug from route
 const route = useRoute();
-const slug = route.params.id;
+const slug = route.params.id as string;
 
-// State
-const post = ref(null);
-const loading = ref(true);
-const error = ref(null);
+// Use content composable
+const { fetchBlogPost } = useContent();
 
-// Methods
-const loadBlogPost = async () => {
-  loading.value = true;
-  error.value = null;
-  
-  try {
-    const response = await getPostBySlug(slug.toString());
-    
-    if (response) {
-      post.value = response;
-    } else {
-      post.value = null;
-    }
-  } catch (err) {
-    console.error('Error fetching blog post:', err);
-    error.value = 'Failed to load blog post. Please try again.';
-  } finally {
-    loading.value = false;
-  }
-};
+// Determine category based on current path
+const category = computed(() => {
+  return route.path.includes('/dev/') ? 'dev' : 'tattoo'
+});
+
+// Fetch the blog post
+const { data: post, pending: loading, error } = await useAsyncData(
+  `blog-post-${category.value}-${slug}`,
+  () => fetchBlogPost(category.value, slug)
+);
 
 // Helper functions
-const formatDate = (dateString) => {
+const formatDate = (dateString: string) => {
   if (!dateString) return '';
   const date = new Date(dateString);
   return date.toLocaleDateString('en-US', { 
@@ -125,12 +116,7 @@ const formatDate = (dateString) => {
   });
 };
 
-const getImageUrl = (path) => path || '';
-
-// Load data
-onMounted(() => {
-  loadBlogPost();
-});
+const getImageUrl = (path: string) => path || '';
 
 // Meta tags
 useHead(() => ({
@@ -140,7 +126,7 @@ useHead(() => ({
   meta: [
     { 
       name: 'description', 
-      content: post.value?.excerpt || 'Detailed article with insights and information.' 
+      content: post.value?.description || 'Detailed article with insights and information.' 
     }
   ]
 }));

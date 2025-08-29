@@ -35,36 +35,36 @@
           <p class="text-gray-600 dark:text-gray-400 mt-2">Check out some of my recent work</p>
         </div>
 
-        <div v-if="featuredProjects.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div v-if="featuredProjects && featuredProjects.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div 
             v-for="project in featuredProjects" 
-            :key="project.id" 
+            :key="project._id" 
             class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all"
           >
             <div class="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-700">
               <img 
-                :src="project.attributes.featuredImage?.data?.attributes?.url || '/placeholder-project.jpg'" 
-                :alt="project.attributes.title" 
+                :src="project.image || '/placeholder-project.jpg'" 
+                :alt="project.title" 
                 class="object-cover w-full h-full"
               />
             </div>
             <div class="p-6">
               <h3 class="text-xl font-bold mb-2 text-primary dark:text-primary-400">
-                {{ project.attributes.title }}
+                {{ project.title }}
               </h3>
               <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
-                {{ project.attributes.description }}
+                {{ project.description }}
               </p>
               <div class="flex flex-wrap gap-2 mb-4">
                 <span 
-                  v-for="(tech, index) in project.attributes.technologies" 
+                  v-for="(tech, index) in project.technologies" 
                   :key="index"
                   class="px-2 py-1 bg-primary-50 dark:bg-primary-400/20 text-primary dark:text-primary-400 text-xs rounded-full"
                 >
                   {{ tech }}
                 </span>
               </div>
-              <NuxtLink :to="`/projects/${project.attributes.slug}`" class="btn btn-primary btn-sm w-full">
+              <NuxtLink :to="`/projects/${project._path.split('/').pop()}`" class="btn btn-primary btn-sm w-full">
                 View Project
               </NuxtLink>
             </div>
@@ -133,30 +133,30 @@
           <p class="text-gray-600 dark:text-gray-400 mt-2">Thoughts and insights about development</p>
         </div>
 
-        <div v-if="recentPosts.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div v-if="recentPosts && recentPosts.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div 
             v-for="post in recentPosts" 
-            :key="post.id" 
+            :key="post._id" 
             class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all"
           >
             <div class="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-700">
               <img 
-                :src="post.attributes.coverImage?.data?.attributes?.url || '/placeholder-blog.jpg'" 
-                :alt="post.attributes.title" 
+                :src="post.image || '/placeholder-blog-dev.jpg'" 
+                :alt="post.title" 
                 class="object-cover w-full h-full"
               />
             </div>
             <div class="p-6">
               <div class="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                {{ new Date(post.attributes.publishedAt).toLocaleDateString() }}
+                {{ new Date(post.date).toLocaleDateString() }}
               </div>
               <h3 class="text-xl font-bold mb-2 text-primary dark:text-primary-400">
-                {{ post.attributes.title }}
+                {{ post.title }}
               </h3>
               <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
-                {{ post.attributes.summary }}
+                {{ post.description }}
               </p>
-              <NuxtLink :to="`/blog/${post.attributes.slug}`" class="btn btn-primary btn-sm w-full">
+              <NuxtLink :to="`/blog/${post._path.split('/').pop()}`" class="btn btn-primary btn-sm w-full">
                 Read More
               </NuxtLink>
             </div>
@@ -189,8 +189,7 @@
 </template>
 
 <script setup lang="ts">
-import { fetchDevLandingContent } from '~/utils/api/content';
-import type { Project, Article } from '~/utils/api/content';
+import { useContent } from '~/composables/useContent';
 
 // Site Configuration
 const config = useSiteConfig();
@@ -209,17 +208,17 @@ useHead({
   ]
 });
 
-// Fetch content from Directus
-const featuredProjects = ref<Project[]>([]);
-const recentPosts = ref<Article[]>([]);
+// Use content composable
+const { fetchProjects, fetchBlogPosts } = useContent();
 
-onMounted(async () => {
-  try {
-    const content = await fetchDevLandingContent();
-    featuredProjects.value = content.featuredProjects.data || [];
-    recentPosts.value = content.recentPosts.data || [];
-  } catch (error) {
-    console.error('Error fetching landing page content:', error);
-  }
-});
+// Fetch featured projects and recent blog posts
+const { data: featuredProjects } = await useAsyncData(
+  'dev-featured-projects',
+  () => fetchProjects(3)
+);
+
+const { data: recentPosts } = await useAsyncData(
+  'dev-recent-posts',
+  () => fetchBlogPosts('dev', 3)
+);
 </script> 
