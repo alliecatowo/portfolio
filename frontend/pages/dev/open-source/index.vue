@@ -31,7 +31,7 @@
         
         <div class="grid gap-6">
           <!-- Repository cards -->
-          <div v-for="repo in repositories" :key="repo.name" class="card p-6">
+          <UCard v-for="repo in repositories" :key="repo.name">
             <div class="flex flex-col md:flex-row md:items-start">
               <div class="flex-grow">
                 <div class="flex items-center mb-2">
@@ -58,16 +58,16 @@
                   </div>
                 </div>
                 <div class="flex gap-4">
-                  <a :href="repo.url" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                  <UButton :href="repo.url" target="_blank" external variant="outline" color="primary">
                     View Repository
-                  </a>
-                  <a v-if="repo.demo" :href="repo.demo" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                  </UButton>
+                  <UButton v-if="repo.demo" :href="repo.demo" target="_blank" external color="primary">
                     Live Demo
-                  </a>
+                  </UButton>
                 </div>
               </div>
             </div>
-          </div>
+          </UCard>
         </div>
       </div>
       
@@ -75,7 +75,7 @@
       <div class="mb-16">
         <h2 class="text-2xl font-bold mb-6">Contributions to Other Projects</h2>
         <div class="grid gap-4">
-          <div v-for="(contribution, index) in contributions" :key="index" class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+          <UCard v-for="(contribution, index) in contributions" :key="index">
             <div class="flex flex-col md:flex-row md:items-start">
               <div class="flex-grow">
                 <h3 class="text-xl font-bold mb-2">{{ contribution.project }}</h3>
@@ -83,16 +83,13 @@
                   {{ contribution.description }}
                 </p>
                 <div class="flex gap-4">
-                  <a :href="contribution.url" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-primary dark:text-dark-primary">
+                  <UButton :href="contribution.url" target="_blank" external variant="soft" color="primary" trailing-icon="i-lucide-external-link">
                     View Contributions
-                    <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                    </svg>
-                  </a>
+                  </UButton>
                 </div>
               </div>
             </div>
-          </div>
+          </UCard>
         </div>
       </div>
       

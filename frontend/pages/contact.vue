@@ -86,8 +86,10 @@
 
       <!-- Contact Form -->
       <div>
-        <div class="card">
-          <h2 class="text-2xl font-bold mb-6">Send a Message</h2>
+        <UCard>
+          <template #header>
+            <h2 class="text-2xl font-bold">Send a Message</h2>
+          </template>
           <form @submit.prevent="submitForm" class="space-y-6">
             <div>
               <label for="name" class="block text-sm font-medium mb-1">Name</label>
@@ -170,7 +172,7 @@
               There was an error sending your message. Please try again.
             </div>
           </form>
-        </div>
+        </UCard>
       </div>
     </div>
   </div>
