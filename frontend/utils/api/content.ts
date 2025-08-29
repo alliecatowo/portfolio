@@ -1,5 +1,5 @@
 /**
- * Service to fetch and handle content using Nuxt Content
+ * Service to fetch and handle content using Nuxt Content directly
  */
 
 // Types
@@ -41,31 +41,53 @@ export interface TattooWork {
 }
 
 /**
- * Fetch blog posts using Nuxt Content
+ * Fetch blog posts using Nuxt Content directly
  */
-export async function getPosts(page = 1, pageSize = 10, filters = {}) {
+export async function getPosts(page = 1, pageSize = 10, filters: any = {}) {
   try {
-    const posts = await $fetch('/api/content/blog', {
-      query: {
-        page,
-        limit: pageSize,
-        ...filters
-      }
-    });
+    let query = queryContent('blog')
+      .where({ published: true })
+      .sort({ date: -1 })
+
+    // Apply category filter if provided
+    if (filters.category) {
+      query = query.where({ category: filters.category })
+    }
+
+    // Get total count
+    const allPosts = await query.find()
+    const total = allPosts.length
+
+    // Get paginated results
+    const posts = await query
+      .limit(pageSize)
+      .skip((page - 1) * pageSize)
+      .find()
 
     return {
-      data: posts.data || [],
+      data: posts.map(post => ({
+        id: post._id,
+        title: post.title,
+        slug: post._path?.split('/').pop(),
+        excerpt: post.description,
+        content: post.body,
+        date_published: post.date,
+        cover_image: post.image,
+        category: post.category,
+        tags: post.tags || [],
+        featured: post.featured || false
+      })),
       meta: {
         pagination: {
           page,
           pageSize,
-          total: posts.total || 0
+          total
         }
       }
-    };
+    }
   } catch (error) {
-    console.error('Error fetching posts:', error);
-    return { data: [], meta: { pagination: { page: 1, pageSize: 10, total: 0 } } };
+    console.error('Error fetching posts:', error)
+    return { data: [], meta: { pagination: { page: 1, pageSize: 10, total: 0 } } }
   }
 }
 
@@ -74,40 +96,78 @@ export async function getPosts(page = 1, pageSize = 10, filters = {}) {
  */
 export async function getPostBySlug(slug: string) {
   try {
-    const post = await $fetch(`/api/content/blog/${slug}`);
-    return post;
+    const post = await queryContent('blog', slug)
+      .where({ published: true })
+      .findOne()
+    
+    if (!post) return null
+    
+    return {
+      id: post._id,
+      title: post.title,
+      slug: post._path?.split('/').pop(),
+      excerpt: post.description,
+      content: post.body,
+      date_published: post.date,
+      cover_image: post.image,
+      category: post.category,
+      tags: post.tags || [],
+      featured: post.featured || false
+    }
   } catch (error) {
-    console.error('Error fetching post by slug:', error);
-    return null;
+    console.error('Error fetching post by slug:', error)
+    return null
   }
 }
 
 /**
  * Fetch developer projects
  */
-export async function getProjects(page = 1, pageSize = 10, filters = {}) {
+export async function getProjects(page = 1, pageSize = 10, filters: any = {}) {
   try {
-    const projects = await $fetch('/api/content/projects', {
-      query: {
-        page,
-        limit: pageSize,
-        ...filters
-      }
-    });
+    let query = queryContent('projects')
+      .where({ status: 'completed' })
+      .sort({ date: -1 })
+
+    // Apply featured filter if provided
+    if (filters.featured) {
+      query = query.where({ featured: true })
+    }
+
+    // Get total count
+    const allProjects = await query.find()
+    const total = allProjects.length
+
+    // Get paginated results
+    const projects = await query
+      .limit(pageSize)
+      .skip((page - 1) * pageSize)
+      .find()
 
     return {
-      data: projects.data || [],
+      data: projects.map((project, index) => ({
+        id: index + 1,
+        title: project.title,
+        description: project.description,
+        slug: project._path?.split('/').pop(),
+        cover_image: project.image,
+        technologies: project.technologies || [],
+        github: project.github,
+        live_url: project.demo,
+        featured: project.featured || false,
+        category: project.category
+      })),
       meta: {
         pagination: {
           page,
           pageSize,
-          total: projects.total || 0
+          total
         }
       }
-    };
+    }
   } catch (error) {
-    console.error('Error fetching projects:', error);
-    return { data: [], meta: { pagination: { page: 1, pageSize: 10, total: 0 } } };
+    console.error('Error fetching projects:', error)
+    return { data: [], meta: { pagination: { page: 1, pageSize: 10, total: 0 } } }
   }
 }
 
@@ -116,40 +176,79 @@ export async function getProjects(page = 1, pageSize = 10, filters = {}) {
  */
 export async function getProjectBySlug(slug: string) {
   try {
-    const project = await $fetch(`/api/content/projects/${slug}`);
-    return project;
+    const project = await queryContent('projects', slug)
+      .where({ status: 'completed' })
+      .findOne()
+    
+    if (!project) return null
+    
+    return {
+      id: project._id,
+      title: project.title,
+      description: project.description,
+      slug: project._path?.split('/').pop(),
+      cover_image: project.image,
+      technologies: project.technologies || [],
+      github: project.github,
+      live_url: project.demo,
+      featured: project.featured || false,
+      category: project.category,
+      content: project.body
+    }
   } catch (error) {
-    console.error('Error fetching project by slug:', error);
-    return null;
+    console.error('Error fetching project by slug:', error)
+    return null
   }
 }
 
 /**
  * Fetch gallery items
  */
-export async function getTattooWorks(page = 1, pageSize = 10, filters = {}) {
+export async function getTattooWorks(page = 1, pageSize = 10, filters: any = {}) {
   try {
-    const works = await $fetch('/api/content/gallery', {
-      query: {
-        page,
-        limit: pageSize,
-        ...filters
-      }
-    });
+    let query = queryContent('gallery')
+      .where({ client_approved: true })
+      .sort({ date: -1 })
+
+    // Apply featured filter if provided
+    if (filters.featured) {
+      query = query.where({ featured: true })
+    }
+
+    // Get total count
+    const allWorks = await query.find()
+    const total = allWorks.length
+
+    // Get paginated results
+    const works = await query
+      .limit(pageSize)
+      .skip((page - 1) * pageSize)
+      .find()
 
     return {
-      data: works.data || [],
+      data: works.map((work, index) => ({
+        id: index + 1,
+        title: work.title,
+        description: work.description,
+        image: work.image,
+        featured: work.featured || false,
+        date: work.date,
+        style: work.style,
+        placement: work.placement,
+        session_time: work.session_time,
+        size: work.size
+      })),
       meta: {
         pagination: {
           page,
           pageSize,
-          total: works.total || 0
+          total
         }
       }
-    };
+    }
   } catch (error) {
-    console.error('Error fetching tattoo works:', error);
-    return { data: [], meta: { pagination: { page: 1, pageSize: 10, total: 0 } } };
+    console.error('Error fetching tattoo works:', error)
+    return { data: [], meta: { pagination: { page: 1, pageSize: 10, total: 0 } } }
   }
 }
 
@@ -158,17 +257,30 @@ export async function getTattooWorks(page = 1, pageSize = 10, filters = {}) {
  */
 export async function getTestimonials(limit = 10) {
   try {
-    const testimonials = await $fetch('/api/content/testimonials', {
-      query: { limit }
-    });
+    const testimonials = await queryContent('testimonials')
+      .where({ verified: true })
+      .sort({ date: -1 })
+      .limit(limit)
+      .find()
 
     return {
-      data: testimonials.data || [],
+      data: testimonials.map((testimonial, index) => ({
+        id: index + 1,
+        name: testimonial.name,
+        text: testimonial.body?.children?.[0]?.children?.[0]?.value || testimonial.description || "Amazing tattoo experience!",
+        rating: testimonial.rating || 5,
+        image: testimonial.image,
+        tattoo_image: testimonial.tattoo_image,
+        date: testimonial.date,
+        location: testimonial.location,
+        tattoo_style: testimonial.tattoo_style,
+        session_time: testimonial.session_time
+      })),
       meta: {}
-    };
+    }
   } catch (error) {
-    console.error('Error fetching testimonials:', error);
-    return { data: [], meta: {} };
+    console.error('Error fetching testimonials:', error)
+    return { data: [], meta: {} }
   }
 }
 
@@ -184,17 +296,30 @@ export function getAssetUrl(path: string) {
  */
 export async function getArticlesByPortfolioType(type: 'dev' | 'tattoo' | 'both', limit = 3) {
   try {
-    const articles = await $fetch(`/api/content/blog/${type}`, {
-      query: { limit }
-    });
+    const articles = await queryContent('blog')
+      .where({ published: true, category: type })
+      .sort({ date: -1 })
+      .limit(limit)
+      .find()
 
     return {
-      data: articles.data || [],
+      data: articles.map(post => ({
+        id: post._id,
+        title: post.title,
+        slug: post._path?.split('/').pop(),
+        excerpt: post.description,
+        content: post.body,
+        date_published: post.date,
+        cover_image: post.image,
+        category: post.category,
+        tags: post.tags || [],
+        featured: post.featured || false
+      })),
       meta: {}
-    };
+    }
   } catch (error) {
-    console.error(`Error fetching ${type} articles:`, error);
-    return { data: [], meta: {} };
+    console.error(`Error fetching ${type} articles:`, error)
+    return { data: [], meta: {} }
   }
 }
 
@@ -203,17 +328,30 @@ export async function getArticlesByPortfolioType(type: 'dev' | 'tattoo' | 'both'
  */
 export async function fetchFeaturedDevProjects(limit = 3) {
   try {
-    const projects = await $fetch('/api/content/projects/featured', {
-      query: { limit }
-    });
+    const projects = await queryContent('projects')
+      .where({ featured: true, status: 'completed' })
+      .sort({ date: -1 })
+      .limit(limit)
+      .find()
 
     return {
-      data: projects.data || [],
+      data: projects.map((project, index) => ({
+        id: index + 1,
+        title: project.title,
+        description: project.description,
+        slug: project._path?.split('/').pop(),
+        cover_image: project.image,
+        technologies: project.technologies || [],
+        github: project.github,
+        live_url: project.demo,
+        featured: project.featured || false,
+        category: project.category
+      })),
       meta: {}
-    };
+    }
   } catch (error) {
-    console.error('Error fetching featured dev projects:', error);
-    return { data: [], meta: {} };
+    console.error('Error fetching featured dev projects:', error)
+    return { data: [], meta: {} }
   }
 }
 
