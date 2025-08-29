@@ -9,7 +9,7 @@
         :key="style.id" 
         class="px-4 py-2 m-1 rounded-md transition-colors"
         :class="activeStyle === style.id 
-          ? 'bg-primary-dark text-white dark:bg-dark-primary dark:text-white' 
+          ? 'bg-primary-700 text-white dark:bg-primary-400 dark:text-white' 
           : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'"
         @click="activeStyle = style.id"
       >
@@ -35,7 +35,7 @@
           <h3 class="text-lg font-bold mb-1">{{ tattoo.title }}</h3>
           <div class="flex gap-2 mb-2">
             <span 
-              class="px-2 py-1 text-xs rounded-full bg-primary/10 dark:bg-dark-primary/20 text-primary-dark dark:text-dark-primary"
+              class="px-2 py-1 text-xs rounded-full bg-primary-50 dark:bg-primary-400/20 text-primary-700 dark:text-primary-400"
             >
               {{ tattoo.style }}
             </span>
@@ -53,7 +53,7 @@
         <button class="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md disabled:opacity-50">
           Previous
         </button>
-        <button class="px-4 py-2 bg-primary-dark text-white dark:bg-dark-primary rounded-md">1</button>
+        <button class="px-4 py-2 bg-primary-700 text-white dark:bg-primary-400 rounded-md">1</button>
         <button class="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md">2</button>
         <button class="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md">3</button>
         <button class="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md">
@@ -95,7 +95,7 @@
           <!-- Tattoo details -->
           <div class="mb-4">
             <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-3 py-1 text-sm rounded-full bg-primary/10 dark:bg-dark-primary/20 text-primary-dark dark:text-dark-primary">
+              <span class="px-3 py-1 text-sm rounded-full bg-primary-50 dark:bg-primary-400/20 text-primary-700 dark:text-primary-400">
                 {{ selectedTattoo.style }}
               </span>
               <span class="px-3 py-1 text-sm rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <section class="py-12 md:py-20 bg-gradient-to-br from-primary-dark/10 to-primary-dark/20 dark:from-dark-primary/20 dark:to-dark-primary/30">
+    <section class="py-12 md:py-20 bg-gradient-to-br from-primary-700/10 to-primary-700/20 dark:from-primary-400/20 dark:to-primary-400/30">
       <div class="container-custom">
         <h1 class="text-4xl md:text-5xl font-bold mb-6 text-center relative">
           <span class="inline-block relative z-10">Client Testimonials</span>
-          <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-primary-dark dark:bg-dark-primary opacity-70 z-0"></span>
+          <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-primary-700 dark:bg-primary-400 opacity-70 z-0"></span>
         </h1>
         
         <div class="max-w-4xl mx-auto">
@@ -19,7 +19,7 @@
 
           <!-- Loading state -->
           <div v-if="loading" class="flex justify-center items-center py-20">
-            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-dark dark:border-dark-primary"></div>
+            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-700 dark:border-primary-400"></div>
           </div>
           
           <!-- Error state -->
@@ -43,8 +43,8 @@
             <!-- Featured testimonial (first one) -->
             <div v-if="testimonials.length > 0" class="mb-16 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-xl relative overflow-hidden">
               <!-- Decorative elements -->
-              <div class="absolute top-0 right-0 h-32 w-32 bg-primary-dark/10 dark:bg-dark-primary/10 rounded-bl-full"></div>
-              <div class="absolute bottom-0 left-0 h-24 w-24 bg-primary-dark/10 dark:bg-dark-primary/10 rounded-tr-full"></div>
+              <div class="absolute top-0 right-0 h-32 w-32 bg-primary-700/10 dark:bg-primary-400/10 rounded-bl-full"></div>
+              <div class="absolute bottom-0 left-0 h-24 w-24 bg-primary-700/10 dark:bg-primary-400/10 rounded-tr-full"></div>
               
               <div class="flex flex-col items-center text-center mb-6 relative z-10">
                 <div class="w-24 h-24 bg-gray-300 dark:bg-gray-700 rounded-full mb-4 overflow-hidden">
@@ -142,7 +142,7 @@
               I'd love to work with you on your next tattoo. Whether you have a specific design in mind 
               or need help bringing your ideas to life, let's start the conversation.
             </p>
-            <NuxtLink to="/tattoo/contact" class="inline-block px-6 py-3 bg-primary-dark dark:bg-dark-primary text-white rounded-full shadow-lg transform transition-transform hover:scale-105">
+            <NuxtLink to="/tattoo/contact" class="inline-block px-6 py-3 bg-primary-700 dark:bg-primary-400 text-white rounded-full shadow-lg transform transition-transform hover:scale-105">
               Book a Consultation
             </NuxtLink>
           </div>

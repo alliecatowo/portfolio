@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="py-12 md:py-20 bg-gradient-to-br from-primary/5 to-primary/10 dark:from-dark-primary/10 dark:to-dark-primary/20">
+    <section class="py-12 md:py-20 bg-gradient-to-br from-primary/5 to-primary-50 dark:from-primary-400/10 dark:to-primary-400/20">
       <div class="container-custom">
         <div class="max-w-4xl mx-auto text-center">
           <h1 class="text-4xl md:text-5xl font-bold mb-6">Developer Blog</h1>
@@ -11,13 +11,13 @@
         
         <!-- Loading state -->
         <div v-if="loading" class="flex justify-center items-center py-20">
-          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-dark-primary"></div>
+          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-primary-400"></div>
         </div>
         
         <!-- Error state -->
         <div v-else-if="error" class="bg-red-100 text-red-800 p-4 rounded-lg max-w-2xl mx-auto">
           <p>{{ error }}</p>
-          <button @click="fetchPosts" class="mt-4 text-primary dark:text-dark-primary font-medium">
+          <button @click="fetchPosts" class="mt-4 text-primary dark:text-primary-400 font-medium">
             Try Again
           </button>
         </div>
@@ -56,7 +56,7 @@
                   <span 
                     v-for="category in post.categories" 
                     :key="category.id" 
-                    class="px-2 py-1 text-xs rounded-full bg-primary/10 dark:bg-dark-primary/20 text-primary dark:text-dark-primary"
+                    class="px-2 py-1 text-xs rounded-full bg-primary-50 dark:bg-primary-400/20 text-primary dark:text-primary-400"
                   >
                     {{ category.name }}
                   </span>
@@ -92,7 +92,7 @@
               :class="[
                 'px-4 py-2 rounded-md shadow',
                 currentPage === page ? 
-                  'bg-primary dark:bg-dark-primary text-white' : 
+                  'bg-primary dark:bg-primary-400 text-white' : 
                   'bg-white dark:bg-gray-800'
               ]"
             >

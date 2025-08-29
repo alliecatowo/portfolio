@@ -1,10 +1,10 @@
 <template>
   <div>
-    <section class="py-12 md:py-20 bg-gradient-to-br from-primary-dark/10 to-primary-dark/20 dark:from-dark-primary/20 dark:to-dark-primary/30">
+    <section class="py-12 md:py-20 bg-gradient-to-br from-primary-700/10 to-primary-700/20 dark:from-primary-400/20 dark:to-primary-400/30">
       <div class="container-custom">
         <h1 class="text-4xl md:text-5xl font-bold mb-6 text-center relative">
           <span class="inline-block relative z-10">Tattoo Gallery</span>
-          <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-primary-dark dark:bg-dark-primary opacity-70 z-0"></span>
+          <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-primary-700 dark:bg-primary-400 opacity-70 z-0"></span>
         </h1>
         
         <p class="text-lg mb-12 text-center max-w-2xl mx-auto">
@@ -19,7 +19,7 @@
             :key="style.id" 
             class="px-4 py-2 m-1 rounded-full transition-colors"
             :class="activeStyle === style.id 
-              ? 'bg-primary-dark text-white dark:bg-dark-primary dark:text-white' 
+              ? 'bg-primary-700 text-white dark:bg-primary-400 dark:text-white' 
               : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'"
             @click="activeStyle = style.id"
           >
@@ -29,13 +29,13 @@
         
         <!-- Loading state -->
         <div v-if="loading" class="flex justify-center items-center py-20">
-          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-dark dark:border-dark-primary"></div>
+          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-700 dark:border-primary-400"></div>
         </div>
         
         <!-- Error state -->
         <div v-else-if="error" class="bg-red-100 text-red-800 p-4 rounded-lg max-w-2xl mx-auto">
           <p>{{ error }}</p>
-          <button @click="fetchTattoos" class="mt-4 text-primary-dark dark:text-dark-primary font-medium">
+          <button @click="fetchTattoos" class="mt-4 text-primary-700 dark:text-primary-400 font-medium">
             Try Again
           </button>
         </div>
@@ -66,7 +66,7 @@
               <h3 class="text-lg font-bold mb-1">{{ tattoo.title }}</h3>
               <div class="flex gap-2 mb-2">
                 <span 
-                  class="px-2 py-1 text-xs rounded-full bg-primary-dark/10 dark:bg-dark-primary/20 text-primary-dark dark:text-dark-primary"
+                  class="px-2 py-1 text-xs rounded-full bg-primary-700/10 dark:bg-primary-400/20 text-primary-700 dark:text-primary-400"
                 >
                   {{ tattoo.style }}
                 </span>
@@ -104,7 +104,7 @@
               :class="[
                 'px-4 py-2 rounded-full shadow',
                 currentPage === page ? 
-                  'bg-primary-dark dark:bg-dark-primary text-white' : 
+                  'bg-primary-700 dark:bg-primary-400 text-white' : 
                   'bg-white dark:bg-gray-800'
               ]"
             >
@@ -159,7 +159,7 @@
               <!-- Tattoo details -->
               <div class="mb-4">
                 <div class="flex flex-wrap gap-2 mb-4">
-                  <span class="px-3 py-1 text-sm rounded-full bg-primary-dark/10 dark:bg-dark-primary/20 text-primary-dark dark:text-dark-primary">
+                  <span class="px-3 py-1 text-sm rounded-full bg-primary-700/10 dark:bg-primary-400/20 text-primary-700 dark:text-primary-400">
                     {{ selectedTattoo.style }}
                   </span>
                   <span class="px-3 py-1 text-sm rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
@@ -215,7 +215,7 @@
                 <p class="mb-4 text-gray-600 dark:text-gray-300">
                   Let's discuss your ideas and create something unique for you.
                 </p>
-                <NuxtLink to="/tattoo/contact" class="inline-block px-6 py-3 bg-primary-dark dark:bg-dark-primary text-white rounded-full shadow-lg transform transition-transform hover:scale-105">
+                <NuxtLink to="/tattoo/contact" class="inline-block px-6 py-3 bg-primary-700 dark:bg-primary-400 text-white rounded-full shadow-lg transform transition-transform hover:scale-105">
                   Book a Consultation
                 </NuxtLink>
               </div>

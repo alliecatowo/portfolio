@@ -1,16 +1,16 @@
 <template>
   <div>
-    <section class="py-12 md:py-20 bg-gradient-to-br from-primary-dark/10 to-primary-dark/20 dark:from-dark-primary/20 dark:to-dark-primary/30">
+    <section class="py-12 md:py-20 bg-gradient-to-br from-primary-700/10 to-primary-700/20 dark:from-primary-400/20 dark:to-primary-400/30">
       <div class="container-custom">
         <!-- Loading state -->
         <div v-if="loading" class="flex justify-center items-center py-20">
-          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-dark dark:border-dark-primary"></div>
+          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-700 dark:border-primary-400"></div>
         </div>
         
         <!-- Error state -->
         <div v-else-if="error" class="bg-red-100 text-red-800 p-4 rounded-lg max-w-2xl mx-auto">
           <p>{{ error }}</p>
-          <NuxtLink to="/tattoo/blog" class="mt-4 text-primary-dark dark:text-dark-primary font-medium inline-block">
+          <NuxtLink to="/tattoo/blog" class="mt-4 text-primary-700 dark:text-primary-400 font-medium inline-block">
             Back to Blog
           </NuxtLink>
         </div>
@@ -18,7 +18,7 @@
         <!-- Blog post content -->
         <div v-else-if="post" class="max-w-3xl mx-auto">
           <div class="mb-8">
-            <NuxtLink to="/tattoo/blog" class="inline-flex items-center text-primary-dark dark:text-dark-primary hover:underline mb-4">
+            <NuxtLink to="/tattoo/blog" class="inline-flex items-center text-primary-700 dark:text-primary-400 hover:underline mb-4">
               <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
               </svg>
@@ -45,7 +45,7 @@
               <span 
                 v-for="category in post.categories" 
                 :key="category.id" 
-                class="px-3 py-1 text-sm rounded-full bg-primary-dark/10 dark:bg-dark-primary/20 text-primary-dark dark:text-dark-primary"
+                class="px-3 py-1 text-sm rounded-full bg-primary-700/10 dark:bg-primary-400/20 text-primary-700 dark:text-primary-400"
               >
                 {{ category.name }}
               </span>
@@ -144,8 +144,8 @@
           <!-- CTA -->
           <div class="mt-16 p-8 bg-white dark:bg-gray-800 rounded-lg shadow-xl text-center relative overflow-hidden">
             <!-- Decorative elements -->
-            <div class="absolute top-0 right-0 h-32 w-32 bg-primary-dark/10 dark:bg-dark-primary/10 rounded-bl-full"></div>
-            <div class="absolute bottom-0 left-0 h-24 w-24 bg-primary-dark/10 dark:bg-dark-primary/10 rounded-tr-full"></div>
+            <div class="absolute top-0 right-0 h-32 w-32 bg-primary-700/10 dark:bg-primary-400/10 rounded-bl-full"></div>
+            <div class="absolute bottom-0 left-0 h-24 w-24 bg-primary-700/10 dark:bg-primary-400/10 rounded-tr-full"></div>
             
             <div class="relative z-10">
               <h2 class="text-2xl font-bold mb-4">Interested in Your Own Custom Tattoo?</h2>
@@ -153,7 +153,7 @@
                 If you're inspired by this story and would like to discuss your own tattoo idea, I'd love to hear from you.
                 Let's create something meaningful together.
               </p>
-              <NuxtLink to="/tattoo/contact" class="inline-block px-6 py-3 bg-primary-dark dark:bg-dark-primary text-white rounded-full shadow-lg transform transition-transform hover:scale-105">
+              <NuxtLink to="/tattoo/contact" class="inline-block px-6 py-3 bg-primary-700 dark:bg-primary-400 text-white rounded-full shadow-lg transform transition-transform hover:scale-105">
                 Book a Consultation
               </NuxtLink>
             </div>
@@ -167,7 +167,7 @@
           </svg>
           <h3 class="text-xl font-semibold mb-2">Post Not Found</h3>
           <p class="text-gray-500 dark:text-gray-400 mb-6">The article you're looking for doesn't exist or has been removed.</p>
-          <NuxtLink to="/tattoo/blog" class="inline-block px-6 py-3 bg-primary-dark dark:bg-dark-primary text-white rounded-full shadow-lg">
+          <NuxtLink to="/tattoo/blog" class="inline-block px-6 py-3 bg-primary-700 dark:bg-primary-400 text-white rounded-full shadow-lg">
             View All Stories
           </NuxtLink>
         </div>

@@ -6,7 +6,7 @@
       </h2>
       
       <div v-if="isLoading" class="flex justify-center py-8">
-        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-dark-primary"></div>
+        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-primary-400"></div>
       </div>
       
       <div v-else-if="error" class="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg text-red-600 dark:text-red-400">
@@ -48,7 +48,7 @@
               <span 
                 v-for="style in work.styles?.data" 
                 :key="style.id" 
-                class="inline-block px-2 py-1 text-xs font-medium bg-primary/10 text-primary dark:bg-dark-primary/20 dark:text-dark-primary rounded-md"
+                class="inline-block px-2 py-1 text-xs font-medium bg-primary-50 text-primary dark:bg-primary-400/20 dark:text-primary-400 rounded-md"
               >
                 {{ style.attributes.name }}
               </span>
@@ -56,7 +56,7 @@
             
             <NuxtLink 
               :to="`/tattoo/gallery/${work.slug}`" 
-              class="mt-4 inline-block text-primary dark:text-dark-primary hover:underline"
+              class="mt-4 inline-block text-primary dark:text-primary-400 hover:underline"
             >
               View Details
             </NuxtLink>
@@ -67,7 +67,7 @@
       <div class="mt-10 text-center">
         <NuxtLink 
           to="/tattoo/gallery" 
-          class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark dark:bg-dark-primary dark:hover:bg-dark-primary-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-dark-primary"
+          class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-700 dark:bg-primary-400 dark:hover:bg-primary-400-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-primary-400"
         >
           View All Works
           <svg class="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

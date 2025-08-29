@@ -1,16 +1,16 @@
 <template>
   <div>
-    <section class="py-12 md:py-20 bg-gradient-to-br from-primary/5 to-primary/10 dark:from-dark-primary/10 dark:to-dark-primary/20">
+    <section class="py-12 md:py-20 bg-gradient-to-br from-primary/5 to-primary-50 dark:from-primary-400/10 dark:to-primary-400/20">
       <div class="container-custom">
         <!-- Loading state -->
         <div v-if="loading" class="flex justify-center items-center py-20">
-          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-dark-primary"></div>
+          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-primary-400"></div>
         </div>
         
         <!-- Error state -->
         <div v-else-if="error" class="bg-red-100 text-red-800 p-4 rounded-lg max-w-2xl mx-auto">
           <p>{{ error }}</p>
-          <NuxtLink to="/dev/projects" class="mt-4 text-primary dark:text-dark-primary font-medium inline-block">
+          <NuxtLink to="/dev/projects" class="mt-4 text-primary dark:text-primary-400 font-medium inline-block">
             Back to Projects
           </NuxtLink>
         </div>
@@ -18,7 +18,7 @@
         <!-- Project details -->
         <div v-else-if="project" class="max-w-4xl mx-auto">
           <div class="mb-8">
-            <NuxtLink to="/dev/projects" class="inline-flex items-center text-primary dark:text-dark-primary hover:underline mb-4">
+            <NuxtLink to="/dev/projects" class="inline-flex items-center text-primary dark:text-primary-400 hover:underline mb-4">
               <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
               </svg>
@@ -31,7 +31,7 @@
               <span 
                 v-for="tech in project.technologies" 
                 :key="tech.id" 
-                class="px-3 py-1 text-sm rounded-full bg-primary/10 dark:bg-dark-primary/20 text-primary dark:text-dark-primary"
+                class="px-3 py-1 text-sm rounded-full bg-primary-50 dark:bg-primary-400/20 text-primary dark:text-primary-400"
               >
                 {{ tech.name }}
               </span>
@@ -82,7 +82,7 @@
                 v-for="(image, index) in project.images" 
                 :key="index" 
                 class="relative aspect-square bg-gray-200 dark:bg-gray-700 rounded-md overflow-hidden cursor-pointer"
-                :class="{ 'ring-2 ring-primary dark:ring-dark-primary': currentImageIndex === index }"
+                :class="{ 'ring-2 ring-primary dark:ring-primary-400': currentImageIndex === index }"
                 @click="currentImageIndex = index"
               >
                 <img 
@@ -113,7 +113,7 @@
               :href="project.liveDemo" 
               target="_blank" 
               rel="noopener noreferrer" 
-              class="inline-flex items-center px-4 py-2 bg-primary dark:bg-dark-primary text-white rounded-md hover:bg-primary-dark dark:hover:bg-dark-primary-dark transition-colors"
+              class="inline-flex items-center px-4 py-2 bg-primary dark:bg-primary-400 text-white rounded-md hover:bg-primary-700 dark:hover:bg-primary-400-700 transition-colors"
             >
               <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
@@ -175,13 +175,13 @@
           </div>
           
           <!-- Contact CTA -->
-          <div class="mt-16 p-8 bg-primary/5 dark:bg-dark-primary/10 rounded-lg text-center">
+          <div class="mt-16 p-8 bg-primary/5 dark:bg-primary-400/10 rounded-lg text-center">
             <h2 class="text-2xl font-bold mb-4">Interested in working together?</h2>
             <p class="mb-6 max-w-2xl mx-auto">
               If you like my work and have a project in mind, I'd love to hear about it.
               Let's discuss how we can collaborate to bring your ideas to life.
             </p>
-            <NuxtLink to="/dev/contact" class="inline-block px-6 py-3 bg-primary dark:bg-dark-primary text-white rounded-md hover:bg-primary-dark dark:hover:bg-dark-primary-dark transition-colors">
+            <NuxtLink to="/dev/contact" class="inline-block px-6 py-3 bg-primary dark:bg-primary-400 text-white rounded-md hover:bg-primary-700 dark:hover:bg-primary-400-700 transition-colors">
               Get in Touch
             </NuxtLink>
           </div>
@@ -194,7 +194,7 @@
           </svg>
           <h3 class="text-xl font-semibold mb-2">Project Not Found</h3>
           <p class="text-gray-500 dark:text-gray-400 mb-6">The project you're looking for doesn't exist or has been removed.</p>
-          <NuxtLink to="/dev/projects" class="inline-block px-6 py-3 bg-primary dark:bg-dark-primary text-white rounded-md hover:bg-primary-dark dark:hover:bg-dark-primary-dark transition-colors">
+          <NuxtLink to="/dev/projects" class="inline-block px-6 py-3 bg-primary dark:bg-primary-400 text-white rounded-md hover:bg-primary-700 dark:hover:bg-primary-400-700 transition-colors">
             View All Projects
           </NuxtLink>
         </div>

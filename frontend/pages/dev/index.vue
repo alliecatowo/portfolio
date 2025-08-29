@@ -5,7 +5,7 @@
       <section class="py-16 md:py-24">
         <div class="flex flex-col md:flex-row items-center">
           <div class="md:w-1/2 mb-10 md:mb-0 md:pr-12">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-primary dark:text-dark-primary">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-primary dark:text-primary-400">
               Allison's Developer Portfolio
             </h1>
             <p class="text-lg md:text-xl mb-8 text-gray-700 dark:text-gray-300">
@@ -31,7 +31,7 @@
       <!-- Featured Projects Section -->
       <section class="py-12 md:py-16">
         <div class="mb-12">
-          <h2 class="text-3xl font-bold text-primary dark:text-dark-primary">Featured Projects</h2>
+          <h2 class="text-3xl font-bold text-primary dark:text-primary-400">Featured Projects</h2>
           <p class="text-gray-600 dark:text-gray-400 mt-2">Check out some of my recent work</p>
         </div>
 
@@ -49,7 +49,7 @@
               />
             </div>
             <div class="p-6">
-              <h3 class="text-xl font-bold mb-2 text-primary dark:text-dark-primary">
+              <h3 class="text-xl font-bold mb-2 text-primary dark:text-primary-400">
                 {{ project.attributes.title }}
               </h3>
               <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
@@ -59,7 +59,7 @@
                 <span 
                   v-for="(tech, index) in project.attributes.technologies" 
                   :key="index"
-                  class="px-2 py-1 bg-primary/10 dark:bg-dark-primary/20 text-primary dark:text-dark-primary text-xs rounded-full"
+                  class="px-2 py-1 bg-primary-50 dark:bg-primary-400/20 text-primary dark:text-primary-400 text-xs rounded-full"
                 >
                   {{ tech }}
                 </span>
@@ -86,38 +86,38 @@
       <section class="py-12 md:py-16 bg-gray-50 dark:bg-gray-800 rounded-xl">
         <div class="container mx-auto px-4">
           <div class="mb-12 text-center">
-            <h2 class="text-3xl font-bold text-primary dark:text-dark-primary">My Skills</h2>
+            <h2 class="text-3xl font-bold text-primary dark:text-primary-400">My Skills</h2>
             <p class="text-gray-600 dark:text-gray-400 mt-2">Technologies and tools I work with</p>
           </div>
           
           <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div class="flex flex-col items-center">
-              <div class="w-16 h-16 bg-primary/10 dark:bg-dark-primary/20 rounded-full flex items-center justify-center mb-4">
-                <span class="text-2xl text-primary dark:text-dark-primary">🚀</span>
+              <div class="w-16 h-16 bg-primary-50 dark:bg-primary-400/20 rounded-full flex items-center justify-center mb-4">
+                <span class="text-2xl text-primary dark:text-primary-400">🚀</span>
               </div>
               <h3 class="text-lg font-semibold mb-2">Frontend</h3>
               <p class="text-center text-gray-600 dark:text-gray-300">Vue, Nuxt, React, TypeScript, Tailwind CSS</p>
             </div>
             
             <div class="flex flex-col items-center">
-              <div class="w-16 h-16 bg-primary/10 dark:bg-dark-primary/20 rounded-full flex items-center justify-center mb-4">
-                <span class="text-2xl text-primary dark:text-dark-primary">⚙️</span>
+              <div class="w-16 h-16 bg-primary-50 dark:bg-primary-400/20 rounded-full flex items-center justify-center mb-4">
+                <span class="text-2xl text-primary dark:text-primary-400">⚙️</span>
               </div>
               <h3 class="text-lg font-semibold mb-2">Backend</h3>
               <p class="text-center text-gray-600 dark:text-gray-300">Node.js, Express, Strapi, PostgreSQL, MongoDB</p>
             </div>
             
             <div class="flex flex-col items-center">
-              <div class="w-16 h-16 bg-primary/10 dark:bg-dark-primary/20 rounded-full flex items-center justify-center mb-4">
-                <span class="text-2xl text-primary dark:text-dark-primary">📱</span>
+              <div class="w-16 h-16 bg-primary-50 dark:bg-primary-400/20 rounded-full flex items-center justify-center mb-4">
+                <span class="text-2xl text-primary dark:text-primary-400">📱</span>
               </div>
               <h3 class="text-lg font-semibold mb-2">Mobile</h3>
               <p class="text-center text-gray-600 dark:text-gray-300">React Native, Progressive Web Apps</p>
             </div>
             
             <div class="flex flex-col items-center">
-              <div class="w-16 h-16 bg-primary/10 dark:bg-dark-primary/20 rounded-full flex items-center justify-center mb-4">
-                <span class="text-2xl text-primary dark:text-dark-primary">🔄</span>
+              <div class="w-16 h-16 bg-primary-50 dark:bg-primary-400/20 rounded-full flex items-center justify-center mb-4">
+                <span class="text-2xl text-primary dark:text-primary-400">🔄</span>
               </div>
               <h3 class="text-lg font-semibold mb-2">DevOps</h3>
               <p class="text-center text-gray-600 dark:text-gray-300">Git, GitHub Actions, Docker, Vercel, AWS</p>
@@ -129,7 +129,7 @@
       <!-- Recent Blog Posts -->
       <section class="py-12 md:py-16">
         <div class="mb-12">
-          <h2 class="text-3xl font-bold text-primary dark:text-dark-primary">Recent Articles</h2>
+          <h2 class="text-3xl font-bold text-primary dark:text-primary-400">Recent Articles</h2>
           <p class="text-gray-600 dark:text-gray-400 mt-2">Thoughts and insights about development</p>
         </div>
 
@@ -150,7 +150,7 @@
               <div class="text-sm text-gray-500 dark:text-gray-400 mb-2">
                 {{ new Date(post.attributes.publishedAt).toLocaleDateString() }}
               </div>
-              <h3 class="text-xl font-bold mb-2 text-primary dark:text-dark-primary">
+              <h3 class="text-xl font-bold mb-2 text-primary dark:text-primary-400">
                 {{ post.attributes.title }}
               </h3>
               <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
@@ -175,8 +175,8 @@
       </section>
 
       <!-- Contact CTA -->
-      <section class="py-12 md:py-16 bg-primary/10 dark:bg-dark-primary/10 rounded-xl text-center">
-        <h2 class="text-3xl font-bold text-primary dark:text-dark-primary mb-4">Let's Work Together</h2>
+      <section class="py-12 md:py-16 bg-primary-50 dark:bg-primary-400/10 rounded-xl text-center">
+        <h2 class="text-3xl font-bold text-primary dark:text-primary-400 mb-4">Let's Work Together</h2>
         <p class="text-gray-700 dark:text-gray-300 max-w-2xl mx-auto mb-8">
           Have a project idea or need a developer for your team? I'm always open to discussing new opportunities and challenges.
         </p>

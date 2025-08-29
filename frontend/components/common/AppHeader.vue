@@ -5,7 +5,7 @@
       <div class="flex items-center">
         <NuxtLink :to="siteConfig.type === 'dev' ? '/dev' : '/tattoo'" class="text-2xl font-bold no-underline">
           <span :class="[
-            siteConfig.type === 'dev' ? 'text-primary dark:text-dark-primary' : 'text-primary-dark dark:text-dark-primary'
+            siteConfig.type === 'dev' ? 'text-primary dark:text-primary-400' : 'text-primary-700 dark:text-primary-400'
           ]">
             {{ siteConfig.title }}
           </span>
@@ -18,7 +18,7 @@
           v-for="(item, index) in navigationItems" 
           :key="index" 
           :to="item.path" 
-          class="no-underline hover:text-primary-dark dark:hover:text-dark-primary-light font-medium transition-colors"
+          class="no-underline hover:text-primary-700 dark:hover:text-primary-400-light font-medium transition-colors"
         >
           {{ item.name }}
         </NuxtLink>
@@ -26,7 +26,7 @@
         <!-- Portfolio Toggle -->
         <button 
           @click="togglePortfolioType" 
-          class="px-3 py-1 rounded-full border-2 border-primary dark:border-dark-primary text-primary dark:text-dark-primary text-sm font-medium hover:bg-primary hover:text-white dark:hover:bg-dark-primary dark:hover:text-white transition-colors"
+          class="px-3 py-1 rounded-full border-2 border-primary dark:border-primary-400 text-primary dark:text-primary-400 text-sm font-medium hover:bg-primary hover:text-white dark:hover:bg-primary-400 dark:hover:text-white transition-colors"
         >
           Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }} Portfolio
         </button>
@@ -40,7 +40,7 @@
 
       <!-- Mobile menu button -->
       <button 
-        class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary"
+        class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-400"
         @click="isMenuOpen = !isMenuOpen"
         aria-label="Toggle menu"
       >
@@ -61,7 +61,7 @@
           v-for="(item, index) in navigationItems" 
           :key="index" 
           :to="item.path" 
-          class="block py-2 no-underline hover:text-primary-dark dark:hover:text-dark-primary-light font-medium transition-colors"
+          class="block py-2 no-underline hover:text-primary-700 dark:hover:text-primary-400-light font-medium transition-colors"
           @click="isMenuOpen = false"
         >
           {{ item.name }}
@@ -70,7 +70,7 @@
         <!-- Portfolio Toggle for mobile -->
         <button 
           @click="togglePortfolioType" 
-          class="block w-full text-left py-2 font-medium text-primary dark:text-dark-primary"
+          class="block w-full text-left py-2 font-medium text-primary dark:text-primary-400"
         >
           Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }} Portfolio
         </button>

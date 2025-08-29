@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gradient-to-br from-purple-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
     <div class="container max-w-5xl px-6 py-20">
       <div class="text-center mb-16">
-        <h1 class="text-5xl md:text-6xl font-bold mb-6 text-primary-dark dark:text-dark-primary">
+        <h1 class="text-5xl md:text-6xl font-bold mb-6 text-primary-700 dark:text-primary-400">
           Allison's Portfolio
         </h1>
         <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
@@ -74,7 +74,7 @@
 
       <div class="mt-20 text-center">
         <p class="text-gray-600 dark:text-gray-400">
-          Want to know more about me? <NuxtLink to="/about" class="text-primary-dark dark:text-dark-primary font-medium">View my about page</NuxtLink>
+          Want to know more about me? <NuxtLink to="/about" class="text-primary-700 dark:text-primary-400 font-medium">View my about page</NuxtLink>
         </p>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="py-12 md:py-20 bg-gradient-to-br from-primary/5 to-primary/10 dark:from-dark-primary/10 dark:to-dark-primary/20">
+    <section class="py-12 md:py-20 bg-gradient-to-br from-primary/5 to-primary-50 dark:from-primary-400/10 dark:to-primary-400/20">
       <div class="container-custom">
         <div class="max-w-4xl mx-auto text-center">
           <h1 class="text-4xl md:text-5xl font-bold mb-6">My Projects</h1>
@@ -17,8 +17,8 @@
               :class="[
                 'px-4 py-2 rounded-full text-sm font-medium transition-colors',
                 !selectedCategory ? 
-                  'bg-primary dark:bg-dark-primary text-white' : 
-                  'bg-gray-100 dark:bg-gray-800 hover:bg-primary/10 dark:hover:bg-dark-primary/10'
+                  'bg-primary dark:bg-primary-400 text-white' : 
+                  'bg-gray-100 dark:bg-gray-800 hover:bg-primary-50 dark:hover:bg-primary-400/10'
               ]"
             >
               All Projects
@@ -30,8 +30,8 @@
               :class="[
                 'px-4 py-2 rounded-full text-sm font-medium transition-colors',
                 selectedCategory === category.id ? 
-                  'bg-primary dark:bg-dark-primary text-white' : 
-                  'bg-gray-100 dark:bg-gray-800 hover:bg-primary/10 dark:hover:bg-dark-primary/10'
+                  'bg-primary dark:bg-primary-400 text-white' : 
+                  'bg-gray-100 dark:bg-gray-800 hover:bg-primary-50 dark:hover:bg-primary-400/10'
               ]"
             >
               {{ category.name }}
@@ -41,13 +41,13 @@
         
         <!-- Loading State -->
         <div v-if="loading" class="flex justify-center items-center py-20">
-          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-dark-primary"></div>
+          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-primary-400"></div>
         </div>
         
         <!-- Error State -->
         <div v-else-if="error" class="bg-red-100 text-red-800 p-4 rounded-lg max-w-2xl mx-auto">
           <p>{{ error }}</p>
-          <button @click="fetchProjects" class="mt-4 text-primary dark:text-dark-primary font-medium">
+          <button @click="fetchProjects" class="mt-4 text-primary dark:text-primary-400 font-medium">
             Try Again
           </button>
         </div>
@@ -82,13 +82,13 @@
                 <span 
                   v-for="tech in project.technologies" 
                   :key="tech.id"
-                  class="px-2 py-1 text-xs rounded-full bg-primary/10 dark:bg-dark-primary/20 text-primary dark:text-dark-primary"
+                  class="px-2 py-1 text-xs rounded-full bg-primary-50 dark:bg-primary-400/20 text-primary dark:text-primary-400"
                 >
                   {{ tech.name }}
                 </span>
               </div>
               <div class="flex justify-between items-center mt-4">
-                <NuxtLink :to="`/dev/projects/${project.slug}`" class="text-primary dark:text-dark-primary font-medium">
+                <NuxtLink :to="`/dev/projects/${project.slug}`" class="text-primary dark:text-primary-400 font-medium">
                   View Details →
                 </NuxtLink>
                 <div class="flex space-x-3">
@@ -97,7 +97,7 @@
                     :href="project.github" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    class="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-dark-primary"
+                    class="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary-400"
                     title="GitHub Repository"
                   >
                     <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -109,7 +109,7 @@
                     :href="project.live_url" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    class="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-dark-primary"
+                    class="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary-400"
                     title="Live Demo"
                   >
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -148,7 +148,7 @@
               :class="[
                 'px-4 py-2 rounded-md',
                 currentPage === page ? 
-                  'bg-primary dark:bg-dark-primary text-white' : 
+                  'bg-primary dark:bg-primary-400 text-white' : 
                   'bg-white dark:bg-gray-800'
               ]"
             >

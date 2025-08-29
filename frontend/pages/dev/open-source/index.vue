@@ -36,7 +36,7 @@
               <div class="flex-grow">
                 <div class="flex items-center mb-2">
                   <h3 class="text-xl font-bold mr-3">{{ repo.name }}</h3>
-                  <span class="px-2 py-1 text-xs rounded-full bg-primary/10 dark:bg-dark-primary/20 text-primary dark:text-dark-primary">
+                  <span class="px-2 py-1 text-xs rounded-full bg-primary-50 dark:bg-primary-400/20 text-primary dark:text-primary-400">
                     {{ repo.language }}
                   </span>
                 </div>
@@ -94,7 +94,7 @@
       </div>
       
       <!-- Connect section -->
-      <div class="bg-primary/10 dark:bg-dark-primary/10 rounded-lg p-8 text-center">
+      <div class="bg-primary-50 dark:bg-primary-400/10 rounded-lg p-8 text-center">
         <h2 class="text-2xl font-bold mb-4">Let's Collaborate</h2>
         <p class="mb-6 max-w-2xl mx-auto">
           Interested in collaborating on an open source project? Have an idea you'd like to discuss?

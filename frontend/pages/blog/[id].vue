@@ -2,7 +2,7 @@
   <div class="container-custom py-12">
     <div class="max-w-3xl mx-auto">
       <!-- Back link -->
-      <NuxtLink to="/blog" class="inline-flex items-center mb-8 text-primary dark:text-dark-primary">
+      <NuxtLink to="/blog" class="inline-flex items-center mb-8 text-primary dark:text-primary-400">
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
         </svg>
@@ -11,13 +11,13 @@
       
       <!-- Loading state -->
       <div v-if="loading" class="flex justify-center items-center py-20">
-        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-dark-primary"></div>
+        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-primary-400"></div>
       </div>
       
       <!-- Error state -->
       <div v-else-if="error" class="bg-red-100 text-red-800 p-4 rounded-lg">
         <p>{{ error }}</p>
-        <button @click="loadBlogPost" class="mt-4 text-primary dark:text-dark-primary font-medium">
+        <button @click="loadBlogPost" class="mt-4 text-primary dark:text-primary-400 font-medium">
           Try Again
         </button>
       </div>
@@ -29,7 +29,7 @@
         </svg>
         <h2 class="text-xl font-semibold mb-2">Blog post not found</h2>
         <p class="text-gray-500 dark:text-gray-400 mb-4">The article you're looking for doesn't exist or has been removed.</p>
-        <NuxtLink to="/blog" class="text-primary dark:text-dark-primary font-medium">
+        <NuxtLink to="/blog" class="text-primary dark:text-primary-400 font-medium">
           Return to Blog
         </NuxtLink>
       </div>

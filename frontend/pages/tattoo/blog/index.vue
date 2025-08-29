@@ -1,11 +1,11 @@
 <template>
   <div>
-    <section class="py-12 md:py-20 bg-gradient-to-br from-primary-dark/10 to-primary-dark/20 dark:from-dark-primary/20 dark:to-dark-primary/30">
+    <section class="py-12 md:py-20 bg-gradient-to-br from-primary-700/10 to-primary-700/20 dark:from-primary-400/20 dark:to-primary-400/30">
       <div class="container-custom">
         <div class="max-w-4xl mx-auto text-center">
           <h1 class="text-4xl md:text-5xl font-bold mb-6 relative">
             <span class="inline-block relative z-10">Tattoo Blog</span>
-            <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-primary-dark dark:bg-dark-primary opacity-70 z-0"></span>
+            <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-primary-700 dark:bg-primary-400 opacity-70 z-0"></span>
           </h1>
           <p class="text-lg mb-12">
             Stories, insights, and inspiration from my journey as a tattoo artist.
@@ -14,13 +14,13 @@
         
         <!-- Loading state -->
         <div v-if="loading" class="flex justify-center items-center py-20">
-          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-dark dark:border-dark-primary"></div>
+          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-700 dark:border-primary-400"></div>
         </div>
         
         <!-- Error state -->
         <div v-else-if="error" class="bg-red-100 text-red-800 p-4 rounded-lg max-w-2xl mx-auto">
           <p>{{ error }}</p>
-          <button @click="fetchPosts" class="mt-4 text-primary-dark dark:text-dark-primary font-medium">
+          <button @click="fetchPosts" class="mt-4 text-primary-700 dark:text-primary-400 font-medium">
             Try Again
           </button>
         </div>
@@ -59,7 +59,7 @@
                   <span 
                     v-for="category in post.categories" 
                     :key="category.id" 
-                    class="px-2 py-1 text-xs rounded-full bg-primary-dark/10 dark:bg-dark-primary/20 text-primary-dark dark:text-dark-primary"
+                    class="px-2 py-1 text-xs rounded-full bg-primary-700/10 dark:bg-primary-400/20 text-primary-700 dark:text-primary-400"
                   >
                     {{ category.name }}
                   </span>
@@ -95,7 +95,7 @@
               :class="[
                 'px-4 py-2 rounded-full shadow',
                 currentPage === page ? 
-                  'bg-primary-dark dark:bg-dark-primary text-white' : 
+                  'bg-primary-700 dark:bg-primary-400 text-white' : 
                   'bg-white dark:bg-gray-800'
               ]"
             >
