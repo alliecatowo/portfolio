@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/image'
   ],
+  css: ['~/assets/css/main.css'],
   runtimeConfig: {
     public: {
       // Site URLs for multi-site navigation
