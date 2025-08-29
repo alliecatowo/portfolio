@@ -1,4 +1,3 @@
-import { serverQueryContent } from '#content/server'
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
@@ -6,17 +5,20 @@ export default defineEventHandler(async (event) => {
   const limit = parseInt(query.limit as string) || 10
   
   try {
-    const posts = await serverQueryContent(event, 'blog')
-      .sort({ date: -1 })
-      .skip((page - 1) * limit)
-      .limit(limit)
-      .find()
-
-    const total = await serverQueryContent(event, 'blog').count()
+    // For now, return sample data until we set up proper Nuxt Content server queries
+    const samplePosts = [
+      {
+        title: "Getting Started with Development",
+        slug: "getting-started",
+        excerpt: "A beginner's guide to web development...",
+        date: new Date().toISOString(),
+        _path: "/blog/dev/getting-started"
+      }
+    ]
 
     return {
-      data: posts,
-      total,
+      data: samplePosts,
+      total: samplePosts.length,
       page,
       limit
     }
