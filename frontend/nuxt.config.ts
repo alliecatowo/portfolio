@@ -2,35 +2,32 @@
 export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
   modules: [
-    '@nuxtjs/tailwindcss',
-    '@nuxtjs/color-mode',
+    '@nuxt/content',
+    '@nuxt/ui',
     '@nuxt/image'
   ],
   runtimeConfig: {
     public: {
-      // Directus API configuration
-      directusUrl: process.env.NUXT_PUBLIC_API_URL || 'https://allisons-portfolio-directus-9vxdi.ondigitalocean.app',
-      directusToken: process.env.NUXT_PUBLIC_DIRECTUS_TOKEN || '2eEMQA40l35OBtWNH6nDS166k0o800sb',
-      
       // Site URLs for multi-site navigation
       devSiteUrl: process.env.DEV_SITE_URL || 'http://localhost:3000',
       tattooSiteUrl: process.env.TATTOO_SITE_URL || 'http://localhost:3000'
     }
   },
-  colorMode: {
-    preference: 'system',
-    fallback: 'light',
-    hid: 'color-mode-script',
-    globalName: '__NUXT_COLOR_MODE__',
-    componentName: 'ColorScheme',
-    classPrefix: '',
-    classSuffix: '',
-    storageKey: 'color-mode'
+  // NuxtUI includes Tailwind and color mode by default
+  ui: {
+    safelistColors: ['primary', 'secondary', 'accent', 'gray', 'green', 'blue', 'red', 'yellow']
   },
-  tailwindcss: {
-    cssPath: '~/assets/css/tailwind.css',
-    configPath: 'tailwind.config.js',
-    viewer: false,
+  content: {
+    highlight: {
+      theme: 'github-dark'
+    },
+    markdown: {
+      anchorLinks: false
+    },
+    // Use experimental native SQLite to avoid better-sqlite3 dependency
+    experimental: {
+      nativeSqlite: true
+    }
   },
   app: {
     head: {
@@ -63,7 +60,7 @@ export default defineNuxtConfig({
       }
     }
   },
-  // Vercel specific configurations
+  // Will change this to Firebase later
   nitro: {
     preset: 'vercel'
   }
