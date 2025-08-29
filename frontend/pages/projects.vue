@@ -69,7 +69,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { fetchAllDevProjects, getDirectusImageUrl } from '~/utils/api/directus';
 
 // Define meta tags for the page
 useHead({
@@ -86,9 +85,9 @@ const error = ref('');
 onMounted(async () => {
   try {
     isLoading.value = true;
-    const result = await fetchAllDevProjects();
-    console.log('Projects from Directus:', result);
-    projects.value = result;
+    const { data } = await $fetch('/api/content/projects');
+    console.log('Projects from API:', data);
+    projects.value = data || [];
   } catch (err) {
     console.error('Failed to fetch projects:', err);
     error.value = 'Failed to load projects. Please try again later.';
