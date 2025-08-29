@@ -90,67 +90,40 @@
           <template #header>
             <h2 class="text-2xl font-bold">Send a Message</h2>
           </template>
-          <form @submit.prevent="submitForm" class="space-y-6">
-            <div>
-              <label for="name" class="block text-sm font-medium mb-1">Name</label>
-              <input 
-                id="name" 
+          <UForm :state="form" @submit="submitForm" class="space-y-6">
+            <UFormGroup label="Name" name="name" required>
+              <UInput 
                 v-model="form.name" 
-                type="text" 
-                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary bg-white dark:bg-gray-800"
+                placeholder="Your full name"
                 required
-              >
-            </div>
+              />
+            </UFormGroup>
             
-            <div>
-              <label for="email" class="block text-sm font-medium mb-1">Email</label>
-              <input 
-                id="email" 
+            <UFormGroup label="Email" name="email" required>
+              <UInput 
                 v-model="form.email" 
-                type="email" 
-                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary bg-white dark:bg-gray-800"
+                type="email"
+                placeholder="your.email@example.com"
                 required
-              >
-            </div>
+              />
+            </UFormGroup>
             
-            <div v-if="siteConfig.type === 'dev'">
-              <label for="subject" class="block text-sm font-medium mb-1">Subject</label>
-              <select 
-                id="subject" 
+            <UFormGroup label="Subject" name="subject">
+              <USelect 
                 v-model="form.subject" 
-                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary bg-white dark:bg-gray-800"
-              >
-                <option value="project">Project Inquiry</option>
-                <option value="collaboration">Collaboration</option>
-                <option value="question">General Question</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
+                :options="subjectOptions"
+                placeholder="Select a subject"
+              />
+            </UFormGroup>
             
-            <div v-else>
-              <label for="subject" class="block text-sm font-medium mb-1">Subject</label>
-              <select 
-                id="subject" 
-                v-model="form.subject" 
-                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary bg-white dark:bg-gray-800"
-              >
-                <option value="appointment">Tattoo Appointment</option>
-                <option value="design">Custom Design</option>
-                <option value="question">Questions About Process</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            
-            <div>
-              <label for="message" class="block text-sm font-medium mb-1">Message</label>
-              <textarea 
-                id="message" 
+            <UFormGroup label="Message" name="message" required>
+              <UTextarea 
                 v-model="form.message" 
-                rows="6" 
-                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-dark-primary bg-white dark:bg-gray-800"
+                :rows="6"
+                placeholder="Tell me about your project or inquiry..."
                 required
-              ></textarea>
-            </div>
+              />
+            </UFormGroup>
             
             <div>
               <UButton 
@@ -164,14 +137,24 @@
               </UButton>
             </div>
             
-            <div v-if="formSubmitSuccess" class="p-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-md">
-              Your message has been sent successfully! I'll get back to you soon.
-            </div>
+            <UAlert 
+              v-if="formSubmitSuccess" 
+              icon="i-lucide-check-circle"
+              color="green"
+              variant="soft"
+              title="Success!"
+              description="Your message has been sent successfully! I'll get back to you soon."
+            />
             
-            <div v-if="formSubmitError" class="p-4 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-md">
-              There was an error sending your message. Please try again.
-            </div>
-          </form>
+            <UAlert 
+              v-if="formSubmitError" 
+              icon="i-lucide-alert-circle"
+              color="red"
+              variant="soft"
+              title="Error"
+              description="There was an error sending your message. Please try again."
+            />
+          </UForm>
         </UCard>
       </div>
     </div>
@@ -196,6 +179,23 @@ const form = reactive({
 const formSubmitting = ref(false);
 const formSubmitSuccess = ref(false);
 const formSubmitError = ref(false);
+
+// Subject options based on site type
+const subjectOptions = computed(() => {
+  return siteConfig.value.type === 'dev' 
+    ? [
+        { label: 'Project Inquiry', value: 'project' },
+        { label: 'Collaboration', value: 'collaboration' },
+        { label: 'General Question', value: 'question' },
+        { label: 'Other', value: 'other' }
+      ]
+    : [
+        { label: 'Tattoo Appointment', value: 'appointment' },
+        { label: 'Custom Design', value: 'design' },
+        { label: 'Questions About Process', value: 'question' },
+        { label: 'Other', value: 'other' }
+      ];
+});
 
 // Submit form
 const submitForm = async () => {
