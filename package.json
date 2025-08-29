@@ -6,12 +6,9 @@
         "node": "22.x"
     },
     "scripts": {
-        "build": "cd frontend && npm install && npm run build",
-        "dev": "cd frontend && npm run dev",
-        "generate": "cd frontend && npm run generate",
-        "preview": "cd frontend && npm run preview"
-    },
-    "workspaces": [
-        "frontend"
-    ]
+        "build": "pnpm --filter=frontend build",
+        "dev": "pnpm --filter=frontend dev",
+        "generate": "pnpm --filter=frontend generate", 
+        "preview": "pnpm --filter=frontend preview"
+    }
 }
