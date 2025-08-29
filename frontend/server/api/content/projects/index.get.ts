@@ -2,6 +2,7 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   const page = parseInt(query.page as string) || 1
   const limit = parseInt(query.limit as string) || 10
+  const featured = query.featured === 'true'
   
   try {
     // Sample projects data with structure matching frontend expectations
@@ -49,13 +50,25 @@ export default defineEventHandler(async (event) => {
           url: "/placeholder-project-3.jpg"
         },
         demoUrl: "https://example.com/tasks",
-        repositoryUrl: "https://github.com/example/task-manager"
+        repositoryUrl: "https://github.com/example/task-manager",
+        featured: false
       }
     ]
 
+    // Add featured flag to existing projects
+    sampleProjects[0].featured = true;
+    sampleProjects[1].featured = true;
+
+    // Filter by featured if specified
+    let projects = featured ? sampleProjects.filter(project => project.featured) : sampleProjects;
+    
+    // Paginate
+    const startIndex = (page - 1) * limit;
+    const paginatedProjects = projects.slice(startIndex, startIndex + limit);
+
     return {
-      data: sampleProjects,
-      total: sampleProjects.length,
+      data: paginatedProjects,
+      total: projects.length,
       page,
       limit
     }
