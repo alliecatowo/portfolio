@@ -78,14 +78,11 @@
 </template>
 
 <script setup lang="ts">
-import { useDirectus } from '~/composables/useDirectus';
+import { getPostBySlug } from '~/utils/api/content';
 import { useSiteConfig } from '~/utils/site-config';
 
 // Get site configuration
 const siteConfig = useSiteConfig();
-
-// Use Directus composable
-const { fetchBlogPost, getImageUrl } = useDirectus();
 
 // Get post slug from route
 const route = useRoute();
@@ -102,9 +99,7 @@ const loadBlogPost = async () => {
   error.value = null;
   
   try {
-    const response = await fetchBlogPost(slug.toString(), {
-      fields: ['id', 'title', 'slug', 'content', 'date_published', 'cover_image', 'excerpt']
-    });
+    const response = await getPostBySlug(slug.toString());
     
     if (response) {
       post.value = response;
@@ -129,6 +124,8 @@ const formatDate = (dateString) => {
     year: 'numeric' 
   });
 };
+
+const getImageUrl = (path) => path || '';
 
 // Load data
 onMounted(() => {
