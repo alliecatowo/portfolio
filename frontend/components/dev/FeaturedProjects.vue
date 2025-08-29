@@ -110,21 +110,19 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useStrapi } from '~/composables/useStrapi';
 
-const strapi = useStrapi();
 const projects = ref<any[]>([]);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
 
-// Fetch featured projects from Strapi
+// Fetch featured projects from API
 const fetchFeaturedProjects = async () => {
   isLoading.value = true;
   error.value = null;
   
   try {
-    const response = await strapi.getFeaturedProjects(3);
-    projects.value = response.data;
+    const { data } = await $fetch('/api/content/projects?featured=true&limit=3');
+    projects.value = data || [];
   } catch (err) {
     console.error('Error fetching featured projects:', err);
     error.value = 'Failed to load projects. Please try again later.';
@@ -133,8 +131,12 @@ const fetchFeaturedProjects = async () => {
   }
 };
 
-// Get Strapi media helper
-const { getStrapiMedia } = strapi;
+// Get media helper function
+const getStrapiMedia = (url: string) => {
+  // For now, return the URL directly
+  // Later this can be enhanced with proper image optimization
+  return url;
+};
 
 onMounted(() => {
   fetchFeaturedProjects();

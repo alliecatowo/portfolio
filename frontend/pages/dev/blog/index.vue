@@ -114,8 +114,6 @@
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
-import { useDirectus } from '~/composables/useDirectus';
-import { fetchAllBlogPosts } from '~/utils/api/directus';
 
 // Ensure site config is set to dev
 const siteConfig = useSiteConfig();
@@ -127,8 +125,10 @@ if (siteConfig.value?.type !== 'dev') {
   };
 }
 
-// Use Directus composable
-const { getImageUrl } = useDirectus();
+// Image helper function
+const getImageUrl = (image: any) => {
+  return image?.url || image || '/placeholder-blog.jpg';
+};
 
 // State
 const posts = ref([]);
@@ -144,23 +144,12 @@ const fetchPosts = async () => {
   error.value = null;
   
   try {
-    const response = await fetchAllBlogPosts({
-      page: currentPage.value,
-      limit: pageSize,
-      sort: ['-date_published']
-    });
+    const { data, total } = await $fetch(`/api/content/blog?page=${currentPage.value}&limit=${pageSize}&category=dev`);
     
-    console.log('Blog posts from Directus:', response);
+    console.log('Blog posts from API:', data);
     
-    if (response) {
-      posts.value = response || [];
-      // Update pagination if meta data is available
-      if (response.meta?.filter_count) {
-        totalPages.value = Math.ceil(response.meta.filter_count / pageSize);
-      } else {
-        totalPages.value = response.length > 0 ? Math.ceil(response.length / pageSize) : 1;
-      }
-    }
+    posts.value = data || [];
+    totalPages.value = Math.ceil((total || data?.length || 0) / pageSize);
   } catch (err) {
     console.error('Error fetching posts:', err);
     error.value = 'Failed to load blog posts. Please try again.';

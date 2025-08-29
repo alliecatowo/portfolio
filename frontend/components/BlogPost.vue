@@ -31,18 +31,26 @@
 </template>
 
 <script setup lang="ts">
-import { useDirectus } from '~/composables/useDirectus'
-
 const props = defineProps<{
   postId: string
 }>()
 
-const { fetchBlogPost, getImageUrl } = useDirectus()
 const post = ref(null)
 
 onMounted(async () => {
-  post.value = await fetchBlogPost(props.postId)
+  try {
+    const { data } = await $fetch(`/api/content/blog/${props.postId}`)
+    post.value = data
+  } catch (error) {
+    console.error('Failed to fetch blog post:', error)
+  }
 })
+
+function getImageUrl(image: any, options?: any) {
+  // For now, return the image URL directly
+  // Later this can be enhanced with image optimization
+  return image?.url || image
+}
 
 function formatDate(dateString: string) {
   const date = new Date(dateString)

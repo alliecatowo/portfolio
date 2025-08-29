@@ -81,21 +81,19 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useStrapi } from '~/composables/useStrapi';
 
-const strapi = useStrapi();
 const works = ref<any[]>([]);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
 
-// Fetch featured tattoo works from Strapi
+// Fetch featured tattoo works from API
 const fetchFeaturedWorks = async () => {
   isLoading.value = true;
   error.value = null;
   
   try {
-    const response = await strapi.getFeaturedTattooWorks(3);
-    works.value = response.data;
+    const { data } = await $fetch('/api/content/tattoo/gallery?featured=true&limit=3');
+    works.value = data || [];
   } catch (err) {
     console.error('Error fetching featured tattoo works:', err);
     error.value = 'Failed to load tattoo works. Please try again later.';
@@ -104,8 +102,12 @@ const fetchFeaturedWorks = async () => {
   }
 };
 
-// Get Strapi media helper
-const { getStrapiMedia } = strapi;
+// Get media helper function
+const getStrapiMedia = (url: string) => {
+  // For now, return the URL directly
+  // Later this can be enhanced with proper image optimization
+  return url;
+};
 
 onMounted(() => {
   fetchFeaturedWorks();
