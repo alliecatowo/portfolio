@@ -1,7 +1,6 @@
 /**
  * Service to fetch and handle content using Nuxt Content
  */
-import { queryContent } from '#imports';
 
 // Types
 export interface Project {
@@ -46,21 +45,21 @@ export interface TattooWork {
  */
 export async function getPosts(page = 1, pageSize = 10, filters = {}) {
   try {
-    const posts = await queryContent('blog')
-      .limit(pageSize)
-      .skip((page - 1) * pageSize)
-      .sort({ date: -1 })
-      .find();
-
-    const total = await queryContent('blog').count();
+    const posts = await $fetch('/api/content/blog', {
+      query: {
+        page,
+        limit: pageSize,
+        ...filters
+      }
+    });
 
     return {
-      data: posts || [],
+      data: posts.data || [],
       meta: {
         pagination: {
           page,
           pageSize,
-          total
+          total: posts.total || 0
         }
       }
     };
@@ -75,7 +74,7 @@ export async function getPosts(page = 1, pageSize = 10, filters = {}) {
  */
 export async function getPostBySlug(slug: string) {
   try {
-    const post = await queryContent('blog', slug).findOne();
+    const post = await $fetch(`/api/content/blog/${slug}`);
     return post;
   } catch (error) {
     console.error('Error fetching post by slug:', error);
@@ -88,21 +87,21 @@ export async function getPostBySlug(slug: string) {
  */
 export async function getProjects(page = 1, pageSize = 10, filters = {}) {
   try {
-    const projects = await queryContent('projects')
-      .limit(pageSize)
-      .skip((page - 1) * pageSize)
-      .sort({ date: -1 })
-      .find();
-
-    const total = await queryContent('projects').count();
+    const projects = await $fetch('/api/content/projects', {
+      query: {
+        page,
+        limit: pageSize,
+        ...filters
+      }
+    });
 
     return {
-      data: projects || [],
+      data: projects.data || [],
       meta: {
         pagination: {
           page,
           pageSize,
-          total
+          total: projects.total || 0
         }
       }
     };
@@ -117,7 +116,7 @@ export async function getProjects(page = 1, pageSize = 10, filters = {}) {
  */
 export async function getProjectBySlug(slug: string) {
   try {
-    const project = await queryContent('projects', slug).findOne();
+    const project = await $fetch(`/api/content/projects/${slug}`);
     return project;
   } catch (error) {
     console.error('Error fetching project by slug:', error);
@@ -130,21 +129,21 @@ export async function getProjectBySlug(slug: string) {
  */
 export async function getTattooWorks(page = 1, pageSize = 10, filters = {}) {
   try {
-    const works = await queryContent('gallery')
-      .limit(pageSize)
-      .skip((page - 1) * pageSize)
-      .sort({ date: -1 })
-      .find();
-
-    const total = await queryContent('gallery').count();
+    const works = await $fetch('/api/content/gallery', {
+      query: {
+        page,
+        limit: pageSize,
+        ...filters
+      }
+    });
 
     return {
-      data: works || [],
+      data: works.data || [],
       meta: {
         pagination: {
           page,
           pageSize,
-          total
+          total: works.total || 0
         }
       }
     };
@@ -159,12 +158,12 @@ export async function getTattooWorks(page = 1, pageSize = 10, filters = {}) {
  */
 export async function getTestimonials(limit = 10) {
   try {
-    const testimonials = await queryContent('testimonials')
-      .limit(limit)
-      .find();
+    const testimonials = await $fetch('/api/content/testimonials', {
+      query: { limit }
+    });
 
     return {
-      data: testimonials || [],
+      data: testimonials.data || [],
       meta: {}
     };
   } catch (error) {
@@ -185,13 +184,12 @@ export function getAssetUrl(path: string) {
  */
 export async function getArticlesByPortfolioType(type: 'dev' | 'tattoo' | 'both', limit = 3) {
   try {
-    const articles = await queryContent('blog', type)
-      .limit(limit)
-      .sort({ date: -1 })
-      .find();
+    const articles = await $fetch(`/api/content/blog/${type}`, {
+      query: { limit }
+    });
 
     return {
-      data: articles || [],
+      data: articles.data || [],
       meta: {}
     };
   } catch (error) {
@@ -205,14 +203,12 @@ export async function getArticlesByPortfolioType(type: 'dev' | 'tattoo' | 'both'
  */
 export async function fetchFeaturedDevProjects(limit = 3) {
   try {
-    const projects = await queryContent('projects')
-      .where({ featured: true })
-      .limit(limit)
-      .sort({ date: -1 })
-      .find();
+    const projects = await $fetch('/api/content/projects/featured', {
+      query: { limit }
+    });
 
     return {
-      data: projects || [],
+      data: projects.data || [],
       meta: {}
     };
   } catch (error) {
