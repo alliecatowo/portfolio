@@ -37,16 +37,17 @@
             </UTooltip>
           </div>
 
-          <UTooltip text="Search (⌘K)" :delay-duration="300">
+          <UTooltip :text="`Search (${commandKey}K)`" :delay-duration="300">
             <UButton
               icon="i-lucide-search"
               variant="ghost"
               color="primary"
               size="sm"
               @click="$emit('openSearch')"
+              class="gap-1"
             >
               <template #trailing>
-                <UKbd size="sm">⌘K</UKbd>
+                <UKbd size="sm">{{ commandKey }}K</UKbd>
               </template>
             </UButton>
           </UTooltip>
@@ -63,6 +64,14 @@
             </UButton>
           </UTooltip>
 
+          <UButton
+            icon="i-lucide-sliders"
+            variant="ghost"
+            color="primary"
+            size="sm"
+            aria-label="Accessibility Settings"
+            @click="showAccessibilitySettings = true"
+          />
           <AdminNav />
           <ClientOnly>
             <ThemeToggle />
@@ -127,6 +136,16 @@
                       Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }}
                       <UIcon name="i-lucide-repeat" class="w-4 h-4 ml-2" />
                     </UButton>
+                    <UButton
+                      icon="i-lucide-sliders"
+                      variant="ghost"
+                      color="primary"
+                      block
+                      class="mb-4"
+                      @click="showAccessibilitySettings = true; isDrawerOpen = false"
+                    >
+                      Accessibility Settings
+                    </UButton>
                     <AdminNav />
                   </div>
                 </nav>
@@ -136,6 +155,11 @@
         </div>
       </div>
     </UContainer>
+    
+    <!-- Accessibility Settings Modal -->
+    <ClientOnly>
+      <AccessibilitySettings v-if="showAccessibilitySettings" @close="showAccessibilitySettings = false" />
+    </ClientOnly>
   </header>
 </template>
 
@@ -143,6 +167,7 @@
 import { useSiteConfig } from '~/utils/site-config';
 import AdminNav from '~/components/common/AdminNav.vue';
 import ThemeToggle from '~/components/common/ThemeToggle.vue';
+import AccessibilitySettings from '~/components/AccessibilitySettings.vue';
 
 // Emits
 const emit = defineEmits<{
@@ -153,8 +178,17 @@ const emit = defineEmits<{
 const siteConfig = useSiteConfig();
 const router = useRouter();
 
+// Command key display
+const commandKey = computed(() => {
+  if (!process.client) return '⌘';
+  const platform = window.navigator.platform.toLowerCase();
+  if (platform.includes('mac')) return '⌘';
+  return 'Ctrl';
+});
+
 // Mobile drawer state
 const isDrawerOpen = ref(false);
+const showAccessibilitySettings = ref(false);
 
 // Close drawer when route changes
 const route = useRoute();

@@ -165,17 +165,9 @@ const subscribeToNewsletter = () => {
   newsletterEmail.value = '';
 };
 
-// Calculate reading time using composable
 const { estimateReadTime, formatReadTime } = useReadTime();
 const readTimeLabel = computed(() => {
   if (!post.value) return '';
-  
-  // First try server-provided reading time
-  if (post.value.readingTime?.text) {
-    return post.value.readingTime.text;
-  }
-  
-  // Fallback to client-side calculation
   const readTime = estimateReadTime(post.value);
   return formatReadTime(readTime.minutes);
 });

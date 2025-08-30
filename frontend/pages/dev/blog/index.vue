@@ -127,15 +127,10 @@ const getImageUrl = (image: any) => {
   return image?.url || image || '/placeholder-blog.jpg';
 };
 
-// Calculate reading time using composable
 const { estimateReadTime, formatReadTime } = useReadTime();
-const getReadTime = (p: any) => {
-  // First try server-provided reading time
-  if (p?.readingTime?.text) return p.readingTime.text;
-  
-  // Fallback to client-side calculation
-  if (!p) return '';
-  const readTime = estimateReadTime(p);
+const getReadTime = (post: any) => {
+  if (!post) return '';
+  const readTime = estimateReadTime(post);
   return formatReadTime(readTime.minutes);
 };
 

@@ -1,3 +1,5 @@
+import { getReadingSpeed } from './useAccessibility';
+
 export function useReadTime() {
   function countImages(node: any): number {
     if (!node) return 0;
@@ -12,6 +14,7 @@ export function useReadTime() {
     }
     return count;
   }
+  
   function extractTextFromNode(node: any): string {
     if (!node) return '';
     // If it's already text
@@ -61,13 +64,13 @@ export function useReadTime() {
   }
 
   function estimateReadTime(doc: any, options?: { wpm?: number; minMinutes?: number }) {
-    const wpm = options?.wpm ?? 225;
+    const wpm = options?.wpm ?? getReadingSpeed();
     const minMinutes = options?.minMinutes ?? 1;
     const text = extractPlainText(doc);
     const words = countWords(text);
     let seconds = words > 0 ? (words / wpm) * 60 : 0;
 
-    // Image adjustment similar to Medium’s heuristic
+    // Image adjustment similar to Medium's heuristic
     const body = doc?.body;
     const imageCount = body ? countImages(body) : 0;
     if (imageCount > 0) {
@@ -83,7 +86,7 @@ export function useReadTime() {
 
   function formatReadTime(minutes: number): string {
     if (minutes <= 0) return '';
-    return `${minutes} min`;
+    return `${minutes} min read`;
   }
 
   return { estimateReadTime, formatReadTime };

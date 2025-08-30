@@ -112,8 +112,12 @@ const formatDate = (dateString: string) => {
   });
 };
 
-// Read time: plugin only
-const getReadTime = (p: any) => p?.readingTime?.text || '';
+const { estimateReadTime, formatReadTime } = useReadTime();
+const getReadTime = (post: any) => {
+  if (!post) return '';
+  const readTime = estimateReadTime(post);
+  return formatReadTime(readTime.minutes);
+};
 
 // Meta tags
 useHead({
@@ -125,13 +129,4 @@ useHead({
     }
   ]
 });
-
-// Dev debug: verify plugin field in list
-if (import.meta.dev) {
-  watchEffect(() => {
-    if (posts.value) {
-      console.log('[content] blog index readingTime:', posts.value.slice(0, 3).map(p => ({ slug: p.slug, text: p.readingTime?.text })))
-    }
-  });
-}
 </script>

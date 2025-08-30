@@ -154,6 +154,14 @@ export const useSearch = () => {
         icon: 'i-lucide-sun-moon'
       },
       {
+        id: 'accessibility-settings',
+        title: 'Accessibility Settings',
+        description: 'Customize reading preferences and accessibility options',
+        path: '#',
+        type: 'action',
+        icon: 'i-lucide-sliders'
+      },
+      {
         id: 'copy-email',
         title: 'Copy Email',
         description: 'Copy email address to clipboard',
@@ -246,6 +254,11 @@ export const useSearch = () => {
         const newMode = colorMode.preference === 'dark' ? 'light' : 'dark'
         colorMode.preference = newMode
         showSuccess(`Switched to ${newMode} mode`, 'Theme Updated')
+        break
+      case 'accessibility-settings':
+        // Emit event to open accessibility settings
+        const nuxtApp = useNuxtApp()
+        nuxtApp.$bus?.emit('open-accessibility-settings')
         break
       case 'copy-email':
         navigator.clipboard.writeText('hello@allisons.dev')

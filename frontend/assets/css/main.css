@@ -3,6 +3,7 @@
 
 @import "tailwindcss";
 @import "@nuxt/ui";
+@import "./accessibility.css";
 
 /* Enhanced design tokens using Tailwind CSS v4 @theme directive */
 @theme {

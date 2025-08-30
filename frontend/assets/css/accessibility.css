@@ -1,0 +1,144 @@
+/* Dyslexia Font */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://cdn.jsdelivr.net/npm/opendyslexic@0.91.12/compiled/OpenDyslexic-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://cdn.jsdelivr.net/npm/opendyslexic@0.91.12/compiled/OpenDyslexic-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply dyslexia font */
+.dyslexia-font {
+  font-family: 'OpenDyslexic', sans-serif !important;
+}
+
+.dyslexia-font * {
+  font-family: inherit !important;
+}
+
+/* High Contrast Mode */
+.high-contrast {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+}
+
+.dark .high-contrast {
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+}
+
+.high-contrast {
+  filter: contrast(1.2);
+}
+
+.high-contrast img {
+  filter: contrast(0.9);
+}
+
+/* Font Size Variations */
+[data-font-size="small"] {
+  font-size: 14px;
+}
+
+[data-font-size="medium"] {
+  font-size: 16px;
+}
+
+[data-font-size="large"] {
+  font-size: 18px;
+}
+
+[data-font-size="x-large"] {
+  font-size: 20px;
+}
+
+/* Line Spacing */
+[data-line-spacing="normal"] .prose {
+  line-height: 1.75;
+}
+
+[data-line-spacing="relaxed"] .prose {
+  line-height: 2;
+}
+
+[data-line-spacing="loose"] .prose {
+  line-height: 2.5;
+}
+
+[data-line-spacing="relaxed"] .prose p,
+[data-line-spacing="loose"] .prose p {
+  margin-bottom: 1.5em;
+}
+
+/* Reduced Motion */
+.reduced-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Color Blind Modes */
+[data-color-blind-mode="protanopia"] {
+  filter: url('#protanopia-filter');
+}
+
+[data-color-blind-mode="deuteranopia"] {
+  filter: url('#deuteranopia-filter');
+}
+
+[data-color-blind-mode="tritanopia"] {
+  filter: url('#tritanopia-filter');
+}
+
+/* Reading Focus Mode */
+.reading-focus {
+  max-width: 65ch;
+  margin: 0 auto;
+}
+
+.reading-focus .prose {
+  font-size: 1.125rem;
+}
+
+/* Quick Actions Bar */
+.quick-actions {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 40;
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem;
+  border-radius: 9999px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.dark .quick-actions {
+  background: rgba(30, 30, 30, 0.95);
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .quick-actions {
+    bottom: 3rem;
+    right: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  /* Wider reading area on larger screens */
+  .reading-focus {
+    max-width: 75ch;
+  }
+}
