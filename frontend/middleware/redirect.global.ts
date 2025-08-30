@@ -3,7 +3,7 @@
  */
 import type { SiteConfig } from '~/utils/site-config';
 
-export default defineNuxtRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware((to) => {
   // Root route without trailing slash should go to the landing page
   if (to.path === '/') {
     return;
@@ -28,7 +28,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   // Handle '/blog' route - check the site config to determine where to redirect
   if (to.path.match(/^\/blog\/?/) && !to.path.match(/^\/(dev|tattoo)\/blog\/?/)) {
-    const siteConfig = useState<SiteConfig>('siteConfig', () => null);
+    const siteConfig = useState<SiteConfig | null>('siteConfig', () => null);
     if (siteConfig.value?.type === 'tattoo') {
       return navigateTo(`/tattoo${to.path}`);
     } else {
@@ -38,7 +38,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   // Handle '/about' and '/contact' in the same way
   if ((to.path === '/about' || to.path === '/contact') && !to.path.match(/^\/(dev|tattoo)/)) {
-    const siteConfig = useState<SiteConfig>('siteConfig', () => null);
+    const siteConfig = useState<SiteConfig | null>('siteConfig', () => null);
     if (siteConfig.value?.type === 'tattoo') {
       return navigateTo(`/tattoo${to.path}`);
     } else {

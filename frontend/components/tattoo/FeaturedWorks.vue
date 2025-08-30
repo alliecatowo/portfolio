@@ -84,10 +84,4 @@ const { data: works, pending: isLoading, error } = await useAsyncData(
 
 const primaryImage = (images: any) => Array.isArray(images) ? images[0] : images
 
-// Get media helper function
-const getStrapiMedia = (url: string) => {
-  // For now, return the URL directly
-  // Later this can be enhanced with proper image optimization
-  return url;
-};
 </script> 

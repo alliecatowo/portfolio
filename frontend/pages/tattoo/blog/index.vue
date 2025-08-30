@@ -28,7 +28,7 @@
         <div v-else class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <UCard
             v-for="post in posts"
-            :key="post.path || post._id || post.slug"
+            :key="post.path || post.slug"
             class="overflow-hidden hover:shadow-lg transition-shadow"
             :ui="{ body: 'p-4 sm:p-5' }"
           >
@@ -93,11 +93,6 @@ const { data: posts, pending: loading, error } = await useAsyncData(
   'tattoo-blog-posts',
   () => queryCollection('blog').where('category', '=', 'tattoo').where('published', '=', true).order('date', 'DESC').all()
 );
-
-// Image helper function
-const getImageUrl = (image: any) => {
-  return image?.url || image || '/placeholder-blog.jpg';
-};
 
 const { estimateReadTime, formatReadTime } = useReadTime();
 const getReadTime = (post: any) => {

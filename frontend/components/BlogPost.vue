@@ -7,7 +7,7 @@
       </div>
       <div v-if="post.featured_image" class="featured-image mb-6">
         <img 
-          :src="getImageUrl(post.featured_image, { width: 800, height: 400, fit: 'cover' })" 
+          :src="getImageUrl(post.featured_image)" 
           :alt="post.title"
           class="w-full rounded-lg shadow-md"
         />
@@ -58,7 +58,7 @@ const { data: post } = await useAsyncData(
   }
 )
 
-function getImageUrl(image: any, options?: any) {
+function getImageUrl(image: any) {
   // For now, return the image URL directly
   // Later this can be enhanced with image optimization
   return image?.url || image

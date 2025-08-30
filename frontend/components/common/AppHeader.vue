@@ -183,7 +183,7 @@ import ThemeToggle from '~/components/common/ThemeToggle.vue';
 import AccessibilitySettings from '~/components/AccessibilitySettings.vue';
 
 // Emits
-const emit = defineEmits<{
+defineEmits<{
   openSearch: []
 }>()
 
@@ -275,6 +275,4 @@ const navigationItems = computed(() => {
   }
 });
 
-// Map to Nuxt UI navigation format
-const navLinks = computed(() => navigationItems.value.map(i => ({ label: i.name, to: i.path })));
 </script>

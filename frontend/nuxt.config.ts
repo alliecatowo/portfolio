@@ -5,7 +5,6 @@ export default defineNuxtConfig({
   ssr: true,
   experimental: {
     payloadExtraction: false,
-    inlineSSRStyles: true,  // Enable to prevent CSS flicker
     renderJsonPayloads: true,
     viewTransition: true
   },
@@ -109,8 +108,7 @@ export default defineNuxtConfig({
     preset: 'node-server',
     compressPublicAssets: true,
     prerender: {
-      crawlLinks: true,
-      routes: ['/sitemap.xml']
+      crawlLinks: true
     },
     minify: true
   },
@@ -174,6 +172,5 @@ export default defineNuxtConfig({
   },
   // Enable component islands for better performance
   components: {
-    islands: true
   }
 })

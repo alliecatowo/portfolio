@@ -93,7 +93,7 @@
             <!-- Testimonial grid (remaining testimonials) -->
             <div v-if="testimonials && testimonials.length > 1" class="grid md:grid-cols-2 gap-8">
               <div 
-                v-for="(testimonial, index) in testimonials.slice(1)" 
+                v-for="testimonial in testimonials.slice(1)" 
                 :key="testimonial.id" 
                 class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg"
               >

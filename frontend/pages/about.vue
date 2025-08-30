@@ -25,7 +25,7 @@
             <a 
               v-for="(link, platform) in siteConfig.socialLinks" 
               :key="platform" 
-              :href="link" 
+              :href="link || '#'" 
               target="_blank" 
               rel="noopener noreferrer"
               class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary-400"

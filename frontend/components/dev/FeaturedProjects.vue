@@ -115,10 +115,4 @@ const { data: projects, pending: isLoading, error } = await useAsyncData(
   () => queryCollection('projects').where('featured', '=', true).order('date', 'DESC').limit(3).all()
 );
 
-// Get media helper function
-const getStrapiMedia = (url: string) => {
-  // For now, return the URL directly
-  // Later this can be enhanced with proper image optimization
-  return url;
-};
 </script> 

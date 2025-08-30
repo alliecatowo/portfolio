@@ -3,7 +3,7 @@
  */
 import { useAuthStore } from '~/composables/useAuth';
 
-export default defineNuxtRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware((to) => {
   // Skip middleware if not on the client side (during SSR)
   if (process.server) return;
   

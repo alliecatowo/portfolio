@@ -165,7 +165,6 @@
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
 import { useContent } from '~/composables/useContent';
-import { getTattooStyleColor } from '~/utils/colors';
 
 // Ensure site config is set to tattoo
 const siteConfig = useSiteConfig();

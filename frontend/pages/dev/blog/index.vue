@@ -33,7 +33,7 @@
         <div v-else class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <UCard
             v-for="post in posts"
-            :key="post.path || post._id || post.slug"
+            :key="post.path || post.slug"
             class="overflow-hidden glass card-hover group"
             :ui="{ body: 'p-0' }"
           >
@@ -121,11 +121,6 @@ const { data: posts, pending: loading, error } = await useAsyncData(
   'dev-blog-posts',
   () => queryCollection('blog').where('category', '=', 'dev').where('published', '=', true).order('date', 'DESC').all()
 );
-
-// Image helper function
-const getImageUrl = (image: any) => {
-  return image?.url || image || '/placeholder-blog.jpg';
-};
 
 const { estimateReadTime, formatReadTime } = useReadTime();
 const getReadTime = (post: any) => {

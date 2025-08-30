@@ -3,8 +3,8 @@ export interface SearchCommandPaletteItem {
   id?: string
   prefix?: string
   label?: string
-  suffix?: string
-  icon?: string
+  suffix?: string | undefined
+  icon?: string | undefined
   active?: boolean
   loading?: boolean
   disabled?: boolean
@@ -226,8 +226,8 @@ export const useSearch = () => {
           .map(item => ({
             id: item.id,
             label: item.title,
-            suffix: item.description,
-            icon: item.icon,
+            ...(item.description && { suffix: item.description }),
+            ...(item.icon && { icon: item.icon }),
             onSelect: () => {
               navigateTo(item.path)
               closeModal?.()
@@ -242,8 +242,8 @@ export const useSearch = () => {
           .map(item => ({
             id: item.id,
             label: item.title,
-            suffix: item.description,
-            icon: item.icon,
+            ...(item.description && { suffix: item.description }),
+            ...(item.icon && { icon: item.icon }),
             onSelect: () => {
               navigateTo(item.path)
               closeModal?.()
@@ -258,8 +258,8 @@ export const useSearch = () => {
           .map(item => ({
             id: item.id,
             label: item.title,
-            suffix: item.description,
-            icon: item.icon,
+            ...(item.description && { suffix: item.description }),
+            ...(item.icon && { icon: item.icon }),
             onSelect: () => {
               navigateTo(item.path)
               closeModal?.()
@@ -274,8 +274,8 @@ export const useSearch = () => {
           .map(item => ({
             id: item.id,
             label: item.title,
-            suffix: item.description,
-            icon: item.icon,
+            ...(item.description && { suffix: item.description }),
+            ...(item.icon && { icon: item.icon }),
             onSelect: () => {
               executeAction(item.id)
               closeModal?.()
@@ -331,7 +331,7 @@ export const useSearch = () => {
           const { preferences, updateFontSize } = useAccessibility()
           const sizes: Array<'small' | 'medium' | 'large' | 'x-large'> = ['small', 'medium', 'large', 'x-large']
           const currentIndex = sizes.indexOf(preferences.value.fontSize)
-          if (currentIndex < sizes.length - 1) {
+          if (currentIndex < sizes.length - 1 && currentIndex >= 0) {
             updateFontSize(sizes[currentIndex + 1])
             showSuccess(`Font size: ${sizes[currentIndex + 1]}`, 'Accessibility')
           }
@@ -342,7 +342,7 @@ export const useSearch = () => {
           const { preferences, updateFontSize } = useAccessibility()
           const sizesDown: Array<'small' | 'medium' | 'large' | 'x-large'> = ['small', 'medium', 'large', 'x-large']
           const currentIndexDown = sizesDown.indexOf(preferences.value.fontSize)
-          if (currentIndexDown > 0) {
+          if (currentIndexDown > 0 && currentIndexDown < sizesDown.length) {
             updateFontSize(sizesDown[currentIndexDown - 1])
             showSuccess(`Font size: ${sizesDown[currentIndexDown - 1]}`, 'Accessibility')
           }
