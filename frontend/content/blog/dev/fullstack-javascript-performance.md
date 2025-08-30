@@ -8,7 +8,7 @@ author: "Allison"
 category: "tutorial"
 reading_time: "18 min read"
 slug: "fullstack-javascript-performance"
-published: true
+published: false
 featured: true
 ---
 

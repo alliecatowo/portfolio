@@ -5,7 +5,7 @@ description: "Learn how to migrate from a headless CMS like Directus to Nuxt Con
 category: "dev"
 tags: ["nuxt", "nuxt-content", "cms", "migration", "directus", "performance"]
 author: "Allie"
-published: true
+published: false
 featured: true
 slug: "nuxt-content-migration"
 ---

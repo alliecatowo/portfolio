@@ -168,8 +168,16 @@
               </div>
             </div>
             <div class="p-6">
-              <div class="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                {{ new Date(post.date).toLocaleDateString() }}
+              <div class="text-sm text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-2">
+                <span class="inline-flex items-center">
+                  <UIcon name="i-lucide-calendar" class="w-3 h-3 mr-1" />
+                  {{ new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
+                </span>
+                <span v-if="getReadTime(post)" class="inline-flex items-center gap-1">
+                  <span class="mx-1">•</span>
+                  <UIcon name="i-lucide-clock" class="w-3 h-3" />
+                  {{ getReadTime(post) }}
+                </span>
               </div>
               <h3 class="text-xl font-bold mb-2 text-primary">
                 {{ post.title }}
@@ -244,4 +252,8 @@ const { data: recentPosts } = await useAsyncData(
   'dev-recent-posts',
   () => fetchBlogPosts('dev', 3)
 );
+
+// Read time: plugin only
+const getReadTime = (p: any) => p?.readingTime?.text || '';
+
 </script> 

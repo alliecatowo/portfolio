@@ -5,7 +5,7 @@ description: "Complete guide to building Progressive Web Apps with service worke
 category: "dev"
 tags: ["pwa", "service-worker", "offline", "web", "mobile", "performance"]
 author: "Allie"
-published: true
+published: false
 featured: true
 featured_image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&h=600&fit=crop"
 reading_time: "16 min"

@@ -5,7 +5,7 @@ description: "Explore advanced TypeScript patterns including conditional types, 
 category: "dev"
 tags: ["typescript", "advanced", "types", "tutorial", "patterns", "backend", "frontend"]
 author: "Allie"
-published: true
+published: false
 featured: true
 featured_image: "https://images.unsplash.com/photo-1619410283995-43d9134e7656?w=1200&h=600&fit=crop"
 reading_time: "15 min"

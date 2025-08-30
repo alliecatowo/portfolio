@@ -5,7 +5,7 @@ description: "Deep dive into advanced React hooks patterns including custom hook
 category: "dev"
 tags: ["react", "hooks", "javascript", "frontend", "performance", "tutorial"]
 author: "Allie"
-published: true
+published: false
 featured: true
 featured_image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200&h=600&fit=crop"
 reading_time: "12 min"

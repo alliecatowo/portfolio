@@ -28,7 +28,7 @@
         <div v-else class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <UCard
             v-for="post in posts"
-            :key="post.id"
+            :key="post.path || post._id || post.slug"
             class="overflow-hidden hover:shadow-lg transition-shadow"
             :ui="{ body: 'p-4 sm:p-5' }"
           >
@@ -47,6 +47,10 @@
               <div class="mt-4">
                 <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">
                   {{ new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
+                </div>
+                <div v-if="getReadTime(post)" class="text-xs text-gray-500 dark:text-gray-400 mb-2">
+                  <UIcon name="i-lucide-clock" class="w-3 h-3 mr-1 inline" />
+                  {{ getReadTime(post) }}
                 </div>
                 <h2 class="text-xl font-semibold mb-2">{{ post.title }}</h2>
                 <p class="text-gray-600 dark:text-gray-300 line-clamp-2 mb-3">
@@ -93,6 +97,18 @@ const { data: posts, pending: loading, error } = await useAsyncData(
 // Image helper function
 const getImageUrl = (image: any) => {
   return image?.url || image || '/placeholder-blog.jpg';
+};
+
+// Calculate reading time using composable
+const { estimateReadTime, formatReadTime } = useReadTime();
+const getReadTime = (p: any) => {
+  // First try server-provided reading time
+  if (p?.readingTime?.text) return p.readingTime.text;
+  
+  // Fallback to client-side calculation
+  if (!p) return '';
+  const readTime = estimateReadTime(p);
+  return formatReadTime(readTime.minutes);
 };
 
 // Meta tags

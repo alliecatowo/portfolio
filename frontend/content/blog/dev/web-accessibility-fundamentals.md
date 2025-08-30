@@ -5,7 +5,7 @@ description: "Comprehensive guide to web accessibility covering WCAG guidelines,
 category: "dev"
 tags: ["accessibility", "a11y", "frontend", "html", "javascript", "design"]
 author: "Allie"
-published: true
+published: false
 featured: true
 featured_image: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=1200&h=600&fit=crop"
 reading_time: "15 min"

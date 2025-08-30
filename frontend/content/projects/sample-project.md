@@ -4,7 +4,7 @@ description: "A comprehensive admin dashboard for managing e-commerce operations
 tech: ["Vue.js", "Nuxt.js", "TypeScript", "Tailwind CSS", "Chart.js", "Node.js", "PostgreSQL"]
 github: "https://github.com/username/ecommerce-dashboard"
 demo: "https://ecommerce-dashboard-demo.vercel.app"
-status: "completed"
+status: "draft"
 featured: true
 category: "web-development"
 startDate: "2024-01-15"

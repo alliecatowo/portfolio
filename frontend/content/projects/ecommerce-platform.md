@@ -4,7 +4,7 @@ description: "A comprehensive e-commerce solution built with Node.js, React, and
 technologies: ["React", "Node.js", "PostgreSQL", "Express", "Stripe", "Redis", "Docker"]
 category: "Full-Stack Development"
 featured: true
-status: "completed"
+status: "draft"
 date: "2024-01-20"
 github: "https://github.com/allisons-dev/ecommerce-platform"
 demo: "https://ecommerce-demo.allisons.dev"

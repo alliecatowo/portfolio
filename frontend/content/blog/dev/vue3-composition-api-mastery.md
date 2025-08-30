@@ -5,7 +5,7 @@ description: "Master the Vue 3 Composition API with advanced patterns, custom co
 category: "dev"
 tags: ["vue", "composition-api", "typescript", "frontend", "tutorial", "javascript"]
 author: "Allie"
-published: true
+published: false
 featured: true
 featured_image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=1200&h=600&fit=crop"
 reading_time: "14 min"

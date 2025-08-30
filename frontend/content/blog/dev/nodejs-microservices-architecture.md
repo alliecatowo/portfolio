@@ -5,7 +5,7 @@ description: "Comprehensive guide to building scalable Node.js microservices wit
 category: "dev"
 tags: ["nodejs", "microservices", "backend", "architecture", "scalability", "tutorial"]
 author: "Allie"
-published: true
+published: false
 featured: true
 featured_image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=600&fit=crop"
 reading_time: "18 min"

@@ -5,7 +5,7 @@ description: "Complete guide to implementing GraphQL APIs with schema design, re
 category: "dev"
 tags: ["graphql", "api", "backend", "nodejs", "tutorial", "performance"]
 author: "Allie"
-published: true
+published: false
 featured: true
 featured_image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=600&fit=crop"
 reading_time: "17 min"

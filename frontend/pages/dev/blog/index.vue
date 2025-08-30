@@ -33,7 +33,7 @@
         <div v-else class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <UCard
             v-for="post in posts"
-            :key="post.id"
+            :key="post.path || post._id || post.slug"
             class="overflow-hidden glass card-hover group"
             :ui="{ body: 'p-0' }"
           >
@@ -51,18 +51,23 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
                 <!-- Reading time badge -->
-                <div class="absolute top-3 right-3">
+                <div class="absolute top-3 right-3" v-if="getReadTime(post)">
                   <UBadge variant="solid" color="neutral" class="backdrop-blur-sm bg-black/30 text-white border-0">
                     <UIcon name="i-lucide-clock" class="w-3 h-3 mr-1" />
-                    {{ '5 min' }} read
+                    {{ getReadTime(post) }}
                   </UBadge>
                 </div>
               </div>
               
               <div class="p-5">
-                <div class="text-sm text-muted mb-2 flex items-center">
-                  <UIcon name="i-lucide-calendar" class="w-3 h-3 mr-1" />
-                  {{ new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
+                <div class="text-sm text-muted mb-2 flex items-center gap-2">
+                  <span class="inline-flex items-center"><UIcon name="i-lucide-calendar" class="w-3 h-3 mr-1" />
+                  {{ new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}</span>
+                  <span v-if="getReadTime(post)" class="inline-flex items-center gap-1">
+                    <span class="mx-1">•</span>
+                    <UIcon name="i-lucide-clock" class="w-3 h-3" />
+                    {{ getReadTime(post) }}
+                  </span>
                 </div>
                 <h2 class="text-xl font-semibold mb-2 text-default group-hover:text-primary transition-colors">{{ post.title }}</h2>
                 <p class="text-muted line-clamp-2 mb-4">
@@ -122,6 +127,18 @@ const getImageUrl = (image: any) => {
   return image?.url || image || '/placeholder-blog.jpg';
 };
 
+// Calculate reading time using composable
+const { estimateReadTime, formatReadTime } = useReadTime();
+const getReadTime = (p: any) => {
+  // First try server-provided reading time
+  if (p?.readingTime?.text) return p.readingTime.text;
+  
+  // Fallback to client-side calculation
+  if (!p) return '';
+  const readTime = estimateReadTime(p);
+  return formatReadTime(readTime.minutes);
+};
+
 
 // Meta tags
 useHead({
@@ -130,6 +147,7 @@ useHead({
     { name: 'description', content: 'Read articles about web development, programming tips, and technology insights from my developer blog.' }
   ]
 });
+
 </script>
 
 <style scoped>

@@ -62,6 +62,26 @@ Getting your first tattoo is an exciting milestone! Here's everything you need t
 - Don't pick at scabs
 - Protect from direct sunlight
 
+## Common Myths (and what actually helps)
+
+- “More ointment heals faster” — Too much suffocates your skin. Thin layers only.
+- “It’s fine to hit the gym tomorrow” — Sweat and friction can irritate a fresh tattoo. Give it a couple days.
+- “A quick sun session won’t hurt” — UV is the enemy of tattoos, especially fresh ones. Cover it.
+
+## What to Bring to Your Session
+
+- Snacks and water for longer sits
+- Headphones and a playlist/podcast
+- A loose layer to keep the area clean on the way home
+
+## Pricing and Time
+
+Good work costs what it costs—and that’s a reflection of planning, hygiene, and experience. Ask questions, get a quote range, and remember that we can break big ideas into multiple sessions.
+
+## Booking with Me
+
+I book consults to align on design, placement, and timeline. Bring references (even rough ones), tell me the feeling you’re going for, and we’ll translate that into a piece that ages beautifully.
+
 ## Final Thoughts
 
 Your first tattoo should be a positive experience. Take your time choosing the right artist and design, and don't rush the process. Remember, a good tattoo isn't cheap, and a cheap tattoo isn't good!

@@ -7,7 +7,7 @@ technologies: ["Vue 3", "Node.js", "PostgreSQL", "Redis", "Socket.io", "Chart.js
 github_url: "https://github.com/allison-dev/saas-analytics-platform"
 live_url: "https://analytics-demo.saasplatform.dev"
 featured_image: "/projects/saas-analytics-featured.jpg"
-status: "completed"
+status: "draft"
 client: "TechFlow Solutions"
 duration: "4 months"
 team_size: "Solo developer"

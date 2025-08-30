@@ -5,7 +5,7 @@ description: "Comprehensive guide to Next.js performance optimization covering S
 category: "dev"
 tags: ["nextjs", "performance", "react", "frontend", "optimization", "tutorial"]
 author: "Allie"
-published: true
+published: false
 featured: true
 featured_image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=600&fit=crop"
 reading_time: "16 min"

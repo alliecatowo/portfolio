@@ -24,8 +24,13 @@
               
               <div>
                 <div class="font-medium">{{ post.author || 'Anonymous' }}</div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">
+                <div class="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2">
                   {{ new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
+                  <span class="inline-flex items-center gap-1">
+                    <span class="mx-1">•</span>
+                    <UIcon name="i-lucide-clock" class="w-3 h-3" />
+                    {{ readTimeLabel }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -152,12 +157,28 @@ const { data: post, pending: loading, error } = await useAsyncData(
     .first()
 );
 
+
 // Newsletter subscription
 const subscribeToNewsletter = () => {
   // In a real app, this would send the email to a backend service
   alert(`Thank you for subscribing with ${newsletterEmail.value}!`);
   newsletterEmail.value = '';
 };
+
+// Calculate reading time using composable
+const { estimateReadTime, formatReadTime } = useReadTime();
+const readTimeLabel = computed(() => {
+  if (!post.value) return '';
+  
+  // First try server-provided reading time
+  if (post.value.readingTime?.text) {
+    return post.value.readingTime.text;
+  }
+  
+  // Fallback to client-side calculation
+  const readTime = estimateReadTime(post.value);
+  return formatReadTime(readTime.minutes);
+});
 
 // Meta tags
 useHead(() => ({

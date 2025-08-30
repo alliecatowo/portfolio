@@ -34,6 +34,11 @@
             <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
               <UIcon name="i-heroicons-calendar" class="h-4 w-4" />
               <time :datetime="post.date">{{ formatDate(post.date) }}</time>
+              <span class="inline-flex items-center gap-1">
+                <span class="mx-1">•</span>
+                <UIcon name="i-lucide-clock" class="h-3.5 w-3.5" />
+                {{ getReadTime(post) }}
+              </span>
             </div>
             
             <h2 class="text-xl font-bold">{{ post.title }}</h2>
@@ -107,6 +112,9 @@ const formatDate = (dateString: string) => {
   });
 };
 
+// Read time: plugin only
+const getReadTime = (p: any) => p?.readingTime?.text || '';
+
 // Meta tags
 useHead({
   title: `Blog - ${siteConfig.value?.title || 'Allison\'s Portfolio'}`,
@@ -117,4 +125,13 @@ useHead({
     }
   ]
 });
+
+// Dev debug: verify plugin field in list
+if (import.meta.dev) {
+  watchEffect(() => {
+    if (posts.value) {
+      console.log('[content] blog index readingTime:', posts.value.slice(0, 3).map(p => ({ slug: p.slug, text: p.readingTime?.text })))
+    }
+  });
+}
 </script>

@@ -5,7 +5,7 @@ description: "Essential TypeScript patterns, configurations, and best practices 
 category: "dev"
 tags: ["typescript", "vue", "nuxt", "best-practices", "development"]
 author: "Allie"
-published: true
+published: false
 featured: true
 slug: "typescript-best-practices"
 ---

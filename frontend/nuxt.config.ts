@@ -3,20 +3,21 @@ import { defineNuxtConfig } from 'nuxt/config'
 export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
   modules: [
-    ['@nuxt/content', {
-      highlight: {
-        theme: 'github-dark'
-      },
-      markdown: {
-        anchorLinks: false
-      },
-      experimental: {
-          nativeSqlite: true
-      }
-    }],
+    '@nuxt/content',
     '@nuxt/ui',
     '@nuxt/image'
   ],
+  content: {
+    highlight: {
+      theme: 'github-dark'
+    },
+    markdown: {
+      anchorLinks: true
+    },
+    experimental: {
+      nativeSqlite: true
+    }
+  },
   css: ['~/assets/css/main.css'],
   // Ensure content auto-imports work
   imports: {

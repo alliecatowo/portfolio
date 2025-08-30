@@ -4,7 +4,7 @@ description: "A comprehensive real-time analytics dashboard for e-commerce busin
 tech: ["React", "TypeScript", "Next.js", "Node.js", "PostgreSQL", "Redis", "Chart.js", "Stripe API", "AWS Lambda", "Docker"]
 github: "https://github.com/username/ecommerce-analytics-dashboard"
 demo: "https://analytics-dashboard-demo.vercel.app"
-status: "completed"
+status: "draft"
 featured: true
 category: "dashboard"
 startDate: "2024-02-01"

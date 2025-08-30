@@ -8,7 +8,7 @@ status: "completed"
 date: "2024-03-15"
 github: "https://github.com/allisons-dev/portfolio"
 demo: "https://allisons.dev"
-image: "/images/projects/portfolio-hero.jpg"
+image: "/placeholder-project.jpg"
 gallery:
   - "/images/projects/portfolio-1.jpg"
   - "/images/projects/portfolio-2.jpg"

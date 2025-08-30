@@ -17,7 +17,14 @@ export default defineContentConfig({
         date_published: z.string().optional(),
         featured_image: z.string().optional(),
         content: z.string().optional(),
-        slug: z.string()
+        slug: z.string(),
+        // Allow Nuxt Content + remark-reading-time to attach computed reading time
+        readingTime: z.object({
+          text: z.string(),
+          minutes: z.number(),
+          time: z.number(),
+          words: z.number()
+        }).optional()
       })
     }),
     projects: defineCollection({

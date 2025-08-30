@@ -5,7 +5,7 @@ description: "A comprehensive guide to starting your journey in modern web devel
 category: "dev"
 tags: ["web-development", "beginners", "javascript", "frontend", "tutorial"]
 author: "Allie"
-published: true
+published: false
 featured: false
 slug: "getting-started"
 ---

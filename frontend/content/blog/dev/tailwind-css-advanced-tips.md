@@ -5,7 +5,7 @@ description: "Advanced Tailwind CSS techniques including custom utilities, plugi
 category: "dev"
 tags: ["tailwind", "css", "design", "frontend", "tips", "tutorial"]
 author: "Allie"
-published: true
+published: false
 featured: true
 featured_image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=600&fit=crop"
 reading_time: "13 min"
