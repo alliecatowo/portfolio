@@ -7,8 +7,7 @@ export const useToastNotifications = () => {
       title,
       description: message,
       color: 'primary',
-      icon: 'i-lucide-check-circle',
-      timeout: 5000
+      icon: 'i-lucide-check-circle'
     })
   }
 
@@ -18,8 +17,7 @@ export const useToastNotifications = () => {
       title,
       description: message,
       color: 'error',
-      icon: 'i-lucide-x-circle',
-      timeout: 7000
+      icon: 'i-lucide-x-circle'
     })
   }
 
@@ -29,8 +27,7 @@ export const useToastNotifications = () => {
       title,
       description: message,
       color: 'info',
-      icon: 'i-lucide-info',
-      timeout: 5000
+      icon: 'i-lucide-info'
     })
   }
 
@@ -40,8 +37,7 @@ export const useToastNotifications = () => {
       title,
       description: message,
       color: 'warning',
-      icon: 'i-lucide-alert-triangle',
-      timeout: 6000
+      icon: 'i-lucide-alert-triangle'
     })
   }
 
@@ -53,10 +49,9 @@ export const useToastNotifications = () => {
       description: message,
       color: 'primary',
       icon: 'i-lucide-loader',
-      timeout: 0, // Don't auto-dismiss loading toasts
       actions: [{
         label: 'Cancel',
-        click: () => toast.remove(id)
+        onClick: () => toast.remove(id)
       }]
     })
     return id

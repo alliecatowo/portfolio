@@ -36,10 +36,11 @@ cd frontend && npm run typecheck
 ```
 
 ### Deployment
-The project uses Vercel for frontend deployment with a custom build script:
+The project uses Firebase App Hosting for deployment:
 ```bash
-# Vercel build command (configured in vercel.json)
-cd frontend && chmod +x build-for-vercel.sh && ./build-for-vercel.sh
+# Deployments are handled automatically via GitHub Actions
+# Production: https://portfolio--portfolio-c1306.us-central1.hosted.app
+# Staging: https://portfolio-staging--portfolio-c1306.us-central1.hosted.app
 ```
 
 ## Architecture Overview
@@ -49,8 +50,7 @@ This is a **multi-site portfolio** built with Nuxt.js that serves both a develop
 ### Core Architecture
 - **Frontend**: Nuxt 4 application with SSR/ISR rendering
 - **Content**: File-based content using @nuxt/content (SQLite backend)
-- **CMS Integration**: Directus headless CMS hosted on DigitalOcean
-- **Deployment**: Vercel with custom build configuration
+- **Deployment**: Firebase App Hosting with CI/CD via GitHub Actions
 - **Multi-site Logic**: Route-based site configuration system
 
 ### Multi-Site System
@@ -66,7 +66,7 @@ Site configuration is handled by:
 - Themes applied via CSS classes (`theme-dev`, `theme-tattoo`, `theme-dual`)
 
 ### Key Technologies
-- **Nuxt 4** with Nitro preset for Vercel
+- **Nuxt 4** with node-server preset for Firebase App Hosting
 - **@nuxt/ui** for component library and styling
 - **@nuxt/content** with native SQLite for content management
 - **@nuxt/image** for optimized image handling
@@ -83,26 +83,73 @@ Site configuration is handled by:
 
 ### Content Management
 - **File-based content**: Stored in `frontend/content/` as Markdown files
-- **Directus CMS**: External API at `https://allisons-portfolio-directus-9vxdi.ondigitalocean.app`
 - **Content types**: blog posts, projects, gallery items, testimonials
 
 ### Environment Variables
 Required for development:
 ```bash
-NUXT_PUBLIC_API_URL=https://allisons-portfolio-directus-9vxdi.ondigitalocean.app
-NUXT_PUBLIC_DIRECTUS_TOKEN=<token>
 DEV_SITE_URL=http://localhost:3000  
 TATTOO_SITE_URL=http://localhost:3000
 ```
 
 ### Build Configuration
-- **Vercel preset** with custom build script (`build-for-vercel.sh`)
+- **Firebase App Hosting** with node-server preset
 - **Route rules**: ISR caching for dynamic content (1 hour TTL)
 - **Content config**: SQLite with experimental native SQLite feature
-- **Output directory**: `public/` for Vercel deployment
+- **Output directory**: `.output/` for Firebase App Hosting
 
 ### Development Notes
 - Uses pnpm workspaces (configured in `pnpm-workspace.yaml`)
 - Node.js 22.x required (specified in engines)
 - Better-sqlite3 dependency issues resolved with native SQLite
-- Build process includes Rollup patches for compatibility
+
+## Git Workflow & CI/CD
+
+### Branch Structure
+- **main**: Production branch (protected, requires PR + CI)
+- **staging**: Staging branch (auto-deploys from main)
+- **feature branches**: Development work (branch from main)
+
+### Workflow Process
+1. Create feature branch from `main`
+2. Make changes and push to feature branch
+3. Open PR against `main` (triggers CI checks)
+4. PR must pass CI (typecheck, lint, build, test) and get approval
+5. Merge to `main` triggers staging deployment
+6. Create release/tag triggers production deployment
+
+### CI/CD Pipeline
+- **CI Checks**: TypeScript check, lint, build validation, tests
+- **Staging Deploy**: Auto-deploy to Firebase App Hosting on main push
+- **Production Deploy**: Manual release/tag triggers production deployment
+- **Branch Protection**: Main branch requires PR reviews + passing CI
+
+### Commit Message Style
+**IMPORTANT**: Use single-line commit messages only:
+```bash
+# Good
+git commit -m "feat: add user authentication"
+git commit -m "fix: resolve login redirect issue" 
+git commit -m "refactor: update API structure"
+
+# Bad (multi-line messages are not preferred)
+git commit -m "feat: add user authentication
+
+- Add login form component
+- Implement JWT token handling
+- Update navigation for auth state"
+```
+
+### Development Commands for Agents
+When working as Claude Code:
+```bash
+# Always create feature branches for changes
+git checkout -b feature/your-feature-name
+
+# Make commits with single-line messages
+git commit -m "feat: your single line description"
+
+# Push and create PR
+git push -u origin feature/your-feature-name
+gh pr create --title "Your PR Title" --body "Brief description"
+```
