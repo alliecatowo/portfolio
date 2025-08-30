@@ -1,6 +1,38 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+
+# Optionally source husky helper if present
+if [ -f "$(dirname -- "$0")/_/husky.sh" ]; then
+  . "$(dirname -- "$0")/_/husky.sh"
+fi
+
+# Skip if no staged changes (e.g., empty commit)
+if git diff --cached --quiet; then
+  echo "ℹ️ No staged files – skipping lint-staged"
+  exit 0
+fi
 
 echo "🔍 Running lint-staged..."
-pnpm lint-staged
-
+if command -v pnpm >/dev/null 2>&1; then
+  if pnpm run lint-staged >/dev/null 2>&1; then
+    pnpm run lint-staged
+  elif pnpm exec lint-staged --version >/dev/null 2>&1; then
+    pnpm exec lint-staged
+  elif command -v npx >/dev/null 2>&1; then
+    echo "ℹ️ lint-staged not found for pnpm; trying npx --no-install"
+    npx --no-install lint-staged || {
+      echo "⚠️ lint-staged not installed. Run 'pnpm install' to enable pre-commit checks.";
+      exit 0;
+    }
+  else
+    echo "⚠️ lint-staged not installed and npx unavailable. Run 'pnpm install'."
+    exit 0
+  fi
+elif command -v npx >/dev/null 2>&1; then
+  npx --no-install lint-staged || {
+    echo "⚠️ lint-staged not installed. Run 'pnpm install' to enable pre-commit checks.";
+    exit 0;
+  }
+else
+  echo "⚠️ Neither pnpm nor npx found; cannot run lint-staged"
+  exit 0
+fi

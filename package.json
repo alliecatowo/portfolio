@@ -1,6 +1,7 @@
 {
     "scripts": {
-        "prepare": "husky"
+        "prepare": "husky install",
+        "lint-staged": "lint-staged"
     },
     "devDependencies": {
 		"@axe-core/cli": "^4.10.2",
@@ -20,7 +21,7 @@
     },
     "lint-staged": {
         "frontend/**/*.{js,ts,vue}": [
-            "pnpm -C frontend eslint --fix --ext .js,.ts,.vue"
+            "pnpm -C frontend exec eslint --fix --ext .js,.ts,.vue"
         ],
         "**/*.{css,scss,md,yml,yaml,json}": [
             "prettier --write"

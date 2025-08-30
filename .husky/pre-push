@@ -1,6 +1,16 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+
+# Optionally source husky helper if present
+if [ -f "$(dirname -- "$0")/_/husky.sh" ]; then
+  . "$(dirname -- "$0")/_/husky.sh"
+fi
 
 echo "🧪 Type checking frontend before push..."
-pnpm -C frontend vue-tsc -p tsconfig.json --noEmit
-
+if command -v pnpm >/dev/null 2>&1; then
+  pnpm -C frontend exec vue-tsc -p tsconfig.json --noEmit
+elif command -v npx >/dev/null 2>&1; then
+  (cd frontend && npx --no-install vue-tsc -p tsconfig.json --noEmit)
+else
+  echo "⚠️ Neither pnpm nor npx found; skipping typecheck"
+  exit 0
+fi
