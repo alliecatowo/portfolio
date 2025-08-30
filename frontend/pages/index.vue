@@ -80,10 +80,10 @@
               View my art gallery, styles, and booking information.
             </p>
             <div class="flex flex-wrap gap-2 mb-6">
-              <UBadge variant="soft" color="pink">Fine Line</UBadge>
-              <UBadge variant="soft" color="purple">Watercolor</UBadge>
-              <UBadge variant="soft" color="amber">Botanical</UBadge>
-              <UBadge variant="soft" color="emerald">Custom</UBadge>
+              <UBadge variant="soft" color="secondary">Fine Line</UBadge>
+              <UBadge variant="soft" color="secondary">Watercolor</UBadge>
+              <UBadge variant="soft" color="warning">Botanical</UBadge>
+              <UBadge variant="soft" color="success">Custom</UBadge>
             </div>
             <div class="relative z-20">
               <UButton to="/tattoo" color="primary" variant="solid" size="lg" class="w-full btn-depth magnetic-hover">

@@ -54,7 +54,7 @@
                 <div class="absolute top-3 right-3">
                   <UBadge variant="solid" color="neutral" class="backdrop-blur-sm bg-black/30 text-white border-0">
                     <UIcon name="i-lucide-clock" class="w-3 h-3 mr-1" />
-                    {{ post.reading_time || '5 min' }} read
+                    {{ '5 min' }} read
                   </UBadge>
                 </div>
               </div>

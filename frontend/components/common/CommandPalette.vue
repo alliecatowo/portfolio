@@ -3,11 +3,14 @@
     <div 
       v-if="isOpen"
       class="fixed inset-0 z-[9999] flex items-start justify-center p-4 pt-20"
-      @click.self="isOpen = false"
-      @keydown.esc="isOpen = false"
+      @click.self="closeModal"
+      @keydown.esc="closeModal"
     >
       <!-- Backdrop -->
-      <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" />
+      <div 
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm" 
+        @click="closeModal"
+      />
       
       <!-- Modal Content -->
       <div class="relative bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-800 w-full max-w-2xl">
@@ -27,7 +30,7 @@
             matchAllWhenSearchEmpty: true
           }"
           class="border-0 bg-transparent rounded-xl"
-          @keydown.esc="isOpen = false"
+          @keydown.esc="closeModal"
         >
           <template #footer>
             <div class="flex items-center justify-between px-4 py-3 border-t border-gray-200/60 dark:border-gray-800/60">
@@ -58,14 +61,14 @@
 </template>
 
 <script setup lang="ts">
-import type { CommandPaletteItem } from '#ui/types'
+import type { SearchCommandPaletteItem } from '~/composables/useSearch'
 import { useSearch } from '~/composables/useSearch'
 
 // Modal open state
 const isOpen = ref(false)
 
 // Selected command state
-const selectedCommand = ref<CommandPaletteItem | undefined>(undefined)
+const selectedCommand = ref<SearchCommandPaletteItem | undefined>(undefined)
 
 // Close modal function
 const closeModal = () => {
