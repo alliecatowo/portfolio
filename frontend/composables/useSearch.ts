@@ -156,10 +156,50 @@ export const useSearch = () => {
       {
         id: 'accessibility-settings',
         title: 'Accessibility Settings',
-        description: 'Customize reading preferences and accessibility options',
+        description: 'Open reading preferences panel',
         path: '#',
         type: 'action',
         icon: 'i-lucide-sliders'
+      },
+      {
+        id: 'toggle-dyslexia-font',
+        title: 'Toggle Dyslexia Font',
+        description: 'Enable/disable OpenDyslexic font',
+        path: '#',
+        type: 'action',
+        icon: 'i-lucide-type'
+      },
+      {
+        id: 'toggle-high-contrast',
+        title: 'Toggle High Contrast',
+        description: 'Enable/disable high contrast mode',
+        path: '#',
+        type: 'action',
+        icon: 'i-lucide-contrast'
+      },
+      {
+        id: 'toggle-reduced-motion',
+        title: 'Toggle Reduced Motion',
+        description: 'Enable/disable animations',
+        path: '#',
+        type: 'action',
+        icon: 'i-lucide-zap-off'
+      },
+      {
+        id: 'increase-font-size',
+        title: 'Increase Font Size',
+        description: 'Make text larger',
+        path: '#',
+        type: 'action',
+        icon: 'i-lucide-zoom-in'
+      },
+      {
+        id: 'decrease-font-size',
+        title: 'Decrease Font Size',
+        description: 'Make text smaller',
+        path: '#',
+        type: 'action',
+        icon: 'i-lucide-zoom-out'
       },
       {
         id: 'copy-email',
@@ -256,9 +296,57 @@ export const useSearch = () => {
         showSuccess(`Switched to ${newMode} mode`, 'Theme Updated')
         break
       case 'accessibility-settings':
-        // Emit event to open accessibility settings
-        const nuxtApp = useNuxtApp()
-        nuxtApp.$bus?.emit('open-accessibility-settings')
+        // Set a flag that the header can watch
+        if (process.client) {
+          // Use a custom event on window
+          window.dispatchEvent(new CustomEvent('open-accessibility-settings'))
+        }
+        break
+      case 'toggle-dyslexia-font':
+        {
+          const { preferences, updateDyslexiaFont } = useAccessibility()
+          const newDyslexia = !preferences.value.dyslexiaFont
+          updateDyslexiaFont(newDyslexia)
+          showSuccess(newDyslexia ? 'Dyslexia font enabled' : 'Dyslexia font disabled', 'Accessibility')
+        }
+        break
+      case 'toggle-high-contrast':
+        {
+          const { preferences, updateHighContrast } = useAccessibility()
+          const newContrast = !preferences.value.highContrast
+          updateHighContrast(newContrast)
+          showSuccess(newContrast ? 'High contrast enabled' : 'High contrast disabled', 'Accessibility')
+        }
+        break
+      case 'toggle-reduced-motion':
+        {
+          const { preferences, updateReducedMotion } = useAccessibility()
+          const newMotion = !preferences.value.reducedMotion
+          updateReducedMotion(newMotion)
+          showSuccess(newMotion ? 'Animations disabled' : 'Animations enabled', 'Accessibility')
+        }
+        break
+      case 'increase-font-size':
+        {
+          const { preferences, updateFontSize } = useAccessibility()
+          const sizes: Array<'small' | 'medium' | 'large' | 'x-large'> = ['small', 'medium', 'large', 'x-large']
+          const currentIndex = sizes.indexOf(preferences.value.fontSize)
+          if (currentIndex < sizes.length - 1) {
+            updateFontSize(sizes[currentIndex + 1])
+            showSuccess(`Font size: ${sizes[currentIndex + 1]}`, 'Accessibility')
+          }
+        }
+        break
+      case 'decrease-font-size':
+        {
+          const { preferences, updateFontSize } = useAccessibility()
+          const sizesDown: Array<'small' | 'medium' | 'large' | 'x-large'> = ['small', 'medium', 'large', 'x-large']
+          const currentIndexDown = sizesDown.indexOf(preferences.value.fontSize)
+          if (currentIndexDown > 0) {
+            updateFontSize(sizesDown[currentIndexDown - 1])
+            showSuccess(`Font size: ${sizesDown[currentIndexDown - 1]}`, 'Accessibility')
+          }
+        }
         break
       case 'copy-email':
         navigator.clipboard.writeText('hello@allisons.dev')

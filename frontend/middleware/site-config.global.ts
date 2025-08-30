@@ -14,5 +14,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
   }
   
   // Set site config directly in the middleware without useRoute
-  useState('siteConfig').value = getSiteConfig(siteType);
+  const siteConfig = useState('siteConfig', () => getSiteConfig('dual'));
+  siteConfig.value = getSiteConfig(siteType);
 }); 

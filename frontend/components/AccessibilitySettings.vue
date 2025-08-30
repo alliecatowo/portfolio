@@ -1,7 +1,16 @@
 <template>
   <div>
     <!-- Settings Modal -->
-    <UModal :model-value="true" @update:model-value="$emit('close')" :ui="{ width: 'sm:max-w-md' }">
+    <UModal 
+      :model-value="true" 
+      @update:model-value="$emit('close')" 
+      :ui="{ 
+        width: 'sm:max-w-lg',
+        padding: 'p-0',
+        rounded: 'rounded-xl',
+        shadow: 'shadow-2xl'
+      }"
+    >
       <UCard>
         <template #header>
           <div class="flex items-center justify-between">

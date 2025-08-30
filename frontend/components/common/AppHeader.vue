@@ -37,21 +37,6 @@
             </UTooltip>
           </div>
 
-          <UTooltip :text="`Search (${commandKey}K)`" :delay-duration="300">
-            <UButton
-              icon="i-lucide-search"
-              variant="ghost"
-              color="primary"
-              size="sm"
-              @click="$emit('openSearch')"
-              class="gap-1"
-            >
-              <template #trailing>
-                <UKbd size="sm">{{ commandKey }}K</UKbd>
-              </template>
-            </UButton>
-          </UTooltip>
-
           <UTooltip text="Switch between portfolios" :delay-duration="300">
             <UButton
               color="primary"
@@ -64,18 +49,37 @@
             </UButton>
           </UTooltip>
 
-          <UButton
-            icon="i-lucide-sliders"
-            variant="ghost"
-            color="primary"
-            size="sm"
-            aria-label="Accessibility Settings"
-            @click="showAccessibilitySettings = true"
-          />
-          <AdminNav />
-          <ClientOnly>
-            <ThemeToggle />
-          </ClientOnly>
+          <div class="flex items-center gap-2 ml-3 pl-3 border-l border-gray-200 dark:border-gray-800">
+            <UTooltip :text="`Search (${commandKey}K)`" :delay-duration="300">
+              <UButton
+                icon="i-lucide-search"
+                variant="ghost"
+                color="primary"
+                size="sm"
+                @click="$emit('openSearch')"
+                class="gap-1"
+              >
+                <template #trailing>
+                  <UKbd size="sm">{{ commandKey }}K</UKbd>
+                </template>
+              </UButton>
+            </UTooltip>
+
+            <UTooltip text="Accessibility Settings" :delay-duration="300">
+              <UButton
+                icon="i-lucide-sliders"
+                variant="ghost"
+                color="primary"
+                size="sm"
+                aria-label="Accessibility Settings"
+                @click="showAccessibilitySettings = true"
+              />
+            </UTooltip>
+
+            <ClientOnly>
+              <ThemeToggle />
+            </ClientOnly>
+          </div>
         </nav>
 
         <!-- Mobile Controls -->
@@ -146,7 +150,6 @@
                     >
                       Accessibility Settings
                     </UButton>
-                    <AdminNav />
                   </div>
                 </nav>
               </div>
@@ -157,17 +160,13 @@
     </UContainer>
     
     <!-- Accessibility Settings Modal -->
-    <ClientOnly>
-      <AccessibilitySettings v-if="showAccessibilitySettings" @close="showAccessibilitySettings = false" />
-    </ClientOnly>
+    <LazyAccessibilitySettings v-if="showAccessibilitySettings" @close="showAccessibilitySettings = false" />
   </header>
 </template>
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
-import AdminNav from '~/components/common/AdminNav.vue';
 import ThemeToggle from '~/components/common/ThemeToggle.vue';
-import AccessibilitySettings from '~/components/AccessibilitySettings.vue';
 
 // Emits
 const emit = defineEmits<{
@@ -189,6 +188,19 @@ const commandKey = computed(() => {
 // Mobile drawer state
 const isDrawerOpen = ref(false);
 const showAccessibilitySettings = ref(false);
+
+// Listen for accessibility settings event from command palette
+onMounted(() => {
+  window.addEventListener('open-accessibility-settings', () => {
+    showAccessibilitySettings.value = true;
+  });
+});
+
+onUnmounted(() => {
+  window.removeEventListener('open-accessibility-settings', () => {
+    showAccessibilitySettings.value = true;
+  });
+});
 
 // Close drawer when route changes
 const route = useRoute();

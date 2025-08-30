@@ -15,7 +15,8 @@
       <!-- Modal Content -->
       <div class="relative bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-800 w-full max-w-2xl">
         <UCommandPalette 
-          v-model="selectedCommand"
+          :model-value="selectedCommand"
+          @update:model-value="handleSelection"
           :groups="commandGroups"
           placeholder="Search pages, posts, projects..."
           icon="i-lucide-search"
@@ -73,10 +74,22 @@ const selectedCommand = ref<SearchCommandPaletteItem | undefined>(undefined)
 // Close modal function
 const closeModal = () => {
   isOpen.value = false
+  // Reset selected command
+  setTimeout(() => {
+    selectedCommand.value = undefined
+  }, 100)
 }
 
 const { createCommandGroups } = useSearch()
 const commandGroups = computed(() => createCommandGroups(closeModal))
+
+// Handle selection from command palette
+const handleSelection = (item: SearchCommandPaletteItem) => {
+  if (item && typeof item.onSelect === 'function') {
+    item.onSelect()
+  }
+  selectedCommand.value = item
+}
 
 // Expose openSearch method
 const openSearch = () => {
