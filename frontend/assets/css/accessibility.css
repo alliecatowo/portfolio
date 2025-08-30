@@ -136,6 +136,49 @@ html.dyslexia-font samp {
   background: rgba(30, 30, 30, 0.95);
 }
 
+/* Enhanced Focus Indicators */
+:focus-visible {
+  outline: 3px solid var(--ui-color-primary-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--ui-color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Skip Links */
+.sr-only:focus {
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Ensure interactive elements have minimum size */
+button, 
+a, 
+input, 
+select, 
+textarea {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* High contrast focus for better visibility */
+@media (prefers-contrast: high) {
+  :focus-visible {
+    outline-width: 4px;
+    outline-color: currentColor;
+  }
+}
+
 /* Responsive adjustments */
 @media (min-width: 768px) {
   .quick-actions {

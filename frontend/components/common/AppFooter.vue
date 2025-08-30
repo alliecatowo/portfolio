@@ -1,12 +1,12 @@
 <template>
-  <footer class="py-12 mt-16 border-t border-gray-200/60 dark:border-gray-800/60 bg-gray-50 dark:bg-gray-950">
+  <footer class="py-12 mt-16 border-t border-gray-200/60 dark:border-gray-800/60 bg-gray-50 dark:bg-gray-950" role="contentinfo" aria-label="Site footer">
     <UContainer>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- Site Information -->
-        <div>
-          <h3 class="font-bold text-xl mb-4 text-primary dark:text-primary-400">{{ siteConfig?.title || 'Portfolio' }}</h3>
+        <section aria-labelledby="footer-about">
+          <h2 id="footer-about" class="font-bold text-xl mb-4 text-primary dark:text-primary-400">{{ siteConfig?.title || 'Portfolio' }}</h2>
           <p class="text-gray-600 dark:text-gray-300 mb-4">{{ siteConfig?.description || 'My personal portfolio website' }}</p>
-          <div class="flex space-x-4 mt-4">
+          <nav class="flex space-x-4 mt-4" aria-label="Social media links">
             <UTooltip text="View my GitHub profile" :delay-duration="300">
               <a v-if="siteConfig?.socialLinks?.github" :href="siteConfig.socialLinks.github" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary-400">
                 <span class="sr-only">GitHub</span>
@@ -47,12 +47,12 @@
                 </svg>
               </a>
             </UTooltip>
-          </div>
-        </div>
+          </nav>
+        </section>
 
         <!-- Quick Links -->
-        <div>
-          <h3 class="font-bold text-xl mb-4 text-primary dark:text-primary-400">Quick Links</h3>
+        <nav aria-labelledby="footer-links">
+          <h2 id="footer-links" class="font-bold text-xl mb-4 text-primary dark:text-primary-400">Quick Links</h2>
           <ul class="space-y-2">
             <li v-for="(item, index) in navigationItems" :key="index">
               <NuxtLink :to="item.path" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-400">
@@ -60,11 +60,11 @@
               </NuxtLink>
             </li>
           </ul>
-        </div>
+        </nav>
 
         <!-- Contact -->
-        <div>
-          <h3 class="font-bold text-xl mb-4 text-primary dark:text-primary-400">Contact</h3>
+        <section aria-labelledby="footer-contact">
+          <h2 id="footer-contact" class="font-bold text-xl mb-4 text-primary dark:text-primary-400">Contact</h2>
           <p class="text-gray-600 dark:text-gray-300 mb-2">
             Feel free to reach out for collaborations or just a friendly hello
           </p>
@@ -75,7 +75,7 @@
           >
             {{ siteConfig.socialLinks.email }}
           </a>
-        </div>
+        </section>
       </div>
 
       <div class="mt-12 pt-8 border-t border-gray-200/60 dark:border-gray-800/60 text-center text-gray-500 dark:text-gray-400">

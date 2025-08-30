@@ -1,5 +1,5 @@
 <template>
-  <header class="sticky top-0 z-50 glass backdrop-blur border-b border-primary/20">
+  <header class="sticky top-0 z-50 glass backdrop-blur border-b border-primary/20" role="banner" aria-label="Site header">
     <UContainer class="py-3">
       <div class="flex items-center justify-between gap-3">
         <!-- Logo / Title -->
@@ -16,7 +16,7 @@
         </NuxtLink>
 
         <!-- Desktop Navigation -->
-        <nav class="hidden md:flex items-center gap-3">
+        <nav id="site-navigation" class="hidden md:flex items-center gap-3" role="navigation" aria-label="Main navigation">
           <div class="flex items-center gap-2">
             <UTooltip 
               v-for="(item, index) in navigationItems"
@@ -31,6 +31,8 @@
                 size="sm"
                 class="text-sm hover:scale-105 transition-all duration-200"
                 :class="route.path === item.path ? 'ring-1 ring-primary/20' : ''"
+                :aria-label="`Navigate to ${item.name}`"
+                :aria-current="route.path === item.path ? 'page' : undefined"
               >
                 {{ item.name }}
               </UButton>
@@ -43,6 +45,7 @@
               variant="outline"
               size="sm"
               @click="togglePortfolioType"
+              aria-label="Switch between developer and tattoo portfolios"
             >
               Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }}
               <UIcon name="i-lucide-repeat" class="w-4 h-4 ml-1" />
@@ -58,6 +61,7 @@
                 size="sm"
                 @click="$emit('openSearch')"
                 class="gap-1"
+                aria-label="Open search (⌘K)"
               >
                 <template #trailing>
                   <ClientOnly>
@@ -76,7 +80,7 @@
                 variant="ghost"
                 color="primary"
                 size="sm"
-                aria-label="Accessibility Settings"
+                aria-label="Open accessibility settings"
                 @click="showAccessibilitySettings = true"
               />
             </UTooltip>
