@@ -50,7 +50,7 @@
           </UTooltip>
 
           <div class="flex items-center gap-2 ml-3 pl-3 border-l border-gray-200 dark:border-gray-800">
-            <UTooltip :text="`Search (${commandKey}K)`" :delay-duration="300">
+            <UTooltip :text="`Search (⌘K)`" :delay-duration="300">
               <UButton
                 icon="i-lucide-search"
                 variant="ghost"
@@ -60,7 +60,12 @@
                 class="gap-1"
               >
                 <template #trailing>
-                  <UKbd size="sm">{{ commandKey }}K</UKbd>
+                  <ClientOnly>
+                    <UKbd size="sm">{{ commandKey }}K</UKbd>
+                    <template #fallback>
+                      <UKbd size="sm">⌘K</UKbd>
+                    </template>
+                  </ClientOnly>
                 </template>
               </UButton>
             </UTooltip>
@@ -107,8 +112,9 @@
             aria-label="Toggle menu" 
           />
           
-          <UDrawer v-model:open="isDrawerOpen" side="right">
-            <template #content>
+          <ClientOnly>
+            <UDrawer v-model:open="isDrawerOpen" side="right">
+              <template #content>
               <div class="glass-strong h-full p-6 flex flex-col">
                 <div class="flex items-center justify-between mb-8">
                   <span class="text-xl font-bold text-gradient">{{ siteConfig.title }}</span>
@@ -155,18 +161,22 @@
               </div>
             </template>
           </UDrawer>
+          </ClientOnly>
         </div>
       </div>
     </UContainer>
     
     <!-- Accessibility Settings Modal -->
-    <LazyAccessibilitySettings v-if="showAccessibilitySettings" @close="showAccessibilitySettings = false" />
+    <ClientOnly>
+      <AccessibilitySettings v-if="showAccessibilitySettings" @close="showAccessibilitySettings = false" />
+    </ClientOnly>
   </header>
 </template>
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
 import ThemeToggle from '~/components/common/ThemeToggle.vue';
+import AccessibilitySettings from '~/components/AccessibilitySettings.vue';
 
 // Emits
 const emit = defineEmits<{

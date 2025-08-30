@@ -16,12 +16,20 @@
 }
 
 /* Apply dyslexia font */
-.dyslexia-font {
+html.dyslexia-font,
+html.dyslexia-font body,
+html.dyslexia-font * {
   font-family: 'OpenDyslexic', sans-serif !important;
 }
 
-.dyslexia-font * {
-  font-family: inherit !important;
+/* Ensure dyslexia font overrides all other fonts */
+html.dyslexia-font .prose,
+html.dyslexia-font .prose *,
+html.dyslexia-font pre,
+html.dyslexia-font code,
+html.dyslexia-font kbd,
+html.dyslexia-font samp {
+  font-family: 'OpenDyslexic', sans-serif !important;
 }
 
 /* High Contrast Mode */

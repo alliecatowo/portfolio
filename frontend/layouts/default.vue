@@ -1,16 +1,14 @@
 <template>
-  <UApp>
-    <div class="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
-      <AppHeader @openSearch="commandPaletteRef?.openSearch()" />
-      <main class="flex-grow">
-        <slot />
-      </main>
-      <AppFooter />
-      
-      <!-- Command Palette -->
-      <CommandPalette ref="commandPaletteRef" />
-    </div>
-  </UApp>
+  <div class="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+    <AppHeader @openSearch="commandPaletteRef?.openSearch()" />
+    <main class="flex-grow">
+      <slot />
+    </main>
+    <AppFooter />
+    
+    <!-- Command Palette -->
+    <CommandPalette ref="commandPaletteRef" />
+  </div>
 </template>
 
 <script setup lang="ts">

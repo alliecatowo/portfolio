@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio--portfolio-c1306.us-central1.hosted.app/sitemap.xml
