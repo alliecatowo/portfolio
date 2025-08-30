@@ -3,7 +3,7 @@
     <!-- Header Section -->
     <section class="py-12 md:py-16 bg-white dark:bg-gray-800">
       <div class="container-custom text-center">
-        <h1 class="text-4xl font-bold mb-4 text-primary dark:text-primary-400">Tattoo Gallery</h1>
+        <h1 class="text-4xl font-bold mb-4 text-gradient-animated">Tattoo Gallery</h1>
         <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
           Explore a collection of unique tattoo designs and stories. Each piece tells a personal journey and represents the collaborative artistry between artist and client.
         </p>
@@ -165,6 +165,7 @@
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
 import { useContent } from '~/composables/useContent';
+import { getTattooStyleColor } from '~/utils/colors';
 
 // Ensure site config is set to tattoo
 const siteConfig = useSiteConfig();

@@ -1,38 +1,67 @@
 <template>
-  <header class="sticky top-0 z-40 backdrop-blur border-b border-gray-200/60 dark:border-gray-800/60 bg-white/70 dark:bg-gray-950/70">
+  <header class="sticky top-0 z-50 glass backdrop-blur border-b border-primary/20">
     <UContainer class="py-3">
       <div class="flex items-center justify-between gap-3">
         <!-- Logo / Title -->
-        <NuxtLink :to="siteConfig.type === 'dev' ? '/dev' : siteConfig.type === 'tattoo' ? '/tattoo' : '/'" class="no-underline">
-          <span class="text-xl sm:text-2xl font-bold text-primary">
-            {{ siteConfig.title }}
-          </span>
+        <NuxtLink :to="siteConfig.type === 'dev' ? '/dev' : siteConfig.type === 'tattoo' ? '/tattoo' : '/'" class="no-underline group">
+          <div class="flex items-center gap-3">
+            <span class="text-xl sm:text-2xl font-bold text-primary select-none transition-all duration-300 group-hover:text-gradient">
+              ALLISON<span class="text-pink-500">.{{ siteConfig.type === 'tattoo' ? 'ink' : 'dev' }}</span>
+            </span>
+            <div class="hidden sm:flex items-center gap-2">
+              <UBadge color="primary" variant="soft" size="xs">5+ Years</UBadge>
+              <UBadge color="primary" variant="soft" size="xs">20+ Projects</UBadge>
+            </div>
+          </div>
         </NuxtLink>
 
         <!-- Desktop Navigation -->
         <nav class="hidden md:flex items-center gap-3">
-          <div class="flex items-center gap-1">
-            <UButton
+          <div class="flex items-center gap-2">
+            <UTooltip 
               v-for="(item, index) in navigationItems"
               :key="index"
-              :to="item.path"
-              variant="link"
-              color="primary"
-              class="text-sm"
+              :text="`Navigate to ${item.name}`"
+              :delay-duration="300"
             >
-              {{ item.name }}
-            </UButton>
+              <UButton
+                :to="item.path"
+                :variant="route.path === item.path ? 'soft' : 'ghost'"
+                color="primary"
+                size="sm"
+                class="text-sm hover:scale-105 transition-all duration-200"
+                :class="route.path === item.path ? 'ring-1 ring-primary/20' : ''"
+              >
+                {{ item.name }}
+              </UButton>
+            </UTooltip>
           </div>
 
-          <UButton
-            color="primary"
-            variant="solid"
-            size="sm"
-            class="text-white bg-gradient-to-r from-[--ui-primary] to-pink-600 dark:to-pink-400 border-0 shadow-sm hover:opacity-90"
-            @click="togglePortfolioType"
-          >
-            Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }}
-          </UButton>
+          <UTooltip text="Search (⌘K)" :delay-duration="300">
+            <UButton
+              icon="i-lucide-search"
+              variant="ghost"
+              color="primary"
+              size="sm"
+              @click="$emit('openSearch')"
+            >
+              <template #trailing>
+                <UKbd size="sm">⌘K</UKbd>
+              </template>
+            </UButton>
+          </UTooltip>
+
+          <UTooltip text="Switch between portfolios" :delay-duration="300">
+            <UButton
+              color="primary"
+              variant="outline"
+              size="sm"
+              @click="togglePortfolioType"
+            >
+              Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }}
+              <UIcon name="i-lucide-repeat" class="w-4 h-4 ml-1" />
+            </UButton>
+          </UTooltip>
 
           <AdminNav />
           <ClientOnly>
@@ -41,40 +70,72 @@
         </nav>
 
         <!-- Mobile Controls -->
-        <div class="md:hidden flex items-center gap-2">
+        <div class="md:hidden flex items-center gap-3">
+          <UTooltip text="Search (⌘K)" :delay-duration="300">
+            <UButton
+              icon="i-lucide-search"
+              variant="ghost"
+              color="primary"
+              size="sm"
+              @click="$emit('openSearch')"
+            />
+          </UTooltip>
           <ClientOnly>
             <ThemeToggle />
           </ClientOnly>
-          <UButton icon="i-heroicons-bars-3" variant="ghost" color="primary" @click="isMenuOpen = !isMenuOpen" aria-label="Toggle menu" />
+          
+          <!-- Mobile Drawer -->
+          <UButton 
+            icon="i-lucide-menu" 
+            variant="ghost" 
+            color="primary" 
+            size="sm"
+            @click="isDrawerOpen = true"
+            aria-label="Toggle menu" 
+          />
+          
+          <UDrawer v-model:open="isDrawerOpen" side="right">
+            <template #content>
+              <div class="glass-strong h-full p-6 flex flex-col">
+                <div class="flex items-center justify-between mb-8">
+                  <span class="text-xl font-bold text-gradient">{{ siteConfig.title }}</span>
+                  <UButton icon="i-lucide-x" variant="ghost" @click="isDrawerOpen = false" aria-label="Close menu" />
+                </div>
+
+                <nav class="flex flex-col gap-4 flex-1">
+                  <UButton
+                    v-for="(item, index) in navigationItems"
+                    :key="index"
+                    :to="item.path"
+                    variant="ghost"
+                    color="primary"
+                    class="justify-start text-left"
+                    @click="isDrawerOpen = false"
+                  >
+                    <UIcon :name="getNavIcon(item.name)" class="w-4 h-4 mr-3" />
+                    {{ item.name }}
+                  </UButton>
+                  
+                  <div class="border-t border-white/10 pt-4 mt-4">
+                    <UButton 
+                      block 
+                      color="primary" 
+                      variant="outline" 
+                      class="mb-4"
+                      @click="togglePortfolioType"
+                    >
+                      Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }}
+                      <UIcon name="i-lucide-repeat" class="w-4 h-4 ml-2" />
+                    </UButton>
+                    <AdminNav />
+                  </div>
+                </nav>
+              </div>
+            </template>
+          </UDrawer>
         </div>
       </div>
     </UContainer>
-
-    <!-- Mobile Menu -->
-    <div v-if="isMenuOpen" class="md:hidden border-t border-gray-200/60 dark:border-gray-800/60 bg-white dark:bg-gray-950">
-      <UContainer class="py-3">
-        <div class="flex flex-col gap-2">
-          <NuxtLink
-            v-for="(item, index) in navigationItems"
-            :key="index"
-            :to="item.path"
-            class="py-2 no-underline text-primary hover:opacity-80"
-            @click="isMenuOpen = false"
-          >
-            {{ item.name }}
-          </NuxtLink>
-
-          <div class="pt-2">
-            <UButton block color="primary" variant="soft" @click="togglePortfolioType">
-              Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }}
-            </UButton>
-          </div>
-          <div class="pt-1">
-            <AdminNav />
-          </div>
-        </div>
-      </UContainer>
-    </div>
   </header>
 </template>
 
@@ -83,17 +144,22 @@ import { useSiteConfig } from '~/utils/site-config';
 import AdminNav from '~/components/common/AdminNav.vue';
 import ThemeToggle from '~/components/common/ThemeToggle.vue';
 
+// Emits
+const emit = defineEmits<{
+  openSearch: []
+}>()
+
 // Get site configuration
 const siteConfig = useSiteConfig();
 const router = useRouter();
 
-// Mobile menu state
-const isMenuOpen = ref(false);
+// Mobile drawer state
+const isDrawerOpen = ref(false);
 
-// Close menu when route changes
+// Close drawer when route changes
 const route = useRoute();
 watch(() => route.path, () => {
-  isMenuOpen.value = false;
+  isDrawerOpen.value = false;
 });
 
 // Toggle between developer and tattoo portfolios
@@ -102,6 +168,22 @@ const togglePortfolioType = () => {
   const newType = currentType === 'dev' ? 'tattoo' : 'dev';
   const baseRoute = newType === 'dev' ? '/dev' : '/tattoo';
   router.push(baseRoute);
+  isDrawerOpen.value = false;
+};
+
+// Get navigation icons
+const getNavIcon = (name: string): string => {
+  const iconMap: Record<string, string> = {
+    'Home': 'i-lucide-home',
+    'About': 'i-lucide-user',
+    'Projects': 'i-lucide-folder',
+    'Open Source': 'i-lucide-git-branch',
+    'Blog': 'i-lucide-pen-tool',
+    'Contact': 'i-lucide-mail',
+    'Gallery': 'i-lucide-image',
+    'Testimonials': 'i-lucide-star'
+  };
+  return iconMap[name] || 'i-lucide-circle';
 };
 
 // Generate navigation items based on site type

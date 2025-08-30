@@ -5,15 +5,21 @@
       <section class="py-16 md:py-24">
         <div class="flex flex-col md:flex-row items-center">
           <div class="md:w-1/2 mb-10 md:mb-0 md:pr-12">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-primary dark:text-primary-400">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gradient-animated">
               Allison's Tattoo Art
             </h1>
             <p class="text-lg md:text-xl mb-8 text-gray-700 dark:text-gray-300">
               Specializing in custom designs that blend fine art with self-expression, creating a unique tattoo experience for every client.
             </p>
             <div class="flex flex-wrap gap-3">
-              <UButton to="/tattoo/gallery" color="primary">View Gallery</UButton>
-              <UButton to="/contact" color="primary" variant="soft">Book a Session</UButton>
+              <UButton to="/tattoo/gallery" color="primary" variant="solid" size="lg" class="btn-depth magnetic-hover">
+                View Gallery
+                <UIcon name="i-lucide-image" class="w-4 h-4 ml-2" />
+              </UButton>
+              <UButton to="/contact" color="primary" variant="soft" size="lg" class="magnetic-hover">
+                Book a Session
+                <UIcon name="i-lucide-calendar" class="w-4 h-4 ml-2" />
+              </UButton>
             </div>
           </div>
           <div class="md:w-1/2 rounded-xl overflow-hidden shadow-lg">
@@ -32,34 +38,49 @@
         </div>
 
         <div v-if="featuredWorks.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div 
+          <UCard
             v-for="work in featuredWorks" 
             :key="work.id" 
-            class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all"
+            class="glass card-hover group overflow-hidden"
+            :ui="{ body: 'p-0' }"
           >
-            <div class="aspect-square bg-gray-100 dark:bg-gray-700">
+            <div class="aspect-square bg-gradient-tattoo relative overflow-hidden">
               <img 
                 :src="work.image || '/placeholder-tattoo-work.jpg'" 
                 :alt="work.title" 
-                class="object-cover w-full h-full"
+                class="object-cover w-full h-full mix-blend-overlay opacity-80 group-hover:scale-110 transition-transform duration-500"
               />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
             <div class="p-6">
-              <h3 class="text-xl font-bold mb-2 text-primary dark:text-primary-400">
+              <h3 class="text-xl font-bold mb-2 text-primary group-hover:text-pink-500 transition-colors">
                 {{ work.title }}
               </h3>
-              <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
+              <p class="text-muted line-clamp-3 mb-4">
                 {{ work.description }}
               </p>
-              <div class="flex items-center mb-4">
-                <span class="text-sm text-gray-500 dark:text-gray-400">Style: </span>
-                <span class="ml-2 px-2 py-1 bg-primary/10 dark:bg-primary-400/20 text-primary dark:text-primary-400 text-xs rounded-full">
+              <div class="flex items-center gap-2 mb-4">
+                <UBadge 
+                  :color="getTattooStyleColor(work.style || 'Custom')" 
+                  variant="soft"
+                  size="sm"
+                >
                   {{ work.style || 'Custom' }}
-                </span>
+                </UBadge>
               </div>
-              <UButton @click="openTattooDetails(work)" color="primary" size="sm" block>View Details</UButton>
+              <UButton 
+                @click="openTattooDetails(work)" 
+                color="primary" 
+                variant="solid" 
+                size="sm" 
+                block
+                class="magnetic-hover"
+              >
+                View Details
+                <UIcon name="i-lucide-arrow-right" class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+              </UButton>
             </div>
-          </div>
+          </UCard>
         </div>
         
         <div v-else class="py-8 flex justify-center">
@@ -272,6 +293,7 @@
 
 <script setup lang="ts">
 import { useContent } from '~/composables/useContent';
+import { getTattooStyleColor } from '~/utils/colors';
 
 // Site Configuration
 const config = useSiteConfig();

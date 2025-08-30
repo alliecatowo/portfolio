@@ -3,21 +3,26 @@
     <section class="py-12 md:py-20">
       <UContainer>
         <div class="max-w-4xl mx-auto text-center mb-10">
-          <h1 class="text-4xl md:text-5xl font-bold mb-3 text-primary dark:text-primary-400">Developer Blog</h1>
-          <p class="text-lg text-gray-600 dark:text-gray-400">
+          <h1 class="text-4xl md:text-5xl font-bold mb-3 text-primary">Developer Blog</h1>
+          <p class="text-lg text-muted">
             Thoughts, tutorials, and insights about web development.
           </p>
         </div>
 
         <!-- Loading state -->
         <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <UCard v-for="n in 6" :key="n">
-            <div class="aspect-video mb-4">
-              <USkeleton class="h-full w-full" />
+          <UCard v-for="n in 6" :key="n" class="glass card-hover">
+            <div class="aspect-video mb-4 rounded-lg overflow-hidden">
+              <USkeleton class="h-full w-full skeleton-shimmer" />
             </div>
-            <USkeleton class="h-6 w-2/3 mb-2" />
-            <USkeleton class="h-4 w-full mb-2" />
-            <USkeleton class="h-4 w-1/2" />
+            <USkeleton class="h-6 w-2/3 mb-2 skeleton-shimmer" />
+            <USkeleton class="h-4 w-full mb-2 skeleton-shimmer" />
+            <USkeleton class="h-4 w-1/2 mb-3 skeleton-shimmer" />
+            <div class="flex gap-2">
+              <USkeleton class="h-5 w-12 skeleton-shimmer" />
+              <USkeleton class="h-5 w-16 skeleton-shimmer" />
+              <USkeleton class="h-5 w-14 skeleton-shimmer" />
+            </div>
           </UCard>
         </div>
 
@@ -29,31 +34,53 @@
           <UCard
             v-for="post in posts"
             :key="post.id"
-            class="overflow-hidden hover:shadow-lg transition-shadow"
-            :ui="{ body: 'p-4 sm:p-5' }"
+            class="overflow-hidden glass card-hover group"
+            :ui="{ body: 'p-0' }"
           >
-            <NuxtLink :to="`/dev/blog/${post.slug}`" class="no-underline">
-              <div class="relative aspect-video bg-gray-200 dark:bg-gray-800 rounded-md overflow-hidden">
+            <NuxtLink :to="`/dev/blog/${post.slug}`" class="no-underline block h-full">
+              <div class="relative aspect-video bg-gradient-card overflow-hidden">
                 <img
                   v-if="post.featured_image"
                   :src="post.featured_image"
                   :alt="post.title"
-                  class="w-full h-full object-cover"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 >
-                <div v-else class="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-500">
-                  Blog Image
+                <div v-else class="absolute inset-0 bg-gradient-dev flex items-center justify-center">
+                  <UIcon name="i-lucide-pen-tool" class="w-12 h-12 text-white/60" />
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <!-- Reading time badge -->
+                <div class="absolute top-3 right-3">
+                  <UBadge variant="solid" color="neutral" class="backdrop-blur-sm bg-black/30 text-white border-0">
+                    <UIcon name="i-lucide-clock" class="w-3 h-3 mr-1" />
+                    {{ post.reading_time || '5 min' }} read
+                  </UBadge>
                 </div>
               </div>
-              <div class="mt-4">
-                <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">
+              
+              <div class="p-5">
+                <div class="text-sm text-muted mb-2 flex items-center">
+                  <UIcon name="i-lucide-calendar" class="w-3 h-3 mr-1" />
                   {{ new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
                 </div>
-                <h2 class="text-xl font-semibold mb-2">{{ post.title }}</h2>
-                <p class="text-gray-600 dark:text-gray-300 line-clamp-2 mb-3">
+                <h2 class="text-xl font-semibold mb-2 text-default group-hover:text-primary transition-colors">{{ post.title }}</h2>
+                <p class="text-muted line-clamp-2 mb-4">
                   {{ post.description }}
                 </p>
                 <div class="flex flex-wrap gap-2" v-if="post.tags && post.tags.length">
-                  <UBadge v-for="tag in post.tags" :key="tag" color="primary" variant="soft" class="text-xs">{{ tag }}</UBadge>
+                  <UBadge 
+                    v-for="tag in post.tags.slice(0, 3)" 
+                    :key="tag" 
+                    :color="getTagColor(tag)" 
+                    variant="soft" 
+                    class="text-xs"
+                  >
+                    {{ tag }}
+                  </UBadge>
+                  <UBadge v-if="post.tags.length > 3" color="neutral" variant="soft" class="text-xs">
+                    +{{ post.tags.length - 3 }}
+                  </UBadge>
                 </div>
               </div>
             </NuxtLink>
@@ -73,6 +100,7 @@
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
+import { getTagColor } from '~/utils/colors';
 
 // Ensure site config is set to dev
 const siteConfig = useSiteConfig();
@@ -93,6 +121,7 @@ const { data: posts, pending: loading, error } = await useAsyncData(
 const getImageUrl = (image: any) => {
   return image?.url || image || '/placeholder-blog.jpg';
 };
+
 
 // Meta tags
 useHead({
