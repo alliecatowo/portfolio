@@ -1,0 +1,55 @@
+name: Deploy to Production
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Git tag to deploy'
+        required: true
+        type: string
+
+jobs:
+  deploy-production:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+      
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+      
+      - name: Deploy to Firebase App Hosting Production
+        run: |
+          firebase apphosting:rollouts:create portfolio \
+            --git-commit=${{ github.event.release.tag_name || inputs.tag }} \
+            --force \
+            --project=portfolio-c1306
+            
+      - name: Create deployment status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const tag = '${{ github.event.release.tag_name || inputs.tag }}';
+            github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: context.payload.deployment?.id || 0,
+              state: 'success',
+              environment_url: 'https://portfolio--portfolio-c1306.us-central1.hosted.app',
+              description: `Deployed ${tag} to production`
+            });

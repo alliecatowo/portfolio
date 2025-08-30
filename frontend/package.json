@@ -12,7 +12,9 @@
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare || true",
         "start": "node .output/server/index.mjs",
-        "typecheck": "nuxi typecheck"
+        "typecheck": "nuxi typecheck",
+        "lint": "nuxi typecheck",
+        "test": "echo 'No tests specified' && exit 0"
     },
     "dependencies": {
         "@nuxt/content": "^3.6.3",
