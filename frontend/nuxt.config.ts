@@ -157,15 +157,16 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
-            'ui-components': ['@nuxt/ui'],
+            // Do not chunk '@nuxt/ui' — it's a Nuxt module, not a runtime lib
             'vue-core': ['vue', 'vue-router']
           }
         }
       }
     },
     optimizeDeps: {
-      include: ['vue', 'vue-router', '@nuxt/ui'],
-      exclude: ['lightningcss', '@tailwindcss/oxide']
+      // Only prebundle runtime libs, never Nuxt modules
+      include: ['vue', 'vue-router'],
+      exclude: ['@nuxt/ui', '@nuxt/kit', 'lightningcss', '@tailwindcss/oxide']
     },
     ssr: {
       external: ['lightningcss', '@tailwindcss/oxide']

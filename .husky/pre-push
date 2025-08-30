@@ -1,5 +1,3 @@
-#!/usr/bin/env sh
-
 # Optionally source husky helper if present
 if [ -f "$(dirname -- "$0")/_/husky.sh" ]; then
   . "$(dirname -- "$0")/_/husky.sh"

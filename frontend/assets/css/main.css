@@ -1,34 +1,72 @@
 /* Custom Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
 
-@import "tailwindcss";
-@import "@nuxt/ui";
-@import "./accessibility.css";
+@import 'tailwindcss';
+/* Import Nuxt UI runtime CSS explicitly to avoid bundling its JS module */
+@import '@nuxt/ui/dist/runtime/index.css';
+@import './accessibility.css';
 
 /* Enhanced design tokens using Tailwind CSS v4 @theme directive */
 @theme {
   /* Custom gradient definitions - More creative and vibrant */
-  --gradient-dev: linear-gradient(135deg, var(--ui-color-primary-500) 0%, var(--ui-color-cyan-500) 30%, var(--ui-color-primary-600) 100%);
-  --gradient-tattoo: linear-gradient(135deg, var(--ui-color-pink-400) 0%, var(--ui-color-rose-500) 50%, var(--ui-color-purple-600) 100%);
-  --gradient-hero: linear-gradient(135deg, var(--ui-color-primary-500) 0%, var(--ui-color-pink-500) 33%, var(--ui-color-purple-500) 66%, var(--ui-color-primary-600) 100%);
-  --gradient-card: linear-gradient(145deg, var(--ui-bg-elevated) 0%, color-mix(in oklab, var(--ui-bg-muted) 80%, var(--ui-color-primary-500) 20%) 100%);
-  
+  --gradient-dev: linear-gradient(
+    135deg,
+    var(--ui-color-primary-500) 0%,
+    var(--ui-color-cyan-500) 30%,
+    var(--ui-color-primary-600) 100%
+  );
+  --gradient-tattoo: linear-gradient(
+    135deg,
+    var(--ui-color-pink-400) 0%,
+    var(--ui-color-rose-500) 50%,
+    var(--ui-color-purple-600) 100%
+  );
+  --gradient-hero: linear-gradient(
+    135deg,
+    var(--ui-color-primary-500) 0%,
+    var(--ui-color-pink-500) 33%,
+    var(--ui-color-purple-500) 66%,
+    var(--ui-color-primary-600) 100%
+  );
+  --gradient-card: linear-gradient(
+    145deg,
+    var(--ui-bg-elevated) 0%,
+    color-mix(in oklab, var(--ui-bg-muted) 80%, var(--ui-color-primary-500) 20%) 100%
+  );
+
   /* More dynamic animated gradient */
-  --gradient-animated: linear-gradient(-45deg, var(--ui-color-primary-400), var(--ui-color-pink-500), var(--ui-color-purple-500), var(--ui-color-cyan-400), var(--ui-color-primary-600), var(--ui-color-rose-400));
-  
+  --gradient-animated: linear-gradient(
+    -45deg,
+    var(--ui-color-primary-400),
+    var(--ui-color-pink-500),
+    var(--ui-color-purple-500),
+    var(--ui-color-cyan-400),
+    var(--ui-color-primary-600),
+    var(--ui-color-rose-400)
+  );
+
   /* Enhanced glassmorphic effects */
   --glass-bg: color-mix(in oklab, var(--ui-bg) 80%, transparent);
   --glass-bg-strong: color-mix(in oklab, var(--ui-bg) 90%, transparent);
   --glass-border: color-mix(in oklab, var(--ui-border) 50%, transparent);
   --glass-border-accent: color-mix(in oklab, var(--ui-primary) 40%, transparent);
-  
+
   /* Creative button gradients */
-  --gradient-button-primary: linear-gradient(135deg, var(--ui-color-primary-500) 0%, var(--ui-color-pink-500) 100%);
-  --gradient-button-soft: linear-gradient(135deg, color-mix(in oklab, var(--ui-color-primary-500) 20%, transparent) 0%, color-mix(in oklab, var(--ui-color-pink-500) 15%, transparent) 100%);
+  --gradient-button-primary: linear-gradient(
+    135deg,
+    var(--ui-color-primary-500) 0%,
+    var(--ui-color-pink-500) 100%
+  );
+  --gradient-button-soft: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--ui-color-primary-500) 20%, transparent) 0%,
+    color-mix(in oklab, var(--ui-color-pink-500) 15%, transparent) 100%
+  );
 }
 
 /* Base theme: white & pink (light), greyish-black & pink (dark) */
-html, body {
+html,
+body {
   @apply bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100;
 }
 
@@ -85,26 +123,54 @@ html, body {
 
 /* Bridge Nuxt UI tokens to utility-like classes for consistency */
 /* These map to @nuxt/ui CSS variables so "primary" accents follow app.config.ts */
-.text-primary { color: var(--ui-primary); }
-.bg-primary { background-color: var(--ui-primary); }
-.border-primary { border-color: var(--ui-primary); }
+.text-primary {
+  color: var(--ui-primary);
+}
+.bg-primary {
+  background-color: var(--ui-primary);
+}
+.border-primary {
+  border-color: var(--ui-primary);
+}
 
 /* Enhanced semantic text utilities */
-.text-default { color: var(--ui-text); }
-.text-muted { color: var(--ui-text-muted); }
-.bg-elevated { background-color: var(--ui-bg-elevated); }
+.text-default {
+  color: var(--ui-text);
+}
+.text-muted {
+  color: var(--ui-text-muted);
+}
+.bg-elevated {
+  background-color: var(--ui-bg-elevated);
+}
 
 /* Common patterns used in the app that relied on palette steps */
-.text-primary-700 { color: var(--ui-primary); }
-.text-primary-500 { color: var(--ui-primary); }
-.dark .text-primary-400 { color: var(--ui-primary); }
-.bg-primary-700 { background-color: var(--ui-primary); }
-.ring-primary { --tw-ring-color: var(--ui-primary) !important; }
+.text-primary-700 {
+  color: var(--ui-primary);
+}
+.text-primary-500 {
+  color: var(--ui-primary);
+}
+.dark .text-primary-400 {
+  color: var(--ui-primary);
+}
+.bg-primary-700 {
+  background-color: var(--ui-primary);
+}
+.ring-primary {
+  --tw-ring-color: var(--ui-primary) !important;
+}
 
 /* Opacity variants approximated via color-mix */
-.bg-primary-700\/10 { background-color: color-mix(in oklab, var(--ui-primary) 10%, transparent); }
-.bg-primary-700\/20 { background-color: color-mix(in oklab, var(--ui-primary) 20%, transparent); }
-.bg-primary-700\/30 { background-color: color-mix(in oklab, var(--ui-primary) 30%, transparent); }
+.bg-primary-700\/10 {
+  background-color: color-mix(in oklab, var(--ui-primary) 10%, transparent);
+}
+.bg-primary-700\/20 {
+  background-color: color-mix(in oklab, var(--ui-primary) 20%, transparent);
+}
+.bg-primary-700\/30 {
+  background-color: color-mix(in oklab, var(--ui-primary) 30%, transparent);
+}
 
 /* Explicitly set which shade feeds --ui-primary for visibility */
 :root {
@@ -119,21 +185,27 @@ html, body {
   background: var(--glass-bg);
   backdrop-filter: blur(12px) saturate(180%);
   border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px color-mix(in oklab, var(--ui-text) 10%, transparent), inset 0 1px 0 color-mix(in oklab, var(--ui-bg) 90%, white 10%);
+  box-shadow:
+    0 8px 32px color-mix(in oklab, var(--ui-text) 10%, transparent),
+    inset 0 1px 0 color-mix(in oklab, var(--ui-bg) 90%, white 10%);
 }
 
 .glass-strong {
   background: var(--glass-bg-strong);
   backdrop-filter: blur(20px) saturate(200%);
   border: 1px solid var(--glass-border-accent);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .glass-accent {
   background: color-mix(in oklab, var(--glass-bg) 90%, var(--ui-color-primary-500) 10%);
   backdrop-filter: blur(16px) saturate(190%);
   border: 1px solid var(--glass-border-accent);
-  box-shadow: 0 10px 36px rgba(236, 72, 153, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 10px 36px rgba(236, 72, 153, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 /* Gradient utility classes */
@@ -161,34 +233,73 @@ html, body {
 
 /* Animation keyframes */
 @keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33% { transform: translateY(-8px) rotate(2deg); }
-  66% { transform: translateY(-12px) rotate(-1deg); }
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+  66% {
+    transform: translateY(-12px) rotate(-1deg);
+  }
 }
 
 @keyframes sparkle {
-  0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
-  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(236, 72, 153, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(236, 72, 153, 0.6), 0 0 60px rgba(147, 51, 234, 0.3); }
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 40px rgba(236, 72, 153, 0.6),
+      0 0 60px rgba(147, 51, 234, 0.3);
+  }
 }
 
 @keyframes text-glow {
-  0%, 100% { text-shadow: 0 0 20px rgba(236, 72, 153, 0.5); }
-  50% { text-shadow: 0 0 30px rgba(236, 72, 153, 0.8), 0 0 40px rgba(147, 51, 234, 0.4); }
+  0%,
+  100% {
+    text-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+  }
+  50% {
+    text-shadow:
+      0 0 30px rgba(236, 72, 153, 0.8),
+      0 0 40px rgba(147, 51, 234, 0.4);
+  }
 }
 
 @keyframes scale-in {
-  0% { transform: scale(0.95); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Enhanced hover effects */
@@ -208,7 +319,9 @@ html, body {
   position: relative;
   overflow: hidden;
   border: 0;
-  box-shadow: 0 4px 20px rgba(236, 72, 153, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 4px 20px rgba(236, 72, 153, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -219,13 +332,15 @@ html, body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   transition: left 0.6s ease;
 }
 
 .btn-gradient:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 30px rgba(236, 72, 153, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 8px 30px rgba(236, 72, 153, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .btn-gradient:hover::before {
@@ -237,17 +352,23 @@ html, body {
   position: relative;
   transform-style: preserve-3d;
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 0 var(--ui-color-primary-700), 0 6px 12px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 4px 0 var(--ui-color-primary-700),
+    0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .btn-depth:hover {
   transform: translateY(2px);
-  box-shadow: 0 2px 0 var(--ui-color-primary-700), 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 2px 0 var(--ui-color-primary-700),
+    0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .btn-depth:active {
   transform: translateY(4px);
-  box-shadow: 0 0 0 var(--ui-color-primary-700), 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 0 0 var(--ui-color-primary-700),
+    0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Button with glow effect */
@@ -259,10 +380,16 @@ html, body {
 
 @keyframes glow-pulse {
   0% {
-    box-shadow: 0 0 5px var(--ui-color-primary-500), 0 0 10px var(--ui-color-primary-500), 0 0 15px var(--ui-color-primary-500);
+    box-shadow:
+      0 0 5px var(--ui-color-primary-500),
+      0 0 10px var(--ui-color-primary-500),
+      0 0 15px var(--ui-color-primary-500);
   }
   100% {
-    box-shadow: 0 0 10px var(--ui-color-primary-500), 0 0 20px var(--ui-color-primary-500), 0 0 30px var(--ui-color-primary-500);
+    box-shadow:
+      0 0 10px var(--ui-color-primary-500),
+      0 0 20px var(--ui-color-primary-500),
+      0 0 30px var(--ui-color-primary-500);
   }
 }
 
@@ -282,7 +409,9 @@ html, body {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.5);
   transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
+  transition:
+    width 0.6s,
+    height 0.6s;
 }
 
 .btn-ripple:active::after {
@@ -301,10 +430,19 @@ html, body {
 }
 
 @keyframes magnetic {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(2px, -2px) scale(1.02); }
-  50% { transform: translate(-2px, 2px) scale(1.01); }
-  75% { transform: translate(1px, 1px) scale(1.02); }
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(2px, -2px) scale(1.02);
+  }
+  50% {
+    transform: translate(-2px, 2px) scale(1.01);
+  }
+  75% {
+    transform: translate(1px, 1px) scale(1.02);
+  }
 }
 
 .btn-soft-creative {
@@ -324,14 +462,23 @@ html, body {
 
 /* Loading skeleton enhancements */
 .skeleton-shimmer {
-  background: linear-gradient(90deg, var(--ui-bg-muted) 25%, var(--ui-bg-elevated) 50%, var(--ui-bg-muted) 75%);
+  background: linear-gradient(
+    90deg,
+    var(--ui-bg-muted) 25%,
+    var(--ui-bg-elevated) 50%,
+    var(--ui-bg-muted) 75%
+  );
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* Enhanced text gradients */
@@ -347,7 +494,12 @@ html, body {
 
 /* Ensure better visibility on all backgrounds */
 .text-gradient-strong {
-  background: linear-gradient(135deg, var(--ui-color-primary-600) 0%, var(--ui-color-pink-500) 50%, var(--ui-color-rose-500) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--ui-color-primary-600) 0%,
+    var(--ui-color-pink-500) 50%,
+    var(--ui-color-rose-500) 100%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -404,7 +556,7 @@ html, body {
 }
 
 .bg-grid {
-  background-image: 
+  background-image:
     linear-gradient(rgba(236, 72, 153, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(236, 72, 153, 0.1) 1px, transparent 1px);
   background-size: 40px 40px;
