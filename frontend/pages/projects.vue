@@ -10,18 +10,17 @@
       <p class="text-lg text-red-600">{{ error }}</p>
     </div>
     
-    <div v-else-if="projects.length === 0">
-      <p class="text-lg">No projects found. Check back soon!</p>
-    </div>
+      <div v-else-if="projects && projects.length === 0">
+        <p class="text-lg">No projects found. Check back soon!</p>
+      </div>
     
-    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div v-for="project in projects" :key="project.id" class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all hover:shadow-xl">
-        <NuxtImg 
-          v-if="project.thumbnail" 
-          :src="project.thumbnail.url" 
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div v-for="project in projects" :key="project.slug || project.path || project.title" class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all hover:shadow-xl">
+        <img 
+          v-if="project.image" 
+          :src="project.image" 
           :alt="project.title"
           class="w-full h-52 object-cover"
-          format="webp"
           loading="lazy"
         />
         <div v-else class="w-full h-52 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
@@ -32,34 +31,34 @@
           <h2 class="text-xl font-bold mb-2">{{ project.title }}</h2>
           <p class="text-gray-700 dark:text-gray-300 mb-4">{{ project.description }}</p>
           
-          <div class="flex flex-wrap gap-2 mb-4">
+          <div class="flex flex-wrap gap-2 mb-4" v-if="project.technologies && project.technologies.length">
             <span 
-              v-for="category in project.categories" 
-              :key="category.id"
-              class="px-3 py-1 text-sm rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+              v-for="tech in project.technologies" 
+              :key="tech"
+              class="px-3 py-1 text-sm rounded-full bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-100"
             >
-              {{ category.name }}
+              {{ tech }}
             </span>
           </div>
           
           <div class="flex justify-between mt-4">
-            <NuxtLink 
-              v-if="project.demoUrl" 
-              :to="project.demoUrl" 
+            <a 
+              v-if="project.demo" 
+              :href="project.demo" 
               target="_blank" 
-              class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+              class="text-primary hover:underline"
             >
               Live Demo
-            </NuxtLink>
+            </a>
             
-            <NuxtLink 
-              v-if="project.repositoryUrl" 
-              :to="project.repositoryUrl" 
+            <a 
+              v-if="project.github" 
+              :href="project.github" 
               target="_blank" 
-              class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+              class="text-primary hover:underline"
             >
               GitHub
-            </NuxtLink>
+            </a>
           </div>
         </div>
       </div>
@@ -68,8 +67,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { fetchAllDevProjects, getDirectusImageUrl } from '~/utils/api/directus';
+// Fetch all projects directly with queryCollection
+const { data: projects, pending: isLoading, error } = await useAsyncData(
+  'all-projects',
+  () => queryCollection('projects').where('status', '<>', 'draft').order('featured', 'DESC').order('date', 'DESC').all()
+);
 
 // Define meta tags for the page
 useHead({
@@ -77,23 +79,5 @@ useHead({
   meta: [
     { name: 'description', content: 'Browse through my development projects and see what I\'ve been working on.' }
   ]
-});
-
-const projects = ref([]);
-const isLoading = ref(true);
-const error = ref('');
-
-onMounted(async () => {
-  try {
-    isLoading.value = true;
-    const result = await fetchAllDevProjects();
-    console.log('Projects from Directus:', result);
-    projects.value = result;
-  } catch (err) {
-    console.error('Failed to fetch projects:', err);
-    error.value = 'Failed to load projects. Please try again later.';
-  } finally {
-    isLoading.value = false;
-  }
 });
 </script> 

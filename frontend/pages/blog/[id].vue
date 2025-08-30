@@ -1,51 +1,37 @@
 <template>
-  <div class="container-custom py-12">
+  <UContainer class="py-12">
     <div class="max-w-3xl mx-auto">
       <!-- Back link -->
-      <NuxtLink to="/blog" class="inline-flex items-center mb-8 text-primary dark:text-dark-primary">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-        </svg>
-        Back to Blog
-      </NuxtLink>
+      <UButton to="/blog" variant="ghost" color="primary" icon="i-heroicons-arrow-left" class="mb-6">Back to Blog</UButton>
       
       <!-- Loading state -->
       <div v-if="loading" class="flex justify-center items-center py-20">
-        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-dark-primary"></div>
+        <USkeleton class="h-12 w-12 rounded-full" />
       </div>
       
       <!-- Error state -->
-      <div v-else-if="error" class="bg-red-100 text-red-800 p-4 rounded-lg">
-        <p>{{ error }}</p>
-        <button @click="loadBlogPost" class="mt-4 text-primary dark:text-dark-primary font-medium">
-          Try Again
-        </button>
-      </div>
+      <UAlert v-else-if="error" color="error" variant="subtle" :title="error.message || 'Error loading post'" />
       
       <!-- Not found state -->
       <div v-else-if="!post" class="text-center py-16">
-        <svg class="w-16 h-16 mx-auto text-gray-300 dark:text-gray-700 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
+        <UIcon name="i-heroicons-document-magnifying-glass" class="w-14 h-14 mx-auto text-gray-300 dark:text-gray-700 mb-4" />
         <h2 class="text-xl font-semibold mb-2">Blog post not found</h2>
         <p class="text-gray-500 dark:text-gray-400 mb-4">The article you're looking for doesn't exist or has been removed.</p>
-        <NuxtLink to="/blog" class="text-primary dark:text-dark-primary font-medium">
-          Return to Blog
-        </NuxtLink>
+        <UButton to="/blog" color="primary">Return to Blog</UButton>
       </div>
       
       <!-- Blog post content -->
       <article v-else>
         <div class="mb-8">
           <div class="text-sm text-gray-500 dark:text-gray-400 mb-2">
-            {{ formatDate(post.date_published) }}
+            {{ formatDate(post.date) }}
           </div>
           <h1 class="mb-6">{{ post.title }}</h1>
           
           <!-- Post image -->
-          <div v-if="post.cover_image" class="relative aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-8">
+          <div v-if="post.featured_image" class="relative aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-8">
             <img 
-              :src="getImageUrl(post.cover_image)" 
+              :src="getImageUrl(post.featured_image)" 
               :alt="post.title"
               class="w-full h-full object-cover rounded-lg"
             >
@@ -57,7 +43,8 @@
           </div>
           
           <!-- Post content -->
-          <div class="prose dark:prose-invert max-w-none" v-html="post.content"></div>
+          <ContentRenderer v-if="post.body" :value="post" class="prose dark:prose-invert max-w-none" />
+          <div v-else class="prose dark:prose-invert max-w-none"></div>
         </div>
       </article>
       
@@ -74,53 +61,36 @@
         </div>
       </div>
     </div>
-  </div>
+  </UContainer>
 </template>
 
 <script setup lang="ts">
-import { useDirectus } from '~/composables/useDirectus';
+import { useContent } from '~/composables/useContent';
 import { useSiteConfig } from '~/utils/site-config';
 
 // Get site configuration
 const siteConfig = useSiteConfig();
 
-// Use Directus composable
-const { fetchBlogPost, getImageUrl } = useDirectus();
-
 // Get post slug from route
 const route = useRoute();
-const slug = route.params.id;
+const slug = route.params.id as string;
 
-// State
-const post = ref(null);
-const loading = ref(true);
-const error = ref(null);
+// Use content composable
+const { fetchBlogPost } = useContent();
 
-// Methods
-const loadBlogPost = async () => {
-  loading.value = true;
-  error.value = null;
-  
-  try {
-    const response = await fetchBlogPost(slug.toString(), {
-      fields: ['id', 'title', 'slug', 'content', 'date_published', 'cover_image', 'excerpt']
-    });
-    
-    if (response) {
-      post.value = response;
-    } else {
-      post.value = null;
-    }
-  } catch (err) {
-    console.error('Error fetching blog post:', err);
-    error.value = 'Failed to load blog post. Please try again.';
-  } finally {
-    loading.value = false;
-  }
-};
+// Determine category based on current path
+const category = computed(() => {
+  return route.path.includes('/dev/') ? 'dev' : 'tattoo'
+});
+
+// Fetch the blog post
+const { data: post, pending: loading, error } = await useAsyncData(
+  `blog-post-${category.value}-${slug}`,
+  () => fetchBlogPost(category.value, slug)
+);
 
 // Helper functions
-const formatDate = (dateString) => {
+const formatDate = (dateString: string) => {
   if (!dateString) return '';
   const date = new Date(dateString);
   return date.toLocaleDateString('en-US', { 
@@ -130,10 +100,7 @@ const formatDate = (dateString) => {
   });
 };
 
-// Load data
-onMounted(() => {
-  loadBlogPost();
-});
+const getImageUrl = (path: string) => path || '';
 
 // Meta tags
 useHead(() => ({
@@ -143,7 +110,7 @@ useHead(() => ({
   meta: [
     { 
       name: 'description', 
-      content: post.value?.excerpt || 'Detailed article with insights and information.' 
+      content: post.value?.description || 'Detailed article with insights and information.' 
     }
   ]
 }));

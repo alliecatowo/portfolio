@@ -15,7 +15,7 @@
             </div>
             <div 
               v-else 
-              class="w-full aspect-square bg-primary/50 dark:bg-primary-dark/50 flex items-center justify-center text-white"
+              class="w-full aspect-square bg-primary/50 dark:bg-primary-700/50 flex items-center justify-center text-white"
             >
               Tattoo Artist Portrait Placeholder
             </div>
@@ -28,7 +28,7 @@
               :href="link" 
               target="_blank" 
               rel="noopener noreferrer"
-              class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-dark-primary"
+              class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary-400"
             >
               <span class="capitalize">{{ platform }}</span>
             </a>
@@ -114,7 +114,7 @@
               : 'Interested in getting a tattoo? I\'d love to discuss your ideas and create something unique for you.'
             }}
           </p>
-          <NuxtLink to="/contact" class="btn btn-primary">Contact Me</NuxtLink>
+          <UButton to="/contact" color="primary">Contact Me</UButton>
         </div>
       </div>
     </div>

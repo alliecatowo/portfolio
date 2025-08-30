@@ -1,185 +1,127 @@
 <template>
   <div>
-    <section class="py-12 md:py-20 bg-gradient-to-br from-primary/5 to-primary/10 dark:from-dark-primary/10 dark:to-dark-primary/20">
-      <div class="container-custom">
-        <div class="max-w-4xl mx-auto text-center">
-          <h1 class="text-4xl md:text-5xl font-bold mb-6">Developer Blog</h1>
-          <p class="text-lg mb-12">
-            Thoughts, tutorials, and insights about web development, programming, and technology.
+    <section class="py-12 md:py-20">
+      <UContainer>
+        <div class="max-w-4xl mx-auto text-center mb-10">
+          <h1 class="text-4xl md:text-5xl font-bold mb-3 text-primary">Developer Blog</h1>
+          <p class="text-lg text-muted">
+            Thoughts, tutorials, and insights about web development.
           </p>
         </div>
-        
+
         <!-- Loading state -->
-        <div v-if="loading" class="flex justify-center items-center py-20">
-          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-dark-primary"></div>
+        <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <UCard v-for="n in 6" :key="n" class="glass card-hover">
+            <div class="aspect-video mb-4 rounded-lg overflow-hidden">
+              <USkeleton class="h-full w-full skeleton-shimmer" />
+            </div>
+            <USkeleton class="h-6 w-2/3 mb-2 skeleton-shimmer" />
+            <USkeleton class="h-4 w-full mb-2 skeleton-shimmer" />
+            <USkeleton class="h-4 w-1/2 mb-3 skeleton-shimmer" />
+            <div class="flex gap-2">
+              <USkeleton class="h-5 w-12 skeleton-shimmer" />
+              <USkeleton class="h-5 w-16 skeleton-shimmer" />
+              <USkeleton class="h-5 w-14 skeleton-shimmer" />
+            </div>
+          </UCard>
         </div>
-        
+
         <!-- Error state -->
-        <div v-else-if="error" class="bg-red-100 text-red-800 p-4 rounded-lg max-w-2xl mx-auto">
-          <p>{{ error }}</p>
-          <button @click="fetchPosts" class="mt-4 text-primary dark:text-dark-primary font-medium">
-            Try Again
-          </button>
-        </div>
-        
+        <UAlert v-else-if="error" color="error" variant="subtle" title="Failed to load posts" class="max-w-xl mx-auto" />
+
         <!-- Blog posts grid -->
-        <div v-else class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <div 
-            v-for="post in posts" 
-            :key="post.id" 
-            class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+        <div v-else class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <UCard
+            v-for="post in posts"
+            :key="post.id"
+            class="overflow-hidden glass card-hover group"
+            :ui="{ body: 'p-0' }"
           >
-            <NuxtLink :to="`/dev/blog/${post.slug}`">
-              <div class="relative aspect-video bg-gray-200 dark:bg-gray-700">
-                <img 
-                  v-if="post.cover_image" 
-                  :src="getImageUrl(post.cover_image)" 
+            <NuxtLink :to="`/dev/blog/${post.slug}`" class="no-underline block h-full">
+              <div class="relative aspect-video bg-gradient-card overflow-hidden">
+                <img
+                  v-if="post.featured_image"
+                  :src="post.featured_image"
                   :alt="post.title"
-                  class="w-full h-full object-cover"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 >
-                <div 
-                  v-else 
-                  class="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-500"
-                >
-                  Blog Image
+                <div v-else class="absolute inset-0 bg-gradient-dev flex items-center justify-center">
+                  <UIcon name="i-lucide-pen-tool" class="w-12 h-12 text-white/60" />
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <!-- Reading time badge -->
+                <div class="absolute top-3 right-3">
+                  <UBadge variant="solid" color="neutral" class="backdrop-blur-sm bg-black/30 text-white border-0">
+                    <UIcon name="i-lucide-clock" class="w-3 h-3 mr-1" />
+                    {{ post.reading_time || '5 min' }} read
+                  </UBadge>
                 </div>
               </div>
-              <div class="p-4">
-                <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                  {{ new Date(post.date_published).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
+              
+              <div class="p-5">
+                <div class="text-sm text-muted mb-2 flex items-center">
+                  <UIcon name="i-lucide-calendar" class="w-3 h-3 mr-1" />
+                  {{ new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
                 </div>
-                <h2 class="text-xl font-bold mb-2">{{ post.title }}</h2>
-                <p class="text-gray-600 dark:text-gray-300 line-clamp-2 mb-3">
-                  {{ post.excerpt }}
+                <h2 class="text-xl font-semibold mb-2 text-default group-hover:text-primary transition-colors">{{ post.title }}</h2>
+                <p class="text-muted line-clamp-2 mb-4">
+                  {{ post.description }}
                 </p>
-                <div class="flex flex-wrap gap-2" v-if="post.categories && post.categories.length">
-                  <span 
-                    v-for="category in post.categories" 
-                    :key="category.id" 
-                    class="px-2 py-1 text-xs rounded-full bg-primary/10 dark:bg-dark-primary/20 text-primary dark:text-dark-primary"
+                <div class="flex flex-wrap gap-2" v-if="post.tags && post.tags.length">
+                  <UBadge 
+                    v-for="tag in post.tags.slice(0, 3)" 
+                    :key="tag" 
+                    :color="getTagColor(tag)" 
+                    variant="soft" 
+                    class="text-xs"
                   >
-                    {{ category.name }}
-                  </span>
+                    {{ tag }}
+                  </UBadge>
+                  <UBadge v-if="post.tags.length > 3" color="neutral" variant="soft" class="text-xs">
+                    +{{ post.tags.length - 3 }}
+                  </UBadge>
                 </div>
               </div>
             </NuxtLink>
-          </div>
+          </UCard>
         </div>
-        
+
         <!-- Empty state -->
-        <div v-if="!loading && !error && posts.length === 0" class="text-center py-16">
-          <svg class="w-16 h-16 mx-auto text-gray-300 dark:text-gray-700 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
+        <div v-if="!loading && !error && (!posts || posts.length === 0)" class="text-center py-16">
+          <UIcon name="i-heroicons-document-text" class="w-14 h-14 mx-auto text-gray-300 dark:text-gray-700 mb-4" />
           <h3 class="text-xl font-semibold mb-2">No posts found</h3>
           <p class="text-gray-500 dark:text-gray-400">Check back later for new content.</p>
         </div>
-        
-        <!-- Pagination -->
-        <div v-if="totalPages > 1" class="flex justify-center mt-12">
-          <div class="flex space-x-2">
-            <button 
-              @click="currentPage > 1 && (currentPage--)" 
-              :disabled="currentPage === 1"
-              class="px-4 py-2 rounded-md bg-white dark:bg-gray-800 shadow disabled:opacity-50"
-            >
-              Previous
-            </button>
-            <button 
-              v-for="page in totalPages" 
-              :key="page" 
-              @click="currentPage = page"
-              :class="[
-                'px-4 py-2 rounded-md shadow',
-                currentPage === page ? 
-                  'bg-primary dark:bg-dark-primary text-white' : 
-                  'bg-white dark:bg-gray-800'
-              ]"
-            >
-              {{ page }}
-            </button>
-            <button 
-              @click="currentPage < totalPages && (currentPage++)" 
-              :disabled="currentPage === totalPages"
-              class="px-4 py-2 rounded-md bg-white dark:bg-gray-800 shadow disabled:opacity-50"
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      </div>
+      </UContainer>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
-import { useDirectus } from '~/composables/useDirectus';
-import { fetchAllBlogPosts } from '~/utils/api/directus';
+import { getTagColor } from '~/utils/colors';
 
 // Ensure site config is set to dev
 const siteConfig = useSiteConfig();
 if (siteConfig.value?.type !== 'dev') {
   siteConfig.value = {
     ...siteConfig.value,
-    type: 'dev',
-    baseRoute: '/dev'
+    type: 'dev'
   };
 }
 
-// Use Directus composable
-const { getImageUrl } = useDirectus();
+// Fetch dev blog posts directly with queryCollection
+const { data: posts, pending: loading, error } = await useAsyncData(
+  'dev-blog-posts',
+  () => queryCollection('blog').where('category', '=', 'dev').where('published', '=', true).order('date', 'DESC').all()
+);
 
-// State
-const posts = ref([]);
-const loading = ref(true);
-const error = ref(null);
-const currentPage = ref(1);
-const totalPages = ref(1);
-const pageSize = 9;
-
-// Fetch posts
-const fetchPosts = async () => {
-  loading.value = true;
-  error.value = null;
-  
-  try {
-    const response = await fetchAllBlogPosts({
-      page: currentPage.value,
-      limit: pageSize,
-      sort: ['-date_published']
-    });
-    
-    console.log('Blog posts from Directus:', response);
-    
-    if (response) {
-      posts.value = response || [];
-      // Update pagination if meta data is available
-      if (response.meta?.filter_count) {
-        totalPages.value = Math.ceil(response.meta.filter_count / pageSize);
-      } else {
-        totalPages.value = response.length > 0 ? Math.ceil(response.length / pageSize) : 1;
-      }
-    }
-  } catch (err) {
-    console.error('Error fetching posts:', err);
-    error.value = 'Failed to load blog posts. Please try again.';
-  } finally {
-    loading.value = false;
-  }
+// Image helper function
+const getImageUrl = (image: any) => {
+  return image?.url || image || '/placeholder-blog.jpg';
 };
 
-// Watchers
-watch(currentPage, () => {
-  fetchPosts();
-  // Scroll to top when changing pages
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-// Lifecycle
-onMounted(() => {
-  fetchPosts();
-});
 
 // Meta tags
 useHead({
@@ -191,17 +133,10 @@ useHead({
 </script>
 
 <style scoped>
-.container-custom {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-</style> 
+</style>

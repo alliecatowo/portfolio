@@ -1,7 +1,0 @@
-{
-    "name": "directus-extensions",
-    "version": "1.0.0",
-    "description": "Custom extensions for Allison's portfolio Directus instance",
-    "private": true,
-    "dependencies": {}
-}

@@ -20,10 +20,7 @@ export default defineNuxtPlugin({
     
     // Set the initial site config
     if (!siteConfig.value) {
-      siteConfig.value = {
-        ...getSiteConfig(siteType),
-        baseRoute: siteType === 'dev' ? '/dev' : '/tattoo'
-      };
+      siteConfig.value = getSiteConfig(siteType);
     }
   }
 }); 

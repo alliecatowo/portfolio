@@ -3,7 +3,7 @@
     <div class="blog-header">
       <h1 class="text-3xl font-bold mb-3">{{ post.title }}</h1>
       <div class="text-gray-600 mb-4">
-        {{ formatDate(post.date_published) }}
+        {{ formatDate(post.date_published || post.date) }}
       </div>
       <div v-if="post.featured_image" class="featured-image mb-6">
         <img 
@@ -31,20 +31,41 @@
 </template>
 
 <script setup lang="ts">
-import { useDirectus } from '~/composables/useDirectus'
-
 const props = defineProps<{
   postId: string
 }>()
 
-const { fetchBlogPost, getImageUrl } = useDirectus()
-const post = ref(null)
-
-onMounted(async () => {
-  post.value = await fetchBlogPost(props.postId)
+// Determine category based on current route
+const route = useRoute()
+const category = computed(() => {
+  return route.path.includes('/tattoo/') ? 'tattoo' : 'dev'
 })
 
-function formatDate(dateString: string) {
+// Fetch the blog post directly with queryCollection
+const { data: post } = await useAsyncData(
+  () => `blog-post-${category.value || 'dev'}-${props.postId || 'unknown'}`,
+  async () => {
+    // Prefer slug match; fall back to path suffix
+    const bySlug = await queryCollection('blog')
+      .where('category', '=', category.value || 'dev')
+      .where('slug', '=', props.postId || 'unknown')
+      .first()
+    if (bySlug) return bySlug
+    return await queryCollection('blog')
+      .where('category', '=', category.value || 'dev')
+      .where('path', '=', `/blog/${category.value || 'dev'}/${props.postId || 'unknown'}`)
+      .first()
+  }
+)
+
+function getImageUrl(image: any, options?: any) {
+  // For now, return the image URL directly
+  // Later this can be enhanced with image optimization
+  return image?.url || image
+}
+
+function formatDate(dateString?: string) {
+  if (!dateString) return ''
   const date = new Date(dateString)
   return new Intl.DateTimeFormat('en-US', { 
     year: 'numeric', 

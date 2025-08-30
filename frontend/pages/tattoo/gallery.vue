@@ -24,7 +24,7 @@
         <div class="aspect-w-1 aspect-h-1 bg-gray-200 dark:bg-gray-700">
           <img 
             v-if="work.image" 
-            :src="getAssetUrl(work.image)" 
+            :src="work.image" 
             :alt="work.title" 
             class="w-full h-full object-cover"
           >
@@ -39,12 +39,12 @@
               {{ work.date ? new Date(work.date).toLocaleDateString() : 'Date not available' }}
             </span>
             <span v-if="work.style" class="inline-block bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 text-xs px-2 py-1 rounded-full">
-              {{ work.style.name }}
+              {{ work.style }}
             </span>
           </div>
           
-          <blockquote v-if="work.client_testimonial" class="italic text-sm text-gray-500 dark:text-gray-400 border-l-2 border-purple-300 dark:border-purple-700 pl-3 mt-4">
-            "{{ work.client_testimonial }}"
+          <blockquote v-if="work.clientTestimonial" class="italic text-sm text-gray-500 dark:text-gray-400 border-l-2 border-purple-300 dark:border-purple-700 pl-3 mt-4">
+            "{{ work.clientTestimonial }}"
           </blockquote>
         </div>
       </div>
@@ -53,23 +53,24 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { getTattooWorks, getAssetUrl } from '~/utils/api/content';
+import { ref } from 'vue';
+import { useContent } from '~/composables/useContent';
 import LoadingSpinner from '~/components/common/LoadingSpinner.vue';
 
 const tattooWorks = ref([]);
 const loading = ref(true);
 const error = ref(null);
 
-onMounted(async () => {
-  try {
-    const response = await getTattooWorks();
-    tattooWorks.value = response.data || [];
-  } catch (err) {
-    console.error('Error fetching tattoo works:', err);
-    error.value = 'Failed to load tattoo works. Please try again later.';
-  } finally {
-    loading.value = false;
-  }
-});
+// Use content composable
+const { fetchGalleryItems } = useContent();
+
+// Fetch data using useAsyncData for SSR support
+const { data, pending, error: fetchError } = await useAsyncData('tattoo-gallery', () => 
+  fetchGalleryItems()
+);
+
+// Set reactive data
+tattooWorks.value = data.value || [];
+loading.value = pending.value;
+error.value = fetchError.value ? 'Failed to load tattoo works. Please try again later.' : null;
 </script> 

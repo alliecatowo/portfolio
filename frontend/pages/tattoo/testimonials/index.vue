@@ -1,10 +1,10 @@
 <template>
   <div>
-    <section class="py-12 md:py-20 bg-gradient-to-br from-primary-dark/10 to-primary-dark/20 dark:from-dark-primary/20 dark:to-dark-primary/30">
+    <section class="py-12 md:py-20 bg-gradient-to-br from-primary-700/10 to-primary-700/20 dark:from-primary-400/20 dark:to-primary-400/30">
       <div class="container-custom">
         <h1 class="text-4xl md:text-5xl font-bold mb-6 text-center relative">
           <span class="inline-block relative z-10">Client Testimonials</span>
-          <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-primary-dark dark:bg-dark-primary opacity-70 z-0"></span>
+          <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-primary-700 dark:bg-primary-400 opacity-70 z-0"></span>
         </h1>
         
         <div class="max-w-4xl mx-auto">
@@ -19,14 +19,14 @@
 
           <!-- Loading state -->
           <div v-if="loading" class="flex justify-center items-center py-20">
-            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-dark dark:border-dark-primary"></div>
+            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-700 dark:border-primary-400"></div>
           </div>
           
           <!-- Error state -->
           <div v-else-if="error" class="bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 px-4 py-3 rounded-lg mb-12">
             <p>{{ error }}</p>
             <button 
-              @click="fetchTestimonials" 
+              @click="retryLoad" 
               class="mt-2 bg-red-800 text-white dark:bg-red-700 px-4 py-2 rounded-md text-sm hover:bg-red-700 dark:hover:bg-red-600 transition-colors"
             >
               Try Again
@@ -34,24 +34,24 @@
           </div>
 
           <!-- No testimonials -->
-          <div v-else-if="testimonials.length === 0" class="text-center py-16">
+          <div v-else-if="testimonials && testimonials.length === 0" class="text-center py-16">
             <p class="text-lg text-gray-600 dark:text-gray-400">No testimonials available at the moment. Check back soon!</p>
           </div>
           
           <!-- Testimonials content -->
           <template v-else>
             <!-- Featured testimonial (first one) -->
-            <div v-if="testimonials.length > 0" class="mb-16 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-xl relative overflow-hidden">
+            <div v-if="testimonials && testimonials.length > 0" class="mb-16 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-xl relative overflow-hidden">
               <!-- Decorative elements -->
-              <div class="absolute top-0 right-0 h-32 w-32 bg-primary-dark/10 dark:bg-dark-primary/10 rounded-bl-full"></div>
-              <div class="absolute bottom-0 left-0 h-24 w-24 bg-primary-dark/10 dark:bg-dark-primary/10 rounded-tr-full"></div>
+              <div class="absolute top-0 right-0 h-32 w-32 bg-primary-700/10 dark:bg-primary-400/10 rounded-bl-full"></div>
+              <div class="absolute bottom-0 left-0 h-24 w-24 bg-primary-700/10 dark:bg-primary-400/10 rounded-tr-full"></div>
               
               <div class="flex flex-col items-center text-center mb-6 relative z-10">
                 <div class="w-24 h-24 bg-gray-300 dark:bg-gray-700 rounded-full mb-4 overflow-hidden">
                   <img 
-                    v-if="testimonials[0].image" 
-                    :src="getImageUrl(testimonials[0].image)" 
-                    :alt="`${testimonials[0].title} photo`"
+                    v-if="testimonials?.[0]?.image" 
+                    :src="getImageUrl(testimonials?.[0]?.image)" 
+                    :alt="`${testimonials?.[0]?.title} photo`"
                     class="w-full h-full object-cover"
                   />
                   <div v-else class="w-full h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
@@ -59,8 +59,8 @@
                   </div>
                 </div>
                 <div class="text-center mb-6">
-                  <h3 class="text-xl font-semibold mb-1">{{ testimonials[0].title }}</h3>
-                  <div class="text-gray-600 dark:text-gray-400">{{ testimonials[0].category }}</div>
+                  <h3 class="text-xl font-semibold mb-1">{{ testimonials?.[0]?.title }}</h3>
+                  <div class="text-gray-600 dark:text-gray-400">{{ testimonials?.[0]?.category }}</div>
                 </div>
                 
                 <div class="text-center mb-8">
@@ -74,15 +74,15 @@
                 </div>
                 
                 <blockquote class="text-lg italic text-center mb-6">
-                  "{{ testimonials[0].description }}"
+                  "{{ testimonials?.[0]?.description }}"
                 </blockquote>
                 
                 <div class="flex justify-center mb-8">
                   <div class="w-40 h-40 bg-gray-300 dark:bg-gray-700 rounded-lg overflow-hidden">
                     <img 
-                      v-if="testimonials[0].image" 
-                      :src="getImageUrl(testimonials[0].image)" 
-                      :alt="`${testimonials[0].title}'s tattoo`"
+                      v-if="testimonials?.[0]?.image" 
+                      :src="getImageUrl(testimonials?.[0]?.image)" 
+                      :alt="`${testimonials?.[0]?.title}'s tattoo`"
                       class="w-full h-full object-cover"
                     />
                   </div>
@@ -91,7 +91,7 @@
             </div>
             
             <!-- Testimonial grid (remaining testimonials) -->
-            <div v-if="testimonials.length > 1" class="grid md:grid-cols-2 gap-8">
+            <div v-if="testimonials && testimonials.length > 1" class="grid md:grid-cols-2 gap-8">
               <div 
                 v-for="(testimonial, index) in testimonials.slice(1)" 
                 :key="testimonial.id" 
@@ -142,7 +142,7 @@
               I'd love to work with you on your next tattoo. Whether you have a specific design in mind 
               or need help bringing your ideas to life, let's start the conversation.
             </p>
-            <NuxtLink to="/tattoo/contact" class="inline-block px-6 py-3 bg-primary-dark dark:bg-dark-primary text-white rounded-full shadow-lg transform transition-transform hover:scale-105">
+            <NuxtLink to="/tattoo/contact" class="inline-block px-6 py-3 bg-primary-700 dark:bg-primary-400 text-white rounded-full shadow-lg transform transition-transform hover:scale-105">
               Book a Consultation
             </NuxtLink>
           </div>
@@ -154,57 +154,32 @@
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
-import { useDirectus } from '~/composables/useDirectus';
-import { fetchAllGalleryItems } from '~/utils/api/directus';
 
 // Ensure site config is set to tattoo
 const siteConfig = useSiteConfig();
 if (siteConfig.value?.type !== 'tattoo') {
   siteConfig.value = {
     ...siteConfig.value,
-    type: 'tattoo',
-    baseRoute: '/tattoo'
+    type: 'tattoo'
   };
 }
 
-// Use Directus composable
-const { getImageUrl } = useDirectus();
+// Fetch testimonials directly with queryCollection
+const { data: testimonials, pending: loading, error } = await useAsyncData(
+  'tattoo-testimonials',
+  () => queryCollection('testimonials').where('verified', '=', true).order('featured', 'DESC').order('date', 'DESC').all()
+);
 
-// State
-const testimonials = ref([]);
-const loading = ref(true);
-const error = ref(null);
-
-// Fetch testimonials
-const fetchTestimonials = async () => {
-  loading.value = true;
-  error.value = null;
-  
-  try {
-    const result = await fetchAllGalleryItems({
-      filter: {
-        category: {
-          _eq: 'testimonial'
-        }
-      },
-      sort: ['sort']
-    });
-    
-    console.log('Testimonials from Directus:', result);
-    
-    testimonials.value = result || [];
-  } catch (err) {
-    console.error('Error fetching testimonials:', err);
-    error.value = 'Failed to load testimonials. Please try again.';
-  } finally {
-    loading.value = false;
-  }
+// Image helper function
+const getImageUrl = (image: any) => {
+  return image?.url || image || '/placeholder-gallery.jpg';
 };
 
-// Lifecycle
-onMounted(() => {
-  fetchTestimonials();
-});
+function retryLoad() {
+  if (process.client) {
+    window.location.reload()
+  }
+}
 
 // Meta tags
 useHead({

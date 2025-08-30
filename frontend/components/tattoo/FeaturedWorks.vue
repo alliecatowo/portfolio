@@ -6,14 +6,14 @@
       </h2>
       
       <div v-if="isLoading" class="flex justify-center py-8">
-        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-dark-primary"></div>
+        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-primary-400"></div>
       </div>
       
       <div v-else-if="error" class="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg text-red-600 dark:text-red-400">
         <p>{{ error }}</p>
       </div>
       
-      <div v-else-if="works.length === 0" class="text-center py-8">
+      <div v-else-if="!works || works.length === 0" class="text-center py-8">
         <p class="text-gray-500 dark:text-gray-400">No featured tattoo works available yet.</p>
       </div>
       
@@ -25,8 +25,8 @@
         >
           <div class="h-64 overflow-hidden">
             <img 
-              v-if="work.images && work.images.data && work.images.data.length > 0" 
-              :src="getStrapiMedia(work.images.data[0].attributes.url)" 
+              v-if="work.images" 
+              :src="primaryImage(work.images)" 
               :alt="work.title" 
               class="w-full h-full object-cover"
             />
@@ -44,19 +44,15 @@
               {{ work.description }}
             </p>
             
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span 
-                v-for="style in work.styles?.data" 
-                :key="style.id" 
-                class="inline-block px-2 py-1 text-xs font-medium bg-primary/10 text-primary dark:bg-dark-primary/20 dark:text-dark-primary rounded-md"
-              >
-                {{ style.attributes.name }}
+            <div class="flex flex-wrap gap-2 mb-4" v-if="work.styles">
+              <span class="inline-block px-2 py-1 text-xs font-medium bg-primary-50 text-primary dark:bg-primary-400/20 dark:text-primary-400 rounded-md">
+                {{ Array.isArray(work.styles) ? work.styles[0] : work.styles }}
               </span>
             </div>
             
             <NuxtLink 
               :to="`/tattoo/gallery/${work.slug}`" 
-              class="mt-4 inline-block text-primary dark:text-dark-primary hover:underline"
+              class="mt-4 inline-block text-primary dark:text-primary-400 hover:underline"
             >
               View Details
             </NuxtLink>
@@ -67,7 +63,7 @@
       <div class="mt-10 text-center">
         <NuxtLink 
           to="/tattoo/gallery" 
-          class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark dark:bg-dark-primary dark:hover:bg-dark-primary-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-dark-primary"
+          class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:opacity-90 dark:bg-primary-400 dark:hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-primary-400"
         >
           View All Works
           <svg class="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -80,34 +76,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useStrapi } from '~/composables/useStrapi';
+// Fetch featured gallery items directly with queryCollection
+const { data: works, pending: isLoading, error } = await useAsyncData(
+  'featured-tattoo-works',
+  () => queryCollection('gallery').where('featured', '=', true).order('date', 'DESC').limit(3).all()
+);
 
-const strapi = useStrapi();
-const works = ref<any[]>([]);
-const isLoading = ref(true);
-const error = ref<string | null>(null);
+const primaryImage = (images: any) => Array.isArray(images) ? images[0] : images
 
-// Fetch featured tattoo works from Strapi
-const fetchFeaturedWorks = async () => {
-  isLoading.value = true;
-  error.value = null;
-  
-  try {
-    const response = await strapi.getFeaturedTattooWorks(3);
-    works.value = response.data;
-  } catch (err) {
-    console.error('Error fetching featured tattoo works:', err);
-    error.value = 'Failed to load tattoo works. Please try again later.';
-  } finally {
-    isLoading.value = false;
-  }
+// Get media helper function
+const getStrapiMedia = (url: string) => {
+  // For now, return the URL directly
+  // Later this can be enhanced with proper image optimization
+  return url;
 };
-
-// Get Strapi media helper
-const { getStrapiMedia } = strapi;
-
-onMounted(() => {
-  fetchFeaturedWorks();
-});
 </script> 
