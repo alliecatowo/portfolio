@@ -43,18 +43,22 @@
         <!-- Gallery Grid -->
         <div v-else-if="filteredTattoos && filteredTattoos.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div 
-            v-for="tattoo in filteredTattoos" 
+            v-for="tattoo in paginatedTattoos" 
             :key="tattoo.id" 
             class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all cursor-pointer"
             @click="openTattooModal(tattoo)"
           >
             <!-- Tattoo Image -->
             <div class="aspect-square bg-gray-200 dark:bg-gray-700 overflow-hidden">
-              <img 
-                :src="tattoo.image || '/placeholder-tattoo.jpg'" 
+              <NuxtImg 
+                provider="none"
+                :src="tattoo.image || 'https://placehold.co/600x600?text=Tattoo'" 
                 :alt="tattoo.title"
+                loading="lazy"
+                preset="gallery"
+                sizes="100vw sm:50vw md:33vw lg:400px"
                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              >
+              />
             </div>
             
             <!-- Tattoo Info -->
@@ -75,90 +79,109 @@
             </div>
           </div>
         </div>
+        
+        <!-- Pagination -->
+        <div v-if="filteredTattoos && filteredTattoos.length > pageSize" class="mt-12 flex justify-center">
+          <UPagination 
+            v-model:page="page"
+            :items-per-page="pageSize" 
+            :total="total" 
+            show-edges
+            :sibling-count="1"
+          />
+        </div>
 
         <!-- Empty State -->
-        <div v-else class="text-center py-16">
+        <div v-else-if="!loading && (!filteredTattoos || filteredTattoos.length === 0)" class="text-center py-16">
           <div class="w-16 h-16 mx-auto text-gray-300 dark:text-gray-700 mb-4">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
             </svg>
           </div>
           <h3 class="text-xl font-semibold mb-2">No tattoos found</h3>
-          <p class="text-gray-500 dark:text-gray-400">Check back later for new gallery additions.</p>
+          <p class="text-gray-500 dark:text-gray-400">{{ activeStyle.value === 'all' ? 'Check back later for new gallery additions.' : `No tattoos found for ${activeStyle.value} style.` }}</p>
         </div>
       </div>
     </section>
 
     <!-- Modal for Tattoo Details -->
-    <div v-if="selectedTattoo" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" @click="closeTattooModal">
-      <div class="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto" @click.stop>
-        <div class="relative">
-          <!-- Close Button -->
-          <button 
-            @click="closeTattooModal"
-            class="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 z-10"
-          >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
-          
+    <UModal 
+      v-model:open="isModalOpen" 
+      :ui="{ content: 'w-full sm:max-w-2xl max-h-[90vh]' }"
+      :prevent-close="false"
+    >
+      <template #content>
+      <UCard v-if="selectedTattoo" :ui="{ body: 'p-0' }">
+        <template #header>
           <!-- Tattoo Image -->
-          <div class="aspect-video bg-gray-200 dark:bg-gray-700 overflow-hidden">
-            <img 
-              :src="selectedTattoo.image || '/placeholder-tattoo.jpg'" 
+          <div class="aspect-video bg-gray-200 dark:bg-gray-700 overflow-hidden rounded-t-lg">
+            <NuxtImg 
+              provider="none"
+              :src="selectedTattoo.image || 'https://placehold.co/800x600?text=Tattoo'" 
               :alt="selectedTattoo.title"
+              loading="lazy"
+              preset="hero"
+              sizes="100vw lg:800px"
               class="w-full h-full object-cover"
-            >
+            />
+          </div>
+        </template>
+        
+        <div class="p-6">
+          <div class="mb-4">
+            <UBadge 
+              :label="selectedTattoo.style" 
+              color="primary" 
+              variant="subtle" 
+              class="mb-2"
+            />
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ selectedTattoo.title }}</h2>
           </div>
           
-          <!-- Tattoo Details -->
-          <div class="p-6">
-            <div class="mb-4">
-              <span class="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-400/20 text-primary dark:text-primary-400 text-sm rounded-full uppercase tracking-wide mb-2">
-                {{ selectedTattoo.style }}
-              </span>
-              <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ selectedTattoo.title }}</h2>
+          <p class="text-gray-600 dark:text-gray-300 mb-6">{{ selectedTattoo.description }}</p>
+          
+          <!-- Technical Details -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div v-if="selectedTattoo.placement">
+              <h4 class="font-semibold text-gray-900 dark:text-white">Placement</h4>
+              <p class="text-gray-600 dark:text-gray-300">{{ selectedTattoo.placement }}</p>
             </div>
-            
-            <p class="text-gray-600 dark:text-gray-300 mb-6">{{ selectedTattoo.description }}</p>
-            
-            <!-- Technical Details -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div v-if="selectedTattoo.placement">
-                <h4 class="font-semibold text-gray-900 dark:text-white">Placement</h4>
-                <p class="text-gray-600 dark:text-gray-300">{{ selectedTattoo.placement }}</p>
-              </div>
-              <div v-if="selectedTattoo.size">
-                <h4 class="font-semibold text-gray-900 dark:text-white">Size</h4>
-                <p class="text-gray-600 dark:text-gray-300">{{ selectedTattoo.size }}</p>
-              </div>
-              <div v-if="selectedTattoo.sessionTime">
-                <h4 class="font-semibold text-gray-900 dark:text-white">Session Time</h4>
-                <p class="text-gray-600 dark:text-gray-300">{{ selectedTattoo.sessionTime }}</p>
-              </div>
-              <div v-if="selectedTattoo.year">
-                <h4 class="font-semibold text-gray-900 dark:text-white">Year</h4>
-                <p class="text-gray-600 dark:text-gray-300">{{ selectedTattoo.year }}</p>
-              </div>
+            <div v-if="selectedTattoo.size">
+              <h4 class="font-semibold text-gray-900 dark:text-white">Size</h4>
+              <p class="text-gray-600 dark:text-gray-300">{{ selectedTattoo.size }}</p>
             </div>
-            
-            <!-- Story -->
-            <div v-if="selectedTattoo.story" class="border-t border-gray-200 dark:border-gray-700 pt-6">
-              <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Story</h4>
-              <p class="text-gray-600 dark:text-gray-300 leading-relaxed">{{ selectedTattoo.story }}</p>
+            <div v-if="selectedTattoo.sessionTime">
+              <h4 class="font-semibold text-gray-900 dark:text-white">Session Time</h4>
+              <p class="text-gray-600 dark:text-gray-300">{{ selectedTattoo.sessionTime }}</p>
             </div>
-            
-            <!-- CTA -->
-            <div class="mt-8 text-center">
-              <NuxtLink to="/tattoo/contact" class="inline-block bg-primary hover:bg-primary-600 dark:bg-primary-400 dark:hover:bg-primary-500 text-white px-6 py-3 rounded-lg transition-colors">
-                Get Your Own Tattoo
-              </NuxtLink>
+            <div v-if="selectedTattoo.year">
+              <h4 class="font-semibold text-gray-900 dark:text-white">Year</h4>
+              <p class="text-gray-600 dark:text-gray-300">{{ selectedTattoo.year }}</p>
             </div>
+          </div>
+          
+          <!-- Story -->
+          <div v-if="selectedTattoo.story" class="border-t border-gray-200 dark:border-gray-700 pt-6">
+            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Story</h4>
+            <p class="text-gray-600 dark:text-gray-300 leading-relaxed">{{ selectedTattoo.story }}</p>
           </div>
         </div>
-      </div>
-    </div>
+        
+        <template #footer>
+          <div class="flex justify-center">
+            <UButton 
+              to="/tattoo/contact" 
+              color="primary" 
+              size="lg"
+              class="px-8 btn-depth magnetic-hover"
+            >
+              Get Your Own Tattoo
+            </UButton>
+          </div>
+        </template>
+      </UCard>
+      </template>
+    </UModal>
   </div>
 </template>
 
@@ -184,6 +207,19 @@ const { data: galleryData, pending: loading, error } = await useAsyncData(
   () => fetchGalleryItems()
 );
 
+// Type definitions
+interface GalleryItem {
+  title?: string;
+  description?: string;
+  images?: string | string[];
+  styles?: string | string[];
+  placement?: string;
+  size?: string;
+  session_time?: string;
+  date?: string;
+  featured?: boolean;
+}
+
 // Map gallery data to tattoos format
 interface TattooItem {
   id: number
@@ -207,19 +243,36 @@ const tattoos = computed<TattooItem[]>(() => {
     id: index + 1,
     title: item.title || 'Untitled',
     description: item.description || '',
-    style: (Array.isArray(item.styles) ? item.styles[0] : (item.styles as any)) || 'custom',
-    placement: (item as any).placement || '',
-    size: (item as any).size || '',
-    sessionTime: (item as any).session_time || '',
+    style: (Array.isArray(item.styles) ? item.styles[0] : (item.styles as string)) || 'custom',
+    placement: (item as GalleryItem).placement || '',
+    size: (item as GalleryItem).size || '',
+    sessionTime: (item as GalleryItem).session_time || '',
     year: new Date(item.date).getFullYear() || new Date().getFullYear(),
     story: item.description || '',
-    image: (Array.isArray(item.images) ? item.images[0] : (item.images as any)) || '/placeholder-tattoo.jpg'
+    image: (Array.isArray(item.images) ? item.images[0] : (item.images as string)) || 'https://placehold.co/600x600?text=Tattoo'
   }));
 });
 
 // State
 const selectedTattoo = ref<TattooItem | null>(null);
 const activeStyle = ref('all');
+const page = ref(1);
+const pageSize = 9; // 3 columns x 3 rows
+
+// Computed property for modal state
+const isModalOpen = computed({
+  get: () => selectedTattoo.value !== null,
+  set: (value: boolean) => {
+    if (!value) {
+      selectedTattoo.value = null;
+    }
+  }
+});
+
+// Watch for style filter changes to reset pagination
+watch(activeStyle, () => {
+  page.value = 1;
+});
 
 // Tattoo styles
 const tattooStyles = [
@@ -233,21 +286,26 @@ const tattooStyles = [
 
 // Computed
 const filteredTattoos = computed(() => {
-  if (activeStyle.value === 'all') return tattoos.value;
-  return tattoos.value.filter(tattoo => 
-    tattoo.style.toLowerCase() === activeStyle.value.toLowerCase()
-  );
+  let filtered = tattoos.value;
+  if (activeStyle.value !== 'all') {
+    filtered = tattoos.value.filter(tattoo => 
+      tattoo.style.toLowerCase() === activeStyle.value.toLowerCase()
+    );
+  }
+  return filtered;
+});
+
+// Pagination computed properties
+const total = computed(() => filteredTattoos.value.length);
+const paginatedTattoos = computed(() => {
+  const start = (page.value - 1) * pageSize;
+  const end = start + pageSize;
+  return filteredTattoos.value.slice(start, end);
 });
 
 // Methods
 const openTattooModal = (tattoo: TattooItem) => {
   selectedTattoo.value = tattoo;
-  document.body.style.overflow = 'hidden';
-};
-
-const closeTattooModal = () => {
-  selectedTattoo.value = null;
-  document.body.style.overflow = 'auto';
 };
 
 // Meta tags

@@ -103,12 +103,14 @@ export default defineNuxtConfig({
       }
     }
   },
-  // Firebase App Hosting - uses Node.js runtime
+  // Static hosting for maximum performance
   nitro: {
-    preset: 'node-server',
+    preset: 'static',
     compressPublicAssets: true,
     prerender: {
-      crawlLinks: true
+      crawlLinks: true,
+      // Temporarily ignore tattoo landing while we stabilize SSR there
+      ignore: ['/tattoo']
     },
     minify: true
   },
@@ -124,26 +126,66 @@ export default defineNuxtConfig({
       xl: 1280,
       xxl: 1536
     },
+    densities: [1, 2], // Support retina displays
     presets: {
       avatar: {
         modifiers: {
           format: 'webp',
           width: 50,
-          height: 50
+          height: 50,
+          fit: 'cover'
+        }
+      },
+      thumbnail: {
+        modifiers: {
+          format: 'webp',
+          width: 150,
+          height: 150,
+          fit: 'cover'
         }
       },
       card: {
         modifiers: {
           format: 'webp',
-          width: 300,
-          height: 200
+          width: 400,
+          height: 250,
+          fit: 'cover'
+        }
+      },
+      blogCard: {
+        modifiers: {
+          format: 'webp',
+          width: 400,
+          height: 225,
+          fit: 'cover',
+          quality: 85
+        }
+      },
+      gallery: {
+        modifiers: {
+          format: 'webp',
+          width: 600,
+          height: 600,
+          fit: 'cover',
+          quality: 90
         }
       },
       hero: {
         modifiers: {
           format: 'webp',
-          width: 1200,
-          height: 600
+          width: 1920,
+          height: 1080,
+          fit: 'cover',
+          quality: 85
+        }
+      },
+      projectImage: {
+        modifiers: {
+          format: 'webp',
+          width: 800,
+          height: 450,
+          fit: 'contain',
+          quality: 90
         }
       }
     }

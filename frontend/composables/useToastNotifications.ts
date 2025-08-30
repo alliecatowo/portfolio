@@ -1,3 +1,11 @@
+interface ToastUpdate {
+  title?: string;
+  description?: string;
+  color?: 'primary' | 'error' | 'info' | 'warning' | 'success';
+  icon?: string;
+  timeout?: number;
+}
+
 export const useToastNotifications = () => {
   const toast = useToast()
 
@@ -57,7 +65,7 @@ export const useToastNotifications = () => {
     return id
   }
 
-  const updateToast = (id: string, updates: any) => {
+  const updateToast = (id: string, updates: ToastUpdate) => {
     toast.update(id, updates)
   }
 

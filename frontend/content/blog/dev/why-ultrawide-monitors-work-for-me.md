@@ -7,7 +7,7 @@ tags: ["ultrawide", "focus", "workflow", "ergonomics"]
 author: "Allie"
 published: true
 featured: false
-featured_image: "/placeholder-dev.jpg"
+featured_image: "https://placehold.co/640x360?text=Dev"
 slug: "why-ultrawide-monitors-work-for-me"
 ---
 
@@ -22,4 +22,3 @@ It’s not about pixels—it’s about posture and attention. Ultrawides let me 
 - Gentle color themes to reduce eye fatigue
 
 I do more with fewer mental tab switches. That’s the win.
-

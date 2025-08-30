@@ -6,7 +6,7 @@ featured: false
 status: "published"
 technologies: ["ZMK", "Bluetooth", "NRF52", "Split Keyboards", "Docs"]
 slug: "zmk-sofle-hdock-fork"
-image: "/placeholder-project.jpg"
+image: "https://placehold.co/800x450?text=Project"
 ---
 
 This fork focuses on approachability: simplified pairing, translated docs, and starter keymaps that feel great on day one. The goal is adoption through care.

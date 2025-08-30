@@ -7,7 +7,7 @@ tags: ["nuxt", "nuxt-content", "portfolio", "cms", "dx"]
 author: "Allie"
 published: true
 featured: true
-featured_image: "/placeholder-blog.jpg"
+featured_image: "https://placehold.co/640x360?text=Blog"
 slug: "nuxt-content-perfect-for-portfolio"
 ---
 

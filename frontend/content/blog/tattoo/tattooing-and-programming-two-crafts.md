@@ -7,7 +7,7 @@ tags: ["craft", "philosophy", "tattoo", "programming", "analogy"]
 author: "Allie"
 published: true
 featured: true
-featured_image: "/placeholder-tattoo.jpg"
+featured_image: "https://placehold.co/640x360?text=Tattoo"
 slug: "tattooing-and-programming-two-crafts"
 ---
 

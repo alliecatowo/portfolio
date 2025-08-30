@@ -16,7 +16,7 @@
                 View Gallery
                 <UIcon name="i-lucide-image" class="w-4 h-4 ml-2" />
               </UButton>
-              <UButton to="/contact" color="primary" variant="soft" size="lg" class="magnetic-hover">
+              <UButton to="/contact" color="primary" variant="soft" size="lg" class="btn-depth magnetic-hover">
                 Book a Session
                 <UIcon name="i-lucide-calendar" class="w-4 h-4 ml-2" />
               </UButton>
@@ -24,7 +24,7 @@
           </div>
           <div class="md:w-1/2 rounded-xl overflow-hidden shadow-lg">
             <div class="aspect-video bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-              <img src="/placeholder-tattoo.jpg" alt="Tattoo Artist Hero Image" class="object-cover w-full h-full" />
+            <NuxtImg provider="none" src="https://placehold.co/1920x1080?text=Tattoo+Hero" alt="Tattoo Artist Hero Image" class="object-cover w-full h-full" loading="lazy" sizes="sm:100vw md:50vw lg:50vw" />
             </div>
           </div>
         </div>
@@ -45,10 +45,13 @@
             :ui="{ body: 'p-0' }"
           >
             <div class="aspect-square bg-gradient-tattoo relative overflow-hidden">
-              <img 
-                :src="work.image || '/placeholder-tattoo-work.jpg'" 
+              <NuxtImg 
+                provider="none"
+                :src="work.image || 'https://placehold.co/1280x600?text=Tattoo+Work'" 
                 :alt="work.title" 
                 class="object-cover w-full h-full mix-blend-overlay opacity-80 group-hover:scale-110 transition-transform duration-500"
+                loading="lazy"
+                sizes="sm:100vw md:33vw lg:33vw"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
@@ -88,7 +91,7 @@
         </div>
 
         <div class="mt-8 text-center">
-          <UButton to="/tattoo/gallery" color="primary" variant="soft">View Full Gallery</UButton>
+          <UButton to="/tattoo/gallery" color="primary" variant="soft" class="btn-depth magnetic-hover">View Full Gallery</UButton>
         </div>
       </section>
 
@@ -167,10 +170,13 @@
           >
             <div class="flex items-start mb-4">
               <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 mr-4">
-                <img 
-                  :src="work.image || '/placeholder-client.jpg'" 
+                <NuxtImg 
+                  provider="none"
+                  :src="work.image || 'https://placehold.co/96x96?text=Client'" 
                   alt="Client" 
                   class="w-full h-full object-cover"
+                  loading="lazy"
+                  sizes="48px"
                 />
               </div>
               <div>
@@ -203,10 +209,13 @@
             class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all"
           >
             <div class="aspect-video bg-gray-100 dark:bg-gray-700">
-              <img 
-                :src="post.featured_image || '/placeholder-blog.jpg'" 
+              <NuxtImg 
+                provider="none"
+                :src="post.featured_image || 'https://placehold.co/640x360?text=Blog'" 
                 :alt="post.title" 
                 class="object-cover w-full h-full"
+                loading="lazy"
+                sizes="sm:100vw md:33vw lg:33vw"
               />
             </div>
             <div class="p-6">
@@ -227,7 +236,7 @@
               <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
                 {{ post.description || post.summary }}
               </p>
-              <UButton :to="`/tattoo/blog/${post.slug || post.path?.split('/').pop()}`" color="primary" size="sm" block>Read More</UButton>
+              <UButton :to="`/tattoo/blog/${post.slug || post.path?.split('/').pop()}`" color="primary" size="sm" class="btn-depth magnetic-hover" block>Read More</UButton>
             </div>
           </div>
         </div>
@@ -237,7 +246,7 @@
         </div>
 
         <div class="mt-8 text-center">
-          <UButton to="/tattoo/blog" color="primary" variant="soft">View All Articles</UButton>
+          <UButton to="/tattoo/blog" color="primary" variant="soft" class="btn-depth magnetic-hover">View All Articles</UButton>
         </div>
       </section>
 
@@ -247,33 +256,30 @@
         <p class="text-gray-700 dark:text-gray-300 max-w-2xl mx-auto mb-8">
           Let's create something beautiful together. Contact me to discuss your ideas and schedule a consultation.
         </p>
-        <UButton to="/contact" color="primary">Book a Consultation</UButton>
+        <UButton to="/contact" color="primary" class="btn-depth magnetic-hover">Book a Consultation</UButton>
       </section>
     </div>
 
     <!-- Tattoo Work Modal -->
-    <div 
-      v-if="selectedWork" 
-      class="fixed inset-0 bg-black/70 dark:bg-black/80 z-50 flex items-center justify-center p-4 overflow-y-auto"
-      @click="selectedWork = null"
+    <UModal 
+      v-model:open="isWorkModalOpen"
+      :ui="{ content: 'w-full sm:max-w-3xl max-h-[90vh]' }"
     >
-      <div 
-        class="bg-white dark:bg-gray-800 rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
-        @click.stop
-      >
-        <div class="relative">
-          <img 
-            :src="selectedWork.image || '/placeholder-tattoo-full.jpg'" 
-            :alt="selectedWork.title" 
-            class="w-full aspect-square object-cover"
-          />
-          <button 
-            @click="selectedWork = null" 
-            class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center"
-          >
-            &times;
-          </button>
-        </div>
+      <template #content>
+      <UCard v-if="selectedWork" :ui="{ body: 'p-0' }">
+        <template #header>
+          <div class="relative">
+            <NuxtImg 
+              provider="none"
+              :src="selectedWork.image || 'https://placehold.co/1280x720?text=Tattoo'" 
+              :alt="selectedWork.title" 
+              class="w-full aspect-square object-cover rounded-t-lg"
+              loading="lazy"
+              sizes="sm:100vw md:75vw lg:75vw"
+            />
+          </div>
+        </template>
+        
         <div class="p-6">
           <h3 class="text-2xl font-bold mb-2 text-primary">
             {{ selectedWork.title }}
@@ -294,8 +300,9 @@
             </p>
           </div>
         </div>
-      </div>
-    </div>
+      </UCard>
+      </template>
+    </UModal>
   </div>
 </template>
 
@@ -320,14 +327,59 @@ useHead({
   ]
 });
 
+// Type definitions
+interface TattooWork {
+  id: string;
+  title: string;
+  description?: string;
+  image?: string;
+  images?: string[];
+  style?: string;
+  placement?: string;
+  size?: string;
+  sessionTime?: string;
+  date?: string;
+  clientTestimonial?: string;
+}
+
+interface BlogPost {
+  id: string;
+  title: string;
+  description?: string;
+  slug: string;
+  date?: string;
+  readingTime?: {
+    text: string;
+    minutes: number;
+  };
+}
+
+interface Testimonial {
+  id: string;
+  name: string;
+  content: string;
+  rating?: number;
+  date?: string;
+}
+
 // Content data
-const featuredWorks = ref<any[]>([]);
-const recentPosts = ref<any[]>([]);
-const testimonials = ref<any[]>([]);
-const selectedWork = ref<any | null>(null);
+const featuredWorks = ref<TattooWork[]>([]);
+const recentPosts = ref<BlogPost[]>([]);
+const testimonials = ref<Testimonial[]>([]);
+const selectedWork = ref<TattooWork | null>(null);
+
+// Computed property for work modal state
+const isWorkModalOpen = computed({
+  get: () => selectedWork.value !== null,
+  set: (value: boolean) => {
+    if (!value) {
+      selectedWork.value = null;
+    }
+  }
+});
 
 // Read time: plugin only
-const getReadTime = (p: any) => p?.readingTime?.text || '';
+const getReadTime = (p: BlogPost) => p?.readingTime?.text || '';
 
 // Computed property for works with testimonials
 const featuredWorksWithTestimonials = computed(() => {
@@ -335,7 +387,7 @@ const featuredWorksWithTestimonials = computed(() => {
 });
 
 // Method to open tattoo details modal
-function openTattooDetails(work: any) {
+function openTattooDetails(work: TattooWork) {
   selectedWork.value = work;
 }
 

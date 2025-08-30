@@ -6,7 +6,7 @@ featured: false
 status: "published"
 technologies: ["Docker", "Portainer", "Caddy", "Plex", "Jellyfin", "Radarr", "Sonarr", "Lidarr", "qBittorrent", "ProtonVPN"]
 slug: "homelab-hetzner-media-box"
-image: "/placeholder-project.jpg"
+image: "https://placehold.co/800x450?text=Project"
 ---
 
 This is the infrastructure behind my media life: consistent, quiet, and easy to maintain. It emphasizes sensible defaults and observability over over‑engineering.

@@ -24,10 +24,13 @@
           class="bg-gray-50 dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition duration-300"
         >
           <div class="h-64 overflow-hidden">
-            <img 
+            <NuxtImg 
               v-if="work.images" 
               :src="primaryImage(work.images)" 
-              :alt="work.title" 
+              :alt="work.title"
+              loading="lazy"
+              preset="gallery"
+              sizes="100vw sm:50vw md:33vw lg:400px"
               class="w-full h-full object-cover"
             />
             <div v-else class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
@@ -82,6 +85,14 @@ const { data: works, pending: isLoading, error } = await useAsyncData(
   () => queryCollection('gallery').where('featured', '=', true).order('date', 'DESC').limit(3).all()
 );
 
-const primaryImage = (images: any) => Array.isArray(images) ? images[0] : images
+type ImageType = string | string[] | { url?: string; src?: string; path?: string; } | undefined;
+
+const primaryImage = (images: ImageType): string => {
+  if (!images) return '';
+  if (Array.isArray(images)) return images[0] || '';
+  if (typeof images === 'string') return images;
+  if (typeof images === 'object') return images.url || images.src || images.path || '';
+  return '';
+}
 
 </script> 

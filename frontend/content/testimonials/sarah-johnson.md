@@ -9,8 +9,8 @@ session_count: 1
 session_time: "4 hours"
 featured: true
 verified: true
-image: "/images/testimonials/sarah-johnson.jpg"
-tattoo_image: "/images/testimonials/sarah-rose-tattoo.jpg"
+image: "https://placehold.co/600x600?text=Sarah+J."
+tattoo_image: "https://placehold.co/800x600?text=Tattoo"
 social:
   instagram: "@sarahj_art"
 ---

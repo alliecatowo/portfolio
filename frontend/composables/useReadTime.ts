@@ -1,7 +1,39 @@
 import { getReadingSpeed } from './useAccessibility';
 
+// Content node types for Nuxt Content
+interface ContentNode {
+  type?: string;
+  tag?: string;
+  value?: string | ContentNode[];
+  text?: string;
+  children?: ContentNode[];
+  body?: ContentNode | ContentNode[];
+  content?: ContentNode[] | string;
+}
+
+interface ContentBody {
+  value?: ContentNode[];
+  children?: ContentNode[];
+  type?: string;
+  tag?: string;
+  text?: string;
+  body?: ContentNode | ContentNode[];
+  content?: ContentNode[] | string;
+}
+
+interface ContentDocument {
+  body?: ContentBody | ContentNode;
+  content?: string;
+  description?: string;
+}
+
+interface ReadTimeOptions {
+  wpm?: number;
+  minMinutes?: number;
+}
+
 export function useReadTime() {
-  function countImages(node: any): number {
+  function countImages(node: ContentNode): number {
     if (!node) return 0;
     let count = 0;
     const type = node.type || node.tag || '';
@@ -15,7 +47,7 @@ export function useReadTime() {
     return count;
   }
   
-  function extractTextFromNode(node: any): string {
+  function extractTextFromNode(node: ContentNode | ContentBody | ContentNode[] | string): string {
     if (!node) return '';
     // If it's already text
     if (typeof node === 'string') return node;
@@ -39,7 +71,7 @@ export function useReadTime() {
     return '';
   }
 
-  function extractPlainText(doc: any): string {
+  function extractPlainText(doc: ContentDocument): string {
     // Handle Nuxt Content body structure
     if (doc?.body) {
       // Nuxt Content v3 body structure with type/value
@@ -63,7 +95,7 @@ export function useReadTime() {
     return words.filter(Boolean).length;
   }
 
-  function estimateReadTime(doc: any, options?: { wpm?: number; minMinutes?: number }) {
+  function estimateReadTime(doc: ContentDocument, options?: ReadTimeOptions) {
     const wpm = options?.wpm ?? getReadingSpeed();
     const minMinutes = options?.minMinutes ?? 1;
     const text = extractPlainText(doc);
@@ -72,7 +104,7 @@ export function useReadTime() {
 
     // Image adjustment similar to Medium's heuristic
     const body = doc?.body;
-    const imageCount = body ? countImages(body) : 0;
+    const imageCount = body ? countImages(body as ContentNode) : 0;
     if (imageCount > 0) {
       for (let i = 1; i <= imageCount; i++) {
         const add = i <= 10 ? 12 - (i - 1) : 3; // 12, 11, ... down to 3

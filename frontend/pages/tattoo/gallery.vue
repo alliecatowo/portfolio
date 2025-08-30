@@ -22,12 +22,15 @@
         class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105"
       >
         <div class="aspect-w-1 aspect-h-1 bg-gray-200 dark:bg-gray-700">
-          <img 
+          <NuxtImg 
             v-if="work.image" 
+            preset="gallery"
             :src="work.image" 
             :alt="work.title" 
             class="w-full h-full object-cover"
-          >
+            loading="lazy"
+            sizes="sm:100vw md:50vw lg:33vw"
+          />
           <div v-else class="w-full h-full bg-gradient-to-br from-purple-200 to-pink-200 dark:from-purple-900 dark:to-pink-900"></div>
         </div>
         <div class="p-4">

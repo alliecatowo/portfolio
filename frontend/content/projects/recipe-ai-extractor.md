@@ -6,7 +6,7 @@ featured: false
 status: "published"
 technologies: ["yt-dlp", "Whisper", "LLM", "Nuxt", "Node.js", "Docker", "Gotenberg"]
 slug: "recipe-ai-extractor"
-image: "/placeholder-project.jpg"
+image: "https://placehold.co/800x450?text=Project"
 ---
 
 This project ingests short‑form videos, transcribes speech, and synthesizes clean recipe cards with ingredients, quantities, and step timing. It can render a printable PDF for the kitchen.

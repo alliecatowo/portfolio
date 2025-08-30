@@ -10,21 +10,17 @@
           </p>
           
           <div class="grid md:grid-cols-3 gap-8 mb-12">
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+            <UCard class="p-6">
               <div class="flex items-center mb-4">
-                <svg class="w-6 h-6 text-primary dark:text-primary-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
+                <UIcon name="i-heroicons-envelope" class="w-6 h-6 text-primary dark:text-primary-400 mr-3" />
                 <h2 class="text-xl font-semibold">Email</h2>
               </div>
               <a href="mailto:dev@allisons.dev" class="text-primary dark:text-primary-400 hover:underline">dev@allisons.dev</a>
-            </div>
+            </UCard>
             
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+            <UCard class="p-6">
               <div class="flex items-center mb-4">
-                <svg class="w-6 h-6 text-primary dark:text-primary-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path>
-                </svg>
+                <UIcon name="i-heroicons-chat-bubble-left-right" class="w-6 h-6 text-primary dark:text-primary-400 mr-3" />
                 <h2 class="text-xl font-semibold">Social</h2>
               </div>
               <div class="flex space-x-3">
@@ -44,98 +40,96 @@
                   </svg>
                 </a>
               </div>
-            </div>
+            </UCard>
             
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+            <UCard class="p-6">
               <div class="flex items-center mb-4">
-                <svg class="w-6 h-6 text-primary dark:text-primary-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
+                <UIcon name="i-heroicons-clock" class="w-6 h-6 text-primary dark:text-primary-400 mr-3" />
                 <h2 class="text-xl font-semibold">Response Time</h2>
               </div>
               <p>I typically respond within 24-48 hours on weekdays.</p>
-            </div>
+            </UCard>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+          <UCard class="p-8">
             <h2 class="text-2xl font-semibold mb-6">Send Me a Message</h2>
             
-            <form @submit.prevent="submitForm" class="space-y-6">
+            <UForm 
+              :schema="schema" 
+              :state="state" 
+              class="space-y-6" 
+              @submit="onSubmit"
+            >
               <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label for="name" class="block text-sm font-medium mb-2">Name</label>
-                  <input 
-                    id="name" 
-                    v-model="form.name" 
-                    type="text" 
-                    class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 focus:ring-primary dark:focus:ring-primary-400 focus:border-primary dark:focus:border-primary-400"
-                    required
-                  >
-                </div>
+                <UFormField label="Name" name="name" required>
+                  <UInput 
+                    v-model="state.name" 
+                    placeholder="John Doe"
+                    size="lg"
+                  />
+                </UFormField>
                 
-                <div>
-                  <label for="email" class="block text-sm font-medium mb-2">Email</label>
-                  <input 
-                    id="email" 
-                    v-model="form.email" 
-                    type="email" 
-                    class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 focus:ring-primary dark:focus:ring-primary-400 focus:border-primary dark:focus:border-primary-400"
-                    required
-                  >
-                </div>
+                <UFormField label="Email" name="email" required>
+                  <UInput 
+                    v-model="state.email" 
+                    type="email"
+                    placeholder="john@example.com"
+                    size="lg"
+                  />
+                </UFormField>
               </div>
               
-              <div>
-                <label for="subject" class="block text-sm font-medium mb-2">Subject</label>
-                <input 
-                  id="subject" 
-                  v-model="form.subject" 
-                  type="text" 
-                  class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 focus:ring-primary dark:focus:ring-primary-400 focus:border-primary dark:focus:border-primary-400"
-                  required
-                >
-              </div>
+              <UFormField label="Subject" name="subject" required>
+                <UInput 
+                  v-model="state.subject" 
+                  placeholder="Project Inquiry"
+                  size="lg"
+                />
+              </UFormField>
               
-              <div>
-                <label for="message" class="block text-sm font-medium mb-2">Message</label>
-                <textarea 
-                  id="message" 
-                  v-model="form.message" 
-                  rows="5" 
-                  class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 focus:ring-primary dark:focus:ring-primary-400 focus:border-primary dark:focus:border-primary-400"
-                  required
-                ></textarea>
-              </div>
+              <UFormField 
+                label="Message" 
+                name="message" 
+                required
+                description="Please provide details about your project or inquiry."
+              >
+                <UTextarea 
+                  v-model="state.message" 
+                  :rows="5"
+                  placeholder="Tell me about your project..."
+                  size="lg"
+                />
+              </UFormField>
               
-              <div class="flex items-start">
-                <input 
-                  id="privacy" 
-                  v-model="form.privacy" 
-                  type="checkbox" 
-                  class="h-4 w-4 mt-1 text-primary dark:text-primary-400 focus:ring-primary dark:focus:ring-primary-400 rounded"
-                  required
-                >
-                <label for="privacy" class="ml-2 block text-sm">
-                  I agree to the <a href="#" class="text-primary dark:text-primary-400 hover:underline">privacy policy</a> and consent to being contacted regarding my inquiry.
-                </label>
-              </div>
+              <UFormField name="privacy">
+                <UCheckbox 
+                  v-model="state.privacy" 
+                  label="I agree to the privacy policy and consent to being contacted regarding my inquiry."
+                />
+              </UFormField>
               
-              <div v-if="formStatus" :class="[formStatus.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800', 'p-4 rounded-md']">
-                {{ formStatus.message }}
-              </div>
-              
-              <div>
-                <button 
+              <div class="flex items-center gap-4">
+                <UButton 
                   type="submit" 
-                  class="px-6 py-3 bg-primary dark:bg-primary-400 text-white rounded-md hover:bg-primary-700 dark:hover:bg-primary-400-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-primary-400 disabled:opacity-50"
+                  size="lg"
+                  :loading="submitting"
                   :disabled="submitting"
                 >
-                  <span v-if="submitting">Sending...</span>
-                  <span v-else>Send Message</span>
-                </button>
+                  {{ submitting ? 'Sending...' : 'Send Message' }}
+                </UButton>
+                
+                <UButton 
+                  type="button"
+                  color="neutral"
+                  variant="ghost"
+                  size="lg"
+                  @click="resetForm"
+                >
+                  Clear Form
+                </UButton>
               </div>
-            </form>
-          </div>
+            </UForm>
+          </UCard>
         </div>
       </div>
     </section>
@@ -143,6 +137,8 @@
 </template>
 
 <script setup lang="ts">
+import { z } from 'zod';
+import type { FormSubmitEvent } from '@nuxt/ui';
 import { useSiteConfig } from '~/utils/site-config';
 
 // Ensure site config is set to dev
@@ -154,45 +150,69 @@ if (siteConfig.value?.type !== 'dev') {
   };
 }
 
-// Form data
-const form = reactive({
-  name: '',
-  email: '',
-  subject: '',
-  message: '',
+// Define the schema for form validation
+const schema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email address'),
+  subject: z.string().min(3, 'Subject must be at least 3 characters'),
+  message: z.string().min(10, 'Message must be at least 10 characters'),
+  privacy: z.boolean().refine(value => value === true, {
+    message: 'You must agree to the privacy policy'
+  })
+});
+
+type Schema = z.output<typeof schema>;
+
+// Form state
+const state = reactive<Partial<Schema>>({
+  name: undefined,
+  email: undefined,
+  subject: undefined,
+  message: undefined,
   privacy: false
 });
 
 const submitting = ref(false);
-const formStatus = ref<{ success: boolean; message: string } | null>(null);
+const toast = useToast();
 
-// Form submission handler - in a real app, this would connect to an API
-const submitForm = async () => {
+// Form submission handler
+async function onSubmit(event: FormSubmitEvent<Schema>) {
   submitting.value = true;
   
-  // Simulate API call
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  
-  // For demo purposes we'll just show a success message
-  formStatus.value = {
-    success: true,
-    message: "Thank you for your message! I'll get back to you as soon as possible."
-  };
-  
-  // Reset form
-  form.name = '';
-  form.email = '';
-  form.subject = '';
-  form.message = '';
-  form.privacy = false;
-  
-  submitting.value = false;
-  
-  // Clear status after 5 seconds
-  setTimeout(() => {
-    formStatus.value = null;
-  }, 5000);
-};
+  try {
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Show success message
+    toast.add({
+      title: 'Message Sent!',
+      description: "Thank you for your message! I'll get back to you as soon as possible.",
+      color: 'success',
+      icon: 'i-heroicons-check-circle'
+    });
+    
+    // Reset form
+    resetForm();
+  } catch (error) {
+    toast.add({
+      title: 'Error',
+      description: 'Something went wrong. Please try again later.',
+      color: 'error',
+      icon: 'i-heroicons-x-circle'
+    });
+  } finally {
+    submitting.value = false;
+  }
+}
+
+// Reset form helper
+function resetForm() {
+  state.name = undefined;
+  state.email = undefined;
+  state.subject = undefined;
+  state.message = undefined;
+  state.privacy = false;
+}
 
 // Meta tags
 useHead({
@@ -210,4 +230,4 @@ useHead({
   margin: 0 auto;
   padding: 0 1rem;
 }
-</style> 
+</style>

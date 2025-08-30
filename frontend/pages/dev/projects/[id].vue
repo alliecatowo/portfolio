@@ -43,11 +43,14 @@
             <!-- Project Image -->
             <div class="space-y-4">
               <div class="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden">
-                <img 
-                  :src="project.image || '/placeholder-project.jpg'" 
+                <NuxtImg 
+                  preset="projectImage"
+                  :src="project.image || 'https://placehold.co/800x450?text=Project'" 
                   :alt="project.title"
                   class="w-full h-full object-cover"
-                >
+                  loading="lazy"
+                  sizes="sm:100vw md:50vw lg:50vw"
+                />
               </div>
             </div>
 

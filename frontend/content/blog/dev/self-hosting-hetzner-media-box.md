@@ -7,7 +7,7 @@ tags: ["self-hosting", "hetzner", "docker", "media", "portainer", "caddy", "home
 author: "Allie"
 published: true
 featured: false
-featured_image: "/placeholder-project.jpg"
+featured_image: "https://placehold.co/800x450?text=Project"
 slug: "self-hosting-hetzner-media-box"
 ---
 

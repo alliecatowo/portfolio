@@ -153,3 +153,4 @@ git commit -m "feat: your single line description"
 git push -u origin feature/your-feature-name
 gh pr create --title "Your PR Title" --body "Brief description"
 ```
+- use pnpm over npm always. never use npm if possible.

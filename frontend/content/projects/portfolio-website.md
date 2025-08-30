@@ -8,7 +8,7 @@ status: "completed"
 date: "2024-03-15"
 github: "https://github.com/allisons-dev/portfolio"
 demo: "https://allisons.dev"
-image: "/placeholder-project.jpg"
+image: "https://placehold.co/800x450?text=Project"
 gallery:
   - "/images/projects/portfolio-1.jpg"
   - "/images/projects/portfolio-2.jpg"

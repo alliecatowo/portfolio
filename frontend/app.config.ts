@@ -30,6 +30,16 @@ export default defineAppConfig({
         color: 'primary',
         variant: 'outline'
       }
+    },
+
+    // Sleeker pagination defaults
+    pagination: {
+      slots: {
+        root: 'w-full',
+        list: 'flex justify-center gap-1',
+        item: 'rounded-md',
+        label: 'min-w-7 text-center'
+      }
     }
   }
 })

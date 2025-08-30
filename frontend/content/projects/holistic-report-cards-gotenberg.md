@@ -6,7 +6,7 @@ featured: true
 status: "published"
 technologies: ["Gotenberg", "HTML Templates", "Nuxt", "Node.js", "PostgreSQL", "Docker"]
 slug: "holistic-report-cards-gotenberg"
-image: "/placeholder-project.jpg"
+image: "https://placehold.co/800x450?text=Project"
 ---
 
 Education needs reporting that reflects humans, not just numbers. This hybrid web app generates holistic reports—narratives, goals, and growth indicators—at district scale.

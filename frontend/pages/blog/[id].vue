@@ -30,11 +30,14 @@
           
           <!-- Post image -->
           <div v-if="post.featured_image" class="relative aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-8">
-            <img 
+            <NuxtImg 
+              preset="blogCard"
               :src="getImageUrl(post.featured_image)" 
               :alt="post.title"
               class="w-full h-full object-cover rounded-lg"
-            >
+              loading="lazy"
+              sizes="sm:100vw md:75vw lg:75vw"
+            />
           </div>
           <div v-else class="relative aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-8">
             <div class="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-500">

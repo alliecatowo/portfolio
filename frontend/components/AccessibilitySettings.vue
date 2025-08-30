@@ -2,30 +2,36 @@
   <div>
     <!-- Settings Modal -->
     <UModal 
-      :model-value="true" 
-      @update:model-value="$emit('close')" 
+      :open="true" 
+      @update:open="$emit('close')" 
       :ui="{ 
-        overlay: 'bg-gray-900/50 dark:bg-gray-950/80'
+        overlay: 'bg-gray-900/50 dark:bg-gray-950/80',
+        content: 'w-full sm:max-w-lg max-h-[85vh] overflow-y-auto',
       }"
+      aria-labelledby="accessibility-modal-title"
+      role="dialog"
+      aria-modal="true"
     >
-      <UCard :ui="{ body: 'px-4 py-3 sm:px-5 sm:py-4', header: 'px-4 py-3 sm:px-5 sm:py-3', footer: 'px-4 py-3 sm:px-5 sm:py-3' }">
-        <template #header>
-          <div class="flex items-center justify-between">
-            <h3 class="text-base font-semibold">Reading Preferences</h3>
-            <UButton
-              @click="$emit('close')"
-              icon="i-lucide-x"
-              variant="ghost"
-              color="neutral"
-              size="xs"
-            />
-          </div>
-        </template>
+      <template #content>
+        <UCard :ui="{ body: 'px-4 py-3 sm:px-5 sm:py-4', header: 'px-4 py-3 sm:px-5 sm:py-3', footer: 'px-4 py-3 sm:px-5 sm:py-3' }">
+          <template #header>
+            <div class="flex items-center justify-between">
+              <h2 class="text-base font-semibold" id="accessibility-modal-title">Reading Preferences</h2>
+              <UButton
+                @click="$emit('close')"
+                icon="i-lucide-x"
+                variant="ghost"
+                color="neutral"
+                size="xs"
+                aria-label="Close reading preferences modal"
+              />
+            </div>
+          </template>
         
-        <div class="space-y-4">
+          <div class="space-y-4">
           <!-- Reading Speed -->
-          <div>
-            <label class="block text-sm font-medium mb-2">
+          <div role="group" aria-labelledby="speed-label">
+            <label id="speed-label" class="block text-sm font-medium mb-2">
               Reading Speed: {{ preferences.readingSpeed }} WPM
             </label>
             <input
@@ -35,6 +41,10 @@
               min="100"
               max="400"
               step="25"
+              aria-label="Reading speed in words per minute"
+              aria-valuemin="100"
+              aria-valuemax="400"
+              :aria-valuenow="preferences.readingSpeed"
               class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
             />
             <div class="flex justify-between text-xs text-gray-500 mt-1">
@@ -117,38 +127,40 @@
               option-attribute="label"
             />
           </div>
-        </div>
-        
-        <template #footer>
-          <div class="flex gap-2">
-            <UButton
-              @click="resetPreferences"
-              variant="ghost"
-              color="neutral"
-              class="flex-1"
-            >
-              Reset to Defaults
-            </UButton>
-            <UButton
-              @click="$emit('close')"
-              color="primary"
-              class="flex-1"
-            >
-              Done
-            </UButton>
           </div>
-        </template>
-      </UCard>
+        
+          <template #footer>
+            <div class="flex gap-2">
+              <UButton
+                @click="resetPreferences"
+                variant="ghost"
+                color="neutral"
+                class="flex-1"
+              >
+                Reset to Defaults
+              </UButton>
+              <UButton
+                @click="$emit('close')"
+                color="primary"
+                class="flex-1"
+              >
+                Done
+              </UButton>
+            </div>
+          </template>
+        </UCard>
+      </template>
     </UModal>
     
     <!-- First Visit Welcome Modal -->
-    <UModal v-model="isFirstVisit" :prevent-close="false">
-      <UCard>
-        <template #header>
-          <h3 class="text-lg font-semibold">Welcome! Let's personalize your reading experience</h3>
-        </template>
+    <UModal v-model:open="isFirstVisit" :prevent-close="false">
+      <template #content>
+        <UCard>
+          <template #header>
+            <h3 class="text-lg font-semibold">Welcome! Let's personalize your reading experience</h3>
+          </template>
         
-        <div class="space-y-6">
+          <div class="space-y-6">
           <div>
             <label class="block text-sm font-medium mb-2">How fast do you read?</label>
             <div class="grid grid-cols-2 gap-2">
@@ -185,26 +197,27 @@
               label="Reduce animations"
             />
           </div>
-        </div>
-        
-        <template #footer>
-          <div class="flex justify-between">
-            <UButton
-              @click="dismissFirstVisit"
-              variant="ghost"
-              color="neutral"
-            >
-              Skip
-            </UButton>
-            <UButton
-              @click="dismissFirstVisit"
-              color="primary"
-            >
-              Start Reading
-            </UButton>
           </div>
-        </template>
-      </UCard>
+        
+          <template #footer>
+            <div class="flex justify-between">
+              <UButton
+                @click="dismissFirstVisit"
+                variant="ghost"
+                color="neutral"
+              >
+                Skip
+              </UButton>
+              <UButton
+                @click="dismissFirstVisit"
+                color="primary"
+              >
+                Start Reading
+              </UButton>
+            </div>
+          </template>
+        </UCard>
+      </template>
     </UModal>
   </div>
 </template>

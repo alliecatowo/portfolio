@@ -7,7 +7,7 @@ tags: ["kando", "craft", "tools", "dx", "design"]
 author: "Allie"
 published: true
 featured: false
-featured_image: "/placeholder-dev.jpg"
+featured_image: "https://placehold.co/640x360?text=Dev"
 slug: "kando-tools-that-spark-joy"
 ---
 
@@ -24,4 +24,3 @@ Kando is the satisfying jolt when a tool feels right. A good pen on smooth paper
 ## Why it matters
 
 Kando isn’t fluff. It keeps you in flow longer. It helps you ship more often. It’s a signal that the designers respected your time—and your attention.
-

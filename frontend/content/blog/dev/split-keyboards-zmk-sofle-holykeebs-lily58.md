@@ -7,7 +7,7 @@ tags: ["keyboards", "zmk", "qmk", "sofle", "lily58", "ergonomics"]
 author: "Allie"
 published: true
 featured: false
-featured_image: "/placeholder-dev.jpg"
+featured_image: "https://placehold.co/640x360?text=Dev"
 slug: "split-keyboards-sofle-zmk-lily58"
 ---
 

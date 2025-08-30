@@ -6,7 +6,7 @@ featured: false
 status: "published"
 technologies: ["Nuxt 3", "Nuxt UI", "Nuxt Content", "Tailwind CSS", "TypeScript"]
 slug: "portfolio-template"
-image: "/placeholder-project.jpg"
+image: "https://placehold.co/800x450?text=Project"
 ---
 
 This template packages the patterns I actually use: typed content collections, sensible project/blog schemas, and a UI that feels polished without being loud.

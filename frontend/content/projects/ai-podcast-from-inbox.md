@@ -6,7 +6,7 @@ featured: false
 status: "published"
 technologies: ["IMAP", "RSS", "LLM", "TTS", "Nuxt", "Node.js", "Docker"]
 slug: "ai-podcast-from-inbox"
-image: "/placeholder-project.jpg"
+image: "https://placehold.co/800x450?text=Project"
 ---
 
 This tool pulls highlights from your inbox and favorite feeds, clusters them by theme, and generates a short daily audio briefing you can listen to on the way to work.

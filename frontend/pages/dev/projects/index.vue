@@ -61,7 +61,7 @@
           <!-- Project Image -->
           <div class="aspect-video bg-gradient-card overflow-hidden relative">
             <img
-              :src="project.image || '/placeholder-project.jpg'"
+                :src="project.image || 'https://placehold.co/800x450?text=Project'"
               :alt="project.title"
               class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
             >

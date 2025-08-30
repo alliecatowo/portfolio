@@ -1,50 +1,23 @@
-# Firebase App Hosting Configuration
-# https://firebase.google.com/docs/app-hosting
+# Settings for Backend (on Cloud Run).
+# See https://firebase.google.com/docs/app-hosting/configure#cloud-run
+runConfig:
+  minInstances: 0
+  # maxInstances: 100
+  # concurrency: 80
+  # cpu: 1
+  # memoryMiB: 512
 
-# Runtime configuration
-runtime: nodejs22
+# Environment variables and secrets.
+# env:
+  # Configure environment variables.
+  # See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment
+  # - variable: MESSAGE
+  #   value: Hello world!
+  #   availability:
+  #     - BUILD
+  #     - RUNTIME
 
-# Build configuration
-build:
-  # Build command - runs in the frontend directory
-  command: "npm run build"
-  
-# Run configuration  
-run:
-  # Start command for the Node.js server
-  command: "npm run start"
-
-# Environment configuration
-env:
-  - variable: NODE_ENV
-    value: production
-  - variable: NITRO_PRESET
-    value: node-server
-  - variable: PORT
-    value: "8080"
-
-# CPU and memory limits
-cpu: 1
-memory: 512Mi
-
-# Concurrency settings
-concurrency: 80
-max_instances: 3
-min_instances: 0
-
-# Health check configuration
-liveness_check:
-  path: "/"
-  check_interval_sec: 30
-  timeout_sec: 4
-  failure_threshold: 2
-  success_threshold: 2
-  initial_delay_sec: 30
-
-readiness_check:
-  path: "/"
-  check_interval_sec: 5
-  timeout_sec: 4
-  failure_threshold: 1
-  success_threshold: 1
-  app_start_timeout_sec: 300
+  # Grant access to secrets in Cloud Secret Manager.
+  # See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
+  # - variable: MY_SECRET
+  #   secret: mySecretRef

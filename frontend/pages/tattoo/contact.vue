@@ -14,15 +14,12 @@
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
             <div class="relative">
-              <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8 relative z-10">
+              <UCard class="p-8 relative z-10">
                 <h2 class="text-2xl font-bold mb-6 text-primary">Studio Information</h2>
                 
                 <div class="space-y-6">
                   <div class="flex items-start">
-                    <svg class="w-6 h-6 text-primary mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
+                    <UIcon name="i-heroicons-map-pin" class="w-6 h-6 text-primary mr-3 mt-1 flex-shrink-0" />
                     <div>
                       <h3 class="font-semibold mb-1">Location</h3>
                       <p>Painted Canvas Studio</p>
@@ -32,9 +29,7 @@
                   </div>
                   
                   <div class="flex items-start">
-                    <svg class="w-6 h-6 text-primary mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
+                    <UIcon name="i-heroicons-clock" class="w-6 h-6 text-primary mr-3 mt-1 flex-shrink-0" />
                     <div>
                       <h3 class="font-semibold mb-1">Studio Hours</h3>
                       <p>Tuesday - Saturday</p>
@@ -44,9 +39,7 @@
                   </div>
                   
                   <div class="flex items-start">
-                    <svg class="w-6 h-6 text-primary mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                    </svg>
+                    <UIcon name="i-heroicons-envelope" class="w-6 h-6 text-primary mr-3 mt-1 flex-shrink-0" />
                     <div>
                       <h3 class="font-semibold mb-1">Email</h3>
                       <a href="mailto:ink@allisons.gay" class="text-primary hover:underline">ink@allisons.gay</a>
@@ -54,9 +47,7 @@
                   </div>
                   
                   <div class="flex items-start">
-                    <svg class="w-6 h-6 text-primary-700 dark:text-primary-400 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                    </svg>
+                    <UIcon name="i-heroicons-phone" class="w-6 h-6 text-primary-700 dark:text-primary-400 mr-3 mt-1 flex-shrink-0" />
                     <div>
                       <h3 class="font-semibold mb-1">Phone</h3>
                       <p>(503) 555-8989</p>
@@ -73,14 +64,14 @@
                     </a>
                   </div>
                 </div>
-              </div>
+              </UCard>
               <!-- Decorative elements for tattoo style -->
               <div class="absolute top-5 right-5 w-20 h-20 rounded-full bg-primary-700/20 dark:bg-primary-400/20 z-0"></div>
               <div class="absolute -bottom-5 -left-5 w-16 h-16 rounded-full bg-primary-700/20 dark:bg-primary-400/20 z-0"></div>
             </div>
             
             <div class="relative">
-              <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8 relative z-10">
+              <UCard class="p-8 relative z-10">
                 <h2 class="text-2xl font-bold mb-6 text-primary-700 dark:text-primary-400">Booking Process</h2>
                 
                 <div class="space-y-8">
@@ -124,154 +115,140 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </UCard>
               <!-- Decorative elements for tattoo style -->
               <div class="absolute -top-5 -left-5 w-16 h-16 rounded-full bg-primary-700/20 dark:bg-primary-400/20 z-0"></div>
               <div class="absolute bottom-10 right-0 w-20 h-20 rounded-full bg-primary-700/20 dark:bg-primary-400/20 z-0"></div>
             </div>
           </div>
           
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8 relative overflow-hidden">
+          <UCard class="p-8 relative overflow-hidden">
             <!-- Decorative element -->
             <div class="absolute top-0 right-0 h-32 w-32 bg-primary-700/10 dark:bg-primary-400/10 rounded-bl-full"></div>
             
             <h2 class="text-2xl font-bold mb-6 text-primary-700 dark:text-primary-400 relative z-10">Consultation Request</h2>
             
-            <form @submit.prevent="submitForm" class="space-y-6 relative z-10">
+            <UForm
+              :schema="schema"
+              :state="state"
+              class="space-y-6 relative z-10"
+              @submit="onSubmit"
+            >
               <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label for="name" class="block text-sm font-medium mb-2">Full Name *</label>
-                  <input 
-                    id="name" 
-                    v-model="form.name" 
-                    type="text" 
-                    class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 focus:ring-primary-700 dark:focus:ring-primary-400 focus:border-primary-700 dark:focus:border-primary-400"
-                    required
-                  >
-                </div>
+                <UFormField label="Full Name" name="name" required>
+                  <UInput 
+                    v-model="state.name" 
+                    placeholder="Your full name"
+                    size="lg"
+                  />
+                </UFormField>
                 
-                <div>
-                  <label for="email" class="block text-sm font-medium mb-2">Email Address *</label>
-                  <input 
-                    id="email" 
-                    v-model="form.email" 
-                    type="email" 
-                    class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 focus:ring-primary-700 dark:focus:ring-primary-400 focus:border-primary-700 dark:focus:border-primary-400"
-                    required
-                  >
-                </div>
+                <UFormField label="Email Address" name="email" required>
+                  <UInput 
+                    v-model="state.email" 
+                    type="email"
+                    placeholder="your@email.com"
+                    size="lg"
+                  />
+                </UFormField>
               </div>
               
               <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label for="phone" class="block text-sm font-medium mb-2">Phone Number</label>
-                  <input 
-                    id="phone" 
-                    v-model="form.phone" 
-                    type="tel" 
-                    class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 focus:ring-primary-700 dark:focus:ring-primary-400 focus:border-primary-700 dark:focus:border-primary-400"
-                  >
-                </div>
+                <UFormField label="Phone Number" name="phone">
+                  <UInput 
+                    v-model="state.phone" 
+                    type="tel"
+                    placeholder="(555) 123-4567"
+                    size="lg"
+                  />
+                </UFormField>
                 
-                <div>
-                  <label for="style" class="block text-sm font-medium mb-2">Tattoo Style *</label>
-                  <select 
-                    id="style" 
-                    v-model="form.style" 
-                    class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 focus:ring-primary-700 dark:focus:ring-primary-400 focus:border-primary-700 dark:focus:border-primary-400"
-                    required
-                  >
-                    <option value="">Select a style</option>
-                    <option value="Fine Line">Fine Line</option>
-                    <option value="Watercolor">Watercolor</option>
-                    <option value="Black & Gray">Black & Gray</option>
-                    <option value="Custom Mix">Custom Mix</option>
-                    <option value="Not Sure">Not Sure (We'll discuss)</option>
-                  </select>
-                </div>
+                <UFormField label="Tattoo Style" name="style" required>
+                  <USelect 
+                    v-model="state.style"
+                    placeholder="Select a style"
+                    :items="tattooStyles"
+                    size="lg"
+                  />
+                </UFormField>
               </div>
               
-              <div>
-                <label for="placement" class="block text-sm font-medium mb-2">Tattoo Placement *</label>
-                <input 
-                  id="placement" 
-                  v-model="form.placement" 
-                  type="text" 
-                  class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 focus:ring-primary-700 dark:focus:ring-primary-400 focus:border-primary-700 dark:focus:border-primary-400"
+              <UFormField label="Tattoo Placement" name="placement" required>
+                <UInput 
+                  v-model="state.placement" 
                   placeholder="Arm, leg, back, etc."
-                  required
-                >
-              </div>
+                  size="lg"
+                />
+              </UFormField>
               
-              <div>
-                <label for="size" class="block text-sm font-medium mb-2">Approximate Size *</label>
-                <select 
-                  id="size" 
-                  v-model="form.size" 
-                  class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 focus:ring-primary-700 dark:focus:ring-primary-400 focus:border-primary-700 dark:focus:border-primary-400"
-                  required
-                >
-                  <option value="">Select size range</option>
-                  <option value="Small (1-2 inches)">Small (1-2 inches)</option>
-                  <option value="Medium (3-5 inches)">Medium (3-5 inches)</option>
-                  <option value="Large (6-10 inches)">Large (6-10 inches)</option>
-                  <option value="Extra Large (10+ inches)">Extra Large (10+ inches)</option>
-                  <option value="Full Sleeve/Leg/Back">Full Sleeve/Leg/Back</option>
-                </select>
-              </div>
+              <UFormField label="Approximate Size" name="size" required>
+                <USelect 
+                  v-model="state.size"
+                  placeholder="Select size range"
+                  :items="sizeOptions"
+                  size="lg"
+                />
+              </UFormField>
               
-              <div>
-                <label for="idea" class="block text-sm font-medium mb-2">Tattoo Idea Description *</label>
-                <textarea 
-                  id="idea" 
-                  v-model="form.idea" 
-                  rows="5" 
-                  class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 focus:ring-primary-700 dark:focus:ring-primary-400 focus:border-primary-700 dark:focus:border-primary-400"
-                  placeholder="Please describe your tattoo idea in as much detail as possible. Include any references, meanings, or specific elements you'd like included."
-                  required
-                ></textarea>
-              </div>
+              <UFormField 
+                label="Tattoo Idea Description" 
+                name="idea" 
+                required
+                description="Please describe your tattoo idea in as much detail as possible. Include any references, meanings, or specific elements you'd like included."
+              >
+                <UTextarea 
+                  v-model="state.idea" 
+                  :rows="5"
+                  placeholder="Describe your tattoo idea..."
+                  size="lg"
+                />
+              </UFormField>
               
-              <div>
-                <label for="previous" class="block text-sm font-medium mb-2">Previous Tattoo Experience</label>
-                <textarea 
-                  id="previous" 
-                  v-model="form.previous" 
-                  rows="2" 
-                  class="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 focus:ring-primary-700 dark:focus:ring-primary-400 focus:border-primary-700 dark:focus:border-primary-400"
-                  placeholder="Is this your first tattoo? Any concerns about pain, etc.?"
-                ></textarea>
-              </div>
+              <UFormField 
+                label="Previous Tattoo Experience" 
+                name="previous"
+                description="Is this your first tattoo? Any concerns about pain, etc.?"
+              >
+                <UTextarea 
+                  v-model="state.previous" 
+                  :rows="2"
+                  placeholder="Share any previous experience or concerns..."
+                  size="lg"
+                />
+              </UFormField>
               
-              <div class="flex items-start">
-                <input 
-                  id="consent" 
-                  v-model="form.consent" 
-                  type="checkbox" 
-                  class="h-4 w-4 mt-1 text-primary-700 dark:text-primary-400 focus:ring-primary-700 dark:focus:ring-primary-400 rounded"
-                  required
-                >
-                <label for="consent" class="ml-2 block text-sm">
-                  I am 18 years of age or older and consent to being contacted about my tattoo inquiry. I understand that filling out this form does not guarantee an appointment.
-                </label>
-              </div>
+              <UFormField name="consent">
+                <UCheckbox 
+                  v-model="state.consent" 
+                  label="I am 18 years of age or older and consent to being contacted about my tattoo inquiry. I understand that filling out this form does not guarantee an appointment."
+                />
+              </UFormField>
               
-              <div v-if="formStatus" :class="[formStatus.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800', 'p-4 rounded-md']">
-                {{ formStatus.message }}
-              </div>
-              
-              <div>
-                <button 
+              <div class="flex items-center gap-4">
+                <UButton 
                   type="submit" 
-                  class="px-8 py-3 bg-primary-700 dark:bg-primary-400 text-white rounded-full shadow-lg transform transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-700 dark:focus:ring-primary-400 disabled:opacity-50"
+                  size="lg"
+                  color="primary"
+                  variant="solid"
+                  :loading="submitting"
                   :disabled="submitting"
+                  class="rounded-full shadow-lg transform transition-transform hover:scale-105"
                 >
-                  <span v-if="submitting">Submitting...</span>
-                  <span v-else>Submit Consultation Request</span>
-                </button>
+                  {{ submitting ? 'Submitting...' : 'Submit Consultation Request' }}
+                </UButton>
+                
+                <UButton 
+                  type="button"
+                  color="neutral"
+                  variant="ghost"
+                  size="lg"
+                  @click="resetForm"
+                >
+                  Clear Form
+                </UButton>
               </div>
-            </form>
-          </div>
+            </UForm>
+          </UCard>
         </div>
       </div>
     </section>
@@ -279,6 +256,8 @@
 </template>
 
 <script setup lang="ts">
+import { z } from 'zod';
+import type { FormSubmitEvent } from '@nuxt/ui';
 import { useSiteConfig } from '~/utils/site-config';
 
 // Ensure site config is set to tattoo
@@ -290,53 +269,98 @@ if (siteConfig.value?.type !== 'tattoo') {
   };
 }
 
-// Form data
-const form = reactive({
-  name: '',
-  email: '',
-  phone: '',
-  style: '',
-  placement: '',
-  size: '',
-  idea: '',
-  previous: '',
+// Form options
+const tattooStyles = [
+  { label: 'Fine Line', value: 'Fine Line' },
+  { label: 'Watercolor', value: 'Watercolor' },
+  { label: 'Black & Gray', value: 'Black & Gray' },
+  { label: 'Custom Mix', value: 'Custom Mix' },
+  { label: 'Not Sure (We\'ll discuss)', value: 'Not Sure' }
+];
+
+const sizeOptions = [
+  { label: 'Small (1-2 inches)', value: 'Small (1-2 inches)' },
+  { label: 'Medium (3-5 inches)', value: 'Medium (3-5 inches)' },
+  { label: 'Large (6-10 inches)', value: 'Large (6-10 inches)' },
+  { label: 'Extra Large (10+ inches)', value: 'Extra Large (10+ inches)' },
+  { label: 'Full Sleeve/Leg/Back', value: 'Full Sleeve/Leg/Back' }
+];
+
+// Define the schema for form validation
+const schema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email address'),
+  phone: z.string().optional(),
+  style: z.string().min(1, 'Please select a tattoo style'),
+  placement: z.string().min(2, 'Please specify tattoo placement'),
+  size: z.string().min(1, 'Please select a size range'),
+  idea: z.string().min(10, 'Please provide at least 10 characters describing your idea'),
+  previous: z.string().optional(),
+  consent: z.boolean().refine(value => value === true, {
+    message: 'You must confirm that you are 18 or older and consent to being contacted'
+  })
+});
+
+type Schema = z.output<typeof schema>;
+
+// Form state
+const state = reactive<Partial<Schema>>({
+  name: undefined,
+  email: undefined,
+  phone: undefined,
+  style: undefined,
+  placement: undefined,
+  size: undefined,
+  idea: undefined,
+  previous: undefined,
   consent: false
 });
 
 const submitting = ref(false);
-const formStatus = ref<{ success: boolean; message: string } | null>(null);
+const toast = useToast();
 
-// Form submission handler - in a real app, this would connect to an API
-const submitForm = async () => {
+// Form submission handler
+async function onSubmit(event: FormSubmitEvent<Schema>) {
   submitting.value = true;
   
-  // Simulate API call
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  
-  // For demo purposes we'll just show a success message
-  formStatus.value = {
-    success: true,
-    message: "Thank you for your consultation request! I'll reach out within 48 hours to schedule your consultation."
-  };
-  
-  // Reset form
-  form.name = '';
-  form.email = '';
-  form.phone = '';
-  form.style = '';
-  form.placement = '';
-  form.size = '';
-  form.idea = '';
-  form.previous = '';
-  form.consent = false;
-  
-  submitting.value = false;
-  
-  // Clear status after 7 seconds
-  setTimeout(() => {
-    formStatus.value = null;
-  }, 7000);
-};
+  try {
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Show success message
+    toast.add({
+      title: 'Consultation Request Submitted!',
+      description: "Thank you for your consultation request! I'll reach out within 48 hours to schedule your consultation.",
+      color: 'success',
+      icon: 'i-heroicons-check-circle'
+    });
+    
+    // Reset form
+    resetForm();
+  } catch (error) {
+    toast.add({
+      title: 'Error',
+      description: 'Something went wrong. Please try again later.',
+      color: 'error',
+      icon: 'i-heroicons-x-circle'
+    });
+  } finally {
+    submitting.value = false;
+  }
+}
+
+// Reset form helper
+function resetForm() {
+  state.name = undefined;
+  state.email = undefined;
+  state.phone = undefined;
+  state.style = undefined;
+  state.placement = undefined;
+  state.size = undefined;
+  state.idea = undefined;
+  state.previous = undefined;
+  state.consent = false;
+}
 
 // Meta tags
 useHead({
@@ -354,4 +378,4 @@ useHead({
   margin: 0 auto;
   padding: 0 1rem;
 }
-</style> 
+</style>

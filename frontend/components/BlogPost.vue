@@ -6,9 +6,12 @@
         {{ formatDate(post.date_published || post.date) }}
       </div>
       <div v-if="post.featured_image" class="featured-image mb-6">
-        <img 
+        <NuxtImg 
           :src="getImageUrl(post.featured_image)" 
           :alt="post.title"
+          loading="lazy"
+          preset="hero"
+          sizes="100vw lg:1200px"
           class="w-full rounded-lg shadow-md"
         />
       </div>
@@ -58,10 +61,16 @@ const { data: post } = await useAsyncData(
   }
 )
 
-function getImageUrl(image: any) {
-  // For now, return the image URL directly
-  // Later this can be enhanced with image optimization
-  return image?.url || image
+interface ImageData {
+  url?: string;
+  src?: string;
+  path?: string;
+}
+
+function getImageUrl(image: ImageData | string | undefined) {
+  if (!image) return '';
+  if (typeof image === 'string') return image;
+  return image.url || image.src || image.path || '';
 }
 
 function formatDate(dateString?: string) {

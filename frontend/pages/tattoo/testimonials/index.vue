@@ -48,11 +48,14 @@
               
               <div class="flex flex-col items-center text-center mb-6 relative z-10">
                 <div class="w-24 h-24 bg-gray-300 dark:bg-gray-700 rounded-full mb-4 overflow-hidden">
-                  <img 
+                  <NuxtImg 
                     v-if="testimonials?.[0]?.image" 
+                    preset="avatar"
                     :src="getImageUrl(testimonials?.[0]?.image)" 
                     :alt="`${testimonials?.[0]?.title} photo`"
                     class="w-full h-full object-cover"
+                    loading="lazy"
+                    sizes="96px"
                   />
                   <div v-else class="w-full h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
                     Photo
@@ -79,11 +82,14 @@
                 
                 <div class="flex justify-center mb-8">
                   <div class="w-40 h-40 bg-gray-300 dark:bg-gray-700 rounded-lg overflow-hidden">
-                    <img 
+                    <NuxtImg 
                       v-if="testimonials?.[0]?.image" 
+                      preset="thumbnail"
                       :src="getImageUrl(testimonials?.[0]?.image)" 
                       :alt="`${testimonials?.[0]?.title}'s tattoo`"
                       class="w-full h-full object-cover"
+                      loading="lazy"
+                      sizes="160px"
                     />
                   </div>
                 </div>
@@ -99,11 +105,14 @@
               >
                 <div class="flex items-center mb-3">
                   <div class="w-16 h-16 bg-gray-300 dark:bg-gray-700 rounded-full mr-4 overflow-hidden">
-                    <img 
+                    <NuxtImg 
                       v-if="testimonial.image" 
+                      preset="avatar"
                       :src="getImageUrl(testimonial.image)" 
                       :alt="`${testimonial.title} photo`"
                       class="w-full h-full object-cover"
+                      loading="lazy"
+                      sizes="64px"
                     />
                   </div>
                   <div>
@@ -124,11 +133,14 @@
                 </blockquote>
                 
                 <div class="w-24 h-24 bg-gray-300 dark:bg-gray-700 rounded-lg overflow-hidden">
-                  <img 
+                  <NuxtImg 
                     v-if="testimonial.image" 
+                    preset="thumbnail"
                     :src="getImageUrl(testimonial.image)" 
                     :alt="`${testimonial.title}'s tattoo`"
                     class="w-full h-full object-cover"
+                    loading="lazy"
+                    sizes="96px"
                   />
                 </div>
               </div>
@@ -171,8 +183,10 @@ const { data: testimonials, pending: loading, error } = await useAsyncData(
 );
 
 // Image helper function
-const getImageUrl = (image: any) => {
-  return image?.url || image || '/placeholder-gallery.jpg';
+const getImageUrl = (image: string | { url?: string; src?: string; } | undefined) => {
+  if (!image) return 'https://placehold.co/600x600?text=Gallery';
+  if (typeof image === 'string') return image;
+  return image.url || image.src || 'https://placehold.co/600x600?text=Gallery';
 };
 
 function retryLoad() {

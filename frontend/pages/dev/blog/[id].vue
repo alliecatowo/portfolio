@@ -42,7 +42,7 @@
           
           <!-- Featured image -->
           <div v-if="post.featured_image" class="mb-8 rounded-lg overflow-hidden">
-            <img :src="post.featured_image" :alt="post.title" class="w-full h-auto">
+            <NuxtImg preset="blogCard" :src="post.featured_image" :alt="post.title" class="w-full h-auto" loading="lazy" sizes="sm:100vw md:75vw lg:75vw" />
           </div>
           
           <!-- Post content -->

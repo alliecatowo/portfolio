@@ -7,7 +7,7 @@ tags: ["ai", "code-review", "automation", "workflow", "claude"]
 author: "Allie"
 published: true
 featured: true
-featured_image: "/placeholder-project.jpg"
+featured_image: "https://placehold.co/800x450?text=Project"
 slug: "swarm-ai-minis-me"
 ---
 

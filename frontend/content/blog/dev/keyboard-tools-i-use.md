@@ -7,7 +7,7 @@ tags: ["keyboards", "zmk", "qmk", "via", "vial", "workflow"]
 author: "Allie"
 published: true
 featured: false
-featured_image: "/placeholder-dev.jpg"
+featured_image: "https://placehold.co/640x360?text=Dev"
 slug: "keyboard-tools-i-use"
 ---
 
@@ -31,4 +31,3 @@ People ask how I manage layers and firmware without losing days to tinkering. He
 - One‑week “practice window” for any big change before deciding
 
 This is how I keep tinkering fun—and keep shipping.
-

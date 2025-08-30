@@ -12,7 +12,7 @@ export interface SearchCommandPaletteItem {
   placeholder?: string
   children?: SearchCommandPaletteItem[]
   onSelect?(e?: Event): void
-  class?: any
+  class?: string | Record<string, boolean> | string[]
 }
 
 export interface SearchCommandPaletteGroup {
@@ -151,7 +151,8 @@ export const useSearch = () => {
         description: 'Switch between light and dark mode',
         path: '#',
         type: 'action',
-        icon: 'i-lucide-sun-moon'
+        icon: 'i-lucide-sun-moon',
+        kbds: ['meta', 'T']
       },
       {
         id: 'accessibility-settings',
@@ -159,7 +160,26 @@ export const useSearch = () => {
         description: 'Open reading preferences panel',
         path: '#',
         type: 'action',
-        icon: 'i-lucide-sliders'
+        icon: 'i-lucide-sliders',
+        kbds: ['meta', 'A']
+      },
+      {
+        id: 'switch-portfolio',
+        title: 'Switch Portfolio',
+        description: 'Toggle between Developer and Tattoo',
+        path: '#',
+        type: 'action',
+        icon: 'i-lucide-repeat',
+        kbds: ['meta', 'S']
+      },
+      {
+        id: 'shortcuts-help',
+        title: 'Keyboard Shortcuts',
+        description: 'Show available keyboard shortcuts',
+        path: '#',
+        type: 'action',
+        icon: 'i-lucide-keyboard',
+        kbds: ['?']
       },
       {
         id: 'toggle-dyslexia-font',
@@ -296,10 +316,26 @@ export const useSearch = () => {
         showSuccess(`Switched to ${newMode} mode`, 'Theme Updated')
         break
       case 'accessibility-settings':
-        // Set a flag that the header can watch
-        if (process.client) {
-          // Use a custom event on window
-          window.dispatchEvent(new CustomEvent('open-accessibility-settings'))
+        {
+          const showAccessibilitySettings = useState<boolean>('showAccessibilitySettings', () => false)
+          showAccessibilitySettings.value = true
+        }
+        break
+      case 'switch-portfolio':
+        {
+          const siteConfig = useSiteConfig()
+          const router = useRouter()
+          const currentType = siteConfig.value.type
+          const newType = currentType === 'dev' ? 'tattoo' : 'dev'
+          const baseRoute = newType === 'dev' ? '/dev' : '/tattoo'
+          router.push(baseRoute)
+          showSuccess(`Switched to ${newType} portfolio`, 'Navigation')
+        }
+        break
+      case 'shortcuts-help':
+        {
+          const showShortcutsHelp = useState<boolean>('showShortcutsHelp', () => false)
+          showShortcutsHelp.value = true
         }
         break
       case 'toggle-dyslexia-font':

@@ -6,7 +6,7 @@ featured: false
 status: "published"
 technologies: ["Meshtastic", "LoRa", "ESP32", "Hardware"]
 slug: "meshtastic-experiments"
-image: "/placeholder-project.jpg"
+image: "https://placehold.co/800x450?text=Project"
 ---
 
 Small meshes, big smiles. I prototype local messaging that works when the internet doesn’t—and builds community when it does.

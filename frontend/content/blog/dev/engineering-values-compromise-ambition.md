@@ -7,7 +7,7 @@ tags: ["values", "craft", "ux", "performance", "cost", "ai"]
 author: "Allie"
 published: true
 featured: false
-featured_image: "/placeholder-dev.jpg"
+featured_image: "https://placehold.co/640x360?text=Dev"
 slug: "engineering-values-compromise-ambition"
 ---
 

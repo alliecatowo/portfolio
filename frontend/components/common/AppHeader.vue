@@ -39,7 +39,7 @@
             </UTooltip>
           </div>
 
-          <UTooltip text="Switch between portfolios" :delay-duration="300">
+          <UTooltip text="Switch between portfolios" :kbds="['meta','S']" :delay-duration="300">
             <UButton
               color="primary"
               variant="outline"
@@ -53,7 +53,7 @@
           </UTooltip>
 
           <div class="flex items-center gap-2 ml-3 pl-3 border-l border-gray-200 dark:border-gray-800">
-            <UTooltip :text="`Search (⌘K)`" :delay-duration="300">
+            <UTooltip text="Search" :kbds="['meta','K']" :delay-duration="300">
               <UButton
                 icon="i-lucide-search"
                 variant="ghost"
@@ -61,20 +61,11 @@
                 size="sm"
                 @click="$emit('openSearch')"
                 class="gap-1"
-                aria-label="Open search (⌘K)"
-              >
-                <template #trailing>
-                  <ClientOnly>
-                    <UKbd size="sm">{{ commandKey }}K</UKbd>
-                    <template #fallback>
-                      <UKbd size="sm">⌘K</UKbd>
-                    </template>
-                  </ClientOnly>
-                </template>
-              </UButton>
+                aria-label="Open search"
+              />
             </UTooltip>
 
-            <UTooltip text="Accessibility Settings" :delay-duration="300">
+            <UTooltip text="Accessibility Settings" :kbds="['meta','A']" :delay-duration="300">
               <UButton
                 icon="i-lucide-sliders"
                 variant="ghost"
@@ -85,15 +76,15 @@
               />
             </UTooltip>
 
-            <ClientOnly>
-              <ThemeToggle />
-            </ClientOnly>
+            <UTooltip text="Toggle theme" :kbds="['meta','T']" :delay-duration="300">
+              <UColorModeSwitch size="xs" color="neutral" />
+            </UTooltip>
           </div>
         </nav>
 
         <!-- Mobile Controls -->
         <div class="md:hidden flex items-center gap-3">
-          <UTooltip text="Search (⌘K)" :delay-duration="300">
+          <UTooltip text="Search" :kbds="['meta','K']" :delay-duration="300">
             <UButton
               icon="i-lucide-search"
               variant="ghost"
@@ -102,9 +93,7 @@
               @click="$emit('openSearch')"
             />
           </UTooltip>
-          <ClientOnly>
-            <ThemeToggle />
-          </ClientOnly>
+          <UColorModeSwitch size="xs" color="neutral" />
           
           <!-- Mobile Drawer -->
           <UButton 
@@ -179,7 +168,6 @@
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
-import ThemeToggle from '~/components/common/ThemeToggle.vue';
 import AccessibilitySettings from '~/components/AccessibilitySettings.vue';
 
 // Emits
@@ -191,30 +179,11 @@ defineEmits<{
 const siteConfig = useSiteConfig();
 const router = useRouter();
 
-// Command key display
-const commandKey = computed(() => {
-  if (!process.client) return '⌘';
-  const platform = window.navigator.platform.toLowerCase();
-  if (platform.includes('mac')) return '⌘';
-  return 'Ctrl';
-});
 
 // Mobile drawer state
 const isDrawerOpen = ref(false);
-const showAccessibilitySettings = ref(false);
+const showAccessibilitySettings = useState<boolean>('showAccessibilitySettings', () => false);
 
-// Listen for accessibility settings event from command palette
-onMounted(() => {
-  window.addEventListener('open-accessibility-settings', () => {
-    showAccessibilitySettings.value = true;
-  });
-});
-
-onUnmounted(() => {
-  window.removeEventListener('open-accessibility-settings', () => {
-    showAccessibilitySettings.value = true;
-  });
-});
 
 // Close drawer when route changes
 const route = useRoute();

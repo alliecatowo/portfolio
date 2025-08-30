@@ -1,0 +1,23 @@
+{
+  "hosting": {
+    "public": "frontend/.output/public",
+    "ignore": [
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "headers": [
+      {
+        "source": "_nuxt/**",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      },
+      {
+        "source": "_ipx/**",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      }
+    ],
+    "rewrites": [
+      { "source": "**", "destination": "/200.html" }
+    ]
+  }
+}
+

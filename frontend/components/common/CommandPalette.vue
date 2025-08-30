@@ -1,64 +1,57 @@
 <template>
-  <Teleport to="body">
-    <div 
-      v-if="isOpen"
-      class="fixed inset-0 z-[9999] flex items-start justify-center p-4 pt-20"
-      @click.self="closeModal"
-      @keydown.esc="closeModal"
-    >
-      <!-- Backdrop -->
-      <div 
-        class="fixed inset-0 bg-black/50 backdrop-blur-sm" 
-        @click="closeModal"
-      />
-      
-      <!-- Modal Content -->
-      <div class="relative bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-800 w-full max-w-2xl">
-        <UCommandPalette 
-          :model-value="selectedCommand"
-          @update:model-value="handleSelection"
-          :groups="commandGroups"
-          placeholder="Search pages, posts, projects..."
-          icon="i-lucide-search"
-          autofocus
-          :fuse-options="{
-            fuseOptions: {
-              ignoreLocation: true,
-              threshold: 0.2,
-              keys: ['label', 'suffix', 'chip.label']
-            },
-            resultLimit: 10,
-            matchAllWhenSearchEmpty: true
-          }"
-          class="border-0 bg-transparent rounded-xl"
-          @keydown.esc="closeModal"
-        >
-          <template #footer>
-            <div class="flex items-center justify-between px-4 py-3 border-t border-gray-200/60 dark:border-gray-800/60">
-              <div class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-                <div class="flex items-center gap-1">
-                  <UKbd size="sm">↑</UKbd>
-                  <UKbd size="sm">↓</UKbd>
-                  <span>navigate</span>
-                </div>
-                <div class="flex items-center gap-1">
-                  <UKbd size="sm">↵</UKbd>
-                  <span>select</span>
-                </div>
-                <div class="flex items-center gap-1">
-                  <UKbd size="sm">esc</UKbd>
-                  <span>close</span>
-                </div>
+  <UModal 
+    v-model:open="isOpen"
+    :ui="{
+      width: 'w-full sm:max-w-2xl',
+      padding: 'p-0',
+      margin: 'sm:my-20'
+    }"
+  >
+    <template #content>
+      <UCommandPalette 
+        :model-value="selectedCommand"
+        @update:model-value="handleSelection"
+        :groups="commandGroups"
+        placeholder="Search pages, posts, projects..."
+        icon="i-lucide-search"
+        autofocus
+        :fuse-options="{
+          fuseOptions: {
+            ignoreLocation: true,
+            threshold: 0.2,
+            keys: ['label', 'suffix', 'chip.label']
+          },
+          resultLimit: 10,
+          matchAllWhenSearchEmpty: true
+        }"
+        
+        @keydown.esc="closeModal"
+      >
+        <template #footer>
+          <div class="flex items-center justify-between px-4 py-3 border-t border-gray-200/60 dark:border-gray-800/60">
+            <div class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+              <div class="flex items-center gap-1">
+                <UKbd size="sm">↑</UKbd>
+                <UKbd size="sm">↓</UKbd>
+                <span>navigate</span>
               </div>
-              <div class="text-xs text-gray-500 dark:text-gray-400">
-                Powered by <span class="text-primary">Fuse.js</span>
+              <div class="flex items-center gap-1">
+                <UKbd size="sm">↵</UKbd>
+                <span>select</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <UKbd size="sm">esc</UKbd>
+                <span>close</span>
               </div>
             </div>
-          </template>
-        </UCommandPalette>
-      </div>
-    </div>
-  </Teleport>
+            <div class="text-xs text-gray-500 dark:text-gray-400">
+              Powered by <span class="text-primary">Fuse.js</span>
+            </div>
+          </div>
+        </template>
+      </UCommandPalette>
+    </template>
+  </UModal>
 </template>
 
 <script setup lang="ts">
@@ -83,6 +76,18 @@ const closeModal = () => {
 const { createCommandGroups } = useSearch()
 const commandGroups = computed(() => createCommandGroups(closeModal))
 
+// Auto-register shortcuts from items with `kbds` using Nuxt UI helper
+const paletteShortcuts = computed(() => extractShortcuts(commandGroups.value.map(g => g.items || [])))
+const filteredPaletteShortcuts = computed(() => {
+  const map = { ...paletteShortcuts.value }
+  // Avoid duplicating global shortcuts
+  delete map.meta_t
+  delete map.meta_a
+  delete map.meta_s
+  return map
+})
+defineShortcuts(filteredPaletteShortcuts)
+
 // Handle selection from command palette
 const handleSelection = (item: SearchCommandPaletteItem) => {
   if (item && typeof item.onSelect === 'function') {
@@ -100,7 +105,7 @@ defineExpose({
   openSearch
 })
 
-// Use defineShortcuts for proper keyboard handling
+// Core palette shortcuts
 defineShortcuts({
   meta_k: {
     usingInput: true,

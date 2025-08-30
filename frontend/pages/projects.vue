@@ -16,12 +16,14 @@
     
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <div v-for="project in projects" :key="project.slug || project.path || project.title" class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all hover:shadow-xl">
-        <img 
+        <NuxtImg 
           v-if="project.image" 
           :src="project.image" 
           :alt="project.title"
-          class="w-full h-52 object-cover"
           loading="lazy"
+          preset="card"
+          sizes="100vw sm:50vw md:33vw lg:400px"
+          class="w-full h-52 object-cover"
         />
         <div v-else class="w-full h-52 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
           <span class="text-gray-400 dark:text-gray-500">No image</span>

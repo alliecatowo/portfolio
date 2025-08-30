@@ -32,10 +32,12 @@
           <h2 id="dev-title" class="sr-only">Developer Portfolio</h2>
           
           <figure class="aspect-video bg-gradient-dev relative">
-            <img src="https://picsum.photos/800/450?random=100" 
-                 alt="Abstract representation of code and development work" 
-                 class="object-cover w-full h-full mix-blend-overlay opacity-60"
-                 loading="lazy" />
+            <NuxtImg src="https://picsum.photos/800/450?random=100" 
+                 alt="Abstract representation of code and development work"
+                 loading="lazy"
+                 preset="hero"
+                 sizes="100vw sm:50vw lg:800px"
+                 class="object-cover w-full h-full mix-blend-overlay opacity-60" />
             <figcaption class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
               <span class="text-2xl md:text-3xl font-bold text-white" aria-hidden="true">Developer Portfolio</span>
             </figcaption>
@@ -72,10 +74,12 @@
           <h2 id="tattoo-title" class="sr-only">Tattoo Portfolio</h2>
           
           <figure class="aspect-video bg-gradient-tattoo relative">
-            <img src="https://picsum.photos/800/450?random=200" 
-                 alt="Abstract representation of tattoo art and designs" 
-                 class="object-cover w-full h-full mix-blend-overlay opacity-60"
-                 loading="lazy" />
+            <NuxtImg src="https://picsum.photos/800/450?random=200" 
+                 alt="Abstract representation of tattoo art and designs"
+                 loading="lazy"
+                 preset="hero"
+                 sizes="100vw sm:50vw lg:800px"
+                 class="object-cover w-full h-full mix-blend-overlay opacity-60" />
             <figcaption class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
               <span class="text-2xl md:text-3xl font-bold text-white" aria-hidden="true">Tattoo Portfolio</span>
             </figcaption>

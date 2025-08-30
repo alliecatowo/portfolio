@@ -6,7 +6,7 @@ featured: true
 status: "published"
 technologies: ["Nuxt 3", "TypeScript", "Claude", "Embeddings", "Vector Search", "Docker"]
 slug: "minis-me"
-image: "/placeholder-project.jpg"
+image: "https://placehold.co/800x450?text=Project"
 ---
 
 minis.me experiments with the idea of “shadow teammates” that understand your codebase, conventions, and tone. It predicts common review feedback—tests, naming, structure, missing edge cases—before the PR goes up.

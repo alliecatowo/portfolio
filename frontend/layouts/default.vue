@@ -16,6 +16,11 @@
     
     <!-- Command Palette -->
     <CommandPalette ref="commandPaletteRef" />
+    
+    <!-- Keyboard Shortcuts Help -->
+    <ClientOnly>
+      <ShortcutsHelp />
+    </ClientOnly>
   </div>
 </template>
 
@@ -23,7 +28,12 @@
 import AppHeader from '~/components/common/AppHeader.vue'
 import AppFooter from '~/components/common/AppFooter.vue'
 import CommandPalette from '~/components/common/CommandPalette.vue'
+import ShortcutsHelp from '~/components/common/ShortcutsHelp.vue'
+import { useGlobalShortcuts } from '~/composables/useGlobalShortcuts'
 
 // Command palette ref
 const commandPaletteRef = ref()
+
+// Register global keyboard shortcuts
+useGlobalShortcuts()
 </script> 

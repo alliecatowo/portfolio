@@ -24,10 +24,16 @@
           class="bg-gray-50 dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition duration-300"
         >
           <div class="h-48 overflow-hidden">
-            <img 
+            <NuxtImg
               v-if="project.image" 
               :src="project.image" 
-              :alt="project.title" 
+              :alt="project.title"
+              loading="lazy"
+              :width="400"
+              :height="200"
+              sizes="100vw sm:50vw md:33vw lg:400px"
+              format="webp"
+              :quality="80"
               class="w-full h-full object-cover"
             />
             <div v-else class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">

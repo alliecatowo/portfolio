@@ -12,11 +12,11 @@
               Specializing in modern web technologies, creative solutions, and clean, efficient code that brings ideas to life.
             </p>
             <div class="flex flex-wrap gap-3">
-              <UButton to="/dev/projects" color="primary" variant="solid">
+              <UButton to="/dev/projects" color="primary" variant="solid" class="btn-depth magnetic-hover">
                 <UIcon name="i-lucide-folder" class="w-4 h-4 mr-2" />
                 View Projects
               </UButton>
-              <UButton to="/dev/contact" color="primary" variant="outline">
+              <UButton to="/dev/contact" color="primary" variant="outline" class="btn-depth magnetic-hover">
                 <UIcon name="i-lucide-mail" class="w-4 h-4 mr-2" />
                 Contact Me
               </UButton>
@@ -24,7 +24,7 @@
           </div>
           <div class="md:w-1/2 rounded-xl overflow-hidden card-hover glass">
             <div class="aspect-video bg-gradient-dev relative">
-              <img src="https://picsum.photos/800/450?random=1" alt="Developer Hero Image" class="object-cover w-full h-full mix-blend-overlay opacity-60" />
+              <NuxtImg preset="hero" src="https://picsum.photos/800/450?random=1" alt="Developer Hero Image" class="object-cover w-full h-full mix-blend-overlay opacity-60" loading="lazy" sizes="sm:100vw md:50vw lg:50vw" />
               <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
                 <div class="text-white">
                   <div class="flex items-center gap-2 mb-2">
@@ -53,10 +53,13 @@
             class="glass rounded-xl overflow-hidden card-hover"
           >
             <div class="aspect-video bg-gradient-card relative">
-              <img 
+              <NuxtImg 
+                preset="card"
                 :src="project.image || `https://picsum.photos/400/300?random=${index + 2}`" 
                 :alt="project.title" 
                 class="object-cover w-full h-full mix-blend-overlay opacity-70"
+                loading="lazy"
+                sizes="sm:100vw md:33vw lg:33vw"
               />
               <div class="absolute top-4 right-4 glass-strong p-2 rounded-full">
                 <UIcon name="i-lucide-external-link" class="w-4 h-4 text-primary" />
@@ -80,7 +83,7 @@
                   {{ tech }}
                 </UBadge>
               </div>
-              <UButton :to="`/dev/projects/${project.slug || project.path?.split('/').pop()}`" color="primary" variant="solid" size="sm" block>
+              <UButton :to="`/dev/projects/${project.slug || project.path?.split('/').pop()}`" color="primary" variant="solid" size="sm" class="btn-depth magnetic-hover" block>
                 View Project
                 <UIcon name="i-lucide-arrow-right" class="w-4 h-4 ml-2" />
               </UButton>
@@ -93,7 +96,7 @@
         </div>
 
         <div class="mt-8 text-center">
-          <UButton to="/dev/projects" color="primary" variant="outline">
+          <UButton to="/dev/projects" color="primary" variant="outline" class="btn-depth magnetic-hover">
             <UIcon name="i-lucide-folder" class="w-4 h-4 mr-2" />
             View All Projects
           </UButton>
@@ -158,10 +161,13 @@
             class="glass rounded-xl overflow-hidden card-hover"
           >
             <div class="aspect-video bg-gradient-card relative">
-              <img 
+              <NuxtImg 
+                preset="blogCard"
                 :src="post.featured_image || `https://picsum.photos/400/300?random=${index + 10}`" 
                 :alt="post.title" 
                 class="object-cover w-full h-full mix-blend-overlay opacity-70"
+                loading="lazy"
+                sizes="sm:100vw md:33vw lg:33vw"
               />
               <div class="absolute top-4 right-4 glass-strong p-2 rounded-full">
                 <UIcon name="i-lucide-book-open" class="w-4 h-4 text-primary" />
@@ -185,7 +191,7 @@
               <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
                 {{ post.description }}
               </p>
-              <UButton :to="`/dev/blog/${post.slug || post.path?.split('/').pop()}`" color="primary" variant="solid" size="sm" block>
+              <UButton :to="`/dev/blog/${post.slug || post.path?.split('/').pop()}`" color="primary" variant="solid" size="sm" class="btn-depth magnetic-hover" block>
                 Read More
               </UButton>
             </div>
@@ -197,7 +203,7 @@
         </div>
 
         <div class="mt-8 text-center">
-          <UButton to="/dev/blog" color="primary" variant="outline">
+          <UButton to="/dev/blog" color="primary" variant="outline" class="btn-depth magnetic-hover">
             <UIcon name="i-lucide-pen-tool" class="w-4 h-4 mr-2" />
             View All Articles
           </UButton>
@@ -210,7 +216,7 @@
         <p class="text-default max-w-2xl mx-auto mb-8">
           Have a project idea or need a developer for your team? I'm always open to discussing new opportunities and challenges.
         </p>
-        <UButton to="/dev/contact" color="primary" variant="solid" size="lg">
+        <UButton to="/dev/contact" color="primary" variant="solid" size="lg" class="btn-depth magnetic-hover">
           <UIcon name="i-lucide-mail" class="w-4 h-4 mr-2" />
           Get in Touch
         </UButton>
@@ -254,6 +260,13 @@ const { data: recentPosts } = await useAsyncData(
 );
 
 // Read time: plugin only
-const getReadTime = (p: any) => p?.readingTime?.text || '';
+interface BlogPost {
+  readingTime?: {
+    text: string;
+    minutes: number;
+  };
+}
+
+const getReadTime = (p: BlogPost) => p?.readingTime?.text || '';
 
 </script> 
