@@ -16,7 +16,9 @@
             class="hidden md:flex"
           />
         </ClientOnly>
-        <ListViewToggle v-model="blogView" />
+        <ClientOnly>
+          <ListViewToggle v-model="blogView" />
+        </ClientOnly>
       </div>
     </header>
     
@@ -74,8 +76,17 @@
 </template>
 
 <script setup lang="ts">
-import { useSiteConfig } from '~/utils/site-config';
 import ListViewToggle from '~/components/common/ListViewToggle.vue'
+import { useSiteConfig } from '~/utils/site-config';
+interface BlogDoc {
+  title?: string;
+  description?: string;
+  date?: string;
+  slug?: string;
+  path?: string;
+  featured_image?: string;
+  tags?: string[];
+}
 
 // Get site configuration
 const siteConfig = useSiteConfig();
@@ -95,12 +106,12 @@ const pageSize = 9; // 3 columns x 3 rows
 const blogCategory = computed(() => siteConfig.value?.type === 'tattoo' ? 'tattoo' : 'dev');
 
 // Fetch all (for tags), plus page-sized items
-const { data: allPostsAll } = await useAsyncData(
+const { data: allPostsAll } = await useAsyncData<BlogDoc[]>(
   () => `blog-all-${blogCategory.value}`,
   async () => {
     try {
       return await queryCollection('blog').where('category', '=', blogCategory.value).where('published', '=', true).order('date', 'DESC').all()
-    } catch (e) {
+    } catch {
       return []
     }
   },
@@ -110,7 +121,7 @@ const { data: allPostsAll } = await useAsyncData(
 // Tag filter
 const allTags = computed(() => {
   const tags = new Set<string>()
-  (allPostsAll.value || []).forEach((p: any) => (p.tags || []).forEach((t: string) => tags.add(t)))
+  (allPostsAll.value || []).forEach((p) => (p.tags || []).forEach((t: string) => tags.add(t)))
   return Array.from(tags).sort()
 })
 const activeTag = ref((route.query.tag as string) || 'all')
@@ -124,7 +135,7 @@ watch(activeTag, (val) => {
 watch(() => route.query.tag, (v) => { activeTag.value = (v as string) || 'all' })
 
 // Page-sized fetching
-const { data: totalCount } = await useAsyncData(
+const { data: totalCount } = await useAsyncData<number>(
   () => `blog-total-${blogCategory.value}-${activeTag.value}`,
   async () => {
     try {
@@ -132,15 +143,15 @@ const { data: totalCount } = await useAsyncData(
         return (await queryCollection('blog').where('category', '=', blogCategory.value).where('published', '=', true).all()).length
       }
       const all = await queryCollection('blog').where('category', '=', blogCategory.value).where('published', '=', true).all()
-      return all.filter((p: any) => Array.isArray(p.tags) && p.tags.includes(activeTag.value)).length
-    } catch (e) {
+      return all.filter((p: BlogDoc) => Array.isArray(p.tags) && p.tags!.includes(activeTag.value)).length
+    } catch {
       return 0
     }
   },
   { watch: [blogCategory, activeTag] }
 )
 
-const { data: pageItems, pending, error } = await useAsyncData(
+const { data: pageItems, pending, error } = await useAsyncData<BlogDoc[]>(
   () => `blog-page-${blogCategory.value}-${activeTag.value}-${page.value}`,
   async () => {
     try {
@@ -149,10 +160,10 @@ const { data: pageItems, pending, error } = await useAsyncData(
         return base.limit(pageSize).skip((page.value - 1) * pageSize).all()
       }
       const all = await base.all()
-      const filtered = all.filter((p: any) => Array.isArray(p.tags) && p.tags.includes(activeTag.value))
+      const filtered = all.filter((p: BlogDoc) => Array.isArray(p.tags) && p.tags!.includes(activeTag.value))
       const start = (page.value - 1) * pageSize
       return filtered.slice(start, start + pageSize)
-    } catch (e) {
+    } catch {
       return []
     }
   },
@@ -165,7 +176,7 @@ const posts = computed(() => pageItems.value || [])
 // Map to @nuxt/ui UBlogPosts props shape
 const { estimateReadTime, formatReadTime } = useReadTime();
 const mappedPosts = computed(() => {
-  return posts.value.map((post: any) => ({
+  return posts.value.map((post: BlogDoc) => ({
     title: post.title,
     description: post.description,
     date: post.date,

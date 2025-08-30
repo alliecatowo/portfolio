@@ -18,7 +18,9 @@
                 class="hidden md:flex"
               />
             </ClientOnly>
-            <ListViewToggle v-model="blogView" />
+            <ClientOnly>
+              <ListViewToggle v-model="blogView" />
+            </ClientOnly>
           </div>
         </div>
         
@@ -73,8 +75,17 @@
 </template>
 
 <script setup lang="ts">
-import { useSiteConfig } from '~/utils/site-config';
 import ListViewToggle from '~/components/common/ListViewToggle.vue'
+import { useSiteConfig } from '~/utils/site-config';
+interface BlogDoc {
+  title?: string;
+  description?: string;
+  date?: string;
+  slug?: string;
+  path?: string;
+  featured_image?: string;
+  tags?: string[];
+}
 
 // Ensure site config is set to tattoo
 const siteConfig = useSiteConfig();
@@ -95,12 +106,12 @@ watch(() => route.query.page, (val) => {
 const pageSize = 9; // 3 columns x 3 rows
 
 // Fetch minimal set (all for tags, then page-sized for view)
-const { data: allPostsAll } = await useAsyncData(
+const { data: allPostsAll } = await useAsyncData<BlogDoc[]>(
   'tattoo-blog-all-meta',
   async () => {
     try {
       return await queryCollection('blog').where('category', '=', 'tattoo').where('published', '=', true).order('date', 'DESC').all()
-    } catch (e) {
+    } catch {
       return []
     }
   }
@@ -109,7 +120,7 @@ const { data: allPostsAll } = await useAsyncData(
 // Tag filter
 const allTags = computed(() => {
   const tags = new Set<string>()
-  (allPostsAll.value || []).forEach((p: any) => (p.tags || []).forEach((t: string) => tags.add(t)))
+  (allPostsAll.value || []).forEach((p) => (p.tags || []).forEach((t: string) => tags.add(t)))
   return Array.from(tags).sort()
 })
 const activeTag = ref((route.query.tag as string) || 'all')
@@ -123,7 +134,7 @@ watch(activeTag, (val) => {
 watch(() => route.query.tag, (v) => { activeTag.value = (v as string) || 'all' })
 
 // Page-sized fetching (server-side)
-const { data: totalCount } = await useAsyncData(
+const { data: totalCount } = await useAsyncData<number>(
   () => `tattoo-blog-total-${activeTag.value}`,
   async () => {
     try {
@@ -131,15 +142,15 @@ const { data: totalCount } = await useAsyncData(
         return (await queryCollection('blog').where('category', '=', 'tattoo').where('published', '=', true).all()).length
       }
       const all = await queryCollection('blog').where('category', '=', 'tattoo').where('published', '=', true).all()
-      return all.filter((p: any) => Array.isArray(p.tags) && p.tags.includes(activeTag.value)).length
-    } catch (e) {
+      return all.filter((p: BlogDoc) => Array.isArray(p.tags) && p.tags!.includes(activeTag.value)).length
+    } catch {
       return 0
     }
   },
   { watch: [activeTag] }
 )
 
-const { data: pageItems, pending: loading, error } = await useAsyncData(
+const { data: pageItems, pending: loading, error } = await useAsyncData<BlogDoc[]>(
   () => `tattoo-blog-page-${activeTag.value}-${page.value}`,
   async () => {
     try {
@@ -148,10 +159,10 @@ const { data: pageItems, pending: loading, error } = await useAsyncData(
         return base.limit(pageSize).skip((page.value - 1) * pageSize).all()
       }
       const all = await base.all()
-      const filtered = all.filter((p: any) => Array.isArray(p.tags) && p.tags.includes(activeTag.value))
+      const filtered = all.filter((p: BlogDoc) => Array.isArray(p.tags) && p.tags!.includes(activeTag.value))
       const start = (page.value - 1) * pageSize
       return filtered.slice(start, start + pageSize)
-    } catch (e) {
+    } catch {
       return []
     }
   },
@@ -163,7 +174,7 @@ const posts = computed(() => pageItems.value || [])
 
 const { estimateReadTime, formatReadTime } = useReadTime();
 const mappedPosts = computed(() => {
-  return posts.value.map((post: any) => ({
+  return posts.value.map((post: BlogDoc) => ({
     title: post.title,
     description: post.description,
     date: post.date,
@@ -175,17 +186,7 @@ const mappedPosts = computed(() => {
 
 const paginationLink = (p: number) => ({ query: { ...route.query, page: p } })
 
-interface BlogPost {
-  title?: string;
-  description?: string;
-  slug?: string;
-  path?: string;
-  date?: string;
-  tags?: string[];
-  category?: string;
-  body?: any;
-  content?: string;
-}
+// Types inlined above; remove unused interface
 
 // Read time display omitted to keep list DRY with UBlogPosts
 

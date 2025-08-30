@@ -1,5 +1,5 @@
 <template>
-  <header class="sticky top-0 z-50 glass backdrop-blur border-b border-primary/20" role="banner" aria-label="Site header">
+  <header class="sticky top-0 z-50 glass backdrop-blur border-b border-primary/20" aria-label="Site header">
     <UContainer class="py-3">
       <div class="flex items-center justify-between gap-3">
         <!-- Logo / Title -->
@@ -30,7 +30,7 @@
                 color="primary"
                 size="sm"
                 class="text-sm hover:scale-105 transition-all duration-200"
-                :class="route.path === item.path ? 'ring-1 ring-primary/20' : ''"
+                
                 :aria-label="`Navigate to ${item.name}`"
                 :aria-current="route.path === item.path ? 'page' : undefined"
               >
@@ -44,8 +44,8 @@
               color="primary"
               variant="outline"
               size="sm"
-              @click="togglePortfolioType"
               aria-label="Switch between developer and tattoo portfolios"
+              @click="togglePortfolioType"
             >
               Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }}
               <UIcon name="i-lucide-repeat" class="w-4 h-4 ml-1" />
@@ -59,9 +59,9 @@
                 variant="ghost"
                 color="primary"
                 size="sm"
-                @click="$emit('openSearch')"
                 class="gap-1"
                 aria-label="Open search"
+                @click="$emit('openSearch')"
               />
             </UTooltip>
 
@@ -101,8 +101,8 @@
             variant="ghost" 
             color="primary" 
             size="sm"
-            @click="isDrawerOpen = true"
-            aria-label="Toggle menu" 
+            aria-label="Toggle menu"
+            @click="isDrawerOpen = true" 
           />
           
           <ClientOnly>
@@ -111,7 +111,7 @@
               <div class="glass-strong h-full p-6 flex flex-col">
                 <div class="flex items-center justify-between mb-8">
                   <span class="text-xl font-bold text-gradient">{{ siteConfig.title }}</span>
-                  <UButton icon="i-lucide-x" variant="ghost" @click="isDrawerOpen = false" aria-label="Close menu" />
+                  <UButton icon="i-lucide-x" variant="ghost" aria-label="Close menu" @click="isDrawerOpen = false" />
                 </div>
 
                 <nav class="flex flex-col gap-4 flex-1">
@@ -167,8 +167,8 @@
 </template>
 
 <script setup lang="ts">
-import { useSiteConfig } from '~/utils/site-config';
 import AccessibilitySettings from '~/components/AccessibilitySettings.vue';
+import { useSiteConfig } from '~/utils/site-config';
 
 // Emits
 defineEmits<{
