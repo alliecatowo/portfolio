@@ -6,12 +6,6 @@ settings:
 
 importers:
 
-  .:
-    devDependencies:
-      nuxi:
-        specifier: ^3.28.0
-        version: 3.28.0
-
   frontend:
     dependencies:
       '@nuxt/content':

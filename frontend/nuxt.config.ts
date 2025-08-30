@@ -8,13 +8,6 @@ export default defineNuxtConfig({
     '@nuxt/image'
   ],
   css: ['~/assets/css/main.css'],
-  runtimeConfig: {
-    public: {
-      // Site URLs for multi-site navigation
-      devSiteUrl: process.env.DEV_SITE_URL || 'http://localhost:3000',
-      tattooSiteUrl: process.env.TATTOO_SITE_URL || 'http://localhost:3000'
-    }
-  },
   content: {
     highlight: {
       theme: 'github-dark'
@@ -61,8 +54,8 @@ export default defineNuxtConfig({
       }
     }
   },
-  // Will change this to Firebase later
+  // Firebase App Hosting - uses Node.js runtime
   nitro: {
-    preset: 'vercel'
+    preset: 'node-server'
   }
 })
