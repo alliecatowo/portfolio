@@ -7,27 +7,32 @@ on:
 jobs:
   deploy-staging:
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup mise (Node, pnpm)
+        uses: jdx/mise-action@v2
         with:
-          node-version: '22'
-      
-      - name: Install Firebase CLI
-        run: npm install -g firebase-tools
+          cache: true
+
+      - name: Install tools via mise
+        run: mise install
       
       - name: Authenticate to Google Cloud
+        if: vars.USE_FIREBASE_CLI == 'true'
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
       
       - name: Deploy to Firebase App Hosting Staging
+        if: vars.USE_FIREBASE_CLI == 'true'
         run: |
-          firebase apphosting:rollouts:create portfolio-staging \
+          pnpm dlx firebase-tools apphosting:rollouts:create portfolio-staging \
             --git-branch=main \
             --force \
             --project=portfolio-c1306

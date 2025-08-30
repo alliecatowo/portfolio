@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🧪 Type checking frontend before push..."
+pnpm -C frontend vue-tsc -p tsconfig.json --noEmit
+

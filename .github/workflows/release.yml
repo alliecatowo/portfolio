@@ -1,26 +1,28 @@
-name: CI
+name: Release
 
 on:
-  pull_request:
-    branches: [ main, staging ]
   push:
-    branches: [ main, staging ]
+    branches: [ main ]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
 
 jobs:
-  ci:
+  release:
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
-    
-    defaults:
-      run:
-        working-directory: ./frontend
-    
+
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
-      
+        with:
+          fetch-depth: 0
+
       - name: Setup mise (Node, pnpm)
         uses: jdx/mise-action@v2
         with:
@@ -40,18 +42,29 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Install dependencies
+      - name: Install frontend dependencies
+        working-directory: ./frontend
         run: pnpm install --frozen-lockfile
-      
-      - name: Run typecheck
+
+      - name: Typecheck
+        working-directory: ./frontend
         run: pnpm run typecheck
-      
-      - name: Run lint (non-blocking)
+
+      - name: Lint (non-blocking)
+        working-directory: ./frontend
         continue-on-error: true
         run: pnpm run lint
-        
-      - name: Build application
+
+      - name: Build
+        working-directory: ./frontend
         run: pnpm run build
-        
-      - name: Run tests
+
+      - name: Tests
+        working-directory: ./frontend
         run: pnpm test
+
+      - name: Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm dlx semantic-release
+

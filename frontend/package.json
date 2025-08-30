@@ -13,7 +13,8 @@
         "postinstall": "nuxt prepare || true",
         "start": "node .output/server/index.mjs",
         "typecheck": "nuxi typecheck",
-        "lint": "nuxi typecheck",
+        "lint": "eslint . --ext .js,.ts,.vue --cache --cache-location .eslintcache",
+        "lint:fix": "eslint . --ext .js,.ts,.vue --fix --cache --cache-location .eslintcache",
         "test": "echo 'No tests specified' && exit 0"
     },
     "dependencies": {
@@ -31,6 +32,17 @@
         "@iconify-json/heroicons": "^1.2.2",
         "@iconify-json/lucide": "^1.2.65",
         "@nuxt/devtools": "latest",
+        "@nuxt/eslint-config": "^0.5.6",
+        "eslint": "^8.57.0",
+        "eslint-config-prettier": "^9.1.0",
+        "@typescript-eslint/eslint-plugin": "^8.41.0",
+        "@typescript-eslint/parser": "^8.41.0",
+        "eslint-plugin-import": "^2.29.1",
+        "eslint-import-resolver-typescript": "^3.6.1",
+        "eslint-plugin-vuejs-accessibility": "^2.3.1",
+        "eslint-plugin-vue": "^9.27.0",
+        "typescript": "^5.9.0",
+        "vue-tsc": "^2.0.28",
         "nuxi": "^3.28.0",
         "nuxt": "^4.0.0"
     }
