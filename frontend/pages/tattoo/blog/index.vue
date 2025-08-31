@@ -17,9 +17,9 @@
           <ClientOnly>
             <TagFilterBar
               v-if="allTags.length"
-              :tags="allTags"
               v-model="activeTag"
               v-model:sort="sort"
+              :tags="allTags"
             />
           </ClientOnly>
         </div>
@@ -100,9 +100,9 @@
 </template>
 
 <script setup lang="ts">
+import BlogCard from '~/components/common/BlogCard.vue'
 import ListViewToggle from '~/components/common/ListViewToggle.vue'
 import TagFilterBar from '~/components/common/TagFilterBar.vue'
-import BlogCard from '~/components/common/BlogCard.vue'
 import { useSiteConfig } from '~/utils/site-config';
 interface BlogDoc {
   title?: string;
@@ -204,12 +204,6 @@ const total = computed(() => totalCount.value || 0)
 const posts = computed(() => pageItems.value || [])
 
 const { estimateReadTime, formatReadTime } = useReadTime();
-const colorForTag = (t: string): 'primary'|'secondary'|'success'|'info'|'warning'|'error'|'neutral' => {
-  const colors = ['primary','secondary','success','info','warning','error'] as const
-  let hash = 0
-  for (let i=0;i<t.length;i++){ hash = (hash*31 + t.charCodeAt(i)) >>> 0 }
-  return colors[hash % colors.length]
-}
 
 const paginationLink = (p: number) => ({ query: { ...route.query, page: p } })
 

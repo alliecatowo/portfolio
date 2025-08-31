@@ -8,6 +8,17 @@ jobs:
   cleanup:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup mise (Node, pnpm)
+        uses: jdx/mise-action@v2
+        with:
+          cache: true
+
+      - name: Install tools via mise
+        run: mise install
+
       - name: Auth to Google Cloud
         uses: google-github-actions/auth@v2
         with:
@@ -22,4 +33,3 @@ jobs:
           PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID || 'portfolio-c1306' }}
         run: |
           pnpm dlx firebase-tools hosting:channel:delete "$CHANNEL_ID" --project "$PROJECT_ID" --force || true
-

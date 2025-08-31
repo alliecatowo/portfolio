@@ -2,10 +2,7 @@
   // https://nuxt.com/docs/guide/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "types": [
-      "nuxt",
-      "node"
-    ],
+    "types": ["nuxt", "node"],
     "strict": true,
     "noImplicitAny": true,
     "noImplicitOverride": true,
@@ -13,26 +10,16 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
-    "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": false,
     "useUnknownInCatchVariables": true,
     "noUncheckedIndexedAccess": true,
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "./*"
-      ],
-      "@/*": [
-        "./*"
-      ]
+      "~/*": ["./*"],
+      "@/*": ["./*"]
     }
   },
-  "include": [
-    ".nuxt/nuxt.d.ts",
-    "**/*"
-  ],
-  "exclude": [
-    "../node_modules/@nuxt/image/**",
-    "../../node_modules/@nuxt/image/**"
-  ]
+  "include": [".nuxt/nuxt.d.ts", "**/*"],
+  "exclude": ["../node_modules/@nuxt/image/**", "../../node_modules/@nuxt/image/**"]
 }
