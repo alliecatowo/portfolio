@@ -193,7 +193,13 @@ body {
 
 /* Horizontal scroller with fade masks at edges */
 .faded-scroll {
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 16px,
+    #000 calc(100% - 16px),
+    transparent
+  );
   mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent);
 }
 
@@ -467,6 +473,65 @@ body {
   }
 }
 
+/* Modern button system - consistent across the app */
+.btn-primary {
+  background-color: #000;
+  color: #fff;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-out;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.dark .btn-primary {
+  background-color: #fff;
+  color: #000;
+}
+
+.dark .btn-primary:hover {
+  box-shadow: 0 10px 40px -10px rgba(255, 255, 255, 0.4);
+}
+
+.btn-secondary {
+  background-color: rgb(243 244 246);
+  color: rgb(17 24 39);
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-out;
+}
+
+.btn-secondary:hover {
+  background-color: rgb(229 231 235);
+}
+
+.dark .btn-secondary {
+  background-color: rgb(31 41 55);
+  color: rgb(243 244 246);
+}
+
+.dark .btn-secondary:hover {
+  background-color: rgb(55 65 81);
+}
+
+.btn-minimal {
+  color: var(--ui-text-muted);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-out;
+}
+
+.btn-minimal:hover {
+  color: var(--ui-text);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 .btn-soft-creative {
   background: color-mix(in oklab, var(--ui-primary) 20%, transparent);
   backdrop-filter: blur(10px);
@@ -582,4 +647,14 @@ body {
     linear-gradient(rgba(236, 72, 153, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(236, 72, 153, 0.1) 1px, transparent 1px);
   background-size: 40px 40px;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

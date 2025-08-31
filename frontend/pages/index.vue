@@ -89,15 +89,15 @@ src="https://picsum.photos/1200/600?random=100"
             </div>
             
             <div class="flex flex-col sm:flex-row gap-4">
-              <NuxtLink
-to="/dev" 
-                        class="flex-1 px-6 py-4 text-center font-semibold text-white bg-primary rounded-lg hover:bg-primary-600 focus:outline-none focus:ring-4 focus:ring-primary/50 transition-all btn-depth magnetic-hover"
-                        aria-label="Explore developer portfolio">
+              <a
+                href="#projects" 
+                class="flex-1 px-6 py-4 text-center font-semibold text-white bg-primary rounded-lg hover:bg-primary-600 focus:outline-none focus:ring-4 focus:ring-primary/50 transition-all btn-depth magnetic-hover"
+                aria-label="View featured projects">
                 View My Work
-                <span aria-hidden="true" class="inline-block ml-2">→</span>
-              </NuxtLink>
+                <span aria-hidden="true" class="inline-block ml-2">↓</span>
+              </a>
               <NuxtLink
-to="/dev/about" 
+to="/about" 
                         class="flex-1 px-6 py-4 text-center font-semibold text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 focus:outline-none focus:ring-4 focus:ring-primary/50 transition-all"
                         aria-label="Learn more about me">
                 About Me
@@ -108,8 +108,8 @@ to="/dev/about"
         
         <!-- Quick Links Grid -->
         <nav class="grid grid-cols-1 md:grid-cols-3 gap-6" role="navigation" aria-label="Quick navigation">
-          <NuxtLink
-to="/dev/projects" 
+          <a
+            href="#projects" 
                     class="group p-6 glass-accent rounded-lg card-hover hover-lift transition-all"
                     aria-label="View projects">
             <div class="flex items-center gap-4 mb-3">
@@ -119,10 +119,10 @@ to="/dev/projects"
               <h3 class="font-semibold text-default">Projects</h3>
             </div>
             <p class="text-muted text-sm">Explore my latest work and technical projects</p>
-          </NuxtLink>
+          </a>
           
-          <NuxtLink
-to="/dev/blog" 
+          <a
+            href="#blog" 
                     class="group p-6 glass-accent rounded-lg card-hover hover-lift transition-all"
                     aria-label="Read blog">
             <div class="flex items-center gap-4 mb-3">
@@ -132,10 +132,10 @@ to="/dev/blog"
               <h3 class="font-semibold text-default">Blog</h3>
             </div>
             <p class="text-muted text-sm">Technical insights and development thoughts</p>
-          </NuxtLink>
+          </a>
           
           <NuxtLink
-to="/dev/contact" 
+to="/contact" 
                     class="group p-6 glass-accent rounded-lg card-hover hover-lift transition-all"
                     aria-label="Get in touch">
             <div class="flex items-center gap-4 mb-3">
@@ -149,20 +149,216 @@ to="/dev/contact"
         </nav>
       </section>
 
-      <aside class="mt-16 text-center">
-        <div class="glass-accent rounded-lg p-6 max-w-2xl mx-auto">
-          <p class="text-muted mb-4">
-            Interested in working together? Let's build something amazing.
+      <!-- Featured Projects Section -->
+      <section id="projects" class="max-w-6xl mx-auto mt-24" aria-labelledby="projects-title">
+        <div class="mb-16 text-center">
+          <h2 id="projects-title" class="text-4xl md:text-5xl font-bold mb-6 text-gradient-animated">
+            Featured Projects
+          </h2>
+          <p class="text-xl md:text-2xl text-default max-w-3xl mx-auto">
+            Innovative solutions and technical showcases
           </p>
-          <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        </div>
+
+        <div v-if="featuredProjects && featuredProjects.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <article 
+            v-for="(project, index) in featuredProjects" 
+            :key="project.slug || project.path || project.title" 
+            class="group glass-accent rounded-xl overflow-hidden card-hover hover-lift"
+          >
+            <figure class="aspect-video bg-gradient-dev relative">
+              <NuxtImg 
+                preset="card"
+                :src="project.image || `https://picsum.photos/400/300?random=${index + 20}`" 
+                :alt="project.title" 
+                class="object-cover w-full h-full mix-blend-overlay opacity-70"
+                loading="lazy"
+                sizes="sm:100vw md:50vw lg:33vw"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div class="absolute top-4 right-4 w-10 h-10 bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full flex items-center justify-center shadow-lg">
+                <UIcon name="i-lucide-external-link" class="w-5 h-5 text-primary" />
+              </div>
+            </figure>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-3 text-default group-hover:text-primary transition-colors">
+                {{ project.title }}
+              </h3>
+              <p class="text-muted mb-4 line-clamp-2">
+                {{ project.description }}
+              </p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span 
+                  v-for="(tech, techIndex) in project.technologies?.slice(0, 3)" 
+                  :key="techIndex"
+                  class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full"
+                >
+                  {{ tech }}
+                </span>
+              </div>
+              <NuxtLink 
+                :to="`/projects/${project.slug || project.path?.split('/').pop()}`" 
+                class="inline-flex items-center font-semibold text-primary hover:text-primary-600 transition-colors"
+              >
+                View Project
+                <UIcon name="i-lucide-arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </NuxtLink>
+            </div>
+          </article>
+        </div>
+
+        <div v-else class="py-12 text-center">
+          <UIcon name="i-lucide-folder" class="h-16 w-16 mx-auto text-gray-300 dark:text-gray-700 mb-4" aria-hidden="true" />
+          <p class="text-muted text-lg">Featured projects coming soon...</p>
+        </div>
+
+        <div class="mt-12 text-center">
+          <NuxtLink 
+            to="/projects" 
+            class="px-8 py-4 text-white bg-primary rounded-lg hover:bg-primary-600 font-semibold transition-all btn-depth magnetic-hover"
+          >
+            View All Projects
+            <span aria-hidden="true" class="inline-block ml-2">→</span>
+          </NuxtLink>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section class="max-w-6xl mx-auto mt-24 glass-accent rounded-xl p-8 md:p-12" aria-labelledby="skills-title">
+        <div class="mb-16 text-center">
+          <h2 id="skills-title" class="text-4xl md:text-5xl font-bold mb-6 text-gradient-animated">
+            Technical Skills
+          </h2>
+          <p class="text-xl md:text-2xl text-default max-w-3xl mx-auto">
+            Technologies and tools I use to build exceptional experiences
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div class="text-center group">
+            <div class="w-20 h-20 mx-auto bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+              <UIcon name="i-lucide-monitor" class="w-10 h-10 text-primary" />
+            </div>
+            <h3 class="font-semibold text-default mb-2">Frontend</h3>
+            <p class="text-sm text-muted">Vue, Nuxt, React, TypeScript, Tailwind</p>
+          </div>
+          
+          <div class="text-center group">
+            <div class="w-20 h-20 mx-auto bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+              <UIcon name="i-lucide-server" class="w-10 h-10 text-primary" />
+            </div>
+            <h3 class="font-semibold text-default mb-2">Backend</h3>
+            <p class="text-sm text-muted">Node.js, Express, PostgreSQL, MongoDB</p>
+          </div>
+          
+          <div class="text-center group">
+            <div class="w-20 h-20 mx-auto bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+              <UIcon name="i-lucide-cloud" class="w-10 h-10 text-primary" />
+            </div>
+            <h3 class="font-semibold text-default mb-2">Cloud & DevOps</h3>
+            <p class="text-sm text-muted">Firebase, Docker, CI/CD, Git</p>
+          </div>
+          
+          <div class="text-center group">
+            <div class="w-20 h-20 mx-auto bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+              <UIcon name="i-lucide-smartphone" class="w-10 h-10 text-primary" />
+            </div>
+            <h3 class="font-semibold text-default mb-2">Mobile & PWA</h3>
+            <p class="text-sm text-muted">React Native, Progressive Web Apps</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recent Blog Posts -->
+      <section id="blog" class="max-w-6xl mx-auto mt-24" aria-labelledby="blog-title">
+        <div class="mb-16 text-center">
+          <h2 id="blog-title" class="text-4xl md:text-5xl font-bold mb-6 text-gradient-animated">
+            Latest Insights
+          </h2>
+          <p class="text-xl md:text-2xl text-default max-w-3xl mx-auto">
+            Thoughts on development, technology, and innovation
+          </p>
+        </div>
+
+        <div v-if="recentPosts && recentPosts.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <article 
+            v-for="(post, index) in recentPosts" 
+            :key="post.slug || post.path" 
+            class="group glass-accent rounded-xl overflow-hidden card-hover hover-lift"
+          >
+            <figure class="aspect-video bg-gradient-card relative">
+              <NuxtImg 
+                preset="blogCard"
+                :src="post.featured_image || `https://picsum.photos/400/300?random=${index + 30}`" 
+                :alt="post.title" 
+                class="object-cover w-full h-full mix-blend-overlay opacity-70"
+                loading="lazy"
+                sizes="sm:100vw md:50vw lg:33vw"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <div class="absolute top-4 right-4 w-10 h-10 bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full flex items-center justify-center shadow-lg">
+                <UIcon name="i-lucide-book-open" class="w-5 h-5 text-primary" />
+              </div>
+            </figure>
+            <div class="p-6">
+              <div class="text-sm text-muted mb-2 flex items-center gap-2">
+                <UIcon name="i-lucide-calendar" class="w-3 h-3" />
+                {{ new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
+              </div>
+              <h3 class="text-xl font-bold mb-3 text-default group-hover:text-primary transition-colors">
+                {{ post.title }}
+              </h3>
+              <p class="text-muted mb-4 line-clamp-2">
+                {{ post.description }}
+              </p>
+              <NuxtLink 
+                :to="`/blog/${post.slug || post.path?.split('/').pop()}`" 
+                class="inline-flex items-center font-semibold text-primary hover:text-primary-600 transition-colors"
+              >
+                Read More
+                <UIcon name="i-lucide-arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </NuxtLink>
+            </div>
+          </article>
+        </div>
+
+        <div v-else class="py-12 text-center">
+          <UIcon name="i-lucide-book-open" class="h-16 w-16 mx-auto text-gray-300 dark:text-gray-700 mb-4" aria-hidden="true" />
+          <p class="text-muted text-lg">Blog posts coming soon...</p>
+        </div>
+
+        <div class="mt-12 text-center">
+          <NuxtLink 
+            to="/blog" 
+            class="px-8 py-4 text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 font-semibold transition-all"
+          >
+            View All Articles
+            <span aria-hidden="true" class="inline-block ml-2">→</span>
+          </NuxtLink>
+        </div>
+      </section>
+
+      <!-- Contact CTA -->
+      <aside class="max-w-4xl mx-auto mt-24 mb-16">
+        <div class="glass-accent rounded-xl p-8 md:p-12 text-center hover-lift">
+          <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gradient-animated">
+            Let's Build Something Amazing
+          </h2>
+          <p class="text-xl md:text-2xl text-default max-w-2xl mx-auto mb-8">
+            Ready to bring your ideas to life? Let's discuss your next project.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <NuxtLink
-to="/dev/contact" 
-                      class="px-6 py-3 text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 font-medium transition-all">
+              to="/contact" 
+              class="px-8 py-4 text-white bg-primary rounded-lg hover:bg-primary-600 font-semibold transition-all btn-depth magnetic-hover"
+            >
+              <UIcon name="i-lucide-mail" class="w-5 h-5 mr-2" />
               Get In Touch
             </NuxtLink>
             <NuxtLink
-to="/dev/about" 
-                      class="px-6 py-3 text-muted hover:text-default font-medium transition-colors">
+              to="/about" 
+              class="px-8 py-4 text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 font-semibold transition-all"
+            >
               Learn More About Me
             </NuxtLink>
           </div>
@@ -196,7 +392,10 @@ useHead({
   ]
 });
 
-// Use developer-focused site config for the landing page
+// Import content utilities
+import { useContent } from '~/composables/useContent';
+
+// Use developer-focused site config for the unified portfolio
 const config = useSiteConfig();
 config.value = {
   ...config.value,
@@ -204,4 +403,18 @@ config.value = {
   description: "Full-stack developer specializing in modern web technologies and creative problem solving",
   type: 'dual',
 };
+
+// Use content composable to fetch featured content
+const { fetchProjects, fetchBlogPosts } = useContent();
+
+// Fetch featured projects and recent blog posts
+const { data: featuredProjects } = await useAsyncData(
+  'home-featured-projects',
+  () => fetchProjects(3, true)
+);
+
+const { data: recentPosts } = await useAsyncData(
+  'home-recent-posts',
+  () => fetchBlogPosts(3)
+);
 </script>

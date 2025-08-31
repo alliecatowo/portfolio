@@ -1,163 +1,238 @@
 <template>
-  <div class="container-custom py-12">
-    <h1 class="text-center mb-12">Contact Me</h1>
-
-    <div class="grid md:grid-cols-2 gap-12">
-      <!-- Contact Info -->
-      <div>
-        <h2 class="text-2xl font-bold mb-6">Get In Touch</h2>
-        <div class="prose dark:prose-invert max-w-none mb-8">
-          <p v-if="siteConfig.type === 'dev'">
-            I'm interested in freelance opportunities, collaborations, and discussions about web development, UX design, 
-            and technology. If you have a project in mind or just want to connect, feel free to reach out!
-          </p>
-          <p v-else>
-            I'm currently accepting new tattoo clients. If you're interested in getting tattooed by me, 
-            have questions about my process, or want to discuss a design idea, please get in touch!
-          </p>
-        </div>
-
-        <div class="space-y-6">
-          <div class="flex items-start">
-            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-primary-50 dark:bg-primary-400/10 text-primary dark:text-primary-400 mr-4">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-              </svg>
-            </div>
-            <div>
-              <h3 class="text-lg font-medium">Email</h3>
-              <p class="mt-1">
-                <a v-if="siteConfig.socialLinks.email" :href="`mailto:${siteConfig.socialLinks.email}`" class="text-primary dark:text-primary-400">
-                  {{ siteConfig.socialLinks.email }}
-                </a>
-              </p>
-            </div>
-          </div>
-
-          <div v-if="siteConfig.type === 'dev'" class="flex items-start">
-            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-primary-50 dark:bg-primary-400/10 text-primary dark:text-primary-400 mr-4">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
-              </svg>
-            </div>
-            <div>
-              <h3 class="text-lg font-medium">GitHub</h3>
-              <p class="mt-1">
-                <a v-if="siteConfig.socialLinks.github" :href="siteConfig.socialLinks.github" target="_blank" rel="noopener noreferrer" class="text-primary dark:text-primary-400">
-                  {{ siteConfig.socialLinks.github.replace('https://github.com/', '@') }}
-                </a>
-              </p>
-            </div>
-          </div>
-
-          <div v-if="siteConfig.type === 'dev'" class="flex items-start">
-            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-primary-50 dark:bg-primary-400/10 text-primary dark:text-primary-400 mr-4">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-              </svg>
-            </div>
-            <div>
-              <h3 class="text-lg font-medium">LinkedIn</h3>
-              <p class="mt-1">
-                <a v-if="siteConfig.socialLinks.linkedin" :href="siteConfig.socialLinks.linkedin" target="_blank" rel="noopener noreferrer" class="text-primary dark:text-primary-400">
-                  {{ siteConfig.socialLinks.linkedin.replace('https://linkedin.com/in/', '@') }}
-                </a>
-              </p>
-            </div>
-          </div>
-
-          <!-- Instagram section removed as tattoo portfolio was removed -->
-        </div>
-      </div>
-
-      <!-- Contact Form -->
-      <div>
-        <UCard>
-          <template #header>
-            <h2 class="text-2xl font-bold">Send a Message</h2>
-          </template>
-          <UForm :state="form" class="space-y-6" @submit="submitForm">
-            <UFormGroup label="Name" name="name" required>
-              <UInput 
-                v-model="form.name" 
-                placeholder="Your full name"
-                required
-              />
-            </UFormGroup>
-            
-            <UFormGroup label="Email" name="email" required>
-              <UInput 
-                v-model="form.email" 
-                type="email"
-                placeholder="your.email@example.com"
-                required
-              />
-            </UFormGroup>
-            
-            <UFormGroup label="Subject" name="subject">
-              <USelect 
-                v-model="form.subject" 
-                :options="subjectOptions"
-                placeholder="Select a subject"
-              />
-            </UFormGroup>
-            
-            <UFormGroup label="Message" name="message" required>
-              <UTextarea 
-                v-model="form.message" 
-                :rows="6"
-                placeholder="Tell me about your project or inquiry..."
-                required
-              />
-            </UFormGroup>
-            
-            <div>
-              <UButton 
-                type="submit" 
-                color="primary"
-                class="w-full"
-                :loading="formSubmitting"
-                :disabled="formSubmitting"
-              >
-                {{ formSubmitting ? 'Sending...' : 'Send Message' }}
-              </UButton>
-            </div>
-            
-            <UAlert 
-              v-if="formSubmitSuccess" 
-              icon="i-lucide-check-circle"
-              color="success"
-              variant="soft"
-              title="Success!"
-              description="Your message has been sent successfully! I'll get back to you soon."
-            />
-            
-            <UAlert 
-              v-if="formSubmitError" 
-              icon="i-lucide-alert-circle"
-              color="error"
-              variant="soft"
-              title="Error"
-              description="There was an error sending your message. Please try again."
-            />
-          </UForm>
-        </UCard>
-      </div>
+  <main class="min-h-screen bg-gradient-animated bg-dots relative overflow-hidden">
+    <!-- Decorative background -->
+    <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
+      <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+      <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
     </div>
-  </div>
+
+    <div class="relative z-10 container max-w-6xl mx-auto px-6 py-20">
+      <header class="text-center mb-16">
+        <h1 class="text-5xl md:text-6xl font-bold mb-6 text-gradient-animated">Get In Touch</h1>
+        <p class="text-xl md:text-2xl text-default max-w-3xl mx-auto">
+          I'm always interested in new opportunities and collaborations. 
+          Let's discuss how we can work together.
+        </p>
+      </header>
+
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <!-- Contact Info -->
+        <div class="space-y-8">
+          <div class="glass-accent rounded-xl p-8">
+            <h2 class="text-2xl font-bold mb-6 text-primary">Let's Connect</h2>
+            <p class="text-default mb-8">
+              Whether you have a project in mind, need technical consultation, or just want to say hello, 
+              I'd love to hear from you. I typically respond within 24-48 hours.
+            </p>
+
+            <div class="space-y-6">
+              <!-- Email -->
+              <a href="mailto:dev@allisons.dev" class="flex items-center gap-4 group hover:translate-x-1 transition-transform">
+                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <UIcon name="i-lucide-mail" class="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <p class="text-sm text-muted">Email</p>
+                  <p class="text-default font-medium">dev@allisons.dev</p>
+                </div>
+              </a>
+
+              <!-- GitHub -->
+              <a
+href="https://github.com/alliecatowo" target="_blank" rel="noopener noreferrer" 
+                 class="flex items-center gap-4 group hover:translate-x-1 transition-transform">
+                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <UIcon name="i-lucide-github" class="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <p class="text-sm text-muted">GitHub</p>
+                  <p class="text-default font-medium">@alliecatowo</p>
+                </div>
+              </a>
+
+              <!-- LinkedIn -->
+              <a
+href="https://linkedin.com/in/allison" target="_blank" rel="noopener noreferrer"
+                 class="flex items-center gap-4 group hover:translate-x-1 transition-transform">
+                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <UIcon name="i-lucide-linkedin" class="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <p class="text-sm text-muted">LinkedIn</p>
+                  <p class="text-default font-medium">@allison</p>
+                </div>
+              </a>
+
+              <!-- Twitter -->
+              <a
+href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
+                 class="flex items-center gap-4 group hover:translate-x-1 transition-transform">
+                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <UIcon name="i-lucide-twitter" class="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <p class="text-sm text-muted">Twitter</p>
+                  <p class="text-default font-medium">@allison</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Availability Card -->
+          <div class="glass-accent rounded-xl p-6 flex items-center gap-4">
+            <div class="relative">
+              <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <div class="absolute inset-0 w-3 h-3 bg-green-500 rounded-full animate-ping"></div>
+            </div>
+            <div>
+              <p class="font-semibold text-default">Currently Available</p>
+              <p class="text-sm text-muted">Open to new projects and opportunities</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="glass-accent rounded-xl p-8">
+          <h2 class="text-2xl font-bold mb-6">Send a Message</h2>
+          
+          <form class="space-y-6" @submit.prevent="submitForm">
+            <!-- Name -->
+            <div>
+              <label for="name" class="block text-sm font-medium mb-2">
+                Name <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="name"
+                v-model="form.name"
+                type="text"
+                required
+                class="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                placeholder="Your full name"
+              />
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label for="email" class="block text-sm font-medium mb-2">
+                Email <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="email"
+                v-model="form.email"
+                type="email"
+                required
+                class="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                placeholder="your.email@example.com"
+              />
+            </div>
+
+            <!-- Subject -->
+            <div>
+              <label for="subject" class="block text-sm font-medium mb-2">
+                Subject
+              </label>
+              <select
+                id="subject"
+                v-model="form.subject"
+                class="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+              >
+                <option value="project">Project Inquiry</option>
+                <option value="collaboration">Collaboration</option>
+                <option value="consultation">Consultation</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <!-- Message -->
+            <div>
+              <label for="message" class="block text-sm font-medium mb-2">
+                Message <span class="text-red-500">*</span>
+              </label>
+              <textarea
+                id="message"
+                v-model="form.message"
+                required
+                rows="6"
+                class="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
+                placeholder="Tell me about your project or inquiry..."
+              ></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              :disabled="formSubmitting"
+              class="w-full px-6 py-4 bg-primary text-white rounded-lg hover:bg-primary-600 font-semibold transition-all btn-depth magnetic-hover disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <span v-if="!formSubmitting" class="flex items-center justify-center gap-2">
+                <UIcon name="i-lucide-send" class="w-5 h-5" />
+                Send Message
+              </span>
+              <span v-else class="flex items-center justify-center gap-2">
+                <UIcon name="i-lucide-loader-2" class="w-5 h-5 animate-spin" />
+                Sending...
+              </span>
+            </button>
+
+            <!-- Success/Error Messages -->
+            <Transition name="fade">
+              <div v-if="formSubmitSuccess" class="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
+                <p class="text-green-600 dark:text-green-400 flex items-center gap-2">
+                  <UIcon name="i-lucide-check-circle" class="w-5 h-5" />
+                  Message sent successfully! I'll get back to you soon.
+                </p>
+              </div>
+            </Transition>
+
+            <Transition name="fade">
+              <div v-if="formSubmitError" class="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+                <p class="text-red-600 dark:text-red-400 flex items-center gap-2">
+                  <UIcon name="i-lucide-alert-circle" class="w-5 h-5" />
+                  There was an error sending your message. Please try again.
+                </p>
+              </div>
+            </Transition>
+          </form>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="mt-20">
+        <h2 class="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
+        <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div class="glass-accent rounded-lg p-6">
+            <h3 class="font-semibold mb-2 text-primary">What's your typical response time?</h3>
+            <p class="text-muted">I usually respond within 24-48 hours during business days.</p>
+          </div>
+          <div class="glass-accent rounded-lg p-6">
+            <h3 class="font-semibold mb-2 text-primary">Are you available for freelance work?</h3>
+            <p class="text-muted">Yes! I'm open to freelance projects and consultations.</p>
+          </div>
+          <div class="glass-accent rounded-lg p-6">
+            <h3 class="font-semibold mb-2 text-primary">What technologies do you work with?</h3>
+            <p class="text-muted">Vue.js, Nuxt, React, Node.js, TypeScript, and more. Check my About page for details.</p>
+          </div>
+          <div class="glass-accent rounded-lg p-6">
+            <h3 class="font-semibold mb-2 text-primary">Do you work remotely?</h3>
+            <p class="text-muted">Yes, I work with clients globally and am comfortable with remote collaboration.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
 </template>
 
 <script setup lang="ts">
 import { useSiteConfig } from '~/utils/site-config';
 
 // Get site configuration
-const siteConfig = useSiteConfig();
+useSiteConfig();
 
 // Form data
 const form = reactive({
   name: '',
   email: '',
-  subject: siteConfig.value.type === 'dev' ? 'project' : 'appointment',
+  subject: 'project',
   message: ''
 });
 
@@ -166,23 +241,6 @@ const formSubmitting = ref(false);
 const formSubmitSuccess = ref(false);
 const formSubmitError = ref(false);
 
-// Subject options based on site type
-const subjectOptions = computed(() => {
-  return siteConfig.value.type === 'dev' 
-    ? [
-        { label: 'Project Inquiry', value: 'project' },
-        { label: 'Collaboration', value: 'collaboration' },
-        { label: 'General Question', value: 'question' },
-        { label: 'Other', value: 'other' }
-      ]
-    : [
-        { label: 'Tattoo Appointment', value: 'appointment' },
-        { label: 'Custom Design', value: 'design' },
-        { label: 'Questions About Process', value: 'question' },
-        { label: 'Other', value: 'other' }
-      ];
-});
-
 // Submit form
 const submitForm = async () => {
   formSubmitting.value = true;
@@ -190,8 +248,8 @@ const submitForm = async () => {
   formSubmitError.value = false;
   
   try {
-    // This would normally be an API call to your backend
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
     
     // Mock successful submission
     formSubmitSuccess.value = true;
@@ -199,11 +257,21 @@ const submitForm = async () => {
     // Reset form
     form.name = '';
     form.email = '';
-    form.subject = siteConfig.value.type === 'dev' ? 'project' : 'appointment';
+    form.subject = 'project';
     form.message = '';
+    
+    // Hide success message after 5 seconds
+    setTimeout(() => {
+      formSubmitSuccess.value = false;
+    }, 5000);
   } catch (error) {
     console.error('Error submitting form:', error);
     formSubmitError.value = true;
+    
+    // Hide error message after 5 seconds
+    setTimeout(() => {
+      formSubmitError.value = false;
+    }, 5000);
   } finally {
     formSubmitting.value = false;
   }
@@ -211,12 +279,24 @@ const submitForm = async () => {
 
 // Meta tags
 useHead({
-  title: `Contact - ${siteConfig.value?.title || 'Allison\'s Portfolio'}`,
+  title: 'Contact | Allison\'s Developer Portfolio',
   meta: [
-    { name: 'description', content: siteConfig.value?.type === 'dev' 
-      ? 'Contact Allison for web development projects, collaborations, or general inquiries'
-      : 'Contact Allison for tattoo appointments, custom designs, or questions about the process'
+    { 
+      name: 'description', 
+      content: 'Get in touch with Allison for web development projects, collaborations, or consultations.' 
     }
   ]
 });
-</script> 
+</script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
