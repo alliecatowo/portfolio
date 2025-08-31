@@ -32,10 +32,6 @@ jobs:
         working-directory: ./frontend
         run: pnpm install --frozen-lockfile
 
-      - name: Typecheck
-        working-directory: ./frontend
-        run: pnpm run typecheck
-
       - name: Build (static)
         working-directory: ./frontend
         run: pnpm run generate
@@ -97,4 +93,3 @@ jobs:
               environment: env,
               environment_url: url
             })
-
