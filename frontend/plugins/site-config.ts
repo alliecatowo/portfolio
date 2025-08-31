@@ -8,14 +8,14 @@ export default defineNuxtPlugin({
     const route = useRoute();
     const siteConfig = useSiteConfig();
     
-    // Default to 'dev' if not specified
-    let siteType: 'dev' | 'tattoo' = 'dev';
+    // Default to 'dev' since tattoo portfolio was removed
+    let siteType: 'dev' | 'dual' = 'dev';
     
     // Check the path to determine the site type
-    if (route.path.startsWith('/tattoo')) {
-      siteType = 'tattoo';
-    } else if (route.path.startsWith('/dev')) {
+    if (route.path.startsWith('/dev')) {
       siteType = 'dev';
+    } else {
+      siteType = 'dual';
     }
     
     // Set the initial site config
