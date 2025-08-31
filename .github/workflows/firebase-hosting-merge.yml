@@ -11,7 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pnpm install --frozen-lockfile && pnpm build
+
+      - name: Setup mise (Node, pnpm)
+        uses: jdx/mise-action@v2
+        with:
+          cache: true
+
+      - name: Install tools via mise
+        run: mise install
+
+      - name: Install dependencies and build
+        run: pnpm install --frozen-lockfile && pnpm build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
