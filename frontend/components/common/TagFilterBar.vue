@@ -24,7 +24,7 @@
           v-for="t in tags"
           :key="t"
           :variant="modelValue === t ? 'solid' : 'soft'"
-          :color="colorForTag(t)"
+          :color="(colorForTag(t) as any)"
           size="xs"
           class="rounded-full px-3 py-1 whitespace-nowrap"
           @click="$emit('update:modelValue', t)"

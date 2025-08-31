@@ -22,7 +22,7 @@
           <UBadge
             v-for="t in tags!.slice(0,4)"
             :key="t"
-            :color="colorForTag(t)"
+            :color="(colorForTag(t) as any)"
             variant="soft"
             size="sm"
           >{{ t }}</UBadge>

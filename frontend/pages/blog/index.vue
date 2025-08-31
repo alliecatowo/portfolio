@@ -48,7 +48,7 @@
       <div v-if="blogView === 'rows'" class="grid grid-cols-1 gap-6">
         <BlogCard
           v-for="post in posts"
-          :key="post.slug || post.path"
+          :key="post.slug || post.path || ''"
           :title="post.title || ''"
           :description="post.description || ''"
           :date="post.date || ''"
@@ -61,7 +61,7 @@
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <BlogCard
           v-for="post in posts"
-          :key="post.slug || post.path"
+          :key="post.slug || post.path || ''"
           :title="post.title || ''"
           :description="post.description || ''"
           :date="post.date || ''"
@@ -206,12 +206,6 @@ const posts = computed(() => pageItems.value || [])
 
 // Map to @nuxt/ui UBlogPosts props shape
 const { estimateReadTime, formatReadTime } = useReadTime();
-const colorForTag = (t: string): 'primary'|'secondary'|'success'|'info'|'warning'|'error'|'neutral' => {
-  const colors = ['primary','secondary','success','info','warning','error'] as const
-  let hash = 0
-  for (let i=0;i<t.length;i++){ hash = (hash*31 + t.charCodeAt(i)) >>> 0 }
-  return colors[hash % colors.length]
-}
 
 const paginationLink = (p: number) => ({ query: { ...route.query, page: p } })
 

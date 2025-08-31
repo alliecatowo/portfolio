@@ -51,7 +51,7 @@
           <div v-if="blogView === 'rows'" class="grid grid-cols-1 gap-6">
             <BlogCard
               v-for="post in posts"
-              :key="post.slug || post.path"
+              :key="post.slug || post.path || ''"
               :title="post.title || ''"
               :description="post.description || ''"
               :date="post.date || ''"
@@ -64,7 +64,7 @@
           <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <BlogCard
               v-for="post in posts"
-              :key="post.slug || post.path"
+              :key="post.slug || post.path || ''"
               :title="post.title || ''"
               :description="post.description || ''"
               :date="post.date || ''"
