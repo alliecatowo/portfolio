@@ -52,6 +52,7 @@ function colorForTag(t: string): 'primary'|'secondary'|'success'|'info'|'warning
   const colors = ['primary','secondary','success','info','warning','error'] as const
   let hash = 0
   for (let i=0;i<t.length;i++){ hash = (hash*31 + t.charCodeAt(i)) >>> 0 }
-  return colors[hash % colors.length]
+  const v = colors[hash % colors.length] as (typeof colors)[number] | undefined
+  return v ?? 'neutral'
 }
 </script>
