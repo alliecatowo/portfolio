@@ -29,12 +29,19 @@ jobs:
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
 
-      - name: Deploy to Firebase App Hosting Staging
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: pnpm install --frozen-lockfile
+
+      - name: Build application
+        working-directory: ./frontend
+        run: pnpm run generate
+
+      - name: Deploy to Firebase Hosting Staging
         if: vars.USE_FIREBASE_CLI == 'true'
         run: |
-          pnpm dlx firebase-tools apphosting:rollouts:create portfolio-staging \
-            --git-branch=main \
-            --force \
+          pnpm dlx firebase-tools hosting:channel:deploy staging \
+            --expires 30d \
             --project=allie-portfolio-project
 
       - name: Comment on PR

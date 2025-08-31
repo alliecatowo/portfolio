@@ -45,12 +45,11 @@ jobs:
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
 
-      - name: Deploy to Firebase App Hosting Production
+      - name: Deploy to Firebase Hosting Production
         if: vars.USE_FIREBASE_CLI == 'true'
         run: |
-          pnpm dlx firebase-tools apphosting:rollouts:create portfolio \
-            --git-commit=${{ github.event.release.tag_name || inputs.tag }} \
-            --force \
+          pnpm dlx firebase-tools deploy \
+            --only hosting \
             --project=allie-portfolio-project
 
       - name: Create deployment status
