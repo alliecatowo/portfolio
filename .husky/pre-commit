@@ -1,7 +1,3 @@
-# Optionally source husky helper if present
-if [ -f "$(dirname -- "$0")/_/husky.sh" ]; then
-  . "$(dirname -- "$0")/_/husky.sh"
-fi
 
 # Skip if no staged changes (e.g., empty commit)
 if git diff --cached --quiet; then
