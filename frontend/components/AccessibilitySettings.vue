@@ -58,35 +58,30 @@
           <!-- Font Size -->
           <div role="group" aria-labelledby="font-size-label">
             <span id="font-size-label" class="block text-sm font-medium mb-2">Font Size</span>
-            <div class="grid grid-cols-4 gap-2">
-              <UButton
-                v-for="size in ['small', 'medium', 'large', 'x-large']"
-                :key="size"
-                :variant="preferences.fontSize === size ? 'solid' : 'outline'"
-                color="primary"
-                size="sm"
-                @click="updateFontSize(size as ('small' | 'medium' | 'large' | 'x-large'))"
-              >
-                {{ size === 'x-large' ? 'XL' : size.charAt(0).toUpperCase() + size.slice(1) }}
-              </UButton>
-            </div>
+            <URadioGroup
+              :model-value="preferences.fontSize"
+              :options="[
+                { value: 'small', label: 'Small' },
+                { value: 'medium', label: 'Medium' },
+                { value: 'large', label: 'Large' },
+                { value: 'x-large', label: 'Extra Large' }
+              ]"
+              @update:model-value="(value: string) => updateFontSize(value as 'small' | 'medium' | 'large' | 'x-large')"
+            />
           </div>
           
           <!-- Line Spacing -->
           <div role="group" aria-labelledby="line-spacing-label">
             <span id="line-spacing-label" class="block text-sm font-medium mb-2">Line Spacing</span>
-            <div class="grid grid-cols-3 gap-2">
-              <UButton
-                v-for="spacing in ['normal', 'relaxed', 'loose']"
-                :key="spacing"
-                :variant="preferences.lineSpacing === spacing ? 'solid' : 'outline'"
-                color="primary"
-                size="sm"
-                @click="updateLineSpacing(spacing as ('normal' | 'relaxed' | 'loose'))"
-              >
-                {{ spacing.charAt(0).toUpperCase() + spacing.slice(1) }}
-              </UButton>
-            </div>
+            <URadioGroup
+              :model-value="preferences.lineSpacing"
+              :options="[
+                { value: 'normal', label: 'Normal' },
+                { value: 'relaxed', label: 'Relaxed' },
+                { value: 'loose', label: 'Loose' }
+              ]"
+              @update:model-value="(value: string) => updateLineSpacing(value as 'normal' | 'relaxed' | 'loose')"
+            />
           </div>
           
           <!-- Accessibility Options -->
@@ -96,40 +91,40 @@
               :model-value="preferences.dyslexiaFont"
               label="Dyslexia-friendly font"
               help="Uses OpenDyslexic font for better readability"
-              size="xs"
+              size="sm"
+              class="small-checkbox"
               @update:model-value="(val) => updateDyslexiaFont(val === true)"
             />
             <UCheckbox
               :model-value="preferences.highContrast"
               label="High contrast"
               help="Increases text contrast for better visibility"
-              size="xs"
+              size="sm"
+              class="small-checkbox"
               @update:model-value="(val) => updateHighContrast(val === true)"
             />
             <UCheckbox
               :model-value="preferences.reducedMotion"
               label="Reduce motion"
               help="Minimizes animations and transitions"
-              size="xs"
+              size="sm"
+              class="small-checkbox"
               @update:model-value="(val) => updateReducedMotion(val === true)"
             />
           </div>
           
-          <!-- Color Blind Mode -->
-          <div>
-            <label class="block text-sm font-medium mb-2" for="color-vision-select">Color Vision</label>
-            <USelectMenu
-              id="color-vision-select"
+          <!-- Color Vision -->
+          <div role="group" aria-labelledby="color-vision-label">
+            <span id="color-vision-label" class="block text-sm font-medium mb-2">Color Vision</span>
+            <URadioGroup
               :model-value="preferences.colorBlindMode"
               :options="[
-                { label: 'Normal vision', value: 'none' },
-                { label: 'Protanopia (Red-blind)', value: 'protanopia' },
-                { label: 'Deuteranopia (Green-blind)', value: 'deuteranopia' },
-                { label: 'Tritanopia (Blue-blind)', value: 'tritanopia' }
+                { value: 'none', label: 'Normal vision' },
+                { value: 'protanopia', label: 'Protanopia (Red-blind)' },
+                { value: 'deuteranopia', label: 'Deuteranopia (Green-blind)' },
+                { value: 'tritanopia', label: 'Tritanopia (Blue-blind)' }
               ]"
-              value-attribute="value"
-              option-attribute="label"
-              @update:model-value="(value) => updateColorBlindMode(typeof value === 'string' && ['none', 'protanopia', 'deuteranopia', 'tritanopia'].includes(value) ? value as AccessibilityPreferences['colorBlindMode'] : 'none')"
+              @update:model-value="(value: string) => updateColorBlindMode(value as 'none' | 'protanopia' | 'deuteranopia' | 'tritanopia')"
             />
           </div>
           </div>
@@ -168,40 +163,36 @@
           <div class="space-y-6">
           <div role="group" aria-labelledby="reading-speed-label">
             <span id="reading-speed-label" class="block text-sm font-medium mb-2">How fast do you read?</span>
-            <div class="grid grid-cols-2 gap-2">
-              <UButton
-                v-for="speed in readingSpeedCategories"
-                :key="speed.wpm"
-                :variant="preferences.readingSpeed === speed.wpm ? 'solid' : 'outline'"
-                color="primary"
-                size="sm"
-                @click="updateReadingSpeed(speed.wpm)"
-              >
-                <div class="text-left">
-                  <div class="font-medium">{{ speed.label }}</div>
-                  <div class="text-xs opacity-75">{{ speed.wpm }} WPM</div>
-                </div>
-              </UButton>
-            </div>
+            <URadioGroup
+              :model-value="preferences.readingSpeed"
+              :options="readingSpeedCategories.map(speed => ({
+                value: speed.wpm,
+                label: `${speed.label} (${speed.wpm} WPM)`
+              }))"
+              @update:model-value="(value: string) => updateReadingSpeed(Number(value))"
+            />
           </div>
           
           <div class="space-y-3">
             <UCheckbox
               :model-value="preferences.dyslexiaFont"
               label="Use dyslexia-friendly font"
-              size="xs"
+              size="sm"
+              class="small-checkbox"
               @update:model-value="(val) => updateDyslexiaFont(val === true)"
             />
             <UCheckbox
               :model-value="preferences.highContrast"
               label="High contrast mode"
-              size="xs"
+              size="sm"
+              class="small-checkbox"
               @update:model-value="(val) => updateHighContrast(val === true)"
             />
             <UCheckbox
               :model-value="preferences.reducedMotion"
               label="Reduce animations"
-              size="xs"
+              size="sm"
+              class="small-checkbox"
               @update:model-value="(val) => updateReducedMotion(val === true)"
             />
           </div>
@@ -232,7 +223,6 @@
 
 <script setup lang="ts">
 import { useAccessibility } from '~/composables/useAccessibility';
-import type { AccessibilityPreferences } from '~/composables/useAccessibility';
 
 defineEmits<{
   close: []
@@ -253,3 +243,33 @@ const {
   updateColorBlindMode,
 } = useAccessibility();
 </script>
+
+<style scoped>
+/* Override Nuxt UI checkbox sizes to be more reasonable */
+:deep(.small-checkbox .form-checkbox) {
+  width: 1rem;
+  height: 1rem;
+}
+
+:deep(.small-checkbox) {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+/* Ensure proper spacing and alignment */
+:deep(.small-checkbox .label) {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+:deep(.small-checkbox .help-text) {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: rgb(107 114 128);
+  margin-top: 0.25rem;
+}
+
+.dark :deep(.small-checkbox .help-text) {
+  color: rgb(156 163 175);
+}
+</style>

@@ -2,9 +2,9 @@ export function useContent() {
   /**
    * Fetch blog posts from content
    */
-  async function fetchBlogPosts(category: 'dev' | 'tattoo' = 'dev', limit?: number) {
+  async function fetchBlogPosts(limit?: number) {
     const query = queryCollection('blog')
-      .where('category', '=', category)
+      .where('category', '=', 'dev')
       .where('published', '=', true)
       .order('date', 'DESC')
     
@@ -18,10 +18,10 @@ export function useContent() {
   /**
    * Fetch a single blog post by slug
    */
-  async function fetchBlogPost(category: 'dev' | 'tattoo', slug: string) {
+  async function fetchBlogPost(slug: string) {
     return await queryCollection('blog')
-      .where('category', '=', category)
-      .where('path', 'LIKE', `%${slug}%`)
+      .where('category', '=', 'dev')
+      .where('slug', '=', slug)
       .first()
   }
 

@@ -42,7 +42,7 @@
           <!-- Portfolio toggle removed - now dev-only -->
 
           <div class="flex items-center gap-2 ml-2 pl-2 border-l border-white/10">
-            <UTooltip text="Search" :kbds="['meta','K']" :delay-duration="300">
+            <UTooltip text="Search" :kbds="['meta', 'k']" :delay-duration="300">
               <UButton
                 variant="ghost"
                 color="primary"
@@ -52,11 +52,11 @@
                 @click="$emit('openSearch')"
               >
                 <UIcon name="i-lucide-search" class="w-4 h-4" />
-                <UKbd class="hidden lg:inline-flex text-[11px]">⌘K</UKbd>
+                <UKbd size="sm" class="hidden lg:inline-flex">{{ isMac ? '⌘K' : 'Ctrl+K' }}</UKbd>
               </UButton>
             </UTooltip>
 
-            <UTooltip text="Accessibility Settings" :kbds="['meta','A']" :delay-duration="300">
+            <UTooltip text="Accessibility Settings" :kbds="['meta', 'a']" :delay-duration="300">
               <UButton
                 icon="i-lucide-sliders"
                 variant="ghost"
@@ -81,7 +81,7 @@
 
         <!-- Mobile Controls -->
         <div class="md:hidden flex items-center gap-3">
-          <UTooltip text="Search" :kbds="['meta','K']" :delay-duration="300">
+          <UTooltip text="Search" :kbds="['meta', 'k']" :delay-duration="300">
             <UButton
               variant="ghost"
               color="primary"
@@ -90,7 +90,7 @@
               @click="$emit('openSearch')"
             >
               <UIcon name="i-lucide-search" class="w-4 h-4" />
-              <UKbd class="hidden sm:inline-flex text-[11px]">⌘K</UKbd>
+              <UKbd size="sm" class="hidden sm:inline-flex">{{ isMac ? '⌘K' : 'Ctrl+K' }}</UKbd>
             </UButton>
           </UTooltip>
           <UColorModeSwitch 
@@ -175,6 +175,14 @@ defineEmits<{
 // Get site configuration
 const siteConfig = useSiteConfig();
 
+// Platform detection for keyboard shortcuts
+const isMac = computed(() => {
+  if (import.meta.client) {
+    return /Mac|iPhone|iPod|iPad/i.test(navigator.platform || navigator.userAgent);
+  }
+  return false;
+});
+
 
 // Mobile drawer state
 const isDrawerOpen = ref(false);
@@ -208,21 +216,21 @@ const getNavIcon = (name: string): string => {
 const navigationItems = computed(() => {
   if (siteConfig.value.type === 'dev') {
     return [
-      { name: 'Home', path: '/dev' },
-      { name: 'About', path: '/dev/about' },
-      { name: 'Projects', path: '/dev/projects' },
-      { name: 'Open Source', path: '/dev/open-source' },
-      { name: 'Blog', path: '/dev/blog' },
-      { name: 'Contact', path: '/dev/contact' }
+      { name: 'Home', path: '/' },
+      { name: 'About', path: '/about' },
+      { name: 'Projects', path: '/projects' },
+      { name: 'Open Source', path: '/open-source' },
+      { name: 'Blog', path: '/blog' },
+      { name: 'Contact', path: '/contact' }
     ];
   } else {
     // Dual mode navigation
     return [
       { name: 'Home', path: '/' },
-      { name: 'About', path: '/dev/about' },
-      { name: 'Projects', path: '/dev/projects' },
-      { name: 'Blog', path: '/dev/blog' },
-      { name: 'Contact', path: '/dev/contact' }
+      { name: 'About', path: '/about' },
+      { name: 'Projects', path: '/projects' },
+      { name: 'Blog', path: '/blog' },
+      { name: 'Contact', path: '/contact' }
     ];
   }
 });
