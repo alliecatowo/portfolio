@@ -134,7 +134,7 @@
               class="space-y-6 relative z-10"
               @submit="onSubmit"
             >
-              <div class="grid md:grid-cols-2 gap-6">
+              <div class="grid md:grid-cols-2 gap-4">
                 <UFormField label="Full Name" name="name" required>
                   <UInput 
                     v-model="state.name" 
@@ -156,7 +156,7 @@
               <div class="grid md:grid-cols-2 gap-6">
                 <UFormField label="Phone Number" name="phone">
                   <UInput 
-                    v-model="state.phone" 
+                    v-model="phoneModel" 
                     type="tel"
                     placeholder="(555) 123-4567"
                     size="lg"
@@ -198,7 +198,7 @@
               >
                 <UTextarea 
                   v-model="state.idea" 
-                  :rows="5"
+                  :rows="7"
                   placeholder="Describe your tattoo idea..."
                   size="lg"
                 />
@@ -210,7 +210,7 @@
                 description="Is this your first tattoo? Any concerns about pain, etc.?"
               >
                 <UTextarea 
-                  v-model="state.previous" 
+                  v-model="previousModel" 
                   :rows="2"
                   placeholder="Share any previous experience or concerns..."
                   size="lg"
@@ -221,6 +221,7 @@
                 <UCheckbox 
                   v-model="state.consent" 
                   label="I am 18 years of age or older and consent to being contacted about my tattoo inquiry. I understand that filling out this form does not guarantee an appointment."
+                  size="md"
                 />
               </UFormField>
               
@@ -304,23 +305,33 @@ const schema = z.object({
 type Schema = z.output<typeof schema>;
 
 // Form state
-const state = reactive<Partial<Schema>>({
-  name: undefined,
-  email: undefined,
-  phone: undefined,
-  style: undefined,
-  placement: undefined,
-  size: undefined,
-  idea: undefined,
-  previous: undefined,
+const state = reactive<Schema>({
+  name: '',
+  email: '',
+  phone: '',
+  style: '',
+  placement: '',
+  size: '',
+  idea: '',
+  previous: '',
   consent: false
 });
+
+// v-model wrappers to avoid undefined unions from optional schema fields
+const phoneModel = computed<string>({
+  get: () => state.phone ?? '',
+  set: (v: string) => { state.phone = v ?? '' }
+})
+const previousModel = computed<string>({
+  get: () => state.previous ?? '',
+  set: (v: string) => { state.previous = v ?? '' }
+})
 
 const submitting = ref(false);
 const toast = useToast();
 
 // Form submission handler
-async function onSubmit(event: FormSubmitEvent<Schema>) {
+async function onSubmit(_: FormSubmitEvent<Schema>) {
   submitting.value = true;
   
   try {
@@ -351,14 +362,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 // Reset form helper
 function resetForm() {
-  state.name = undefined;
-  state.email = undefined;
-  state.phone = undefined;
-  state.style = undefined;
-  state.placement = undefined;
-  state.size = undefined;
-  state.idea = undefined;
-  state.previous = undefined;
+  state.name = '';
+  state.email = '';
+  state.phone = '';
+  state.style = '';
+  state.placement = '';
+  state.size = '';
+  state.idea = '';
+  state.previous = '';
   state.consent = false;
 }
 

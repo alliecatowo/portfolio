@@ -99,7 +99,7 @@
             </svg>
           </div>
           <h3 class="text-xl font-semibold mb-2">No tattoos found</h3>
-          <p class="text-gray-500 dark:text-gray-400">{{ activeStyle.value === 'all' ? 'Check back later for new gallery additions.' : `No tattoos found for ${activeStyle.value} style.` }}</p>
+          <p class="text-gray-500 dark:text-gray-400">{{ activeStyle === 'all' ? 'Check back later for new gallery additions.' : `No tattoos found for ${activeStyle} style.` }}</p>
         </div>
       </div>
     </section>

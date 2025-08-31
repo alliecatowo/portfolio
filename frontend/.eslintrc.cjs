@@ -24,6 +24,12 @@ module.exports = {
   rules: {
     // Common Nuxt/Vue ergonomics
     'vue/multi-word-component-names': 'off',
+    // Accessibility - allow aria-labelledby for complex form groups
+    'vuejs-accessibility/label-has-for': ['error', {
+      required: {
+        some: ['nesting', 'id']
+      }
+    }],
     // TS hygiene
     '@typescript-eslint/consistent-type-imports': 'warn',
     '@typescript-eslint/no-unused-vars': [

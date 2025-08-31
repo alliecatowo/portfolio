@@ -1,4 +1,4 @@
-interface AccessibilityPreferences {
+export interface AccessibilityPreferences {
   readingSpeed: number;
   dyslexiaFont: boolean;
   highContrast: boolean;

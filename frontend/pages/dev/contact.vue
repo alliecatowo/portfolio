@@ -60,7 +60,7 @@
               class="space-y-6" 
               @submit="onSubmit"
             >
-              <div class="grid md:grid-cols-2 gap-6">
+              <div class="grid md:grid-cols-2 gap-4">
                 <UFormField label="Name" name="name" required>
                   <UInput 
                     v-model="state.name" 
@@ -95,7 +95,7 @@
               >
                 <UTextarea 
                   v-model="state.message" 
-                  :rows="5"
+                  :rows="7"
                   placeholder="Tell me about your project..."
                   size="lg"
                 />
@@ -105,6 +105,7 @@
                 <UCheckbox 
                   v-model="state.privacy" 
                   label="I agree to the privacy policy and consent to being contacted regarding my inquiry."
+                  size="md"
                 />
               </UFormField>
               
@@ -164,11 +165,11 @@ const schema = z.object({
 type Schema = z.output<typeof schema>;
 
 // Form state
-const state = reactive<Partial<Schema>>({
-  name: undefined,
-  email: undefined,
-  subject: undefined,
-  message: undefined,
+const state = reactive<Schema>({
+  name: '',
+  email: '',
+  subject: '',
+  message: '',
   privacy: false
 });
 
@@ -176,7 +177,7 @@ const submitting = ref(false);
 const toast = useToast();
 
 // Form submission handler
-async function onSubmit(event: FormSubmitEvent<Schema>) {
+async function onSubmit(_: FormSubmitEvent<Schema>) {
   submitting.value = true;
   
   try {
@@ -207,10 +208,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 // Reset form helper
 function resetForm() {
-  state.name = undefined;
-  state.email = undefined;
-  state.subject = undefined;
-  state.message = undefined;
+  state.name = '';
+  state.email = '';
+  state.subject = '';
+  state.message = '';
   state.privacy = false;
 }
 

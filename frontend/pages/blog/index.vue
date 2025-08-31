@@ -1,24 +1,26 @@
 <template>
   <UContainer as="main" class="py-12">
-    <header class="mb-6 flex items-center justify-between">
+    <header class="mb-3 flex items-center justify-between">
       <div class="text-center md:text-left">
         <h1 class="text-4xl font-bold">Blog</h1>
         <p class="sr-only">{{ siteConfig?.type === 'dev' ? 'Development articles and tutorials' : 'Tattoo art stories and insights' }}</p>
       </div>
       <div class="flex items-center gap-3">
         <ClientOnly>
-          <URadioGroup
-            v-if="allTags.length"
-            v-model="activeTag"
-            :items="[{ label: 'All', value: 'all' }, ...allTags.map(t => ({ label: t, value: t }))]"
-            orientation="horizontal"
-            size="sm"
-            class="hidden md:flex"
-          />
+          <ListViewToggle v-model="blogView" />
         </ClientOnly>
-        <ListViewToggle v-model="blogView" />
       </div>
     </header>
+    <div class="mb-6">
+      <ClientOnly>
+        <TagFilterBar
+          v-if="allTags.length"
+          :tags="allTags"
+          v-model="activeTag"
+          v-model:sort="sort"
+        />
+      </ClientOnly>
+    </div>
     
     <!-- Loading state -->
     <div v-if="pending" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="status" aria-label="Loading blog posts">
@@ -43,7 +45,32 @@
     <!-- Blog posts -->
     <section v-else-if="posts && posts.length > 0" aria-labelledby="posts-heading">
       <h2 id="posts-heading" class="sr-only">Blog posts</h2>
-      <UBlogPosts :posts="mappedPosts" :orientation="blogView === 'rows' ? 'vertical' : 'horizontal'" />
+      <div v-if="blogView === 'rows'" class="grid grid-cols-1 gap-6">
+        <BlogCard
+          v-for="post in posts"
+          :key="post.slug || post.path || ''"
+          :title="post.title || ''"
+          :description="post.description || ''"
+          :date="post.date || ''"
+          :image="post.featured_image || 'https://placehold.co/640x360?text=Blog'"
+          :read-time="formatReadTime(estimateReadTime(post as any).minutes)"
+          :to="`/blog/${post.slug || post.path?.split('/').pop()}`"
+          :tags="post.tags || []"
+        />
+      </div>
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <BlogCard
+          v-for="post in posts"
+          :key="post.slug || post.path || ''"
+          :title="post.title || ''"
+          :description="post.description || ''"
+          :date="post.date || ''"
+          :image="post.featured_image || 'https://placehold.co/640x360?text=Blog'"
+          :read-time="formatReadTime(estimateReadTime(post as any).minutes)"
+          :to="`/blog/${post.slug || post.path?.split('/').pop()}`"
+          :tags="post.tags || []"
+        />
+      </div>
     </section>
     
     <!-- Pagination -->
@@ -74,8 +101,19 @@
 </template>
 
 <script setup lang="ts">
-import { useSiteConfig } from '~/utils/site-config';
 import ListViewToggle from '~/components/common/ListViewToggle.vue'
+import TagFilterBar from '~/components/common/TagFilterBar.vue'
+import BlogCard from '~/components/common/BlogCard.vue'
+import { useSiteConfig } from '~/utils/site-config';
+interface BlogDoc {
+  title?: string;
+  description?: string;
+  date?: string;
+  slug?: string;
+  path?: string;
+  featured_image?: string;
+  tags?: string[];
+}
 
 // Get site configuration
 const siteConfig = useSiteConfig();
@@ -95,12 +133,12 @@ const pageSize = 9; // 3 columns x 3 rows
 const blogCategory = computed(() => siteConfig.value?.type === 'tattoo' ? 'tattoo' : 'dev');
 
 // Fetch all (for tags), plus page-sized items
-const { data: allPostsAll } = await useAsyncData(
+const { data: allPostsAll } = await useAsyncData<BlogDoc[]>(
   () => `blog-all-${blogCategory.value}`,
   async () => {
     try {
       return await queryCollection('blog').where('category', '=', blogCategory.value).where('published', '=', true).order('date', 'DESC').all()
-    } catch (e) {
+    } catch {
       return []
     }
   },
@@ -108,12 +146,13 @@ const { data: allPostsAll } = await useAsyncData(
 )
 
 // Tag filter
-const allTags = computed(() => {
+const allTags = computed((): string[] => {
   const tags = new Set<string>()
-  (allPostsAll.value || []).forEach((p: any) => (p.tags || []).forEach((t: string) => tags.add(t)))
+  ;(allPostsAll.value || []).forEach((p) => (p.tags || []).forEach((t: string) => tags.add(t)))
   return Array.from(tags).sort()
 })
 const activeTag = ref((route.query.tag as string) || 'all')
+const sort = ref<'newest'|'oldest'>('newest')
 watch(activeTag, (val) => {
   if (!process.client) return
   const q = { ...route.query }
@@ -124,7 +163,7 @@ watch(activeTag, (val) => {
 watch(() => route.query.tag, (v) => { activeTag.value = (v as string) || 'all' })
 
 // Page-sized fetching
-const { data: totalCount } = await useAsyncData(
+const { data: totalCount } = await useAsyncData<number>(
   () => `blog-total-${blogCategory.value}-${activeTag.value}`,
   async () => {
     try {
@@ -132,31 +171,34 @@ const { data: totalCount } = await useAsyncData(
         return (await queryCollection('blog').where('category', '=', blogCategory.value).where('published', '=', true).all()).length
       }
       const all = await queryCollection('blog').where('category', '=', blogCategory.value).where('published', '=', true).all()
-      return all.filter((p: any) => Array.isArray(p.tags) && p.tags.includes(activeTag.value)).length
-    } catch (e) {
+      return all.filter((p: BlogDoc) => Array.isArray(p.tags) && p.tags!.includes(activeTag.value)).length
+    } catch {
       return 0
     }
   },
   { watch: [blogCategory, activeTag] }
 )
 
-const { data: pageItems, pending, error } = await useAsyncData(
-  () => `blog-page-${blogCategory.value}-${activeTag.value}-${page.value}`,
+const { data: pageItems, pending, error } = await useAsyncData<BlogDoc[]>(
+  () => `blog-page-${blogCategory.value}-${activeTag.value}-${page.value}-${sort.value}`,
   async () => {
     try {
-      const base = queryCollection('blog').where('category', '=', blogCategory.value).where('published', '=', true).order('date', 'DESC')
+      const base = queryCollection('blog')
+        .where('category', '=', blogCategory.value)
+        .where('published', '=', true)
+        .order('date', sort.value === 'newest' ? 'DESC' : 'ASC')
       if (activeTag.value === 'all') {
         return base.limit(pageSize).skip((page.value - 1) * pageSize).all()
       }
       const all = await base.all()
-      const filtered = all.filter((p: any) => Array.isArray(p.tags) && p.tags.includes(activeTag.value))
+      const filtered = all.filter((p: BlogDoc) => Array.isArray(p.tags) && p.tags!.includes(activeTag.value))
       const start = (page.value - 1) * pageSize
       return filtered.slice(start, start + pageSize)
-    } catch (e) {
+    } catch {
       return []
     }
   },
-  { watch: [blogCategory, page, activeTag] }
+  { watch: [blogCategory, page, activeTag, sort] }
 )
 
 const total = computed(() => totalCount.value || 0)
@@ -164,16 +206,6 @@ const posts = computed(() => pageItems.value || [])
 
 // Map to @nuxt/ui UBlogPosts props shape
 const { estimateReadTime, formatReadTime } = useReadTime();
-const mappedPosts = computed(() => {
-  return posts.value.map((post: any) => ({
-    title: post.title,
-    description: post.description,
-    date: post.date,
-    image: post.featured_image || 'https://placehold.co/640x360?text=Blog',
-    badge: formatReadTime(estimateReadTime(post).minutes),
-    to: `/blog/${post.slug || post.path?.split('/').pop()}`
-  }))
-})
 
 const paginationLink = (p: number) => ({ query: { ...route.query, page: p } })
 

@@ -15,6 +15,13 @@ export default defineAppConfig({
       }
     },
 
+    // Smaller checkboxes by default (reduce visual weight)
+    checkbox: {
+      default: {
+        size: 'sm'
+      }
+    },
+
     card: {
       default: {
         background: 'white dark:bg-gray-950',

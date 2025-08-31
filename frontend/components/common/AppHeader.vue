@@ -1,5 +1,5 @@
 <template>
-  <header class="sticky top-0 z-50 glass backdrop-blur border-b border-primary/20" role="banner" aria-label="Site header">
+  <header class="sticky top-0 z-50 glass backdrop-blur border-b border-primary/20" aria-label="Site header">
     <UContainer class="py-3">
       <div class="flex items-center justify-between gap-3">
         <!-- Logo / Title -->
@@ -16,8 +16,8 @@
         </NuxtLink>
 
         <!-- Desktop Navigation -->
-        <nav id="site-navigation" class="hidden md:flex items-center gap-3" role="navigation" aria-label="Main navigation">
-          <div class="flex items-center gap-2">
+        <nav id="site-navigation" class="hidden md:flex items-center gap-3 overflow-x-auto flex-nowrap" role="navigation" aria-label="Main navigation">
+          <div class="flex items-center gap-2 flex-nowrap">
             <UTooltip 
               v-for="(item, index) in navigationItems"
               :key="index"
@@ -26,15 +26,15 @@
             >
               <UButton
                 :to="item.path"
-                :variant="route.path === item.path ? 'soft' : 'ghost'"
+                :variant="route.path === item.path ? 'outline' : 'ghost'"
                 color="primary"
                 size="sm"
-                class="text-sm hover:scale-105 transition-all duration-200"
-                :class="route.path === item.path ? 'ring-1 ring-primary/20' : ''"
+                class="text-sm px-2 rounded-md whitespace-nowrap transition-colors duration-200 flex-shrink-0"
+                
                 :aria-label="`Navigate to ${item.name}`"
                 :aria-current="route.path === item.path ? 'page' : undefined"
               >
-                {{ item.name }}
+                <span class="whitespace-nowrap">{{ item.name }}</span>
               </UButton>
             </UTooltip>
           </div>
@@ -42,27 +42,30 @@
           <UTooltip text="Switch between portfolios" :kbds="['meta','S']" :delay-duration="300">
             <UButton
               color="primary"
-              variant="outline"
+              variant="ghost"
               size="sm"
-              @click="togglePortfolioType"
+              class="rounded-full frosty-pill px-3 py-1.5 whitespace-nowrap flex-shrink-0"
               aria-label="Switch between developer and tattoo portfolios"
+              @click="togglePortfolioType"
             >
-              Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }}
-              <UIcon name="i-lucide-repeat" class="w-4 h-4 ml-1" />
+              <UIcon name="i-lucide-repeat" class="w-4 h-4 mr-1" />
+              <span class="whitespace-nowrap">Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }}</span>
             </UButton>
           </UTooltip>
 
-          <div class="flex items-center gap-2 ml-3 pl-3 border-l border-gray-200 dark:border-gray-800">
+          <div class="flex items-center gap-2 ml-2 pl-2 border-l border-white/10">
             <UTooltip text="Search" :kbds="['meta','K']" :delay-duration="300">
               <UButton
-                icon="i-lucide-search"
                 variant="ghost"
                 color="primary"
                 size="sm"
-                @click="$emit('openSearch')"
-                class="gap-1"
+                class="gap-2"
                 aria-label="Open search"
-              />
+                @click="$emit('openSearch')"
+              >
+                <UIcon name="i-lucide-search" class="w-4 h-4" />
+                <UKbd class="hidden lg:inline-flex text-[11px]">⌘K</UKbd>
+              </UButton>
             </UTooltip>
 
             <UTooltip text="Accessibility Settings" :kbds="['meta','A']" :delay-duration="300">
@@ -77,7 +80,13 @@
             </UTooltip>
 
             <UTooltip text="Toggle theme" :kbds="['meta','T']" :delay-duration="300">
-              <UColorModeSwitch size="xs" color="neutral" />
+              <UColorModeSwitch 
+                size="sm" 
+                color="neutral"
+                checked-icon="i-lucide-sun"
+                unchecked-icon="i-lucide-moon"
+                :ui="{ icon: 'size-3 text-black/80 dark:text-pink-400' }"
+              />
             </UTooltip>
           </div>
         </nav>
@@ -86,14 +95,23 @@
         <div class="md:hidden flex items-center gap-3">
           <UTooltip text="Search" :kbds="['meta','K']" :delay-duration="300">
             <UButton
-              icon="i-lucide-search"
               variant="ghost"
               color="primary"
               size="sm"
+              class="gap-2"
               @click="$emit('openSearch')"
-            />
+            >
+              <UIcon name="i-lucide-search" class="w-4 h-4" />
+              <UKbd class="hidden sm:inline-flex text-[11px]">⌘K</UKbd>
+            </UButton>
           </UTooltip>
-          <UColorModeSwitch size="xs" color="neutral" />
+          <UColorModeSwitch 
+            size="sm" 
+            color="neutral"
+            checked-icon="i-lucide-sun"
+            unchecked-icon="i-lucide-moon"
+            :ui="{ icon: 'size-3 text-black/80 dark:text-pink-400' }"
+          />
           
           <!-- Mobile Drawer -->
           <UButton 
@@ -101,8 +119,8 @@
             variant="ghost" 
             color="primary" 
             size="sm"
-            @click="isDrawerOpen = true"
-            aria-label="Toggle menu" 
+            aria-label="Toggle menu"
+            @click="isDrawerOpen = true" 
           />
           
           <ClientOnly>
@@ -111,7 +129,7 @@
               <div class="glass-strong h-full p-6 flex flex-col">
                 <div class="flex items-center justify-between mb-8">
                   <span class="text-xl font-bold text-gradient">{{ siteConfig.title }}</span>
-                  <UButton icon="i-lucide-x" variant="ghost" @click="isDrawerOpen = false" aria-label="Close menu" />
+                  <UButton icon="i-lucide-x" variant="ghost" aria-label="Close menu" @click="isDrawerOpen = false" />
                 </div>
 
                 <nav class="flex flex-col gap-4 flex-1">
@@ -167,8 +185,8 @@
 </template>
 
 <script setup lang="ts">
-import { useSiteConfig } from '~/utils/site-config';
 import AccessibilitySettings from '~/components/AccessibilitySettings.vue';
+import { useSiteConfig } from '~/utils/site-config';
 
 // Emits
 defineEmits<{

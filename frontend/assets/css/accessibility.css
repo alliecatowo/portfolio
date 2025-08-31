@@ -1,7 +1,8 @@
 /* Dyslexia Font */
 @font-face {
   font-family: 'OpenDyslexic';
-  src: url('https://cdn.jsdelivr.net/npm/opendyslexic@0.91.12/compiled/OpenDyslexic-Regular.woff2') format('woff2');
+  src: url('https://cdn.jsdelivr.net/npm/opendyslexic@0.91.12/compiled/OpenDyslexic-Regular.woff2')
+    format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -9,7 +10,8 @@
 
 @font-face {
   font-family: 'OpenDyslexic';
-  src: url('https://cdn.jsdelivr.net/npm/opendyslexic@0.91.12/compiled/OpenDyslexic-Bold.woff2') format('woff2');
+  src: url('https://cdn.jsdelivr.net/npm/opendyslexic@0.91.12/compiled/OpenDyslexic-Bold.woff2')
+    format('woff2');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -52,37 +54,54 @@ html.dyslexia-font samp {
 }
 
 /* Font Size Variations */
-[data-font-size="small"] {
+[data-font-size='small'] {
   font-size: 14px;
 }
 
-[data-font-size="medium"] {
+[data-font-size='medium'] {
   font-size: 16px;
 }
 
-[data-font-size="large"] {
+[data-font-size='large'] {
   font-size: 18px;
 }
 
-[data-font-size="x-large"] {
+[data-font-size='x-large'] {
   font-size: 20px;
 }
 
 /* Line Spacing */
-[data-line-spacing="normal"] .prose {
+[data-line-spacing='normal'] {
+  line-height: 1.5;
+}
+
+[data-line-spacing='normal'] .prose {
   line-height: 1.75;
 }
 
-[data-line-spacing="relaxed"] .prose {
+[data-line-spacing='relaxed'] {
+  line-height: 1.75;
+}
+
+[data-line-spacing='relaxed'] .prose {
   line-height: 2;
 }
 
-[data-line-spacing="loose"] .prose {
+[data-line-spacing='loose'] {
+  line-height: 2;
+}
+
+[data-line-spacing='loose'] .prose {
   line-height: 2.5;
 }
 
-[data-line-spacing="relaxed"] .prose p,
-[data-line-spacing="loose"] .prose p {
+[data-line-spacing='relaxed'] p,
+[data-line-spacing='loose'] p {
+  margin-bottom: 1.25em;
+}
+
+[data-line-spacing='relaxed'] .prose p,
+[data-line-spacing='loose'] .prose p {
   margin-bottom: 1.5em;
 }
 
@@ -95,15 +114,15 @@ html.dyslexia-font samp {
 }
 
 /* Color Blind Modes */
-[data-color-blind-mode="protanopia"] {
+[data-color-blind-mode='protanopia'] {
   filter: url('#protanopia-filter');
 }
 
-[data-color-blind-mode="deuteranopia"] {
+[data-color-blind-mode='deuteranopia'] {
   filter: url('#deuteranopia-filter');
 }
 
-[data-color-blind-mode="tritanopia"] {
+[data-color-blind-mode='tritanopia'] {
   filter: url('#tritanopia-filter');
 }
 
@@ -162,10 +181,10 @@ a:focus-visible {
 }
 
 /* Ensure interactive elements have minimum size */
-button, 
-a, 
-input, 
-select, 
+button,
+a,
+input,
+select,
 textarea {
   min-height: 44px;
   min-width: 44px;

@@ -1,7 +1,14 @@
 {
     "scripts": {
         "prepare": "husky install",
-        "lint-staged": "lint-staged"
+        "lint-staged": "lint-staged",
+        "dev": "pnpm -C frontend dev",
+        "build": "pnpm -C frontend build",
+        "generate": "pnpm -C frontend generate",
+        "preview": "pnpm -C frontend preview",
+        "typecheck": "pnpm -C frontend typecheck",
+        "lint": "pnpm -C frontend lint",
+        "lint:fix": "pnpm -C frontend lint:fix"
     },
     "devDependencies": {
 		"@axe-core/cli": "^4.10.2",

@@ -2,24 +2,28 @@
   <div>
     <section class="py-12 md:py-20">
       <UContainer>
-        <div class="max-w-5xl mx-auto mb-6 flex items-center justify-between">
+        <div class="max-w-5xl mx-auto mb-3 flex items-center justify-between">
           <div class="text-center md:text-left">
             <h1 class="text-4xl md:text-5xl font-bold mb-1 text-primary">Developer Blog</h1>
             <p class="text-lg text-muted">Thoughts, tutorials, and insights about web development.</p>
           </div>
           <div class="flex items-center gap-3">
             <ClientOnly>
-              <URadioGroup
-                v-if="allTags.length"
-                v-model="activeTag"
-                :items="[{ label: 'All', value: 'all' }, ...allTags.map(t => ({ label: t, value: t }))]"
-                orientation="horizontal"
-                size="sm"
-                class="hidden md:flex"
-              />
+              <ListViewToggle v-model="blogView" />
             </ClientOnly>
-            <ListViewToggle v-model="blogView" />
           </div>
+        </div>
+
+        <!-- Tag filter under the heading -->
+        <div class="max-w-5xl mx-auto mb-6">
+          <ClientOnly>
+            <TagFilterBar
+              v-if="allTags.length"
+              :tags="allTags"
+              v-model="activeTag"
+              v-model:sort="sort"
+            />
+          </ClientOnly>
         </div>
 
         <!-- Loading state -->
@@ -44,7 +48,32 @@
 
         <!-- Blog posts -->
         <div v-else>
-          <UBlogPosts :posts="mappedPosts" :orientation="blogView === 'rows' ? 'vertical' : 'horizontal'" />
+          <div v-if="blogView === 'rows'" class="grid grid-cols-1 gap-6">
+            <BlogCard
+              v-for="post in posts"
+              :key="post.slug || post.path || ''"
+              :title="post.title || ''"
+              :description="post.description || ''"
+              :date="post.date || ''"
+              :image="post.featured_image || 'https://placehold.co/640x360?text=Blog'"
+              :read-time="formatReadTime(estimateReadTime(post as any).minutes)"
+              :to="`/dev/blog/${post.slug}`"
+              :tags="post.tags || []"
+            />
+          </div>
+          <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <BlogCard
+              v-for="post in posts"
+              :key="post.slug || post.path || ''"
+              :title="post.title || ''"
+              :description="post.description || ''"
+              :date="post.date || ''"
+              :image="post.featured_image || 'https://placehold.co/640x360?text=Blog'"
+              :read-time="formatReadTime(estimateReadTime(post as any).minutes)"
+              :to="`/dev/blog/${post.slug}`"
+              :tags="post.tags || []"
+            />
+          </div>
         </div>
         
         <!-- Pagination -->
@@ -77,8 +106,19 @@
 </template>
 
 <script setup lang="ts">
-import { useSiteConfig } from '~/utils/site-config';
 import ListViewToggle from '~/components/common/ListViewToggle.vue'
+import TagFilterBar from '~/components/common/TagFilterBar.vue'
+import BlogCard from '~/components/common/BlogCard.vue'
+import { useSiteConfig } from '~/utils/site-config';
+interface BlogDoc {
+  title?: string;
+  description?: string;
+  date?: string;
+  slug?: string;
+  path?: string;
+  featured_image?: string;
+  tags?: string[];
+}
 // No need for tag color helpers on list; using UBlogPosts
 
 // Ensure site config is set to dev
@@ -100,7 +140,7 @@ watch(() => route.query.page, (val) => {
 const pageSize = 9; // 3 columns x 3 rows
 
 // Tag filter (from all posts, lightweight if content small)
-const { data: allPostsAll } = await useAsyncData(
+const { data: allPostsAll } = await useAsyncData<BlogDoc[]>(
   'dev-blog-all-meta',
   async () => {
     try {
@@ -109,18 +149,19 @@ const { data: allPostsAll } = await useAsyncData(
         .where('published', '=', true)
         .order('date', 'DESC')
         .all()
-    } catch (e) {
+    } catch {
       return []
     }
   }
 )
 
-const allTags = computed(() => {
+const allTags = computed((): string[] => {
   const tags = new Set<string>()
-  (allPostsAll.value || []).forEach((p: any) => (p.tags || []).forEach((t: string) => tags.add(t)))
+  ;(allPostsAll.value || []).forEach((p) => (p.tags || []).forEach((t: string) => tags.add(t)))
   return Array.from(tags).sort()
 })
 const activeTag = ref((route.query.tag as string) || 'all')
+const sort = ref<'newest'|'oldest'>('newest')
 watch(activeTag, (val) => {
   if (!process.client) return
   const q = { ...route.query }
@@ -131,7 +172,7 @@ watch(activeTag, (val) => {
 watch(() => route.query.tag, (v) => { activeTag.value = (v as string) || 'all' })
 
 // Page-sized fetching (server-side via useAsyncData)
-const { data: totalCount } = await useAsyncData(
+const { data: totalCount } = await useAsyncData<number>(
   () => `dev-blog-total-${activeTag.value}`,
   async () => {
     try {
@@ -139,61 +180,44 @@ const { data: totalCount } = await useAsyncData(
         return (await queryCollection('blog').where('category', '=', 'dev').where('published', '=', true).all()).length
       }
       const all = await queryCollection('blog').where('category', '=', 'dev').where('published', '=', true).all()
-      return all.filter((p: any) => Array.isArray(p.tags) && p.tags.includes(activeTag.value)).length
-    } catch (e) {
+      return all.filter((p: BlogDoc) => Array.isArray(p.tags) && p.tags!.includes(activeTag.value)).length
+    } catch {
       return 0
     }
   },
   { watch: [activeTag] }
 )
 
-const { data: pageItems, pending: loading, error } = await useAsyncData(
-  () => `dev-blog-page-${activeTag.value}-${page.value}`,
+const { data: pageItems, pending: loading, error } = await useAsyncData<BlogDoc[]>(
+  () => `dev-blog-page-${activeTag.value}-${page.value}-${sort.value}`,
   async () => {
     try {
-      const base = queryCollection('blog').where('category', '=', 'dev').where('published', '=', true).order('date', 'DESC')
+      const base = queryCollection('blog')
+        .where('category', '=', 'dev')
+        .where('published', '=', true)
+        .order('date', sort.value === 'newest' ? 'DESC' : 'ASC')
       if (activeTag.value === 'all') {
         return base.limit(pageSize).skip((page.value - 1) * pageSize).all()
       }
       const all = await base.all()
-      const filtered = all.filter((p: any) => Array.isArray(p.tags) && p.tags.includes(activeTag.value))
+      const filtered = all.filter((p: BlogDoc) => Array.isArray(p.tags) && p.tags!.includes(activeTag.value))
       const start = (page.value - 1) * pageSize
       return filtered.slice(start, start + pageSize)
-    } catch (e) {
+    } catch {
       return []
     }
   },
-  { watch: [page, activeTag] }
+  { watch: [page, activeTag, sort] }
 )
 
 const total = computed(() => totalCount.value || 0)
 const posts = computed(() => pageItems.value || [])
 
 const { estimateReadTime, formatReadTime } = useReadTime();
-const mappedPosts = computed(() => {
-  return posts.value.map((post: any) => ({
-    title: post.title,
-    description: post.description,
-    date: post.date,
-    image: post.featured_image || 'https://placehold.co/640x360?text=Blog',
-    badge: formatReadTime(estimateReadTime(post).minutes),
-    to: `/dev/blog/${post.slug}`
-  }))
-})
 
 const paginationLink = (p: number) => ({ query: { ...route.query, page: p } })
 
-interface BlogPost {
-  title?: string;
-  description?: string;
-  slug?: string;
-  path?: string;
-  date?: string;
-  tags?: string[];
-  category?: string;
-  body?: any;
-  content?: string;
-}
+// Types inlined above; remove unused interface
 
 // Read time displayed via badge on each item
 
