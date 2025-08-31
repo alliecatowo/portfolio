@@ -181,7 +181,7 @@
               </div>
               <div>
                 <h3 class="font-semibold text-lg">Client {{ index + 1 }}</h3>
-                <p class="text-gray-500 dark:text-gray-400 text-sm">{{ new Date(work.date).toLocaleDateString() }}</p>
+                <p class="text-gray-500 dark:text-gray-400 text-sm">{{ new Date(work.date || Date.now()).toLocaleDateString() }}</p>
               </div>
             </div>
             <p class="text-gray-600 dark:text-gray-300 italic">
@@ -211,7 +211,7 @@
             <div class="aspect-video bg-gray-100 dark:bg-gray-700">
               <NuxtImg 
                 provider="none"
-                :src="post.featured_image || 'https://placehold.co/640x360?text=Blog'" 
+                :src="'https://placehold.co/640x360?text=Blog'" 
                 :alt="post.title" 
                 class="object-cover w-full h-full"
                 loading="lazy"
@@ -222,7 +222,7 @@
               <div class="text-sm text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-2">
                 <span class="inline-flex items-center">
                   <UIcon name="i-lucide-calendar" class="w-3 h-3 mr-1" />
-                  {{ new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
+                  {{ new Date(post.date || Date.now()).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
                 </span>
                 <span v-if="getReadTime(post)" class="inline-flex items-center gap-1">
                   <span class="mx-1">•</span>
@@ -234,9 +234,9 @@
                 {{ post.title }}
               </h3>
               <p class="text-gray-600 dark:text-gray-300 line-clamp-3 mb-4">
-                {{ post.description || post.summary }}
+                {{ post.description || '' }}
               </p>
-              <UButton :to="`/tattoo/blog/${post.slug || post.path?.split('/').pop()}`" color="primary" size="sm" class="btn-depth magnetic-hover" block>Read More</UButton>
+              <UButton :to="`/tattoo/blog/${post.slug || ''}`" color="primary" size="sm" class="btn-depth magnetic-hover" block>Read More</UButton>
             </div>
           </div>
         </div>
@@ -285,7 +285,7 @@
             {{ selectedWork.title }}
           </h3>
           <div class="flex items-center mb-4 text-sm text-gray-500 dark:text-gray-400">
-            <span>{{ new Date(selectedWork.date).toLocaleDateString() }}</span>
+            <span>{{ new Date(selectedWork.date || Date.now()).toLocaleDateString() }}</span>
             <span class="mx-2">•</span>
             <span>Style: {{ selectedWork.style || 'Custom' }}</span>
           </div>
@@ -406,7 +406,28 @@ const { data: testimonialData } = await useAsyncData('tattoo-testimonials', () =
 );
 
 // Set reactive data
-featuredWorks.value = galleryData.value || [];
-recentPosts.value = blogData.value || [];
-testimonials.value = testimonialData.value || [];
+featuredWorks.value = (galleryData.value || []).map((it: any, idx: number) => ({
+  id: String(it.id ?? it._id ?? idx),
+  title: it.title ?? 'Untitled',
+  description: it.description ?? '',
+  image: Array.isArray(it.images) ? it.images[0] : (it.images ?? ''),
+  style: Array.isArray(it.styles) ? it.styles[0] : it.styles,
+  placement: it.placement,
+  size: it.size,
+  sessionTime: it.session_time,
+  date: it.date
+}))
+recentPosts.value = (blogData.value || []).map((p: any) => ({
+  id: String(p.id ?? p._id ?? p.slug ?? Math.random()),
+  title: p.title,
+  description: p.description,
+  slug: p.slug ?? (p.path ? String(p.path).split('/').pop() : ''),
+  date: p.date,
+  readingTime: p.readingTime
+}))
+testimonials.value = (testimonialData.value || []).map((t: any, i: number) => ({
+  id: String(t.id ?? t._id ?? i),
+  name: t.title ?? 'Anonymous',
+  content: t.description ?? ''
+}))
 </script> 

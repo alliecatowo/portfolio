@@ -191,6 +191,12 @@ body {
     inset 0 1px 0 color-mix(in oklab, var(--ui-bg) 90%, white 10%);
 }
 
+/* Horizontal scroller with fade masks at edges */
+.faded-scroll {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+}
+
 .glass-strong {
   background: var(--glass-bg-strong);
   backdrop-filter: blur(20px) saturate(200%);
@@ -207,6 +213,21 @@ body {
   box-shadow:
     0 10px 36px rgba(236, 72, 153, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Frosted pill specifically for compact buttons in header */
+.frosty-pill {
+  background-color: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  border-radius: 9999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+}
+.dark .frosty-pill {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
 }
 
 /* Gradient utility classes */

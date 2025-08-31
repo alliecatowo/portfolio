@@ -2,16 +2,14 @@
   <UModal 
     v-model:open="isOpen"
     :ui="{
-      width: 'w-full sm:max-w-2xl',
-      padding: 'p-0',
-      margin: 'sm:my-20'
+      content: 'w-full sm:max-w-2xl p-0 sm:my-20'
     }"
   >
     <template #content>
       <UCommandPalette 
         :model-value="selectedCommand"
         @update:model-value="handleSelection"
-        :groups="commandGroups"
+        :groups="(commandGroups as any)"
         placeholder="Search pages, posts, projects..."
         icon="i-lucide-search"
         autofocus

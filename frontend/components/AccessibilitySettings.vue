@@ -96,18 +96,21 @@
               @update:model-value="(val) => updateDyslexiaFont(val as boolean)"
               label="Dyslexia-friendly font"
               help="Uses OpenDyslexic font for better readability"
+              size="sm"
             />
             <UCheckbox
               :model-value="preferences.highContrast"
               @update:model-value="(val) => updateHighContrast(val as boolean)"
               label="High contrast"
               help="Increases text contrast for better visibility"
+              size="sm"
             />
             <UCheckbox
               :model-value="preferences.reducedMotion"
               @update:model-value="(val) => updateReducedMotion(val as boolean)"
               label="Reduce motion"
               help="Minimizes animations and transitions"
+              size="sm"
             />
           </div>
           
@@ -185,16 +188,19 @@
               :model-value="preferences.dyslexiaFont"
               @update:model-value="(val) => updateDyslexiaFont(val as boolean)"
               label="Use dyslexia-friendly font"
+              size="sm"
             />
             <UCheckbox
               :model-value="preferences.highContrast"
               @update:model-value="(val) => updateHighContrast(val as boolean)"
               label="High contrast mode"
+              size="sm"
             />
             <UCheckbox
               :model-value="preferences.reducedMotion"
               @update:model-value="(val) => updateReducedMotion(val as boolean)"
               label="Reduce animations"
+              size="sm"
             />
           </div>
           </div>

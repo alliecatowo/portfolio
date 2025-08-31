@@ -2,26 +2,26 @@
   <div>
     <section class="py-12 md:py-20">
       <UContainer>
-        <div class="max-w-5xl mx-auto mb-6 flex items-center justify-between">
+        <div class="max-w-5xl mx-auto mb-3 flex items-center justify-between">
           <div class="text-center md:text-left">
             <h1 class="text-4xl md:text-5xl font-bold mb-1 text-primary dark:text-primary-400">Tattoo Blog</h1>
             <p class="text-lg text-gray-600 dark:text-gray-400">Stories, insights, and inspiration from my journey as a tattoo artist.</p>
           </div>
           <div class="flex items-center gap-3">
             <ClientOnly>
-              <URadioGroup
-                v-if="allTags.length"
-                v-model="activeTag"
-                :items="[{ label: 'All', value: 'all' }, ...allTags.map(t => ({ label: t, value: t }))]"
-                orientation="horizontal"
-                size="sm"
-                class="hidden md:flex"
-              />
-            </ClientOnly>
-            <ClientOnly>
               <ListViewToggle v-model="blogView" />
             </ClientOnly>
           </div>
+        </div>
+        <div class="max-w-5xl mx-auto mb-6">
+          <ClientOnly>
+            <TagFilterBar
+              v-if="allTags.length"
+              :tags="allTags"
+              v-model="activeTag"
+              v-model:sort="sort"
+            />
+          </ClientOnly>
         </div>
         
         <!-- Loading state -->
@@ -41,7 +41,32 @@
         
         <!-- Blog posts -->
         <div v-else>
-          <UBlogPosts :posts="mappedPosts" :orientation="blogView === 'rows' ? 'vertical' : 'horizontal'" />
+          <div v-if="blogView === 'rows'" class="grid grid-cols-1 gap-6">
+            <BlogCard
+              v-for="post in posts"
+              :key="post.slug || post.path"
+              :title="post.title || ''"
+              :description="post.description"
+              :date="post.date"
+              :image="post.featured_image || 'https://placehold.co/640x360?text=Blog'"
+              :read-time="formatReadTime(estimateReadTime(post as any).minutes)"
+              :to="`/tattoo/blog/${post.slug}`"
+              :tags="post.tags || []"
+            />
+          </div>
+          <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <BlogCard
+              v-for="post in posts"
+              :key="post.slug || post.path"
+              :title="post.title || ''"
+              :description="post.description"
+              :date="post.date"
+              :image="post.featured_image || 'https://placehold.co/640x360?text=Blog'"
+              :read-time="formatReadTime(estimateReadTime(post as any).minutes)"
+              :to="`/tattoo/blog/${post.slug}`"
+              :tags="post.tags || []"
+            />
+          </div>
         </div>
         
         <!-- Pagination -->
@@ -76,6 +101,8 @@
 
 <script setup lang="ts">
 import ListViewToggle from '~/components/common/ListViewToggle.vue'
+import TagFilterBar from '~/components/common/TagFilterBar.vue'
+import BlogCard from '~/components/common/BlogCard.vue'
 import { useSiteConfig } from '~/utils/site-config';
 interface BlogDoc {
   title?: string;
@@ -118,12 +145,13 @@ const { data: allPostsAll } = await useAsyncData<BlogDoc[]>(
 )
 
 // Tag filter
-const allTags = computed(() => {
+const allTags = computed((): string[] => {
   const tags = new Set<string>()
-  (allPostsAll.value || []).forEach((p) => (p.tags || []).forEach((t: string) => tags.add(t)))
+  ;(allPostsAll.value || []).forEach((p) => (p.tags || []).forEach((t: string) => tags.add(t)))
   return Array.from(tags).sort()
 })
 const activeTag = ref((route.query.tag as string) || 'all')
+const sort = ref<'newest'|'oldest'>('newest')
 watch(activeTag, (val) => {
   if (!process.client) return
   const q = { ...route.query }
@@ -151,10 +179,13 @@ const { data: totalCount } = await useAsyncData<number>(
 )
 
 const { data: pageItems, pending: loading, error } = await useAsyncData<BlogDoc[]>(
-  () => `tattoo-blog-page-${activeTag.value}-${page.value}`,
+  () => `tattoo-blog-page-${activeTag.value}-${page.value}-${sort.value}`,
   async () => {
     try {
-      const base = queryCollection('blog').where('category', '=', 'tattoo').where('published', '=', true).order('date', 'DESC')
+      const base = queryCollection('blog')
+        .where('category', '=', 'tattoo')
+        .where('published', '=', true)
+        .order('date', sort.value === 'newest' ? 'DESC' : 'ASC')
       if (activeTag.value === 'all') {
         return base.limit(pageSize).skip((page.value - 1) * pageSize).all()
       }
@@ -166,23 +197,19 @@ const { data: pageItems, pending: loading, error } = await useAsyncData<BlogDoc[
       return []
     }
   },
-  { watch: [page, activeTag] }
+  { watch: [page, activeTag, sort] }
 )
 
 const total = computed(() => totalCount.value || 0)
 const posts = computed(() => pageItems.value || [])
 
 const { estimateReadTime, formatReadTime } = useReadTime();
-const mappedPosts = computed(() => {
-  return posts.value.map((post: BlogDoc) => ({
-    title: post.title,
-    description: post.description,
-    date: post.date,
-    image: post.featured_image || 'https://placehold.co/640x360?text=Blog',
-    badge: formatReadTime(estimateReadTime(post).minutes),
-    to: `/tattoo/blog/${post.slug}`
-  }))
-})
+const colorForTag = (t: string): 'primary'|'secondary'|'success'|'info'|'warning'|'error'|'neutral' => {
+  const colors = ['primary','secondary','success','info','warning','error'] as const
+  let hash = 0
+  for (let i=0;i<t.length;i++){ hash = (hash*31 + t.charCodeAt(i)) >>> 0 }
+  return colors[hash % colors.length]
+}
 
 const paginationLink = (p: number) => ({ query: { ...route.query, page: p } })
 

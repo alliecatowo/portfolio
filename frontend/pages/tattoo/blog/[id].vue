@@ -170,7 +170,7 @@ useHead(() => ({
 const { estimateReadTime, formatReadTime } = useReadTime();
 const readTimeLabel = computed(() => {
   if (!post.value) return '';
-  const readTime = estimateReadTime(post.value);
+  const readTime = estimateReadTime(post.value as any);
   return formatReadTime(readTime.minutes);
 });
 </script>
