@@ -2,7 +2,7 @@ export interface SiteConfig {
   domain?: string;
   title: string;
   description: string;
-  type: 'dev' | 'tattoo' | 'dual';
+  type: 'dev' | 'dual';
   themeClass: string;
   socialLinks: {
     github?: string;
@@ -14,10 +14,9 @@ export interface SiteConfig {
 }
 
 export const DEV_DOMAIN = 'allisons.dev';
-export const TATTOO_DOMAIN = 'allisons.gay';
 
-export function getSiteConfig(siteType: 'dev' | 'tattoo' | 'dual'): SiteConfig {
-  const configs: Record<'dev' | 'tattoo' | 'dual', SiteConfig> = {
+export function getSiteConfig(siteType: 'dev' | 'dual'): SiteConfig {
+  const configs: Record<'dev' | 'dual', SiteConfig> = {
     dev: {
       domain: DEV_DOMAIN,
       title: "Allison's Developer Portfolio",
@@ -25,30 +24,21 @@ export function getSiteConfig(siteType: 'dev' | 'tattoo' | 'dual'): SiteConfig {
       type: 'dev',
       themeClass: 'theme-dev',
       socialLinks: {
-        github: 'https://github.com/allison',
+        github: 'https://github.com/alliecatowo',
         linkedin: 'https://linkedin.com/in/allison',
         twitter: 'https://twitter.com/allison',
         email: 'dev@allisons.dev',
       }
     },
-    tattoo: {
-      domain: TATTOO_DOMAIN,
-      title: "Allison's Tattoo Art",
-      description: "Unique and creative tattoo designs with a personal touch",
-      type: 'tattoo',
-      themeClass: 'theme-tattoo',
-      socialLinks: {
-        instagram: 'https://instagram.com/allison.tattoo',
-        twitter: 'https://twitter.com/allison.tattoo',
-        email: 'ink@allisons.gay',
-      }
-    },
     dual: {
-      title: "Allison's Portfolio",
-      description: "Software developer and tattoo artist portfolio",
+      domain: DEV_DOMAIN,
+      title: "Allison's Developer Portfolio",
+      description: "Full-stack developer specializing in modern web technologies and creative problem solving",
       type: 'dual',
       themeClass: 'theme-dual',
       socialLinks: {
+        github: 'https://github.com/alliecatowo',
+        linkedin: 'https://linkedin.com/in/allison',
         email: 'hello@allisons.dev',
       }
     }

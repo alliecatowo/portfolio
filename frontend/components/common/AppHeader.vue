@@ -3,10 +3,10 @@
     <UContainer class="py-3">
       <div class="flex items-center justify-between gap-3">
         <!-- Logo / Title -->
-        <NuxtLink :to="siteConfig.type === 'dev' ? '/dev' : siteConfig.type === 'tattoo' ? '/tattoo' : '/'" class="no-underline group">
+        <NuxtLink :to="siteConfig.type === 'dev' ? '/dev' : '/'" class="no-underline group">
           <div class="flex items-center gap-3">
             <span class="text-xl sm:text-2xl font-bold text-primary select-none transition-all duration-300 group-hover:text-gradient">
-              ALLISON<span class="text-pink-500">.{{ siteConfig.type === 'tattoo' ? 'ink' : 'dev' }}</span>
+              ALLISON<span class="text-pink-500">.dev</span>
             </span>
             <div class="hidden sm:flex items-center gap-2">
               <UBadge color="primary" variant="soft" size="xs">5+ Years</UBadge>
@@ -39,19 +39,7 @@
             </UTooltip>
           </div>
 
-          <UTooltip text="Switch between portfolios" :kbds="['meta','S']" :delay-duration="300">
-            <UButton
-              color="primary"
-              variant="ghost"
-              size="sm"
-              class="rounded-full frosty-pill px-3 py-1.5 whitespace-nowrap flex-shrink-0"
-              aria-label="Switch between developer and tattoo portfolios"
-              @click="togglePortfolioType"
-            >
-              <UIcon name="i-lucide-repeat" class="w-4 h-4 mr-1" />
-              <span class="whitespace-nowrap">Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }}</span>
-            </UButton>
-          </UTooltip>
+          <!-- Portfolio toggle removed - now dev-only -->
 
           <div class="flex items-center gap-2 ml-2 pl-2 border-l border-white/10">
             <UTooltip text="Search" :kbds="['meta','K']" :delay-duration="300">
@@ -147,16 +135,7 @@
                   </UButton>
                   
                   <div class="border-t border-white/10 pt-4 mt-4">
-                    <UButton 
-                      block 
-                      color="primary" 
-                      variant="outline" 
-                      class="mb-4"
-                      @click="togglePortfolioType"
-                    >
-                      Switch to {{ siteConfig.type === 'dev' ? 'Tattoo' : 'Developer' }}
-                      <UIcon name="i-lucide-repeat" class="w-4 h-4 ml-2" />
-                    </UButton>
+                    <!-- Portfolio toggle removed - now dev-only -->
                     <UButton
                       icon="i-lucide-sliders"
                       variant="ghost"
@@ -195,7 +174,6 @@ defineEmits<{
 
 // Get site configuration
 const siteConfig = useSiteConfig();
-const router = useRouter();
 
 
 // Mobile drawer state
@@ -209,14 +187,7 @@ watch(() => route.path, () => {
   isDrawerOpen.value = false;
 });
 
-// Toggle between developer and tattoo portfolios
-const togglePortfolioType = () => {
-  const currentType = siteConfig.value.type;
-  const newType = currentType === 'dev' ? 'tattoo' : 'dev';
-  const baseRoute = newType === 'dev' ? '/dev' : '/tattoo';
-  router.push(baseRoute);
-  isDrawerOpen.value = false;
-};
+// Portfolio toggle function removed - now dev-only
 
 // Get navigation icons
 const getNavIcon = (name: string): string => {
@@ -244,20 +215,14 @@ const navigationItems = computed(() => {
       { name: 'Blog', path: '/dev/blog' },
       { name: 'Contact', path: '/dev/contact' }
     ];
-  } else if (siteConfig.value.type === 'tattoo') {
-    return [
-      { name: 'Home', path: '/tattoo' },
-      { name: 'About', path: '/tattoo/about' },
-      { name: 'Gallery', path: '/tattoo/gallery' },
-      { name: 'Testimonials', path: '/tattoo/testimonials' },
-      { name: 'Blog', path: '/tattoo/blog' },
-      { name: 'Contact', path: '/tattoo/contact' }
-    ];
   } else {
+    // Dual mode navigation
     return [
       { name: 'Home', path: '/' },
-      { name: 'About', path: '/about' },
-      { name: 'Contact', path: '/contact' }
+      { name: 'About', path: '/dev/about' },
+      { name: 'Projects', path: '/dev/projects' },
+      { name: 'Blog', path: '/dev/blog' },
+      { name: 'Contact', path: '/dev/contact' }
     ];
   }
 });

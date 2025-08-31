@@ -1,14 +1,14 @@
 ---
-title: "Tattooing and Programming: Two Crafts, One Mindset"
-date: "2025-08-30"
-description: "On precision, empathy, and translating a client’s vision—whether ink or code—into something beautiful and durable."
-category: "tattoo"
-tags: ["craft", "philosophy", "tattoo", "programming", "analogy"]
-author: "Allie"
+title: 'Tattooing and Programming: Two Crafts, One Mindset'
+date: '2025-08-30'
+description: 'On precision, empathy, and translating a client’s vision—whether ink or code—into something beautiful and durable.'
+category: 'tattoo'
+tags: ['craft', 'philosophy', 'tattoo', 'programming', 'analogy']
+author: 'Allie'
 published: true
 featured: true
-featured_image: "https://placehold.co/640x360?text=Tattoo"
-slug: "tattooing-and-programming-two-crafts"
+featured_image: 'https://placehold.co/640x360?text=Tattoo'
+slug: 'tattooing-and-programming-two-crafts'
 ---
 
 # Tattooing and Programming: Two Crafts, One Mindset

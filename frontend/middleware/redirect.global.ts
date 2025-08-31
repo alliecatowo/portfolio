@@ -1,7 +1,6 @@
 /**
  * Global middleware to handle redirects
  */
-import type { SiteConfig } from '~/utils/site-config';
 
 export default defineNuxtRouteMiddleware((to) => {
   // Root route without trailing slash should go to the landing page
@@ -18,31 +17,15 @@ export default defineNuxtRouteMiddleware((to) => {
     return navigateTo(`/dev${to.path}`);
   }
 
-  if (to.path.match(/^\/gallery\/?/) && !to.path.match(/^\/tattoo\/gallery\/?/)) {
-    return navigateTo(`/tattoo${to.path}`);
+  // Removed gallery and testimonials redirects as tattoo portfolio was removed
+
+  // Handle '/blog' route - redirect to dev blog
+  if (to.path.match(/^\/blog\/?/) && !to.path.match(/^\/dev\/blog\/?/)) {
+    return navigateTo(`/dev${to.path}`);
   }
 
-  if (to.path.match(/^\/testimonials\/?/) && !to.path.match(/^\/tattoo\/testimonials\/?/)) {
-    return navigateTo(`/tattoo${to.path}`);
-  }
-
-  // Handle '/blog' route - check the site config to determine where to redirect
-  if (to.path.match(/^\/blog\/?/) && !to.path.match(/^\/(dev|tattoo)\/blog\/?/)) {
-    const siteConfig = useState<SiteConfig | null>('siteConfig', () => null);
-    if (siteConfig.value?.type === 'tattoo') {
-      return navigateTo(`/tattoo${to.path}`);
-    } else {
-      return navigateTo(`/dev${to.path}`);
-    }
-  }
-
-  // Handle '/about' and '/contact' in the same way
-  if ((to.path === '/about' || to.path === '/contact') && !to.path.match(/^\/(dev|tattoo)/)) {
-    const siteConfig = useState<SiteConfig | null>('siteConfig', () => null);
-    if (siteConfig.value?.type === 'tattoo') {
-      return navigateTo(`/tattoo${to.path}`);
-    } else {
-      return navigateTo(`/dev${to.path}`);
-    }
+  // Handle '/about' and '/contact' - redirect to dev versions
+  if ((to.path === '/about' || to.path === '/contact') && !to.path.match(/^\/dev/)) {
+    return navigateTo(`/dev${to.path}`);
   }
 }); 

@@ -15,9 +15,9 @@
       <ClientOnly>
         <TagFilterBar
           v-if="allTags.length"
-          :tags="allTags"
           v-model="activeTag"
           v-model:sort="sort"
+          :tags="allTags"
         />
       </ClientOnly>
     </div>
@@ -101,9 +101,9 @@
 </template>
 
 <script setup lang="ts">
+import BlogCard from '~/components/common/BlogCard.vue'
 import ListViewToggle from '~/components/common/ListViewToggle.vue'
 import TagFilterBar from '~/components/common/TagFilterBar.vue'
-import BlogCard from '~/components/common/BlogCard.vue'
 import { useSiteConfig } from '~/utils/site-config';
 interface BlogDoc {
   title?: string;
@@ -129,8 +129,8 @@ watch(() => route.query.page, (val) => {
 })
 const pageSize = 9; // 3 columns x 3 rows
 
-// Determine which blog category to show based on site type
-const blogCategory = computed(() => siteConfig.value?.type === 'tattoo' ? 'tattoo' : 'dev');
+// Always show dev blog since tattoo portfolio was removed
+const blogCategory = computed(() => 'dev');
 
 // Fetch all (for tags), plus page-sized items
 const { data: allPostsAll } = await useAsyncData<BlogDoc[]>(

@@ -17,11 +17,13 @@
       </div>
     </div>
     
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <div class="blog-content prose lg:prose-lg mx-auto" v-html="post.content"></div>
     
     <div v-if="post.tags && post.tags.length" class="mt-8 pt-4 border-t border-gray-200">
       <div class="flex flex-wrap gap-2">
-        <span v-for="tag in post.tags" :key="tag" 
+        <span
+v-for="tag in post.tags" :key="tag" 
           class="px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full">
           {{ tag }}
         </span>
@@ -38,10 +40,9 @@ const props = defineProps<{
   postId: string
 }>()
 
-// Determine category based on current route
-const route = useRoute()
+// Always dev category now (tattoo removed)
 const category = computed(() => {
-  return route.path.includes('/tattoo/') ? 'tattoo' : 'dev'
+  return 'dev'
 })
 
 // Fetch the blog post directly with queryCollection
