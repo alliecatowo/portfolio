@@ -9,6 +9,12 @@ module.exports = {
     'plugin:vuejs-accessibility/recommended',
     'prettier'
   ],
+  parser: 'vue-eslint-parser',
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+    project: './tsconfig.json',
+    extraFileExtensions: ['.vue']
+  },
   env: {
     browser: true,
     es2022: true,
