@@ -13,7 +13,7 @@ export interface SearchCommandPaletteItem {
   children?: SearchCommandPaletteItem[]
   onSelect?(e?: Event): void
   class?: string | Record<string, boolean> | string[]
-  kbds?: any[]
+  kbds?: (string | undefined)[]
 }
 
 export interface SearchCommandPaletteGroup {
@@ -34,113 +34,126 @@ export interface SearchableContent {
   icon?: string
   category?: string
   tags?: string[]
-  kbds?: string[]
+  kbds?: (string | undefined)[]
 }
 
 export const useSearch = () => {
-  // Mock data for now - replace with actual content queries
-  const posts = ref([])
-  const projects = ref([])
+  // Real content data with reactive updates - using return types from useContent
+  const posts = ref<Awaited<ReturnType<typeof fetchBlogPosts>>>([])
+  const projects = ref<Awaited<ReturnType<typeof fetchProjects>>>([])
+  
+  const { fetchBlogPosts, fetchProjects } = useContent()
+  const isLoading = ref(false)
+  const searchHistory = ref<string[]>([])
+  const recentCommands = ref<SearchableContent[]>([])
+  
+  // Load real content on mount
+  onMounted(async () => {
+    await loadContent()
+  })
+  
+  const loadContent = async () => {
+    isLoading.value = true
+    try {
+      const [blogPosts, projectItems] = await Promise.all([
+        fetchBlogPosts(),
+        fetchProjects()
+      ])
+      posts.value = blogPosts
+      projects.value = projectItems
+    } catch (error) {
+      console.error('Failed to load content:', error)
+    } finally {
+      isLoading.value = false
+    }
+  }
 
   const searchableContent = computed<SearchableContent[]>(() => {
     const content: SearchableContent[] = []
 
-    // Navigation pages
+    // Navigation pages (unified portfolio structure)
     content.push(
       {
         id: 'home',
         title: 'Home',
-        description: 'Portfolio homepage showcasing both developer and tattoo work',
+        description: 'Portfolio homepage and overview',
         path: '/',
         type: 'page',
         icon: 'i-lucide-home'
       },
       {
-        id: 'dev-portfolio',
-        title: 'Developer Portfolio',
-        description: 'Full-stack developer projects and skills',
-        path: '/dev',
-        type: 'page',
-        icon: 'i-lucide-code'
-      },
-      {
-        id: 'dev-about',
-        title: 'About Me (Developer)',
-        description: 'My development journey and technical skills',
-        path: '/dev/about',
+        id: 'about',
+        title: 'About Me',
+        description: 'My journey, skills, and experience',
+        path: '/about',
         type: 'page',
         icon: 'i-lucide-user'
       },
       {
-        id: 'dev-projects',
-        title: 'Development Projects',
-        description: 'Browse my coding projects and open source contributions',
-        path: '/dev/projects',
+        id: 'projects',
+        title: 'Projects',
+        description: 'Development projects and case studies',
+        path: '/projects',
         type: 'page',
         icon: 'i-lucide-folder'
       },
       {
-        id: 'dev-blog',
-        title: 'Developer Blog',
+        id: 'open-source',
+        title: 'Open Source',
+        description: 'Open source contributions and packages',
+        path: '/open-source',
+        type: 'page',
+        icon: 'i-lucide-github'
+      },
+      {
+        id: 'blog',
+        title: 'Blog',
         description: 'Technical articles and development insights',
-        path: '/dev/blog',
+        path: '/blog',
         type: 'page',
         icon: 'i-lucide-pen-tool'
       },
       {
-        id: 'dev-contact',
-        title: 'Contact (Developer)',
-        description: 'Get in touch about development projects',
-        path: '/dev/contact',
+        id: 'contact',
+        title: 'Contact',
+        description: 'Get in touch about projects and opportunities',
+        path: '/contact',
         type: 'page',
         icon: 'i-lucide-mail'
-      },
-      {
-        id: 'tattoo-portfolio',
-        title: 'Tattoo Portfolio',
-        description: 'Custom tattoo designs and artwork',
-        path: '/tattoo',
-        type: 'page',
-        icon: 'i-lucide-brush'
-      },
-      {
-        id: 'tattoo-gallery',
-        title: 'Tattoo Gallery',
-        description: 'Browse my tattoo artwork and designs',
-        path: '/tattoo/gallery',
-        type: 'page',
-        icon: 'i-lucide-image'
       }
     )
 
-    // Blog posts
+    // Blog posts (real content with enhanced searchability)
     if (posts.value && Array.isArray(posts.value)) {
-      posts.value.forEach((post: any) => {
+      posts.value.forEach((post) => {
+        const readingTime = post.readingTime || Math.ceil((typeof post.body === 'object' && post.body !== null && 'length' in post.body ? (post.body as { length: number }).length : 1000) / 200)
         content.push({
-          id: post._id || post._path,
+          id: post.path || post.slug || 'unknown-post',
           title: post.title || 'Untitled Post',
-          description: post.description || post.excerpt || 'Blog post',
-          path: post._path || `/blog/${post.slug}`,
+          description: `${post.description || 'Blog post'} • ${readingTime} min read`,
+          path: `/blog/${post.slug || post.path?.split('/').pop()}`,
           type: 'blog',
           icon: 'i-lucide-file-text',
           category: post.category,
-          tags: post.tags || []
+          tags: [...(post.tags || []), post.date ? `${new Date(post.date).getFullYear()}` : ''].filter(Boolean)
         })
       })
     }
 
-    // Projects
+    // Projects (real content with tech stack visibility)
     if (projects.value && Array.isArray(projects.value)) {
-      projects.value.forEach((project: any) => {
+      projects.value.forEach((project) => {
+        const techStack = project.technologies || []
+        const statusBadge = project.featured ? '⭐ Featured' : project.status || ''
         content.push({
-          id: project._id || project._path,
+          id: project.path || project.slug || 'unknown-project',
           title: project.title || 'Untitled Project',
-          description: project.description || 'Development project',
-          path: project._path || `/projects/${project.slug}`,
+          description: `${project.description || 'Development project'} ${statusBadge ? `• ${statusBadge}` : ''}`,
+          path: `/projects/${project.slug || project.path?.split('/').pop()}`,
           type: 'project',
-          icon: 'i-lucide-box',
-          category: project.category,
-          tags: project.tech || project.technologies || []
+          icon: project.featured ? 'i-lucide-star' : 'i-lucide-box',
+          category: undefined,
+          tags: [...techStack].filter(Boolean)
         })
       })
     }
@@ -236,96 +249,224 @@ export const useSearch = () => {
     return content
   })
 
-  const createCommandGroups = (closeModal?: () => void): SearchCommandPaletteGroup[] => {
-    const content = searchableContent.value
+  // Advanced search with prefix support
+  const parseSearchTerm = (term: string) => {
+    const trimmed = term.trim()
+    
+    // Handle search prefixes
+    if (trimmed.startsWith('>blog ')) {
+      return { prefix: 'blog', query: trimmed.slice(6) }
+    }
+    if (trimmed.startsWith('>projects ') || trimmed.startsWith('>proj ')) {
+      return { prefix: 'projects', query: trimmed.slice(trimmed.startsWith('>projects ') ? 10 : 6) }
+    }
+    if (trimmed.startsWith('>actions ') || trimmed.startsWith('>act ')) {
+      return { prefix: 'actions', query: trimmed.slice(trimmed.startsWith('>actions ') ? 9 : 5) }
+    }
+    if (trimmed.startsWith('>pages ')) {
+      return { prefix: 'pages', query: trimmed.slice(7) }
+    }
+    if (trimmed === '?' || trimmed.startsWith('?')) {
+      return { prefix: 'help', query: trimmed.slice(1) }
+    }
+    if (trimmed.startsWith('!')) {
+      return { prefix: 'execute', query: trimmed.slice(1) }
+    }
+    
+    return { prefix: null, query: trimmed }
+  }
 
-    return [
-      {
-        id: 'pages',
-        label: 'Pages',
-        items: content
-          .filter(item => item.type === 'page')
-          .map(item => ({
+  const addToHistory = (item: SearchableContent) => {
+    // Add to recent commands, avoiding duplicates
+    const filtered = recentCommands.value.filter((cmd: SearchableContent) => cmd.id !== item.id)
+    recentCommands.value = [item, ...filtered].slice(0, 10)
+  }
+
+  const addSearchToHistory = (term: string) => {
+    if (term.trim() && !searchHistory.value.includes(term.trim())) {
+      searchHistory.value = [term.trim(), ...searchHistory.value].slice(0, 20)
+    }
+  }
+
+  const createCommandGroups = (closeModal?: () => void, searchTerm?: string): SearchCommandPaletteGroup[] => {
+    const content = searchableContent.value
+    const parsed = parseSearchTerm(searchTerm || '')
+    
+    // If help prefix, show shortcuts and help
+    if (parsed.prefix === 'help') {
+      return [{
+        id: 'help',
+        label: 'Help & Shortcuts',
+        items: [
+          {
+            id: 'help-prefixes',
+            label: 'Search Prefixes',
+            suffix: '>blog, >projects, >actions, >pages',
+            icon: 'i-lucide-hash',
+            onSelect: () => closeModal?.()
+          },
+          {
+            id: 'help-shortcuts',
+            label: 'Keyboard Shortcuts',
+            suffix: '⌘K to open, ↑↓ to navigate, ↵ to select',
+            icon: 'i-lucide-keyboard',
+            onSelect: () => closeModal?.()
+          },
+          {
+            id: 'help-actions',
+            label: 'Quick Actions',
+            suffix: 'Use ! prefix for immediate execution',
+            icon: 'i-lucide-zap',
+            onSelect: () => closeModal?.()
+          }
+        ]
+      }]
+    }
+
+    // Filter content based on prefix
+    let filteredContent = content
+    if (parsed.prefix === 'blog') {
+      filteredContent = content.filter(item => item.type === 'blog')
+    } else if (parsed.prefix === 'projects') {
+      filteredContent = content.filter(item => item.type === 'project')
+    } else if (parsed.prefix === 'actions') {
+      filteredContent = content.filter(item => item.type === 'action')
+    } else if (parsed.prefix === 'pages') {
+      filteredContent = content.filter(item => item.type === 'page')
+    }
+
+    const groups: SearchCommandPaletteGroup[] = []
+
+    // Add recent commands if no search term or prefix
+    if (!parsed.query && !parsed.prefix && recentCommands.value.length > 0) {
+      groups.push({
+        id: 'recent',
+        label: 'Recently Used',
+        items: recentCommands.value.slice(0, 5).map((item: SearchableContent) => ({
+          id: item.id,
+          label: item.title,
+          suffix: item.description,
+          icon: item.icon,
+          onSelect: () => {
+            if (item.type === 'action') {
+              executeAction(item.id)
+            } else {
+              navigateTo(item.path)
+            }
+            addToHistory(item)
+            closeModal?.()
+          }
+        }))
+      })
+    }
+
+    // Add content groups based on prefix or show all
+    if (!parsed.prefix || parsed.prefix === 'pages') {
+      const pages = filteredContent.filter(item => item.type === 'page')
+      if (pages.length > 0) {
+        groups.push({
+          id: 'pages',
+          label: 'Pages',
+          items: pages.map((item: SearchableContent) => ({
             id: item.id,
             label: item.title,
-            ...(item.description && { suffix: item.description }),
-            ...(item.icon && { icon: item.icon }),
+            suffix: item.description,
+            icon: item.icon,
             onSelect: () => {
               navigateTo(item.path)
+              addToHistory(item)
               closeModal?.()
             }
           }))
-      },
-      {
-        id: 'blog',
-        label: 'Blog Posts',
-        items: content
-          .filter(item => item.type === 'blog')
-          .map(item => ({
+        })
+      }
+    }
+
+    if (!parsed.prefix || parsed.prefix === 'blog') {
+      const blogPosts = filteredContent.filter(item => item.type === 'blog')
+      if (blogPosts.length > 0) {
+        groups.push({
+          id: 'blog',
+          label: parsed.prefix === 'blog' ? 'Blog Posts' : 'Recent Blog Posts',
+          items: blogPosts.slice(0, parsed.prefix === 'blog' ? 50 : 6).map((item: SearchableContent) => ({
             id: item.id,
             label: item.title,
-            ...(item.description && { suffix: item.description }),
-            ...(item.icon && { icon: item.icon }),
+            suffix: item.description,
+            icon: item.icon,
             onSelect: () => {
               navigateTo(item.path)
+              addToHistory(item)
               closeModal?.()
             }
           }))
-      },
-      {
-        id: 'projects',
-        label: 'Projects',
-        items: content
-          .filter(item => item.type === 'project')
-          .map(item => ({
+        })
+      }
+    }
+
+    if (!parsed.prefix || parsed.prefix === 'projects') {
+      const projectItems = filteredContent.filter(item => item.type === 'project')
+      if (projectItems.length > 0) {
+        groups.push({
+          id: 'projects',
+          label: parsed.prefix === 'projects' ? 'All Projects' : 'Featured Projects',
+          items: projectItems.slice(0, parsed.prefix === 'projects' ? 50 : 6).map((item: SearchableContent) => ({
             id: item.id,
             label: item.title,
-            ...(item.description && { suffix: item.description }),
-            ...(item.icon && { icon: item.icon }),
+            suffix: item.description,
+            icon: item.icon,
             onSelect: () => {
               navigateTo(item.path)
+              addToHistory(item)
               closeModal?.()
             }
           }))
-      },
-      {
-        id: 'actions',
-        label: 'Quick Actions',
-        items: content
-          .filter(item => item.type === 'action')
-          .map(item => ({
+        })
+      }
+    }
+
+    if (!parsed.prefix || parsed.prefix === 'actions') {
+      const actions = filteredContent.filter(item => item.type === 'action')
+      if (actions.length > 0) {
+        groups.push({
+          id: 'actions',
+          label: 'Quick Actions',
+          items: actions.map((item: SearchableContent) => ({
             id: item.id,
             label: item.title,
-            ...(item.description && { suffix: item.description }),
-            ...(item.icon && { icon: item.icon }),
-            ...(item.kbds && { kbds: item.kbds as any }),
+            suffix: item.description,
+            icon: item.icon,
+            kbds: item.kbds,
             onSelect: () => {
               executeAction(item.id)
+              addToHistory(item)
               closeModal?.()
             }
           }))
+        })
       }
-    ].filter(group => group.items.length > 0)
+    }
+
+    return groups.filter((group: SearchCommandPaletteGroup) => group.items && group.items.length > 0)
   }
+
 
   const executeAction = (actionId: string) => {
     const { showSuccess } = useToastNotifications()
     
     switch (actionId) {
-      case 'toggle-theme':
+      case 'toggle-theme': {
         const colorMode = useColorMode()
         const newMode = colorMode.preference === 'dark' ? 'light' : 'dark'
         colorMode.preference = newMode
         showSuccess(`Switched to ${newMode} mode`, 'Theme Updated')
         break
-      case 'accessibility-settings':
-        {
+      }
+      case 'accessibility-settings': {
           const showAccessibilitySettings = useState<boolean>('showAccessibilitySettings', () => false)
           showAccessibilitySettings.value = true
+          break
         }
-        break
-      case 'switch-portfolio':
-        {
+      case 'switch-portfolio': {
           const siteConfig = useSiteConfig()
           const router = useRouter()
           const currentType = siteConfig.value.type
@@ -333,6 +474,7 @@ export const useSearch = () => {
           const baseRoute = newType === 'dev' ? '/dev' : '/tattoo'
           router.push(baseRoute)
           showSuccess(`Switched to ${newType} portfolio`, 'Navigation')
+          break
         }
         break
       case 'shortcuts-help':
@@ -396,6 +538,13 @@ export const useSearch = () => {
 
   return {
     searchableContent: readonly(searchableContent),
-    createCommandGroups
+    createCommandGroups,
+    parseSearchTerm,
+    addToHistory,
+    addSearchToHistory,
+    searchHistory: readonly(searchHistory),
+    recentCommands: readonly(recentCommands),
+    isLoading: readonly(isLoading),
+    loadContent
   }
 }
