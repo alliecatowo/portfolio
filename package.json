@@ -1,37 +1,42 @@
 {
-    "scripts": {
-        "prepare": "husky install",
-        "lint-staged": "lint-staged",
-        "dev": "pnpm -C frontend dev",
-        "build": "pnpm -C frontend build",
-        "generate": "pnpm -C frontend generate",
-        "preview": "pnpm -C frontend preview",
-        "typecheck": "pnpm -C frontend typecheck",
-        "lint": "pnpm -C frontend lint",
-        "lint:fix": "pnpm -C frontend lint:fix"
-    },
-    "devDependencies": {
-		"@axe-core/cli": "^4.10.2",
-		"@commitlint/cli": "^19.5.0",
-		"@commitlint/config-conventional": "^19.5.0",
-		"@semantic-release/changelog": "^6.0.3",
-		"@semantic-release/commit-analyzer": "^13.0.0",
-		"@semantic-release/github": "^10.3.5",
-		"@semantic-release/git": "^10.0.1",
-		"@semantic-release/exec": "^6.0.3",
-		"@semantic-release/release-notes-generator": "^14.0.1",
-		"husky": "^9.1.6",
-		"lint-staged": "^15.2.9",
-		"pa11y": "^9.0.0",
-		"prettier": "^3.3.3",
-        "semantic-release": "^24.1.0"
-    },
-    "lint-staged": {
-        "frontend/**/*.{js,ts,vue}": [
-            "pnpm -C frontend exec eslint --fix --ext .js,.ts,.vue"
-        ],
-        "**/*.{css,scss,md,yml,yaml,json}": [
-            "prettier --write"
-        ]
-    }
+  "scripts": {
+    "prepare": "husky install",
+    "lint-staged": "lint-staged",
+    "dev": "pnpm -C frontend dev",
+    "build": "pnpm -C frontend build",
+    "generate": "pnpm -C frontend generate",
+    "preview": "pnpm -C frontend preview",
+    "typecheck": "pnpm -C frontend typecheck",
+    "lint": "pnpm -C frontend lint",
+    "lint:fix": "pnpm -C frontend lint:fix",
+    "lockfile:check": "pnpm install --frozen-lockfile --prefer-offline",
+    "lockfile:update": "pnpm install && git add pnpm-lock.yaml"
+  },
+  "devDependencies": {
+    "@axe-core/cli": "^4.10.2",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/github": "^10.3.5",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/release-notes-generator": "^14.0.1",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.9",
+    "pa11y": "^9.0.0",
+    "prettier": "^3.3.3",
+    "semantic-release": "^24.1.0"
+  },
+  "lint-staged": {
+    "frontend/**/*.{js,ts,vue}": [
+      "pnpm -C frontend exec eslint --fix --ext .js,.ts,.vue"
+    ],
+    "**/*.{css,scss,md,yml,yaml,json}": [
+      "prettier --write"
+    ],
+    "{package.json,frontend/package.json}": [
+      "bash -c 'pnpm lockfile:check'"
+    ]
+  }
 }
