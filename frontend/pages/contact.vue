@@ -223,10 +223,6 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
 </template>
 
 <script setup lang="ts">
-import { useSiteConfig } from '~/utils/site-config';
-
-// Get site configuration
-useSiteConfig();
 
 // Form data
 const form = reactive({

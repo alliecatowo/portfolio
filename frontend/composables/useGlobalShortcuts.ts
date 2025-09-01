@@ -4,8 +4,6 @@ export const useGlobalShortcuts = () => {
   const showShortcutsHelp = useState<boolean>('showShortcutsHelp', () => false)
 
   const colorMode = useColorMode()
-  const router = useRouter()
-  const siteConfig = useSiteConfig()
 
   const toggleColorMode = () => {
     const next = colorMode.preference === 'dark' ? 'light' : 'dark'
@@ -13,10 +11,8 @@ export const useGlobalShortcuts = () => {
   }
 
   const togglePortfolioType = () => {
-    const currentType = siteConfig.value?.type
-    const newType = currentType === 'dev' ? 'tattoo' : 'dev'
-    const baseRoute = newType === 'dev' ? '/dev' : '/tattoo'
-    router.push(baseRoute)
+    // Portfolio toggling disabled
+    console.log('Portfolio toggling is disabled')
   }
 
   const closeActiveModals = () => {

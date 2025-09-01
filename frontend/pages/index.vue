@@ -395,15 +395,6 @@ useHead({
 // Import content utilities
 import { useContent } from '~/composables/useContent';
 
-// Use developer-focused site config for the unified portfolio
-const config = useSiteConfig();
-config.value = {
-  ...config.value,
-  title: "Allison's Developer Portfolio",
-  description: "Full-stack developer specializing in modern web technologies and creative problem solving",
-  type: 'dual',
-};
-
 // Use content composable to fetch featured content
 const { fetchProjects, fetchBlogPosts } = useContent();
 

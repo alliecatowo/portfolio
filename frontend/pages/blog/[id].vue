@@ -258,10 +258,6 @@
 
 <script setup lang="ts">
 import { useContent } from '~/composables/useContent';
-import { useSiteConfig } from '~/utils/site-config';
-
-// Get site configuration
-const siteConfig = useSiteConfig();
 
 // Get post slug from route
 const route = useRoute();
@@ -353,8 +349,8 @@ const getTagColor = (tag: string): 'primary'|'secondary'|'success'|'info'|'warni
 // Meta tags
 useHead(() => ({
   title: post.value 
-    ? `${post.value.title} - ${siteConfig.value?.title || 'Allison\'s Portfolio'}`
-    : `Blog - ${siteConfig.value?.title || 'Allison\'s Portfolio'}`,
+    ? `${post.value.title} - Allison's Portfolio`
+    : `Blog - Allison's Portfolio`,
   meta: [
     { 
       name: 'description', 

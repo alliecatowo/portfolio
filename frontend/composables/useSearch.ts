@@ -179,15 +179,6 @@ export const useSearch = () => {
         kbds: ['meta', 'A']
       },
       {
-        id: 'switch-portfolio',
-        title: 'Switch Portfolio',
-        description: 'Toggle between Developer and Tattoo',
-        path: '#',
-        type: 'action',
-        icon: 'i-lucide-repeat',
-        kbds: ['meta', 'S']
-      },
-      {
         id: 'shortcuts-help',
         title: 'Keyboard Shortcuts',
         description: 'Show available keyboard shortcuts',
@@ -467,16 +458,9 @@ export const useSearch = () => {
           break
         }
       case 'switch-portfolio': {
-          const siteConfig = useSiteConfig()
-          const router = useRouter()
-          const currentType = siteConfig.value.type
-          const newType = currentType === 'dev' ? 'tattoo' : 'dev'
-          const baseRoute = newType === 'dev' ? '/dev' : '/tattoo'
-          router.push(baseRoute)
-          showSuccess(`Switched to ${newType} portfolio`, 'Navigation')
+          showSuccess(`Portfolio switching is disabled`, 'Info')
           break
         }
-        break
       case 'shortcuts-help':
         {
           const showShortcutsHelp = useState<boolean>('showShortcutsHelp', () => false)
