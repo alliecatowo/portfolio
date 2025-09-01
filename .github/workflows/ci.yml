@@ -282,3 +282,25 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ALLIE_PORTFOLIO_PROJECT }}
           channelId: live
           projectId: allie-portfolio-project
+
+  # Summary job to report overall CI status
+  ci-success:
+    if: always()
+    needs: [setup, typecheck, lint, build, test, commitlint, firebase-preview, firebase-production]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check all jobs
+        run: |
+          # Check if any required job failed
+          if [[ "${{ needs.setup.result }}" == "failure" || 
+                "${{ needs.typecheck.result }}" == "failure" || 
+                "${{ needs.lint.result }}" == "failure" || 
+                "${{ needs.build.result }}" == "failure" || 
+                "${{ needs.test.result }}" == "failure" || 
+                ("${{ needs.commitlint.result }}" == "failure" && "${{ github.event_name }}" == "pull_request") ]]; then
+            echo "::error::One or more required CI jobs failed"
+            exit 1
+          fi
+
+          # Firebase jobs can be skipped, that's OK
+          echo "All CI checks passed! ✅"
