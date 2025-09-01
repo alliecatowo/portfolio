@@ -43,6 +43,14 @@ pnpm -C frontend lint:files path/to/file.ts path/to/file.vue
 # OR from frontend directory
 cd frontend && npm run lint
 cd frontend && npm run lint:files path/to/file.ts
+
+# Database Management (Nuxt Content)
+# Clean corrupted SQLite database
+pnpm -C frontend db:clean
+# Rebuild database from scratch
+pnpm -C frontend db:rebuild
+# Start dev server with clean database
+pnpm -C frontend dev:clean
 ```
 
 ### Deployment
@@ -123,7 +131,45 @@ TATTOO_SITE_URL=http://localhost:3000
 
 - Uses pnpm workspaces (configured in `pnpm-workspace.yaml`)
 - Node.js 22.x required (specified in engines)
-- Better-sqlite3 dependency issues resolved with native SQLite
+- Uses better-sqlite3 in development for stable live reload
+- Production uses native SQLite (Node 22.x) for performance
+
+## Troubleshooting
+
+### Nuxt Content SQLite Issues
+
+**Problem**: `no such table: _content_blog` errors during development
+
+**Root Cause**: SQLite database corruption during Hot Module Replacement (HMR)
+
+**Solutions**:
+
+```bash
+# Quick fix - clean and restart
+pnpm -C frontend dev:clean
+
+# Manual database cleanup
+pnpm -C frontend db:clean
+pnpm dev
+
+# Complete rebuild (if corruption persists)
+pnpm -C frontend db:rebuild
+pnpm dev
+```
+
+**Prevention**:
+
+- Database configuration automatically uses better-sqlite3 in development
+- Native SQLite only used in production for performance
+- Avoid manual `.data/content/contents.sqlite` file modifications
+
+### Common Development Issues
+
+**Port conflicts**: If port 3000 is in use, Nuxt will auto-select next available port
+
+**TypeScript errors after updates**: Run `pnpm -C frontend typecheck` to verify types
+
+**Linting failures**: Use `pnpm -C frontend lint:fix` for auto-fixable issues
 
 ## Git Workflow & CI/CD
 

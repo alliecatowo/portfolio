@@ -14,8 +14,15 @@ export default defineNuxtConfig({
     '@nuxt/image'
   ],
   // Color mode handled by @nuxt/ui defaults (system)
-  // Force Nuxt Content to use Node's built-in SQLite (avoids native deps like better-sqlite3)
-  ...({ content: { experimental: { nativeSqlite: true, sqliteConnector: 'native' } } } as any),
+  // Use better-sqlite3 for development stability (native SQLite causes live reload issues)
+  ...({ content: { 
+    experimental: { 
+      // Use better-sqlite3 in development for stability with HMR/live reload
+      sqliteConnector: process.env.NODE_ENV === 'production' ? 'native' : 'better-sqlite3',
+      // Enable native SQLite only in production (Node 22.5.0+)
+      nativeSqlite: process.env.NODE_ENV === 'production'
+    } 
+  } }),
   css: ['~/assets/css/main.css'],
   // Ensure content auto-imports work
   imports: {
@@ -99,7 +106,7 @@ export default defineNuxtConfig({
         projectImage: { modifiers: { format: 'webp', width: 800, height: 450, fit: 'contain', quality: 90 } }
       }
     }
-  } as any),
+  }),
   // Vite optimizations
   vite: {
     build: {
