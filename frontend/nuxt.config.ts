@@ -111,19 +111,10 @@ export default defineNuxtConfig({
     build: {
       cssCodeSplit: true,
       // Disable sourcemaps in production to avoid Tailwind CSS v4 plugin warnings
-      sourcemap: process.env.NODE_ENV === 'development',
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            // Do not chunk '@nuxt/ui' — it's a Nuxt module, not a runtime lib
-            'vue-core': ['vue', 'vue-router']
-          }
-        }
-      }
+      sourcemap: process.env.NODE_ENV === 'development'
     },
     optimizeDeps: {
-      // Only prebundle runtime libs, never Nuxt modules
-      include: ['vue', 'vue-router'],
+      // Only prebundle essential runtime libs, let Nuxt 4 handle vue/vue-router
       exclude: ['@nuxt/ui', '@nuxt/kit', 'lightningcss', '@tailwindcss/oxide']
     },
     ssr: {
