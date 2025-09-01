@@ -100,11 +100,14 @@ export default defineNuxtConfig({
       ]
     }
   },
-
-  // Use standard ipx provider for better compatibility with static generation
+  // Nuxt Image presets (used across pages) 
+  // Use ipxStatic for proper static generation with CI compatibility
   ...({ image: {
-    provider: 'ipx',
-
+    provider: 'ipxStatic',
+    // Add Sharp configuration for CI environments
+    ipxStatic: {
+      sharp: true,
+    },
     presets: {
       avatar: { 
         modifiers: { 
