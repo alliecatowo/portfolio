@@ -24,8 +24,8 @@
                   <!-- Main image -->
                   <div class="relative w-full h-full rounded-full overflow-hidden glass-accent p-2">
                     <NuxtImg 
-                      src="https://picsum.photos/500/500?random=profile" 
-                      alt="Allison - Full-Stack Developer"
+                      src="/images/personal/allison-avatar.jpg" 
+                      alt="Allison - Full-Stack Developer and Tattoo Artist"
                       class="w-full h-full rounded-full object-cover"
                       loading="eager"
                       preset="avatar"
@@ -63,7 +63,7 @@
                 Hi, I'm Allison
               </h1>
               <p class="text-2xl md:text-3xl text-default mb-6">
-                Full-Stack Developer & Creative Technologist
+                Full-Stack Developer & Tattoo Artist
               </p>
               <div class="prose prose-lg text-default max-w-none">
                 <p class="mb-6">
@@ -73,7 +73,10 @@
                 </p>
                 <p class="mb-8">
                   Whether it's building scalable applications, optimizing performance, or creating intuitive interfaces, 
-                  I bring passion, precision, and creativity to every project.
+                  I bring passion, precision, and creativity to every project. When I'm not coding, I'm often tattooing — I love translating ideas into linework and color.
+                </p>
+                <p class="mb-8">
+                  At home, I share life with my fiancée Violet and two chinchillas: Ray (our chunky loaf, senior citizen) and Paddy (our tiny, high‑energy St. Patrick’s Day adoption). I also tinker with split keyboards — a Lily58 with a trackpad, and a pink Sofle running wireless ZMK with OLEDs and a dongle setup.
                 </p>
               </div>
               
@@ -322,18 +325,18 @@
             <div class="glass-accent rounded-xl overflow-hidden hover-lift group">
               <div class="aspect-video bg-gradient-to-br from-primary/20 to-purple-600/20 relative">
                 <NuxtImg 
-                  src="https://picsum.photos/400/300?random=hobby1" 
-                  alt="Photography"
+                  src="/images/keyboards/sofle-pink-oled.jpg" 
+                  alt="Pink Sofle keyboard with OLED screens"
                   class="w-full h-full object-cover mix-blend-overlay"
                   loading="lazy"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <UIcon name="i-lucide-camera" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
+                <UIcon name="i-lucide-keyboard" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
               </div>
               <div class="p-6">
-                <h3 class="text-xl font-bold mb-2 text-primary">Photography</h3>
+                <h3 class="text-xl font-bold mb-2 text-primary">Custom Keyboards</h3>
                 <p class="text-muted">
-                  Capturing moments and perspectives through the lens. Love exploring urban landscapes and nature.
+                  Daily drivers: Lily58 with a touchpad, and a pink Sofle running wireless ZMK with OLEDs + dongle.
                 </p>
               </div>
             </div>
@@ -341,18 +344,18 @@
             <div class="glass-accent rounded-xl overflow-hidden hover-lift group">
               <div class="aspect-video bg-gradient-to-br from-purple-600/20 to-pink-500/20 relative">
                 <NuxtImg 
-                  src="https://picsum.photos/400/300?random=hobby2" 
-                  alt="Hiking"
+                  src="/images/couple/allison-violet-beach.jpg" 
+                  alt="Allison and Violet at the beach, showing tattoo work"
                   class="w-full h-full object-cover mix-blend-overlay"
                   loading="lazy"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <UIcon name="i-lucide-mountain" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
+                <UIcon name="i-lucide-pen-tool" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
               </div>
               <div class="p-6">
-                <h3 class="text-xl font-bold mb-2 text-purple-500">Hiking & Nature</h3>
+                <h3 class="text-xl font-bold mb-2 text-purple-500">Tattoo Art</h3>
                 <p class="text-muted">
-                  Finding balance and inspiration in nature. Weekend hikes help clear my mind and spark creativity.
+                  I tattoo part‑time — linework, color, and collaborative designs that tell stories.
                 </p>
               </div>
             </div>
@@ -360,8 +363,8 @@
             <div class="glass-accent rounded-xl overflow-hidden hover-lift group">
               <div class="aspect-video bg-gradient-to-br from-pink-500/20 to-yellow-500/20 relative">
                 <NuxtImg 
-                  src="https://picsum.photos/400/300?random=hobby3" 
-                  alt="Cat companions"
+                  src="/images/couple/allison-violet-selfie.jpg" 
+                  alt="Allison and Violet (chinchilla in background)"
                   class="w-full h-full object-cover mix-blend-overlay"
                   loading="lazy"
                 />
@@ -369,9 +372,9 @@
                 <UIcon name="i-lucide-heart" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
               </div>
               <div class="p-6">
-                <h3 class="text-xl font-bold mb-2 text-pink-500">Cat Parent</h3>
+                <h3 class="text-xl font-bold mb-2 text-pink-500">Chinchilla Crew</h3>
                 <p class="text-muted">
-                  Proud parent to Pixel and Vector - my debugging companions who ensure no keyboard goes unsat upon.
+                  Two rescues from Craigslist: Ray (chunky loaf, older) and Paddy (tiny, full of energy).
                 </p>
               </div>
             </div>
