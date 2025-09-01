@@ -82,28 +82,27 @@ export default defineNuxtConfig({
   features: {
     devLogs: process.env.NODE_ENV === 'development'
   },
-  // Firebase Hosting (static)
+  // Firebase Hosting (static) - simplified configuration
   nitro: {
     preset: 'static',
-    compressPublicAssets: true,
     prerender: {
       crawlLinks: true,
-      ignore: ['/tattoo'],
-      failOnError: false
-    },
-    minify: true,
-    // Better error logging in development
-    logLevel: process.env.NODE_ENV === 'development' ? 3 : 0,
-    experimental: {
-      wasm: true
+      failOnError: false,
+      // Include all main routes for proper static generation
+      routes: [
+        '/',
+        '/projects',
+        '/about', 
+        '/contact',
+        '/gallery',
+        '/open-source',
+        '/blog'
+      ]
     }
   },
   // Nuxt Image presets (used across pages)
-  // Wrapped in spread+any to avoid Nuxt 4 type noise during typecheck
-  ...({ image: {
-    // Use none provider in development (serves from /public), ipx in production
-    provider: process.env.NODE_ENV === 'development' ? 'none' : 'ipx',
-    // Simple presets that work with both providers
+  // Let Nuxt automatically select provider: ipx (dev) or ipxStatic (static builds)
+  image: {
     presets: {
       avatar: { 
         modifiers: { 
@@ -144,7 +143,7 @@ export default defineNuxtConfig({
         } 
       }
     }
-  } }),
+  },
   // Vite optimizations
   vite: {
     build: {

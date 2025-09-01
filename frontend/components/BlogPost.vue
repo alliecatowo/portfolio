@@ -7,7 +7,7 @@
       </div>
       <div v-if="post.featured_image" class="featured-image mb-6">
         <NuxtImg 
-          :src="getImageUrl(post.featured_image)" 
+          :src="post.featured_image" 
           :alt="post.title"
           loading="lazy"
           preset="hero"
@@ -61,18 +61,6 @@ const { data: post } = await useAsyncData(
       .first()
   }
 )
-
-interface ImageData {
-  url?: string;
-  src?: string;
-  path?: string;
-}
-
-function getImageUrl(image: ImageData | string | undefined) {
-  if (!image) return '';
-  if (typeof image === 'string') return image;
-  return image.url || image.src || image.path || '';
-}
 
 function formatDate(dateString?: string) {
   if (!dateString) return ''

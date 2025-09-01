@@ -7,15 +7,11 @@
 </template>
 
 <script setup lang="ts">
-import { useSiteConfig } from '~/utils/site-config';
-
-const siteConfig = useSiteConfig();
-
-// Set meta tags based on site configuration
-useHead(() => ({
-  title: siteConfig.value?.title || 'Allison\'s Portfolio',
+// Set meta tags
+useHead({
+  title: "Allison's Portfolio",
   meta: [
-    { name: 'description', content: siteConfig.value?.description || 'Allison\'s dual portfolio website for development and tattoo art' },
+    { name: 'description', content: "Allison's portfolio website for development and creative work" },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { name: 'theme-color', content: '#FF69B4' }
   ],
@@ -25,7 +21,7 @@ useHead(() => ({
   htmlAttrs: {
     lang: 'en'
   }
-}));
+});
 </script>
 
 <style>

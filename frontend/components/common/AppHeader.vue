@@ -3,7 +3,7 @@
     <UContainer class="py-3">
       <div class="flex items-center justify-between gap-3">
         <!-- Logo / Title -->
-        <NuxtLink :to="siteConfig.type === 'dev' ? '/dev' : '/'" class="no-underline group">
+        <NuxtLink to="/" class="no-underline group">
           <div class="flex items-center gap-3">
             <span class="text-2xl sm:text-3xl font-bold text-primary select-none transition-all duration-300 group-hover:text-gradient">
               ALLISONS<span class="text-pink-500">.dev</span>
@@ -125,7 +125,7 @@
                 <!-- Mobile Menu Header -->
                 <div class="flex items-center justify-between mb-8">
                   <div class="flex items-center gap-3">
-                    <span class="text-xl font-bold text-gradient">{{ siteConfig.title }}</span>
+                    <span class="text-xl font-bold text-gradient">Allison's Portfolio</span>
                     <UBadge color="primary" variant="soft" size="xs">Mobile</UBadge>
                   </div>
                   <UButton 
@@ -205,15 +205,11 @@
 
 <script setup lang="ts">
 import AccessibilitySettings from '~/components/AccessibilitySettings.vue';
-import { useSiteConfig } from '~/utils/site-config';
 
 // Emits
 defineEmits<{
   openSearch: []
 }>()
-
-// Get site configuration
-const siteConfig = useSiteConfig();
 
 // Platform detection for keyboard shortcuts
 const isMac = computed(() => {
@@ -252,27 +248,13 @@ const getNavIcon = (name: string): string => {
   return iconMap[name] || 'i-lucide-circle';
 };
 
-// Generate navigation items based on site type
-const navigationItems = computed(() => {
-  if (siteConfig.value.type === 'dev') {
-    return [
-      { name: 'Home', path: '/' },
-      { name: 'About', path: '/about' },
-      { name: 'Projects', path: '/projects' },
-      { name: 'Open Source', path: '/open-source' },
-      { name: 'Blog', path: '/blog' },
-      { name: 'Contact', path: '/contact' }
-    ];
-  } else {
-    // Dual mode navigation
-    return [
-      { name: 'Home', path: '/' },
-      { name: 'About', path: '/about' },
-      { name: 'Projects', path: '/projects' },
-      { name: 'Blog', path: '/blog' },
-      { name: 'Contact', path: '/contact' }
-    ];
-  }
-});
+// Navigation items
+const navigationItems = [
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+  { name: 'Projects', path: '/projects' },
+  { name: 'Blog', path: '/blog' },
+  { name: 'Contact', path: '/contact' }
+];
 
 </script>

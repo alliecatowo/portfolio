@@ -234,7 +234,7 @@
 
 <script setup lang="ts">
 import BlogCard from '~/components/common/BlogCard.vue'
-import { useSiteConfig } from '~/utils/site-config';
+
 interface BlogDoc {
   title?: string;
   description?: string;
@@ -244,9 +244,6 @@ interface BlogDoc {
   featured_image?: string;
   tags?: string[];
 }
-
-// Get site configuration
-const siteConfig = useSiteConfig();
 
 // Content fetched via queryCollection with limit/skip
 
@@ -465,13 +462,10 @@ function getTagColor(tag: string): 'primary'|'secondary'|'success'|'info'|'warni
 
 // Meta tags
 useHead({
-  title: `Blog - ${siteConfig.value?.title || 'Allison\'s Portfolio'}`,
+  title: `Blog - Allison's Portfolio`,
   meta: [
-    { name: 'description', content: siteConfig.value?.type === 'dev' 
-      ? 'Articles about development, coding, and tech insights from Allison'
-      : 'Stories and insights about tattoo art, designs, and client experiences'
-    },
-    { property: 'og:title', content: `Blog - ${siteConfig.value?.title || 'Allison\'s Portfolio'}` },
+    { name: 'description', content: 'Articles about development, coding, and tech insights from Allison' },
+    { property: 'og:title', content: `Blog - Allison's Portfolio` },
     { property: 'og:type', content: 'website' }
   ]
 });

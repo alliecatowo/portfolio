@@ -452,18 +452,9 @@
 </template>
 
 <script setup lang="ts">
-import { useSiteConfig } from '~/utils/site-config';
-
-// Set site config
-const siteConfig = useSiteConfig();
-siteConfig.value = {
-  ...siteConfig.value,
-  type: 'dual'
-};
-
 // Meta tags
 useHead({
-  title: `About Me - ${siteConfig.value?.title || 'Allison\'s Developer Portfolio'}`,
+  title: `About Me - Allison's Developer Portfolio`,
   meta: [
     { 
       name: 'description', 
