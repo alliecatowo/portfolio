@@ -51,6 +51,14 @@ pnpm -C frontend db:clean
 pnpm -C frontend db:rebuild
 # Start dev server with clean database
 pnpm -C frontend dev:clean
+
+# Lockfile Management (pnpm)
+# Check if lockfile is in sync with package.json
+pnpm lockfile:check
+# Update lockfile and stage for commit
+pnpm lockfile:update
+# Install with strict lockfile validation (CI behavior)
+pnpm install --frozen-lockfile
 ```
 
 ### Deployment
@@ -131,8 +139,8 @@ TATTOO_SITE_URL=http://localhost:3000
 
 - Uses pnpm workspaces (configured in `pnpm-workspace.yaml`)
 - Node.js 22.x required (specified in engines)
-- Uses better-sqlite3 in development for stable live reload
-- Production uses native SQLite (Node 22.x) for performance
+- Uses Node.js native SQLite (Node 22.x) for performance
+- Database corruption resolved with cleanup scripts
 
 ## Troubleshooting
 
@@ -159,8 +167,9 @@ pnpm dev
 
 **Prevention**:
 
-- Database configuration automatically uses better-sqlite3 in development
-- Native SQLite only used in production for performance
+- Uses Node.js native SQLite (requires Node.js 22.5.0+)
+- Database automatically cleaned/rebuilt when corruption occurs
+- Database files (.data directory) are gitignored and regenerated
 - Avoid manual `.data/content/contents.sqlite` file modifications
 
 ### Common Development Issues
@@ -170,6 +179,39 @@ pnpm dev
 **TypeScript errors after updates**: Run `pnpm -C frontend typecheck` to verify types
 
 **Linting failures**: Use `pnpm -C frontend lint:fix` for auto-fixable issues
+
+### pnpm Workspace & Lockfile Issues
+
+**Problem**: Firebase deploy fails with "lockfile is out of sync" errors
+
+**Root Cause**: pnpm workspace lockfile (`pnpm-lock.yaml`) is inconsistent with package.json dependencies
+
+**Solutions**:
+
+```bash
+# Check lockfile consistency (run before commits)
+pnpm lockfile:check
+
+# Fix inconsistent lockfile
+pnpm lockfile:update
+
+# Manual lockfile regeneration
+rm pnpm-lock.yaml && pnpm install
+```
+
+**Prevention**:
+
+- Pre-commit hooks automatically validate lockfile consistency
+- Always run `pnpm lockfile:update` after adding/removing dependencies
+- CI/CD uses `--frozen-lockfile` to enforce exact dependency matching
+- Single lockfile at workspace root manages all packages
+
+**Dependency Management Workflow**:
+
+1. Add dependency: `pnpm -C frontend add package-name`
+2. Update lockfile: `pnpm lockfile:update`
+3. Commit both package.json and pnpm-lock.yaml changes
+4. Verify CI passes with frozen lockfile validation
 
 ## Git Workflow & CI/CD
 
