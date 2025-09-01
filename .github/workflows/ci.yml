@@ -148,7 +148,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-output
-          path: .output
+          path: /home/runner/work/portfolio/portfolio/frontend/.output
           retention-days: 1
 
   test:
