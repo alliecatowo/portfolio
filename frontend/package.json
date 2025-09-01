@@ -16,7 +16,10 @@
     "lint": "eslint . --ext .js,.ts,.vue --cache --cache-location .eslintcache",
     "lint:files": "eslint --ext .js,.ts,.vue --cache --cache-location .eslintcache",
     "lint:fix": "eslint . --ext .js,.ts,.vue --fix --cache --cache-location .eslintcache",
-    "test": "echo 'No tests specified' && exit 0"
+    "test": "echo 'No tests specified' && exit 0",
+    "db:clean": "rm -rf .data/content/contents.sqlite",
+    "db:rebuild": "npm run db:clean && nuxt prepare",
+    "dev:clean": "npm run db:clean && npm run dev"
   },
   "dependencies": {
     "@nuxt/content": "^3.6.3",
@@ -25,6 +28,7 @@
     "@nuxtjs/robots": "^5.5.1",
     "@nuxtjs/sitemap": "^7.4.3",
     "@pinia/nuxt": "^0.5.1",
+    "better-sqlite3": "^12.2.0",
     "nuxt-og-image": "^5.1.9",
     "pinia": "^2.1.7",
     "vue": "^3.5.13",
