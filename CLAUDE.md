@@ -14,6 +14,31 @@ pnpm dev
 cd frontend && npm run dev
 ```
 
+### Firebase Emulation
+
+Test your static builds exactly as they will work on Firebase hosting:
+
+```bash
+# Build and serve via Firebase emulator (recommended for production testing)
+pnpm emulators:build
+# Builds static site and starts Firebase hosting emulator at http://127.0.0.1:5000
+
+# Serve existing build via Firebase emulator
+pnpm emulators:start
+# Serves frontend/.output/public at http://127.0.0.1:5000
+
+# Start with Emulator UI (includes debugging tools)
+pnpm emulators:ui
+# Includes Firebase Emulator UI at http://127.0.0.1:4000
+```
+
+**Key Benefits:**
+
+- Tests static hosting behavior exactly like production Firebase
+- Validates image optimization (IPX) with proper cache headers
+- Verifies rewrites, redirects, and 404/200.html fallbacks
+- Much faster than actual Firebase deployment for testing
+
 ### Build Commands
 
 **IMPORTANT: Always use pnpm, not npm**
