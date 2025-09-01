@@ -7,7 +7,7 @@ tags: ['career', 'tattoo', 'artistry', 'creative', 'balance', 'personal']
 author: 'Allie'
 published: true
 featured: true
-featured_image: '/images/couple/allison-violet-beach.jpg'
+featured_image: '/images/personal/allison-portrait.jpg'
 slug: 'code-and-ink-dual-creative-careers'
 ---
 
