@@ -10,7 +10,10 @@
     "lint": "pnpm -C frontend lint",
     "lint:fix": "pnpm -C frontend lint:fix",
     "lockfile:check": "pnpm install --frozen-lockfile --prefer-offline",
-    "lockfile:update": "pnpm install && git add pnpm-lock.yaml"
+    "lockfile:update": "pnpm install && git add pnpm-lock.yaml",
+    "emulators:start": "firebase emulators:start --only hosting",
+    "emulators:build": "pnpm generate && firebase emulators:start --only hosting",
+    "emulators:ui": "firebase emulators:start"
   },
   "devDependencies": {
     "@axe-core/cli": "^4.10.2",
