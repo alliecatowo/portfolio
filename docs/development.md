@@ -24,8 +24,8 @@ This guide covers the development setup, workflow, and best practices for the po
 ### System Requirements
 
 - **Operating System**: macOS, Linux, or Windows (with WSL2)
-- **Memory**: 8GB RAM minimum, 16GB recommended
-- **Storage**: 2GB free space for dependencies and build artifacts
+- **Memory**: 4GB RAM minimum, 8GB recommended
+- **Storage**: 1GB free space for dependencies
 
 ## 🚀 Initial Setup
 
@@ -182,22 +182,21 @@ pnpm lint
 pnpm lint:fix
 ```
 
-### Advanced Commands
+### Database Commands
 
 ```bash
+# Clean SQLite database (fixes corruption)
+cd frontend && pnpm run db:clean
+
+# Rebuild database from scratch
+cd frontend && pnpm run db:rebuild
+
+# Start dev server with clean database
+cd frontend && pnpm run dev:clean
+
 # Clear all caches and reinstall
-rm -rf node_modules .nuxt .output frontend/node_modules frontend/.nuxt
+rm -rf .nuxt .output frontend/.nuxt
 pnpm install
-
-# Analyze bundle size
-cd frontend
-pnpm build --analyze
-
-# Check for outdated dependencies
-pnpm outdated
-
-# Update dependencies
-pnpm update --latest
 ```
 
 ## 📝 Code Standards
@@ -300,10 +299,13 @@ pnpm typecheck && pnpm lint && pnpm build
 ### Content Testing
 
 ```bash
-# Test content rendering
+# Test content rendering across all sites:
+# http://localhost:3000/dev/blog (dev blog posts)
+# http://localhost:3000/tattoo/blog (tattoo blog posts)
+# http://localhost:3000/blog (dual mode blog posts)
+
 # Add test content to frontend/content/
-# Check that content appears correctly in the UI
-# Verify frontmatter is parsed properly
+# Verify frontmatter parsing and metadata display
 ```
 
 ## 🐛 Debugging
@@ -330,10 +332,10 @@ pnpm typecheck && pnpm lint && pnpm build
    # Fix reported issues
    ```
 
-4. **Content not updating**
+4. **Content database corruption**
    ```bash
-   rm -rf .nuxt
-   # Restart dev server
+   cd frontend && pnpm run db:clean
+   pnpm dev
    ```
 
 ### Debug Tools

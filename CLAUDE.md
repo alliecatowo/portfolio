@@ -63,12 +63,12 @@ pnpm install --frozen-lockfile
 
 ### Deployment
 
-The project uses Firebase App Hosting for deployment:
+The project uses Firebase static hosting:
 
 ```bash
 # Deployments are handled automatically via GitHub Actions
-# Production: https://portfolio--portfolio-c1306.us-central1.hosted.app
-# Staging: https://portfolio-staging--portfolio-c1306.us-central1.hosted.app
+# Production: https://allisons.dev
+# Preview: Auto-deployed for pull requests
 ```
 
 ## Architecture Overview
@@ -77,9 +77,9 @@ This is a **multi-site portfolio** built with Nuxt.js that serves both a develop
 
 ### Core Architecture
 
-- **Frontend**: Nuxt 4 application with SSR/ISR rendering
-- **Content**: File-based content using @nuxt/content (SQLite backend)
-- **Deployment**: Firebase App Hosting with CI/CD via GitHub Actions
+- **Frontend**: Nuxt 4 application with static generation and ISR
+- **Content**: File-based content using @nuxt/content (native SQLite)
+- **Deployment**: Firebase static hosting with CI/CD via GitHub Actions
 - **Multi-site Logic**: Route-based site configuration system
 
 ### Multi-Site System
@@ -98,11 +98,11 @@ Site configuration is handled by:
 
 ### Key Technologies
 
-- **Nuxt 4** with node-server preset for Firebase App Hosting
+- **Nuxt 4** with static preset for Firebase hosting
 - **@nuxt/ui** for component library and styling
 - **@nuxt/content** with native SQLite for content management
 - **@nuxt/image** for optimized image handling
-- **Pinia** for state management
+- **Pinia** for admin authentication (minimal usage)
 - **TypeScript** throughout
 
 ### Directory Structure
@@ -130,10 +130,10 @@ TATTOO_SITE_URL=http://localhost:3000
 
 ### Build Configuration
 
-- **Firebase App Hosting** with node-server preset
+- **Firebase static hosting** with static preset
 - **Route rules**: ISR caching for dynamic content (1 hour TTL)
-- **Content config**: SQLite with experimental native SQLite feature
-- **Output directory**: `.output/` for Firebase App Hosting
+- **Content config**: Native SQLite (Node.js 22.5.0+)
+- **Output directory**: `.output/public/` for static hosting
 
 ### Development Notes
 
@@ -217,24 +217,26 @@ rm pnpm-lock.yaml && pnpm install
 
 ### Branch Structure
 
-- **main**: Production branch (protected, requires PR + CI)
-- **staging**: Staging branch (auto-deploys from main)
+- **main**: Integration branch (protected, requires PR + CI)
 - **feature branches**: Development work (branch from main)
 
 ### Workflow Process
 
 1. Create feature branch from `main`
 2. Make changes and push to feature branch
-3. Open PR against `main` (triggers CI checks)
-4. PR must pass CI (typecheck, lint, build, test) and get approval
-5. Merge to `main` triggers staging deployment
-6. Create release/tag triggers production deployment
+3. Open PR against `main` (triggers CI checks + preview deployment)
+4. PR must pass CI (typecheck, lint, build, commitlint) and get approval
+5. Merge to `main` for integration and staging deployment
 
 ### CI/CD Pipeline
 
-- **CI Checks**: TypeScript check, lint, build validation, tests
-- **Staging Deploy**: Auto-deploy to Firebase App Hosting on main push
-- **Production Deploy**: Manual release/tag triggers production deployment
+**Parallel Architecture with Direct Rebuilds:**
+
+- **CI Checks**: Parallel execution of typecheck, lint, build, test, commitlint
+- **Preview Deploy**: Auto-deploy PRs to Firebase preview channel (rebuilds independently)
+- **Production Deploy**: Auto-deploy `production` branch to live channel (rebuilds independently)
+- **Shared Cache**: pnmp store cache shared across all jobs for efficiency
+- **Error Handling**: GitHub Actions annotations with colored logs
 - **Branch Protection**: Main branch requires PR reviews + passing CI
 
 ### Commit Message Style
