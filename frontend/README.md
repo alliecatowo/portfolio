@@ -1,60 +1,38 @@
 # Portfolio Frontend
 
-The Nuxt 4 application powering a dual-purpose portfolio for development and tattoo artistry.
+Nuxt 4 application powering the multi-site portfolio system.
 
-## 🏗️ Architecture
+## 🏗️ Multi-Site Architecture
 
-### Multi-Site System
+Dynamic route-based portfolio serving three experiences:
 
-The portfolio dynamically adapts based on the current route:
+- **`/dev/*`** - Developer portfolio (technical projects, engineering blog)
+- **`/tattoo/*`** - Tattoo portfolio (art gallery, creative content)
+- **`/`** - Dual mode (combined showcase)
 
-- **Developer Portfolio** (`/dev/*`) - Technical projects, development blog, and engineering content
-- **Tattoo Portfolio** (`/tattoo/*`) - Art gallery, tattoo works, and artistic blog posts
-- **Dual Mode** (root `/`) - Combined experience showcasing both skill sets
+**Implementation:**
 
-### Route-Based Configuration
+- Route middleware detects context and applies theming
+- Content filtering based on active site mode
+- Three distinct CSS themes (`theme-dev`, `theme-tattoo`, `theme-dual`)
 
-The site configuration is determined by middleware that:
-
-1. Detects the current route path
-2. Sets the appropriate site context (`dev`, `tattoo`, or `dual`)
-3. Applies corresponding theme classes to the root element
-4. Filters content based on the active context
-
-### Theme System
-
-Three distinct visual themes:
-
-- `theme-dev` - Clean, technical aesthetic with code-inspired elements
-- `theme-tattoo` - Artistic, gallery-focused design with visual emphasis
-- `theme-dual` - Balanced design combining both aesthetics
-
-## 🚀 Development
-
-### Local Setup
+## 🚀 Quick Start
 
 ```bash
-# Navigate to frontend directory
-cd frontend
-
-# Install dependencies
-pnpm install
-
-# Start development server
+# From project root
 pnpm dev
+# → http://localhost:3000
+
+# Or from frontend directory
+cd frontend && pnpm dev
 ```
 
-### Environment Variables
+**Environment Setup:**
 
-Create a `.env` file in the frontend directory:
-
-```env
-# Site URLs (for multi-site routing)
-DEV_SITE_URL=http://localhost:3000
-TATTOO_SITE_URL=http://localhost:3000
-
-# Additional configuration as needed
-NUXT_PUBLIC_SITE_URL=http://localhost:3000
+```bash
+# Optional: Create .env in frontend/
+echo "DEV_SITE_URL=http://localhost:3000" > frontend/.env
+echo "TATTOO_SITE_URL=http://localhost:3000" >> frontend/.env
 ```
 
 ### Content Management
