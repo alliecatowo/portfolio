@@ -7,7 +7,7 @@
         Sorry, the page you are looking for doesn't exist or has been moved.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <UButton @click="$router.go(-1)" variant="outline" color="primary">
+        <UButton variant="outline" color="primary" @click="$router.go(-1)">
           Go Back
         </UButton>
         <UButton to="/" color="primary">
@@ -20,6 +20,9 @@
 
 <script setup lang="ts">
 defineProps({
-  error: Object
+  error: {
+    type: Object,
+    default: () => ({})
+  }
 });
 </script> 

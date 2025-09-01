@@ -1,7 +1,7 @@
 <template>
   <UTabs
-    :items="items"
     v-model="internal"
+    :items="items"
     variant="pill"
     size="sm"
     color="primary"

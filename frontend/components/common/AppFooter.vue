@@ -1,5 +1,5 @@
 <template>
-  <footer class="py-12 mt-16 border-t border-gray-200/60 dark:border-gray-800/60 bg-gray-50 dark:bg-gray-950" role="contentinfo" aria-label="Site footer">
+  <footer class="py-12 mt-16 border-t border-gray-200/60 dark:border-gray-800/60 bg-gray-50 dark:bg-gray-950" aria-label="Site footer">
     <UContainer>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- Site Information -->
