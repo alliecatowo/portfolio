@@ -8,8 +8,8 @@
       Skip to navigation
     </a>
     
-    <AppHeader @openSearch="commandPaletteRef?.openSearch()" />
-    <main id="main-content" class="flex-grow" role="main" aria-label="Main content">
+    <AppHeader @open-search="commandPaletteRef?.openSearch()" />
+    <main id="main-content" class="flex-grow" aria-label="Main content">
       <slot />
     </main>
     <AppFooter />
@@ -25,8 +25,8 @@
 </template>
 
 <script setup lang="ts">
-import AppHeader from '~/components/common/AppHeader.vue'
 import AppFooter from '~/components/common/AppFooter.vue'
+import AppHeader from '~/components/common/AppHeader.vue'
 import CommandPalette from '~/components/common/CommandPalette.vue'
 import ShortcutsHelp from '~/components/common/ShortcutsHelp.vue'
 import { useGlobalShortcuts } from '~/composables/useGlobalShortcuts'

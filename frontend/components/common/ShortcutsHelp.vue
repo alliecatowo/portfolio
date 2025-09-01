@@ -5,7 +5,7 @@
         <template #header>
           <div class="flex items-center justify-between">
             <h3 class="text-base font-semibold">Keyboard Shortcuts</h3>
-            <UButton icon="i-lucide-x" variant="ghost" color="neutral" size="xs" @click="isOpen = false" aria-label="Close" />
+            <UButton icon="i-lucide-x" variant="ghost" color="neutral" size="xs" aria-label="Close" @click="isOpen = false" />
           </div>
         </template>
 

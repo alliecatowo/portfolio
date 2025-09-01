@@ -3,4 +3,5 @@
 node_modules
 dist
 coverage
+types/shims-nuxt-aliases.d.ts
 

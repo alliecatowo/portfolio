@@ -77,14 +77,14 @@ export default defineNuxtConfig({
       ]
     }
   },
-  // Static hosting for maximum performance
+  // Firebase Hosting (static)
   nitro: {
     preset: 'static',
     compressPublicAssets: true,
     prerender: {
       crawlLinks: true,
-      // Temporarily ignore tattoo landing while we stabilize SSR there
-      ignore: ['/tattoo']
+      ignore: ['/tattoo'],
+      failOnError: false
     },
     minify: true
   },
