@@ -124,15 +124,47 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Clear Sharp cache and install dependencies
+        run: |
+          echo "::group::Clear potentially cached Sharp binaries"
+          # Clear any cached Sharp binaries that might be incompatible
+          rm -rf node_modules/sharp 2>/dev/null || true
+          rm -rf ../node_modules/sharp 2>/dev/null || true
+          echo "::endgroup::"
+
+          echo "::group::Install dependencies with frozen lockfile"
+          pnpm install --frozen-lockfile
+          echo "::endgroup::"
+
+          echo "::group::Verify Sharp installation"
+          echo "Sharp in frontend:"
+          pnpm list sharp 2>/dev/null || echo "Sharp not in frontend direct dependencies"
+          echo "Sharp in workspace root:"
+          cd .. && pnpm list sharp 2>/dev/null || echo "Sharp not in root dependencies" && cd frontend
+          echo "Test Sharp loading:"
+          node -e "try { require('sharp'); console.log('Sharp loaded successfully'); } catch(e) { console.log('Sharp error:', e.message); }"
+          echo "::endgroup::"
 
       - name: Build application
         run: |
-          pnpm run build || {
-            echo "::error title=Build Error::Application build failed"
+          echo "::group::Environment Debug"
+          echo "Node version: $(node --version)"
+          echo "pnpm version: $(pnpm --version)"
+          echo "Working directory: $(pwd)"
+          echo "Sharp installation check:"
+          pnpm list sharp 2>/dev/null || echo "Sharp not found in direct dependencies"
+          echo "::endgroup::"
+
+          echo "::group::Nuxt Build with Enhanced Debug"
+          DEBUG="nuxt:*" NUXT_DEBUG=true pnpm run build || {
+            echo "::error title=Build Error::Application build failed with IPX issues"
+            echo "::group::Post-failure Debug"
+            echo "Checking for Sharp binary issues:"
+            node -e "try { require('sharp'); console.log('Sharp loaded successfully'); } catch(e) { console.log('Sharp error:', e.message); }"
+            echo "::endgroup::"
             exit 1
           }
+          echo "::endgroup::"
 
       - name: Debug - Verify build output
         run: |
