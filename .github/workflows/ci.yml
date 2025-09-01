@@ -2,9 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches: [ main, staging ]
+    branches: [main, staging]
   push:
-    branches: [ main, staging ]
+    branches: [main, staging]
 
 jobs:
   ci:
@@ -12,15 +12,19 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
-    
+
     defaults:
       run:
         working-directory: ./frontend
-    
+
+    env:
+      FORCE_COLOR: 1
+      CI: true
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup mise (Node, pnpm)
         uses: jdx/mise-action@v2
         with:
@@ -42,16 +46,33 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      
+
       - name: Run typecheck
-        run: pnpm run typecheck
-      
+        run: |
+          pnpm run typecheck || {
+            echo "::error title=TypeScript Error::TypeScript compilation failed"
+            exit 1
+          }
+
       - name: Run lint (non-blocking)
         continue-on-error: true
         run: pnpm run lint
-        
+
       - name: Build application
-        run: pnpm run build
-        
+        run: |
+          pnpm run build || {
+            echo "::error title=Build Error::Application build failed"
+            exit 1
+          }
+
       - name: Run tests
         run: pnpm test
+
+      - name: Lint commits (PR only)
+        if: github.event_name == 'pull_request'
+        run: |
+          cd ../
+          pnpm exec commitlint --from=origin/${{ github.base_ref }} --to=HEAD || {
+            echo "::error title=Commit Lint Error::One or more commit messages do not follow conventional format"
+            exit 1
+          }
