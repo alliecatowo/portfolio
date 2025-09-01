@@ -100,7 +100,7 @@ export default defineNuxtConfig({
   },
   // Nuxt Image presets (used across pages)
   // Wrapped in spread+any to avoid Nuxt 4 type noise during typecheck
-  image: {
+  ...({ image: {
     // Use none provider in development (serves from /public), ipx in production
     provider: process.env.NODE_ENV === 'development' ? 'none' : 'ipx',
     // Simple presets that work with both providers
@@ -144,7 +144,7 @@ export default defineNuxtConfig({
         } 
       }
     }
-  },
+  } }),
   // Vite optimizations
   vite: {
     build: {
