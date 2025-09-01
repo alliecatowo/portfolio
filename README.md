@@ -96,36 +96,37 @@ The site automatically detects the context and applies appropriate theming and c
 - **Staging**: Auto-deployed from main branch to staging channel
 - **Preview**: Automatic deployments for pull requests
 
-## 🚢 Deployment
+## ⚡ CI/CD Pipeline
 
-The project uses a sophisticated CI/CD pipeline:
+Parallel CI/CD with atomic job isolation:
 
-### Branch Strategy
+```
+setup (deps + cache) → PARALLEL jobs → deployments
+```
 
-- `feature/*` → Pull Request → Preview deployment (7-day expiry)
-- `main` → Auto-deploy to staging channel (30-day expiry)
-- `production` → Deploy on release/tag
+**Features:**
 
-### Automated Workflows
+- Faster execution through parallel jobs
+- Colored terminal output in CI logs
+- Independent job failures with clear error reporting
+- Shared build artifacts for efficient deployments
 
-- **CI Checks**: TypeScript, linting, build validation on every PR
-- **Preview Deployments**: Automatic Firebase preview for PRs
-- **Staging Deployment**: Auto-deploy main branch changes
-- **Production Release**: Tag-based production deployments
+### Deployment Strategy
+
+- **Preview**: Automatic PR deployments → 7-day expiry
+- **Staging**: Auto-deploy from `main` → 30-day expiry
+- **Production**: Release/tag triggered → Live site
 
 ## 📚 Documentation
 
-Detailed documentation is available in the [`docs/`](./docs) directory:
+Comprehensive documentation is available in the [`docs/`](./docs) directory:
 
-- [Development Guide](./docs/development.md) - Setup and development workflow
-- [Architecture Overview](./docs/architecture.md) - System design and structure
-- [Deployment Guide](./docs/deployment.md) - CI/CD and deployment processes
-- [Contributing Guide](./docs/contributing.md) - How to contribute to the project
-- [Troubleshooting](./docs/troubleshooting.md) - Common issues and solutions
+- [📖 Documentation Index](./docs/index.md) - Complete documentation overview
+- [🚀 Development Guide](./docs/development.md) - Setup, workflow, and best practices
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read our [Contributing Guide](./docs/contributing.md) for details on our code of conduct and the process for submitting pull requests.
+Contributions are welcome! Please follow the [Development Guide](./docs/development.md) for setup and workflow practices. Create feature branches and submit pull requests for review.
 
 ## 📄 License
 
