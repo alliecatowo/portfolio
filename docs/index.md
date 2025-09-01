@@ -48,9 +48,11 @@ Routes automatically detect context and apply appropriate theming and content fi
 
 - **Framework**: Nuxt 4 (Vue 3, TypeScript)
 - **Content**: @nuxt/content with native SQLite backend
-- **UI**: @nuxt/ui (TailwindCSS-based components)
-- **Deployment**: Firebase Hosting with GitHub Actions CI/CD
-- **Package Management**: pnpm workspaces with mise version management
+- **UI**: @nuxt/ui (TailwindCSS v4 components)
+- **Images**: @nuxt/image with optimized presets
+- **State**: Minimal Pinia for admin auth only
+- **Deployment**: Firebase static hosting
+- **Package Management**: pnpm workspaces
 
 ## 📁 Project Structure
 
@@ -68,42 +70,49 @@ portfolio/
 
 ## ⚡ CI/CD Pipeline
 
-Parallel CI/CD with atomic job isolation:
+Parallel CI/CD with atomic job isolation and direct deployment rebuilds:
 
 ```
-setup (deps + cache)
+setup (deps + pnpm cache)
     ↓
 PARALLEL: typecheck, lint, build, test, commitlint
     ↓
-PARALLEL: firebase-preview (PR), firebase-production (releases)
+PARALLEL: firebase-preview (PR), firebase-production (production branch)
 ```
 
 **Features:**
 
-- Faster execution through parallel jobs
-- Colored terminal output in CI logs
-- Independent job failures with clear error reporting
-- Shared build artifacts across deployment jobs
+- **Parallel execution** with independent job failures
+- **Colored logs** (FORCE_COLOR=1, TERM=xterm-256color)
+- **Shared pnpm cache** across all jobs for efficiency
+- **Direct rebuilds** in deployment jobs for reliability
+- **GitHub Actions annotations** for clear error reporting
 
 ## 🚢 Firebase Deployment
 
+**Strategy:** Direct rebuilds in deployment jobs for maximum reliability.
+
 **Channels:**
 
-- **Preview**: Automatic PR deployments (7-day expiry)
-- **Staging**: Auto-deploy from `main` branch (30-day expiry)
-- **Production**: Release/tag based deployments
+- **Preview**: Automatic PR deployments to preview channel
+- **Production**: Auto-deploy from `production` branch to live channel
 
-**Static Site Generation** with ISR caching for dynamic content.
+**Architecture:**
+
+- Firebase jobs rebuild independently using shared pnpm cache
+- No artifact dependencies - eliminates upload/download bottlenecks
+- Static site generation with ISR caching for dynamic content
+- Firebase App Hosting with node-server preset
 
 ## 🔄 Branch Workflow
 
 ```
-feature/name → PR → main → production
-     ↓           ↓      ↓        ↓
-  preview    CI checks  staging  release
+feature/name → PR → main
+     ↓           ↓      ↓
+  preview    CI checks  staging
 ```
 
-All branches require passing CI checks (parallel typecheck, lint, build, test).
+Branches require passing CI checks (parallel typecheck, lint, build).
 
 ## 🧑‍💻 Development
 

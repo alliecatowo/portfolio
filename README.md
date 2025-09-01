@@ -55,7 +55,7 @@ pnpm lint:fix
 - **Framework**: [Nuxt 4](https://nuxt.com/) with Vue 3
 - **Content Management**: [@nuxt/content](https://content.nuxt.com/) with native SQLite backend
 - **Styling**: [@nuxt/ui](https://ui.nuxt.com/) (TailwindCSS-based component library)
-- **State Management**: [Pinia](https://pinia.vuejs.org/)
+- **Authentication**: Minimal [Pinia](https://pinia.vuejs.org/) for admin auth
 - **Deployment**: [Firebase Hosting](https://firebase.google.com/products/hosting)
 - **CI/CD**: GitHub Actions with automated preview, staging, and production deployments
 - **Package Manager**: pnpm with workspaces
@@ -73,8 +73,7 @@ portfolio/
 │   ├── middleware/       # Route middleware
 │   ├── pages/           # File-based routing
 │   ├── public/          # Static assets
-│   ├── server/          # Server API routes
-│   └── utils/           # Utility functions
+│   └── utils/           # Site config and utilities
 ├── .github/             # GitHub Actions workflows
 ├── docs/               # Project documentation
 └── firebase.json       # Firebase configuration
@@ -98,24 +97,25 @@ The site automatically detects the context and applies appropriate theming and c
 
 ## ⚡ CI/CD Pipeline
 
-Parallel CI/CD with atomic job isolation:
+Parallel CI/CD with atomic job isolation and direct deployment rebuilds:
 
 ```
-setup (deps + cache) → PARALLEL jobs → deployments
+setup (deps + pnpm cache) → PARALLEL jobs → deployments
 ```
 
 **Features:**
 
-- Faster execution through parallel jobs
-- Colored terminal output in CI logs
-- Independent job failures with clear error reporting
-- Shared build artifacts for efficient deployments
+- **Parallel execution** with independent job failures
+- **Colored logs** (FORCE_COLOR=1, TERM=xterm-256color)
+- **Shared pnpm cache** across all jobs for efficiency
+- **Direct rebuilds** in deployment jobs for reliability
+- **GitHub Actions annotations** for clear error reporting
 
 ### Deployment Strategy
 
-- **Preview**: Automatic PR deployments → 7-day expiry
-- **Staging**: Auto-deploy from `main` → 30-day expiry
-- **Production**: Release/tag triggered → Live site
+- **Preview**: Automatic PR deployments to Firebase preview channel
+- **Static Generation**: ISR with 1-hour cache for dynamic content
+- **Architecture**: Direct rebuilds eliminate artifact dependencies
 
 ## 📚 Documentation
 
