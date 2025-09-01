@@ -19,7 +19,11 @@ cd frontend && npm run dev
 Test your static builds exactly as they will work on Firebase hosting:
 
 ```bash
-# Build and serve via Firebase emulator (recommended for production testing)
+# All-in-one: watch files, rebuild, and serve via emulator (recommended for development)
+pnpm emulate
+# Watches files, rebuilds on change, serves at http://127.0.0.1:5000
+
+# Build and serve via Firebase emulator (for one-time testing)
 pnpm emulators:build
 # Builds static site and starts Firebase hosting emulator at http://127.0.0.1:5000
 

@@ -13,7 +13,8 @@
     "lockfile:update": "pnpm install && git add pnpm-lock.yaml",
     "emulators:start": "firebase emulators:start --only hosting",
     "emulators:build": "pnpm generate && firebase emulators:start --only hosting",
-    "emulators:ui": "firebase emulators:start"
+    "emulators:ui": "firebase emulators:start",
+    "emulate": "concurrently \"pnpm -C frontend dev:watch-build\" \"firebase emulators:start --only hosting\""
   },
   "devDependencies": {
     "@axe-core/cli": "^4.10.2",
@@ -25,6 +26,7 @@
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^10.3.5",
     "@semantic-release/release-notes-generator": "^14.0.1",
+    "concurrently": "^9.2.1",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.9",
     "pa11y": "^9.0.0",
