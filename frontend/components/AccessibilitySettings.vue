@@ -88,12 +88,12 @@
           <div role="group" aria-labelledby="dyslexia-font-label">
             <span id="dyslexia-font-label" class="block text-sm font-medium mb-2">Dyslexia-friendly font</span>
             <URadioGroup
-              :model-value="preferences.dyslexiaFont"
+              :model-value="String(preferences.dyslexiaFont)"
               :options="[
-                { value: false, label: 'Standard font' },
-                { value: true, label: 'OpenDyslexic font' }
+                { value: 'false', label: 'Standard font' },
+                { value: 'true', label: 'OpenDyslexic font' }
               ]"
-              @update:model-value="(value: boolean) => updateDyslexiaFont(value)"
+              @update:model-value="(value: string) => updateDyslexiaFont(value === 'true')"
             />
           </div>
           
@@ -101,12 +101,12 @@
           <div role="group" aria-labelledby="high-contrast-label">
             <span id="high-contrast-label" class="block text-sm font-medium mb-2">Contrast</span>
             <URadioGroup
-              :model-value="preferences.highContrast"
+              :model-value="String(preferences.highContrast)"
               :options="[
-                { value: false, label: 'Normal contrast' },
-                { value: true, label: 'High contrast' }
+                { value: 'false', label: 'Normal contrast' },
+                { value: 'true', label: 'High contrast' }
               ]"
-              @update:model-value="(value: boolean) => updateHighContrast(value)"
+              @update:model-value="(value: string) => updateHighContrast(value === 'true')"
             />
           </div>
           
@@ -114,12 +114,12 @@
           <div role="group" aria-labelledby="reduced-motion-label">
             <span id="reduced-motion-label" class="block text-sm font-medium mb-2">Motion</span>
             <URadioGroup
-              :model-value="preferences.reducedMotion"
+              :model-value="String(preferences.reducedMotion)"
               :options="[
-                { value: false, label: 'Normal animations' },
-                { value: true, label: 'Reduced motion' }
+                { value: 'false', label: 'Normal animations' },
+                { value: 'true', label: 'Reduced motion' }
               ]"
-              @update:model-value="(value: boolean) => updateReducedMotion(value)"
+              @update:model-value="(value: string) => updateReducedMotion(value === 'true')"
             />
           </div>
           
@@ -187,36 +187,36 @@
             <div role="group" aria-labelledby="welcome-dyslexia-font-label">
               <span id="welcome-dyslexia-font-label" class="block text-sm font-medium mb-2">Font type</span>
               <URadioGroup
-                :model-value="preferences.dyslexiaFont"
+                :model-value="String(preferences.dyslexiaFont)"
                 :options="[
-                  { value: false, label: 'Standard font' },
-                  { value: true, label: 'Dyslexia-friendly font' }
+                  { value: 'false', label: 'Standard font' },
+                  { value: 'true', label: 'Dyslexia-friendly font' }
                 ]"
-                @update:model-value="(value: boolean) => updateDyslexiaFont(value)"
+                @update:model-value="(value: string) => updateDyslexiaFont(value === 'true')"
               />
             </div>
             
             <div role="group" aria-labelledby="welcome-high-contrast-label">
               <span id="welcome-high-contrast-label" class="block text-sm font-medium mb-2">Contrast</span>
               <URadioGroup
-                :model-value="preferences.highContrast"
+                :model-value="String(preferences.highContrast)"
                 :options="[
-                  { value: false, label: 'Normal contrast' },
-                  { value: true, label: 'High contrast' }
+                  { value: 'false', label: 'Normal contrast' },
+                  { value: 'true', label: 'High contrast' }
                 ]"
-                @update:model-value="(value: boolean) => updateHighContrast(value)"
+                @update:model-value="(value: string) => updateHighContrast(value === 'true')"
               />
             </div>
             
             <div role="group" aria-labelledby="welcome-reduced-motion-label">
               <span id="welcome-reduced-motion-label" class="block text-sm font-medium mb-2">Motion</span>
               <URadioGroup
-                :model-value="preferences.reducedMotion"
+                :model-value="String(preferences.reducedMotion)"
                 :options="[
-                  { value: false, label: 'Normal animations' },
-                  { value: true, label: 'Reduced motion' }
+                  { value: 'false', label: 'Normal animations' },
+                  { value: 'true', label: 'Reduced motion' }
                 ]"
-                @update:model-value="(value: boolean) => updateReducedMotion(value)"
+                @update:model-value="(value: string) => updateReducedMotion(value === 'true')"
               />
             </div>
           </div>

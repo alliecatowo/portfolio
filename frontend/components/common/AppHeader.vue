@@ -102,9 +102,7 @@
               unchecked-icon="i-lucide-moon"
               :ui="{ 
                 base: 'rounded-full p-2 transition-all duration-200 hover:scale-105',
-                icon: 'w-4 h-4 text-primary-600 dark:text-primary-400',
-                track: 'bg-primary-100 dark:bg-primary-900/50',
-                thumb: 'bg-white dark:bg-primary-600 shadow-lg'
+                icon: 'w-4 h-4 text-primary-600 dark:text-primary-400'
               }"
             />
           </UTooltip>
@@ -184,9 +182,7 @@
                         unchecked-icon="i-lucide-moon"
                         :ui="{ 
                           base: 'rounded-full transition-all duration-300 hover:scale-110',
-                          icon: 'w-4 h-4 text-primary-600 dark:text-primary-400',
-                          track: 'bg-primary-100 dark:bg-primary-900/50',
-                          thumb: 'bg-white dark:bg-primary-600 shadow-lg'
+                          icon: 'w-4 h-4 text-primary-600 dark:text-primary-400'
                         }"
                       />
                     </div>
