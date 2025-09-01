@@ -101,9 +101,9 @@ export default defineNuxtConfig({
     }
   },
   // Nuxt Image presets (used across pages) 
-  // Force ipxStatic for static builds to pre-generate optimized images
+  // Use standard ipx provider for better compatibility with static generation
   ...({ image: {
-    provider: 'ipxStatic',
+    provider: 'ipx',
     presets: {
       avatar: { 
         modifiers: { 
