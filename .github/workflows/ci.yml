@@ -148,10 +148,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-output
-          path: |
-            .output/**
-            .output/nitro.json
-            .output/public/**
+          path: .output/
           retention-days: 1
 
   test:
@@ -208,9 +205,12 @@ jobs:
           }
 
   firebase-preview:
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && needs.build.result == 'success'
-    needs: build
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    needs: setup
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
     permissions:
       checks: write
       contents: read
@@ -219,11 +219,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
+      - name: Setup mise (Node, pnpm)
+        uses: jdx/mise-action@v2
         with:
-          name: build-output
-          path: frontend/.output
+          cache: true
+
+      - name: Restore pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ needs.setup.outputs.pnpm-store-path }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build for deployment
+        run: pnpm run build
 
       - name: Deploy to Firebase Hosting Preview
         uses: FirebaseExtended/action-hosting-deploy@v0
@@ -233,18 +246,34 @@ jobs:
           projectId: allie-portfolio-project
 
   firebase-production:
-    if: github.ref == 'refs/heads/production' && needs.build.result == 'success'
-    needs: build
+    if: github.ref == 'refs/heads/production'
+    needs: setup
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
+      - name: Setup mise (Node, pnpm)
+        uses: jdx/mise-action@v2
         with:
-          name: build-output
-          path: frontend/.output
+          cache: true
+
+      - name: Restore pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ needs.setup.outputs.pnpm-store-path }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build for deployment
+        run: pnpm run build
 
       - name: Deploy to Firebase Hosting Production
         uses: FirebaseExtended/action-hosting-deploy@v0
