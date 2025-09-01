@@ -7,7 +7,7 @@ tags: ['personal', 'pets', 'chinchillas', 'rescue', 'life']
 author: 'Allie'
 published: true
 featured: false
-featured_image: '/images/personal/allison-avatar.jpg'
+featured_image: '/images/chinchillas/20231108_214955.jpg'
 slug: 'life-with-chinchillas-ray-and-paddy'
 ---
 

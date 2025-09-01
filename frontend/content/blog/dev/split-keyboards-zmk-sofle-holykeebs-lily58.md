@@ -29,6 +29,10 @@ The pink Sofle above runs my ZMK fork and has been my daily driver for over a ye
 
 I maintain a fork of the Sofle ZMK firmware (especially for hdock/dongle pairings). It's translated, documented, and maintained so others can get up and running without falling into a weekend of yak‑shaving. Community work should feel welcoming.
 
+![OLED screen close-up showing layer status](/images/keyboards/oled-screen-closeup.jpg 'Close-up of OLED display showing current layer and WPM')
+
+The OLED screens aren't just pretty—they're functional. Layer indicators, WPM tracking, and even custom graphics make the typing experience more engaging and informative.
+
 ![Lily58 with trackpad on space-themed desk mat](/images/keyboards/lily58-trackpad-setup.jpg 'Lily58 keyboard with integrated trackpad on space desk mat')
 
 The Lily58 above features an integrated trackpad module - perfect for those moments when you need precise cursor control but don't want to reach for a mouse. It sits beautifully on my space-themed desk mat alongside other keyboards in my collection.

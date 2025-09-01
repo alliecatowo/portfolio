@@ -77,17 +77,23 @@ export default defineNuxtConfig({
       ]
     }
   },
+  
+  // Better error handling and logging
+  features: {
+    devLogs: process.env.NODE_ENV === 'development'
+  },
   // Firebase Hosting (static)
   nitro: {
-    preset: process.env.NODE_ENV === 'development' ? 'node-server' : 'static',
+    preset: 'static',
     compressPublicAssets: true,
     prerender: {
       crawlLinks: true,
       ignore: ['/tattoo'],
       failOnError: false
     },
-    minify: process.env.NODE_ENV !== 'development',
-    // Enable IPX in development
+    minify: true,
+    // Better error logging in development
+    logLevel: process.env.NODE_ENV === 'development' ? 3 : 0,
     experimental: {
       wasm: true
     }
@@ -95,24 +101,12 @@ export default defineNuxtConfig({
   // Nuxt Image presets (used across pages)
   // Wrapped in spread+any to avoid Nuxt 4 type noise during typecheck
   image: {
-    // Basic IPX configuration
-    provider: 'ipx',
-    ipx: {
-      // Configure IPX server properly
-      maxAge: 60 * 60 * 24 * 7, // 7 days cache
-      sharp: {
-        // Sharp options for image processing
-        quality: 80,
-        progressive: true,
-        optimizeScans: true,
-        mozjpeg: true
-      }
-    },
-    // Presets for different image sizes
+    // Use none provider in development (serves from /public), ipx in production
+    provider: process.env.NODE_ENV === 'development' ? 'none' : 'ipx',
+    // Simple presets that work with both providers
     presets: {
       avatar: { 
         modifiers: { 
-          format: 'webp', 
           width: 400, 
           height: 400, 
           fit: 'cover',
@@ -121,7 +115,6 @@ export default defineNuxtConfig({
       },
       thumbnail: { 
         modifiers: { 
-          format: 'webp', 
           width: 200, 
           height: 200, 
           fit: 'cover' 
@@ -129,10 +122,25 @@ export default defineNuxtConfig({
       },
       card: { 
         modifiers: { 
-          format: 'webp', 
           width: 500, 
           height: 300, 
           fit: 'cover' 
+        } 
+      },
+      hero: { 
+        modifiers: { 
+          width: 800, 
+          height: 400, 
+          fit: 'cover',
+          quality: 85 
+        } 
+      },
+      blogCard: { 
+        modifiers: { 
+          width: 400, 
+          height: 250, 
+          fit: 'cover',
+          quality: 85 
         } 
       }
     }

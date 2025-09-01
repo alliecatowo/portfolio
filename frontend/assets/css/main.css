@@ -221,6 +221,15 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
+.glass-neutral {
+  background: color-mix(in oklab, var(--glass-bg) 92%, var(--ui-color-gray-600) 8%);
+  backdrop-filter: blur(16px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 10px 36px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
 /* Frosted pill specifically for compact buttons in header */
 .frosty-pill {
   background-color: rgba(255, 255, 255, 0.22);

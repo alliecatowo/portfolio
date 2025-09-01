@@ -79,13 +79,11 @@
             </p>
             
             <div v-if="project.technologies?.length" class="flex flex-wrap gap-2 mb-4">
-              <span 
+              <ColoredTag
                 v-for="tech in project.technologies.slice(0, 4)" 
                 :key="tech"
-                class="px-2 py-1 text-xs bg-primary/10 text-primary rounded-md font-medium"
-              >
-                {{ tech }}
-              </span>
+                :tag="tech"
+              />
               <span v-if="project.technologies.length > 4" class="px-2 py-1 text-xs text-muted">
                 +{{ project.technologies.length - 4 }} more
               </span>
@@ -161,6 +159,8 @@
 </template>
 
 <script setup lang="ts">
+import ColoredTag from '~/components/common/ColoredTag.vue'
+
 // Fetch all projects
 const { data: projects, pending, error } = await useAsyncData(
   'all-projects',

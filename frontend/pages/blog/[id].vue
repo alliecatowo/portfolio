@@ -67,7 +67,7 @@
           <!-- Author & Meta -->
           <div class="flex items-center gap-4">
             <UAvatar
-              src="/images/avatar.jpg"
+              src="/images/personal/allison-avatar.jpg"
               alt="Allison"
               size="md"
             >
@@ -151,7 +151,7 @@
           <!-- Author Bio -->
           <div class="flex items-start gap-4 p-6 bg-gray-50 dark:bg-gray-900/50 rounded-xl">
             <UAvatar
-              src="/images/avatar.jpg"
+              src="/images/personal/allison-avatar.jpg"
               alt="Allison"
               size="lg"
             >
