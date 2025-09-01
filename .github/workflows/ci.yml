@@ -104,6 +104,9 @@ jobs:
   build:
     needs: setup
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -122,20 +125,30 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: cd frontend && pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Build application
         run: |
-          cd frontend && pnpm run build || {
+          pnpm run build || {
             echo "::error title=Build Error::Application build failed"
             exit 1
           }
+
+      - name: Debug - Verify build output
+        run: |
+          echo "Current directory: $(pwd)"
+          echo "Contents of current directory:"
+          ls -la
+          echo "Looking for .output directory:"
+          ls -la .output || echo ".output directory not found"
+          echo "Contents of .output if it exists:"
+          ls -la .output/ || echo "Cannot list .output contents"
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: build-output
-          path: frontend/.output
+          path: .output
           retention-days: 1
 
   test:
