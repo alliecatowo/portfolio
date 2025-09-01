@@ -110,6 +110,8 @@ export default defineNuxtConfig({
   vite: {
     build: {
       cssCodeSplit: true,
+      // Disable sourcemaps in production to avoid Tailwind CSS v4 plugin warnings
+      sourcemap: process.env.NODE_ENV === 'development',
       rollupOptions: {
         output: {
           manualChunks: {
