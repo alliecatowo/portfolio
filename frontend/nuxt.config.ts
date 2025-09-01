@@ -79,33 +79,64 @@ export default defineNuxtConfig({
   },
   // Firebase Hosting (static)
   nitro: {
-    preset: 'static',
+    preset: process.env.NODE_ENV === 'development' ? 'node-server' : 'static',
     compressPublicAssets: true,
     prerender: {
       crawlLinks: true,
       ignore: ['/tattoo'],
       failOnError: false
     },
-    minify: true
+    minify: process.env.NODE_ENV !== 'development',
+    // Enable IPX in development
+    experimental: {
+      wasm: true
+    }
   },
   // Nuxt Image presets (used across pages)
   // Wrapped in spread+any to avoid Nuxt 4 type noise during typecheck
-  ...({
-    image: {
-      quality: 80,
-      format: ['webp','avif'],
-      densities: [1,2],
-      presets: {
-        avatar: { modifiers: { format: 'webp', width: 50, height: 50, fit: 'cover' } },
-        thumbnail: { modifiers: { format: 'webp', width: 150, height: 150, fit: 'cover' } },
-        card: { modifiers: { format: 'webp', width: 400, height: 250, fit: 'cover' } },
-        blogCard: { modifiers: { format: 'webp', width: 400, height: 225, fit: 'cover', quality: 85 } },
-        gallery: { modifiers: { format: 'webp', width: 600, height: 600, fit: 'cover', quality: 90 } },
-        hero: { modifiers: { format: 'webp', width: 1920, height: 1080, fit: 'cover', quality: 85 } },
-        projectImage: { modifiers: { format: 'webp', width: 800, height: 450, fit: 'contain', quality: 90 } }
+  image: {
+    // Basic IPX configuration
+    provider: 'ipx',
+    ipx: {
+      // Configure IPX server properly
+      maxAge: 60 * 60 * 24 * 7, // 7 days cache
+      sharp: {
+        // Sharp options for image processing
+        quality: 80,
+        progressive: true,
+        optimizeScans: true,
+        mozjpeg: true
+      }
+    },
+    // Presets for different image sizes
+    presets: {
+      avatar: { 
+        modifiers: { 
+          format: 'webp', 
+          width: 400, 
+          height: 400, 
+          fit: 'cover',
+          quality: 85 
+        } 
+      },
+      thumbnail: { 
+        modifiers: { 
+          format: 'webp', 
+          width: 200, 
+          height: 200, 
+          fit: 'cover' 
+        } 
+      },
+      card: { 
+        modifiers: { 
+          format: 'webp', 
+          width: 500, 
+          height: 300, 
+          fit: 'cover' 
+        } 
       }
     }
-  }),
+  },
   // Vite optimizations
   vite: {
     build: {

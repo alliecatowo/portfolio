@@ -59,24 +59,24 @@
 
             <!-- Right: Introduction -->
             <div>
-              <h1 class="text-5xl md:text-6xl font-bold mb-6 text-gradient-animated">
+              <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-gradient-animated leading-tight">
                 Hi, I'm Allison
               </h1>
-              <p class="text-2xl md:text-3xl text-default mb-6">
+              <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-default mb-6 leading-relaxed">
                 Full-Stack Developer & Tattoo Artist
               </p>
               <div class="prose prose-lg text-default max-w-none">
-                <p class="mb-6">
-                  I craft exceptional digital experiences that blend beautiful design with powerful functionality. 
-                  With expertise spanning modern web technologies, I transform complex problems into elegant, 
-                  user-friendly solutions.
+                <p class="mb-6 text-base md:text-lg leading-relaxed">
+                  I'm a software engineer and tattoo artist living with my fiancé Violet and our two rescued chinchillas in a setup that perfectly blends code, creativity, and chaos. By day, I build web applications with Vue, Nuxt, TypeScript, and modern tooling. By evening, I translate ideas into permanent art on skin.
                 </p>
-                <p class="mb-8">
-                  Whether it's building scalable applications, optimizing performance, or creating intuitive interfaces, 
-                  I bring passion, precision, and creativity to every project. When I'm not coding, I'm often tattooing — I love translating ideas into linework and color.
+                <p class="mb-6 text-base md:text-lg leading-relaxed">
+                  My journey into tech started with teenage curiosity—customizing MySpace profiles and building terrible websites that somehow worked. What began as digital tinkering evolved into a career spanning startups, established companies, and everything in between. I've shipped applications for healthcare, e-commerce, education, and finance, always focusing on user experience and maintainable code.
                 </p>
-                <p class="mb-8">
-                  At home, I share life with my fiancée Violet and two chinchillas: Ray (our chunky loaf, senior citizen) and Paddy (our tiny, high‑energy St. Patrick’s Day adoption). I also tinker with split keyboards — a Lily58 with a trackpad, and a pink Sofle running wireless ZMK with OLEDs and a dongle setup.
+                <p class="mb-6 text-base md:text-lg leading-relaxed">
+                  Tattooing entered my life as a creative outlet that software couldn't provide. There's something profound about creating permanent art that becomes part of someone's story. The precision required, the collaboration with clients, the immediate tactile feedback—it complements coding in ways I never expected. Both crafts require patience, attention to detail, and the ability to bring someone's vision to life.
+                </p>
+                <p class="mb-8 text-base md:text-lg leading-relaxed">
+                  At home, our rescued chinchillas Ray and Paddy keep life interesting. Ray is our gentle giant who perfected the art of being a furry loaf, while Paddy brings endless energy and mischief. They're active during my late-night coding sessions, which works out perfectly. I also maintain a collection of split keyboards—my daily driver is a pink Sofle running my ZMK fork with OLED screens, and a Lily58 with an integrated trackpad for when precision cursor control matters.
                 </p>
               </div>
               
@@ -113,7 +113,7 @@
       <!-- Journey Timeline -->
       <section class="py-20 relative">
         <div class="container max-w-6xl mx-auto px-6">
-          <h2 class="text-4xl md:text-5xl font-bold mb-16 text-center text-gradient-animated">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-16 text-center text-gradient-animated leading-tight px-4">
             My Journey
           </h2>
           
@@ -126,10 +126,9 @@
               <div class="flex items-center justify-center">
                 <div class="relative glass-accent rounded-xl p-8 max-w-2xl hover-lift">
                   <div class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-primary rounded-full border-4 border-white dark:border-gray-900"></div>
-                  <h3 class="text-xl font-bold mb-2 text-primary">The Beginning</h3>
-                  <p class="text-default">
-                    Started my coding journey as a teenager, customizing MySpace profiles and building simple websites. 
-                    What began as curiosity quickly became a passion for creating digital experiences.
+                  <h3 class="text-xl font-bold mb-3 text-primary">Teenage Tinkering</h3>
+                  <p class="text-default leading-relaxed">
+                    It started with MySpace profile customization and terrible HTML experiments. I was that kid who viewed source on every website, trying to understand how digital things worked. Building my first "Hello World" page felt like magic—I could create something from nothing but text in a file.
                   </p>
                 </div>
               </div>
@@ -137,10 +136,9 @@
               <div class="flex items-center justify-center">
                 <div class="relative glass-accent rounded-xl p-8 max-w-2xl hover-lift">
                   <div class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-purple-500 rounded-full border-4 border-white dark:border-gray-900"></div>
-                  <h3 class="text-xl font-bold mb-2 text-purple-500">Computer Science Degree</h3>
-                  <p class="text-default">
-                    Formalized my knowledge with a CS degree, diving deep into algorithms, data structures, 
-                    and software engineering principles that form the foundation of my work today.
+                  <h3 class="text-xl font-bold mb-3 text-purple-500">Formal Education & First Jobs</h3>
+                  <p class="text-default leading-relaxed">
+                    College gave me the theory—algorithms, data structures, software engineering principles. But the real learning happened during internships and first jobs, where I discovered that shipping working software requires much more than perfect code. Communication, collaboration, and understanding user needs became as important as technical skills.
                   </p>
                 </div>
               </div>
@@ -148,10 +146,9 @@
               <div class="flex items-center justify-center">
                 <div class="relative glass-accent rounded-xl p-8 max-w-2xl hover-lift">
                   <div class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-pink-500 rounded-full border-4 border-white dark:border-gray-900"></div>
-                  <h3 class="text-xl font-bold mb-2 text-pink-500">Professional Growth</h3>
-                  <p class="text-default">
-                    Worked with startups and established companies across e-commerce, education, healthcare, 
-                    and finance sectors. Each project expanded my skills and perspective.
+                  <h3 class="text-xl font-bold mb-3 text-pink-500">Professional Growth & Tattoo Discovery</h3>
+                  <p class="text-default leading-relaxed">
+                    Years of startup life, scaling challenges, and diverse projects across healthcare, fintech, and e-commerce taught me that technology is only as good as the problems it solves. Around this time, I discovered tattooing—initially as stress relief, but it quickly became a parallel creative practice that informed my approach to software development.
                   </p>
                 </div>
               </div>
@@ -159,10 +156,9 @@
               <div class="flex items-center justify-center">
                 <div class="relative glass-accent rounded-xl p-8 max-w-2xl hover-lift animate-pulse-subtle">
                   <div class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-gradient-to-r from-primary to-pink-500 rounded-full border-4 border-white dark:border-gray-900 animate-pulse"></div>
-                  <h3 class="text-xl font-bold mb-2 text-gradient">Today & Beyond</h3>
-                  <p class="text-default">
-                    Continuing to push boundaries, learn new technologies, and create meaningful solutions. 
-                    Always excited about the next challenge and opportunity to make an impact.
+                  <h3 class="text-xl font-bold mb-3 text-gradient">Present Day</h3>
+                  <p class="text-default leading-relaxed">
+                    Now I balance software engineering with tattoo artistry, finding that each practice strengthens the other. I maintain open-source keyboard firmware, write about technology and creativity, and continue building applications that solve real problems. Violet and our chinchillas keep me grounded, reminding me that the best work happens when you bring your whole self to it.
                   </p>
                 </div>
               </div>
@@ -334,9 +330,9 @@
                 <UIcon name="i-lucide-keyboard" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
               </div>
               <div class="p-6">
-                <h3 class="text-xl font-bold mb-2 text-primary">Custom Keyboards</h3>
+                <h3 class="text-xl font-bold mb-2 text-primary">Split Keyboards</h3>
                 <p class="text-muted">
-                  Daily drivers: Lily58 with a touchpad, and a pink Sofle running wireless ZMK with OLEDs + dongle.
+                  Daily drivers: Lily58 with integrated trackpad, and a pink Sofle running my ZMK fork with OLED screens and wireless dongle setup. I maintain open-source firmware to help others get started with splits.
                 </p>
               </div>
             </div>
@@ -353,9 +349,9 @@
                 <UIcon name="i-lucide-pen-tool" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
               </div>
               <div class="p-6">
-                <h3 class="text-xl font-bold mb-2 text-purple-500">Tattoo Art</h3>
+                <h3 class="text-xl font-bold mb-2 text-purple-500">Tattoo Artistry</h3>
                 <p class="text-muted">
-                  I tattoo part‑time — linework, color, and collaborative designs that tell stories.
+                  Part-time tattoo artist specializing in linework, botanical designs, and collaborative custom pieces. I love the intersection of technical precision and creative expression—much like coding, but permanent.
                 </p>
               </div>
             </div>
@@ -372,9 +368,9 @@
                 <UIcon name="i-lucide-heart" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
               </div>
               <div class="p-6">
-                <h3 class="text-xl font-bold mb-2 text-pink-500">Chinchilla Crew</h3>
+                <h3 class="text-xl font-bold mb-2 text-pink-500">Chinchilla Parents</h3>
                 <p class="text-muted">
-                  Two rescues from Craigslist: Ray (chunky loaf, older) and Paddy (tiny, full of energy).
+                  Ray and Paddy, our rescued chinchillas who keep life interesting. Ray is our gentle giant who perfected the loaf position, while Paddy brings chaos and endless energy. They're active during my late-night coding sessions.
                 </p>
               </div>
             </div>
