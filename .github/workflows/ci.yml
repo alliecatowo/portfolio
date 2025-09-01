@@ -6,21 +6,16 @@ on:
   push:
     branches: [main, staging]
 
+env:
+  FORCE_COLOR: 1
+  CI: true
+  TERM: xterm-256color
+
 jobs:
-  ci:
+  setup:
     runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: true
-
-    defaults:
-      run:
-        working-directory: ./frontend
-
-    env:
-      FORCE_COLOR: 1
-      CI: true
-
+    outputs:
+      pnpm-store-path: ${{ steps.pnpm-cache.outputs.pnpm-store-path }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -33,46 +28,212 @@ jobs:
       - name: Install tools via mise
         run: mise install
 
-      - name: Determine pnpm store path
-        run: echo "PNPM_STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "pnpm-store-path=$(cd frontend && pnpm store path --silent)" >> $GITHUB_OUTPUT
 
       - name: Setup pnpm cache
         uses: actions/cache@v4
         with:
-          path: ${{ env.PNPM_STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+          path: ${{ steps.pnpm-cache.outputs.pnpm-store-path }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: cd frontend && pnpm install --frozen-lockfile
+
+  typecheck:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup mise (Node, pnpm)
+        uses: jdx/mise-action@v2
+        with:
+          cache: true
+
+      - name: Restore pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ needs.setup.outputs.pnpm-store-path }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: cd frontend && pnpm install --frozen-lockfile
 
       - name: Run typecheck
         run: |
-          pnpm run typecheck || {
+          cd frontend && pnpm exec nuxi typecheck --colors || {
             echo "::error title=TypeScript Error::TypeScript compilation failed"
             exit 1
           }
 
-      - name: Run lint (non-blocking)
-        continue-on-error: true
-        run: pnpm run lint
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup mise (Node, pnpm)
+        uses: jdx/mise-action@v2
+        with:
+          cache: true
+
+      - name: Restore pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ needs.setup.outputs.pnpm-store-path }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: cd frontend && pnpm install --frozen-lockfile
+
+      - name: Run lint
+        run: cd frontend && pnpm exec eslint . --ext .js,.ts,.vue --color --cache --cache-location .eslintcache
+
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup mise (Node, pnpm)
+        uses: jdx/mise-action@v2
+        with:
+          cache: true
+
+      - name: Restore pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ needs.setup.outputs.pnpm-store-path }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: cd frontend && pnpm install --frozen-lockfile
 
       - name: Build application
         run: |
-          pnpm run build || {
+          cd frontend && pnpm run build || {
             echo "::error title=Build Error::Application build failed"
             exit 1
           }
 
-      - name: Run tests
-        run: pnpm test
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: frontend/.output
+          retention-days: 1
 
-      - name: Lint commits (PR only)
-        if: github.event_name == 'pull_request'
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup mise (Node, pnpm)
+        uses: jdx/mise-action@v2
+        with:
+          cache: true
+
+      - name: Restore pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ needs.setup.outputs.pnpm-store-path }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: cd frontend && pnpm install --frozen-lockfile
+
+      - name: Run tests
+        run: cd frontend && pnpm test
+
+  commitlint:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup mise (Node, pnpm)
+        uses: jdx/mise-action@v2
+        with:
+          cache: true
+
+      - name: Install tools via mise
+        run: mise install
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint commits
         run: |
-          cd ../
           pnpm exec commitlint --from=origin/${{ github.base_ref }} --to=HEAD || {
             echo "::error title=Commit Lint Error::One or more commit messages do not follow conventional format"
             exit 1
           }
+
+  firebase-preview:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: frontend/.output
+
+      - name: Deploy to Firebase Hosting Preview
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ALLIE_PORTFOLIO_PROJECT }}
+          projectId: allie-portfolio-project
+
+  firebase-production:
+    if: github.ref == 'refs/heads/production'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: frontend/.output
+
+      - name: Deploy to Firebase Hosting Production
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ALLIE_PORTFOLIO_PROJECT }}
+          channelId: live
+          projectId: allie-portfolio-project
