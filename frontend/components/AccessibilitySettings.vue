@@ -84,32 +84,42 @@
             />
           </div>
           
-          <!-- Accessibility Options -->
-          <div class="space-y-2">
-            <h4 class="text-sm font-medium mb-1">Accessibility</h4>
-            <UCheckbox
+          <!-- Dyslexia Font -->
+          <div role="group" aria-labelledby="dyslexia-font-label">
+            <span id="dyslexia-font-label" class="block text-sm font-medium mb-2">Dyslexia-friendly font</span>
+            <URadioGroup
               :model-value="preferences.dyslexiaFont"
-              label="Dyslexia-friendly font"
-              help="Uses OpenDyslexic font for better readability"
-              size="sm"
-              class="small-checkbox"
-              @update:model-value="(val) => updateDyslexiaFont(val === true)"
+              :options="[
+                { value: false, label: 'Standard font' },
+                { value: true, label: 'OpenDyslexic font' }
+              ]"
+              @update:model-value="(value: boolean) => updateDyslexiaFont(value)"
             />
-            <UCheckbox
+          </div>
+          
+          <!-- High Contrast -->
+          <div role="group" aria-labelledby="high-contrast-label">
+            <span id="high-contrast-label" class="block text-sm font-medium mb-2">Contrast</span>
+            <URadioGroup
               :model-value="preferences.highContrast"
-              label="High contrast"
-              help="Increases text contrast for better visibility"
-              size="sm"
-              class="small-checkbox"
-              @update:model-value="(val) => updateHighContrast(val === true)"
+              :options="[
+                { value: false, label: 'Normal contrast' },
+                { value: true, label: 'High contrast' }
+              ]"
+              @update:model-value="(value: boolean) => updateHighContrast(value)"
             />
-            <UCheckbox
+          </div>
+          
+          <!-- Reduced Motion -->
+          <div role="group" aria-labelledby="reduced-motion-label">
+            <span id="reduced-motion-label" class="block text-sm font-medium mb-2">Motion</span>
+            <URadioGroup
               :model-value="preferences.reducedMotion"
-              label="Reduce motion"
-              help="Minimizes animations and transitions"
-              size="sm"
-              class="small-checkbox"
-              @update:model-value="(val) => updateReducedMotion(val === true)"
+              :options="[
+                { value: false, label: 'Normal animations' },
+                { value: true, label: 'Reduced motion' }
+              ]"
+              @update:model-value="(value: boolean) => updateReducedMotion(value)"
             />
           </div>
           
@@ -173,28 +183,42 @@
             />
           </div>
           
-          <div class="space-y-3">
-            <UCheckbox
-              :model-value="preferences.dyslexiaFont"
-              label="Use dyslexia-friendly font"
-              size="sm"
-              class="small-checkbox"
-              @update:model-value="(val) => updateDyslexiaFont(val === true)"
-            />
-            <UCheckbox
-              :model-value="preferences.highContrast"
-              label="High contrast mode"
-              size="sm"
-              class="small-checkbox"
-              @update:model-value="(val) => updateHighContrast(val === true)"
-            />
-            <UCheckbox
-              :model-value="preferences.reducedMotion"
-              label="Reduce animations"
-              size="sm"
-              class="small-checkbox"
-              @update:model-value="(val) => updateReducedMotion(val === true)"
-            />
+          <div class="space-y-4">
+            <div role="group" aria-labelledby="welcome-dyslexia-font-label">
+              <span id="welcome-dyslexia-font-label" class="block text-sm font-medium mb-2">Font type</span>
+              <URadioGroup
+                :model-value="preferences.dyslexiaFont"
+                :options="[
+                  { value: false, label: 'Standard font' },
+                  { value: true, label: 'Dyslexia-friendly font' }
+                ]"
+                @update:model-value="(value: boolean) => updateDyslexiaFont(value)"
+              />
+            </div>
+            
+            <div role="group" aria-labelledby="welcome-high-contrast-label">
+              <span id="welcome-high-contrast-label" class="block text-sm font-medium mb-2">Contrast</span>
+              <URadioGroup
+                :model-value="preferences.highContrast"
+                :options="[
+                  { value: false, label: 'Normal contrast' },
+                  { value: true, label: 'High contrast' }
+                ]"
+                @update:model-value="(value: boolean) => updateHighContrast(value)"
+              />
+            </div>
+            
+            <div role="group" aria-labelledby="welcome-reduced-motion-label">
+              <span id="welcome-reduced-motion-label" class="block text-sm font-medium mb-2">Motion</span>
+              <URadioGroup
+                :model-value="preferences.reducedMotion"
+                :options="[
+                  { value: false, label: 'Normal animations' },
+                  { value: true, label: 'Reduced motion' }
+                ]"
+                @update:model-value="(value: boolean) => updateReducedMotion(value)"
+              />
+            </div>
           </div>
           </div>
         
@@ -245,31 +269,5 @@ const {
 </script>
 
 <style scoped>
-/* Override Nuxt UI checkbox sizes to be more reasonable */
-:deep(.small-checkbox .form-checkbox) {
-  width: 1rem;
-  height: 1rem;
-}
-
-:deep(.small-checkbox) {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-/* Ensure proper spacing and alignment */
-:deep(.small-checkbox .label) {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-:deep(.small-checkbox .help-text) {
-  font-size: 0.75rem;
-  line-height: 1rem;
-  color: rgb(107 114 128);
-  margin-top: 0.25rem;
-}
-
-.dark :deep(.small-checkbox .help-text) {
-  color: rgb(156 163 175);
-}
+/* No custom overwrites needed - using native radio groups */
 </style>
