@@ -102,7 +102,7 @@ export default defineNuxtConfig({
   },
   // Nuxt Image presets (used across pages)
   // Let Nuxt automatically select provider: ipx (dev) or ipxStatic (static builds)
-  image: {
+  ...({ image: {
     presets: {
       avatar: { 
         modifiers: { 
@@ -143,7 +143,7 @@ export default defineNuxtConfig({
         } 
       }
     }
-  },
+  } }),
   // Vite optimizations
   vite: {
     build: {
