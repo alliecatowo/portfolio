@@ -64,3 +64,6 @@ logs
 
 .gemini/
 gha-creds-*.json
+
+# Claude Code local settings
+.claude/
