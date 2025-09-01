@@ -77,6 +77,7 @@ const formattedDate = computed(() => {
   if (!props.date) return ''
   try { return new Date(props.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) } catch { return props.date }
 })
+
 </script>
 
 <style scoped>
