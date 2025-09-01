@@ -10,7 +10,7 @@
       </div>
       
       <div v-else-if="error" class="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg text-red-600 dark:text-red-400">
-        <p>{{ error }}</p>
+        <p>{{ error }} asdffsadf </p>
       </div>
       
       <div v-else-if="!projects || projects.length === 0" class="text-center py-8">
@@ -50,7 +50,7 @@
               {{ project.description }}
             </p>
             
-            <div class="flex flex-wrap gap-2 mb-4" v-if="project.technologies && project.technologies.length">
+            <div v-if="project.technologies && project.technologies.length" class="flex flex-wrap gap-2 mb-4">
               <span 
                 v-for="tech in project.technologies" 
                 :key="tech" 

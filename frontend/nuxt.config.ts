@@ -14,13 +14,12 @@ export default defineNuxtConfig({
     '@nuxt/image'
   ],
   // Color mode handled by @nuxt/ui defaults (system)
-  // Use better-sqlite3 for development stability (native SQLite causes live reload issues)
+  // Use native SQLite (Node.js 22.5.0+) for performance
   ...({ content: { 
     experimental: { 
-      // Use better-sqlite3 in development for stability with HMR/live reload
-      sqliteConnector: process.env.NODE_ENV === 'production' ? 'native' : 'better-sqlite3',
-      // Enable native SQLite only in production (Node 22.5.0+)
-      nativeSqlite: process.env.NODE_ENV === 'production'
+      // Use Node.js native SQLite module
+      nativeSqlite: true,
+      sqliteConnector: 'native'
     } 
   } }),
   css: ['~/assets/css/main.css'],
