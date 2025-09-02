@@ -514,7 +514,7 @@ export const useSearch = () => {
         }
         break
       case 'copy-email':
-        navigator.clipboard.writeText('hello@allisons.dev')
+        navigator.clipboard.writeText('me@allisons.dev')
         showSuccess('Email address copied to clipboard!', 'Copied')
         break
     }

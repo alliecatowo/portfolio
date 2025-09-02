@@ -419,7 +419,7 @@
                 <UIcon name="i-lucide-github" class="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
               </a>
               <a 
-                href="https://linkedin.com/in/allison" 
+                href="https://linkedin.com/in/allie-cat" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 class="w-12 h-12 glass-strong rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors group"
@@ -437,7 +437,7 @@
                 <UIcon name="i-lucide-twitter" class="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
               </a>
               <a 
-                href="mailto:dev@allisons.dev" 
+                href="mailto:me@allisons.dev" 
                 class="w-12 h-12 glass-strong rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors group"
                 aria-label="Email"
               >
