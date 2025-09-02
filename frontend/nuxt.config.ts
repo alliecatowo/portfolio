@@ -101,9 +101,9 @@ export default defineNuxtConfig({
     }
   },
   // Nuxt Image presets (used across pages) 
-  // Use regular ipx provider - let Nuxt handle static generation automatically
+  // Use 'none' provider to bypass IPX entirely and serve images as-is
   ...({ image: {
-    provider: 'ipx',
+    provider: 'none',
     presets: {
       avatar: { 
         modifiers: { 
