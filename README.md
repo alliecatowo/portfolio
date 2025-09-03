@@ -1,6 +1,17 @@
 # Allison's Portfolio
 
-A modern developer portfolio built with Nuxt 4, showcasing software engineering projects and technical expertise.
+<div align="center">
+
+[![Production Deploy](https://github.com/alliecatowo/portfolio/actions/workflows/production-deploy.yml/badge.svg)](https://github.com/alliecatowo/portfolio/actions/workflows/production-deploy.yml)
+[![CI](https://github.com/alliecatowo/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/alliecatowo/portfolio/actions/workflows/ci.yml)
+[![Built with Nuxt](https://img.shields.io/badge/Built%20with-Nuxt%204-00DC82.svg?logo=nuxt.js)](https://nuxt.com/)
+[![Managed with mise](https://img.shields.io/badge/Managed%20with-mise-FF6B6B.svg)](https://mise.jdx.dev/)
+
+**🚀 [Production](https://allisons.dev) • 🧪 [Staging](https://allie-portfolio-project--staging-o21oschp.web.app)**
+
+*A modern developer portfolio built with Nuxt 4, showcasing software engineering projects and technical expertise.*
+
+</div>
 
 ## 🚀 Quick Start
 
@@ -52,15 +63,14 @@ pnpm lint:fix
 
 ## 🏗️ Tech Stack
 
-- **Framework**: [Nuxt 4](https://nuxt.com/) with Vue 3
+- **Framework**: [Nuxt 4](https://nuxt.com/) with Vue 3 and TypeScript
 - **Content Management**: [@nuxt/content](https://content.nuxt.com/) with native SQLite backend
 - **Styling**: [@nuxt/ui](https://ui.nuxt.com/) (TailwindCSS-based component library)
-- **Authentication**: Minimal [Pinia](https://pinia.vuejs.org/) for admin auth
-- **Deployment**: [Firebase Hosting](https://firebase.google.com/products/hosting)
+- **Deployment**: [Firebase Hosting](https://firebase.google.com/products/hosting) with channel-based environments
 - **CI/CD**: GitHub Actions with automated preview, staging, and production deployments
-- **Package Manager**: pnpm with workspaces
-- **Environment Management**: mise for consistent tool versions
-- **Code Quality**: TypeScript, ESLint, Prettier, Husky, lint-staged
+- **Tool Management**: [mise](https://mise.jdx.dev/) for automatic Node.js and pnpm version management
+- **Package Manager**: [pnpm](https://pnpm.io/) with workspaces and optimized caching
+- **Code Quality**: ESLint, Prettier, Husky pre-commit hooks, lint-staged
 
 ## 📁 Project Structure
 
@@ -94,20 +104,21 @@ portfolio/
 
 ## ⚡ CI/CD Pipeline
 
-Optimized GitHub Actions workflow with caching and parallel execution:
+Optimized GitHub Actions workflow with intelligent caching and parallel execution:
 
 ```
-PRs → Temporary preview channels (7-day expiry)
-main → Permanent staging channel (always up-to-date)
-releases → Production live channel (stable releases)
+📝 Pull Requests    → 🔍 Preview channels (7-day auto-expiry)
+🔄 Main branch      → 🧪 Staging environment (always current)
+🏷️ GitHub releases → 🚀 Production deployment (stable)
 ```
 
-**Features:**
+**Pipeline Features:**
 
-- **Smart Caching** - node_modules and pnpm store caching
-- **Parallel Jobs** - typecheck, lint, and deploy run in parallel
-- **Manual Claude Review** - On-demand code reviews via workflow dispatch
-- **Environment Separation** - Dedicated staging and production channels
+- **🚀 Smart Caching** - pnpm store and node_modules with cache restoration
+- **⚡ Parallel Execution** - typecheck, lint, and build jobs run concurrently  
+- **🔒 Environment Protection** - Staging and production use protected environments
+- **🎯 Channel Isolation** - Firebase hosting channels provide URL isolation
+- **📊 Status Monitoring** - Real-time deployment status via GitHub badges
 
 ## 🤝 Contributing
 
@@ -121,7 +132,7 @@ All PRs are automatically validated with typecheck, linting, and preview deploym
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the GPL-3.0 License - see the [LICENSE](./LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
