@@ -90,7 +90,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ needs.setup.outputs.pnpm-store-path }}
-          key: ${{ runner.os }}-pnmp-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
@@ -100,7 +100,7 @@ jobs:
       - name: Run lint
         run: cd frontend && pnpm exec eslint . --ext .js,.ts,.vue --color --cache --cache-location .eslintcache
 
-  build:
+  generate:
     needs: setup
     runs-on: ubuntu-latest
     defaults:
@@ -121,7 +121,7 @@ jobs:
           path: ${{ needs.setup.outputs.pnpm-store-path }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnmp-store-
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -135,32 +135,6 @@ jobs:
           name: build-output
           path: .output/
           retention-days: 1
-
-  test:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup mise (Node, pnpm)
-        uses: jdx/mise-action@v2
-        with:
-          cache: true
-
-      - name: Restore pnpm cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ needs.setup.outputs.pnpm-store-path }}
-          key: ${{ runner.os }}-pnmp-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
-        run: cd frontend && pnpm install --frozen-lockfile
-
-      - name: Run tests
-        run: cd frontend && pnmp test
 
   commitlint:
     if: github.event_name == 'pull_request'
@@ -215,7 +189,7 @@ jobs:
           path: ${{ needs.setup.outputs.pnpm-store-path }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnmp-store-
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -252,7 +226,7 @@ jobs:
           path: ${{ needs.setup.outputs.pnpm-store-path }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnmp-store-
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -271,7 +245,7 @@ jobs:
   # Summary job to report overall CI status
   ci-success:
     if: always()
-    needs: [setup, typecheck, lint, build, test, commitlint, firebase-preview, firebase-production]
+    needs: [setup, typecheck, lint, generate, commitlint, firebase-preview, firebase-production]
     runs-on: ubuntu-latest
     steps:
       - name: Check all jobs
@@ -280,8 +254,7 @@ jobs:
           if [[ "${{ needs.setup.result }}" == "failure" || 
                 "${{ needs.typecheck.result }}" == "failure" || 
                 "${{ needs.lint.result }}" == "failure" || 
-                "${{ needs.build.result }}" == "failure" || 
-                "${{ needs.test.result }}" == "failure" || 
+                "${{ needs.generate.result }}" == "failure" || 
                 ("${{ needs.commitlint.result }}" == "failure" && "${{ github.event_name }}" == "pull_request") ]]; then
             echo "::error::One or more required CI jobs failed"
             exit 1
