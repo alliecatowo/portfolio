@@ -66,7 +66,7 @@ pnpm lint:fix
 
 ```
 portfolio/
-├── frontend/               # Nuxt 4 application
+├── app/                    # Nuxt 4 application
 │   ├── components/        # Vue components
 │   ├── content/          # Markdown content files
 │   ├── layouts/          # Page layouts
@@ -88,18 +88,18 @@ portfolio/
 
 ## 🔗 Live Sites
 
-- **Production**: https://allisons.dev
-- **Staging**: Auto-deployed from main branch to staging channel
-- **Preview**: Automatic deployments for pull requests
+- **Production**: https://allisons.dev (live channel - releases only)
+- **Staging**: https://allie-portfolio-project--staging-o21oschp.web.app (reflects main branch)
+- **Preview**: Automatic temporary deployments for pull requests
 
 ## ⚡ CI/CD Pipeline
 
 Optimized GitHub Actions workflow with caching and parallel execution:
 
 ```
-PR → Preview deployment
-main → Staging deployment
-release → Production deployment
+PRs → Temporary preview channels (7-day expiry)
+main → Permanent staging channel (always up-to-date)
+releases → Production live channel (stable releases)
 ```
 
 **Features:**
