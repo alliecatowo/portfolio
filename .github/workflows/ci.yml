@@ -11,10 +11,12 @@ env:
   CI: true
 
 jobs:
+  # Shared setup job with dependency installation
   setup:
     runs-on: ubuntu-latest
     outputs:
       pnpm-store-path: ${{ steps.pnpm-cache.outputs.pnpm-store-path }}
+      node-modules-cache-key: ${{ steps.cache-deps.outputs.cache-hit }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,16 +26,13 @@ jobs:
         with:
           cache: true
 
-      - name: Install tools via mise
-        run: mise install
-
       - name: Get pnpm store directory
         id: pnpm-cache
+        working-directory: frontend
         shell: bash
-        run: |
-          echo "pnpm-store-path=$(cd frontend && pnpm store path --silent)" >> $GITHUB_OUTPUT
+        run: echo "pnpm-store-path=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
 
-      - name: Setup pnmp cache
+      - name: Setup pnpm cache
         uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-cache.outputs.pnpm-store-path }}
@@ -41,8 +40,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: Cache node_modules
+        id: cache-deps
+        uses: actions/cache@v4
+        with:
+          path: frontend/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
       - name: Install dependencies
-        run: cd frontend && pnpm install --frozen-lockfile
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+        working-directory: frontend
+        run: pnpm install --frozen-lockfile
 
   typecheck:
     needs: setup
@@ -56,23 +66,17 @@ jobs:
         with:
           cache: true
 
-      - name: Restore pnpm cache
-        uses: actions/cache@v4
+      - name: Restore node_modules cache
+        uses: actions/cache/restore@v4
         with:
-          path: ${{ needs.setup.outputs.pnpm-store-path }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          path: frontend/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
-        run: cd frontend && pnpm install --frozen-lockfile
+            ${{ runner.os }}-node-modules-
 
       - name: Run typecheck
-        run: |
-          cd frontend && pnpm exec nuxi typecheck --colors || {
-            echo "::error title=TypeScript Error::TypeScript compilation failed"
-            exit 1
-          }
+        working-directory: frontend
+        run: pnpm exec nuxi typecheck --colors
 
   lint:
     needs: setup
@@ -86,55 +90,25 @@ jobs:
         with:
           cache: true
 
-      - name: Restore pnpm cache
+      - name: Restore node_modules cache
+        uses: actions/cache/restore@v4
+        with:
+          path: frontend/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      - name: Cache ESLint
         uses: actions/cache@v4
         with:
-          path: ${{ needs.setup.outputs.pnpm-store-path }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          path: frontend/.eslintcache
+          key: ${{ runner.os }}-eslint-${{ hashFiles('frontend/**/*.{js,ts,vue}') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
-        run: cd frontend && pnpm install --frozen-lockfile
+            ${{ runner.os }}-eslint-
 
       - name: Run lint
-        run: cd frontend && pnpm exec eslint . --ext .js,.ts,.vue --color --cache --cache-location .eslintcache
-
-  generate:
-    needs: setup
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup mise (Node, pnpm)
-        uses: jdx/mise-action@v2
-        with:
-          cache: true
-
-      - name: Restore pnpm cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ needs.setup.outputs.pnpm-store-path }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Generate static site
-        run: pnpm run generate
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-output
-          path: .output/
-          retention-days: 1
+        working-directory: frontend
+        run: pnpm exec eslint . --ext .js,.ts,.vue --color --cache --cache-location .eslintcache
 
   commitlint:
     if: github.event_name == 'pull_request'
@@ -165,15 +139,15 @@ jobs:
 
   firebase-preview:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
-    needs: setup
+    needs: [setup, typecheck, lint] # Run after validation passes
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend
+    environment:
+      name: Preview
     permissions:
       checks: write
       contents: read
       pull-requests: write
+      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -183,18 +157,16 @@ jobs:
         with:
           cache: true
 
-      - name: Restore pnpm cache
-        uses: actions/cache@v4
+      - name: Restore node_modules cache
+        uses: actions/cache/restore@v4
         with:
-          path: ${{ needs.setup.outputs.pnpm-store-path }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          path: frontend/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+            ${{ runner.os }}-node-modules-
 
       - name: Build for deployment
+        working-directory: frontend
         run: pnpm run generate
 
       - name: Deploy to Firebase Hosting Preview
@@ -204,48 +176,10 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ALLIE_PORTFOLIO_PROJECT }}
           projectId: allie-portfolio-project
 
-  firebase-production:
-    if: github.ref == 'refs/heads/production'
-    needs: setup
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup mise (Node, pnpm)
-        uses: jdx/mise-action@v2
-        with:
-          cache: true
-
-      - name: Restore pnpm cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ needs.setup.outputs.pnpm-store-path }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build for deployment
-        run: pnpm run generate
-
-      - name: Deploy to Firebase Hosting Production
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ALLIE_PORTFOLIO_PROJECT }}
-          channelId: live
-          projectId: allie-portfolio-project
-
   # Summary job to report overall CI status
   ci-success:
     if: always()
-    needs: [setup, typecheck, lint, generate, commitlint, firebase-preview, firebase-production]
+    needs: [setup, typecheck, lint, commitlint, firebase-preview]
     runs-on: ubuntu-latest
     steps:
       - name: Check all jobs
@@ -254,7 +188,6 @@ jobs:
           if [[ "${{ needs.setup.result }}" == "failure" || 
                 "${{ needs.typecheck.result }}" == "failure" || 
                 "${{ needs.lint.result }}" == "failure" || 
-                "${{ needs.generate.result }}" == "failure" || 
                 ("${{ needs.commitlint.result }}" == "failure" && "${{ github.event_name }}" == "pull_request") ]]; then
             echo "::error::One or more required CI jobs failed"
             exit 1
