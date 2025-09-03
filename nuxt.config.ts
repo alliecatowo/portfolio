@@ -90,7 +90,6 @@ export default defineNuxtConfig({
         '/projects',
         '/about', 
         '/contact',
-        '/gallery',
         '/open-source',
         '/blog'
       ]

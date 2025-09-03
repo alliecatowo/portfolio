@@ -4,7 +4,6 @@ export function useContent() {
    */
   async function fetchBlogPosts(limit?: number) {
     const query = queryCollection('blog')
-      .where('category', '=', 'dev')
       .where('published', '=', true)
       .order('date', 'DESC')
     
@@ -20,7 +19,6 @@ export function useContent() {
    */
   async function fetchBlogPost(slug: string) {
     return await queryCollection('blog')
-      .where('category', '=', 'dev')
       .where('slug', '=', slug)
       .first()
   }
