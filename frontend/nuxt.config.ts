@@ -92,8 +92,7 @@ export default defineNuxtConfig({
         '/contact',
         '/gallery',
         '/open-source',
-        '/blog',
-        '/images/**'
+        '/blog'
       ]
     }
   },

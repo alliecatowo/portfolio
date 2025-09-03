@@ -2,7 +2,7 @@ name: Release
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch: {}
 
 permissions:
@@ -57,7 +57,7 @@ jobs:
 
       - name: Build
         working-directory: ./frontend
-        run: pnpm run build
+        run: pnpm run generate
 
       - name: Tests
         working-directory: ./frontend
@@ -67,4 +67,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm dlx semantic-release
-

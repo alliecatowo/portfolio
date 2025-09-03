@@ -9,7 +9,6 @@ on:
 env:
   FORCE_COLOR: 1
   CI: true
-  TERM: xterm-256color
 
 jobs:
   setup:
@@ -34,7 +33,7 @@ jobs:
         run: |
           echo "pnpm-store-path=$(cd frontend && pnpm store path --silent)" >> $GITHUB_OUTPUT
 
-      - name: Setup pnpm cache
+      - name: Setup pnmp cache
         uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-cache.outputs.pnpm-store-path }}
@@ -91,7 +90,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ needs.setup.outputs.pnpm-store-path }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnmp-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
@@ -122,59 +121,13 @@ jobs:
           path: ${{ needs.setup.outputs.pnpm-store-path }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            ${{ runner.os }}-pnmp-store-
 
-      - name: Clear Sharp cache and install dependencies
-        run: |
-          echo "::group::Clear potentially cached Sharp binaries"
-          # Clear any cached Sharp binaries that might be incompatible
-          rm -rf node_modules/sharp 2>/dev/null || true
-          rm -rf ../node_modules/sharp 2>/dev/null || true
-          echo "::endgroup::"
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-          echo "::group::Install dependencies with frozen lockfile"
-          pnpm install --frozen-lockfile
-          echo "::endgroup::"
-
-          echo "::group::Verify Sharp installation"
-          echo "Sharp in frontend:"
-          pnpm list sharp 2>/dev/null || echo "Sharp not in frontend direct dependencies"
-          echo "Sharp in workspace root:"
-          cd .. && pnpm list sharp 2>/dev/null || echo "Sharp not in root dependencies" && cd frontend
-          echo "Test Sharp loading:"
-          node -e "try { require('sharp'); console.log('Sharp loaded successfully'); } catch(e) { console.log('Sharp error:', e.message); }"
-          echo "::endgroup::"
-
-      - name: Build application
-        run: |
-          echo "::group::Environment Debug"
-          echo "Node version: $(node --version)"
-          echo "pnpm version: $(pnpm --version)"
-          echo "Working directory: $(pwd)"
-          echo "Sharp installation check:"
-          pnpm list sharp 2>/dev/null || echo "Sharp not found in direct dependencies"
-          echo "::endgroup::"
-
-          echo "::group::Nuxt Build with Enhanced Debug"
-          DEBUG="nuxt:*" NUXT_DEBUG=true pnpm run build || {
-            echo "::error title=Build Error::Application build failed with IPX issues"
-            echo "::group::Post-failure Debug"
-            echo "Checking for Sharp binary issues:"
-            node -e "try { require('sharp'); console.log('Sharp loaded successfully'); } catch(e) { console.log('Sharp error:', e.message); }"
-            echo "::endgroup::"
-            exit 1
-          }
-          echo "::endgroup::"
-
-      - name: Debug - Verify build output
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "Contents of current directory:"
-          ls -la
-          echo "Looking for .output directory:"
-          ls -la .output || echo ".output directory not found"
-          echo "Contents of .output if it exists:"
-          ls -la .output/ || echo "Cannot list .output contents"
+      - name: Generate static site
+        run: pnpm run generate
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -199,7 +152,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ needs.setup.outputs.pnpm-store-path }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnmp-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
@@ -207,7 +160,7 @@ jobs:
         run: cd frontend && pnpm install --frozen-lockfile
 
       - name: Run tests
-        run: cd frontend && pnpm test
+        run: cd frontend && pnmp test
 
   commitlint:
     if: github.event_name == 'pull_request'
@@ -262,13 +215,13 @@ jobs:
           path: ${{ needs.setup.outputs.pnpm-store-path }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            ${{ runner.os }}-pnmp-store-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Build for deployment
-        run: pnpm run build
+        run: pnpm run generate
 
       - name: Deploy to Firebase Hosting Preview
         uses: FirebaseExtended/action-hosting-deploy@v0
@@ -299,13 +252,13 @@ jobs:
           path: ${{ needs.setup.outputs.pnpm-store-path }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            ${{ runner.os }}-pnmp-store-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Build for deployment
-        run: pnpm run build
+        run: pnpm run generate
 
       - name: Deploy to Firebase Hosting Production
         uses: FirebaseExtended/action-hosting-deploy@v0
