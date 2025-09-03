@@ -70,11 +70,7 @@ export default defineNuxtConfig({
     tsConfig: {
       compilerOptions: {
         noErrorTruncation: false
-      },
-      exclude: [
-        '../node_modules/@nuxt/image/**',
-        '../../node_modules/@nuxt/image/**'
-      ]
+      }
     }
   },
   
@@ -101,10 +97,7 @@ export default defineNuxtConfig({
       ]
     }
   },
-  // Nuxt Image presets (used across pages) 
-  // Use 'none' provider to bypass IPX entirely and serve images as-is
   ...({ image: {
-    provider: 'none',
     presets: {
       avatar: { 
         modifiers: { 
@@ -155,7 +148,7 @@ export default defineNuxtConfig({
     },
     optimizeDeps: {
       // Only prebundle essential runtime libs, let Nuxt 4 handle vue/vue-router
-      exclude: ['@nuxt/ui', '@nuxt/kit', 'lightningcss', '@tailwindcss/oxide']
+      exclude: ['@nuxt/ui', '@nuxt/kit', '@nuxt/image', 'lightningcss', '@tailwindcss/oxide']
     },
     ssr: {
       external: ['lightningcss', '@tailwindcss/oxide']
