@@ -74,5 +74,5 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ALLIE_PORTFOLIO_PROJECT }}
-          channelId: live
+          target: production
           projectId: allie-portfolio-project
