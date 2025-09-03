@@ -52,24 +52,6 @@ export function useContent() {
       .first()
   }
 
-  /**
-   * Fetch gallery items from content
-   */
-  async function fetchGalleryItems(limit?: number, featured?: boolean) {
-    const query = queryCollection('gallery')
-      .order('featured', 'DESC')
-      .order('date', 'DESC')
-    
-    if (featured) {
-      query.where('featured', '=', true)
-    }
-    
-    if (limit) {
-      query.limit(limit)
-    }
-    
-    return await query.all()
-  }
 
   /**
    * Fetch testimonials from content
@@ -92,7 +74,6 @@ export function useContent() {
     fetchBlogPost,
     fetchProjects,
     fetchProject,
-    fetchGalleryItems,
     fetchTestimonials
   }
 }

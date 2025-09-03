@@ -371,7 +371,7 @@ to="/contact"
 <script setup lang="ts">
 // Set site metadata
 // Import content utilities
-import { useContent } from '~/composables/useContent';
+import { useContent } from '~/app/composables/useContent';
 
 useHead({
   title: "Allison's Developer Portfolio - Full-Stack Web Development",

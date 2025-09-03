@@ -233,7 +233,7 @@
 </template>
 
 <script setup lang="ts">
-import BlogCard from '~/components/common/BlogCard.vue'
+import BlogCard from '~/app/components/common/BlogCard.vue'
 
 interface BlogDoc {
   title?: string;
