@@ -43,5 +43,25 @@
     "{package.json,frontend/package.json}": [
       "bash -c 'pnpm lockfile:check'"
     ]
+  },
+  "pnpm": {
+    "supportedArchitectures": {
+      "os": [
+        "linux",
+        "current"
+      ],
+      "cpu": [
+        "x64",
+        "current"
+      ],
+      "libc": [
+        "glibc",
+        "musl",
+        "current"
+      ]
+    },
+    "overrides": {
+      "sharp": "^0.34.3"
+    }
   }
 }

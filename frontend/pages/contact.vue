@@ -27,13 +27,13 @@
 
             <div class="space-y-6">
               <!-- Email -->
-              <a href="mailto:dev@allisons.dev" class="flex items-center gap-4 group hover:translate-x-1 transition-transform">
+              <a href="mailto:me@allisons.dev" class="flex items-center gap-4 group hover:translate-x-1 transition-transform">
                 <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                   <UIcon name="i-lucide-mail" class="w-6 h-6 text-primary" />
                 </div>
                 <div>
                   <p class="text-sm text-muted">Email</p>
-                  <p class="text-default font-medium">dev@allisons.dev</p>
+                  <p class="text-default font-medium">me@allisons.dev</p>
                 </div>
               </a>
 
@@ -52,14 +52,14 @@ href="https://github.com/alliecatowo" target="_blank" rel="noopener noreferrer"
 
               <!-- LinkedIn -->
               <a
-href="https://linkedin.com/in/allison" target="_blank" rel="noopener noreferrer"
+href="https://linkedin.com/in/allie-cat" target="_blank" rel="noopener noreferrer"
                  class="flex items-center gap-4 group hover:translate-x-1 transition-transform">
                 <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                   <UIcon name="i-lucide-linkedin" class="w-6 h-6 text-primary" />
                 </div>
                 <div>
                   <p class="text-sm text-muted">LinkedIn</p>
-                  <p class="text-default font-medium">@allison</p>
+                  <p class="text-default font-medium">@allie-cat</p>
                 </div>
               </a>
 

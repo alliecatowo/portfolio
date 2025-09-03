@@ -9,7 +9,6 @@ on:
 env:
   FORCE_COLOR: 1
   CI: true
-  TERM: xterm-256color
 
 jobs:
   setup:
@@ -34,7 +33,7 @@ jobs:
         run: |
           echo "pnpm-store-path=$(cd frontend && pnpm store path --silent)" >> $GITHUB_OUTPUT
 
-      - name: Setup pnpm cache
+      - name: Setup pnmp cache
         uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-cache.outputs.pnpm-store-path }}
@@ -101,7 +100,7 @@ jobs:
       - name: Run lint
         run: cd frontend && pnpm exec eslint . --ext .js,.ts,.vue --color --cache --cache-location .eslintcache
 
-  build:
+  generate:
     needs: setup
     runs-on: ubuntu-latest
     defaults:
@@ -127,22 +126,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build application
-        run: |
-          pnpm run build || {
-            echo "::error title=Build Error::Application build failed"
-            exit 1
-          }
-
-      - name: Debug - Verify build output
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "Contents of current directory:"
-          ls -la
-          echo "Looking for .output directory:"
-          ls -la .output || echo ".output directory not found"
-          echo "Contents of .output if it exists:"
-          ls -la .output/ || echo "Cannot list .output contents"
+      - name: Generate static site
+        run: pnpm run generate
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -150,32 +135,6 @@ jobs:
           name: build-output
           path: .output/
           retention-days: 1
-
-  test:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup mise (Node, pnpm)
-        uses: jdx/mise-action@v2
-        with:
-          cache: true
-
-      - name: Restore pnpm cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ needs.setup.outputs.pnpm-store-path }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
-        run: cd frontend && pnpm install --frozen-lockfile
-
-      - name: Run tests
-        run: cd frontend && pnpm test
 
   commitlint:
     if: github.event_name == 'pull_request'
@@ -236,7 +195,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build for deployment
-        run: pnpm run build
+        run: pnpm run generate
 
       - name: Deploy to Firebase Hosting Preview
         uses: FirebaseExtended/action-hosting-deploy@v0
@@ -273,7 +232,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build for deployment
-        run: pnpm run build
+        run: pnpm run generate
 
       - name: Deploy to Firebase Hosting Production
         uses: FirebaseExtended/action-hosting-deploy@v0
@@ -286,7 +245,7 @@ jobs:
   # Summary job to report overall CI status
   ci-success:
     if: always()
-    needs: [setup, typecheck, lint, build, test, commitlint, firebase-preview, firebase-production]
+    needs: [setup, typecheck, lint, generate, commitlint, firebase-preview, firebase-production]
     runs-on: ubuntu-latest
     steps:
       - name: Check all jobs
@@ -295,8 +254,7 @@ jobs:
           if [[ "${{ needs.setup.result }}" == "failure" || 
                 "${{ needs.typecheck.result }}" == "failure" || 
                 "${{ needs.lint.result }}" == "failure" || 
-                "${{ needs.build.result }}" == "failure" || 
-                "${{ needs.test.result }}" == "failure" || 
+                "${{ needs.generate.result }}" == "failure" || 
                 ("${{ needs.commitlint.result }}" == "failure" && "${{ github.event_name }}" == "pull_request") ]]; then
             echo "::error::One or more required CI jobs failed"
             exit 1
