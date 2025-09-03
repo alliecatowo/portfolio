@@ -7,7 +7,7 @@
     "node": "22.x"
   },
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "lint-staged": "lint-staged",
     "build": "nuxt build",
     "dev": "nuxt dev",
