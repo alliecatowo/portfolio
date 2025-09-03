@@ -1,73 +1,53 @@
-# Root workspace
-node_modules
-.DS_Store
+# Dependencies
+node_modules/
+
+# Build outputs
+.nuxt/
+.output/
+.nitro/
+dist/**/*
+.data/
+dist
+# Environment files
 .env
 .env.*
 !.env.example
 
-# Frontend
-frontend/.nuxt
-frontend/.output
-frontend/dist
-frontend/.env
-frontend/.env.*
-!frontend/.env.example
-frontend/node_modules
-
-# Backend
-backend/node_modules
-backend/build
-backend/.cache
-backend/.tmp
-backend/dist
-backend/public/uploads
-backend/.env
-backend/.env.*
-!backend/.env.example
-
-# Misc
+# Logs
 *.log
-.cache
+logs/
+
+# Cache
+.cache/
 .eslintcache
-.idea
-.vscode
-.DS_Store
+.tsbuildinfo
+
+# IDE/Editor
+.idea/
+.vscode/
+.fleet/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-strapi-docker
 
-# Nuxt dev/build outputs
-.output
-.data
-.nuxt
-.nitro
-.cache
-dist
-
-# Logs
-logs
-*.log
+# OS
+.DS_Store
+Thumbs.db
 
 # Misc
-.fleet
-.idea
-
-# Local env files
-.env
-.env.*
-!.env.example
-.vercel
-.env*.local
-
+.tmp/
+.temp/
+.vercel/
 .gemini/
 gha-creds-*.json
 
 # Claude Code local settings
 .claude/
 
-# Firebase
+# Firebase (keep .firebaserc, ignore others)
 .firebase/
-.firebaserc
+firebase-debug.log
+firestore-debug.log
+ui-debug.log

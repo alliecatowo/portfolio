@@ -1,6 +1,6 @@
 # Allison's Portfolio
 
-A multi-site portfolio showcasing development and tattoo artistry work, built with Nuxt 4 and modern web technologies.
+A modern developer portfolio built with Nuxt 4, showcasing software engineering projects and technical expertise.
 
 ## 🚀 Quick Start
 
@@ -67,27 +67,24 @@ pnpm lint:fix
 ```
 portfolio/
 ├── frontend/               # Nuxt 4 application
-│   ├── components/        # Vue components (common, dev, tattoo)
+│   ├── components/        # Vue components
 │   ├── content/          # Markdown content files
 │   ├── layouts/          # Page layouts
-│   ├── middleware/       # Route middleware
 │   ├── pages/           # File-based routing
 │   ├── public/          # Static assets
-│   └── utils/           # Site config and utilities
-├── .github/             # GitHub Actions workflows
-├── docs/               # Project documentation
-└── firebase.json       # Firebase configuration
+│   └── utils/           # Utilities and helpers
+├── .github/             # CI/CD workflows
+└── firebase.json       # Firebase hosting config
 ```
 
-## 🎨 Multi-Site Architecture
+## ✨ Features
 
-This portfolio dynamically serves three different experiences based on the URL path:
-
-1. **Developer Portfolio** (`/dev/*`) - Software engineering projects and technical blog
-2. **Tattoo Portfolio** (`/tattoo/*`) - Tattoo artistry gallery and artistic blog
-3. **Dual Mode** (root `/`) - Combined portfolio experience
-
-The site automatically detects the context and applies appropriate theming and content filtering.
+- **Static Site Generation** with ISR (Incremental Static Regeneration)
+- **Content Management** using file-based Markdown with @nuxt/content
+- **Responsive Design** with modern UI components
+- **SEO Optimized** with automatic sitemap and meta tags
+- **Performance Focused** with image optimization and caching
+- **Type Safe** with full TypeScript integration
 
 ## 🔗 Live Sites
 
@@ -97,36 +94,30 @@ The site automatically detects the context and applies appropriate theming and c
 
 ## ⚡ CI/CD Pipeline
 
-Parallel CI/CD with atomic job isolation and direct deployment rebuilds:
+Optimized GitHub Actions workflow with caching and parallel execution:
 
 ```
-setup (deps + pnpm cache) → PARALLEL jobs → deployments
+PR → Preview deployment
+main → Staging deployment
+release → Production deployment
 ```
 
 **Features:**
 
-- **Parallel execution** with independent job failures
-- **Colored logs** (FORCE_COLOR=1, TERM=xterm-256color)
-- **Shared pnpm cache** across all jobs for efficiency
-- **Direct rebuilds** in deployment jobs for reliability
-- **GitHub Actions annotations** for clear error reporting
-
-### Deployment Strategy
-
-- **Preview**: Automatic PR deployments to Firebase preview channel
-- **Static Generation**: ISR with 1-hour cache for dynamic content
-- **Architecture**: Direct rebuilds eliminate artifact dependencies
-
-## 📚 Documentation
-
-Comprehensive documentation is available in the [`docs/`](./docs) directory:
-
-- [📖 Documentation Index](./docs/index.md) - Complete documentation overview
-- [🚀 Development Guide](./docs/development.md) - Setup, workflow, and best practices
+- **Smart Caching** - node_modules and pnpm store caching
+- **Parallel Jobs** - typecheck, lint, and deploy run in parallel
+- **Manual Claude Review** - On-demand code reviews via workflow dispatch
+- **Environment Separation** - Dedicated staging and production channels
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow the [Development Guide](./docs/development.md) for setup and workflow practices. Create feature branches and submit pull requests for review.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes using conventional commits
+4. Push to your branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+All PRs are automatically validated with typecheck, linting, and preview deployments.
 
 ## 📄 License
 

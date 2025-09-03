@@ -1,46 +1,89 @@
 {
+  "name": "portfolio",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "lint-staged": "lint-staged",
-    "dev": "pnpm -C frontend dev",
-    "build": "pnpm -C frontend build",
-    "generate": "pnpm -C frontend generate",
-    "preview": "pnpm -C frontend preview",
-    "typecheck": "pnpm -C frontend typecheck",
-    "lint": "pnpm -C frontend lint",
-    "lint:fix": "pnpm -C frontend lint:fix",
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare || true",
+    "start": "node .output/server/index.mjs",
+    "typecheck": "nuxi typecheck",
+    "lint": "eslint . --cache --cache-location .eslintcache",
+    "lint:fix": "eslint . --fix --cache --cache-location .eslintcache",
     "lockfile:check": "pnpm install --frozen-lockfile --prefer-offline",
     "lockfile:update": "pnpm install && git add pnpm-lock.yaml",
-    "emulators:start": "firebase emulators:start --only hosting",
+    "db:clean": "rm -rf .data/content/contents.sqlite",
+    "db:rebuild": "pnpm db:clean && nuxt prepare",
+    "dev:clean": "pnpm db:clean && pnpm dev",
     "emulators:build": "pnpm generate && firebase emulators:start --only hosting",
-    "emulators:ui": "firebase emulators:start",
-    "emulate": "concurrently \"pnpm -C frontend dev:watch-build\" \"firebase emulators:start --only hosting\""
+    "emulate": "pnpm generate && firebase emulators:start --only hosting"
+  },
+  "dependencies": {
+    "@nuxt/content": "^3.6.3",
+    "@nuxt/image": "^1.11.0",
+    "@nuxt/ui": "4.0.0-alpha.0",
+    "@nuxtjs/robots": "^5.5.1",
+    "@nuxtjs/sitemap": "^7.4.3",
+    "@pinia/nuxt": "^0.5.5",
+    "nuxt-og-image": "^5.1.9",
+    "pinia": "^2.3.1",
+    "sharp": "^0.34.3",
+    "vue": "^3.5.21",
+    "zod": "^4.1.5"
   },
   "devDependencies": {
     "@axe-core/cli": "^4.10.2",
-    "@commitlint/cli": "^19.5.0",
+    "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/js": "^9.34.0",
+    "@iconify-json/heroicons": "^1.2.2",
+    "@iconify-json/lucide": "^1.2.66",
+    "@nuxt/cli": "^3.28.0",
+    "@nuxt/devtools": "latest",
+    "@nuxt/eslint-config": "^0.5.7",
+    "@nuxt/schema": "^4.1.0",
     "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^10.3.5",
-    "@semantic-release/release-notes-generator": "^14.0.1",
-    "concurrently": "^9.2.1",
-    "husky": "^9.1.6",
-    "lint-staged": "^15.2.9",
+    "@semantic-release/release-notes-generator": "^14.0.3",
+    "@types/node": "^24.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.42.0",
+    "@typescript-eslint/parser": "^8.42.0",
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-import-resolver-typescript": "^3.10.1",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-vue": "^9.33.0",
+    "eslint-plugin-vuejs-accessibility": "^2.4.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
+    "nuxi": "^3.28.0",
+    "nuxt": "^4.1.0",
     "pa11y": "^9.0.0",
-    "prettier": "^3.3.3",
-    "semantic-release": "^24.1.0"
+    "prettier": "^3.6.2",
+    "semantic-release": "^24.2.7",
+    "tailwindcss": "^4.1.12",
+    "typescript": "^5.9.2",
+    "vue-tsc": "^2.2.12"
   },
   "lint-staged": {
-    "frontend/**/*.{js,ts,vue}": [
-      "pnpm -C frontend exec eslint --fix --ext .js,.ts,.vue"
+    "**/*.{js,ts,vue}": [
+      "eslint --fix"
     ],
     "**/*.{css,scss,md,yml,yaml,json}": [
       "prettier --write"
     ],
-    "{package.json,frontend/package.json}": [
+    "package.json": [
       "bash -c 'pnpm lockfile:check'"
     ]
   },
@@ -62,6 +105,21 @@
     },
     "overrides": {
       "sharp": "^0.34.3"
-    }
+    },
+    "ignoredBuiltDependencies": [
+      "@parcel/watcher",
+      "@tailwindcss/oxide",
+      "chromedriver",
+      "esbuild",
+      "puppeteer",
+      "sharp",
+      "unrs-resolver",
+      "vue-demi"
+    ],
+    "onlyBuiltDependencies": []
+  },
+  "pnpmConfig": {
+    "enable-pre-post-scripts": true,
+    "auto-install-peers": true
   }
 }

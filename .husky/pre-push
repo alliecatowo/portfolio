@@ -1,8 +1,8 @@
-echo "🧪 Type checking frontend before push..."
+echo "🧪 Type checking before push..."
 if command -v pnpm >/dev/null 2>&1; then
-  pnpm -C frontend exec vue-tsc -p tsconfig.json --noEmit
+  pnpm run typecheck
 elif command -v npx >/dev/null 2>&1; then
-  (cd frontend && npx --no-install vue-tsc -p tsconfig.json --noEmit)
+  npx --no-install nuxi typecheck
 else
   echo "⚠️ Neither pnpm nor npx found; skipping typecheck"
   exit 0

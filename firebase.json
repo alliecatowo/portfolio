@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "frontend/.output/public",
+    "public": ".output/public",
     "ignore": ["**/.*", "**/node_modules/**"],
     "headers": [
       {

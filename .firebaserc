@@ -1,5 +1,15 @@
 {
   "projects": {
-    "default": "allie-portfolio-project"
+    "default": "allie-portfolio-project",
+    "staging": "allie-portfolio-project",
+    "production": "allie-portfolio-project"
+  },
+  "targets": {
+    "allie-portfolio-project": {
+      "hosting": {
+        "production": ["allie-portfolio-project"],
+        "staging": ["allie-portfolio-project"]
+      }
+    }
   }
 }
