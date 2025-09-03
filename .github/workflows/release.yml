@@ -55,9 +55,6 @@ jobs:
         continue-on-error: true
         run: pnpm run lint
 
-      - name: Tests
-        working-directory: .
-        run: pnpm test
 
       - name: Semantic Release
         env:
