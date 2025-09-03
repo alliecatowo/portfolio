@@ -68,8 +68,8 @@
 </template>
 
 <script setup lang="ts">
-import type { SearchCommandPaletteItem } from '~/composables/useSearch'
-import { useSearch } from '~/composables/useSearch'
+import type { SearchCommandPaletteItem } from '../../composables/useSearch'
+import { useSearch } from '../../composables/useSearch'
 
 // Modal open state
 const isOpen = ref(false)

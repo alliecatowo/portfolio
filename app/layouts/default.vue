@@ -25,11 +25,11 @@
 </template>
 
 <script setup lang="ts">
-import AppFooter from '~/app/components/common/AppFooter.vue'
-import AppHeader from '~/app/components/common/AppHeader.vue'
-import CommandPalette from '~/app/components/common/CommandPalette.vue'
-import ShortcutsHelp from '~/app/components/common/ShortcutsHelp.vue'
-import { useGlobalShortcuts } from '~/app/composables/useGlobalShortcuts'
+import AppFooter from '~/components/common/AppFooter.vue'
+import AppHeader from '~/components/common/AppHeader.vue'
+import CommandPalette from '~/components/common/CommandPalette.vue'
+import ShortcutsHelp from '~/components/common/ShortcutsHelp.vue'
+import { useGlobalShortcuts } from '~/composables/useGlobalShortcuts'
 
 // Command palette ref
 const commandPaletteRef = ref()

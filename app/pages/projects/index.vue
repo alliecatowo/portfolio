@@ -159,7 +159,7 @@
 </template>
 
 <script setup lang="ts">
-import ColoredTag from '~/app/components/common/ColoredTag.vue'
+import ColoredTag from '../../components/common/ColoredTag.vue'
 
 // Fetch all projects
 const { data: projects, pending, error } = await useAsyncData(

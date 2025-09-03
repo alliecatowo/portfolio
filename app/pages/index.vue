@@ -371,7 +371,7 @@ to="/contact"
 <script setup lang="ts">
 // Set site metadata
 // Import content utilities
-import { useContent } from '~/app/composables/useContent';
+import { useContent } from '~/composables/useContent';
 
 useHead({
   title: "Allison's Developer Portfolio - Full-Stack Web Development",
@@ -395,6 +395,7 @@ useHead({
   ]
 });
 
+
 // Use content composable to fetch featured content
 const { fetchProjects, fetchBlogPosts } = useContent();
 
@@ -408,4 +409,6 @@ const { data: recentPosts } = await useAsyncData(
   'home-recent-posts',
   () => fetchBlogPosts(3)
 );
+
+
 </script>

@@ -54,7 +54,7 @@ export default defineNuxtConfig({
     '/**': { isr: true }, // ISR for everything
     // Blog posts can cache longer
     '/blog/**': { isr: 3600 }, // Revalidate every hour
-    // Projects 
+    // Projects and gallery
     '/projects/**': { isr: 3600 },
   },
   compatibilityDate: '2025-03-10',

@@ -175,7 +175,7 @@
             <span id="reading-speed-label" class="block text-sm font-medium mb-2">How fast do you read?</span>
             <URadioGroup
               :model-value="preferences.readingSpeed"
-              :options="readingSpeedCategories.map(speed => ({
+              :options="readingSpeedCategories.map((speed: any) => ({
                 value: speed.wpm,
                 label: `${speed.label} (${speed.wpm} WPM)`
               }))"

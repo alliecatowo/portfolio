@@ -257,7 +257,7 @@
 </template>
 
 <script setup lang="ts">
-import { useContent } from '~/app/composables/useContent';
+import { useContent } from '../../composables/useContent';
 
 // Get post slug from route
 const route = useRoute();

@@ -7,7 +7,7 @@ node_modules/
 .nitro/
 dist/**/*
 .data/
-
+dist
 # Environment files
 .env
 .env.*
