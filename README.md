@@ -71,7 +71,6 @@ pnpm lint:fix
 - **Tool Management**: [mise](https://mise.jdx.dev/) for automatic Node.js and pnpm version management
 - **Package Manager**: [pnpm](https://pnpm.io/) with workspaces and optimized caching
 - **Code Quality**: ESLint, Prettier, Husky pre-commit hooks, lint-staged
-- **Authentication**: Minimal [Pinia](https://pinia.vuejs.org/) store for admin features
 
 ## 📁 Project Structure
 
@@ -133,7 +132,7 @@ All PRs are automatically validated with typecheck, linting, and preview deploym
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the GPL-3.0 License - see the [LICENSE](./LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
