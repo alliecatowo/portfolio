@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: Staging
-      url: https://allie-portfolio-staging.web.app
+      url: https://allie-portfolio-project--staging.web.app
     defaults:
       run:
         working-directory: .
