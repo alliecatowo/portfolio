@@ -43,20 +43,20 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install frontend dependencies
-        working-directory: ./frontend
+        working-directory: .
         run: pnpm install --frozen-lockfile
 
       - name: Typecheck
-        working-directory: ./frontend
+        working-directory: .
         run: pnpm run typecheck
 
       - name: Lint (non-blocking)
-        working-directory: ./frontend
+        working-directory: .
         continue-on-error: true
         run: pnpm run lint
 
       - name: Tests
-        working-directory: ./frontend
+        working-directory: .
         run: pnpm test
 
       - name: Semantic Release

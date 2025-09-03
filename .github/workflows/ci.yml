@@ -28,7 +28,6 @@ jobs:
 
       - name: Get pnpm store directory
         id: pnpm-cache
-        working-directory: frontend
         shell: bash
         run: echo "pnpm-store-path=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
 
@@ -36,7 +35,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-cache.outputs.pnpm-store-path }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnmp-store-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
@@ -44,14 +43,14 @@ jobs:
         id: cache-deps
         uses: actions/cache@v4
         with:
-          path: frontend/node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
 
       - name: Install dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
-        working-directory: frontend
+        working-directory: .
         run: pnpm install --frozen-lockfile
 
   typecheck:
@@ -69,13 +68,13 @@ jobs:
       - name: Restore node_modules cache
         uses: actions/cache/restore@v4
         with:
-          path: frontend/node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
 
       - name: Run typecheck
-        working-directory: frontend
+        working-directory: .
         run: pnpm exec nuxi typecheck --colors
 
   lint:
@@ -93,8 +92,8 @@ jobs:
       - name: Restore node_modules cache
         uses: actions/cache/restore@v4
         with:
-          path: frontend/node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
 
@@ -107,7 +106,7 @@ jobs:
             ${{ runner.os }}-eslint-
 
       - name: Run lint
-        working-directory: frontend
+        working-directory: .
         run: pnpm exec eslint . --ext .js,.ts,.vue --color --cache --cache-location .eslintcache
 
   commitlint:
@@ -160,13 +159,13 @@ jobs:
       - name: Restore node_modules cache
         uses: actions/cache/restore@v4
         with:
-          path: frontend/node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/pnpm-lock.yaml') }}
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
 
       - name: Build for deployment
-        working-directory: frontend
+        working-directory: .
         run: pnpm run generate
 
       - name: Deploy to Firebase Hosting Preview
