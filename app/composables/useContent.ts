@@ -53,27 +53,10 @@ export function useContent() {
   }
 
 
-  /**
-   * Fetch testimonials from content
-   */
-  async function fetchTestimonials(limit?: number) {
-    const query = queryCollection('testimonials')
-      .where('verified', '=', true)
-      .order('featured', 'DESC')
-      .order('date', 'DESC')
-    
-    if (limit) {
-      query.limit(limit)
-    }
-    
-    return await query.all()
-  }
-
   return {
     fetchBlogPosts,
     fetchBlogPost,
     fetchProjects,
-    fetchProject,
-    fetchTestimonials
+    fetchProject
   }
 }

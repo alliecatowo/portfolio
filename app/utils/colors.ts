@@ -125,41 +125,6 @@ const tagColorMap: Record<string, NuxtUIColor> = {
   'productivity': 'warning',
 };
 
-// Tattoo style color mappings
-const tattooStyleColorMap: Record<string, NuxtUIColor> = {
-  // Main styles
-  'fine line': 'secondary',
-  'fineline': 'secondary',
-  'watercolor': 'secondary',
-  'botanical': 'success',
-  'custom': 'primary',
-  'traditional': 'error',
-  'neo-traditional': 'warning',
-  'realism': 'neutral',
-  'blackwork': 'neutral',
-  'geometric': 'info',
-  'minimalist': 'info',
-  'abstract': 'secondary',
-  'dotwork': 'secondary',
-  'linework': 'secondary',
-  
-  // Themes
-  'floral': 'error',
-  'nature': 'success',
-  'animals': 'warning',
-  'portrait': 'neutral',
-  'mandala': 'secondary',
-  'tribal': 'warning',
-  'japanese': 'error',
-  'lettering': 'primary',
-  'script': 'primary',
-  'ornamental': 'secondary',
-  'surreal': 'secondary',
-  'illustrative': 'info',
-  'sketch': 'neutral',
-  'vintage': 'warning',
-  'modern': 'info',
-};
 
 // Project category color mappings
 const projectCategoryColorMap: Record<string, NuxtUIColor> = {
@@ -201,13 +166,6 @@ export function getTagColor(tag: string): NuxtUIColor {
   return tagColorMap[normalized] || 'neutral';
 }
 
-/**
- * Get color for a tattoo style
- */
-export function getTattooStyleColor(style: string): NuxtUIColor {
-  const normalized = style.toLowerCase().trim();
-  return tattooStyleColorMap[normalized] || 'neutral';
-}
 
 /**
  * Get color for a project category
@@ -220,18 +178,16 @@ export function getProjectCategoryColor(category: string): NuxtUIColor {
 /**
  * Get color for any type of label (attempts all mappings)
  */
-export function getColor(label: string, type?: 'tech' | 'tag' | 'style' | 'project'): NuxtUIColor {
+export function getColor(label: string, type?: 'tech' | 'tag' | 'project'): NuxtUIColor {
   const normalized = label.toLowerCase().trim();
   
   if (type === 'tech') return getTechColor(normalized);
   if (type === 'tag') return getTagColor(normalized);
-  if (type === 'style') return getTattooStyleColor(normalized);
   if (type === 'project') return getProjectCategoryColor(normalized);
   
   // Try all mappings if no type specified
   return techColorMap[normalized] || 
          tagColorMap[normalized] || 
-         tattooStyleColorMap[normalized] || 
          projectCategoryColorMap[normalized] || 
          'neutral';
 }
@@ -240,7 +196,7 @@ export function getColor(label: string, type?: 'tech' | 'tag' | 'style' | 'proje
  * Get a diverse set of colors for a list of items
  * Ensures visual variety by cycling through different color options
  */
-export function getDiverseColors(items: string[], type?: 'tech' | 'tag' | 'style' | 'project'): NuxtUIColor[] {
+export function getDiverseColors(items: string[], type?: 'tech' | 'tag' | 'project'): NuxtUIColor[] {
   const colorRotation: NuxtUIColor[] = ['primary', 'success', 'info', 'warning', 'secondary', 'error', 'neutral'];
   const usedColors = new Set<NuxtUIColor>();
   

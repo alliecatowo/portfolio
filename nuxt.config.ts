@@ -1,5 +1,5 @@
 import { defineNuxtConfig } from 'nuxt/config'
-// https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
   ssr: true,
@@ -13,17 +13,13 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/image'
   ],
-  // Color mode handled by @nuxt/ui defaults (system)
-  // Use native SQLite (Node.js 22.5.0+) for performance
   ...({ content: { 
     experimental: { 
-      // Use Node.js native SQLite module
       nativeSqlite: true,
       sqliteConnector: 'native'
     } 
   } }),
   css: ['~/assets/css/main.css'],
-  // Ensure content auto-imports work
   imports: {
     autoImport: true
   },
@@ -49,20 +45,7 @@ export default defineNuxtConfig({
       ]
     }
   },
-  routeRules: {
-    // Use ISR for all pages to avoid Nuxt UI SSR bug with Nuxt 4
-    '/**': { isr: true }, // ISR for everything
-    // Blog posts can cache longer
-    '/blog/**': { isr: 3600 }, // Revalidate every hour
-    // Projects and gallery
-    '/projects/**': { isr: 3600 },
-  },
   compatibilityDate: '2025-03-10',
-  
-  // Site configuration handled via modules/runtime, keep config minimal for type safety
-  
-  // Sitemap/robots/og-image are configured via modules; remove here to keep config type-safe
-  // Disable TTY interactions that cause errors
   typescript: {
     tsConfig: {
       compilerOptions: {
@@ -70,26 +53,14 @@ export default defineNuxtConfig({
       }
     }
   },
-  
-  // Better error handling and logging
   features: {
     devLogs: process.env.NODE_ENV === 'development'
   },
-  // Firebase Hosting (static) - simplified configuration
   nitro: {
     preset: 'static',
     prerender: {
       crawlLinks: true,
-      failOnError: false,
-      // Include all main routes for proper static generation
-      routes: [
-        '/',
-        '/projects',
-        '/about', 
-        '/contact',
-        '/open-source',
-        '/blog'
-      ]
+      failOnError: false
     }
   },
   ...({ image: {
@@ -134,22 +105,18 @@ export default defineNuxtConfig({
       }
     }
   } }),
-  // Vite optimizations
   vite: {
     build: {
       cssCodeSplit: true,
-      // Disable sourcemaps in production to avoid Tailwind CSS v4 plugin warnings
       sourcemap: process.env.NODE_ENV === 'development'
     },
     optimizeDeps: {
-      // Only prebundle essential runtime libs, let Nuxt 4 handle vue/vue-router
       exclude: ['@nuxt/ui', '@nuxt/kit', '@nuxt/image', 'lightningcss', '@tailwindcss/oxide']
     },
     ssr: {
       external: ['lightningcss', '@tailwindcss/oxide']
     }
   },
-  // Enable component islands for better performance
   components: {
   }
 })

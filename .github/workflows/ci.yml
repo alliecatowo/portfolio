@@ -35,7 +35,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.pnpm-cache.outputs.pnpm-store-path }}
-          key: ${{ runner.os }}-pnmp-store-${{ hashFiles('pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
@@ -100,8 +100,8 @@ jobs:
       - name: Cache ESLint
         uses: actions/cache@v4
         with:
-          path: frontend/.eslintcache
-          key: ${{ runner.os }}-eslint-${{ hashFiles('frontend/**/*.{js,ts,vue}') }}
+          path: .eslintcache
+          key: ${{ runner.os }}-eslint-${{ hashFiles('**/*.{js,ts,vue}') }}
           restore-keys: |
             ${{ runner.os }}-eslint-
 

@@ -9,7 +9,7 @@ export default defineContentConfig({
         title: z.string(),
         date: z.string(),
         description: z.string(),
-        category: z.enum(['dev', 'tattoo']),
+        category: z.enum(['dev']),
         tags: z.array(z.string()),
         author: z.string(),
         published: z.boolean(),
@@ -42,32 +42,6 @@ export default defineContentConfig({
         demo: z.string().optional(),
         slug: z.string().optional(),
         images: z.any().optional(),
-        image: z.string().optional()
-      })
-    }),
-    gallery: defineCollection({
-      type: 'page',
-      source: 'gallery/**/*.md',
-      schema: z.object({
-        title: z.string(),
-        date: z.string(),
-        description: z.string(),
-        featured: z.boolean(),
-        slug: z.string().optional(),
-        images: z.any().optional(),
-        styles: z.any().optional()
-      })
-    }),
-    testimonials: defineCollection({
-      type: 'page',
-      source: 'testimonials/**/*.md',
-      schema: z.object({
-        title: z.string(),
-        date: z.string(),
-        description: z.string(),
-        featured: z.boolean(),
-        verified: z.boolean(),
-        category: z.string().optional(),
         image: z.string().optional()
       })
     })
