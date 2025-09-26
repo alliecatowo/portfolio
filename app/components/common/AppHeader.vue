@@ -42,19 +42,16 @@
           <!-- Portfolio toggle removed - now dev-only -->
 
           <div class="flex items-center gap-2 ml-2 pl-2 border-l border-white/10">
-            <UTooltip text="Search" :kbds="['meta', 'k']" :delay-duration="300">
-              <UButton
-                variant="ghost"
-                color="primary"
-                size="sm"
-                class="gap-2"
-                aria-label="Open search"
-                @click="$emit('openSearch')"
-              >
-                <UIcon name="i-lucide-search" class="w-4 h-4" />
-                <UKbd size="sm" class="hidden lg:inline-flex">{{ isMac ? '⌘K' : 'Ctrl+K' }}</UKbd>
-              </UButton>
-            </UTooltip>
+            <UContentSearchButton
+              :collapsed="false"
+              variant="ghost"
+              color="primary"
+              size="sm"
+              :tooltip="true"
+              icon="i-lucide-search"
+              label=""
+              class="gap-2"
+            />
 
             <UTooltip text="Accessibility Settings" :kbds="['meta', 'a']" :delay-duration="300">
               <UButton
@@ -81,17 +78,15 @@
 
         <!-- Mobile Controls -->
         <div class="md:hidden flex items-center gap-2">
-          <UTooltip text="Search" :kbds="['meta', 'k']" :delay-duration="300">
-            <UButton
-              variant="ghost"
-              color="primary"
-              size="sm"
-              icon="i-lucide-search"
-              aria-label="Open search"
-              class="p-2"
-              @click="$emit('openSearch')"
-            />
-          </UTooltip>
+          <UContentSearchButton
+            collapsed
+            variant="ghost"
+            color="primary"
+            size="sm"
+            :tooltip="true"
+            icon="i-lucide-search"
+            class="p-2"
+          />
           
           <!-- Enhanced Mobile Theme Toggle -->
           <UTooltip text="Toggle theme" :delay-duration="300">
@@ -206,18 +201,7 @@
 <script setup lang="ts">
 import AccessibilitySettings from '~/components/AccessibilitySettings.vue';
 
-// Emits
-defineEmits<{
-  openSearch: []
-}>()
 
-// Platform detection for keyboard shortcuts
-const isMac = computed(() => {
-  if (import.meta.client) {
-    return /Mac|iPhone|iPod|iPad/i.test(navigator.platform || navigator.userAgent);
-  }
-  return false;
-});
 
 
 // Mobile drawer state

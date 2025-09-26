@@ -327,7 +327,7 @@ const { data: pageItems, pending, error } = await useAsyncData<BlogDoc[]>(
       let base = queryCollection('blog')
         .where('category', '=', 'dev')
         .where('published', '=', true)
-      
+
       // Apply sorting
       if (sort.value === 'newest') {
         base = base.order('date', 'DESC')
@@ -341,19 +341,19 @@ const { data: pageItems, pending, error } = await useAsyncData<BlogDoc[]>(
         // For 'popular' or default, use date desc for now
         base = base.order('date', 'DESC')
       }
-      
+
       if (activeTag.value === 'all') {
         return base.limit(pageSize).skip((page.value - 1) * pageSize).all()
       }
       const all = await base.all()
       let filtered = all.filter((p: BlogDoc) => Array.isArray(p.tags) && p.tags!.includes(activeTag.value))
-      
+
       // Apply client-side sorting for filtered results if needed
       if (sort.value === 'popular') {
         // Sort by number of tags as a popularity proxy
         filtered = filtered.sort((a, b) => (b.tags?.length || 0) - (a.tags?.length || 0))
       }
-      
+
       const start = (page.value - 1) * pageSize
       return filtered.slice(start, start + pageSize)
     } catch {
