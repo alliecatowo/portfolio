@@ -41,18 +41,18 @@
                 
                 <!-- Quick stats -->
                 <div class="grid grid-cols-3 gap-4 mt-8">
-                  <div class="text-center glass-accent rounded-lg p-4 hover-lift">
+                  <UCard class="text-center glass-accent hover:scale-105 transition-transform">
                     <div class="text-2xl font-bold text-primary">5+</div>
                     <div class="text-sm text-muted">Years Experience</div>
-                  </div>
-                  <div class="text-center glass-accent rounded-lg p-4 hover-lift">
+                  </UCard>
+                  <UCard class="text-center glass-accent hover:scale-105 transition-transform">
                     <div class="text-2xl font-bold text-primary">50+</div>
                     <div class="text-sm text-muted">Projects Completed</div>
-                  </div>
-                  <div class="text-center glass-accent rounded-lg p-4 hover-lift">
+                  </UCard>
+                  <UCard class="text-center glass-accent hover:scale-105 transition-transform">
                     <div class="text-2xl font-bold text-primary">∞</div>
                     <div class="text-sm text-muted">Coffee Consumed</div>
-                  </div>
+                  </UCard>
                 </div>
               </div>
             </div>
@@ -124,43 +124,43 @@
             <!-- Timeline items -->
             <div class="space-y-12">
               <div class="flex items-center justify-center">
-                <div class="relative glass-accent rounded-xl p-8 max-w-2xl hover-lift">
+                <UCard class="relative glass-accent max-w-2xl hover:scale-105 transition-transform">
                   <div class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-primary rounded-full border-4 border-white dark:border-gray-900"/>
                   <h3 class="text-xl font-bold mb-3 text-primary">Teenage Tinkering</h3>
                   <p class="text-default leading-relaxed">
                     It started with MySpace profile customization and terrible HTML experiments. I was that kid who viewed source on every website, trying to understand how digital things worked. Building my first "Hello World" page felt like magic—I could create something from nothing but text in a file.
                   </p>
-                </div>
+                </UCard>
               </div>
               
               <div class="flex items-center justify-center">
-                <div class="relative glass-accent rounded-xl p-8 max-w-2xl hover-lift">
+                <UCard class="relative glass-accent max-w-2xl hover:scale-105 transition-transform">
                   <div class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-purple-500 rounded-full border-4 border-white dark:border-gray-900"/>
                   <h3 class="text-xl font-bold mb-3 text-purple-500">Formal Education & First Jobs</h3>
                   <p class="text-default leading-relaxed">
                     College gave me the theory—algorithms, data structures, software engineering principles. But the real learning happened during internships and first jobs, where I discovered that shipping working software requires much more than perfect code. Communication, collaboration, and understanding user needs became as important as technical skills.
                   </p>
-                </div>
+                </UCard>
               </div>
               
               <div class="flex items-center justify-center">
-                <div class="relative glass-accent rounded-xl p-8 max-w-2xl hover-lift">
+                <UCard class="relative glass-accent max-w-2xl hover:scale-105 transition-transform">
                   <div class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-pink-500 rounded-full border-4 border-white dark:border-gray-900"/>
                   <h3 class="text-xl font-bold mb-3 text-pink-500">Professional Growth & Tattoo Discovery</h3>
                   <p class="text-default leading-relaxed">
                     Years of startup life, scaling challenges, and diverse projects across healthcare, fintech, and e-commerce taught me that technology is only as good as the problems it solves. Around this time, I discovered tattooing—initially as stress relief, but it quickly became a parallel creative practice that informed my approach to software development.
                   </p>
-                </div>
+                </UCard>
               </div>
               
               <div class="flex items-center justify-center">
-                <div class="relative glass-accent rounded-xl p-8 max-w-2xl hover-lift animate-pulse-subtle">
+                <UCard class="relative glass-accent max-w-2xl hover:scale-105 transition-transform animate-pulse-subtle">
                   <div class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-gradient-to-r from-primary to-pink-500 rounded-full border-4 border-white dark:border-gray-900 animate-pulse"/>
                   <h3 class="text-xl font-bold mb-3 text-gradient">Present Day</h3>
                   <p class="text-default leading-relaxed">
                     Now I balance software engineering with tattoo artistry, finding that each practice strengthens the other. I maintain open-source keyboard firmware, write about technology and creativity, and continue building applications that solve real problems. Violet and our chinchillas keep me grounded, reminding me that the best work happens when you bring your whole self to it.
                   </p>
-                </div>
+                </UCard>
               </div>
             </div>
           </div>
@@ -318,62 +318,65 @@
           </h2>
           
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="glass-accent rounded-xl overflow-hidden hover-lift group">
-              <div class="aspect-video bg-gradient-to-br from-primary/20 to-purple-600/20 relative">
-                <NuxtImg 
-                  src="/images/keyboards/sofle-pink-oled.jpg" 
-                  alt="Pink Sofle keyboard with OLED screens"
-                  class="w-full h-full object-cover mix-blend-overlay"
-                  loading="lazy"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"/>
-                <UIcon name="i-lucide-keyboard" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
-              </div>
-              <div class="p-6">
-                <h3 class="text-xl font-bold mb-2 text-primary">Split Keyboards</h3>
-                <p class="text-muted">
-                  Daily drivers: Lily58 with integrated trackpad, and a pink Sofle running my ZMK fork with OLED screens and wireless dongle setup. I maintain open-source firmware to help others get started with splits.
-                </p>
-              </div>
-            </div>
+            <UCard class="glass-accent hover:scale-105 transition-transform overflow-hidden">
+              <template #header>
+                <div class="aspect-video bg-gradient-to-br from-primary/20 to-purple-600/20 relative overflow-hidden rounded-lg">
+                  <NuxtImg
+                    src="/images/keyboards/sofle-pink-oled.jpg"
+                    alt="Pink Sofle keyboard with OLED screens"
+                    class="w-full h-full object-cover mix-blend-overlay"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"/>
+                  <UIcon name="i-lucide-keyboard" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
+                </div>
+              </template>
 
-            <div class="glass-accent rounded-xl overflow-hidden hover-lift group">
-              <div class="aspect-video bg-gradient-to-br from-purple-600/20 to-pink-500/20 relative">
-                <NuxtImg 
-                  src="/images/couple/allison-violet-beach.jpg" 
-                  alt="Allison and Violet at the beach, showing tattoo work"
-                  class="w-full h-full object-cover mix-blend-overlay"
-                  loading="lazy"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"/>
-                <UIcon name="i-lucide-pen-tool" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
-              </div>
-              <div class="p-6">
-                <h3 class="text-xl font-bold mb-2 text-purple-500">Tattoo Artistry</h3>
-                <p class="text-muted">
-                  Part-time tattoo artist specializing in linework, botanical designs, and collaborative custom pieces. I love the intersection of technical precision and creative expression—much like coding, but permanent.
-                </p>
-              </div>
-            </div>
+              <h3 class="text-xl font-bold mb-2 text-primary">Split Keyboards</h3>
+              <p class="text-muted">
+                Daily drivers: Lily58 with integrated trackpad, and a pink Sofle running my ZMK fork with OLED screens and wireless dongle setup. I maintain open-source firmware to help others get started with splits.
+              </p>
+            </UCard>
 
-            <div class="glass-accent rounded-xl overflow-hidden hover-lift group">
-              <div class="aspect-video bg-gradient-to-br from-pink-500/20 to-yellow-500/20 relative">
-                <NuxtImg 
-                  src="/images/couple/allison-violet-selfie.jpg" 
-                  alt="Allison and Violet (chinchilla in background)"
-                  class="w-full h-full object-cover mix-blend-overlay"
-                  loading="lazy"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"/>
-                <UIcon name="i-lucide-heart" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
-              </div>
-              <div class="p-6">
-                <h3 class="text-xl font-bold mb-2 text-pink-500">Chinchilla Parents</h3>
-                <p class="text-muted">
-                  Ray and Paddy, our rescued chinchillas who keep life interesting. Ray is our gentle giant who perfected the loaf position, while Paddy brings chaos and endless energy. They're active during my late-night coding sessions.
-                </p>
-              </div>
-            </div>
+            <UCard class="glass-accent hover:scale-105 transition-transform overflow-hidden">
+              <template #header>
+                <div class="aspect-video bg-gradient-to-br from-purple-600/20 to-pink-500/20 relative overflow-hidden rounded-lg">
+                  <NuxtImg
+                    src="/images/couple/allison-violet-beach.jpg"
+                    alt="Allison and Violet at the beach, showing tattoo work"
+                    class="w-full h-full object-cover mix-blend-overlay"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"/>
+                  <UIcon name="i-lucide-pen-tool" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
+                </div>
+              </template>
+
+              <h3 class="text-xl font-bold mb-2 text-purple-500">Tattoo Artistry</h3>
+              <p class="text-muted">
+                Part-time tattoo artist specializing in linework, botanical designs, and collaborative custom pieces. I love the intersection of technical precision and creative expression—much like coding, but permanent.
+              </p>
+            </UCard>
+
+            <UCard class="glass-accent hover:scale-105 transition-transform overflow-hidden">
+              <template #header>
+                <div class="aspect-video bg-gradient-to-br from-pink-500/20 to-yellow-500/20 relative overflow-hidden rounded-lg">
+                  <NuxtImg
+                    src="/images/couple/allison-violet-selfie.jpg"
+                    alt="Allison and Violet (chinchilla in background)"
+                    class="w-full h-full object-cover mix-blend-overlay"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"/>
+                  <UIcon name="i-lucide-heart" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
+                </div>
+              </template>
+
+              <h3 class="text-xl font-bold mb-2 text-pink-500">Chinchilla Parents</h3>
+              <p class="text-muted">
+                Ray and Paddy, our rescued chinchillas who keep life interesting. Ray is our gentle giant who perfected the loaf position, while Paddy brings chaos and endless energy. They're active during my late-night coding sessions.
+              </p>
+            </UCard>
           </div>
         </div>
       </section>
@@ -381,30 +384,33 @@
       <!-- Connect CTA -->
       <section class="py-20">
         <div class="container max-w-4xl mx-auto px-6">
-          <div class="glass-accent rounded-2xl p-8 md:p-12 text-center hover-lift">
+          <UCard class="glass-accent text-center hover:scale-105 transition-transform">
             <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gradient-animated">
               Let's Create Something Amazing
             </h2>
             <p class="text-xl text-default mb-8 max-w-2xl mx-auto">
-              I'm always excited about new challenges and collaborations. 
+              I'm always excited about new challenges and collaborations.
               Whether you have a project in mind or just want to connect, I'd love to hear from you.
             </p>
-            
+
             <div class="flex flex-wrap gap-4 justify-center mb-8">
-              <NuxtLink 
-                to="/contact" 
-                class="px-8 py-4 bg-primary text-white rounded-lg hover:bg-primary-600 font-semibold transition-all btn-depth magnetic-hover"
+              <UButton
+                to="/contact"
+                color="primary"
+                size="lg"
+                leading-icon="i-lucide-mail"
               >
-                <UIcon name="i-lucide-mail" class="w-5 h-5 mr-2" />
                 Get In Touch
-              </NuxtLink>
-              <NuxtLink 
-                to="/projects" 
-                class="px-8 py-4 text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 font-semibold transition-all"
+              </UButton>
+              <UButton
+                to="/projects"
+                color="primary"
+                variant="outline"
+                size="lg"
+                leading-icon="i-lucide-folder"
               >
-                <UIcon name="i-lucide-folder" class="w-5 h-5 mr-2" />
                 View Projects
-              </NuxtLink>
+              </UButton>
             </div>
             
             <!-- Social Links -->
@@ -444,7 +450,7 @@
                 <UIcon name="i-lucide-mail" class="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
               </a>
             </div>
-          </div>
+          </UCard>
         </div>
       </section>
     </div>

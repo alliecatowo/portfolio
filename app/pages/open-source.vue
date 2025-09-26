@@ -7,10 +7,11 @@
       </header>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <article 
-          v-for="repo in repositories" 
+        <UCard
+          v-for="repo in repositories"
           :key="repo.id"
-          class="glass-accent rounded-xl p-6 hover-lift"
+          class="glass-accent hover:scale-105 transition-transform"
+          tag="article"
         >
           <div class="flex items-start justify-between mb-4">
             <UIcon name="i-lucide-book" class="w-6 h-6 text-primary" />
@@ -49,7 +50,7 @@
               {{ repo.open_issues_count }}
             </span>
           </div>
-        </article>
+        </UCard>
       </div>
       
       <div v-if="!repositories || repositories.length === 0" class="text-center py-12">

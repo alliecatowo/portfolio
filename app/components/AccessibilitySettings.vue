@@ -1,19 +1,19 @@
 <template>
   <div>
     <!-- Settings Modal -->
-    <UModal 
-      :open="true" 
-      :ui="{ 
+    <UModal
+      :open="true"
+      :ui="{
         overlay: 'bg-gray-900/50 dark:bg-gray-950/80',
         content: 'w-full sm:max-w-lg max-h-[85vh] overflow-y-auto',
-      }" 
+      }"
       aria-labelledby="accessibility-modal-title"
       role="dialog"
       aria-modal="true"
       @update:open="$emit('close')"
     >
       <template #content>
-        <UCard :ui="{ body: 'px-4 py-3 sm:px-5 sm:py-4', header: 'px-4 py-3 sm:px-5 sm:py-3', footer: 'px-4 py-3 sm:px-5 sm:py-3' }">
+        <UCard :ui="{ body: 'px-4 py-3 sm:px-5 sm:py-4', header: 'px-4 py-3 sm:px-5 sm:py-3', footer: 'px-4 py-3 sm:px-5 sm:py-3' }" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
           <template #header>
             <div class="flex items-center justify-between">
               <h2 id="accessibility-modal-title" class="text-base font-semibold">Reading Preferences</h2>
@@ -21,124 +21,129 @@
                 icon="i-lucide-x"
                 variant="ghost"
                 color="neutral"
-                size="xs"
+                size="sm"
                 aria-label="Close reading preferences modal"
                 @click="$emit('close')"
               />
             </div>
           </template>
-        
+
           <div class="space-y-4">
-          <!-- Reading Speed -->
-          <div role="group" aria-labelledby="speed-label">
-            <label id="speed-label" class="block text-sm font-medium mb-2" for="speed-slider">
-              Reading Speed: {{ preferences.readingSpeed }} WPM
-            </label>
-            <input
-              id="speed-slider"
-              type="range"
-              :value="preferences.readingSpeed"
-              min="100"
-              max="400"
-              step="25"
-              aria-label="Reading speed in words per minute"
-              aria-valuemin="100"
-              aria-valuemax="400"
-              :aria-valuenow="preferences.readingSpeed"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-              @input="updateReadingSpeed(Number(($event.target as HTMLInputElement)?.value))"
+            <!-- Reading Speed -->
+            <UFormField
+              :label="`Reading Speed: ${preferences.readingSpeed} WPM`"
+              description="Adjust how fast you read to optimize the reading experience"
             >
-            <div class="flex justify-between text-xs text-gray-500 mt-1">
-              <span>Slow</span>
-              <span>Average</span>
-              <span>Fast</span>
+              <USlider
+                :model-value="preferences.readingSpeed"
+                :min="100"
+                :max="400"
+                :step="25"
+                tooltip
+                color="primary"
+                size="sm"
+                @update:model-value="updateReadingSpeed"
+              />
+              <div class="flex justify-between text-xs text-gray-500 mt-1">
+                <span>Slow (100)</span>
+                <span>Average (250)</span>
+                <span>Fast (400)</span>
+              </div>
+            </UFormField>
+
+            <!-- Font Size -->
+            <UFormField
+              label="Font Size"
+              description="Choose the text size that's most comfortable for you"
+            >
+              <URadioGroup
+                :model-value="preferences.fontSize"
+                :options="[
+                  { value: 'small', label: 'Small' },
+                  { value: 'medium', label: 'Medium' },
+                  { value: 'large', label: 'Large' },
+                  { value: 'x-large', label: 'Extra Large' }
+                ]"
+                @update:model-value="(value: string) => updateFontSize(value as 'small' | 'medium' | 'large' | 'x-large')"
+              />
+            </UFormField>
+
+            <!-- Line Spacing -->
+            <UFormField
+              label="Line Spacing"
+              description="Adjust the spacing between lines for better readability"
+            >
+              <URadioGroup
+                :model-value="preferences.lineSpacing"
+                :options="[
+                  { value: 'normal', label: 'Normal' },
+                  { value: 'relaxed', label: 'Relaxed' },
+                  { value: 'loose', label: 'Loose' }
+                ]"
+                @update:model-value="(value: string) => updateLineSpacing(value as 'normal' | 'relaxed' | 'loose')"
+              />
+            </UFormField>
+
+            <!-- Accessibility Toggles -->
+            <div class="space-y-3">
+              <!-- Dyslexia Font -->
+              <UFormField
+                label="Dyslexia-friendly Font"
+                description="Use OpenDyslexic font designed for improved readability"
+              >
+                <USwitch
+                  :model-value="preferences.dyslexiaFont"
+                  color="primary"
+                  size="sm"
+                  @update:model-value="updateDyslexiaFont"
+                />
+              </UFormField>
+
+              <!-- High Contrast -->
+              <UFormField
+                label="High Contrast"
+                description="Increase contrast for better visual distinction"
+              >
+                <USwitch
+                  :model-value="preferences.highContrast"
+                  color="primary"
+                  size="sm"
+                  @update:model-value="updateHighContrast"
+                />
+              </UFormField>
+
+              <!-- Reduced Motion -->
+              <UFormField
+                label="Reduced Motion"
+                description="Minimize animations and transitions for better accessibility"
+              >
+                <USwitch
+                  :model-value="preferences.reducedMotion"
+                  color="primary"
+                  size="sm"
+                  @update:model-value="updateReducedMotion"
+                />
+              </UFormField>
             </div>
+
+            <!-- Color Vision -->
+            <UFormField
+              label="Color Vision Assistance"
+              description="Apply color filters to accommodate different color vision types"
+            >
+              <URadioGroup
+                :model-value="preferences.colorBlindMode"
+                :options="[
+                  { value: 'none', label: 'Normal vision' },
+                  { value: 'protanopia', label: 'Protanopia (Red-blind)' },
+                  { value: 'deuteranopia', label: 'Deuteranopia (Green-blind)' },
+                  { value: 'tritanopia', label: 'Tritanopia (Blue-blind)' }
+                ]"
+                @update:model-value="(value: string) => updateColorBlindMode(value as 'none' | 'protanopia' | 'deuteranopia' | 'tritanopia')"
+              />
+            </UFormField>
           </div>
-          
-          <!-- Font Size -->
-          <div role="group" aria-labelledby="font-size-label">
-            <span id="font-size-label" class="block text-sm font-medium mb-2">Font Size</span>
-            <URadioGroup
-              :model-value="preferences.fontSize"
-              :options="[
-                { value: 'small', label: 'Small' },
-                { value: 'medium', label: 'Medium' },
-                { value: 'large', label: 'Large' },
-                { value: 'x-large', label: 'Extra Large' }
-              ]"
-              @update:model-value="(value: string) => updateFontSize(value as 'small' | 'medium' | 'large' | 'x-large')"
-            />
-          </div>
-          
-          <!-- Line Spacing -->
-          <div role="group" aria-labelledby="line-spacing-label">
-            <span id="line-spacing-label" class="block text-sm font-medium mb-2">Line Spacing</span>
-            <URadioGroup
-              :model-value="preferences.lineSpacing"
-              :options="[
-                { value: 'normal', label: 'Normal' },
-                { value: 'relaxed', label: 'Relaxed' },
-                { value: 'loose', label: 'Loose' }
-              ]"
-              @update:model-value="(value: string) => updateLineSpacing(value as 'normal' | 'relaxed' | 'loose')"
-            />
-          </div>
-          
-          <!-- Dyslexia Font -->
-          <div role="group" aria-labelledby="dyslexia-font-label">
-            <span id="dyslexia-font-label" class="block text-sm font-medium mb-2">Dyslexia-friendly font</span>
-            <URadioGroup
-              :model-value="String(preferences.dyslexiaFont)"
-              :options="[
-                { value: 'false', label: 'Standard font' },
-                { value: 'true', label: 'OpenDyslexic font' }
-              ]"
-              @update:model-value="(value: string) => updateDyslexiaFont(value === 'true')"
-            />
-          </div>
-          
-          <!-- High Contrast -->
-          <div role="group" aria-labelledby="high-contrast-label">
-            <span id="high-contrast-label" class="block text-sm font-medium mb-2">Contrast</span>
-            <URadioGroup
-              :model-value="String(preferences.highContrast)"
-              :options="[
-                { value: 'false', label: 'Normal contrast' },
-                { value: 'true', label: 'High contrast' }
-              ]"
-              @update:model-value="(value: string) => updateHighContrast(value === 'true')"
-            />
-          </div>
-          
-          <!-- Reduced Motion -->
-          <div role="group" aria-labelledby="reduced-motion-label">
-            <span id="reduced-motion-label" class="block text-sm font-medium mb-2">Motion</span>
-            <URadioGroup
-              :model-value="String(preferences.reducedMotion)"
-              :options="[
-                { value: 'false', label: 'Normal animations' },
-                { value: 'true', label: 'Reduced motion' }
-              ]"
-              @update:model-value="(value: string) => updateReducedMotion(value === 'true')"
-            />
-          </div>
-          
-          <!-- Color Vision -->
-          <div role="group" aria-labelledby="color-vision-label">
-            <span id="color-vision-label" class="block text-sm font-medium mb-2">Color Vision</span>
-            <URadioGroup
-              :model-value="preferences.colorBlindMode"
-              :options="[
-                { value: 'none', label: 'Normal vision' },
-                { value: 'protanopia', label: 'Protanopia (Red-blind)' },
-                { value: 'deuteranopia', label: 'Deuteranopia (Green-blind)' },
-                { value: 'tritanopia', label: 'Tritanopia (Blue-blind)' }
-              ]"
-              @update:model-value="(value: string) => updateColorBlindMode(value as 'none' | 'protanopia' | 'deuteranopia' | 'tritanopia')"
-            />
-          </div>
-          </div>
-        
+
           <template #footer>
             <div class="flex gap-2">
               <UButton
@@ -161,67 +166,70 @@
         </UCard>
       </template>
     </UModal>
-    
+
     <!-- First Visit Welcome Modal -->
     <UModal v-model:open="isFirstVisit" :prevent-close="false">
       <template #content>
-        <UCard>
+        <UCard class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
           <template #header>
             <h3 class="text-lg font-semibold">Welcome! Let's personalize your reading experience</h3>
           </template>
-        
+
           <div class="space-y-6">
-          <div role="group" aria-labelledby="reading-speed-label">
-            <span id="reading-speed-label" class="block text-sm font-medium mb-2">How fast do you read?</span>
-            <URadioGroup
-              :model-value="preferences.readingSpeed"
-              :options="readingSpeedCategories.map((speed: any) => ({
-                value: speed.wpm,
-                label: `${speed.label} (${speed.wpm} WPM)`
-              }))"
-              @update:model-value="(value: string) => updateReadingSpeed(Number(value))"
-            />
-          </div>
-          
-          <div class="space-y-4">
-            <div role="group" aria-labelledby="welcome-dyslexia-font-label">
-              <span id="welcome-dyslexia-font-label" class="block text-sm font-medium mb-2">Font type</span>
+            <UFormField
+              label="How fast do you read?"
+              description="Choose your preferred reading speed to start with"
+            >
               <URadioGroup
-                :model-value="String(preferences.dyslexiaFont)"
-                :options="[
-                  { value: 'false', label: 'Standard font' },
-                  { value: 'true', label: 'Dyslexia-friendly font' }
-                ]"
-                @update:model-value="(value: string) => updateDyslexiaFont(value === 'true')"
+                :model-value="preferences.readingSpeed"
+                :options="readingSpeedCategories.map((speed: any) => ({
+                  value: speed.wpm,
+                  label: `${speed.label} (${speed.wpm} WPM)`
+                }))"
+                @update:model-value="(value: string) => updateReadingSpeed(Number(value))"
               />
-            </div>
-            
-            <div role="group" aria-labelledby="welcome-high-contrast-label">
-              <span id="welcome-high-contrast-label" class="block text-sm font-medium mb-2">Contrast</span>
-              <URadioGroup
-                :model-value="String(preferences.highContrast)"
-                :options="[
-                  { value: 'false', label: 'Normal contrast' },
-                  { value: 'true', label: 'High contrast' }
-                ]"
-                @update:model-value="(value: string) => updateHighContrast(value === 'true')"
-              />
-            </div>
-            
-            <div role="group" aria-labelledby="welcome-reduced-motion-label">
-              <span id="welcome-reduced-motion-label" class="block text-sm font-medium mb-2">Motion</span>
-              <URadioGroup
-                :model-value="String(preferences.reducedMotion)"
-                :options="[
-                  { value: 'false', label: 'Normal animations' },
-                  { value: 'true', label: 'Reduced motion' }
-                ]"
-                @update:model-value="(value: string) => updateReducedMotion(value === 'true')"
-              />
+            </UFormField>
+
+            <div class="space-y-4">
+              <!-- Welcome Switches -->
+              <UFormField
+                label="Dyslexia-friendly Font"
+                description="Use OpenDyslexic font for improved readability"
+              >
+                <USwitch
+                  :model-value="preferences.dyslexiaFont"
+                  color="primary"
+                  size="sm"
+                  @update:model-value="updateDyslexiaFont"
+                />
+              </UFormField>
+
+              <UFormField
+                label="High Contrast"
+                description="Increase contrast for better visual distinction"
+              >
+                <USwitch
+                  :model-value="preferences.highContrast"
+                  color="primary"
+                  size="sm"
+                  @update:model-value="updateHighContrast"
+                />
+              </UFormField>
+
+              <UFormField
+                label="Reduced Motion"
+                description="Minimize animations for better accessibility"
+              >
+                <USwitch
+                  :model-value="preferences.reducedMotion"
+                  color="primary"
+                  size="sm"
+                  @update:model-value="updateReducedMotion"
+                />
+              </UFormField>
             </div>
           </div>
-          </div>
-        
+
           <template #footer>
             <div class="flex justify-between">
               <UButton
@@ -269,5 +277,5 @@ const {
 </script>
 
 <style scoped>
-/* No custom overwrites needed - using native radio groups */
+/* All styling handled by Nuxt UI components */
 </style>

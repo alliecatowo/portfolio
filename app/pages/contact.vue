@@ -18,7 +18,7 @@
       <div class="grid lg:grid-cols-2 gap-12 items-start">
         <!-- Contact Info -->
         <div class="space-y-8">
-          <div class="glass-accent rounded-xl p-8">
+          <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
             <h2 class="text-2xl font-bold mb-6 text-primary">Let's Connect</h2>
             <p class="text-default mb-8">
               Whether you have a project in mind, need technical consultation, or just want to say hello, 
@@ -76,146 +76,122 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
                 </div>
               </a>
             </div>
-          </div>
+          </UCard>
 
           <!-- Availability Card -->
-          <div class="glass-accent rounded-xl p-6 flex items-center gap-4">
-            <div class="relative">
-              <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"/>
-              <div class="absolute inset-0 w-3 h-3 bg-green-500 rounded-full animate-ping"/>
+          <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
+            <div class="flex items-center gap-4">
+              <div class="relative">
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"/>
+                <div class="absolute inset-0 w-3 h-3 bg-green-500 rounded-full animate-ping"/>
+              </div>
+              <div>
+                <p class="font-semibold text-default">Currently Available</p>
+                <p class="text-sm text-muted">Open to new projects and opportunities</p>
+              </div>
             </div>
-            <div>
-              <p class="font-semibold text-default">Currently Available</p>
-              <p class="text-sm text-muted">Open to new projects and opportunities</p>
-            </div>
-          </div>
+          </UCard>
         </div>
 
         <!-- Contact Form -->
-        <div class="glass-accent rounded-xl p-8">
-          <h2 class="text-2xl font-bold mb-6">Send a Message</h2>
-          
-          <form class="space-y-6" @submit.prevent="submitForm">
-            <!-- Name -->
-            <div>
-              <label for="name" class="block text-sm font-medium mb-2">
-                Name <span class="text-red-500">*</span>
-              </label>
-              <input
-                id="name"
-                v-model="form.name"
-                type="text"
-                required
-                class="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                placeholder="Your full name"
-              >
-            </div>
+        <UCard class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
+          <template #header>
+            <h2 class="text-2xl font-bold">Send a Message</h2>
+          </template>
 
-            <!-- Email -->
-            <div>
-              <label for="email" class="block text-sm font-medium mb-2">
-                Email <span class="text-red-500">*</span>
-              </label>
-              <input
-                id="email"
+          <UForm
+            :validate="validate"
+            :state="form"
+            class="space-y-4"
+            @submit="onSubmit"
+            @error="onError"
+          >
+            <UFormField label="Name" name="name" required>
+              <UInput
+                v-model="form.name"
+                placeholder="Your full name"
+                size="md"
+              />
+            </UFormField>
+
+            <UFormField label="Email" name="email" required>
+              <UInput
                 v-model="form.email"
                 type="email"
-                required
-                class="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                 placeholder="your.email@example.com"
-              >
-            </div>
-
-            <!-- Subject -->
-            <div>
-              <label for="subject" class="block text-sm font-medium mb-2">
-                Subject
-              </label>
-              <select
-                id="subject"
-                v-model="form.subject"
-                class="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-              >
-                <option value="project">Project Inquiry</option>
-                <option value="collaboration">Collaboration</option>
-                <option value="consultation">Consultation</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-
-            <!-- Message -->
-            <div>
-              <label for="message" class="block text-sm font-medium mb-2">
-                Message <span class="text-red-500">*</span>
-              </label>
-              <textarea
-                id="message"
-                v-model="form.message"
-                required
-                rows="6"
-                class="w-full px-4 py-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
-                placeholder="Tell me about your project or inquiry..."
+                size="md"
               />
-            </div>
+            </UFormField>
 
-            <!-- Submit Button -->
-            <button
+            <UFormField label="Subject" name="subject">
+              <USelect
+                v-model="form.subject"
+                :options="subjectOptions"
+                size="md"
+              />
+            </UFormField>
+
+            <UFormField label="Message" name="message" required>
+              <UTextarea
+                v-model="form.message"
+                :rows="6"
+                placeholder="Tell me about your project or inquiry..."
+                size="md"
+              />
+            </UFormField>
+
+            <UButton
               type="submit"
-              :disabled="formSubmitting"
-              class="w-full px-6 py-4 bg-primary text-white rounded-lg hover:bg-primary-600 font-semibold transition-all btn-depth magnetic-hover disabled:opacity-50 disabled:cursor-not-allowed"
+              :loading="formSubmitting"
+              size="lg"
+              color="primary"
+              block
+              icon="i-lucide-send"
             >
-              <span v-if="!formSubmitting" class="flex items-center justify-center gap-2">
-                <UIcon name="i-lucide-send" class="w-5 h-5" />
-                Send Message
-              </span>
-              <span v-else class="flex items-center justify-center gap-2">
-                <UIcon name="i-lucide-loader-2" class="w-5 h-5 animate-spin" />
-                Sending...
-              </span>
-            </button>
+              {{ formSubmitting ? 'Sending...' : 'Send Message' }}
+            </UButton>
 
-            <!-- Success/Error Messages -->
-            <Transition name="fade">
-              <div v-if="formSubmitSuccess" class="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
-                <p class="text-green-600 dark:text-green-400 flex items-center gap-2">
-                  <UIcon name="i-lucide-check-circle" class="w-5 h-5" />
-                  Message sent successfully! I'll get back to you soon.
-                </p>
-              </div>
-            </Transition>
+            <UAlert
+              v-if="formSubmitSuccess"
+              color="green"
+              variant="soft"
+              title="Message sent successfully!"
+              description="I'll get back to you soon."
+              icon="i-lucide-check-circle"
+            />
 
-            <Transition name="fade">
-              <div v-if="formSubmitError" class="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
-                <p class="text-red-600 dark:text-red-400 flex items-center gap-2">
-                  <UIcon name="i-lucide-alert-circle" class="w-5 h-5" />
-                  There was an error sending your message. Please try again.
-                </p>
-              </div>
-            </Transition>
-          </form>
-        </div>
+            <UAlert
+              v-if="formSubmitError"
+              color="red"
+              variant="soft"
+              title="Error sending message"
+              description="There was an error sending your message. Please try again."
+              icon="i-lucide-alert-circle"
+            />
+          </UForm>
+        </UCard>
       </div>
 
       <!-- FAQ Section -->
       <section class="mt-20">
         <h2 class="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
         <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          <div class="glass-accent rounded-lg p-6">
+          <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
             <h3 class="font-semibold mb-2 text-primary">What's your typical response time?</h3>
             <p class="text-muted">I usually respond within 24-48 hours during business days.</p>
-          </div>
-          <div class="glass-accent rounded-lg p-6">
+          </UCard>
+          <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
             <h3 class="font-semibold mb-2 text-primary">Are you available for freelance work?</h3>
             <p class="text-muted">Yes! I'm open to freelance projects and consultations.</p>
-          </div>
-          <div class="glass-accent rounded-lg p-6">
+          </UCard>
+          <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
             <h3 class="font-semibold mb-2 text-primary">What technologies do you work with?</h3>
             <p class="text-muted">Vue.js, Nuxt, React, Node.js, TypeScript, and more. Check my About page for details.</p>
-          </div>
-          <div class="glass-accent rounded-lg p-6">
+          </UCard>
+          <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
             <h3 class="font-semibold mb-2 text-primary">Do you work remotely?</h3>
             <p class="text-muted">Yes, I work with clients globally and am comfortable with remote collaboration.</p>
-          </div>
+          </UCard>
         </div>
       </section>
     </div>
@@ -223,6 +199,7 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
 </template>
 
 <script setup lang="ts">
+import type { FormError, FormErrorEvent, FormSubmitEvent } from '@nuxt/ui';
 
 // Form data
 const form = reactive({
@@ -232,30 +209,55 @@ const form = reactive({
   message: ''
 });
 
+// Subject options for USelect
+const subjectOptions = [
+  { label: 'Project Inquiry', value: 'project' },
+  { label: 'Collaboration', value: 'collaboration' },
+  { label: 'Consultation', value: 'consultation' },
+  { label: 'Other', value: 'other' }
+];
+
 // Form states
 const formSubmitting = ref(false);
 const formSubmitSuccess = ref(false);
 const formSubmitError = ref(false);
 
-// Submit form
-const submitForm = async () => {
+// Form validation
+const validate = (state: typeof form): FormError[] => {
+  const errors = [];
+  if (!state.name?.trim()) {
+    errors.push({ name: 'name', message: 'Name is required' });
+  }
+  if (!state.email?.trim()) {
+    errors.push({ name: 'email', message: 'Email is required' });
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email)) {
+    errors.push({ name: 'email', message: 'Please enter a valid email address' });
+  }
+  if (!state.message?.trim()) {
+    errors.push({ name: 'message', message: 'Message is required' });
+  }
+  return errors;
+};
+
+// Handle form submission
+const onSubmit = async (_event: FormSubmitEvent<typeof form>) => {
   formSubmitting.value = true;
   formSubmitSuccess.value = false;
   formSubmitError.value = false;
-  
+
   try {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
     // Mock successful submission
     formSubmitSuccess.value = true;
-    
+
     // Reset form
     form.name = '';
     form.email = '';
     form.subject = 'project';
     form.message = '';
-    
+
     // Hide success message after 5 seconds
     setTimeout(() => {
       formSubmitSuccess.value = false;
@@ -263,13 +265,22 @@ const submitForm = async () => {
   } catch (error) {
     console.error('Error submitting form:', error);
     formSubmitError.value = true;
-    
+
     // Hide error message after 5 seconds
     setTimeout(() => {
       formSubmitError.value = false;
     }, 5000);
   } finally {
     formSubmitting.value = false;
+  }
+};
+
+// Handle form validation errors
+const onError = (event: FormErrorEvent) => {
+  if (event?.errors?.[0]?.id) {
+    const element = document.getElementById(event.errors[0].id);
+    element?.focus();
+    element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 };
 
@@ -284,15 +295,3 @@ useHead({
   ]
 });
 </script>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
