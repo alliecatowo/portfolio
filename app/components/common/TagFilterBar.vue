@@ -1,88 +1,91 @@
 <template>
-  <div class="glass-accent rounded-xl p-4 mb-6">
+  <UCard class="mb-6 backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20" variant="outline">
     <div class="flex flex-col gap-4">
-      <!-- Tags Row -->
-      <div class="flex items-center gap-2 w-full">
-        <UButton
-          variant="ghost"
-          color="neutral"
-          size="xs"
-          icon="i-lucide-chevron-left"
-          aria-label="Scroll tags left"
-          class="flex-shrink-0"
-          @click="scrollBy(-1)"
-        />
-
-        <div ref="scroller" class="flex-1 overflow-x-auto">
-          <div class="flex items-center gap-2 pb-2" style="width: max-content;">
+      <!-- Tags Carousel -->
+      <div>
+      <UCarousel
+        v-slot="{ item }"
+        :items="carouselItems"
+        arrows
+        :prev="{ size: 'sm', variant: 'outline' }"
+        :next="{ size: 'sm', variant: 'outline' }"
+      >
+          <UChip
+            v-if="item.type === 'all'"
+            :text="totalCount"
+            :color="modelValue === 'all' ? 'primary' : 'neutral'"
+            size="sm"
+            position="top-right"
+            class="cursor-pointer"
+            @click="$emit('update:modelValue', 'all')"
+          >
             <UBadge
               :variant="modelValue === 'all' ? 'solid' : 'soft'"
               color="primary"
               size="sm"
-              class="cursor-pointer transition-all hover:scale-105 whitespace-nowrap"
-              @click="$emit('update:modelValue', 'all')"
             >
-              All ({{ totalCount }})
+              All
             </UBadge>
-            
-            <UBadge
-              v-for="t in tags"
-              :key="t"
-              :variant="modelValue === t ? 'solid' : 'soft'"
-              :color="(colorForTag(t) as any)"
-              size="sm"
-              class="cursor-pointer transition-all hover:scale-105 whitespace-nowrap"
-              @click="$emit('update:modelValue', t)"
-            >
-              {{ t }} ({{ getTagCount(t) }})
-            </UBadge>
-          </div>
-        </div>
+          </UChip>
 
-        <UButton
-          variant="ghost"
-          color="neutral"
-          size="xs"
-          icon="i-lucide-chevron-right"
-          aria-label="Scroll tags right"
-          class="flex-shrink-0"
-          @click="scrollBy(1)"
-        />
+          <UChip
+            v-else
+            :text="getTagCount(item.tag)"
+            :color="modelValue === item.tag ? colorForTag(item.tag) : 'neutral'"
+            size="sm"
+            position="top-right"
+            class="cursor-pointer"
+            @click="$emit('update:modelValue', item.tag)"
+          >
+            <UBadge
+              :variant="modelValue === item.tag ? 'solid' : 'soft'"
+              :color="colorForTag(item.tag)"
+              size="sm"
+            >
+              {{ item.tag }}
+            </UBadge>
+          </UChip>
+        </UCarousel>
       </div>
 
-      <!-- Sort & Clear Row -->
-      <div class="flex items-center justify-between">
+      <!-- Sort & Clear Controls -->
+      <UFieldGroup orientation="horizontal" class="justify-between">
         <USelectMenu
           v-model="selectedSortVal"
-          :items="sortOptions"
-          value-key="value"
-          label-key="label"
+          :options="sortOptions"
+          value-attribute="value"
+          option-attribute="label"
           size="sm"
-          class="min-w-[140px]"
-          :search-input="false"
+          variant="outline"
+          searchable="false"
         >
           <template #leading>
-            <UIcon :name="getSortIcon(selectedSortVal)" class="w-4 h-4" />
+            <UIcon :name="getSortIcon(selectedSortVal)" />
           </template>
         </USelectMenu>
 
         <UButton
-          v-if="modelValue !== 'all' || selectedSortVal !== 'newest'"
-          variant="ghost"
-          color="neutral"
+          v-if="hasActiveFilters"
+          variant="outline"
+          color="gray"
           size="sm"
           icon="i-lucide-x"
           @click="clearFilters"
         >
           Clear
         </UButton>
-      </div>
+        </UFieldGroup>
     </div>
-  </div>
+  </UCard>
 </template>
 
 <script setup lang="ts">
 type SortValue = 'newest' | 'oldest' | 'popular' | 'alphabetical'
+
+interface CarouselItem {
+  type: 'all' | 'tag'
+  tag?: string
+}
 
 const props = defineProps<{
   tags: string[]
@@ -98,13 +101,16 @@ const emit = defineEmits<{
   'update:sort': [value: SortValue]
 }>()
 
-const scroller = ref<HTMLDivElement | null>(null)
+// Create carousel items with 'All' as first item
+const carouselItems = computed<CarouselItem[]>(() => [
+  { type: 'all' },
+  ...props.tags.map(tag => ({ type: 'tag' as const, tag }))
+])
 
-function scrollBy(dir: number) {
-  const el = scroller.value
-  if (!el) return
-  el.scrollBy({ left: dir * 180, behavior: 'smooth' })
-}
+// Check if any filters are active
+const hasActiveFilters = computed(() =>
+  props.modelValue !== 'all' || props.sort !== 'newest'
+)
 
 const sortOptions = [
   { label: 'Newest First', value: 'newest', icon: 'i-lucide-arrow-down' },
@@ -130,7 +136,7 @@ function getTagCount(tag: string): number {
 function getSortIcon(sortValue: SortValue): string {
   const iconMap = {
     newest: 'i-lucide-arrow-down',
-    oldest: 'i-lucide-arrow-up', 
+    oldest: 'i-lucide-arrow-up',
     popular: 'i-lucide-trending-up',
     alphabetical: 'i-lucide-arrow-up-a-z'
   }
