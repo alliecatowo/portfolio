@@ -8,7 +8,7 @@ export default defineAppConfig({
 
     // Component-specific defaults
     button: {
-      default: {
+      defaultVariants: {
         size: 'md',
         color: 'primary',
         variant: 'solid'
@@ -17,22 +17,19 @@ export default defineAppConfig({
 
     // Smaller checkboxes by default (reduce visual weight)
     checkbox: {
-      default: {
+      defaultVariants: {
         size: 'sm'
       }
     },
 
     card: {
-      default: {
-        background: 'white dark:bg-gray-950',
-        ring: 'ring-1 ring-gray-200 dark:ring-gray-800/60',
-        rounded: 'rounded-lg',
-        shadow: 'shadow-sm'
+      slots: {
+        root: 'bg-white dark:bg-gray-950 ring-1 ring-gray-200 dark:ring-gray-800/60 rounded-lg shadow-sm'
       }
     },
 
     input: {
-      default: {
+      defaultVariants: {
         size: 'md',
         color: 'primary',
         variant: 'outline'

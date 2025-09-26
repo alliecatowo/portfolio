@@ -8,14 +8,12 @@
       Skip to navigation
     </a>
     
-    <AppHeader @open-search="commandPaletteRef?.openSearch()" />
+    <AppHeader />
     <main id="main-content" class="flex-grow" aria-label="Main content">
       <slot />
     </main>
     <AppFooter />
-    
-    <!-- Command Palette -->
-    <CommandPalette ref="commandPaletteRef" />
+
     
     <!-- Keyboard Shortcuts Help -->
     <ClientOnly>
@@ -27,12 +25,10 @@
 <script setup lang="ts">
 import AppFooter from '~/components/common/AppFooter.vue'
 import AppHeader from '~/components/common/AppHeader.vue'
-import CommandPalette from '~/components/common/CommandPalette.vue'
 import ShortcutsHelp from '~/components/common/ShortcutsHelp.vue'
 import { useGlobalShortcuts } from '~/composables/useGlobalShortcuts'
 
-// Command palette ref
-const commandPaletteRef = ref()
+// Layout setup
 
 // Register global keyboard shortcuts
 useGlobalShortcuts()

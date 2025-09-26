@@ -18,6 +18,7 @@ export default defineContentConfig({
         featured_image: z.string().optional(),
         content: z.string().optional(),
         slug: z.string(),
+        // Allow Nuxt Content + remark-reading-time to attach computed reading time
         readingTime: z.object({
           text: z.string(),
           minutes: z.number(),
