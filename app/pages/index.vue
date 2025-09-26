@@ -31,121 +31,114 @@
         <h2 id="showcase-title" class="sr-only">Developer Showcase</h2>
         
         <!-- Main Developer Card -->
-        <article class="group relative glass-accent rounded-xl overflow-hidden card-hover hover-lift mb-12" aria-labelledby="main-dev-title" aria-describedby="main-dev-description">
-          <figure class="aspect-[16/9] md:aspect-[21/9] bg-gradient-dev relative">
-            <NuxtImg
-src="https://picsum.photos/1200/600?random=100" 
-                 alt="Abstract representation of code and development work"
-                 loading="lazy"
-                 preset="hero"
-                 sizes="100vw lg:1200px"
-                 class="object-cover w-full h-full mix-blend-overlay opacity-60" />
-            <figcaption class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
-              <div class="w-full">
-                <h3 id="main-dev-title" class="text-3xl md:text-4xl font-bold text-white mb-4">
-                  Crafting Digital Experiences
-                </h3>
-                <p class="text-white/90 text-lg md:text-xl max-w-2xl">
-                  Passionate about building scalable applications, elegant user interfaces, and solving complex technical challenges.
-                </p>
+        <UCard class="glass-accent mb-12">
+          <template #header>
+            <div class="aspect-[16/9] md:aspect-[21/9] bg-gradient-dev relative overflow-hidden rounded-lg">
+              <NuxtImg
+                src="https://picsum.photos/1200/600?random=100"
+                alt="Abstract representation of code and development work"
+                loading="lazy"
+                preset="hero"
+                sizes="100vw lg:1200px"
+                class="object-cover w-full h-full mix-blend-overlay opacity-60" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
+                <div class="w-full">
+                  <h3 id="main-dev-title" class="text-3xl md:text-4xl font-bold text-white mb-4">
+                    Crafting Digital Experiences
+                  </h3>
+                  <p class="text-white/90 text-lg md:text-xl max-w-2xl">
+                    Passionate about building scalable applications, elegant user interfaces, and solving complex technical challenges.
+                  </p>
+                </div>
               </div>
-            </figcaption>
-            <!-- Decorative icons -->
-            <div class="absolute top-6 right-6 flex gap-3" aria-hidden="true">
-              <div class="w-12 h-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full flex items-center justify-center float-animation shadow-lg">
-                <UIcon name="i-lucide-code" class="w-6 h-6 text-primary" />
-              </div>
-              <div class="w-12 h-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full flex items-center justify-center float-animation shadow-lg" style="animation-delay: 0.5s;">
-                <UIcon name="i-lucide-monitor" class="w-6 h-6 text-primary" />
-              </div>
-            </div>
-          </figure>
-          
-          <section class="p-8 bg-gradient-card">
-            <p id="main-dev-description" class="text-default text-lg mb-8">
-              Specializing in modern web technologies with expertise in Vue.js, Node.js, and full-stack development. 
-              I love creating intuitive interfaces and robust backend systems that scale.
-            </p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div>
-                <h4 class="font-semibold text-default mb-3">Frontend Excellence</h4>
-                <ul class="flex flex-wrap gap-2">
-                  <li><span class="inline-block px-3 py-2 text-sm bg-green-500/10 text-green-600 dark:text-green-400 rounded-full">Vue.js</span></li>
-                  <li><span class="inline-block px-3 py-2 text-sm bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-full">Nuxt</span></li>
-                  <li><span class="inline-block px-3 py-2 text-sm bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 rounded-full">TypeScript</span></li>
-                  <li><span class="inline-block px-3 py-2 text-sm bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 rounded-full">Tailwind</span></li>
-                </ul>
-              </div>
-              <div>
-                <h4 class="font-semibold text-default mb-3">Backend & Tools</h4>
-                <ul class="flex flex-wrap gap-2">
-                  <li><span class="inline-block px-3 py-2 text-sm bg-purple-500/10 text-purple-600 dark:text-purple-400 rounded-full">Node.js</span></li>
-                  <li><span class="inline-block px-3 py-2 text-sm bg-red-500/10 text-red-600 dark:text-red-400 rounded-full">Firebase</span></li>
-                  <li><span class="inline-block px-3 py-2 text-sm bg-gray-500/10 text-gray-600 dark:text-gray-400 rounded-full">Docker</span></li>
-                  <li><span class="inline-block px-3 py-2 text-sm bg-primary/10 text-primary rounded-full">Git/CI</span></li>
-                </ul>
+              <div class="absolute top-6 right-6 flex gap-3" aria-hidden="true">
+                <div class="w-12 h-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full flex items-center justify-center float-animation shadow-lg">
+                  <UIcon name="i-lucide-code" class="w-6 h-6 text-primary" />
+                </div>
+                <div class="w-12 h-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full flex items-center justify-center float-animation shadow-lg" style="animation-delay: 0.5s;">
+                  <UIcon name="i-lucide-monitor" class="w-6 h-6 text-primary" />
+                </div>
               </div>
             </div>
+          </template>
+
+          <p id="main-dev-description" class="text-default text-lg mb-8">
+            Specializing in modern web technologies with expertise in Vue.js, Node.js, and full-stack development.
+            I love creating intuitive interfaces and robust backend systems that scale.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div>
+              <h4 class="font-semibold text-default mb-3">Frontend Excellence</h4>
+              <ul class="flex flex-wrap gap-2">
+                <li><UBadge color="green" variant="soft">Vue.js</UBadge></li>
+                <li><UBadge color="blue" variant="soft">Nuxt</UBadge></li>
+                <li><UBadge color="yellow" variant="soft">TypeScript</UBadge></li>
+                <li><UBadge color="cyan" variant="soft">Tailwind</UBadge></li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-semibold text-default mb-3">Backend & Tools</h4>
+              <ul class="flex flex-wrap gap-2">
+                <li><UBadge color="purple" variant="soft">Node.js</UBadge></li>
+                <li><UBadge color="red" variant="soft">Firebase</UBadge></li>
+                <li><UBadge color="gray" variant="soft">Docker</UBadge></li>
+                <li><UBadge color="primary" variant="soft">Git/CI</UBadge></li>
+              </ul>
+            </div>
+          </div>
             
+          <template #footer>
             <div class="flex flex-col sm:flex-row gap-4">
-              <a
-                href="#projects" 
-                class="flex-1 px-6 py-4 text-center font-semibold text-white bg-primary rounded-lg hover:bg-primary-600 focus:outline-none focus:ring-4 focus:ring-primary/50 transition-all btn-depth magnetic-hover"
-                aria-label="View featured projects">
+              <UButton
+                to="#projects"
+                color="primary"
+                size="lg"
+                block
+                class="flex-1"
+                trailing-icon="i-lucide-arrow-down"
+              >
                 View My Work
-                <span aria-hidden="true" class="inline-block ml-2">↓</span>
-              </a>
-              <NuxtLink
-to="/about" 
-                        class="flex-1 px-6 py-4 text-center font-semibold text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 focus:outline-none focus:ring-4 focus:ring-primary/50 transition-all"
-                        aria-label="Learn more about me">
+              </UButton>
+              <UButton
+                to="/about"
+                color="primary"
+                variant="outline"
+                size="lg"
+                block
+                class="flex-1"
+              >
                 About Me
-              </NuxtLink>
+              </UButton>
             </div>
-          </section>
-        </article>
+          </template>
+        </UCard>
         
         <!-- Quick Links Grid -->
         <nav class="grid grid-cols-1 md:grid-cols-3 gap-6" role="navigation" aria-label="Quick navigation">
-          <a
-            href="#projects" 
-                    class="group p-6 glass-accent rounded-lg card-hover hover-lift transition-all"
-                    aria-label="View projects">
+          <UCard class="glass-accent hover:scale-105 transition-transform" to="#projects">
             <div class="flex items-center gap-4 mb-3">
-              <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                <UIcon name="i-lucide-folder-code" class="w-5 h-5 text-primary" />
-              </div>
+              <UIcon name="i-lucide-folder-code" class="w-5 h-5 text-primary" />
               <h3 class="font-semibold text-default">Projects</h3>
             </div>
             <p class="text-muted text-sm">Explore my latest work and technical projects</p>
-          </a>
-          
-          <a
-            href="#blog" 
-                    class="group p-6 glass-accent rounded-lg card-hover hover-lift transition-all"
-                    aria-label="Read blog">
+          </UCard>
+
+          <UCard class="glass-accent hover:scale-105 transition-transform" to="#blog">
             <div class="flex items-center gap-4 mb-3">
-              <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                <UIcon name="i-lucide-book-open" class="w-5 h-5 text-primary" />
-              </div>
+              <UIcon name="i-lucide-book-open" class="w-5 h-5 text-primary" />
               <h3 class="font-semibold text-default">Blog</h3>
             </div>
             <p class="text-muted text-sm">Technical insights and development thoughts</p>
-          </a>
-          
-          <NuxtLink
-to="/contact" 
-                    class="group p-6 glass-accent rounded-lg card-hover hover-lift transition-all"
-                    aria-label="Get in touch">
+          </UCard>
+
+          <UCard class="glass-accent hover:scale-105 transition-transform" to="/contact">
             <div class="flex items-center gap-4 mb-3">
-              <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                <UIcon name="i-lucide-message-circle" class="w-5 h-5 text-primary" />
-              </div>
+              <UIcon name="i-lucide-message-circle" class="w-5 h-5 text-primary" />
               <h3 class="font-semibold text-default">Contact</h3>
             </div>
             <p class="text-muted text-sm">Let's discuss your next project</p>
-          </NuxtLink>
+          </UCard>
         </nav>
       </section>
 
@@ -161,50 +154,50 @@ to="/contact"
         </div>
 
         <div v-if="featuredProjects && featuredProjects.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <article 
-            v-for="(project, index) in featuredProjects" 
-            :key="project.slug || project.path || project.title" 
-            class="group glass-accent rounded-xl overflow-hidden card-hover hover-lift"
+          <UCard
+            v-for="(project, index) in featuredProjects"
+            :key="project.slug || project.path || project.title"
+            class="glass-accent hover:scale-105 transition-transform"
+            :to="`/projects/${project.slug || project.path?.split('/').pop()}`"
           >
-            <figure class="aspect-video bg-gradient-dev relative">
-              <NuxtImg 
-                preset="card"
-                :src="project.image || `https://picsum.photos/400/300?random=${index + 20}`" 
-                :alt="project.title" 
-                class="object-cover w-full h-full mix-blend-overlay opacity-70"
-                loading="lazy"
-                sizes="sm:100vw md:50vw lg:33vw"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"/>
-              <div class="absolute top-4 right-4 w-10 h-10 bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full flex items-center justify-center shadow-lg">
-                <UIcon name="i-lucide-external-link" class="w-5 h-5 text-primary" />
+            <template #header>
+              <div class="aspect-video bg-gradient-dev relative overflow-hidden rounded-lg">
+                <NuxtImg
+                  preset="card"
+                  :src="project.image || `https://picsum.photos/400/300?random=${index + 20}`"
+                  :alt="project.title"
+                  class="object-cover w-full h-full mix-blend-overlay opacity-70"
+                  loading="lazy"
+                  sizes="sm:100vw md:50vw lg:33vw"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"/>
+                <div class="absolute top-4 right-4">
+                  <UIcon name="i-lucide-external-link" class="w-5 h-5 text-white" />
+                </div>
               </div>
-            </figure>
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-3 text-default group-hover:text-primary transition-colors">
-                {{ project.title }}
-              </h3>
-              <p class="text-muted mb-4 line-clamp-2">
-                {{ project.description }}
-              </p>
-              <div class="flex flex-wrap gap-2 mb-4">
-                <span 
-                  v-for="(tech, techIndex) in project.technologies?.slice(0, 3)" 
+            </template>
+
+            <h3 class="text-xl font-bold mb-3 text-default">
+              {{ project.title }}
+            </h3>
+            <p class="text-muted mb-4 line-clamp-2">
+              {{ project.description }}
+            </p>
+
+            <template #footer>
+              <div class="flex flex-wrap gap-2">
+                <UBadge
+                  v-for="(tech, techIndex) in project.technologies?.slice(0, 3)"
                   :key="techIndex"
-                  class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full"
+                  color="primary"
+                  variant="soft"
+                  size="sm"
                 >
                   {{ tech }}
-                </span>
+                </UBadge>
               </div>
-              <NuxtLink 
-                :to="`/projects/${project.slug || project.path?.split('/').pop()}`" 
-                class="inline-flex items-center font-semibold text-primary hover:text-primary-600 transition-colors"
-              >
-                View Project
-                <UIcon name="i-lucide-arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </NuxtLink>
-            </div>
-          </article>
+            </template>
+          </UCard>
         </div>
 
         <div v-else class="py-12 text-center">
@@ -213,18 +206,19 @@ to="/contact"
         </div>
 
         <div class="mt-12 text-center">
-          <NuxtLink 
-            to="/projects" 
-            class="px-8 py-4 text-white bg-primary rounded-lg hover:bg-primary-600 font-semibold transition-all btn-depth magnetic-hover"
+          <UButton
+            to="/projects"
+            color="primary"
+            size="lg"
+            trailing-icon="i-lucide-arrow-right"
           >
             View All Projects
-            <span aria-hidden="true" class="inline-block ml-2">→</span>
-          </NuxtLink>
+          </UButton>
         </div>
       </section>
 
       <!-- Skills Section -->
-      <section class="max-w-6xl mx-auto mt-24 glass-accent rounded-xl p-8 md:p-12" aria-labelledby="skills-title">
+      <UCard class="max-w-6xl mx-auto mt-24 glass-accent" aria-labelledby="skills-title">
         <div class="mb-16 text-center">
           <h2 id="skills-title" class="text-4xl md:text-5xl font-bold mb-6 text-gradient-animated">
             Technical Skills
@@ -267,7 +261,7 @@ to="/contact"
             <p class="text-sm text-muted">React Native, Progressive Web Apps</p>
           </div>
         </div>
-      </section>
+      </UCard>
 
       <!-- Recent Blog Posts -->
       <section id="blog" class="max-w-6xl mx-auto mt-24" aria-labelledby="blog-title">
@@ -281,45 +275,18 @@ to="/contact"
         </div>
 
         <div v-if="recentPosts && recentPosts.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <article 
-            v-for="(post, index) in recentPosts" 
-            :key="post.slug || post.path" 
-            class="group glass-accent rounded-xl overflow-hidden card-hover hover-lift"
-          >
-            <figure class="aspect-video bg-gradient-card relative">
-              <NuxtImg 
-                preset="blogCard"
-                :src="post.featured_image || `https://picsum.photos/400/300?random=${index + 30}`" 
-                :alt="post.title" 
-                class="object-cover w-full h-full mix-blend-overlay opacity-70"
-                loading="lazy"
-                sizes="sm:100vw md:50vw lg:33vw"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"/>
-              <div class="absolute top-4 right-4 w-10 h-10 bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full flex items-center justify-center shadow-lg">
-                <UIcon name="i-lucide-book-open" class="w-5 h-5 text-primary" />
-              </div>
-            </figure>
-            <div class="p-6">
-              <div class="text-sm text-muted mb-2 flex items-center gap-2">
-                <UIcon name="i-lucide-calendar" class="w-3 h-3" />
-                {{ new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) }}
-              </div>
-              <h3 class="text-xl font-bold mb-3 text-default group-hover:text-primary transition-colors">
-                {{ post.title }}
-              </h3>
-              <p class="text-muted mb-4 line-clamp-2">
-                {{ post.description }}
-              </p>
-              <NuxtLink 
-                :to="`/blog/${post.slug || post.path?.split('/').pop()}`" 
-                class="inline-flex items-center font-semibold text-primary hover:text-primary-600 transition-colors"
-              >
-                Read More
-                <UIcon name="i-lucide-arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </NuxtLink>
-            </div>
-          </article>
+          <UBlogPost
+            v-for="(post, index) in recentPosts"
+            :key="post.slug || post.path"
+            :title="post.title"
+            :description="post.description"
+            :date="post.date"
+            :image="post.featured_image || `https://picsum.photos/400/300?random=${index + 30}`"
+            :to="`/blog/${post.slug || post.path?.split('/').pop()}`"
+            variant="outline"
+            orientation="vertical"
+            class="glass-accent hover:scale-105 transition-transform"
+          />
         </div>
 
         <div v-else class="py-12 text-center">
@@ -328,13 +295,15 @@ to="/contact"
         </div>
 
         <div class="mt-12 text-center">
-          <NuxtLink 
-            to="/blog" 
-            class="px-8 py-4 text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 font-semibold transition-all"
+          <UButton
+            to="/blog"
+            color="primary"
+            variant="outline"
+            size="lg"
+            trailing-icon="i-lucide-arrow-right"
           >
             View All Articles
-            <span aria-hidden="true" class="inline-block ml-2">→</span>
-          </NuxtLink>
+          </UButton>
         </div>
       </section>
 

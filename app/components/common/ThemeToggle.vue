@@ -1,14 +1,18 @@
 <template>
   <UColorModeButton
-    size="sm"
+    size="md"
+    variant="ghost"
+    color="primary"
+    square
     title="Toggle dark/light mode"
   >
     <template #fallback>
       <UButton
         loading
         variant="ghost"
-        color="neutral"
-        size="sm"
+        color="primary"
+        size="md"
+        square
       />
     </template>
   </UColorModeButton>
