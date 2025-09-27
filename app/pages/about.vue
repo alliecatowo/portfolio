@@ -82,28 +82,35 @@
               
               <!-- CTA Buttons -->
               <div class="flex flex-wrap gap-4">
-                <NuxtLink 
-                  to="/projects" 
-                  class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-600 font-semibold transition-all btn-depth magnetic-hover"
+                <UButton
+                  to="/projects"
+                  color="primary"
+                  size="lg"
+                  leading-icon="i-lucide-folder"
+                  class="btn-depth magnetic-hover"
                 >
-                  <UIcon name="i-lucide-folder" class="w-5 h-5 mr-2" />
                   View My Work
-                </NuxtLink>
-                <NuxtLink 
-                  to="/contact" 
-                  class="px-6 py-3 text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 font-semibold transition-all"
+                </UButton>
+                <UButton
+                  to="/contact"
+                  color="primary"
+                  variant="outline"
+                  size="lg"
+                  leading-icon="i-lucide-mail"
                 >
-                  <UIcon name="i-lucide-mail" class="w-5 h-5 mr-2" />
                   Get In Touch
-                </NuxtLink>
-                <a 
-                  href="/resume.pdf" 
-                  class="px-6 py-3 text-muted hover:text-default font-semibold transition-colors flex items-center"
+                </UButton>
+                <UButton
+                  href="/resume.pdf"
+                  target="_blank"
+                  variant="ghost"
+                  color="neutral"
+                  size="lg"
+                  leading-icon="i-lucide-download"
                   download
                 >
-                  <UIcon name="i-lucide-download" class="w-5 h-5 mr-2" />
                   Download Resume
-                </a>
+                </UButton>
               </div>
             </div>
           </div>

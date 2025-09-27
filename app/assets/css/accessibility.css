@@ -180,15 +180,7 @@ a:focus-visible {
   white-space: normal;
 }
 
-/* Ensure interactive elements have minimum size */
-button,
-a,
-input,
-select,
-textarea {
-  min-height: 44px;
-  min-width: 44px;
-}
+/* Removed problematic min-size rule that was affecting switches */
 
 /* High contrast focus for better visibility */
 @media (prefers-contrast: high) {

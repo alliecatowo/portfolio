@@ -102,54 +102,93 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
           <UForm
             :validate="validate"
             :state="form"
-            class="space-y-4"
+            :schema="schema"
+            class="space-y-6"
             @submit="onSubmit"
             @error="onError"
           >
-            <UFormField label="Name" name="name" required>
+            <UFormField label="Name" name="name" required :ui="{ label: 'text-sm font-medium' }">
               <UInput
                 v-model="form.name"
                 placeholder="Your full name"
-                size="md"
+                size="lg"
+                :ui="{ placeholder: 'text-muted' }"
+                autocomplete="name"
               />
             </UFormField>
 
-            <UFormField label="Email" name="email" required>
+            <UFormField label="Email" name="email" required :ui="{ label: 'text-sm font-medium' }">
               <UInput
                 v-model="form.email"
                 type="email"
                 placeholder="your.email@example.com"
-                size="md"
+                size="lg"
+                :ui="{ placeholder: 'text-muted' }"
+                autocomplete="email"
               />
             </UFormField>
 
-            <UFormField label="Subject" name="subject">
-              <USelect
+            <UFormField label="Subject" name="subject" :ui="{ label: 'text-sm font-medium' }">
+              <USelectMenu
                 v-model="form.subject"
                 :options="subjectOptions"
-                size="md"
-              />
+                searchable
+                size="lg"
+                placeholder="Select inquiry type"
+                value-attribute="value"
+                option-attribute="label"
+                :ui="{ placeholder: 'text-muted' }"
+              >
+                <template #leading>
+                  <UIcon name="i-lucide-tag" class="w-5 h-5 text-muted" />
+                </template>
+              </USelectMenu>
             </UFormField>
 
-            <UFormField label="Message" name="message" required>
+            <UFormField label="Message" name="message" required :ui="{ label: 'text-sm font-medium' }">
               <UTextarea
                 v-model="form.message"
                 :rows="6"
                 placeholder="Tell me about your project or inquiry..."
-                size="md"
+                size="lg"
+                :ui="{ placeholder: 'text-muted' }"
+                :resize="true"
               />
             </UFormField>
 
-            <UButton
-              type="submit"
-              :loading="formSubmitting"
-              size="lg"
-              color="primary"
-              block
-              icon="i-lucide-send"
-            >
-              {{ formSubmitting ? 'Sending...' : 'Send Message' }}
-            </UButton>
+            <div class="flex gap-4 pt-4">
+              <UButton
+                type="submit"
+                :loading="formSubmitting"
+                size="lg"
+                color="primary"
+                :ui="{ rounded: 'rounded-lg' }"
+                class="flex-1"
+                :disabled="formSubmitting"
+              >
+                <template #leading>
+                  <UIcon name="i-lucide-send" class="w-5 h-5" />
+                </template>
+                <template #default>
+                  {{ formSubmitting ? 'Sending Message...' : 'Send Message' }}
+                </template>
+              </UButton>
+
+              <UButton
+                type="reset"
+                variant="outline"
+                size="lg"
+                color="gray"
+                :ui="{ rounded: 'rounded-lg' }"
+                :disabled="formSubmitting"
+                @click="resetForm"
+              >
+                <template #leading>
+                  <UIcon name="i-lucide-rotate-ccw" class="w-5 h-5" />
+                </template>
+                Reset
+              </UButton>
+            </div>
 
             <UAlert
               v-if="formSubmitSuccess"
@@ -200,6 +239,15 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
 
 <script setup lang="ts">
 import type { FormError, FormErrorEvent, FormSubmitEvent } from '@nuxt/ui';
+import { z } from 'zod';
+
+// Zod schema for validation
+const schema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters').max(50, 'Name must be less than 50 characters'),
+  email: z.string().email('Please enter a valid email address'),
+  subject: z.string().min(1, 'Please select a subject'),
+  message: z.string().min(10, 'Message must be at least 10 characters').max(1000, 'Message must be less than 1000 characters')
+});
 
 // Form data
 const form = reactive({
@@ -209,12 +257,12 @@ const form = reactive({
   message: ''
 });
 
-// Subject options for USelect
+// Subject options for USelectMenu
 const subjectOptions = [
-  { label: 'Project Inquiry', value: 'project' },
-  { label: 'Collaboration', value: 'collaboration' },
-  { label: 'Consultation', value: 'consultation' },
-  { label: 'Other', value: 'other' }
+  { label: 'Project Inquiry', value: 'project', icon: 'i-lucide-briefcase' },
+  { label: 'Collaboration', value: 'collaboration', icon: 'i-lucide-users' },
+  { label: 'Consultation', value: 'consultation', icon: 'i-lucide-message-circle' },
+  { label: 'Other', value: 'other', icon: 'i-lucide-help-circle' }
 ];
 
 // Form states
@@ -222,21 +270,28 @@ const formSubmitting = ref(false);
 const formSubmitSuccess = ref(false);
 const formSubmitError = ref(false);
 
-// Form validation
+// Form validation using Zod
 const validate = (state: typeof form): FormError[] => {
-  const errors = [];
-  if (!state.name?.trim()) {
-    errors.push({ name: 'name', message: 'Name is required' });
+  try {
+    schema.parse(state);
+    return [];
+  } catch (error) {
+    const zodError = error as { errors: Array<{ path: string[]; message: string }> };
+    return zodError.errors.map((err) => ({
+      name: err.path[0] as string,
+      message: err.message
+    }));
   }
-  if (!state.email?.trim()) {
-    errors.push({ name: 'email', message: 'Email is required' });
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email)) {
-    errors.push({ name: 'email', message: 'Please enter a valid email address' });
-  }
-  if (!state.message?.trim()) {
-    errors.push({ name: 'message', message: 'Message is required' });
-  }
-  return errors;
+};
+
+// Reset form function
+const resetForm = () => {
+  form.name = '';
+  form.email = '';
+  form.subject = 'project';
+  form.message = '';
+  formSubmitSuccess.value = false;
+  formSubmitError.value = false;
 };
 
 // Handle form submission
@@ -253,10 +308,7 @@ const onSubmit = async (_event: FormSubmitEvent<typeof form>) => {
     formSubmitSuccess.value = true;
 
     // Reset form
-    form.name = '';
-    form.email = '';
-    form.subject = 'project';
-    form.message = '';
+    resetForm();
 
     // Hide success message after 5 seconds
     setTimeout(() => {

@@ -2,7 +2,7 @@ export interface AccessibilityPreferences {
   readingSpeed: number;
   dyslexiaFont: boolean;
   highContrast: boolean;
-  fontSize: 'small' | 'medium' | 'large' | 'x-large';
+  fontSize: 'x-small' | 'small' | 'medium' | 'large' | 'x-large';
   lineSpacing: 'normal' | 'relaxed' | 'loose';
   reducedMotion: boolean;
   colorBlindMode: 'none' | 'protanopia' | 'deuteranopia' | 'tritanopia';
