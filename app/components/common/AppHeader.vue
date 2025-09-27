@@ -38,13 +38,20 @@
           color="primary"
           size="md"
           square
+          :ui="{ rounded: 'rounded-lg' }"
           aria-label="Open accessibility settings"
           @click="showAccessibilitySettings = true"
         />
       </UTooltip>
 
       <UTooltip text="Toggle theme" :kbds="['meta','t']">
-        <UColorModeButton size="md" variant="ghost" color="primary" square />
+        <UColorModeButton
+          size="md"
+          variant="ghost"
+          color="primary"
+          square
+          :ui="{ rounded: 'rounded-lg' }"
+        />
       </UTooltip>
     </template>
 
@@ -59,13 +66,14 @@
       />
 
       <!-- Mobile actions -->
-      <div class="pt-6 mt-6 border-t border-default space-y-3">
+      <div class="pt-6 mt-6 border-t border-default space-y-4">
         <div class="grid grid-cols-2 gap-3">
           <UButton
             icon="i-lucide-accessibility"
             variant="outline"
             color="primary"
             size="md"
+            :ui="{ rounded: 'rounded-lg' }"
             @click="showAccessibilitySettings = true"
           >
             Accessibility
@@ -80,13 +88,20 @@
           />
         </div>
 
-        <div class="flex items-center justify-between py-3 px-4 bg-primary/5 rounded-lg">
-          <div class="flex items-center gap-3">
-            <UIcon name="i-lucide-palette" class="w-5 h-5" />
-            <span class="text-sm font-medium">Theme</span>
+        <UCard variant="outline" class="p-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <UIcon name="i-lucide-palette" class="w-5 h-5 text-primary" />
+              <span class="text-sm font-medium">Theme</span>
+            </div>
+            <UColorModeButton
+              size="md"
+              variant="ghost"
+              color="primary"
+              :ui="{ rounded: 'rounded-full' }"
+            />
           </div>
-          <UColorModeButton size="md" variant="ghost" color="primary" />
-        </div>
+        </UCard>
       </div>
     </template>
   </UHeader>

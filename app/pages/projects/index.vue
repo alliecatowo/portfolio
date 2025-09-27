@@ -79,14 +79,23 @@
             </p>
             
             <div v-if="project.technologies?.length" class="flex flex-wrap gap-2 mb-4">
-              <ColoredTag
-                v-for="tech in project.technologies.slice(0, 4)" 
+              <UBadge
+                v-for="tech in project.technologies.slice(0, 4)"
                 :key="tech"
-                :tag="tech"
-              />
-              <span v-if="project.technologies.length > 4" class="px-2 py-1 text-xs text-muted">
+                variant="soft"
+                size="sm"
+                class="capitalize"
+              >
+                {{ tech }}
+              </UBadge>
+              <UBadge
+                v-if="project.technologies.length > 4"
+                variant="soft"
+                color="gray"
+                size="sm"
+              >
                 +{{ project.technologies.length - 4 }} more
-              </span>
+              </UBadge>
             </div>
             
             <div class="flex items-center justify-between">
@@ -137,20 +146,24 @@
             Let's discuss your next project.
           </p>
           <div class="flex flex-wrap gap-4 justify-center">
-            <NuxtLink 
-              to="/contact" 
-              class="px-8 py-4 bg-primary text-white rounded-lg hover:bg-primary-600 font-semibold transition-all btn-depth magnetic-hover"
+            <UButton
+              to="/contact"
+              color="primary"
+              size="lg"
+              leading-icon="i-lucide-mail"
+              class="btn-depth magnetic-hover"
             >
-              <UIcon name="i-lucide-mail" class="w-5 h-5 mr-2" />
               Get In Touch
-            </NuxtLink>
-            <NuxtLink 
-              to="/about" 
-              class="px-8 py-4 text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 font-semibold transition-all"
+            </UButton>
+            <UButton
+              to="/about"
+              color="primary"
+              variant="outline"
+              size="lg"
+              leading-icon="i-lucide-user"
             >
-              <UIcon name="i-lucide-user" class="w-5 h-5 mr-2" />
               About Me
-            </NuxtLink>
+            </UButton>
           </div>
         </div>
       </section>
@@ -159,8 +172,6 @@
 </template>
 
 <script setup lang="ts">
-import ColoredTag from '../../components/common/ColoredTag.vue'
-
 // Fetch all projects
 const { data: projects, pending, error } = await useAsyncData(
   'all-projects',
