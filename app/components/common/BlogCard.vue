@@ -13,11 +13,15 @@
     <!-- Custom footer for tags -->
     <template #footer>
       <div v-if="tags?.length" class="flex flex-wrap gap-2">
-        <ColoredTag
+        <UBadge
           v-for="t in tags!.slice(0, 4)"
           :key="t"
-          :tag="t"
-        />
+          variant="soft"
+          size="sm"
+          class="capitalize"
+        >
+          {{ t }}
+        </UBadge>
         <UBadge
           v-if="tags!.length > 4"
           variant="soft"
@@ -32,8 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import ColoredTag from './ColoredTag.vue'
-
 defineProps<{
   title: string
   description?: string

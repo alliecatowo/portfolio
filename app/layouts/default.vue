@@ -1,25 +1,35 @@
 <template>
-  <div class="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
-    <!-- Skip Navigation Links -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-md">
+  <UApp :ui="{ primary: 'pink', gray: 'neutral' }">
+    <!-- Enhanced Skip Navigation Links -->
+    <ULink
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-md focus:ring-2 focus:ring-primary-300"
+      aria-label="Skip to main content"
+    >
       Skip to main content
-    </a>
-    <a href="#site-navigation" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-32 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-md">
+    </ULink>
+    <ULink
+      href="#site-navigation"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-32 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-md focus:ring-2 focus:ring-primary-300"
+      aria-label="Skip to navigation"
+    >
       Skip to navigation
-    </a>
-    
+    </ULink>
+
     <AppHeader />
-    <main id="main-content" class="flex-grow" aria-label="Main content">
+    <UMain id="main-content" class="flex-grow" aria-label="Main content">
       <slot />
-    </main>
+    </UMain>
     <AppFooter />
 
-    
-    <!-- Keyboard Shortcuts Help -->
+    <!-- Enhanced Keyboard Shortcuts Help -->
     <ClientOnly>
       <ShortcutsHelp />
     </ClientOnly>
-  </div>
+
+    <!-- Global Toast Notifications -->
+    <UToast />
+  </UApp>
 </template>
 
 <script setup lang="ts">
@@ -32,4 +42,5 @@ import { useGlobalShortcuts } from '~/composables/useGlobalShortcuts'
 
 // Register global keyboard shortcuts
 useGlobalShortcuts()
+
 </script> 

@@ -1,5 +1,6 @@
 <template>
-  <main class="min-h-screen bg-gradient-animated bg-dots flex items-center justify-center relative overflow-hidden">
+  <UPage>
+    <UMain class="min-h-screen bg-gradient-animated bg-dots flex items-center justify-center relative overflow-hidden">
     <!-- Decorative background - hidden from screen readers -->
     <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
       <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse pulse-glow"/>
@@ -153,52 +154,63 @@
           </p>
         </div>
 
-        <div v-if="featuredProjects && featuredProjects.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <UCard
-            v-for="(project, index) in featuredProjects"
-            :key="project.slug || project.path || project.title"
-            class="glass-accent hover:scale-105 transition-transform"
-            :to="`/projects/${project.slug || project.path?.split('/').pop()}`"
-          >
-            <template #header>
-              <div class="aspect-video bg-gradient-dev relative overflow-hidden rounded-lg">
-                <NuxtImg
-                  preset="card"
-                  :src="project.image || `https://picsum.photos/400/300?random=${index + 20}`"
-                  :alt="project.title"
-                  class="object-cover w-full h-full mix-blend-overlay opacity-70"
-                  loading="lazy"
-                  sizes="sm:100vw md:50vw lg:33vw"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"/>
-                <div class="absolute top-4 right-4">
-                  <UIcon name="i-lucide-external-link" class="w-5 h-5 text-white" />
+        <UCarousel
+          v-if="featuredProjects && featuredProjects.length > 0"
+          :items="featuredProjects"
+          :ui="{
+            item: 'basis-full md:basis-1/2 lg:basis-1/3',
+            container: 'gap-8',
+            wrapper: 'mx-auto'
+          }"
+          arrows
+          :prev="{ icon: 'i-lucide-chevron-left', size: 'sm', variant: 'outline' }"
+          :next="{ icon: 'i-lucide-chevron-right', size: 'sm', variant: 'outline' }"
+        >
+          <template #default="{ item: project, index }">
+            <UCard
+              class="glass-accent hover:scale-105 transition-transform group"
+              :to="`/projects/${project.slug || project.path?.split('/').pop()}`"
+            >
+              <template #header>
+                <div class="aspect-video bg-gradient-dev relative overflow-hidden rounded-lg">
+                  <NuxtImg
+                    preset="card"
+                    :src="project.image || `https://picsum.photos/400/300?random=${index + 20}`"
+                    :alt="project.title"
+                    class="object-cover w-full h-full mix-blend-overlay opacity-70 group-hover:opacity-90 transition-opacity"
+                    loading="lazy"
+                    sizes="sm:100vw md:50vw lg:33vw"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"/>
+                  <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <UIcon name="i-lucide-external-link" class="w-5 h-5 text-white" />
+                  </div>
                 </div>
-              </div>
-            </template>
+              </template>
 
-            <h3 class="text-xl font-bold mb-3 text-default">
-              {{ project.title }}
-            </h3>
-            <p class="text-muted mb-4 line-clamp-2">
-              {{ project.description }}
-            </p>
+              <h3 class="text-xl font-bold mb-3 text-default">
+                {{ project.title }}
+              </h3>
+              <p class="text-muted mb-4 line-clamp-2">
+                {{ project.description }}
+              </p>
 
-            <template #footer>
-              <div class="flex flex-wrap gap-2">
-                <UBadge
-                  v-for="(tech, techIndex) in project.technologies?.slice(0, 3)"
-                  :key="techIndex"
-                  color="primary"
-                  variant="soft"
-                  size="sm"
-                >
-                  {{ tech }}
-                </UBadge>
-              </div>
-            </template>
-          </UCard>
-        </div>
+              <template #footer>
+                <div class="flex flex-wrap gap-2">
+                  <UBadge
+                    v-for="(tech, techIndex) in project.technologies?.slice(0, 3)"
+                    :key="techIndex"
+                    color="primary"
+                    variant="soft"
+                    size="sm"
+                  >
+                    {{ tech }}
+                  </UBadge>
+                </div>
+              </template>
+            </UCard>
+          </template>
+        </UCarousel>
 
         <div v-else class="py-12 text-center">
           <UIcon name="i-lucide-folder" class="h-16 w-16 mx-auto text-gray-300 dark:text-gray-700 mb-4" aria-hidden="true" />
@@ -317,24 +329,29 @@
             Ready to bring your ideas to life? Let's discuss your next project.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <NuxtLink
-              to="/contact" 
-              class="px-8 py-4 text-white bg-primary rounded-lg hover:bg-primary-600 font-semibold transition-all btn-depth magnetic-hover"
+            <UButton
+              to="/contact"
+              color="primary"
+              size="lg"
+              leading-icon="i-lucide-mail"
+              class="btn-depth magnetic-hover"
             >
-              <UIcon name="i-lucide-mail" class="w-5 h-5 mr-2" />
               Get In Touch
-            </NuxtLink>
-            <NuxtLink
-              to="/about" 
-              class="px-8 py-4 text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 font-semibold transition-all"
+            </UButton>
+            <UButton
+              to="/about"
+              color="primary"
+              variant="outline"
+              size="lg"
             >
               Learn More About Me
-            </NuxtLink>
+            </UButton>
           </div>
         </div>
       </aside>
     </section>
-  </main>
+    </UMain>
+  </UPage>
 </template>
 
 <script setup lang="ts">
