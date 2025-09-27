@@ -9,7 +9,20 @@ export default defineAppConfig({
         size: 'md',
         color: 'primary',
         variant: 'solid'
-      }
+      },
+      variants: {
+        variant: {
+          magnet: 'btn-depth magnetic-hover relative overflow-hidden transition-all duration-300 ease-out'
+        }
+      },
+      compoundVariants: [
+        // Magnet variant with primary color (matches original solid style)
+        {
+          color: 'primary',
+          variant: 'magnet',
+          class: 'bg-primary text-inverted hover:bg-primary/75 active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary shadow-lg hover:shadow-xl active:translate-y-1'
+        }
+      ]
     },
     checkbox: {
       defaultVariants: {
