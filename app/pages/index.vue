@@ -94,6 +94,7 @@
               <UButton
                 to="#projects"
                 color="primary"
+                variant="magnet"
                 size="lg"
                 block
                 class="flex-1"
@@ -221,6 +222,7 @@
           <UButton
             to="/projects"
             color="primary"
+            variant="magnet"
             size="lg"
             trailing-icon="i-lucide-arrow-right"
           >
@@ -310,7 +312,7 @@
           <UButton
             to="/blog"
             color="primary"
-            variant="outline"
+            variant="magnet"
             size="lg"
             trailing-icon="i-lucide-arrow-right"
           >
@@ -332,9 +334,9 @@
             <UButton
               to="/contact"
               color="primary"
+              variant="magnet"
               size="lg"
               leading-icon="i-lucide-mail"
-              class="btn-depth magnetic-hover"
             >
               Get In Touch
             </UButton>
