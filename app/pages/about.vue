@@ -85,9 +85,9 @@
                 <UButton
                   to="/projects"
                   color="primary"
+                  variant="magnet"
                   size="lg"
                   leading-icon="i-lucide-folder"
-                  class="btn-depth magnetic-hover"
                 >
                   View My Work
                 </UButton>
