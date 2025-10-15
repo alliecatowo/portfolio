@@ -149,9 +149,9 @@
             <UButton
               to="/contact"
               color="primary"
+              variant="magnet"
               size="lg"
               leading-icon="i-lucide-mail"
-              class="btn-depth magnetic-hover"
             >
               Get In Touch
             </UButton>
