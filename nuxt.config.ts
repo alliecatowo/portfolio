@@ -13,12 +13,20 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/image'
   ],
-  ...({ content: { 
-    experimental: { 
+  content: {
+    experimental: {
       nativeSqlite: true,
       sqliteConnector: 'native'
-    } 
-  } }),
+    },
+    preview: {
+      api: 'https://api.nuxt.studio',
+      gitInfo: {
+        name: 'portfolio',
+        owner: 'alliecatowo',
+        url: 'https://github.com/alliecatowo/portfolio'
+      }
+    }
+  },
   css: ['~/assets/css/main.css'],
   imports: {
     autoImport: true

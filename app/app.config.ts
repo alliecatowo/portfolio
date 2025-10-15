@@ -1,12 +1,9 @@
 export default defineAppConfig({
   ui: {
-    // Map primary/neutral aliases to Tailwind palette names
     colors: {
       primary: 'pink',
       neutral: 'slate'
     },
-
-    // Component-specific defaults
     button: {
       default: {
         size: 'md',
@@ -14,14 +11,11 @@ export default defineAppConfig({
         variant: 'solid'
       }
     },
-
-    // Smaller checkboxes by default (reduce visual weight)
     checkbox: {
       default: {
         size: 'sm'
       }
     },
-
     card: {
       default: {
         background: 'white dark:bg-gray-950',
@@ -30,7 +24,6 @@ export default defineAppConfig({
         shadow: 'shadow-sm'
       }
     },
-
     input: {
       default: {
         size: 'md',
@@ -38,8 +31,6 @@ export default defineAppConfig({
         variant: 'outline'
       }
     },
-
-    // Sleeker pagination defaults
     pagination: {
       slots: {
         root: 'w-full',
