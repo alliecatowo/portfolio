@@ -1,10 +1,8 @@
 <template>
   <UApp>
-    <TooltipProvider>
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
-    </TooltipProvider>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
     <ClientOnly>
       <LazyUContentSearch
         v-model:search-term="searchTerm"
@@ -20,8 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { TooltipProvider } from 'reka-ui'
-
 const { data: navigation } = await useAsyncData('navigation', async () => {
   const [blogNavigation, projectsNavigation] = await Promise.all([
     queryCollectionNavigation('blog'),
