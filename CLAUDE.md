@@ -96,7 +96,7 @@ The project uses Firebase static hosting:
 
 ```bash
 # Deployments are handled automatically via GitHub Actions
-# Production: https://allisons.dev (live channel - releases only)
+# Production: https://allisons.dev (live channel - main branch)
 # Staging: https://allie-portfolio-project--staging-o21oschp.web.app (main branch)
 # Preview: Auto-deployed temporary channels for pull requests
 ```

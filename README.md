@@ -9,7 +9,7 @@
 
 **🚀 [Production](https://allisons.dev) • 🧪 [Staging](https://allie-portfolio-project--staging-o21oschp.web.app)**
 
-*A modern developer portfolio built with Nuxt 4, showcasing software engineering projects and technical expertise.*
+_A modern developer portfolio built with Nuxt 4, showcasing software engineering projects and technical expertise._
 
 </div>
 
@@ -98,7 +98,7 @@ portfolio/
 
 ## 🔗 Live Sites
 
-- **Production**: https://allisons.dev (live channel - releases only)
+- **Production**: https://allisons.dev (live channel - main branch)
 - **Staging**: https://allie-portfolio-project--staging-o21oschp.web.app (reflects main branch)
 - **Preview**: Automatic temporary deployments for pull requests
 
@@ -108,14 +108,14 @@ Optimized GitHub Actions workflow with intelligent caching and parallel executio
 
 ```
 📝 Pull Requests    → 🔍 Preview channels (7-day auto-expiry)
-🔄 Main branch      → 🧪 Staging environment (always current)
-🏷️ GitHub releases → 🚀 Production deployment (stable)
+🔄 Main branch      → 🧪 Staging environment + 🚀 Production deployment
+🕹️ Manual dispatch  → 🔁 Optional redeploy of any ref
 ```
 
 **Pipeline Features:**
 
 - **🚀 Smart Caching** - pnpm store and node_modules with cache restoration
-- **⚡ Parallel Execution** - typecheck, lint, and build jobs run concurrently  
+- **⚡ Parallel Execution** - typecheck, lint, and build jobs run concurrently
 - **🔒 Environment Protection** - Staging and production use protected environments
 - **🎯 Channel Isolation** - Firebase hosting channels provide URL isolation
 - **📊 Status Monitoring** - Real-time deployment status via GitHub badges
