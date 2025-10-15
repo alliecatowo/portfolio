@@ -1,15 +1,23 @@
 ---
-title: 'GraphQL Implementation Guide: From Schema Design to Production'
-date: '2024-04-15'
-description: 'Complete guide to implementing GraphQL APIs with schema design, resolvers, authentication, caching, and performance optimization strategies for production applications.'
-category: 'dev'
-tags: ['graphql', 'api', 'backend', 'nodejs', 'tutorial', 'performance']
-author: 'Allie'
+title: "GraphQL Implementation Guide: From Schema Design to Production"
+date: 2024-04-15
+description: Complete guide to implementing GraphQL APIs with schema design,
+  resolvers, authentication, caching, and performance optimization strategies
+  for production applications.
+category: dev
+tags:
+  - graphql
+  - api
+  - backend
+  - nodejs
+  - tutorial
+  - performance
+author: Allie
 published: false
 featured: true
-featured_image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=600&fit=crop'
-reading_time: '17 min'
-slug: 'graphql-implementation-guide'
+featured_image: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=600&fit=crop
+reading_time: 17 min
+slug: graphql-implementation-guide
 ---
 
 # GraphQL Implementation Guide: From Schema Design to Production

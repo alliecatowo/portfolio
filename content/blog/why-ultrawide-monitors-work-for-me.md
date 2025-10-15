@@ -1,14 +1,18 @@
 ---
-title: 'Why Ultrawide Monitors Work for Me'
-date: '2025-08-30'
-description: 'One canvas, fewer context switches, calmer attention.'
-category: 'dev'
-tags: ['ultrawide', 'focus', 'workflow', 'ergonomics']
-author: 'Allie'
+title: Why Ultrawide Monitors Work for Me
+date: 2025-08-30
+description: One canvas, fewer context switches, calmer attention.
+category: dev
+tags:
+  - ultrawide
+  - focus
+  - workflow
+  - ergonomics
+author: Allie
 published: true
 featured: false
-featured_image: 'https://placehold.co/640x360?text=Dev'
-slug: 'why-ultrawide-monitors-work-for-me'
+featured_image: https://placehold.co/640x360?text=Dev
+slug: why-ultrawide-monitors-work-for-me
 ---
 
 # Why Ultrawide Monitors Work for Me
