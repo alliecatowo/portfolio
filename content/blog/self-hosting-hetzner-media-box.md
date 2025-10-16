@@ -1,14 +1,22 @@
 ---
-title: 'My Self‑Hosted Stack on a 16TB Hetzner Box'
-date: '2025-08-30'
-description: 'Plex, Jellyfin, Radarr/Sonarr/Lidarr/LazyLibrarian, qBittorrent, Jellyseerr, ProtonVPN, Portainer, and Caddy—running reliably and cheaply.'
-category: 'dev'
-tags: ['self-hosting', 'hetzner', 'docker', 'media', 'portainer', 'caddy', 'homelab']
-author: 'Allie'
+title: My Self‑Hosted Stack on a 16TB Hetzner Box
+date: 2025-08-30
+description: Plex, Jellyfin, Radarr/Sonarr/Lidarr/LazyLibrarian, qBittorrent,
+  Jellyseerr, ProtonVPN, Portainer, and Caddy—running reliably and cheaply.
+category: dev
+tags:
+  - self-hosting
+  - hetzner
+  - docker
+  - media
+  - portainer
+  - caddy
+  - homelab
+author: Allie
 published: true
 featured: false
-featured_image: 'https://placehold.co/800x450?text=Project'
-slug: 'self-hosting-hetzner-media-box'
+featured_image: https://placehold.co/800x450?text=Project
+slug: self-hosting-hetzner-media-box
 ---
 
 # My Self‑Hosted Stack on a 16TB Hetzner Box

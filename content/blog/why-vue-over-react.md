@@ -1,14 +1,20 @@
 ---
-title: 'Why I Reach for Vue Over React'
-date: '2025-08-30'
-description: 'A DX-first take on why Vue’s clarity, SFCs, and composables help me ship faster and feel happier than React’s ever-shifting conventions.'
-category: 'dev'
-tags: ['vue', 'react', 'dx', 'composition-api', 'opinion']
-author: 'Allie'
+title: Why I Reach for Vue Over React
+date: 2025-08-30
+description: A DX-first take on why Vue’s clarity, SFCs, and composables help me
+  ship faster and feel happier than React’s ever-shifting conventions.
+category: dev
+tags:
+  - vue
+  - react
+  - dx
+  - composition-api
+  - opinion
+author: Allie
 published: true
 featured: true
-featured_image: 'https://placehold.co/640x360?text=Blog'
-slug: 'why-vue-over-react'
+featured_image: https://placehold.co/640x360?text=Blog
+slug: why-vue-over-react
 ---
 
 # Why I Reach for Vue Over React

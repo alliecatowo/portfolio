@@ -1,14 +1,20 @@
 ---
-title: 'Why Nuxt Content Is Perfect for My Portfolio'
-date: '2025-08-30'
-description: 'Git-first publishing, zero external CMS, and a workflow that keeps writing and shipping right next to the code.'
-category: 'dev'
-tags: ['nuxt', 'nuxt-content', 'portfolio', 'cms', 'dx']
-author: 'Allie'
+title: Why Nuxt Content Is Perfect for My Portfolio
+date: 2025-08-30
+description: Git-first publishing, zero external CMS, and a workflow that keeps
+  writing and shipping right next to the code.
+category: dev
+tags:
+  - nuxt
+  - nuxt-content
+  - portfolio
+  - cms
+  - dx
+author: Allie
 published: true
 featured: true
-featured_image: 'https://placehold.co/640x360?text=Blog'
-slug: 'nuxt-content-perfect-for-portfolio'
+featured_image: https://placehold.co/640x360?text=Blog
+slug: nuxt-content-perfect-for-portfolio
 ---
 
 # Why Nuxt Content Is Perfect for My Portfolio

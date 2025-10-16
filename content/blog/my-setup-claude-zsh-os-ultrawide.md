@@ -1,14 +1,24 @@
 ---
-title: 'My Everyday Setup: Claude Code, zsh, OS Choices, and Ultrawides'
-date: '2025-08-30'
-description: 'A practical tour of the tools that keep me fast and calm: AI as accelerator, clean shells, sane OS picks, and screens that let me breathe.'
-category: 'dev'
-tags: ['ai', 'claude', 'zsh', 'linux', 'macos', 'kubuntu', 'ultrawide', 'tools', 'workflow']
-author: 'Allie'
+title: "My Everyday Setup: Claude Code, zsh, OS Choices, and Ultrawides"
+date: 2025-08-30
+description: "A practical tour of the tools that keep me fast and calm: AI as
+  accelerator, clean shells, sane OS picks, and screens that let me breathe."
+category: dev
+tags:
+  - ai
+  - claude
+  - zsh
+  - linux
+  - macos
+  - kubuntu
+  - ultrawide
+  - tools
+  - workflow
+author: Allie
 published: true
 featured: false
-featured_image: 'https://placehold.co/640x360?text=Dev'
-slug: 'my-setup-claude-zsh-os-ultrawide'
+featured_image: https://placehold.co/640x360?text=Dev
+slug: my-setup-claude-zsh-os-ultrawide
 ---
 
 # My Everyday Setup: Claude Code, zsh, OS Choices, and Ultrawides
