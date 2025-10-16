@@ -1,0 +1,108 @@
+seo:
+  title: "Allison's Developer Portfolio - Full-Stack Web Development"
+  description: 'Full-stack developer specializing in modern web technologies, Vue.js, Node.js, and creating exceptional user experiences.'
+  keywords:
+    - developer
+    - portfolio
+    - web development
+    - Vue.js
+    - Node.js
+    - TypeScript
+    - full-stack
+    - software engineer
+hero:
+  title: "Allison's Developer Portfolio"
+  subtitle: 'Full-stack developer specializing in modern web technologies, creative problem solving, and building exceptional user experiences.'
+  note:
+    label: Press
+    keys:
+      - '⌘'
+      - K
+showcase:
+  title: Crafting Digital Experiences
+  description: 'Passionate about building scalable applications, elegant user interfaces, and solving complex technical challenges.'
+  summary: 'Specializing in modern web technologies with expertise in Vue.js, Node.js, and full-stack development. I love creating intuitive interfaces and robust backend systems that scale.'
+  image: https://picsum.photos/1200/600?random=100
+  iconHighlights:
+    - icon: i-lucide-code
+    - icon: i-lucide-monitor
+      delay: '0.5s'
+  specializations:
+    - title: Frontend Excellence
+      items:
+        - label: Vue.js
+          color: green
+        - label: Nuxt
+          color: blue
+        - label: TypeScript
+          color: yellow
+        - label: Tailwind
+          color: cyan
+    - title: Backend & Tools
+      items:
+        - label: Node.js
+          color: purple
+        - label: Firebase
+          color: red
+        - label: Docker
+          color: gray
+        - label: Git/CI
+          color: primary
+  primaryCta:
+    label: View My Work
+    to: '#projects'
+    variant: magnet
+    trailingIcon: i-lucide-arrow-down
+  secondaryCta:
+    label: About Me
+    to: /about
+    variant: outline
+quickLinks:
+  - title: Projects
+    description: Explore my latest work and technical projects
+    to: '#projects'
+    icon: i-lucide-folder-code
+  - title: Blog
+    description: Technical insights and development thoughts
+    to: '#blog'
+    icon: i-lucide-book-open
+  - title: Contact
+    description: "Let's discuss your next project"
+    to: /contact
+    icon: i-lucide-message-circle
+projectsSection:
+  title: Featured Projects
+  description: Innovative solutions and technical showcases
+  ctaLabel: View All Projects
+skillsSection:
+  title: Technical Skills
+  description: Technologies and tools I use to build exceptional experiences
+  items:
+    - title: Frontend
+      description: Vue, Nuxt, React, TypeScript, Tailwind
+      icon: i-lucide-monitor
+    - title: Backend
+      description: Node.js, Express, PostgreSQL, MongoDB
+      icon: i-lucide-server
+    - title: Cloud & DevOps
+      description: Firebase, Docker, CI/CD, Git
+      icon: i-lucide-cloud
+    - title: Mobile & PWA
+      description: React Native, Progressive Web Apps
+      icon: i-lucide-smartphone
+blogSection:
+  title: Latest Insights
+  description: Thoughts on development, technology, and innovation
+  ctaLabel: View All Articles
+contactSection:
+  title: "Let's Build Something Amazing"
+  description: "Ready to bring your ideas to life? Let's discuss your next project."
+  primaryCta:
+    label: Get In Touch
+    to: /contact
+    icon: i-lucide-mail
+    variant: magnet
+  secondaryCta:
+    label: Learn More About Me
+    to: /about
+    variant: outline
