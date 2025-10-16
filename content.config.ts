@@ -26,6 +26,135 @@ export default defineContentConfig({
         }).optional()
       })
     }),
+    about: defineCollection({
+      type: 'page',
+      source: 'about/**/*.md',
+      schema: z.object({
+        title: z.string(),
+        hero: z
+          .object({
+            heading: z.string(),
+            subheading: z.string().optional(),
+            image: z.string().optional(),
+            imageAlt: z.string().optional(),
+            status: z
+              .object({
+                label: z.string(),
+                indicatorColorClass: z.string().optional()
+              })
+              .optional(),
+            stats: z
+              .array(
+                z.object({
+                  label: z.string(),
+                  value: z.string()
+                })
+              )
+              .optional(),
+            ctas: z
+              .array(
+                z.object({
+                  label: z.string(),
+                  to: z.string().optional(),
+                  href: z.string().optional(),
+                  variant: z.string().optional(),
+                  color: z.string().optional(),
+                  size: z.string().optional(),
+                  icon: z.string().optional(),
+                  target: z.string().optional(),
+                  download: z.boolean().optional(),
+                  type: z.enum(['route', 'external']).optional()
+                })
+              )
+              .optional()
+          })
+          .optional(),
+        introduction: z.array(z.string()).optional(),
+        journey: z
+          .object({
+            title: z.string(),
+            items: z.array(
+              z.object({
+                title: z.string(),
+                description: z.string(),
+                indicatorClass: z.string().optional(),
+                titleClass: z.string().optional()
+              })
+            )
+          })
+          .optional(),
+        skills: z
+          .object({
+            title: z.string(),
+            categories: z.array(
+              z.object({
+                title: z.string(),
+                icon: z.string(),
+                gradientClass: z.string().optional(),
+                iconBackgroundClass: z.string().optional(),
+                iconColorClass: z.string().optional(),
+                titleClass: z.string().optional(),
+                highlights: z.array(z.string())
+              })
+            )
+          })
+          .optional(),
+        interests: z
+          .object({
+            title: z.string(),
+            cards: z.array(
+              z.object({
+                title: z.string(),
+                description: z.string(),
+                image: z.string(),
+                imageAlt: z.string(),
+                gradientClass: z.string().optional(),
+                icon: z.string(),
+                titleClass: z.string().optional()
+              })
+            )
+          })
+          .optional(),
+        closing: z
+          .object({
+            title: z.string(),
+            description: z.string(),
+            buttons: z
+              .array(
+                z.object({
+                  label: z.string(),
+                  to: z.string().optional(),
+                  href: z.string().optional(),
+                  variant: z.string().optional(),
+                  color: z.string().optional(),
+                  size: z.string().optional(),
+                  icon: z.string().optional(),
+                  target: z.string().optional(),
+                  type: z.enum(['route', 'external']).optional()
+                })
+              )
+              .optional(),
+            socialLinks: z
+              .array(
+                z.object({
+                  label: z.string(),
+                  href: z.string(),
+                  icon: z.string(),
+                  ariaLabel: z.string()
+                })
+              )
+              .optional()
+          })
+          .optional(),
+        seo: z
+          .object({
+            title: z.string().optional(),
+            description: z.string().optional(),
+            keywords: z.union([z.string(), z.array(z.string())]).optional()
+          })
+          .optional()
+      })
+    }),
     projects: defineCollection({
       type: 'page',
       source: 'projects/**/*.md',

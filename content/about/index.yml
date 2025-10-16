@@ -1,0 +1,229 @@
+title: 'About Allison'
+hero:
+  heading: "Hi, I'm Allison"
+  subheading: 'Full-Stack Developer & Tattoo Artist'
+  image: '/images/personal/allison-avatar.jpg'
+  imageAlt: 'Allison - Full-Stack Developer and Tattoo Artist'
+  status:
+    label: 'Available for projects'
+    indicatorColorClass: 'bg-green-500'
+  stats:
+    - label: 'Years Experience'
+      value: '5+'
+    - label: 'Projects Completed'
+      value: '50+'
+    - label: 'Coffee Consumed'
+      value: '∞'
+  ctas:
+    - label: 'View My Work'
+      to: '/projects'
+      color: 'primary'
+      variant: 'magnet'
+      size: 'lg'
+      icon: 'i-lucide-folder'
+      type: 'route'
+    - label: 'Get In Touch'
+      to: '/contact'
+      color: 'primary'
+      variant: 'outline'
+      size: 'lg'
+      icon: 'i-lucide-mail'
+      type: 'route'
+    - label: 'Download Resume'
+      href: '/resume.pdf'
+      target: '_blank'
+      variant: 'ghost'
+      color: 'neutral'
+      size: 'lg'
+      icon: 'i-lucide-download'
+      download: true
+      type: 'external'
+introduction:
+  - >-
+    I'm a software engineer and tattoo artist living with my fiancé Violet and our two rescued
+    chinchillas in a setup that perfectly blends code, creativity, and chaos. By day, I build web
+    applications with Vue, Nuxt, TypeScript, and modern tooling. By evening, I translate ideas into
+    permanent art on skin.
+  - >-
+    My journey into tech started with teenage curiosity—customizing MySpace profiles and building
+    terrible websites that somehow worked. What began as digital tinkering evolved into a career
+    spanning startups, established companies, and everything in between. I've shipped applications for
+    healthcare, e-commerce, education, and finance, always focusing on user experience and maintainable
+    code.
+  - >-
+    Tattooing entered my life as a creative outlet that software couldn't provide. There's something
+    profound about creating permanent art that becomes part of someone's story. The precision required,
+    the collaboration with clients, the immediate tactile feedback—it complements coding in ways I never
+    expected. Both crafts require patience, attention to detail, and the ability to bring someone's vision
+    to life.
+  - >-
+    At home, our rescued chinchillas Ray and Paddy keep life interesting. Ray is our gentle giant who
+    perfected the art of being a furry loaf, while Paddy brings endless energy and mischief. They're active
+    during my late-night coding sessions, which works out perfectly. I also maintain a collection of split
+    keyboards—my daily driver is a pink Sofle running my ZMK fork with OLED screens, and a Lily58 with an
+    integrated trackpad for when precision cursor control matters.
+journey:
+  title: 'My Journey'
+  items:
+    - title: 'Teenage Tinkering'
+      description: >-
+        It started with MySpace profile customization and terrible HTML experiments. I was that kid who
+        viewed source on every website, trying to understand how digital things worked. Building my first
+        "Hello World" page felt like magic—I could create something from nothing but text in a file.
+      indicatorClass: 'bg-primary'
+      titleClass: 'text-primary'
+    - title: 'Formal Education & First Jobs'
+      description: >-
+        College gave me the theory—algorithms, data structures, software engineering principles. But the
+        real learning happened during internships and first jobs, where I discovered that shipping working
+        software requires much more than perfect code. Communication, collaboration, and understanding user
+        needs became as important as technical skills.
+      indicatorClass: 'bg-purple-500'
+      titleClass: 'text-purple-500'
+    - title: 'Professional Growth & Tattoo Discovery'
+      description: >-
+        Years of startup life, scaling challenges, and diverse projects across healthcare, fintech, and
+        e-commerce taught me that technology is only as good as the problems it solves. Around this time, I
+        discovered tattooing—initially as stress relief, but it quickly became a parallel creative practice
+        that informed my approach to software development.
+      indicatorClass: 'bg-pink-500'
+      titleClass: 'text-pink-500'
+    - title: 'Present Day'
+      description: >-
+        Now I balance software engineering with tattoo artistry, finding that each practice strengthens the
+        other. I maintain open-source keyboard firmware, write about technology and creativity, and continue
+        building applications that solve real problems. Violet and our chinchillas keep me grounded,
+        reminding me that the best work happens when you bring your whole self to it.
+      indicatorClass: 'bg-gradient-to-r from-primary to-pink-500 animate-pulse'
+      titleClass: 'text-gradient'
+skills:
+  title: 'Technical Arsenal'
+  categories:
+    - title: 'Frontend Magic'
+      icon: 'i-lucide-monitor'
+      gradientClass: 'bg-gradient-to-r from-primary to-purple-600'
+      iconBackgroundClass: 'bg-primary/10'
+      iconColorClass: 'text-primary'
+      titleClass: 'text-primary'
+      highlights:
+        - 'Vue.js / Nuxt 3'
+        - 'React / Next.js'
+    - 'TypeScript'
+    - 'Tailwind CSS'
+    - 'Three.js / WebGL'
+    - title: 'Backend Power'
+      icon: 'i-lucide-server'
+      gradientClass: 'bg-gradient-to-r from-purple-600 to-pink-500'
+      iconBackgroundClass: 'bg-purple-500/10'
+      iconColorClass: 'text-purple-500'
+      titleClass: 'text-purple-500'
+      highlights:
+        - 'Node.js / Express'
+        - 'GraphQL / REST'
+        - 'PostgreSQL'
+        - 'MongoDB'
+        - 'Redis'
+    - title: 'Cloud & DevOps'
+      icon: 'i-lucide-cloud'
+      gradientClass: 'bg-gradient-to-r from-pink-500 to-yellow-500'
+      iconBackgroundClass: 'bg-pink-500/10'
+      iconColorClass: 'text-pink-500'
+      titleClass: 'text-pink-500'
+      highlights:
+        - 'Docker / K8s'
+        - 'AWS / GCP'
+        - 'CI/CD Pipelines'
+        - 'Firebase'
+        - 'Vercel / Netlify'
+    - title: 'Tools & More'
+      icon: 'i-lucide-wrench'
+      gradientClass: 'bg-gradient-to-r from-yellow-500 to-primary'
+      iconBackgroundClass: 'bg-yellow-500/10'
+      iconColorClass: 'text-yellow-500'
+      titleClass: 'text-yellow-500'
+      highlights:
+        - 'Git / GitHub'
+        - 'Jest / Vitest'
+        - 'Cypress / Playwright'
+        - 'Figma'
+        - 'AI Tools'
+interests:
+  title: 'Beyond the Code'
+  cards:
+    - title: 'Split Keyboards'
+      description: >-
+        Daily drivers: Lily58 with integrated trackpad, and a pink Sofle running my ZMK fork with OLED
+        screens and wireless dongle setup. I maintain open-source firmware to help others get started with
+        splits.
+      image: '/images/keyboards/sofle-pink-oled.jpg'
+      imageAlt: 'Pink Sofle keyboard with OLED screens'
+      gradientClass: 'bg-gradient-to-br from-primary/20 to-purple-600/20'
+      icon: 'i-lucide-keyboard'
+      titleClass: 'text-primary'
+    - title: 'Tattoo Artistry'
+      description: >-
+        Part-time tattoo artist specializing in linework, botanical designs, and collaborative custom
+        pieces. I love the intersection of technical precision and creative expression—much like coding, but
+        permanent.
+      image: '/images/couple/allison-violet-beach.jpg'
+      imageAlt: 'Allison and Violet at the beach, showing tattoo work'
+      gradientClass: 'bg-gradient-to-br from-purple-600/20 to-pink-500/20'
+      icon: 'i-lucide-pen-tool'
+      titleClass: 'text-purple-500'
+    - title: 'Chinchilla Parents'
+      description: >-
+        Ray and Paddy, our rescued chinchillas who keep life interesting. Ray is our gentle giant who
+        perfected the loaf position, while Paddy brings chaos and endless energy. They're active during my
+        late-night coding sessions.
+      image: '/images/couple/allison-violet-selfie.jpg'
+      imageAlt: 'Allison and Violet (chinchilla in background)'
+      gradientClass: 'bg-gradient-to-br from-pink-500/20 to-yellow-500/20'
+      icon: 'i-lucide-heart'
+      titleClass: 'text-pink-500'
+closing:
+  title: "Let's Create Something Amazing"
+  description: >-
+    I'm always excited about new challenges and collaborations. Whether you have a project in mind or just
+    want to connect, I'd love to hear from you.
+  buttons:
+    - label: 'Get In Touch'
+      to: '/contact'
+      color: 'primary'
+      size: 'lg'
+      icon: 'i-lucide-mail'
+      type: 'route'
+    - label: 'View Projects'
+      to: '/projects'
+      color: 'primary'
+      variant: 'outline'
+      size: 'lg'
+      icon: 'i-lucide-folder'
+      type: 'route'
+  socialLinks:
+    - label: 'GitHub'
+      href: 'https://github.com/alliecatowo'
+      icon: 'i-lucide-github'
+      ariaLabel: 'GitHub'
+    - label: 'LinkedIn'
+      href: 'https://linkedin.com/in/allie-cat'
+      icon: 'i-lucide-linkedin'
+      ariaLabel: 'LinkedIn'
+    - label: 'Twitter'
+      href: 'https://twitter.com/allison'
+      icon: 'i-lucide-twitter'
+      ariaLabel: 'Twitter'
+    - label: 'Email'
+      href: 'mailto:me@allisons.dev'
+      icon: 'i-lucide-mail'
+      ariaLabel: 'Email'
+seo:
+  title: "About Me - Allison's Developer Portfolio"
+  description: >-
+    Learn about Allison - a passionate full-stack developer and tattoo artist blending creativity with
+    technical expertise to craft delightful digital experiences.
+  keywords:
+    - 'full-stack developer'
+    - 'web developer'
+    - 'Vue.js'
+    - 'Nuxt'
+    - 'TypeScript'

@@ -2,483 +2,406 @@
   <main class="min-h-screen bg-gradient-animated bg-dots relative overflow-hidden">
     <!-- Decorative background elements -->
     <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
-      <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse"/>
-      <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"/>
-      <div class="absolute top-1/3 right-1/4 w-40 h-40 bg-purple-500/5 rounded-full blur-2xl float-animation"/>
+      <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+      <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;" />
+      <div class="absolute top-1/3 right-1/4 w-40 h-40 bg-purple-500/5 rounded-full blur-2xl float-animation" />
     </div>
 
     <div class="relative z-10">
-      <!-- Hero Section with Photo -->
-      <section class="py-20 md:py-32">
-        <div class="container max-w-7xl mx-auto px-6">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <!-- Left: Photo and Quick Info -->
-            <div class="relative">
-              <div class="relative z-10">
-                <!-- Profile Image Container -->
-                <div class="relative mx-auto w-80 h-80 md:w-96 md:h-96">
-                  <!-- Decorative rings -->
-                  <div class="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-pink-500 to-purple-600 animate-spin-slow opacity-20"/>
-                  <div class="absolute inset-4 rounded-full bg-gradient-to-l from-primary via-purple-600 to-pink-500 animate-spin-reverse opacity-20"/>
-                  
-                  <!-- Main image -->
-                  <div class="relative w-full h-full rounded-full overflow-hidden glass-accent p-2">
-                    <NuxtImg 
-                      src="/images/personal/allison-avatar.jpg" 
-                      alt="Allison - Full-Stack Developer and Tattoo Artist"
-                      class="w-full h-full rounded-full object-cover"
-                      loading="eager"
-                      preset="avatar"
-                    />
-                  </div>
-                  
-                  <!-- Status badge -->
-                  <div class="absolute bottom-4 right-4 glass-strong px-4 py-2 rounded-full flex items-center gap-2">
-                    <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"/>
-                    <span class="text-sm font-medium">Available for projects</span>
-                  </div>
-                </div>
-                
-                <!-- Quick stats -->
-                <div class="grid grid-cols-3 gap-4 mt-8">
-                  <UCard class="text-center glass-accent hover:scale-105 transition-transform">
-                    <div class="text-2xl font-bold text-primary">5+</div>
-                    <div class="text-sm text-muted">Years Experience</div>
-                  </UCard>
-                  <UCard class="text-center glass-accent hover:scale-105 transition-transform">
-                    <div class="text-2xl font-bold text-primary">50+</div>
-                    <div class="text-sm text-muted">Projects Completed</div>
-                  </UCard>
-                  <UCard class="text-center glass-accent hover:scale-105 transition-transform">
-                    <div class="text-2xl font-bold text-primary">∞</div>
-                    <div class="text-sm text-muted">Coffee Consumed</div>
-                  </UCard>
-                </div>
-              </div>
-            </div>
-
-            <!-- Right: Introduction -->
-            <div>
-              <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-gradient-animated leading-tight">
-                Hi, I'm Allison
-              </h1>
-              <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-default mb-6 leading-relaxed">
-                Full-Stack Developer & Tattoo Artist
-              </p>
-              <div class="prose prose-lg text-default max-w-none">
-                <p class="mb-6 text-base md:text-lg leading-relaxed">
-                  I'm a software engineer and tattoo artist living with my fiancé Violet and our two rescued chinchillas in a setup that perfectly blends code, creativity, and chaos. By day, I build web applications with Vue, Nuxt, TypeScript, and modern tooling. By evening, I translate ideas into permanent art on skin.
-                </p>
-                <p class="mb-6 text-base md:text-lg leading-relaxed">
-                  My journey into tech started with teenage curiosity—customizing MySpace profiles and building terrible websites that somehow worked. What began as digital tinkering evolved into a career spanning startups, established companies, and everything in between. I've shipped applications for healthcare, e-commerce, education, and finance, always focusing on user experience and maintainable code.
-                </p>
-                <p class="mb-6 text-base md:text-lg leading-relaxed">
-                  Tattooing entered my life as a creative outlet that software couldn't provide. There's something profound about creating permanent art that becomes part of someone's story. The precision required, the collaboration with clients, the immediate tactile feedback—it complements coding in ways I never expected. Both crafts require patience, attention to detail, and the ability to bring someone's vision to life.
-                </p>
-                <p class="mb-8 text-base md:text-lg leading-relaxed">
-                  At home, our rescued chinchillas Ray and Paddy keep life interesting. Ray is our gentle giant who perfected the art of being a furry loaf, while Paddy brings endless energy and mischief. They're active during my late-night coding sessions, which works out perfectly. I also maintain a collection of split keyboards—my daily driver is a pink Sofle running my ZMK fork with OLED screens, and a Lily58 with an integrated trackpad for when precision cursor control matters.
-                </p>
-              </div>
-              
-              <!-- CTA Buttons -->
-              <div class="flex flex-wrap gap-4">
-                <UButton
-                  to="/projects"
-                  color="primary"
-                  variant="magnet"
-                  size="lg"
-                  leading-icon="i-lucide-folder"
-                >
-                  View My Work
-                </UButton>
-                <UButton
-                  to="/contact"
-                  color="primary"
-                  variant="outline"
-                  size="lg"
-                  leading-icon="i-lucide-mail"
-                >
-                  Get In Touch
-                </UButton>
-                <UButton
-                  href="/resume.pdf"
-                  target="_blank"
-                  variant="ghost"
-                  color="neutral"
-                  size="lg"
-                  leading-icon="i-lucide-download"
-                  download
-                >
-                  Download Resume
-                </UButton>
-              </div>
-            </div>
-          </div>
+      <div v-if="pending" class="container max-w-7xl mx-auto px-6 py-32">
+        <div class="glass-accent rounded-2xl p-12 flex flex-col items-center justify-center gap-4 text-center">
+          <UIcon name="i-lucide-loader-2" class="w-10 h-10 animate-spin text-primary" aria-hidden="true" />
+          <p class="text-lg text-muted">Loading about page...</p>
         </div>
-      </section>
+      </div>
 
-      <!-- Journey Timeline -->
-      <section class="py-20 relative">
-        <div class="container max-w-6xl mx-auto px-6">
-          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-16 text-center text-gradient-animated leading-tight px-4">
-            My Journey
-          </h2>
-          
-          <div class="relative">
-            <!-- Timeline line -->
-            <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary via-purple-500 to-pink-500 opacity-20"/>
-            
-            <!-- Timeline items -->
-            <div class="space-y-12">
-              <div class="flex items-center justify-center">
-                <UCard class="relative glass-accent max-w-2xl hover:scale-105 transition-transform">
-                  <div class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-primary rounded-full border-4 border-white dark:border-gray-900"/>
-                  <h3 class="text-xl font-bold mb-3 text-primary">Teenage Tinkering</h3>
-                  <p class="text-default leading-relaxed">
-                    It started with MySpace profile customization and terrible HTML experiments. I was that kid who viewed source on every website, trying to understand how digital things worked. Building my first "Hello World" page felt like magic—I could create something from nothing but text in a file.
-                  </p>
-                </UCard>
-              </div>
-              
-              <div class="flex items-center justify-center">
-                <UCard class="relative glass-accent max-w-2xl hover:scale-105 transition-transform">
-                  <div class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-purple-500 rounded-full border-4 border-white dark:border-gray-900"/>
-                  <h3 class="text-xl font-bold mb-3 text-purple-500">Formal Education & First Jobs</h3>
-                  <p class="text-default leading-relaxed">
-                    College gave me the theory—algorithms, data structures, software engineering principles. But the real learning happened during internships and first jobs, where I discovered that shipping working software requires much more than perfect code. Communication, collaboration, and understanding user needs became as important as technical skills.
-                  </p>
-                </UCard>
-              </div>
-              
-              <div class="flex items-center justify-center">
-                <UCard class="relative glass-accent max-w-2xl hover:scale-105 transition-transform">
-                  <div class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-pink-500 rounded-full border-4 border-white dark:border-gray-900"/>
-                  <h3 class="text-xl font-bold mb-3 text-pink-500">Professional Growth & Tattoo Discovery</h3>
-                  <p class="text-default leading-relaxed">
-                    Years of startup life, scaling challenges, and diverse projects across healthcare, fintech, and e-commerce taught me that technology is only as good as the problems it solves. Around this time, I discovered tattooing—initially as stress relief, but it quickly became a parallel creative practice that informed my approach to software development.
-                  </p>
-                </UCard>
-              </div>
-              
-              <div class="flex items-center justify-center">
-                <UCard class="relative glass-accent max-w-2xl hover:scale-105 transition-transform animate-pulse-subtle">
-                  <div class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-gradient-to-r from-primary to-pink-500 rounded-full border-4 border-white dark:border-gray-900 animate-pulse"/>
-                  <h3 class="text-xl font-bold mb-3 text-gradient">Present Day</h3>
-                  <p class="text-default leading-relaxed">
-                    Now I balance software engineering with tattoo artistry, finding that each practice strengthens the other. I maintain open-source keyboard firmware, write about technology and creativity, and continue building applications that solve real problems. Violet and our chinchillas keep me grounded, reminding me that the best work happens when you bring your whole self to it.
-                  </p>
-                </UCard>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Skills Showcase -->
-      <section class="py-20 glass-accent">
-        <div class="container max-w-7xl mx-auto px-6">
-          <h2 class="text-4xl md:text-5xl font-bold mb-16 text-center text-gradient-animated">
-            Technical Arsenal
-          </h2>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <!-- Frontend -->
-            <div class="group relative">
-              <div class="absolute inset-0 bg-gradient-to-r from-primary to-purple-600 rounded-xl blur opacity-25 group-hover:opacity-40 transition-opacity"/>
-              <div class="relative glass-strong rounded-xl p-6 h-full hover-lift">
-                <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <UIcon name="i-lucide-monitor" class="w-8 h-8 text-primary" />
-                </div>
-                <h3 class="text-xl font-bold mb-4 text-primary">Frontend Magic</h3>
-                <ul class="space-y-2 text-default">
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    Vue.js / Nuxt 3
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    React / Next.js
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    TypeScript
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    Tailwind CSS
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    Three.js / WebGL
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Backend -->
-            <div class="group relative">
-              <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-500 rounded-xl blur opacity-25 group-hover:opacity-40 transition-opacity"/>
-              <div class="relative glass-strong rounded-xl p-6 h-full hover-lift">
-                <div class="w-16 h-16 bg-purple-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <UIcon name="i-lucide-server" class="w-8 h-8 text-purple-500" />
-                </div>
-                <h3 class="text-xl font-bold mb-4 text-purple-500">Backend Power</h3>
-                <ul class="space-y-2 text-default">
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    Node.js / Express
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    GraphQL / REST
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    PostgreSQL
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    MongoDB
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    Redis
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- DevOps -->
-            <div class="group relative">
-              <div class="absolute inset-0 bg-gradient-to-r from-pink-500 to-yellow-500 rounded-xl blur opacity-25 group-hover:opacity-40 transition-opacity"/>
-              <div class="relative glass-strong rounded-xl p-6 h-full hover-lift">
-                <div class="w-16 h-16 bg-pink-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <UIcon name="i-lucide-cloud" class="w-8 h-8 text-pink-500" />
-                </div>
-                <h3 class="text-xl font-bold mb-4 text-pink-500">Cloud & DevOps</h3>
-                <ul class="space-y-2 text-default">
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    Docker / K8s
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    AWS / GCP
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    CI/CD Pipelines
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    Firebase
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    Vercel / Netlify
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Tools -->
-            <div class="group relative">
-              <div class="absolute inset-0 bg-gradient-to-r from-yellow-500 to-primary rounded-xl blur opacity-25 group-hover:opacity-40 transition-opacity"/>
-              <div class="relative glass-strong rounded-xl p-6 h-full hover-lift">
-                <div class="w-16 h-16 bg-yellow-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <UIcon name="i-lucide-wrench" class="w-8 h-8 text-yellow-500" />
-                </div>
-                <h3 class="text-xl font-bold mb-4 text-yellow-500">Tools & More</h3>
-                <ul class="space-y-2 text-default">
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    Git / GitHub
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    Jest / Vitest
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    Cypress / Playwright
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    Figma
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    AI Tools
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Personal Interests -->
-      <section class="py-20">
-        <div class="container max-w-6xl mx-auto px-6">
-          <h2 class="text-4xl md:text-5xl font-bold mb-16 text-center text-gradient-animated">
-            Beyond the Code
-          </h2>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <UCard class="glass-accent hover:scale-105 transition-transform overflow-hidden">
-              <template #header>
-                <div class="aspect-video bg-gradient-to-br from-primary/20 to-purple-600/20 relative overflow-hidden rounded-lg">
-                  <NuxtImg
-                    src="/images/keyboards/sofle-pink-oled.jpg"
-                    alt="Pink Sofle keyboard with OLED screens"
-                    class="w-full h-full object-cover mix-blend-overlay"
-                    loading="lazy"
-                  />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"/>
-                  <UIcon name="i-lucide-keyboard" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
-                </div>
-              </template>
-
-              <h3 class="text-xl font-bold mb-2 text-primary">Split Keyboards</h3>
-              <p class="text-muted">
-                Daily drivers: Lily58 with integrated trackpad, and a pink Sofle running my ZMK fork with OLED screens and wireless dongle setup. I maintain open-source firmware to help others get started with splits.
-              </p>
-            </UCard>
-
-            <UCard class="glass-accent hover:scale-105 transition-transform overflow-hidden">
-              <template #header>
-                <div class="aspect-video bg-gradient-to-br from-purple-600/20 to-pink-500/20 relative overflow-hidden rounded-lg">
-                  <NuxtImg
-                    src="/images/couple/allison-violet-beach.jpg"
-                    alt="Allison and Violet at the beach, showing tattoo work"
-                    class="w-full h-full object-cover mix-blend-overlay"
-                    loading="lazy"
-                  />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"/>
-                  <UIcon name="i-lucide-pen-tool" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
-                </div>
-              </template>
-
-              <h3 class="text-xl font-bold mb-2 text-purple-500">Tattoo Artistry</h3>
-              <p class="text-muted">
-                Part-time tattoo artist specializing in linework, botanical designs, and collaborative custom pieces. I love the intersection of technical precision and creative expression—much like coding, but permanent.
-              </p>
-            </UCard>
-
-            <UCard class="glass-accent hover:scale-105 transition-transform overflow-hidden">
-              <template #header>
-                <div class="aspect-video bg-gradient-to-br from-pink-500/20 to-yellow-500/20 relative overflow-hidden rounded-lg">
-                  <NuxtImg
-                    src="/images/couple/allison-violet-selfie.jpg"
-                    alt="Allison and Violet (chinchilla in background)"
-                    class="w-full h-full object-cover mix-blend-overlay"
-                    loading="lazy"
-                  />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"/>
-                  <UIcon name="i-lucide-heart" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
-                </div>
-              </template>
-
-              <h3 class="text-xl font-bold mb-2 text-pink-500">Chinchilla Parents</h3>
-              <p class="text-muted">
-                Ray and Paddy, our rescued chinchillas who keep life interesting. Ray is our gentle giant who perfected the loaf position, while Paddy brings chaos and endless energy. They're active during my late-night coding sessions.
-              </p>
-            </UCard>
-          </div>
-        </div>
-      </section>
-
-      <!-- Connect CTA -->
-      <section class="py-20">
+      <section v-else-if="error" class="py-20">
         <div class="container max-w-4xl mx-auto px-6">
-          <UCard class="glass-accent text-center hover:scale-105 transition-transform">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gradient-animated">
-              Let's Create Something Amazing
-            </h2>
-            <p class="text-xl text-default mb-8 max-w-2xl mx-auto">
-              I'm always excited about new challenges and collaborations.
-              Whether you have a project in mind or just want to connect, I'd love to hear from you.
-            </p>
-
-            <div class="flex flex-wrap gap-4 justify-center mb-8">
-              <UButton
-                to="/contact"
-                color="primary"
-                size="lg"
-                leading-icon="i-lucide-mail"
-              >
-                Get In Touch
-              </UButton>
-              <UButton
-                to="/projects"
-                color="primary"
-                variant="outline"
-                size="lg"
-                leading-icon="i-lucide-folder"
-              >
-                View Projects
-              </UButton>
-            </div>
-            
-            <!-- Social Links -->
-            <div class="flex justify-center gap-6">
-              <a 
-                href="https://github.com/alliecatowo" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="w-12 h-12 glass-strong rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors group"
-                aria-label="GitHub"
-              >
-                <UIcon name="i-lucide-github" class="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
-              </a>
-              <a 
-                href="https://linkedin.com/in/allie-cat" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="w-12 h-12 glass-strong rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors group"
-                aria-label="LinkedIn"
-              >
-                <UIcon name="i-lucide-linkedin" class="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
-              </a>
-              <a 
-                href="https://twitter.com/allison" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="w-12 h-12 glass-strong rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors group"
-                aria-label="Twitter"
-              >
-                <UIcon name="i-lucide-twitter" class="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
-              </a>
-              <a 
-                href="mailto:me@allisons.dev" 
-                class="w-12 h-12 glass-strong rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors group"
-                aria-label="Email"
-              >
-                <UIcon name="i-lucide-mail" class="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
-              </a>
-            </div>
+          <UCard class="glass-accent text-center border border-red-500/20">
+            <UIcon name="i-lucide-alert-circle" class="h-16 w-16 mx-auto text-red-500 mb-6" />
+            <h2 class="text-2xl font-bold mb-4 text-default">Something went wrong</h2>
+            <p class="text-muted mb-6">{{ error?.message || 'Failed to load the about page content.' }}</p>
+            <UButton color="primary" @click="refresh">Try Again</UButton>
           </UCard>
         </div>
       </section>
+
+      <template v-else-if="aboutPage">
+        <!-- Hero Section with Photo -->
+        <section class="py-20 md:py-32">
+          <div class="container max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div v-if="hero" class="relative">
+                <div class="relative z-10">
+                  <div v-if="hero.image" class="relative mx-auto w-80 h-80 md:w-96 md:h-96">
+                    <div class="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-pink-500 to-purple-600 animate-spin-slow opacity-20" />
+                    <div class="absolute inset-4 rounded-full bg-gradient-to-l from-primary via-purple-600 to-pink-500 animate-spin-reverse opacity-20" />
+
+                    <div class="relative w-full h-full rounded-full overflow-hidden glass-accent p-2">
+                      <NuxtImg
+                        :src="hero.image"
+                        :alt="hero.imageAlt || hero.heading"
+                        class="w-full h-full rounded-full object-cover"
+                        loading="eager"
+                        preset="avatar"
+                      />
+                    </div>
+
+                    <div v-if="hero.status" class="absolute bottom-4 right-4 glass-strong px-4 py-2 rounded-full flex items-center gap-2">
+                      <span
+                        class="w-3 h-3 rounded-full animate-pulse"
+                        :class="hero.status.indicatorColorClass || 'bg-green-500'"
+                      />
+                      <span class="text-sm font-medium">{{ hero.status.label }}</span>
+                    </div>
+                  </div>
+
+                  <div v-if="hero.stats?.length" class="grid grid-cols-3 gap-4 mt-8">
+                    <UCard
+                      v-for="stat in hero.stats"
+                      :key="`${stat.label}-${stat.value}`"
+                      class="text-center glass-accent hover:scale-105 transition-transform"
+                    >
+                      <div class="text-2xl font-bold text-primary">{{ stat.value }}</div>
+                      <div class="text-sm text-muted">{{ stat.label }}</div>
+                    </UCard>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h1 v-if="hero?.heading" class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-gradient-animated leading-tight">
+                  {{ hero.heading }}
+                </h1>
+                <p v-if="hero?.subheading" class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-default mb-6 leading-relaxed">
+                  {{ hero.subheading }}
+                </p>
+
+                <div v-if="introduction.length" class="prose prose-lg text-default max-w-none">
+                  <p
+                    v-for="(paragraph, index) in introduction"
+                    :key="`intro-${index}`"
+                    class="mb-6 text-base md:text-lg leading-relaxed"
+                  >
+                    {{ paragraph }}
+                  </p>
+                </div>
+
+                <div v-if="hero?.ctas?.length" class="flex flex-wrap gap-4">
+                  <UButton
+                    v-for="cta in hero.ctas"
+                    :key="cta.label"
+                    :to="cta.type === 'route' ? cta.to : undefined"
+                    :href="cta.type === 'external' ? cta.href : undefined"
+                    :target="cta.target"
+                    :variant="cta.variant || (cta.type === 'external' ? 'ghost' : 'solid')"
+                    :color="cta.color || 'primary'"
+                    :size="cta.size || 'md'"
+                    :leading-icon="cta.icon"
+                    :download="cta.download ?? undefined"
+                  >
+                    {{ cta.label }}
+                  </UButton>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Journey Timeline -->
+        <section v-if="journey" class="py-20 relative">
+          <div class="container max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-16 text-center text-gradient-animated leading-tight px-4">
+              {{ journey.title }}
+            </h2>
+
+            <div class="relative">
+              <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary via-purple-500 to-pink-500 opacity-20" />
+
+              <div class="space-y-12">
+                <div
+                  v-for="(item, index) in journey.items"
+                  :key="`${item.title}-${index}`"
+                  class="flex items-center justify-center"
+                >
+                  <UCard
+                    class="relative glass-accent max-w-2xl hover:scale-105 transition-transform"
+                    :class="index === journey.items.length - 1 ? 'animate-pulse-subtle' : ''"
+                  >
+                    <div
+                      class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-full border-4 border-white dark:border-gray-900"
+                      :class="item.indicatorClass || 'bg-primary'"
+                    />
+                    <h3 class="text-xl font-bold mb-3" :class="item.titleClass || 'text-primary'">{{ item.title }}</h3>
+                    <p class="text-default leading-relaxed">{{ item.description }}</p>
+                  </UCard>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Skills Showcase -->
+        <section v-if="skills" class="py-20 glass-accent">
+          <div class="container max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl md:text-5xl font-bold mb-16 text-center text-gradient-animated">
+              {{ skills.title }}
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div
+                v-for="category in skills.categories"
+                :key="category.title"
+                class="group relative"
+              >
+                <div
+                  class="absolute inset-0 rounded-xl blur opacity-25 group-hover:opacity-40 transition-opacity"
+                  :class="category.gradientClass || 'bg-gradient-to-r from-primary to-purple-600'"
+                />
+                <div class="relative glass-strong rounded-xl p-6 h-full hover-lift">
+                  <div
+                    class="w-16 h-16 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"
+                    :class="category.iconBackgroundClass || 'bg-primary/10'"
+                  >
+                    <UIcon :name="category.icon" class="w-8 h-8" :class="category.iconColorClass || 'text-primary'" />
+                  </div>
+                  <h3 class="text-xl font-bold mb-4" :class="category.titleClass || 'text-primary'">
+                    {{ category.title }}
+                  </h3>
+                  <ul class="space-y-2 text-default">
+                    <li
+                      v-for="highlight in category.highlights"
+                      :key="highlight"
+                      class="flex items-center gap-2"
+                    >
+                      <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
+                      {{ highlight }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Personal Interests -->
+        <section v-if="interests" class="py-20">
+          <div class="container max-w-6xl mx-auto px-6">
+            <h2 class="text-4xl md:text-5xl font-bold mb-16 text-center text-gradient-animated">
+              {{ interests.title }}
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <UCard
+                v-for="card in interests.cards"
+                :key="card.title"
+                class="glass-accent hover:scale-105 transition-transform overflow-hidden"
+              >
+                <template #header>
+                  <div
+                    class="aspect-video relative overflow-hidden rounded-lg"
+                    :class="card.gradientClass || 'bg-gradient-to-br from-primary/20 to-purple-600/20'"
+                  >
+                    <NuxtImg
+                      :src="card.image"
+                      :alt="card.imageAlt"
+                      class="w-full h-full object-cover mix-blend-overlay"
+                      loading="lazy"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <UIcon :name="card.icon" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
+                  </div>
+                </template>
+
+                <h3 class="text-xl font-bold mb-2" :class="card.titleClass || 'text-primary'">{{ card.title }}</h3>
+                <p class="text-muted">{{ card.description }}</p>
+              </UCard>
+            </div>
+          </div>
+        </section>
+
+        <!-- Connect CTA -->
+        <section v-if="closing" class="py-20">
+          <div class="container max-w-4xl mx-auto px-6">
+            <UCard class="glass-accent text-center hover:scale-105 transition-transform">
+              <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gradient-animated">
+                {{ closing.title }}
+              </h2>
+              <p class="text-xl text-default mb-8 max-w-2xl mx-auto">
+                {{ closing.description }}
+              </p>
+
+              <div v-if="closing.buttons?.length" class="flex flex-wrap gap-4 justify-center mb-8">
+                <UButton
+                  v-for="button in closing.buttons"
+                  :key="button.label"
+                  :to="button.type === 'route' ? button.to : undefined"
+                  :href="button.type === 'external' ? button.href : undefined"
+                  :variant="button.variant || (button.type === 'external' ? 'ghost' : 'solid')"
+                  :color="button.color || 'primary'"
+                  :size="button.size || 'md'"
+                  :leading-icon="button.icon"
+                  :target="button.target"
+                >
+                  {{ button.label }}
+                </UButton>
+              </div>
+
+              <div v-if="closing.socialLinks?.length" class="flex justify-center gap-6">
+                <a
+                  v-for="link in closing.socialLinks"
+                  :key="link.href"
+                  :href="link.href"
+                  class="w-12 h-12 glass-strong rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors group"
+                  :aria-label="link.ariaLabel"
+                  :target="link.href.startsWith('http') ? '_blank' : undefined"
+                  :rel="link.href.startsWith('http') ? 'noopener noreferrer' : undefined"
+                >
+                  <UIcon :name="link.icon" class="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
+                </a>
+              </div>
+            </UCard>
+          </div>
+        </section>
+      </template>
     </div>
   </main>
 </template>
 
 <script setup lang="ts">
-// Meta tags
-useHead({
-  title: `About Me - Allison's Developer Portfolio`,
-  meta: [
-    { 
-      name: 'description', 
-      content: 'Learn about Allison - a passionate full-stack developer with expertise in modern web technologies, creating exceptional digital experiences.' 
-    },
-    {
-      name: 'keywords',
-      content: 'full-stack developer, web developer, Vue.js, React, Node.js, TypeScript, portfolio, about'
-    }
-  ]
-});
+import { computed } from 'vue'
+
+type CTAButton = {
+  label: string
+  to?: string
+  href?: string
+  variant?: string
+  color?: string
+  size?: string
+  icon?: string
+  target?: string
+  download?: boolean
+  type?: 'route' | 'external'
+}
+
+type HeroSection = {
+  heading: string
+  subheading?: string
+  image?: string
+  imageAlt?: string
+  status?: {
+    label: string
+    indicatorColorClass?: string
+  }
+  stats?: { label: string; value: string }[]
+  ctas?: CTAButton[]
+}
+
+type JourneySection = {
+  title: string
+  items: {
+    title: string
+    description: string
+    indicatorClass?: string
+    titleClass?: string
+  }[]
+}
+
+type SkillsSection = {
+  title: string
+  categories: {
+    title: string
+    icon: string
+    gradientClass?: string
+    iconBackgroundClass?: string
+    iconColorClass?: string
+    titleClass?: string
+    highlights: string[]
+  }[]
+}
+
+type InterestsSection = {
+  title: string
+  cards: {
+    title: string
+    description: string
+    image: string
+    imageAlt: string
+    gradientClass?: string
+    icon: string
+    titleClass?: string
+  }[]
+}
+
+type SocialLink = {
+  label: string
+  href: string
+  icon: string
+  ariaLabel: string
+}
+
+type ClosingSection = {
+  title: string
+  description: string
+  buttons?: CTAButton[]
+  socialLinks?: SocialLink[]
+}
+
+type SeoSection = {
+  title?: string
+  description?: string
+  keywords?: string | string[]
+}
+
+type AboutContent = {
+  title: string
+  hero?: HeroSection
+  introduction?: string[]
+  journey?: JourneySection
+  skills?: SkillsSection
+  interests?: InterestsSection
+  closing?: ClosingSection
+  seo?: SeoSection
+}
+
+const { data: about, pending, error } = await useAsyncData<AboutContent | null>(
+  'about-page',
+  async () => {
+    const entry = await queryCollection('about').first()
+    return entry as AboutContent | null
+  }
+)
+
+const aboutPage = computed(() => about.value)
+const hero = computed(() => aboutPage.value?.hero)
+const introduction = computed(() => aboutPage.value?.introduction ?? [])
+const journey = computed(() => aboutPage.value?.journey)
+const skills = computed(() => aboutPage.value?.skills)
+const interests = computed(() => aboutPage.value?.interests)
+const closing = computed(() => aboutPage.value?.closing)
+
+const refresh = () => refreshNuxtData('about-page')
+
+const fallbackTitle = "About Me - Allison's Developer Portfolio"
+const fallbackDescription =
+  "Learn about Allison - a passionate full-stack developer and tattoo artist blending creativity with technical expertise to craft delightful digital experiences."
+
+const seoTitle = computed(() => aboutPage.value?.seo?.title ?? fallbackTitle)
+const seoDescription = computed(() => aboutPage.value?.seo?.description ?? fallbackDescription)
+const seoKeywords = computed(() => {
+  const keywords = aboutPage.value?.seo?.keywords
+  const keywordContent = Array.isArray(keywords) ? keywords.join(', ') : keywords
+
+  return keywordContent ?? 'full-stack developer, web developer, Vue.js, Nuxt, TypeScript'
+})
+
+useSeoMeta({
+  title: seoTitle,
+  ogTitle: seoTitle,
+  description: seoDescription,
+  ogDescription: seoDescription,
+  keywords: seoKeywords
+})
 </script>
 
 <style scoped>
@@ -509,7 +432,8 @@ useHead({
 }
 
 @keyframes pulse-subtle {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -526,7 +450,8 @@ useHead({
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
