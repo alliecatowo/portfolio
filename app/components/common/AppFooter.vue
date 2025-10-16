@@ -70,32 +70,11 @@
 </template>
 
 <script setup lang="ts">
+import type { Collections } from '@nuxt/content'
 import { computed } from 'vue'
+import type { FooterContent } from '~/types/footer'
 
 const isExternalLink = (url: string) => /^https?:\/\//.test(url)
-
-interface FooterContent {
-  title: string
-  tagline: string
-  socials: Array<{
-    label: string
-    url: string
-    icon: string
-    tooltip?: string
-    srLabel?: string
-  }>
-  quickLinks: Array<{
-    label: string
-    to: string
-  }>
-  contact?: {
-    message?: string
-    email?: string
-  }
-  builtWith?: string
-  copyrightName: string
-}
-
 const fallbackFooter: FooterContent = {
   title: "Allison's Portfolio",
   tagline: 'Full-stack developer and creative problem solver',
@@ -144,10 +123,20 @@ const fallbackFooter: FooterContent = {
   copyrightName: "Allison's Portfolio"
 }
 
-const { data: footerData } = await useAsyncData('footer-settings', () =>
-  queryContent<FooterContent>('settings', 'footer').findOne()
-)
+type FooterEntry = Collections['settings']
 
-const footer = computed<FooterContent>(() => footerData.value ?? fallbackFooter)
+const { data: footerData } = await useAsyncData<FooterContent | null>('footer-settings', async () => {
+  const entry = (await queryCollection('settings')
+    .where('id', '=', 'settings:footer')
+    .first()) as FooterEntry | null
+
+  if (!entry) {
+    return null
+  }
+
+  return entry
+})
+
+const footer = computed(() => footerData.value ?? fallbackFooter)
 const currentYear = computed(() => new Date().getFullYear())
 </script>
