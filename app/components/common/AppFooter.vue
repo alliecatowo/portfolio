@@ -72,31 +72,9 @@
 <script setup lang="ts">
 import type { Collections } from '@nuxt/content'
 import { computed } from 'vue'
+import type { FooterContent } from '~/types/footer'
 
 const isExternalLink = (url: string) => /^https?:\/\//.test(url)
-
-interface FooterContent {
-  title: string
-  tagline: string
-  socials: Array<{
-    label: string
-    url: string
-    icon: string
-    tooltip?: string
-    srLabel?: string
-  }>
-  quickLinks: Array<{
-    label: string
-    to: string
-  }>
-  contact?: {
-    message?: string
-    email?: string
-  }
-  builtWith?: string
-  copyrightName: string
-}
-
 const fallbackFooter: FooterContent = {
   title: "Allison's Portfolio",
   tagline: 'Full-stack developer and creative problem solver',
