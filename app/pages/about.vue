@@ -364,8 +364,12 @@ type AboutContent = {
   seo?: SeoSection
 }
 
-const { data: about, pending, error } = await useAsyncData<AboutContent | null>('about-page', () =>
-  queryContent<AboutContent>('/about').findOne()
+const { data: about, pending, error } = await useAsyncData<AboutContent | null>(
+  'about-page',
+  async () => {
+    const entry = await queryCollection('about').first()
+    return entry as AboutContent | null
+  }
 )
 
 const aboutPage = computed(() => about.value)
@@ -378,21 +382,25 @@ const closing = computed(() => aboutPage.value?.closing)
 
 const refresh = () => refreshNuxtData('about-page')
 
-useSeoMeta(() => {
-  const page = aboutPage.value
-  const fallbackTitle = "About Me - Allison's Developer Portfolio"
-  const fallbackDescription =
-    "Learn about Allison - a passionate full-stack developer and tattoo artist blending creativity with technical expertise to craft delightful digital experiences."
-  const keywords = page?.seo?.keywords
+const fallbackTitle = "About Me - Allison's Developer Portfolio"
+const fallbackDescription =
+  "Learn about Allison - a passionate full-stack developer and tattoo artist blending creativity with technical expertise to craft delightful digital experiences."
+
+const seoTitle = computed(() => aboutPage.value?.seo?.title ?? fallbackTitle)
+const seoDescription = computed(() => aboutPage.value?.seo?.description ?? fallbackDescription)
+const seoKeywords = computed(() => {
+  const keywords = aboutPage.value?.seo?.keywords
   const keywordContent = Array.isArray(keywords) ? keywords.join(', ') : keywords
 
-  return {
-    title: page?.seo?.title ?? fallbackTitle,
-    ogTitle: page?.seo?.title ?? fallbackTitle,
-    description: page?.seo?.description ?? fallbackDescription,
-    ogDescription: page?.seo?.description ?? fallbackDescription,
-    keywords: keywordContent ?? 'full-stack developer, web developer, Vue.js, Nuxt, TypeScript'
-  }
+  return keywordContent ?? 'full-stack developer, web developer, Vue.js, Nuxt, TypeScript'
+})
+
+useSeoMeta({
+  title: seoTitle,
+  ogTitle: seoTitle,
+  description: seoDescription,
+  ogDescription: seoDescription,
+  keywords: seoKeywords
 })
 </script>
 
