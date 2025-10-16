@@ -8,10 +8,11 @@
 
     <div class="relative z-10 container max-w-6xl mx-auto px-6 py-20">
       <header class="text-center mb-16">
-        <h1 class="text-5xl md:text-6xl font-bold mb-6 text-gradient-animated">Get In Touch</h1>
+        <h1 class="text-5xl md:text-6xl font-bold mb-6 text-gradient-animated">
+          {{ contactContent.hero.title }}
+        </h1>
         <p class="text-xl md:text-2xl text-default max-w-3xl mx-auto">
-          I'm always interested in new opportunities and collaborations. 
-          Let's discuss how we can work together.
+          {{ contactContent.hero.description }}
         </p>
       </header>
 
@@ -19,60 +20,26 @@
         <!-- Contact Info -->
         <div class="space-y-8">
           <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
-            <h2 class="text-2xl font-bold mb-6 text-primary">Let's Connect</h2>
+            <h2 class="text-2xl font-bold mb-6 text-primary">{{ contactContent.contactCard.title }}</h2>
             <p class="text-default mb-8">
-              Whether you have a project in mind, need technical consultation, or just want to say hello, 
-              I'd love to hear from you. I typically respond within 24-48 hours.
+              {{ contactContent.contactCard.description }}
             </p>
 
             <div class="space-y-6">
-              <!-- Email -->
-              <a href="mailto:me@allisons.dev" class="flex items-center gap-4 group hover:translate-x-1 transition-transform">
-                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <UIcon name="i-lucide-mail" class="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <p class="text-sm text-muted">Email</p>
-                  <p class="text-default font-medium">me@allisons.dev</p>
-                </div>
-              </a>
-
-              <!-- GitHub -->
               <a
-href="https://github.com/alliecatowo" target="_blank" rel="noopener noreferrer" 
-                 class="flex items-center gap-4 group hover:translate-x-1 transition-transform">
+                v-for="method in contactContent.contactCard.methods"
+                :key="method.id"
+                :href="method.url"
+                class="flex items-center gap-4 group hover:translate-x-1 transition-transform"
+                :target="method.url.startsWith('http') ? '_blank' : undefined"
+                :rel="method.url.startsWith('http') ? 'noopener noreferrer' : undefined"
+              >
                 <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <UIcon name="i-lucide-github" class="w-6 h-6 text-primary" />
+                  <UIcon :name="method.icon" class="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <p class="text-sm text-muted">GitHub</p>
-                  <p class="text-default font-medium">@alliecatowo</p>
-                </div>
-              </a>
-
-              <!-- LinkedIn -->
-              <a
-href="https://linkedin.com/in/allie-cat" target="_blank" rel="noopener noreferrer"
-                 class="flex items-center gap-4 group hover:translate-x-1 transition-transform">
-                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <UIcon name="i-lucide-linkedin" class="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <p class="text-sm text-muted">LinkedIn</p>
-                  <p class="text-default font-medium">@allie-cat</p>
-                </div>
-              </a>
-
-              <!-- Twitter -->
-              <a
-href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
-                 class="flex items-center gap-4 group hover:translate-x-1 transition-transform">
-                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <UIcon name="i-lucide-twitter" class="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <p class="text-sm text-muted">Twitter</p>
-                  <p class="text-default font-medium">@allison</p>
+                  <p class="text-sm text-muted">{{ method.label }}</p>
+                  <p class="text-default font-medium">{{ method.value }}</p>
                 </div>
               </a>
             </div>
@@ -82,12 +49,18 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
           <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
             <div class="flex items-center gap-4">
               <div class="relative">
-                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"/>
-                <div class="absolute inset-0 w-3 h-3 bg-green-500 rounded-full animate-ping"/>
+                <div
+                  class="w-3 h-3 rounded-full animate-pulse"
+                  :class="contactContent.availability.indicatorClass ?? 'bg-green-500'"
+                />
+                <div
+                  class="absolute inset-0 w-3 h-3 rounded-full animate-ping"
+                  :class="contactContent.availability.indicatorClass ?? 'bg-green-500'"
+                />
               </div>
               <div>
-                <p class="font-semibold text-default">Currently Available</p>
-                <p class="text-sm text-muted">Open to new projects and opportunities</p>
+                <p class="font-semibold text-default">{{ contactContent.availability.status }}</p>
+                <p class="text-sm text-muted">{{ contactContent.availability.description }}</p>
               </div>
             </div>
           </UCard>
@@ -96,7 +69,7 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
         <!-- Contact Form -->
         <UCard class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
           <template #header>
-            <h2 class="text-2xl font-bold">Send a Message</h2>
+            <h2 class="text-2xl font-bold">{{ contactContent.form.title }}</h2>
           </template>
 
           <UForm
@@ -107,34 +80,34 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
             @submit="onSubmit"
             @error="onError"
           >
-            <UFormField label="Name" name="name" required :ui="{ label: 'text-sm font-medium' }">
+            <UFormField :label="contactContent.form.nameField.label" name="name" required :ui="{ label: 'text-sm font-medium' }">
               <UInput
                 v-model="form.name"
-                placeholder="Your full name"
+                :placeholder="contactContent.form.nameField.placeholder"
                 size="lg"
                 :ui="{ placeholder: 'text-muted' }"
                 autocomplete="name"
               />
             </UFormField>
 
-            <UFormField label="Email" name="email" required :ui="{ label: 'text-sm font-medium' }">
+            <UFormField :label="contactContent.form.emailField.label" name="email" required :ui="{ label: 'text-sm font-medium' }">
               <UInput
                 v-model="form.email"
                 type="email"
-                placeholder="your.email@example.com"
+                :placeholder="contactContent.form.emailField.placeholder"
                 size="lg"
                 :ui="{ placeholder: 'text-muted' }"
                 autocomplete="email"
               />
             </UFormField>
 
-            <UFormField label="Subject" name="subject" :ui="{ label: 'text-sm font-medium' }">
+            <UFormField :label="contactContent.form.subjectField.label" name="subject" :ui="{ label: 'text-sm font-medium' }">
               <USelectMenu
                 v-model="form.subject"
                 :options="subjectOptions"
                 searchable
                 size="lg"
-                placeholder="Select inquiry type"
+                :placeholder="contactContent.form.subjectField.placeholder"
                 value-attribute="value"
                 option-attribute="label"
                 :ui="{ placeholder: 'text-muted' }"
@@ -145,11 +118,11 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
               </USelectMenu>
             </UFormField>
 
-            <UFormField label="Message" name="message" required :ui="{ label: 'text-sm font-medium' }">
+            <UFormField :label="contactContent.form.messageField.label" name="message" required :ui="{ label: 'text-sm font-medium' }">
               <UTextarea
                 v-model="form.message"
                 :rows="6"
-                placeholder="Tell me about your project or inquiry..."
+                :placeholder="contactContent.form.messageField.placeholder"
                 size="lg"
                 :ui="{ placeholder: 'text-muted' }"
                 :resize="true"
@@ -170,7 +143,7 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
                   <UIcon name="i-lucide-send" class="w-5 h-5" />
                 </template>
                 <template #default>
-                  {{ formSubmitting ? 'Sending Message...' : 'Send Message' }}
+                  {{ formSubmitting ? contactContent.form.submitButton.loadingLabel : contactContent.form.submitButton.label }}
                 </template>
               </UButton>
 
@@ -186,7 +159,7 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
                 <template #leading>
                   <UIcon name="i-lucide-rotate-ccw" class="w-5 h-5" />
                 </template>
-                Reset
+                {{ contactContent.form.resetButton.label }}
               </UButton>
             </div>
 
@@ -194,18 +167,18 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
               v-if="formSubmitSuccess"
               color="green"
               variant="soft"
-              title="Message sent successfully!"
-              description="I'll get back to you soon."
-              icon="i-lucide-check-circle"
+              :title="contactContent.form.successAlert.title"
+              :description="contactContent.form.successAlert.description"
+              :icon="contactContent.form.successAlert.icon"
             />
 
             <UAlert
               v-if="formSubmitError"
               color="red"
               variant="soft"
-              title="Error sending message"
-              description="There was an error sending your message. Please try again."
-              icon="i-lucide-alert-circle"
+              :title="contactContent.form.errorAlert.title"
+              :description="contactContent.form.errorAlert.description"
+              :icon="contactContent.form.errorAlert.icon"
             />
           </UForm>
         </UCard>
@@ -213,23 +186,16 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
 
       <!-- FAQ Section -->
       <section class="mt-20">
-        <h2 class="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
+        <h2 class="text-3xl font-bold mb-8 text-center">{{ contactContent.faq.title }}</h2>
         <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
-            <h3 class="font-semibold mb-2 text-primary">What's your typical response time?</h3>
-            <p class="text-muted">I usually respond within 24-48 hours during business days.</p>
-          </UCard>
-          <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
-            <h3 class="font-semibold mb-2 text-primary">Are you available for freelance work?</h3>
-            <p class="text-muted">Yes! I'm open to freelance projects and consultations.</p>
-          </UCard>
-          <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
-            <h3 class="font-semibold mb-2 text-primary">What technologies do you work with?</h3>
-            <p class="text-muted">Vue.js, Nuxt, React, Node.js, TypeScript, and more. Check my About page for details.</p>
-          </UCard>
-          <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
-            <h3 class="font-semibold mb-2 text-primary">Do you work remotely?</h3>
-            <p class="text-muted">Yes, I work with clients globally and am comfortable with remote collaboration.</p>
+          <UCard
+            v-for="item in contactContent.faq.items"
+            :key="item.question"
+            variant="outline"
+            class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20"
+          >
+            <h3 class="font-semibold mb-2 text-primary">{{ item.question }}</h3>
+            <p class="text-muted">{{ item.answer }}</p>
           </UCard>
         </div>
       </section>
@@ -240,6 +206,128 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
 <script setup lang="ts">
 import type { FormError, FormErrorEvent, FormSubmitEvent } from '@nuxt/ui';
 import { z } from 'zod';
+
+interface ContactMethod {
+  id: string;
+  label: string;
+  value: string;
+  url: string;
+  icon: string;
+}
+
+interface FormFieldContent {
+  label: string;
+  placeholder: string;
+}
+
+interface AlertContent {
+  title: string;
+  description: string;
+  icon?: string;
+}
+
+interface ContactContent {
+  hero: {
+    title: string;
+    description: string;
+  };
+  contactCard: {
+    title: string;
+    description: string;
+    methods: ContactMethod[];
+  };
+  availability: {
+    status: string;
+    description: string;
+    indicatorClass?: string;
+  };
+  form: {
+    title: string;
+    nameField: FormFieldContent;
+    emailField: FormFieldContent;
+    subjectField: FormFieldContent;
+    messageField: FormFieldContent;
+    subjectOptions: Array<{ label: string; value: string; icon?: string }>;
+    defaultSubject?: string;
+    submitButton: {
+      label: string;
+      loadingLabel: string;
+    };
+    resetButton: {
+      label: string;
+    };
+    successAlert: AlertContent;
+    errorAlert: AlertContent;
+  };
+  faq: {
+    title: string;
+    items: Array<{
+      question: string;
+      answer: string;
+    }>;
+  };
+  meta: {
+    title: string;
+    description: string;
+  };
+}
+
+const fallbackContactContent: ContactContent = {
+  hero: {
+    title: '',
+    description: ''
+  },
+  contactCard: {
+    title: '',
+    description: '',
+    methods: []
+  },
+  availability: {
+    status: '',
+    description: '',
+    indicatorClass: 'bg-green-500'
+  },
+  form: {
+    title: '',
+    nameField: { label: '', placeholder: '' },
+    emailField: { label: '', placeholder: '' },
+    subjectField: { label: '', placeholder: '' },
+    messageField: { label: '', placeholder: '' },
+    subjectOptions: [],
+    defaultSubject: '',
+    submitButton: { label: '', loadingLabel: '' },
+    resetButton: { label: '' },
+    successAlert: { title: '', description: '' },
+    errorAlert: { title: '', description: '' }
+  },
+  faq: {
+    title: '',
+    items: []
+  },
+  meta: {
+    title: '',
+    description: ''
+  }
+};
+
+const { data: contactContentData } = await useAsyncData<ContactContent | null>(
+  'contact-content',
+  async () => {
+    const document = await queryCollection('contact').first();
+
+    if (!document) {
+      return null;
+    }
+
+    const { body: _body, ...content } = document as ContactContent & { body?: unknown };
+
+    return content;
+  }
+);
+
+const contactContent = computed(() => contactContentData.value ?? fallbackContactContent);
+const subjectOptions = computed(() => contactContent.value.form.subjectOptions ?? []);
+const defaultSubject = computed(() => contactContent.value.form.defaultSubject ?? subjectOptions.value[0]?.value ?? '');
 
 // Zod schema for validation
 const schema = z.object({
@@ -253,17 +341,26 @@ const schema = z.object({
 const form = reactive({
   name: '',
   email: '',
-  subject: 'project',
+  subject: defaultSubject.value,
   message: ''
 });
 
-// Subject options for USelectMenu
-const subjectOptions = [
-  { label: 'Project Inquiry', value: 'project', icon: 'i-lucide-briefcase' },
-  { label: 'Collaboration', value: 'collaboration', icon: 'i-lucide-users' },
-  { label: 'Consultation', value: 'consultation', icon: 'i-lucide-message-circle' },
-  { label: 'Other', value: 'other', icon: 'i-lucide-help-circle' }
-];
+watch(defaultSubject, (value) => {
+  if (value && form.subject !== value) {
+    form.subject = value;
+  }
+});
+
+watch(subjectOptions, (options) => {
+  if (!options.length) {
+    form.subject = '';
+    return;
+  }
+
+  if (!options.find((option) => option.value === form.subject)) {
+    form.subject = defaultSubject.value;
+  }
+});
 
 // Form states
 const formSubmitting = ref(false);
@@ -288,7 +385,7 @@ const validate = (state: typeof form): FormError[] => {
 const resetForm = () => {
   form.name = '';
   form.email = '';
-  form.subject = 'project';
+  form.subject = defaultSubject.value;
   form.message = '';
   formSubmitSuccess.value = false;
   formSubmitError.value = false;
@@ -337,13 +434,13 @@ const onError = (event: FormErrorEvent) => {
 };
 
 // Meta tags
-useHead({
-  title: 'Contact | Allison\'s Developer Portfolio',
+useHead(() => ({
+  title: contactContent.value.meta.title,
   meta: [
-    { 
-      name: 'description', 
-      content: 'Get in touch with Allison for web development projects, collaborations, or consultations.' 
+    {
+      name: 'description',
+      content: contactContent.value.meta.description
     }
   ]
-});
+}));
 </script>
