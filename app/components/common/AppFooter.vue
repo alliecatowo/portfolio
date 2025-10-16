@@ -70,6 +70,7 @@
 </template>
 
 <script setup lang="ts">
+import type { Collections } from '@nuxt/content'
 import { computed } from 'vue'
 
 const isExternalLink = (url: string) => /^https?:\/\//.test(url)
@@ -144,10 +145,38 @@ const fallbackFooter: FooterContent = {
   copyrightName: "Allison's Portfolio"
 }
 
-const { data: footerData } = await useAsyncData('footer-settings', () =>
-  queryContent<FooterContent>('settings', 'footer').findOne()
-)
+type FooterEntry = Collections['settings']
 
-const footer = computed<FooterContent>(() => footerData.value ?? fallbackFooter)
+const { data: footerData } = await useAsyncData<FooterContent | null>('footer-settings', async () => {
+  const entry = (await queryCollection('settings')
+    .where('id', '=', 'settings:footer')
+    .first()) as FooterEntry | null
+
+  if (!entry) {
+    return null
+  }
+
+  const {
+    title,
+    tagline,
+    socials = [],
+    quickLinks = [],
+    contact,
+    builtWith,
+    copyrightName
+  } = entry
+
+  return {
+    title,
+    tagline,
+    socials,
+    quickLinks,
+    contact,
+    builtWith,
+    copyrightName
+  }
+})
+
+const footer = computed(() => footerData.value ?? fallbackFooter)
 const currentYear = computed(() => new Date().getFullYear())
 </script>
