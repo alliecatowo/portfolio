@@ -43,6 +43,91 @@ export default defineContentConfig({
         images: z.any().optional(),
         image: z.string().optional()
       })
+    }),
+    contact: defineCollection({
+      type: 'data',
+      source: 'contact.{yml,yaml,json}',
+      schema: z.object({
+        hero: z.object({
+          title: z.string(),
+          description: z.string()
+        }),
+        contactCard: z.object({
+          title: z.string(),
+          description: z.string(),
+          methods: z.array(
+            z.object({
+              id: z.string(),
+              label: z.string(),
+              value: z.string(),
+              url: z.string(),
+              icon: z.string()
+            })
+          )
+        }),
+        availability: z.object({
+          status: z.string(),
+          description: z.string(),
+          indicatorClass: z.string().optional()
+        }),
+        form: z.object({
+          title: z.string(),
+          nameField: z.object({
+            label: z.string(),
+            placeholder: z.string()
+          }),
+          emailField: z.object({
+            label: z.string(),
+            placeholder: z.string()
+          }),
+          subjectField: z.object({
+            label: z.string(),
+            placeholder: z.string()
+          }),
+          messageField: z.object({
+            label: z.string(),
+            placeholder: z.string()
+          }),
+          subjectOptions: z.array(
+            z.object({
+              label: z.string(),
+              value: z.string(),
+              icon: z.string().optional()
+            })
+          ),
+          defaultSubject: z.string().optional(),
+          submitButton: z.object({
+            label: z.string(),
+            loadingLabel: z.string()
+          }),
+          resetButton: z.object({
+            label: z.string()
+          }),
+          successAlert: z.object({
+            title: z.string(),
+            description: z.string(),
+            icon: z.string().optional()
+          }),
+          errorAlert: z.object({
+            title: z.string(),
+            description: z.string(),
+            icon: z.string().optional()
+          })
+        }),
+        faq: z.object({
+          title: z.string(),
+          items: z.array(
+            z.object({
+              question: z.string(),
+              answer: z.string()
+            })
+          )
+        }),
+        meta: z.object({
+          title: z.string(),
+          description: z.string()
+        })
+      })
     })
   }
 })
