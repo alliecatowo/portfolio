@@ -156,25 +156,7 @@ const { data: footerData } = await useAsyncData<FooterContent | null>('footer-se
     return null
   }
 
-  const {
-    title,
-    tagline,
-    socials = [],
-    quickLinks = [],
-    contact,
-    builtWith,
-    copyrightName
-  } = entry
-
-  return {
-    title,
-    tagline,
-    socials,
-    quickLinks,
-    contact,
-    builtWith,
-    copyrightName
-  }
+  return entry
 })
 
 const footer = computed(() => footerData.value ?? fallbackFooter)
