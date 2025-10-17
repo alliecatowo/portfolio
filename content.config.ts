@@ -43,6 +43,41 @@ export default defineContentConfig({
         images: z.any().optional(),
         image: z.string().optional()
       })
+    }),
+    settings: defineCollection({
+      type: 'data',
+      source: 'settings/*.yaml',
+      schema: z.object({
+        title: z.string(),
+        tagline: z.string(),
+        socials: z
+          .array(
+            z.object({
+              label: z.string(),
+              url: z.string(),
+              icon: z.string(),
+              tooltip: z.string().optional(),
+              srLabel: z.string().optional()
+            })
+          )
+          .default([]),
+        quickLinks: z
+          .array(
+            z.object({
+              label: z.string(),
+              to: z.string()
+            })
+          )
+          .default([]),
+        contact: z
+          .object({
+            message: z.string().optional(),
+            email: z.string().optional()
+          })
+          .optional(),
+        builtWith: z.string().optional(),
+        copyrightName: z.string()
+      })
     })
   }
 })
