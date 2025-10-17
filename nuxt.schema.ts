@@ -1,6 +1,18 @@
 import { field, group } from '@nuxt/content/preview'
 
 export default defineNuxtSchema({
+  studio: {
+    content: {
+      globals: {
+        footer: {
+          label: 'Footer',
+          description: 'Edit footer copy, quick links, and contact info managed via content/settings/footer.yaml.',
+          icon: 'i-ph-seal-check',
+          file: 'content/settings/footer.yaml'
+        }
+      }
+    }
+  },
   appConfig: {
     ui: group({
       title: 'UI',

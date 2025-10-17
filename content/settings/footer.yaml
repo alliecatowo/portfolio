@@ -1,0 +1,39 @@
+title: "Allison's Portfolio"
+tagline: 'Full-stack developer and creative problem solver'
+socials:
+  - label: GitHub
+    srLabel: 'GitHub'
+    tooltip: 'View my GitHub profile'
+    icon: i-lucide-github
+    url: https://github.com/alliecatowo
+  - label: LinkedIn
+    srLabel: 'LinkedIn'
+    tooltip: 'Connect on LinkedIn'
+    icon: i-lucide-linkedin
+    url: https://linkedin.com/in/allie-cat
+  - label: Twitter
+    srLabel: 'Twitter'
+    tooltip: 'Follow on Twitter'
+    icon: i-lucide-twitter
+    url: https://twitter.com/allison
+  - label: Email
+    srLabel: 'Email'
+    tooltip: 'Send me an email'
+    icon: i-lucide-mail
+    url: mailto:me@allisons.dev
+quickLinks:
+  - label: Home
+    to: /
+  - label: About
+    to: /about
+  - label: Projects
+    to: /projects
+  - label: Blog
+    to: /blog
+  - label: Contact
+    to: /contact
+contact:
+  message: 'Feel free to reach out for collaborations or just a friendly hello'
+  email: me@allisons.dev
+builtWith: 'Built with ❤ using Nuxt, Nuxt UI, and Tailwind CSS'
+copyrightName: "Allison's Portfolio"
