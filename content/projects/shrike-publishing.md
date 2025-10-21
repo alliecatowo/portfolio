@@ -1,6 +1,10 @@
 ---
 technologies: []
 featured: true
+github: https://github.com/alliecatowo/shrike-publishing
+liveDemo: https://shrike-publishing.com
+demo: https://shrike-publishing.com
+slug: shrike-publishing
 ---
 
 # Shrike Publishing

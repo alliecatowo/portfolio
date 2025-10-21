@@ -18,6 +18,7 @@ technologies:
   - ProtonVPN
 slug: homelab-hetzner-media-box
 image: /images/homelab/screenshot-2025-10-16-at-13-03-45-homepage-allie-cat-cinema.png
+liveDemo: https://home.allisons.dev
 ---
 
 This is the infrastructure behind my media life: consistent, quiet, and easy to maintain. It emphasizes sensible defaults and observability over over‑engineering.

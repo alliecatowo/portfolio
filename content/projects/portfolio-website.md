@@ -1,23 +1,31 @@
 ---
-title: 'Modern Portfolio Website'
-description: 'A full-stack portfolio website built with Nuxt.js, featuring dual developer/tattoo artist sections, Nuxt Content CMS, and modern UI components.'
-technologies: ['Nuxt.js', 'Vue.js', 'TypeScript', 'Tailwind CSS', 'Nuxt UI', 'Nuxt Content']
-category: 'Full-Stack Development'
+title: Modern Portfolio Website
+description: A full-stack portfolio website built with Nuxt.js, featuring dual
+  developer/tattoo artist sections, Nuxt Content CMS, and modern UI components.
+technologies:
+  - Nuxt.js
+  - Vue.js
+  - TypeScript
+  - Tailwind CSS
+  - Nuxt UI
+  - Nuxt Content
+category: Full-Stack Development
 featured: true
-status: 'completed'
-date: '2024-03-15'
-github: 'https://github.com/allisons-dev/portfolio'
-demo: 'https://allisons.dev'
-image: 'https://placehold.co/800x450?text=Project'
+status: completed
+date: 2024-03-15
+github: https://github.com/allisons-dev/portfolio
+demo: https://allisons.dev
+image: https://placehold.co/800x450?text=Project
 gallery:
-  - '/images/projects/portfolio-1.jpg'
-  - '/images/projects/portfolio-2.jpg'
-  - '/images/projects/portfolio-3.jpg'
+  - /images/projects/portfolio-1.jpg
+  - /images/projects/portfolio-2.jpg
+  - /images/projects/portfolio-3.jpg
 challenges:
-  - 'Dual-purpose design for developer and tattoo artist personas'
-  - 'Complex content management with Nuxt Content'
-  - 'Performance optimization for image-heavy portfolio'
-  - 'Responsive design across all device types'
+  - Dual-purpose design for developer and tattoo artist personas
+  - Complex content management with Nuxt Content
+  - Performance optimization for image-heavy portfolio
+  - Responsive design across all device types
+slug: portfolio-website
 ---
 
 # Modern Portfolio Website
@@ -41,7 +49,7 @@ This portfolio serves a unique dual purpose - presenting both my software develo
 
 ### Architecture
 
-```
+```text
 Frontend (Nuxt.js)
 ├── Pages & Components (Vue.js + TypeScript)
 ├── Content Management (Nuxt Content)
@@ -89,7 +97,7 @@ Frontend (Nuxt.js)
 
 ### 2. Content Architecture
 
-```
+```text
 content/
 ├── blog/
 │   ├── dev/           # Developer blog posts
