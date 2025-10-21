@@ -1,8 +1,8 @@
 slug: home
 layout: home
 seo:
-  title: "Allison's Developer Portfolio - Full-Stack Web Development"
-  description: 'Full-stack developer specializing in modern web technologies, Vue.js, Node.js, and creating exceptional user experiences.'
+  title: Allison's Developer Portfolio - Full-Stack Web Development
+  description: Full-stack developer specializing in modern web technologies, Vue.js, Node.js, and creating exceptional user experiences.
   keywords:
     - developer
     - portfolio
@@ -11,100 +11,120 @@ seo:
     - Vue.js
     - Node.js
 hero:
-  title: "Allison's Developer Portfolio"
-  description: 'Full-stack developer specializing in modern web technologies, creative problem solving, and building exceptional user experiences.'
+  title: Allison's Developer Portfolio
+  description: Full-stack developer specializing in modern web technologies, creative problem solving, and building exceptional user experiences.
   note:
-    prefix: 'Press'
+    prefix: Press
     keys:
-      - '⌘'
-      - 'K'
-    suffix: 'to open quick search'
+      - ⌘
+      - K
+    suffix: to open quick search
   card:
-    title: 'Crafting Digital Experiences'
-    description: 'Passionate about building scalable applications, elegant user interfaces, and solving complex technical challenges.'
-    introduction: 'Specializing in modern web technologies with expertise in Vue.js, Node.js, and full-stack development. I love creating intuitive interfaces and robust backend systems that scale.'
-    image: 'https://picsum.photos/1200/600?random=100'
+    title: Crafting Digital Experiences
+    description: Passionate about building scalable applications, elegant user interfaces, and solving complex technical challenges.
+    introduction: Specializing in leveraging AI to accelerate product cycle and developer velocity, and building scalable, robust, and human centric applications.
+    image: /images/legalease/search-hero-with-sidebar-collapsed.png
     badges:
-      - title: 'Frontend Excellence'
+      - title: Frontend Excellence
         items:
-          - 'Vue.js'
-          - 'Nuxt'
-          - 'TypeScript'
-          - 'Tailwind'
-      - title: 'Backend & Tools'
+          - Vue.js
+          - Nuxt
+          - TypeScript
+          - Tailwind
+          - React.js
+          - Google GenKit
+      - title: Backend & Tools
         items:
-          - 'Node.js'
-          - 'Firebase'
-          - 'Docker'
-          - 'Git/CI'
+          - Python
+          - GoLang
+          - Postgres
+          - Docker
+          - Git/CI
+      - title: Cloud Native Expertise
+        items:
+          - Google Cloud Platform
+          - Firebase
+          - Supabase
+          - Kubernetes
+          - Vercel
+          - Fly.io
+          - Neon.tech
+      - title: AI Awesomeness
+        items:
+          - Vertex AI
+          - Un/Stuctured Data Extraction
+          - RAG
+          - Audio/Visual models
+          - Machine Learning
+
     buttons:
-      - label: 'View My Work'
+      - label: View My Work
         to: '#projects'
         variant: magnet
         color: primary
         size: lg
-        icon: 'i-lucide-arrow-down'
+        icon: i-lucide-arrow-down
         iconPosition: trailing
-      - label: 'About Me'
-        to: '/about'
+      - label: About Me
+        to: /about
         variant: outline
         color: primary
         size: lg
 quickLinks:
   links:
-    - title: 'Projects'
-      description: 'Explore my latest work and technical projects'
+    - title: Projects
+      description: Explore my latest work and technical projects
       to: '#projects'
-      icon: 'i-lucide-folder-code'
-    - title: 'Blog'
-      description: 'Technical insights and development thoughts'
+      icon: i-lucide-folder-code
+    - title: Blog
+      description: Technical insights and development thoughts
       to: '#blog'
-      icon: 'i-lucide-book-open'
-    - title: 'Contact'
-      description: "Let's discuss your next project"
-      to: '/contact'
-      icon: 'i-lucide-message-circle'
+      icon: i-lucide-book-open
+    - title: Contact
+      description: Let's discuss your next project
+      to: /contact
+      icon: i-lucide-message-circle
 projects:
-  title: 'Featured Projects'
-  description: 'Innovative solutions and technical showcases'
+  title: Featured Projects
+  description: Innovative solutions and technical showcases
   cta:
-    label: 'View All Projects'
-    to: '/projects'
+    label: View All Projects
+    to: /projects
 skills:
-  title: 'Technical Skills'
-  description: 'Technologies and tools I use to build exceptional experiences'
+  title: Technical Skills
+  description: Technologies and tools I use to build exceptional experiences
   items:
-    - title: 'Frontend'
-      description: 'Vue, Nuxt, React, TypeScript, Tailwind'
-      icon: 'i-lucide-monitor'
-    - title: 'Backend'
-      description: 'Node.js, Express, PostgreSQL, MongoDB'
-      icon: 'i-lucide-server'
-    - title: 'Cloud & DevOps'
-      description: 'Firebase, Docker, CI/CD, Git'
-      icon: 'i-lucide-cloud'
-    - title: 'Mobile & PWA'
-      description: 'React Native, Progressive Web Apps'
-      icon: 'i-lucide-smartphone'
+    - title: Frontend
+      description: Vue, Nuxt, React, TypeScript, Tailwind
+      icon: i-lucide-monitor
+    - title: Backend
+      description: Node.js, Express, PostgreSQL, MongoDB
+      icon: i-lucide-server
+    - title: Cloud & DevOps
+      description: Firebase, Docker, CI/CD, Git
+      icon: i-lucide-cloud
+    - title: Mobile & PWA
+      description: React Native, Progressive Web Apps
+      icon: i-lucide-smartphone
 blog:
-  title: 'Latest Insights'
-  description: 'Thoughts on development, technology, and innovation'
+  title: Latest Insights
+  description: Thoughts on development, technology, and innovation
   cta:
-    label: 'View All Articles'
-    to: '/blog'
+    label: View All Articles
+    to: /blog
 cta:
-  title: "Let's Build Something Amazing"
-  description: "Ready to bring your ideas to life? Let's discuss your next project."
+  title: Let's Build Something Amazing
+  description: Ready to bring your ideas to life? Let's discuss your next project.
   buttons:
-    - label: 'Get In Touch'
-      to: '/contact'
+    - label: Get In Touch
+      to: /contact
       color: primary
       variant: magnet
       size: lg
-      icon: 'i-lucide-mail'
+      icon: i-lucide-mail
       iconPosition: leading
-    - label: 'Learn More About Me'
-      to: '/about'
+    - label: Learn More About Me
+      to: /about
       color: primary
       variant: outline
       size: lg
