@@ -70,15 +70,15 @@
                   v-for="button in heroButtons"
                   :key="button.label"
                   :to="button.to"
-                  :href="button.href"
-                  :target="button.external ? '_blank' : undefined"
-                  :rel="button.external ? 'noopener noreferrer' : undefined"
-                  :download="button.download"
-                  :variant="button.variant || 'solid'"
-                  :color="button.color || 'primary'"
-                  :size="button.size || 'md'"
-                  :leading-icon="button.icon && button.iconPosition !== 'trailing' ? button.icon : undefined"
-                  :trailing-icon="button.icon && button.iconPosition === 'trailing' ? button.icon : undefined"
+                :href="button.href"
+                :target="button.external ? '_blank' : undefined"
+                :rel="button.external ? 'noopener noreferrer' : undefined"
+                :download="resolveDownloadAttr(button)"
+                :variant="button.variant || 'solid'"
+                :color="button.color || 'primary'"
+                :size="button.size || 'md'"
+                :leading-icon="button.icon && button.iconPosition !== 'trailing' ? button.icon : undefined"
+                :trailing-icon="button.icon && button.iconPosition === 'trailing' ? button.icon : undefined"
                 >
                   {{ button.label }}
                 </UButton>
@@ -214,10 +214,7 @@
                 :href="button.href"
                 :target="button.external ? '_blank' : undefined"
                 :rel="button.external ? 'noopener noreferrer' : undefined"
-                :download="button.download
-                  ? (button.download === true ? '' : button.download)
-                  : undefined
-                "
+                :download="resolveDownloadAttr(button)"
                 :variant="button.variant || 'solid'"
                 :color="button.color || 'primary'"
                 :size="button.size || 'md'"
@@ -372,6 +369,18 @@ const heroImage = computed<HeroImage | null>(() => hero.value?.image ?? null)
 const heroStats = computed<HeroStat[]>(() => hero.value?.stats ?? [])
 const heroParagraphs = computed<string[]>(() => hero.value?.paragraphs ?? [])
 const heroButtons = computed<ButtonLink[]>(() => hero.value?.buttons ?? [])
+const resolveDownloadAttr = (button: ButtonLink) => {
+  if (typeof button.download === 'string' && button.download.trim().length > 0) {
+    return button.download
+  }
+
+  if (button.download) {
+    const filename = button.href?.split('/').filter(Boolean).pop()
+    return filename || undefined
+  }
+
+  return undefined
+}
 const journey = computed<JourneySection | null>(() => page.value?.journey ?? null)
 const journeyItems = computed<JourneyItem[]>(() => journey.value?.items ?? [])
 const skills = computed<SkillsSection | null>(() => page.value?.skills ?? null)

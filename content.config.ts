@@ -103,11 +103,11 @@ export default defineContentConfig({
               color: z.string().optional(),
               size: z.string().optional(),
               icon: z.string().optional(),
-            iconPosition: z.enum(['leading', 'trailing']).optional(),
-            external: z.boolean().optional(),
-            download: z.union([z.boolean(), z.string()]).optional()
-          })).optional()
-          }).optional()
+              iconPosition: z.enum(['leading', 'trailing']).optional(),
+              external: z.boolean().optional(),
+              download: z.union([z.boolean(), z.string()]).optional()
+            })).optional()
+          }).optional(),
         }),
         quickLinks: z.object({
           links: z.array(z.object({
@@ -187,6 +187,37 @@ export default defineContentConfig({
             alt: z.string().optional(),
             description: z.string()
           }))
+        }).optional()
+      })
+    }),
+    globals: defineCollection({
+      type: 'data',
+      source: 'globals/**/*.{yml,yaml,json}',
+      schema: z.object({
+        slug: z.string(),
+        brand: z.object({
+          title: z.string(),
+          tagline: z.string().optional()
+        }),
+        description: z.string().optional(),
+        socials: z.array(z.object({
+          label: z.string(),
+          href: z.string(),
+          icon: z.string(),
+          tooltip: z.string().optional(),
+          external: z.boolean().optional()
+        })).optional(),
+        navigation: z.array(z.object({
+          label: z.string(),
+          to: z.string()
+        })).optional(),
+        contact: z.object({
+          description: z.string().optional(),
+          email: z.string().optional()
+        }).optional(),
+        bottom: z.object({
+          text: z.string().optional(),
+          subtext: z.string().optional()
         }).optional()
       })
     })

@@ -61,11 +61,21 @@ export function useContent() {
       .first()
   }
 
+  /**
+   * Fetch a global config entry by slug
+   */
+  async function fetchGlobal(slug: string) {
+    return await queryCollection('globals')
+      .where('slug', '=', slug)
+      .first()
+  }
+
   return {
     fetchBlogPosts,
     fetchBlogPost,
     fetchProjects,
     fetchProject,
-    fetchPage
+    fetchPage,
+    fetchGlobal
   }
 }

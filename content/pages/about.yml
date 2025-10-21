@@ -20,8 +20,6 @@ hero:
   stats:
     - label: Years Experience
       value: 5+
-    - label: Projects Completed
-      value: 20+
     - label: Redbull Consumed
       value: ∞
   paragraphs:
@@ -52,7 +50,7 @@ hero:
       icon: i-lucide-download
       iconPosition: leading
       external: true
-      download: true
+      download: Allison-Coleman-Resume.pdf
   description: I love to build things, solve problems, and learn new things everyday!
   card:
     buttons: []

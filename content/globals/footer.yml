@@ -1,0 +1,37 @@
+slug: footer
+brand:
+  title: "Allison's Portfolio"
+  tagline: 'Full-stack developer and creative problem solver'
+description: 'Full-stack developer and creative problem solver'
+socials:
+  - label: GitHub
+    href: 'https://github.com/alliecatowo'
+    icon: 'i-lucide-github'
+    tooltip: 'View my GitHub profile'
+    external: true
+  - label: LinkedIn
+    href: 'https://linkedin.com/in/allie-cat'
+    icon: 'i-lucide-linkedin'
+    tooltip: 'Connect on LinkedIn'
+    external: true
+  - label: Email
+    href: 'mailto:me@allisons.dev'
+    icon: 'i-lucide-mail'
+    tooltip: 'Send me an email'
+navigation:
+  - label: Home
+    to: '/'
+  - label: About
+    to: '/about'
+  - label: Projects
+    to: '/projects'
+  - label: Blog
+    to: '/blog'
+  - label: Contact
+    to: '/contact'
+contact:
+  description: 'Feel free to reach out for collaborations or just a friendly hello.'
+  email: 'me@allisons.dev'
+bottom:
+  text: 'All rights reserved.'
+  subtext: 'Built with ❤️ using Nuxt, Nuxt UI, and Tailwind CSS.'

@@ -96,10 +96,7 @@
                   :href="button.href"
                   :target="button.external ? '_blank' : undefined"
                   :rel="button.external ? 'noopener noreferrer' : undefined"
-                  :download="button.download
-                    ? (button.download === true ? '' : button.download)
-                    : undefined
-                  "
+                  :download="resolveDownloadAttr(button)"
                   :color="button.color || 'primary'"
                   :variant="button.variant || 'solid'"
                   :size="button.size || 'md'"
@@ -315,10 +312,7 @@
                 :href="button.href"
                 :target="button.external ? '_blank' : undefined"
                 :rel="button.external ? 'noopener noreferrer' : undefined"
-                :download="button.download
-                  ? (button.download === true ? '' : button.download)
-                  : undefined
-                "
+                :download="resolveDownloadAttr(button)"
                 :color="button.color || 'primary'"
                 :variant="button.variant || 'solid'"
                 :size="button.size || 'md'"
@@ -342,6 +336,19 @@ import { useContent } from '~/composables/useContent'
 const { fetchProjects, fetchBlogPosts, fetchPage } = useContent()
 
 const { data: homeContent } = await useAsyncData('home-page-content', () => fetchPage('home'))
+
+const resolveDownloadAttr = (button: { download?: boolean | string; href?: string }) => {
+  if (typeof button.download === 'string' && button.download.trim().length > 0) {
+    return button.download
+  }
+
+  if (button.download) {
+    const filename = button.href?.split('/').filter(Boolean).pop()
+    return filename || undefined
+  }
+
+  return undefined
+}
 
 const page = computed(() => homeContent.value ?? null)
 const seo = computed(() => page.value?.seo)

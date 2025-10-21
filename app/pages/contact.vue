@@ -63,18 +63,6 @@ href="https://linkedin.com/in/allie-cat" target="_blank" rel="noopener noreferre
                 </div>
               </a>
 
-              <!-- Twitter -->
-              <a
-href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
-                 class="flex items-center gap-4 group hover:translate-x-1 transition-transform">
-                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <UIcon name="i-lucide-twitter" class="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <p class="text-sm text-muted">Twitter</p>
-                  <p class="text-default font-medium">@allison</p>
-                </div>
-              </a>
             </div>
           </UCard>
 
@@ -100,44 +88,46 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
           </template>
 
           <UForm
-            :validate="validate"
             :state="form"
             :schema="schema"
-            class="space-y-6"
+            class="space-y-8"
             @submit="onSubmit"
             @error="onError"
           >
-            <UFormField label="Name" name="name" required :ui="{ label: 'text-sm font-medium' }">
+            <UFormField label="Name" name="name" required :ui="formFieldUi">
               <UInput
                 v-model="form.name"
                 placeholder="Your full name"
                 size="lg"
-                :ui="{ placeholder: 'text-muted' }"
+                :ui="inputUi"
+                class="w-full"
                 autocomplete="name"
               />
             </UFormField>
 
-            <UFormField label="Email" name="email" required :ui="{ label: 'text-sm font-medium' }">
+            <UFormField label="Email" name="email" required :ui="formFieldUi">
               <UInput
                 v-model="form.email"
                 type="email"
                 placeholder="your.email@example.com"
                 size="lg"
-                :ui="{ placeholder: 'text-muted' }"
+                :ui="inputUi"
+                class="w-full"
                 autocomplete="email"
               />
             </UFormField>
 
-            <UFormField label="Subject" name="subject" :ui="{ label: 'text-sm font-medium' }">
+            <UFormField label="Subject" name="subject" :ui="formFieldUi">
               <USelectMenu
                 v-model="form.subject"
-                :options="subjectOptions"
+                :items="subjectOptions"
                 searchable
                 size="lg"
                 placeholder="Select inquiry type"
                 value-attribute="value"
                 option-attribute="label"
-                :ui="{ placeholder: 'text-muted' }"
+                :ui="selectUi"
+                class="w-full"
               >
                 <template #leading>
                   <UIcon name="i-lucide-tag" class="w-5 h-5 text-muted" />
@@ -145,24 +135,26 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
               </USelectMenu>
             </UFormField>
 
-            <UFormField label="Message" name="message" required :ui="{ label: 'text-sm font-medium' }">
+            <UFormField label="Message" name="message" required :ui="formFieldUi">
               <UTextarea
                 v-model="form.message"
                 :rows="6"
                 placeholder="Tell me about your project or inquiry..."
                 size="lg"
-                :ui="{ placeholder: 'text-muted' }"
+                :ui="textareaUi"
+                class="w-full"
                 :resize="true"
               />
             </UFormField>
 
-            <div class="flex gap-4 pt-4">
+            <div class="flex flex-col sm:flex-row gap-4 pt-2">
               <UButton
                 type="submit"
                 :loading="formSubmitting"
                 size="lg"
                 color="primary"
-                :ui="{ rounded: 'rounded-lg' }"
+                variant="magnet"
+                :ui="submitButtonUi"
                 class="flex-1"
                 :disabled="formSubmitting"
               >
@@ -179,9 +171,10 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
                 variant="outline"
                 size="lg"
                 color="gray"
-                :ui="{ rounded: 'rounded-lg' }"
+                :ui="resetButtonUi"
                 :disabled="formSubmitting"
-                @click="resetForm"
+                class="sm:w-auto"
+                @click="resetForm({ clearStatus: true })"
               >
                 <template #leading>
                   <UIcon name="i-lucide-rotate-ccw" class="w-5 h-5" />
@@ -238,112 +231,173 @@ href="https://twitter.com/allison" target="_blank" rel="noopener noreferrer"
 </template>
 
 <script setup lang="ts">
-import type { FormError, FormErrorEvent, FormSubmitEvent } from '@nuxt/ui';
-import { z } from 'zod';
+import { computed, reactive, ref } from 'vue'
+import type { FormErrorEvent, FormSubmitEvent } from '@nuxt/ui'
+import { z } from 'zod'
 
-// Zod schema for validation
 const schema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters').max(50, 'Name must be less than 50 characters'),
-  email: z.string().email('Please enter a valid email address'),
-  subject: z.string().min(1, 'Please select a subject'),
-  message: z.string().min(10, 'Message must be at least 10 characters').max(1000, 'Message must be less than 1000 characters')
-});
+  name: z
+    .string({ message: 'Please enter your name' })
+    .min(2, 'Name must be at least 2 characters')
+    .max(50, 'Name must be less than 50 characters'),
+  email: z.string({ message: 'Please enter your email address' }).email('Please enter a valid email address'),
+  subject: z.enum(['project', 'hiring', 'collaboration', 'consultation', 'other'], {
+    message: 'Please select a subject'
+  }),
+  message: z
+    .string({ message: 'Please enter a message' })
+    .min(10, 'Message must be at least 10 characters')
+    .max(1000, 'Message must be less than 1000 characters')
+})
 
-// Form data
-const form = reactive({
+type ContactForm = z.infer<typeof schema>
+
+const form = reactive<ContactForm>({
   name: '',
   email: '',
   subject: 'project',
   message: ''
-});
+})
 
 // Subject options for USelectMenu
 const subjectOptions = [
   { label: 'Project Inquiry', value: 'project', icon: 'i-lucide-briefcase' },
+  { label: 'Full-Time Opportunity', value: 'hiring', icon: 'i-lucide-id-card' },
   { label: 'Collaboration', value: 'collaboration', icon: 'i-lucide-users' },
   { label: 'Consultation', value: 'consultation', icon: 'i-lucide-message-circle' },
   { label: 'Other', value: 'other', icon: 'i-lucide-help-circle' }
-];
+]
+
+const subjectLabel = computed(() => subjectOptions.find((option) => option.value === form.subject)?.label ?? 'General Inquiry')
+
+const formFieldUi = {
+  label: 'text-sm font-semibold text-default flex items-center gap-1',
+  error: 'text-xs text-rose-400 mt-2'
+} as const
+
+const inputUi = {
+  base:
+    'rounded-xl border border-white/15 dark:border-white/10 bg-white/5 dark:bg-white/5 text-default placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/40 focus:bg-white/10 transition-all'
+} as const
+
+const selectUi = {
+  trigger:
+    'rounded-xl border border-white/15 dark:border-white/10 bg-white/5 dark:bg-white/5 text-default placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/40 focus:bg-white/10 transition-all',
+  option: 'text-default'
+} as const
+
+const textareaUi = {
+  base:
+    'rounded-xl border border-white/15 dark:border-white/10 bg-white/5 dark:bg-white/5 text-default placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/40 focus:bg-white/10 transition-all'
+} as const
+
+const submitButtonUi = {
+  base: 'rounded-xl font-semibold shadow-lg shadow-primary/30'
+} as const
+
+const resetButtonUi = {
+  base: 'rounded-xl border border-white/20 text-default hover:border-primary hover:text-primary transition-colors'
+} as const
 
 // Form states
-const formSubmitting = ref(false);
-const formSubmitSuccess = ref(false);
-const formSubmitError = ref(false);
-
-// Form validation using Zod
-const validate = (state: typeof form): FormError[] => {
-  try {
-    schema.parse(state);
-    return [];
-  } catch (error) {
-    const zodError = error as { errors: Array<{ path: string[]; message: string }> };
-    return zodError.errors.map((err) => ({
-      name: err.path[0] as string,
-      message: err.message
-    }));
-  }
-};
+const formSubmitting = ref(false)
+const formSubmitSuccess = ref(false)
+const formSubmitError = ref(false)
 
 // Reset form function
-const resetForm = () => {
-  form.name = '';
-  form.email = '';
-  form.subject = 'project';
-  form.message = '';
-  formSubmitSuccess.value = false;
-  formSubmitError.value = false;
-};
+const resetForm = (options: { clearStatus?: boolean } = {}) => {
+  form.name = ''
+  form.email = ''
+  form.subject = 'project'
+  form.message = ''
+  if (options.clearStatus) {
+    formSubmitSuccess.value = false
+    formSubmitError.value = false
+  }
+}
 
 // Handle form submission
-const onSubmit = async (_event: FormSubmitEvent<typeof form>) => {
-  formSubmitting.value = true;
-  formSubmitSuccess.value = false;
-  formSubmitError.value = false;
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/me@allisons.dev'
+
+const onSubmit = async (_event: FormSubmitEvent<ContactForm>) => {
+  formSubmitting.value = true
+  formSubmitSuccess.value = false
+  formSubmitError.value = false
 
   try {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    const payload = {
+      name: form.name,
+      email: form.email,
+      subject: subjectLabel.value,
+      message: form.message,
+      _replyto: form.email,
+      _subject: `Portfolio Contact: ${subjectLabel.value}`,
+      _template: 'table',
+      _captcha: 'false'
+    }
 
-    // Mock successful submission
-    formSubmitSuccess.value = true;
+    const response = await fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
 
-    // Reset form
-    resetForm();
+    let data: { success?: string | boolean; message?: string; result?: string } | null = null
+    const contentType = response.headers.get('content-type')
 
-    // Hide success message after 5 seconds
-    setTimeout(() => {
-      formSubmitSuccess.value = false;
-    }, 5000);
+    if (contentType?.includes('application/json')) {
+      data = await response.json()
+    } else {
+      // Attempt to parse JSON response embedded in text, ignore errors
+      try {
+        const text = await response.text()
+        data = JSON.parse(text)
+      } catch {
+        data = null
+      }
+    }
+
+    if (response.ok) {
+      formSubmitSuccess.value = true
+      resetForm()
+      setTimeout(() => {
+        formSubmitSuccess.value = false
+      }, 5000)
+      return
+    }
+
+    throw new Error(data?.message || 'Unknown error')
   } catch (error) {
-    console.error('Error submitting form:', error);
-    formSubmitError.value = true;
-
-    // Hide error message after 5 seconds
+    console.error('Error submitting form:', error)
+    formSubmitError.value = true
     setTimeout(() => {
-      formSubmitError.value = false;
-    }, 5000);
+      formSubmitError.value = false
+    }, 5000)
   } finally {
-    formSubmitting.value = false;
+    formSubmitting.value = false
   }
-};
+}
 
 // Handle form validation errors
 const onError = (event: FormErrorEvent) => {
   if (event?.errors?.[0]?.id) {
-    const element = document.getElementById(event.errors[0].id);
-    element?.focus();
-    element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const element = document.getElementById(event.errors[0].id)
+    element?.focus()
+    element?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
-};
+}
 
 // Meta tags
 useHead({
-  title: 'Contact | Allison\'s Developer Portfolio',
+  title: "Contact | Allison's Developer Portfolio",
   meta: [
-    { 
-      name: 'description', 
-      content: 'Get in touch with Allison for web development projects, collaborations, or consultations.' 
+    {
+      name: 'description',
+      content: 'Get in touch with Allison for web development projects, collaborations, or consultations.'
     }
   ]
-});
+})
 </script>
