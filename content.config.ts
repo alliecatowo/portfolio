@@ -53,27 +53,48 @@ export default defineContentConfig({
         seo: z.object({
           title: z.string(),
           description: z.string(),
-          keywords: z.array(z.string())
+        keywords: z.array(z.string()).default([])
+      }).optional(),
+      hero: z.object({
+        title: z.string(),
+        subtitle: z.string().optional(),
+        description: z.string().optional(),
+        note: z.object({
+          prefix: z.string(),
+          keys: z.array(z.string()).default([]),
+          suffix: z.string()
         }).optional(),
-        hero: z.object({
+        image: z.object({
+          src: z.string(),
+          alt: z.string(),
+          status: z.string().optional()
+        }).optional(),
+        stats: z.array(z.object({
+          label: z.string(),
+          value: z.string()
+        })).default([]),
+        paragraphs: z.array(z.string()).default([]),
+        buttons: z.array(z.object({
+          label: z.string(),
+          to: z.string().optional(),
+          href: z.string().optional(),
+          variant: z.string().optional(),
+          color: z.string().optional(),
+          size: z.string().optional(),
+          icon: z.string().optional(),
+          iconPosition: z.enum(['leading', 'trailing']).optional(),
+          external: z.boolean().optional(),
+          download: z.boolean().optional()
+        })).default([]),
+        card: z.object({
           title: z.string(),
-          subtitle: z.string().optional(),
-          description: z.string().optional(),
-          note: z.object({
-            prefix: z.string(),
-            keys: z.array(z.string()),
-            suffix: z.string()
-          }).optional(),
-          image: z.object({
-            src: z.string(),
-            alt: z.string(),
-            status: z.string().optional()
-          }).optional(),
-          stats: z.array(z.object({
-            label: z.string(),
-            value: z.string()
-          })).optional(),
-          paragraphs: z.array(z.string()).optional(),
+          description: z.string(),
+          introduction: z.string().optional(),
+          image: z.string().optional(),
+          badges: z.array(z.object({
+            title: z.string(),
+            items: z.array(z.string()).default([])
+          })).default([]),
           buttons: z.array(z.object({
             label: z.string(),
             to: z.string().optional(),
@@ -85,38 +106,17 @@ export default defineContentConfig({
             iconPosition: z.enum(['leading', 'trailing']).optional(),
             external: z.boolean().optional(),
             download: z.boolean().optional()
-          })).optional(),
-          card: z.object({
-            title: z.string(),
-            description: z.string(),
-            introduction: z.string().optional(),
-            image: z.string().optional(),
-            badges: z.array(z.object({
-              title: z.string(),
-              items: z.array(z.string())
-            })).optional(),
-            buttons: z.array(z.object({
-              label: z.string(),
-              to: z.string().optional(),
-              href: z.string().optional(),
-              variant: z.string().optional(),
-              color: z.string().optional(),
-              size: z.string().optional(),
-              icon: z.string().optional(),
-              iconPosition: z.enum(['leading', 'trailing']).optional(),
-              external: z.boolean().optional(),
-              download: z.boolean().optional()
-            })).optional()
-          }).optional()
-        }),
-        quickLinks: z.object({
-          links: z.array(z.object({
-            title: z.string(),
-            description: z.string(),
-            to: z.string(),
-            icon: z.string().optional()
-          }))
-        }).optional(),
+          })).default([])
+        }).optional()
+      }),
+      quickLinks: z.object({
+        links: z.array(z.object({
+          title: z.string(),
+          description: z.string(),
+          to: z.string(),
+          icon: z.string().optional()
+          })).default([])
+      }).optional(),
         projects: z.object({
           title: z.string(),
           description: z.string(),
@@ -132,13 +132,13 @@ export default defineContentConfig({
             title: z.string(),
             description: z.string(),
             icon: z.string().optional()
-          })).optional(),
+          })).default([]),
           categories: z.array(z.object({
             title: z.string(),
             color: z.string().optional(),
             icon: z.string().optional(),
-            items: z.array(z.string())
-          })).optional()
+            items: z.array(z.string()).default([])
+          })).default([])
         }).optional(),
         blog: z.object({
           title: z.string(),
@@ -162,12 +162,12 @@ export default defineContentConfig({
             iconPosition: z.enum(['leading', 'trailing']).optional(),
             external: z.boolean().optional(),
             download: z.boolean().optional()
-          })).optional(),
+          })).default([]),
           socials: z.array(z.object({
             label: z.string(),
             href: z.string(),
             icon: z.string().optional()
-          })).optional()
+          })).default([])
         }).optional(),
         journey: z.object({
           title: z.string(),
@@ -175,7 +175,7 @@ export default defineContentConfig({
             title: z.string(),
             color: z.string().optional(),
             description: z.string()
-          }))
+          })).default([])
         }).optional(),
         life: z.object({
           title: z.string(),
@@ -186,7 +186,7 @@ export default defineContentConfig({
             image: z.string().optional(),
             alt: z.string().optional(),
             description: z.string()
-          }))
+          })).default([])
         }).optional()
       })
     })
