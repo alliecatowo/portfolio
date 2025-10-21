@@ -52,11 +52,20 @@ export function useContent() {
       .first()
   }
 
+  /**
+   * Fetch a managed page by slug
+   */
+  async function fetchPage(slug: string) {
+    return await queryCollection('pages')
+      .where('slug', '=', slug)
+      .first()
+  }
 
   return {
     fetchBlogPosts,
     fetchBlogPost,
     fetchProjects,
-    fetchProject
+    fetchProject,
+    fetchPage
   }
 }
