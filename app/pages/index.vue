@@ -150,18 +150,20 @@
             </p>
           </div>
 
-          <UCarousel
-            v-if="featuredProjects && featuredProjects.length > 0"
-            :items="featuredProjects"
-            :ui="{
-              item: 'basis-full md:basis-1/2 lg:basis-1/3',
-              container: 'gap-8',
-              wrapper: 'mx-auto'
-            }"
-            arrows
-            :prev="{ icon: 'i-lucide-chevron-left', size: 'sm', variant: 'outline' }"
-            :next="{ icon: 'i-lucide-chevron-right', size: 'sm', variant: 'outline' }"
-          >
+        <UCarousel
+          v-if="featuredProjects && featuredProjects.length > 0"
+          class="w-full"
+          :items="featuredProjects"
+          :ui="featuredProjectsCarouselUi"
+          :breakpoints="featuredProjectsBreakpoints"
+          :loop="featuredProjects.length > 3"
+          :align="'start'"
+          :drag-free="true"
+          :slides-to-scroll="1"
+          arrows
+          :prev="featuredProjectsPrev"
+          :next="featuredProjectsNext"
+        >
             <template #default="{ item: project, index }">
               <UCard
                 class="glass-accent hover:scale-105 transition-transform group"
@@ -354,6 +356,44 @@ import { useContent } from '~/composables/useContent'
 const { fetchProjects, fetchBlogPosts, fetchPage } = useContent()
 
 const { data: homeContent } = await useAsyncData('home-page-content', () => fetchPage('home'))
+
+const featuredProjectsCarouselUi = {
+  root: 'w-full',
+  viewport: 'overflow-visible pb-4',
+  container: 'gap-6 sm:gap-8',
+  item: 'basis-[85%] sm:basis-2/3 md:basis-1/2 lg:basis-1/3 xl:basis-1/4 pe-2',
+  arrows: 'hidden md:flex',
+  prev: '-left-6 sm:-left-10 top-1/2 -translate-y-1/2',
+  next: '-right-6 sm:-right-10 top-1/2 -translate-y-1/2'
+} as const
+
+const featuredProjectsBreakpoints = {
+  '(max-width: 640px)': {
+    ui: {
+      container: 'gap-4',
+      item: 'basis-[92%] pe-2'
+    }
+  },
+  '(min-width: 1536px)': {
+    ui: {
+      item: 'basis-1/4'
+    }
+  }
+} as const
+
+const featuredProjectsPrev = {
+  icon: 'i-lucide-chevron-left',
+  variant: 'outline',
+  color: 'primary',
+  size: 'sm'
+} as const
+
+const featuredProjectsNext = {
+  icon: 'i-lucide-chevron-right',
+  variant: 'outline',
+  color: 'primary',
+  size: 'sm'
+} as const
 
 const page = computed(() => homeContent.value ?? null)
 const seo = computed(() => page.value?.seo)
