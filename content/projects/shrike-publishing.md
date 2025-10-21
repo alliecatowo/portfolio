@@ -5,6 +5,11 @@ github: https://github.com/alliecatowo/shrike-publishing
 liveDemo: https://shrike-publishing.com
 demo: https://shrike-publishing.com
 slug: shrike-publishing
+image: /images/shrike-publishing/screenshot-2025-10-21-at-00-02-30-blood-neon-shrike-publishing.png
+title: Shrike Publishing
+description: Cheap User Friendly CMS Solution
+date: 2025-08-30
+status: published
 ---
 
 # Shrike Publishing

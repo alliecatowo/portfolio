@@ -4,6 +4,7 @@ slug: legal-ease-ai
 image: /images/legalease/search-hero-pink-light.png
 title: LegalEase AI
 description: Self-hosted legal discovery platform for messy, sensitive data.
+date: 2025-08-30
 ---
 
 #
