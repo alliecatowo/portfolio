@@ -1,12 +1,18 @@
 ---
-title: 'ZMK Sofle (hdock/dongle) — Community Firmware Fork'
-date: '2025-08-30'
-description: 'A maintained Sofle fork with hdock pairing, English docs, and defaults that make first‑run setup painless.'
-featured: false
-status: 'published'
-technologies: ['ZMK', 'Bluetooth', 'NRF52', 'Split Keyboards', 'Docs']
-slug: 'zmk-sofle-hdock-fork'
-image: 'https://placehold.co/800x450?text=Project'
+title: ZMK Sofle (hdock/dongle) — Community Firmware Fork
+date: 2025-08-30
+description: A maintained Sofle fork with hdock pairing, English docs, and
+  defaults that make first‑run setup painless.
+featured: true
+status: published
+technologies:
+  - ZMK
+  - Bluetooth
+  - NRF52
+  - Split Keyboards
+  - Docs
+slug: zmk-sofle-hdock-fork
+image: https://placehold.co/800x450?text=Project
 ---
 
 This fork focuses on approachability: simplified pairing, translated docs, and starter keymaps that feel great on day one. The goal is adoption through care.

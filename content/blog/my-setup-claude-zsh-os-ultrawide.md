@@ -37,6 +37,7 @@ zsh with a minimal prompt, fast history search, and a handful of aliases. I pref
 
 - Mac at work: It just runs, and I’ve grown to love it.
 - Kubuntu at home: Plasma is pleasant without being loud. I’m not a huge Ubuntu fan and I get the snap complaints, but Kubuntu has been a refreshing reset while I tour other options.
+- another test
 
 ## Screens and focus
 
