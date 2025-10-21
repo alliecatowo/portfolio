@@ -45,7 +45,7 @@ hero:
       icon: 'i-lucide-mail'
       iconPosition: leading
     - label: 'Download Resume'
-      href: '/resume.pdf'
+      href: '/Allison-Coleman-Resume.pdf'
       variant: ghost
       color: neutral
       size: lg

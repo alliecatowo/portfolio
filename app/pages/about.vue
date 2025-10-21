@@ -12,28 +12,28 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div class="relative">
               <div class="relative z-10">
-                <div v-if="hero.image" class="relative mx-auto w-80 h-80 md:w-96 md:h-96">
+                <div v-if="heroImage" class="relative mx-auto w-80 h-80 md:w-96 md:h-96">
                   <div class="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-pink-500 to-purple-600 animate-spin-slow opacity-20" />
                   <div class="absolute inset-4 rounded-full bg-gradient-to-l from-primary via-purple-600 to-pink-500 animate-spin-reverse opacity-20" />
 
-                  <div class="relative w-full h-full rounded-full overflow-hidden glass-accent p-2">
-                    <NuxtImg
-                      :src="hero.image.src"
-                      :alt="hero.image.alt || hero.title"
-                      class="w-full h-full rounded-full object-cover"
-                      loading="eager"
-                      preset="avatar"
-                    />
-                  </div>
-
-                  <div
-                    v-if="hero.image.status"
-                    class="absolute bottom-4 right-4 glass-strong px-4 py-2 rounded-full flex items-center gap-2"
-                  >
-                    <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                    <span class="text-sm font-medium">{{ hero.image.status }}</span>
-                  </div>
+                <div class="relative w-full h-full rounded-full overflow-hidden glass-accent p-2">
+                  <NuxtImg
+                    :src="heroImage.src"
+                    :alt="heroImage.alt || hero.title"
+                    class="w-full h-full rounded-full object-cover"
+                    loading="eager"
+                    preset="avatar"
+                  />
                 </div>
+
+                <div
+                  v-if="heroImage.status"
+                  class="absolute bottom-4 right-4 glass-strong px-4 py-2 rounded-full flex items-center gap-2"
+                >
+                  <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                  <span class="text-sm font-medium">{{ heroImage.status }}</span>
+                </div>
+              </div>
 
                 <div v-if="heroStats.length" class="grid grid-cols-3 gap-4 mt-8">
                   <UCard
@@ -365,6 +365,7 @@ const { data: aboutContent } = await useAsyncData<AboutPageContent | null>(
 const page = computed<AboutPageContent | null>(() => aboutContent.value ?? null)
 const seo = computed<AboutSeo | undefined>(() => page.value?.seo)
 const hero = computed<HeroSection | null>(() => page.value?.hero ?? null)
+const heroImage = computed<HeroImage | null>(() => hero.value?.image ?? null)
 const heroStats = computed<HeroStat[]>(() => hero.value?.stats ?? [])
 const heroParagraphs = computed<string[]>(() => hero.value?.paragraphs ?? [])
 const heroButtons = computed<ButtonLink[]>(() => hero.value?.buttons ?? [])
