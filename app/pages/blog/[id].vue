@@ -112,19 +112,7 @@
 
         <!-- Article Body -->
         <div class="max-w-none">
-          <ContentRenderer 
-            v-if="post.body" 
-            :value="post" 
-            class="prose prose-lg dark:prose-invert prose-slate max-w-none
-                   prose-headings:text-default prose-headings:font-bold
-                   prose-p:text-default prose-p:leading-relaxed prose-p:text-lg
-                   prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-                   prose-strong:text-default prose-strong:font-semibold
-                   prose-code:text-primary prose-code:bg-gray-100 dark:prose-code:bg-gray-800
-                   prose-pre:bg-gray-100 dark:prose-pre:bg-gray-800
-                   prose-blockquote:text-muted prose-blockquote:border-primary
-                   prose-hr:border-gray-200 dark:prose-hr:border-gray-700" 
-          />
+          <ContentRenderer v-if="post.body" :value="post" />
           <div v-else class="text-muted py-8">
             No content available for this post.
           </div>

@@ -32,7 +32,7 @@
           />
         </div>
         
-        <ContentRenderer v-if="project.body" :value="project" class="prose prose-lg dark:prose-invert max-w-none mb-8" />
+        <ContentRenderer v-if="project.body" :value="project" />
         <div v-else class="prose prose-lg dark:prose-invert max-w-none mb-8">
           {{ project.description }}
         </div>

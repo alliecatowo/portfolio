@@ -74,6 +74,7 @@ export default defineContentConfig({
             value: z.string()
           })).optional(),
           paragraphs: z.array(z.string()).optional(),
+          body: z.string().optional(),
           buttons: z.array(z.object({
             label: z.string(),
             to: z.string().optional(),

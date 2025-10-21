@@ -285,6 +285,7 @@ type HeroSection = {
   image?: HeroImage
   stats?: HeroStat[]
   paragraphs?: string[]
+  body?: string
   buttons?: ButtonLink[]
 }
 
@@ -367,7 +368,15 @@ const seo = computed<AboutSeo | undefined>(() => page.value?.seo)
 const hero = computed<HeroSection | null>(() => page.value?.hero ?? null)
 const heroImage = computed<HeroImage | null>(() => hero.value?.image ?? null)
 const heroStats = computed<HeroStat[]>(() => hero.value?.stats ?? [])
-const heroParagraphs = computed<string[]>(() => hero.value?.paragraphs ?? [])
+const heroParagraphs = computed<string[]>(() => {
+  if (hero.value?.body) {
+    return hero.value.body
+      .split(/\n{2,}/)
+      .map((block: string) => block.trim())
+      .filter((block: string) => Boolean(block))
+  }
+  return hero.value?.paragraphs ?? []
+})
 const heroButtons = computed<ButtonLink[]>(() => hero.value?.buttons ?? [])
 const resolveDownloadAttr = (button: ButtonLink) => {
   if (typeof button.download === 'string' && button.download.trim().length > 0) {
