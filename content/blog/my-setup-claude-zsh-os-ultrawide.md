@@ -15,7 +15,7 @@ tags:
   - tools
   - workflow
 author: Allie
-published: true
+published: false
 featured: false
 featured_image: https://placehold.co/640x360?text=Dev
 slug: my-setup-claude-zsh-os-ultrawide
@@ -37,11 +37,10 @@ zsh with a minimal prompt, fast history search, and a handful of aliases. I pref
 
 - Mac at work: It just runs, and I’ve grown to love it.
 - Kubuntu at home: Plasma is pleasant without being loud. I’m not a huge Ubuntu fan and I get the snap complaints, but Kubuntu has been a refreshing reset while I tour other options.
-- another test
 
 ## Screens and focus
 
-Ultrawides are my sweet spot. One canvas, many contexts, no window Tetris. It’s easier on my attention and kinder to my neck.
+Ultrawides are my sweet spot. One canvas, many contexts, no window Tetris. It’s easier on my attention span and kinder to my neck.
 
 The theme across all of this: fewer obstacles, more flow.
 

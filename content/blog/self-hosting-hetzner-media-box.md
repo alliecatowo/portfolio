@@ -37,11 +37,11 @@ I like owning my media and my infrastructure. A bare‑metal Hetzner machine wit
 
 If you can't tell - I like my movies a lot, and I'm very fussy about the quality! I'm sure some of you are thinking "***Why Not ProxMox***\*?",\* and you'd be right! Hetzner doesn't support proxmox as a default recovery image, and by time I had setup my stack, it was too late to redo. I do plan to move to proxmox at some point, but this works for now, allows friends to hop on and help me admin the stack, and has been working good for my household, family, and friends so far, so I dont want to push my luck! The next hardware upgrade I get (I'm seeing some very attractive boxes with newer hardware on auction...), I'm definitely doing proxmox first!
 
-::prose-accordion{.one _76="two"}
+\::prose-accordion{.one -76="two"}
 test
 
 test
-::
+\::
 
 ## Why Not Homelab?
 

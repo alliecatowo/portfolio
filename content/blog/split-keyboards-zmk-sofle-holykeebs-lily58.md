@@ -14,21 +14,21 @@ tags:
 author: Allie
 published: true
 featured: false
-featured_image: /images/keyboards/sofle-pink-oled.jpg
-slug: split-keyboards-sofle-zmk-lily58
+featured_image: /images/keyboards/keyboards-collection-1.jpg
+slug: split-keyboards-zmk-sofle-holykeebs-lily58
 ---
 
 # Falling for Split Keyboards: Sofle ZMK, Lily58, and HolyKeebs Peripherals
 
-Split keyboards changed how I work. My hands relax. My shoulders drop. And with ZMK on a Sofle and a QMK Lily58 nearby, I can mold input to the way my brain actually thinks.
+Split keyboards changed how I work. My hands relax and my shoulders drop. With ZMK on a Sofle and a QMK Lily58 nearby, I can mold input to the way my brain actually thinks.
 
-![My Sofle with ZMK and OLED screens](/images/keyboards/sofle-pink-oled.jpg "Sofle keyboard with pink case and OLED displays")
+![My Sofle with ZMK and OLED screens](/images/keyboards/pink-green-rgb.jpg "Sofle keyboard with pink case and OLED displays")
 
 The pink Sofle above runs my ZMK fork and has been my daily driver for over a year. Those OLED screens show layer status, WPM, and custom graphics that make me smile every time I glance down.
 
 ## Why splits stuck
 
-- Comfort first: Columnar stagger and proper tenting removed the tension I didn’t realize I’d normalized.
+- Comfort first: Columnar stagger and proper tenting removed the tension I didn’t realize I’ve normalized.
 - Layers as language: Once you accept layers, your keyboard becomes an instrument. Text editing, nav, symbols, macros—everything falls into place.
 - Peripherals matter: A HolyKeebs touchpad, trackball, or trackpoint keeps my mouse hand from wandering. The whole rig works with me, not against me.
 

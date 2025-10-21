@@ -29,7 +29,7 @@ I’ve written a lot of React. It pays the bills, has a huge ecosystem, and ther
 
 ## Tradeoffs I accept
 
-- React’s ecosystem is bigger and has more hiring demand. That matters. I still choose Vue because the day‑to‑day developer experience is smoother, my components stay smaller, and I make fewer “framework decisions” per file.
+- React’s ecosystem is bigger and has more hiring demand, that matters. Still, I choose Vue because the day‑to‑day developer experience is smoother, my components stay smaller, and I make fewer “framework decisions” per file.
 - Some React patterns are genuinely great—hooks changed how we think about state. Vue just took that evolution, removed the footguns, and made it ergonomic.
 
 ## The outcome
@@ -55,7 +55,7 @@ JSX is powerful, but I don’t need a programming language to describe markup mo
 
 ## Composables vs Hooks (the sharp edges I avoid)
 
-Hooks are great until they aren’t—rules of hooks, dependency arrays, and the “why did this render three times?” rabbit hole. Composables feel calmer. They’re functions, they’re explicit, and the reactivity system does the boring parts without surprises.
+Hooks are great until they aren’t; rules of hooks, dependency arrays, and the “why did this render three times?” rabbit hole. Composables feel calmer. They’re functions, they’re explicit, and the reactivity system does the boring parts without surprises.
 
 ## Testing and long-term calm
 

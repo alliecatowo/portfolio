@@ -13,7 +13,7 @@ tags:
 author: Allie
 published: true
 featured: true
-featured_image: https://placehold.co/640x360?text=Blog
+featured_image: /screenshot-2025-10-20-at-23-49-08-nuxt-studio.png
 slug: nuxt-content-perfect-for-portfolio
 ---
 
