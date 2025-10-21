@@ -10,7 +10,7 @@ technologies:
   - Nuxt UI
   - Nuxt Content
 category: Full-Stack Development
-featured: true
+featured: false
 status: completed
 date: 2024-03-15
 github: https://github.com/allisons-dev/portfolio

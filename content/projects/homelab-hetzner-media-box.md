@@ -2,7 +2,7 @@
 title: Homelab Media Box on Hetzner (16TB)
 date: 2025-08-30
 description: A home away from home for my data, media, and privacy.
-featured: true
+featured: false
 status: published
 technologies:
   - Docker

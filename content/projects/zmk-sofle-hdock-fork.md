@@ -3,7 +3,7 @@ title: AllieCatKeeb Sofle (ZMK Firmware)
 date: 2025-08-30
 description: A custom split keyboard firmware engineered for power, style, and
   pure typing joy.
-featured: true
+featured: false
 status: published
 technologies:
   - ZMK
