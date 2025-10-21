@@ -1,0 +1,106 @@
+<AboutHero
+  title="Hi, I'm Allison"
+  subtitle="Full-Stack Developer & Tattoo Artist"
+  status="Available for projects"
+  image="/images/personal/allison-avatar.jpg"
+>
+  I'm a software engineer and tattoo artist living with my fiancé Violet and our two rescued chinchillas in a setup that perfectly blends code, creativity, and chaos. By day, I build applications with Vue, Nuxt, TypeScript, and modern tooling. By evening, I translate ideas into permanent art on skin.
+
+  My journey into tech started with teenage curiosity—customizing MySpace profiles and shipping scrappy websites that somehow worked. That curiosity grew into a career spanning startups, growth-stage teams, and enterprise-scale projects, always with a focus on resilient architecture and polished UX.
+
+  <template #buttons>
+    <ContentButton to="/projects" variant="magnet" leading-icon="i-lucide-folder">
+      View My Work
+    </ContentButton>
+    <ContentButton to="/contact" variant="outline" leading-icon="i-lucide-mail">
+      Get In Touch
+    </ContentButton>
+    <ContentButton href="/Allison-Coleman-Resume.pdf" variant="ghost" color="neutral" leading-icon="i-lucide-download" download="Allison-Coleman-Resume.pdf" external>
+      Download Resume
+    </ContentButton>
+  </template>
+
+  <template #stats>
+    <AboutStat label="Years Experience" value="5+" />
+    <AboutStat label="Projects Shipped" value="20+" />
+    <AboutStat label="Coffee / Tea" value="Balanced ☕" />
+  </template>
+</AboutHero>
+
+<JourneyTimeline title="My Journey">
+  <JourneyItem title="Teenage Tinkering" color="primary">
+    It started with MySpace profile customization and shamelessly view-sourcing every site I loved. Building my first "Hello World" page felt like magic—creating something from nothing but text in a file.
+  </JourneyItem>
+  <JourneyItem title="Formal Education & First Roles" color="purple">
+    Computer science gave me the theory: algorithms, data structures, systems. The real learning happened in internships and first roles where communication, product thinking, and collaboration mattered as much as clean code.
+  </JourneyItem>
+  <JourneyItem title="Product Engineering & Tattoo Discovery" color="pink">
+    Years of product engineering across healthcare, fintech, and e-commerce taught me how to ship reliable software. Around that time I fell in love with tattooing—a creative counterpart that sharpened my sense of detail, balance, and storytelling.
+  </JourneyItem>
+  <JourneyItem title="Present Day" color="gradient">
+    I balance software engineering with tattoo artistry, open-source hardware projects, and writing. Violet and our chinchillas keep me grounded, and I stay energized by the communities around custom keyboards, Nuxt, and creative tooling.
+  </JourneyItem>
+</JourneyTimeline>
+
+<SkillCategoryGrid title="Technical Arsenal">
+  <SkillCategory title="Frontend Magic" icon="i-lucide-monitor" color="primary">
+    <li>Nuxt & Vue</li>
+    <li>React & Next.js</li>
+    <li>TypeScript</li>
+    <li>Tailwind & design systems</li>
+    <li>Accessible UI patterns</li>
+  </SkillCategory>
+  <SkillCategory title="Backend Power" icon="i-lucide-server" color="purple">
+    <li>Node.js & Nitro</li>
+    <li>REST & GraphQL APIs</li>
+    <li>PostgreSQL, MongoDB</li>
+    <li>Authentication & RBAC</li>
+    <li>Edge & serverless workflows</li>
+  </SkillCategory>
+  <SkillCategory title="Cloud & Ops" icon="i-lucide-cloud" color="pink">
+    <li>Deployments on Vercel & Netlify</li>
+    <li>CI/CD pipelines</li>
+    <li>Docker & container orchestration</li>
+    <li>Realtime data & pub/sub</li>
+    <li>Observability & logging</li>
+  </SkillCategory>
+  <SkillCategory title="Tools & Craft" icon="i-lucide-wrench" color="yellow">
+    <li>Design systems & Storybook</li>
+    <li>Nuxt Content & docs experience</li>
+    <li>AI-assisted workflows</li>
+    <li>Hardware tinkering & firmware</li>
+    <li>Creative coding & prototyping</li>
+  </SkillCategory>
+</SkillCategoryGrid>
+
+<LifeGrid title="Beyond the Code">
+  <LifeCard title="Split Keyboards" icon="i-lucide-keyboard" image="/images/keyboards/sofle-pink-oled.jpg" color="primary">
+    Daily drivers: a pink Sofle running my ZMK fork and a Lily58 with integrated trackpad. I maintain firmware forks to help others get comfortable with ergonomic keyboards.
+  </LifeCard>
+  <LifeCard title="Tattoo Artistry" icon="i-lucide-pen-tool" image="/images/couple/allison-violet-beach.jpg" color="purple">
+    Tattooing keeps my craft grounded. I specialise in linework, botanical pieces, and collaborative storytelling that clients carry with them forever.
+  </LifeCard>
+  <LifeCard title="Chinchilla Parents" icon="i-lucide-heart" image="/images/couple/allison-violet-selfie.jpg" color="pink">
+    Ray and Paddy keep my late-night coding sessions interesting—equal parts gentle loafing and pure chaos.
+  </LifeCard>
+</LifeGrid>
+
+<AboutCta
+  title="Let's Create Something Memorable"
+  description="Interested in collaborating, hiring, or chatting about creative tech? I'm always up for thoughtful conversations."
+>
+  <template #buttons>
+    <ContentButton to="/contact" variant="magnet" leading-icon="i-lucide-mail">
+      Get In Touch
+    </ContentButton>
+    <ContentButton to="/projects" variant="outline" leading-icon="i-lucide-folder">
+      View Projects
+    </ContentButton>
+  </template>
+
+  <template #socials>
+    <SocialIconLink label="GitHub" href="https://github.com/alliecatowo" icon="i-lucide-github" />
+    <SocialIconLink label="LinkedIn" href="https://linkedin.com/in/allie-cat" icon="i-lucide-linkedin" />
+    <SocialIconLink label="Email" href="mailto:me@allisons.dev" icon="i-lucide-mail" />
+  </template>
+</AboutCta>

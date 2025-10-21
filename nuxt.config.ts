@@ -125,6 +125,4 @@ export default defineNuxtConfig({
       external: ['lightningcss', '@tailwindcss/oxide']
     }
   },
-  components: {
-  }
 })

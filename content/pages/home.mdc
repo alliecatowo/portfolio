@@ -1,0 +1,70 @@
+<HomeHero
+  title="Allison's Developer Portfolio"
+  subtitle="Full-Stack Development, Creative Problem Solving"
+  :note="{ prefix: 'Press', keys: ['⌘', 'K'], suffix: 'to open quick search' }"
+>
+  Full-stack developer specializing in modern web technologies, user experience, and thoughtful product design. I build resilient systems, craft polished interfaces, and guide teams from concept to launch.
+
+  <template #buttons>
+    <ContentButton to="/projects" variant="magnet" trailing-icon="i-lucide-arrow-down">
+      View My Work
+    </ContentButton>
+    <ContentButton to="/about" variant="outline">
+      About Me
+    </ContentButton>
+  </template>
+</HomeHero>
+
+<CraftingDigitalExperiencesSection />
+
+<HeroShowcaseSection>
+  <template #card>
+    <div class="aspect-[16/9] bg-gradient-dev relative overflow-hidden rounded-xl">
+      <NuxtImg
+        src="https://picsum.photos/1200/600?random=100"
+        alt="Abstract representation of code and development work"
+        class="object-cover w-full h-full mix-blend-overlay opacity-70"
+        loading="lazy"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+      <div class="absolute top-6 right-6 flex gap-3" aria-hidden="true">
+        <div class="w-12 h-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full flex items-center justify-center float-animation shadow-lg">
+          <UIcon name="i-lucide-code" class="w-6 h-6 text-primary" />
+        </div>
+        <div class="w-12 h-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full flex items-center justify-center float-animation shadow-lg" style="animation-delay: 0.5s;">
+          <UIcon name="i-lucide-monitor" class="w-6 h-6 text-primary" />
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template #quick-links>
+    <HomeQuickLink title="Projects" description="Explore my recent work and experiments" to="#projects" icon="i-lucide-folder-code" />
+    <HomeQuickLink title="Blog" description="Development notes, walkthroughs, and tools" to="#blog" icon="i-lucide-book-open" />
+    <HomeQuickLink title="Contact" description="Let's talk about shipping something great" to="/contact" icon="i-lucide-message-circle" />
+  </template>
+</HeroShowcaseSection>
+
+<FeaturedProjectsSection
+  id="projects"
+  title="Featured Projects"
+  description="Selected builds that combine thoughtful UX, reliable architecture, and delightful polish"
+/>
+
+<LatestInsightsSection
+  id="blog"
+  title="Latest Insights"
+  description="Notes on building, debugging, and learning in the open"
+/>
+
+<HomeCta
+  title="Let's Build Something Amazing"
+  description="Ready to bring your ideas to life? I'd love to hear about your next project, collaboration, or product vision."
+>
+  <ContentButton to="/contact" variant="magnet" leading-icon="i-lucide-mail">
+    Get In Touch
+  </ContentButton>
+  <ContentButton to="/projects" variant="outline" trailing-icon="i-lucide-arrow-right">
+    View Projects
+  </ContentButton>
+</HomeCta>
