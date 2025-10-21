@@ -84,7 +84,7 @@ export default defineContentConfig({
             icon: z.string().optional(),
             iconPosition: z.enum(['leading', 'trailing']).optional(),
             external: z.boolean().optional(),
-            download: z.boolean().optional()
+            download: z.union([z.boolean(), z.string()]).optional()
           })).optional(),
           card: z.object({
             title: z.string(),
@@ -103,10 +103,10 @@ export default defineContentConfig({
               color: z.string().optional(),
               size: z.string().optional(),
               icon: z.string().optional(),
-              iconPosition: z.enum(['leading', 'trailing']).optional(),
-              external: z.boolean().optional(),
-              download: z.boolean().optional()
-            })).optional()
+            iconPosition: z.enum(['leading', 'trailing']).optional(),
+            external: z.boolean().optional(),
+            download: z.union([z.boolean(), z.string()]).optional()
+          })).optional()
           }).optional()
         }),
         quickLinks: z.object({
@@ -161,7 +161,7 @@ export default defineContentConfig({
             icon: z.string().optional(),
             iconPosition: z.enum(['leading', 'trailing']).optional(),
             external: z.boolean().optional(),
-            download: z.boolean().optional()
+            download: z.union([z.boolean(), z.string()]).optional()
           })).optional(),
           socials: z.array(z.object({
             label: z.string(),

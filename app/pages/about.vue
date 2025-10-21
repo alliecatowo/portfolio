@@ -214,7 +214,10 @@
                 :href="button.href"
                 :target="button.external ? '_blank' : undefined"
                 :rel="button.external ? 'noopener noreferrer' : undefined"
-                :download="button.download"
+                :download="button.download
+                  ? (button.download === true ? '' : button.download)
+                  : undefined
+                "
                 :variant="button.variant || 'solid'"
                 :color="button.color || 'primary'"
                 :size="button.size || 'md'"
@@ -259,7 +262,7 @@ type ButtonLink = {
   icon?: string
   iconPosition?: 'leading' | 'trailing'
   external?: boolean
-  download?: boolean
+  download?: boolean | string
 }
 
 type AboutSeo = {

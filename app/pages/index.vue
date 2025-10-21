@@ -96,7 +96,10 @@
                   :href="button.href"
                   :target="button.external ? '_blank' : undefined"
                   :rel="button.external ? 'noopener noreferrer' : undefined"
-                  :download="button.download"
+                  :download="button.download
+                    ? (button.download === true ? '' : button.download)
+                    : undefined
+                  "
                   :color="button.color || 'primary'"
                   :variant="button.variant || 'solid'"
                   :size="button.size || 'md'"
@@ -324,7 +327,10 @@
                 :href="button.href"
                 :target="button.external ? '_blank' : undefined"
                 :rel="button.external ? 'noopener noreferrer' : undefined"
-                :download="button.download"
+                :download="button.download
+                  ? (button.download === true ? '' : button.download)
+                  : undefined
+                "
                 :color="button.color || 'primary'"
                 :variant="button.variant || 'solid'"
                 :size="button.size || 'md'"
