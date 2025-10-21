@@ -149,66 +149,52 @@
               {{ projectsSection.description }}
             </p>
           </div>
-
-        <UCarousel
-          v-if="featuredProjects && featuredProjects.length > 0"
-          class="w-full"
-          :items="featuredProjects"
-          :ui="featuredProjectsCarouselUi"
-          :breakpoints="featuredProjectsBreakpoints"
-          :loop="featuredProjects.length > 3"
-          :align="'start'"
-          :drag-free="true"
-          :slides-to-scroll="1"
-          arrows
-          :prev="featuredProjectsPrev"
-          :next="featuredProjectsNext"
-        >
-            <template #default="{ item: project, index }">
-              <UCard
-                class="glass-accent hover:scale-105 transition-transform group"
-                :to="`/projects/${project.slug || project.path?.split('/').pop()}`"
-              >
-                <template #header>
-                  <div class="aspect-video bg-gradient-dev relative overflow-hidden rounded-lg">
-                    <NuxtImg
-                      preset="card"
-                      :src="project.image || `https://picsum.photos/400/300?random=${index + 20}`"
-                      :alt="project.title"
-                      class="object-cover w-full h-full mix-blend-overlay opacity-70 group-hover:opacity-90 transition-opacity"
-                      loading="lazy"
-                      sizes="sm:100vw md:50vw lg:33vw"
-                    />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <UIcon name="i-lucide-external-link" class="w-5 h-5 text-white" />
-                    </div>
+          <UPageGrid v-if="featuredProjects && featuredProjects.length > 0" class="mt-12">
+            <UCard
+              v-for="(project, index) in featuredProjects"
+              :key="project.path || index"
+              class="glass-accent hover:scale-105 transition-transform group"
+              :to="`/projects/${project.slug || project.path?.split('/').pop()}`"
+            >
+              <template #header>
+                <div class="aspect-video bg-gradient-dev relative overflow-hidden rounded-lg">
+                  <NuxtImg
+                    preset="card"
+                    :src="project.image || `https://picsum.photos/400/300?random=${index + 20}`"
+                    :alt="project.title"
+                    class="object-cover w-full h-full mix-blend-overlay opacity-70 group-hover:opacity-90 transition-opacity"
+                    loading="lazy"
+                    sizes="sm:100vw md:50vw lg:33vw"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <UIcon name="i-lucide-external-link" class="w-5 h-5 text-white" />
                   </div>
-                </template>
+                </div>
+              </template>
 
-                <h3 class="text-xl font-bold mb-3 text-default">
-                  {{ project.title }}
-                </h3>
-                <p class="text-muted mb-4 line-clamp-2">
-                  {{ project.description }}
-                </p>
+              <h3 class="text-xl font-bold mb-3 text-default">
+                {{ project.title }}
+              </h3>
+              <p class="text-muted mb-4 line-clamp-2">
+                {{ project.description }}
+              </p>
 
-                <template #footer>
-                  <div class="flex flex-wrap gap-2">
-                    <UBadge
-                      v-for="(tech, techIndex) in project.technologies?.slice(0, 3)"
-                      :key="techIndex"
-                      color="primary"
-                      variant="soft"
-                      size="sm"
-                    >
-                      {{ tech }}
-                    </UBadge>
-                  </div>
-                </template>
-              </UCard>
-            </template>
-          </UCarousel>
+              <template #footer>
+                <div class="flex flex-wrap gap-2">
+                  <UBadge
+                    v-for="(tech, techIndex) in project.technologies?.slice(0, 3)"
+                    :key="techIndex"
+                    color="primary"
+                    variant="soft"
+                    size="sm"
+                  >
+                    {{ tech }}
+                  </UBadge>
+                </div>
+              </template>
+            </UCard>
+          </UPageGrid>
 
           <div v-else class="py-12 text-center">
             <UIcon name="i-lucide-folder" class="h-16 w-16 mx-auto text-gray-300 dark:text-gray-700 mb-4" aria-hidden="true" />
@@ -357,44 +343,6 @@ const { fetchProjects, fetchBlogPosts, fetchPage } = useContent()
 
 const { data: homeContent } = await useAsyncData('home-page-content', () => fetchPage('home'))
 
-const featuredProjectsCarouselUi = {
-  root: 'w-full',
-  viewport: 'overflow-visible pb-4',
-  container: 'gap-6 sm:gap-8',
-  item: 'basis-[85%] sm:basis-2/3 md:basis-1/2 lg:basis-1/3 xl:basis-1/4 pe-2',
-  arrows: 'hidden md:flex',
-  prev: '-left-6 sm:-left-10 top-1/2 -translate-y-1/2',
-  next: '-right-6 sm:-right-10 top-1/2 -translate-y-1/2'
-} as const
-
-const featuredProjectsBreakpoints = {
-  '(max-width: 640px)': {
-    ui: {
-      container: 'gap-4',
-      item: 'basis-[92%] pe-2'
-    }
-  },
-  '(min-width: 1536px)': {
-    ui: {
-      item: 'basis-1/4'
-    }
-  }
-} as const
-
-const featuredProjectsPrev = {
-  icon: 'i-lucide-chevron-left',
-  variant: 'outline',
-  color: 'primary',
-  size: 'sm'
-} as const
-
-const featuredProjectsNext = {
-  icon: 'i-lucide-chevron-right',
-  variant: 'outline',
-  color: 'primary',
-  size: 'sm'
-} as const
-
 const page = computed(() => homeContent.value ?? null)
 const seo = computed(() => page.value?.seo)
 const hero = computed(() => page.value?.hero ?? null)
@@ -409,7 +357,7 @@ const ctaSection = computed(() => page.value?.cta ?? null)
 
 const { data: featuredProjects } = await useAsyncData(
   'home-featured-projects',
-  () => fetchProjects(3, true)
+  () => fetchProjects(undefined, true)
 )
 
 const { data: recentPosts } = await useAsyncData(
