@@ -1,18 +1,20 @@
-slug: home
+slug: ''
 layout: home
 seo:
   title: Allison's Developer Portfolio - Full-Stack Web Development
-  description: Full-stack developer specializing in modern web technologies, Vue.js, Node.js, and creating exceptional user experiences.
+  description: Full-stack developer Specializing in leveraging AI to accelerate product cycle and developer velocity, and building scalable, robust, and human centric applications.
   keywords:
-    - developer
-    - portfolio
-    - web development
-    - full-stack
+    - AI
+    - software engineer
+    - Full Stack
+    - Nuxt
     - Vue.js
-    - Node.js
+    - React.js
+    - RAG
+    - Cloud Infrastructue
 hero:
   title: Allison's Developer Portfolio
-  description: Full-stack developer specializing in modern web technologies, creative problem solving, and building exceptional user experiences.
+  description: Full-stack developer specializing in modern web technologies, creative problem solving, and building exceptional user experience
   note:
     prefix: Press
     keys:
@@ -56,7 +58,6 @@ hero:
           - RAG
           - Audio/Visual models
           - Machine Learning
-
     buttons:
       - label: View My Work
         to: '#projects'
@@ -70,6 +71,9 @@ hero:
         variant: outline
         color: primary
         size: lg
+  buttons: []
+  paragraphs: []
+  stats: []
 quickLinks:
   links:
     - title: Projects
@@ -106,6 +110,7 @@ skills:
     - title: Mobile & PWA
       description: React Native, Progressive Web Apps
       icon: i-lucide-smartphone
+  categories: []
 blog:
   title: Latest Insights
   description: Thoughts on development, technology, and innovation
@@ -128,3 +133,8 @@ cta:
       color: primary
       variant: outline
       size: lg
+  socials: []
+life:
+  cards: []
+journey:
+  items: []
