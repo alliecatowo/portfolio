@@ -46,7 +46,7 @@ export default defineContentConfig({
     }),
     pages: defineCollection({
       type: 'data',
-      source: 'pages/**/*.(yml|yaml|json)',
+      source: 'pages/**/*.{yml,yaml,json}',
       schema: z.object({
         slug: z.string(),
         layout: z.enum(['home', 'about']),
