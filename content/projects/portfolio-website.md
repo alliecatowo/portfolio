@@ -15,8 +15,10 @@ tags:
   - vue
   - typescript
   - tailwind
-  - ssr
-  - jamstack
+  - static-site
+  - cms
+  - nuxt-content
+  - nuxt-ui
 category: Full-Stack Development
 featured: false
 status: completed

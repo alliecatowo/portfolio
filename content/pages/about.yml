@@ -20,7 +20,7 @@ hero:
   stats:
     - label: Years Experience
       value: 5+
-    - label: Coffee Consumed
+    - label: Redbull Consumed
       value: ∞
     - label: Projects Completed
       value: 20+
@@ -75,7 +75,7 @@ journey:
       color: pink-500
       description: Years of startup life, scaling challenges, and diverse projects across healthcare, fintech, and e-commerce taught me that technology is only as good as the problems it solves. Around this time, I discovered tattooing—initially as stress relief, but it quickly became a parallel creative practice that informed my approach to software development.
     - title: Present Day
-      color: gradient
+      color: primary
       description: Now I balance software engineering with tattoo artistry, finding that each practice strengthens the other. I maintain open-source keyboard firmware, write about technology and creativity, and continue building applications that solve real problems. Violet and our chinchillas keep me grounded, reminding me that the best work happens when you bring your whole self to it.
 skills:
   title: Technical Arsenal
