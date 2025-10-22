@@ -144,25 +144,17 @@
             </p>
           </div>
           <UPageGrid v-if="featuredProjects && featuredProjects.length > 0" class="mt-12">
-            <UPageCard
+            <UBlogPost
               v-for="(project, index) in featuredProjects"
               :key="project.path || index"
               :title="project.title"
-              :description="project.description"
+              :image="project.image || `https://picsum.photos/400/300?random=${index + 20}`"
               :to="`/projects/${project.slug}`"
               variant="soft"
-              orientation="horizontal"
-              class="glass-accent hover:scale-105 transition-transform"
+              class="glass-accent hover:scale-105 transition-transform min-h-[400px]"
             >
-              <NuxtImg
-                preset="card"
-                :src="project.image || `https://picsum.photos/400/300?random=${index + 20}`"
-                :alt="project.title"
-                class="w-full h-full object-cover rounded-lg"
-                loading="lazy"
-                sizes="sm:100vw md:50vw lg:33vw"
-              />
-              <template #footer>
+              <template #description>
+                <p class="text-base text-pretty text-muted mb-3">{{ project.description }}</p>
                 <div class="flex flex-wrap gap-2">
                   <UBadge
                     v-for="(tech, techIndex) in project.technologies?.slice(0, 3)"
@@ -175,7 +167,7 @@
                   </UBadge>
                 </div>
               </template>
-            </UPageCard>
+            </UBlogPost>
           </UPageGrid>
 
           <div v-else class="py-12 text-center">
