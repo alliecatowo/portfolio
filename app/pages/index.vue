@@ -1,6 +1,6 @@
 <template>
   <UPage>
-    <UMain class="min-h-screen bg-gradient-animated bg-dots flex items-center justify-center relative overflow-hidden">
+    <UMain class="min-h-screen bg-gradient-animated bg-dots relative overflow-hidden">
       <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
         <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse pulse-glow" />
         <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl animate-pulse float-animation" style="animation-delay: 2s;" />
@@ -8,7 +8,7 @@
         <div class="absolute bottom-1/3 right-1/3 w-24 h-24 bg-cyan-500/5 rounded-full blur-xl sparkle-element" style="animation-delay: 1s;" />
       </div>
 
-      <div class="relative z-20">
+      <div class="relative z-20 py-20 md:py-32">
         <ContentRenderer v-if="page" :value="page" :data="{ featuredProjects: featuredProjects || [], recentPosts: recentPosts || [] }" />
       </div>
     </UMain>

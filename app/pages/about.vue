@@ -7,7 +7,7 @@
     </div>
 
     <div class="relative z-10">
-      <ContentRenderer :value="page" />
+      <ContentRenderer v-if="page" :value="page" />
     </div>
   </main>
 </template>

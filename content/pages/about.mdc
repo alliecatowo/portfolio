@@ -1,106 +1,170 @@
-<AboutHero
-  title="Hi, I'm Allison"
-  subtitle="Full-Stack Developer & Tattoo Artist"
-  status="Available for projects"
-  image="/images/personal/allison-avatar.jpg"
->
+---
+title: About Me - Allison's Developer Portfolio
+description: Learn about Allison - a passionate full-stack developer blending modern web development with tattoo artistry and creative projects.
+slug: about
+---
+
+::u-page-hero{ title="Hi, I'm Allison" subtitle="Full-Stack Developer & Tattoo Artist" orientation="horizontal" :ui="{ container: 'grid lg:grid-cols-[1fr,480px] gap-12 lg:gap-16 items-center' }" }
+  ::div{ class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 text-sm mb-4" }
+  ::span{ class="w-3 h-3 bg-green-500 rounded-full animate-pulse" }
+  Available for projects
+  ::
+
   I'm a software engineer and tattoo artist living with my fiancé Violet and our two rescued chinchillas in a setup that perfectly blends code, creativity, and chaos. By day, I build applications with Vue, Nuxt, TypeScript, and modern tooling. By evening, I translate ideas into permanent art on skin.
 
   My journey into tech started with teenage curiosity—customizing MySpace profiles and shipping scrappy websites that somehow worked. That curiosity grew into a career spanning startups, growth-stage teams, and enterprise-scale projects, always with a focus on resilient architecture and polished UX.
 
-  <template #buttons>
-    <ContentButton to="/projects" variant="magnet" leading-icon="i-lucide-folder">
-      View My Work
-    </ContentButton>
-    <ContentButton to="/contact" variant="outline" leading-icon="i-lucide-mail">
-      Get In Touch
-    </ContentButton>
-    <ContentButton href="/Allison-Coleman-Resume.pdf" variant="ghost" color="neutral" leading-icon="i-lucide-download" download="Allison-Coleman-Resume.pdf" external>
-      Download Resume
-    </ContentButton>
-  </template>
+  ::u-button{ to="/projects" variant="magnet" leading-icon="i-lucide-folder" }
+  View My Work
+  ::
 
-  <template #stats>
-    <AboutStat label="Years Experience" value="5+" />
-    <AboutStat label="Projects Shipped" value="20+" />
-    <AboutStat label="Coffee / Tea" value="Balanced ☕" />
-  </template>
-</AboutHero>
+  ::u-button{ to="/contact" variant="outline" leading-icon="i-lucide-mail" }
+  Get In Touch
+  ::
 
-<JourneyTimeline title="My Journey">
-  <JourneyItem title="Teenage Tinkering" color="primary">
-    It started with MySpace profile customization and shamelessly view-sourcing every site I loved. Building my first "Hello World" page felt like magic—creating something from nothing but text in a file.
-  </JourneyItem>
-  <JourneyItem title="Formal Education & First Roles" color="purple">
-    Computer science gave me the theory: algorithms, data structures, systems. The real learning happened in internships and first roles where communication, product thinking, and collaboration mattered as much as clean code.
-  </JourneyItem>
-  <JourneyItem title="Product Engineering & Tattoo Discovery" color="pink">
-    Years of product engineering across healthcare, fintech, and e-commerce taught me how to ship reliable software. Around that time I fell in love with tattooing—a creative counterpart that sharpened my sense of detail, balance, and storytelling.
-  </JourneyItem>
-  <JourneyItem title="Present Day" color="gradient">
-    I balance software engineering with tattoo artistry, open-source hardware projects, and writing. Violet and our chinchillas keep me grounded, and I stay energized by the communities around custom keyboards, Nuxt, and creative tooling.
-  </JourneyItem>
-</JourneyTimeline>
+  ::u-button{ href="/Allison-Coleman-Resume.pdf" variant="ghost" color="neutral" leading-icon="i-lucide-download" download="Allison-Coleman-Resume.pdf" external }
+  Download Resume
+  ::
 
-<SkillCategoryGrid title="Technical Arsenal">
-  <SkillCategory title="Frontend Magic" icon="i-lucide-monitor" color="primary">
-    <li>Nuxt & Vue</li>
-    <li>React & Next.js</li>
-    <li>TypeScript</li>
-    <li>Tailwind & design systems</li>
-    <li>Accessible UI patterns</li>
-  </SkillCategory>
-  <SkillCategory title="Backend Power" icon="i-lucide-server" color="purple">
-    <li>Node.js & Nitro</li>
-    <li>REST & GraphQL APIs</li>
-    <li>PostgreSQL, MongoDB</li>
-    <li>Authentication & RBAC</li>
-    <li>Edge & serverless workflows</li>
-  </SkillCategory>
-  <SkillCategory title="Cloud & Ops" icon="i-lucide-cloud" color="pink">
-    <li>Deployments on Vercel & Netlify</li>
-    <li>CI/CD pipelines</li>
-    <li>Docker & container orchestration</li>
-    <li>Realtime data & pub/sub</li>
-    <li>Observability & logging</li>
-  </SkillCategory>
-  <SkillCategory title="Tools & Craft" icon="i-lucide-wrench" color="yellow">
-    <li>Design systems & Storybook</li>
-    <li>Nuxt Content & docs experience</li>
-    <li>AI-assisted workflows</li>
-    <li>Hardware tinkering & firmware</li>
-    <li>Creative coding & prototyping</li>
-  </SkillCategory>
-</SkillCategoryGrid>
+  #aside
+  ::div{ class="space-y-4" }
+  ::u-card{ class="text-center" }
+  ::div{ class="text-2xl font-bold text-primary" } 5+ ::
+  ::div{ class="text-sm text-muted" } Years Experience ::
+  ::
 
-<LifeGrid title="Beyond the Code">
-  <LifeCard title="Split Keyboards" icon="i-lucide-keyboard" image="/images/keyboards/sofle-pink-oled.jpg" color="primary">
-    Daily drivers: a pink Sofle running my ZMK fork and a Lily58 with integrated trackpad. I maintain firmware forks to help others get comfortable with ergonomic keyboards.
-  </LifeCard>
-  <LifeCard title="Tattoo Artistry" icon="i-lucide-pen-tool" image="/images/couple/allison-violet-beach.jpg" color="purple">
-    Tattooing keeps my craft grounded. I specialise in linework, botanical pieces, and collaborative storytelling that clients carry with them forever.
-  </LifeCard>
-  <LifeCard title="Chinchilla Parents" icon="i-lucide-heart" image="/images/couple/allison-violet-selfie.jpg" color="pink">
-    Ray and Paddy keep my late-night coding sessions interesting—equal parts gentle loafing and pure chaos.
-  </LifeCard>
-</LifeGrid>
+  ::u-card{ class="text-center" }
+  ::div{ class="text-2xl font-bold text-primary" } 20+ ::
+  ::div{ class="text-sm text-muted" } Projects Shipped ::
+  ::
 
-<AboutCta
-  title="Let's Create Something Memorable"
-  description="Interested in collaborating, hiring, or chatting about creative tech? I'm always up for thoughtful conversations."
->
-  <template #buttons>
-    <ContentButton to="/contact" variant="magnet" leading-icon="i-lucide-mail">
-      Get In Touch
-    </ContentButton>
-    <ContentButton to="/projects" variant="outline" leading-icon="i-lucide-folder">
-      View Projects
-    </ContentButton>
-  </template>
+  ::u-card{ class="text-center" }
+  ::div{ class="text-2xl font-bold text-primary" } Balanced ☕ ::
+  ::div{ class="text-sm text-muted" } Coffee / Tea ::
+  ::
 
-  <template #socials>
-    <SocialIconLink label="GitHub" href="https://github.com/alliecatowo" icon="i-lucide-github" />
-    <SocialIconLink label="LinkedIn" href="https://linkedin.com/in/allie-cat" icon="i-lucide-linkedin" />
-    <SocialIconLink label="Email" href="mailto:me@allisons.dev" icon="i-lucide-mail" />
-  </template>
-</AboutCta>
+  ::div{ class="relative mx-auto w-72 h-72 md:w-80 md:h-80 mt-8" }
+  ::div{ class="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-pink-500 to-purple-600 animate-spin-slow opacity-20" }
+  ::div{ class="absolute inset-4 rounded-full bg-gradient-to-l from-primary via-purple-600 to-pink-500 animate-spin-reverse opacity-20" }
+  ::div{ class="relative w-full h-full rounded-full overflow-hidden p-2" }
+  ::nuxt-img{ src="/images/personal/allison-avatar.jpg" alt="Hi, I'm Allison" preset="avatar" class="w-full h-full rounded-full object-cover" }
+  ::
+  ::
+  ::
+::
+
+
+::journey-timeline
+
+### Teenage Tinkering
+It started with MySpace profile customization and shamelessly view-sourcing every site I loved. Building my first "Hello World" page felt like magic—creating something from nothing but text in a file.
+
+### Formal Education & First Roles
+Computer science gave me the theory: algorithms, data structures, systems. The real learning happened in internships and first roles where communication, product thinking, and collaboration mattered as much as clean code.
+
+### Product Engineering & Tattoo Discovery
+Years of product engineering across healthcare, fintech, and e-commerce taught me how to ship reliable software. Around that time I fell in love with tattooing—a creative counterpart that sharpened my sense of detail, balance, and storytelling.
+
+### Present Day
+I balance software engineering with tattoo artistry, open-source hardware projects, and writing. Violet and our chinchillas keep me grounded, and I stay energized by the communities around custom keyboards, Nuxt, and creative tooling.
+
+::
+
+::u-card-group
+- Nuxt & Vue
+- React & Next.js
+- TypeScript
+- Tailwind & design systems
+- Accessible UI patterns
+::
+
+::u-card{title="Backend Power" icon="i-lucide-server" color="purple"}
+- Node.js & Nitro
+- REST & GraphQL APIs
+- PostgreSQL, MongoDB
+- Authentication & RBAC
+- Edge & serverless workflows
+::
+
+::u-card{title="Cloud & Ops" icon="i-lucide-cloud" color="pink"}
+- Deployments on Vercel & Netlify
+- CI/CD pipelines
+- Docker & container orchestration
+- Realtime data & pub/sub
+- Observability & logging
+::
+
+::u-card{title="Tools & Craft" icon="i-lucide-wrench" color="yellow"}
+- Design systems & Storybook
+- Nuxt Content & docs experience
+- AI-assisted workflows
+- Hardware tinkering & firmware
+- Creative coding & prototyping
+::
+
+::
+
+::u-card-group
+
+::u-card{title="Split Keyboards" icon="i-lucide-keyboard" color="primary"}
+![Split Keyboards](/images/keyboards/sofle-pink-oled.jpg)
+
+Daily drivers: a pink Sofle running my ZMK fork and a Lily58 with integrated trackpad. I maintain firmware forks to help others get comfortable with ergonomic keyboards.
+::
+
+::u-card{title="Tattoo Artistry" icon="i-lucide-pen-tool" color="purple"}
+![Tattoo Artistry](/images/couple/allison-violet-beach.jpg)
+
+Tattooing keeps my craft grounded. I specialise in linework, botanical pieces, and collaborative storytelling that clients carry with them forever.
+::
+
+::u-card{title="Chinchilla Parents" icon="i-lucide-heart" color="pink"}
+![Chinchilla Parents](/images/couple/allison-violet-selfie.jpg)
+
+Ray and Paddy keep my late-night coding sessions interesting—equal parts gentle loafing and pure chaos.
+::
+
+::
+
+::about-cta{ title="Let's Create Something Memorable" description="Interested in collaborating, hiring, or chatting about creative tech? I'm always up for thoughtful conversations." }
+  ::u-button{ to="/contact" variant="magnet" leading-icon="i-lucide-mail" }
+  Get In Touch
+  ::
+
+  ::u-button{ to="/projects" variant="outline" leading-icon="i-lucide-folder" }
+  View Projects
+  ::
+
+  #links
+  ::u-icon{name="i-lucide-github"} [GitHub](https://github.com/alliecatowo) •
+  ::u-icon{name="i-lucide-linkedin"} [LinkedIn](https://linkedin.com/allie-cat) •
+  ::u-icon{name="i-lucide-mail"} [Email](mailto:me@allisons.dev)
+::
+
+<style scoped>
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spin-reverse 25s linear infinite;
+}
+</style>

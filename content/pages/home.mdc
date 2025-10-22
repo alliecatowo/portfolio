@@ -1,70 +1,130 @@
-<HomeHero
-  title="Allison's Developer Portfolio"
-  subtitle="Full-Stack Development, Creative Problem Solving"
-  :note="{ prefix: 'Press', keys: ['⌘', 'K'], suffix: 'to open quick search' }"
->
+---
+title: Allison's Developer Portfolio
+description: Full-stack developer specializing in modern web technologies, user experience, and thoughtful product design.
+slug: home
+---
+
+::u-page-hero{ title="Allison's Developer Portfolio" subtitle="Full-Stack Development, Creative Problem Solving" :ui="{ container: 'max-w-4xl mx-auto text-center' }" }
   Full-stack developer specializing in modern web technologies, user experience, and thoughtful product design. I build resilient systems, craft polished interfaces, and guide teams from concept to launch.
 
-  <template #buttons>
-    <ContentButton to="/projects" variant="magnet" trailing-icon="i-lucide-arrow-down">
-      View My Work
-    </ContentButton>
-    <ContentButton to="/about" variant="outline">
-      About Me
-    </ContentButton>
-  </template>
-</HomeHero>
+  ::u-button{ to="/projects" variant="magnet" trailing-icon="i-lucide-arrow-down" }
+  View My Work
+  ::
 
-<CraftingDigitalExperiencesSection />
+  ::u-button{ to="/about" variant="outline" }
+  About Me
+  ::
+::
 
-<HeroShowcaseSection>
-  <template #card>
-    <div class="aspect-[16/9] bg-gradient-dev relative overflow-hidden rounded-xl">
-      <NuxtImg
-        src="https://picsum.photos/1200/600?random=100"
-        alt="Abstract representation of code and development work"
-        class="object-cover w-full h-full mix-blend-overlay opacity-70"
-        loading="lazy"
-      />
-      <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-      <div class="absolute top-6 right-6 flex gap-3" aria-hidden="true">
-        <div class="w-12 h-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full flex items-center justify-center float-animation shadow-lg">
-          <UIcon name="i-lucide-code" class="w-6 h-6 text-primary" />
-        </div>
-        <div class="w-12 h-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full flex items-center justify-center float-animation shadow-lg" style="animation-delay: 0.5s;">
-          <UIcon name="i-lucide-monitor" class="w-6 h-6 text-primary" />
-        </div>
-      </div>
-    </div>
-  </template>
+::u-page-section
+  ::u-card{ class="text-center" }
+  #title
+  Crafting Digital Experiences
 
-  <template #quick-links>
-    <HomeQuickLink title="Projects" description="Explore my recent work and experiments" to="#projects" icon="i-lucide-folder-code" />
-    <HomeQuickLink title="Blog" description="Development notes, walkthroughs, and tools" to="#blog" icon="i-lucide-book-open" />
-    <HomeQuickLink title="Contact" description="Let's talk about shipping something great" to="/contact" icon="i-lucide-message-circle" />
-  </template>
-</HeroShowcaseSection>
+  #description
+  I ship resilient full-stack platforms, data-rich dashboards, and immersive front-ends powered by Nuxt, Vue, TypeScript, and collaborative tooling.
 
-<FeaturedProjectsSection
-  id="projects"
-  title="Featured Projects"
-  description="Selected builds that combine thoughtful UX, reliable architecture, and delightful polish"
-/>
+  #footer
+  ::div{ class="flex flex-wrap gap-2 justify-center mb-4" }
+  ::u-badge{ color="green" variant="soft" } Vue.js ::
+  ::u-badge{ color="blue" variant="soft" } Nuxt ::
+  ::u-badge{ color="yellow" variant="soft" } TypeScript ::
+  ::u-badge{ color="cyan" variant="soft" } Tailwind ::
 
-<LatestInsightsSection
-  id="blog"
-  title="Latest Insights"
-  description="Notes on building, debugging, and learning in the open"
-/>
+  ::u-button{ to="#projects" variant="magnet" trailing-icon="i-lucide-arrow-down" }
+  Explore Projects
+  ::
 
-<HomeCta
-  title="Let's Build Something Amazing"
-  description="Ready to bring your ideas to life? I'd love to hear about your next project, collaboration, or product vision."
->
-  <ContentButton to="/contact" variant="magnet" leading-icon="i-lucide-mail">
-    Get In Touch
-  </ContentButton>
-  <ContentButton to="/projects" variant="outline" trailing-icon="i-lucide-arrow-right">
-    View Projects
-  </ContentButton>
-</HomeCta>
+  ::u-button{ to="/contact" variant="outline" }
+  Collaborate
+  ::
+  ::
+::
+
+::u-page-section
+  ::div{ class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start" }
+  ::u-card{ class="aspect-[16/9] relative overflow-hidden" }
+  ::nuxt-img{ src="https://picsum.photos/1200/600?random=100" alt="Abstract representation of code and development work" class="object-cover w-full h-full" loading="lazy" }
+  ::
+
+  ::div{ class="space-y-4" }
+  ::u-card{ to="#projects" }
+  ::u-icon{ name="i-lucide-folder-code" class="w-6 h-6 text-primary mb-2" }
+  #title
+  Projects
+  #description
+  Explore my recent work and experiments
+  ::
+
+  ::u-card{ to="#blog" }
+  ::u-icon{ name="i-lucide-book-open" class="w-6 h-6 text-primary mb-2" }
+  #title
+  Blog
+  #description
+  Development notes, walkthroughs, and tools
+  ::
+
+  ::u-card{ to="/contact" }
+  ::u-icon{ name="i-lucide-message-circle" class="w-6 h-6 text-primary mb-2" }
+  #title
+  Contact
+  #description
+  Let's talk about shipping something great
+  ::
+  ::
+::
+
+::u-page-section{ id="projects" title="Featured Projects" description="Selected builds that combine thoughtful UX, reliable architecture, and delightful polish" }
+  ::u-page-grid{ v-if="featuredProjects?.length" }
+  ::u-card{ v-for="project in featuredProjects" :key="project.path" :to="`/projects/${project.slug || project.path?.split('/').pop()}`" }
+  #header
+  ::nuxt-img{ preset="card" :src="project.image || fallbackImage(project.path)" :alt="project.title" class="aspect-video object-cover" loading="lazy" sizes="sm:100vw md:50vw lg:33vw" }
+  ::
+
+  #title
+  {{ project.title }}
+
+  #description
+  {{ project.description }}
+
+  #footer
+  ::u-badge{ v-for="(tech, index) in project.technologies?.slice(0, 3)" :key="index" color="primary" variant="soft" size="sm" }
+  {{ tech }}
+  ::
+  ::
+  ::
+
+  ::div{ v-else class="text-center py-12" }
+  ::u-empty{ icon="i-lucide-folder" label="Featured projects coming soon..." }
+  ::
+
+  ::div{ class="text-center mt-8" }
+  ::u-button{ to="/projects" variant="magnet" size="lg" trailing-icon="i-lucide-arrow-right" }
+  View All Projects
+  ::
+::
+
+::u-page-section{ id="blog" title="Latest Insights" description="Notes on building, debugging, and learning in the open" }
+  ::u-page-grid{ v-if="recentPosts?.length" }
+  ::u-blog-post{ v-for="post in recentPosts" :key="post.slug" :title="post.title" :description="post.description" :date="post.date" :image="post.featured_image || fallbackImage(post.slug)" :to="`/blog/${post.slug}`" orientation="vertical" }
+  ::
+
+  ::div{ v-else class="text-center py-12" }
+  ::u-empty{ icon="i-lucide-book-open" label="Blog posts coming soon..." }
+  ::
+
+  ::div{ class="text-center mt-8" }
+  ::u-button{ to="/blog" variant="magnet" size="lg" trailing-icon="i-lucide-arrow-right" }
+  View All Articles
+  ::
+::
+
+::u-page-cta{ title="Let's Build Something Amazing" description="Ready to bring your ideas to life? I'd love to hear about your next project, collaboration, or product vision." }
+  ::u-button{ to="/contact" variant="magnet" leading-icon="i-lucide-mail" }
+  Get In Touch
+  ::
+
+  ::u-button{ to="/projects" variant="outline" trailing-icon="i-lucide-arrow-right" }
+  View Projects
+  ::
+::
