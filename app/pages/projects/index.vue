@@ -38,50 +38,17 @@
       </div>
       
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <NuxtLink
-          v-for="project in projects"
+        <UBlogPost
+          v-for="(project, index) in projects"
           :key="project.slug || project.path || project.title"
+          :title="project.title"
+          :description="project.description"
+          :image="project.image || `https://picsum.photos/400/300?random=${index + 20}`"
           :to="`/projects/${project.slug}`"
-          class="block"
+          variant="soft"
+          class="glass-accent hover:scale-105 transition-transform"
         >
-          <UCard
-            class="group glass-accent rounded-xl overflow-hidden hover-lift"
-          >
-          <div class="aspect-video bg-gradient-dev relative overflow-hidden">
-            <NuxtImg 
-              v-if="project.image" 
-              :src="project.image" 
-              :alt="project.title"
-              loading="lazy"
-              preset="card"
-              sizes="sm:100vw md:50vw lg:33vw"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-            <div v-else class="w-full h-full bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center">
-              <UIcon name="i-lucide-code" class="w-12 h-12 text-primary opacity-50" />
-            </div>
-            
-            <!-- Overlay with project type -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-              <div class="absolute bottom-4 left-4">
-                <span class="px-3 py-1 bg-white/90 dark:bg-gray-800/90 text-sm font-medium rounded-full">
-                  Project
-                </span>
-              </div>
-              <div class="absolute bottom-4 right-4">
-                <UIcon name="i-lucide-external-link" class="w-6 h-6 text-white" />
-              </div>
-            </div>
-          </div>
-          
-          <div class="p-6">
-            <h2 class="text-xl font-bold mb-3 text-default group-hover:text-primary transition-colors">
-              {{ project.title }}
-            </h2>
-            <p class="text-muted mb-4 line-clamp-3">
-              {{ project.description }}
-            </p>
-            
+          <template #footer>
             <div v-if="project.technologies?.length" class="flex flex-wrap gap-2 mb-4">
               <UBadge
                 v-for="tech in project.technologies.slice(0, 4)"
@@ -101,12 +68,12 @@
                 +{{ project.technologies.length - 4 }} more
               </UBadge>
             </div>
-            
+
             <div class="flex items-center justify-end">
               <div class="flex items-center gap-2">
-                <a 
-                  v-if="project.demo" 
-                  :href="project.demo" 
+                <a
+                  v-if="project.demo"
+                  :href="project.demo"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="p-2 text-muted hover:text-primary transition-colors"
@@ -115,10 +82,10 @@
                 >
                   <UIcon name="i-lucide-external-link" class="w-4 h-4" />
                 </a>
-                
-                <a 
-                  v-if="project.github" 
-                  :href="project.github" 
+
+                <a
+                  v-if="project.github"
+                  :href="project.github"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="p-2 text-muted hover:text-primary transition-colors"
@@ -129,9 +96,8 @@
                 </a>
               </div>
             </div>
-          </div>
-          </UCard>
-        </NuxtLink>
+          </template>
+        </UBlogPost>
       </div>
       
       <!-- Featured Call-to-Action -->

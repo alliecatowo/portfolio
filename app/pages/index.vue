@@ -112,20 +112,16 @@
           </UCard>
 
           <div v-if="quickLinks.length" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <NuxtLink
+            <UPageCard
               v-for="link in quickLinks"
               :key="link.title"
+              :title="link.title"
+              :description="link.description"
+              :icon="link.icon"
               :to="link.to"
-              class="block"
-            >
-              <UCard class="glass-accent hover:scale-105 transition-transform">
-                <div class="flex items-center gap-4 mb-3">
-                  <UIcon v-if="link.icon" :name="link.icon" class="w-5 h-5 text-primary" />
-                  <h3 class="font-semibold text-default">{{ link.title }}</h3>
-                </div>
-                <p class="text-muted text-sm">{{ link.description }}</p>
-              </UCard>
-            </NuxtLink>
+              variant="soft"
+              class="glass-accent hover:scale-105 transition-transform"
+            />
           </div>
         </section>
 
@@ -148,39 +144,24 @@
             </p>
           </div>
           <UPageGrid v-if="featuredProjects && featuredProjects.length > 0" class="mt-12">
-            <NuxtLink
+            <UPageCard
               v-for="(project, index) in featuredProjects"
               :key="project.path || index"
+              :title="project.title"
+              :description="project.description"
               :to="`/projects/${project.slug}`"
-              class="block"
+              variant="soft"
+              orientation="horizontal"
+              class="glass-accent hover:scale-105 transition-transform"
             >
-              <UCard
-                class="glass-accent hover:scale-105 transition-transform group"
-              >
-              <template #header>
-                <div class="aspect-video bg-gradient-dev relative overflow-hidden rounded-lg">
-                  <NuxtImg
-                    preset="card"
-                    :src="project.image || `https://picsum.photos/400/300?random=${index + 20}`"
-                    :alt="project.title"
-                    class="object-cover w-full h-full mix-blend-overlay opacity-70 group-hover:opacity-90 transition-opacity"
-                    loading="lazy"
-                    sizes="sm:100vw md:50vw lg:33vw"
-                  />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <UIcon name="i-lucide-external-link" class="w-5 h-5 text-white" />
-                  </div>
-                </div>
-              </template>
-
-              <h3 class="text-xl font-bold mb-3 text-default">
-                {{ project.title }}
-              </h3>
-              <p class="text-muted mb-4 line-clamp-2">
-                {{ project.description }}
-              </p>
-
+              <NuxtImg
+                preset="card"
+                :src="project.image || `https://picsum.photos/400/300?random=${index + 20}`"
+                :alt="project.title"
+                class="w-full h-full object-cover rounded-lg"
+                loading="lazy"
+                sizes="sm:100vw md:50vw lg:33vw"
+              />
               <template #footer>
                 <div class="flex flex-wrap gap-2">
                   <UBadge
@@ -194,8 +175,7 @@
                   </UBadge>
                 </div>
               </template>
-              </UCard>
-            </NuxtLink>
+            </UPageCard>
           </UPageGrid>
 
           <div v-else class="py-12 text-center">
