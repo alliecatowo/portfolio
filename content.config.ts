@@ -45,6 +45,14 @@ export default defineContentConfig({
         image: z.string().optional()
       })
     }),
+    contact: defineCollection({
+      type: 'page',
+      source: 'contact/**/*.md',
+      schema: z.object({
+        title: z.string(),
+        description: z.string()
+      })
+    }),
     pages: defineCollection({
       type: 'data',
       source: 'pages/**/*.{yml,yaml,json}',
