@@ -11,7 +11,8 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
     '@nuxt/ui',
-    '@nuxt/image'
+    '@nuxt/image',
+    '@nuxt/fonts'
   ],
   content: {
     experimental: {

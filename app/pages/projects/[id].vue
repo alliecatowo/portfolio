@@ -23,16 +23,18 @@
         </header>
         
         <div v-if="project.image" class="mb-8">
-          <NuxtImg 
-            :src="project.image" 
+          <NuxtImg
+            :src="project.image"
             :alt="project.title"
             class="w-full rounded-lg shadow-lg"
             loading="eager"
             preset="hero"
           />
         </div>
-        
-        <ContentRenderer v-if="project.body" :value="project" />
+
+        <div v-if="project.body" class="max-w-none">
+          <ContentRenderer :value="project" />
+        </div>
         <div v-else class="prose prose-lg dark:prose-invert max-w-none mb-8">
           {{ project.description }}
         </div>

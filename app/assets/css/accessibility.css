@@ -34,6 +34,35 @@ html.dyslexia-font samp {
   font-family: 'OpenDyslexic', sans-serif !important;
 }
 
+/* Temporarily disabled - may be interfering with prose typography */
+/*
+/* Line Spacing */
+/*
+[data-line-spacing='normal'] .prose {
+  line-height: 1.75;
+}
+
+[data-line-spacing='relaxed'] .prose {
+  line-height: 2;
+}
+
+[data-line-spacing='loose'] .prose {
+  line-height: 2.5;
+}
+
+[data-line-spacing='relaxed'] .prose p,
+[data-line-spacing='loose'] .prose p {
+  margin-bottom: 1.5em;
+}
+*/
+
+/* Reading Focus Mode */
+/*
+.reading-focus .prose {
+  font-size: 1.125rem;
+}
+*/
+
 /* High Contrast Mode */
 .high-contrast {
   --background: 0 0% 100%;
