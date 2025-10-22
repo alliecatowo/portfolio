@@ -9,8 +9,8 @@ export default defineNuxtConfig({
     viewTransition: true
   },
   modules: [
-    '@nuxt/content',
     '@nuxt/ui',
+    '@nuxt/content',
     '@nuxt/image'
   ],
   content: {
