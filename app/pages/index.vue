@@ -111,21 +111,22 @@
             </template>
           </UCard>
 
-          <nav v-if="quickLinks.length" class="grid grid-cols-1 md:grid-cols-3 gap-6" role="navigation" aria-label="Quick navigation">
-            <UCard
+          <div v-if="quickLinks.length" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <NuxtLink
               v-for="link in quickLinks"
               :key="link.title"
-              class="glass-accent hover:scale-105 transition-transform"
-              :to="link.to?.startsWith('http') ? undefined : link.to"
-              :href="link.to?.startsWith('http') ? link.to : undefined"
+              :to="link.to"
+              class="block"
             >
-              <div class="flex items-center gap-4 mb-3">
-                <UIcon v-if="link.icon" :name="link.icon" class="w-5 h-5 text-primary" />
-                <h3 class="font-semibold text-default">{{ link.title }}</h3>
-              </div>
-              <p class="text-muted text-sm">{{ link.description }}</p>
-            </UCard>
-          </nav>
+              <UCard class="glass-accent hover:scale-105 transition-transform">
+                <div class="flex items-center gap-4 mb-3">
+                  <UIcon v-if="link.icon" :name="link.icon" class="w-5 h-5 text-primary" />
+                  <h3 class="font-semibold text-default">{{ link.title }}</h3>
+                </div>
+                <p class="text-muted text-sm">{{ link.description }}</p>
+              </UCard>
+            </NuxtLink>
+          </div>
         </section>
 
         <section
@@ -147,12 +148,15 @@
             </p>
           </div>
           <UPageGrid v-if="featuredProjects && featuredProjects.length > 0" class="mt-12">
-            <UCard
+            <NuxtLink
               v-for="(project, index) in featuredProjects"
               :key="project.path || index"
-              class="glass-accent hover:scale-105 transition-transform group"
-              :to="`/projects/${project.slug || project.path?.split('/').pop()}`"
+              :to="`/projects/${project.slug}`"
+              class="block"
             >
+              <UCard
+                class="glass-accent hover:scale-105 transition-transform group"
+              >
               <template #header>
                 <div class="aspect-video bg-gradient-dev relative overflow-hidden rounded-lg">
                   <NuxtImg
@@ -190,7 +194,8 @@
                   </UBadge>
                 </div>
               </template>
-            </UCard>
+              </UCard>
+            </NuxtLink>
           </UPageGrid>
 
           <div v-else class="py-12 text-center">

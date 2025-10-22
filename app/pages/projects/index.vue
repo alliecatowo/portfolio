@@ -38,11 +38,15 @@
       </div>
       
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <article 
-          v-for="project in projects" 
-          :key="project.slug || project.path || project.title" 
-          class="group glass-accent rounded-xl overflow-hidden hover-lift"
+        <NuxtLink
+          v-for="project in projects"
+          :key="project.slug || project.path || project.title"
+          :to="`/projects/${project.slug}`"
+          class="block"
         >
+          <UCard
+            class="group glass-accent rounded-xl overflow-hidden hover-lift"
+          >
           <div class="aspect-video bg-gradient-dev relative overflow-hidden">
             <NuxtImg 
               v-if="project.image" 
@@ -98,15 +102,7 @@
               </UBadge>
             </div>
             
-            <div class="flex items-center justify-between">
-              <NuxtLink 
-                :to="`/projects/${project.slug || project.path?.split('/').pop()}`" 
-                class="inline-flex items-center text-primary hover:text-primary-600 font-medium transition-colors group/link"
-              >
-                View Details
-                <UIcon name="i-lucide-arrow-right" class="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform" />
-              </NuxtLink>
-              
+            <div class="flex items-center justify-end">
               <div class="flex items-center gap-2">
                 <a 
                   v-if="project.demo" 
@@ -134,7 +130,8 @@
               </div>
             </div>
           </div>
-        </article>
+          </UCard>
+        </NuxtLink>
       </div>
       
       <!-- Featured Call-to-Action -->
