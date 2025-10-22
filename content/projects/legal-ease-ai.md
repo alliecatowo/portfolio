@@ -1,5 +1,27 @@
 ---
-technologies: []
+technologies:
+  - Python
+  - FastAPI
+  - React
+  - TypeScript
+  - PostgreSQL
+  - Docker
+  - OpenAI
+  - Local AI Models
+  - Vector Search
+  - OCR
+  - Speech-to-Text
+tags:
+  - ai
+  - legal
+  - discovery
+  - self-hosted
+  - privacy
+  - fastapi
+  - react
+  - vector-search
+  - ocr
+  - speech-to-text
 slug: legal-ease-ai
 image: /images/legalease/demo.gif
 title: LegalEase AI
@@ -56,7 +78,7 @@ It also taught me the value of “honest defaults” — shipping with good base
 
 - Processes **20 TB+ of discovery data** reliably on commodity hardware.
 - Reduces document-review time from **hours to minutes**.
-- Enables small legal teams to use advanced AI workflows *without* cloud dependencies or subscription costs.
+- Enables small legal teams to use advanced AI workflows _without_ cloud dependencies or subscription costs.
 - Inspired the foundation for my later R\&D into local retrieval and evidence intelligence.
 
 ---

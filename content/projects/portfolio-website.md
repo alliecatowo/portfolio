@@ -9,6 +9,14 @@ technologies:
   - Tailwind CSS
   - Nuxt UI
   - Nuxt Content
+tags:
+  - portfolio
+  - nuxt
+  - vue
+  - typescript
+  - tailwind
+  - ssr
+  - jamstack
 category: Full-Stack Development
 featured: false
 status: completed

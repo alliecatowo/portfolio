@@ -11,7 +11,19 @@ technologies:
   - NRF52
   - Split Keyboards
   - Docs
-  - C/++
+  - C++
+  - GitHub Actions
+tags:
+  - keyboard
+  - firmware
+  - zmk
+  - bluetooth
+  - split-keyboard
+  - sofle
+  - wireless
+  - rgb
+  - oled
+  - open-source
 slug: zmk-sofle-hdock-fork
 image: /images/keyboards/rainbow-rgb-split.jpg
 github: https://github.com/alliecatowo/zmk-sofle

@@ -1,10 +1,24 @@
 ---
 technologies:
-  - c
+  - C
+  - QMK
+  - Vial
+  - GitHub Actions
+tags:
+  - keyboard
+  - firmware
+  - qmk
+  - vial
+  - split-keyboard
+  - lily58
+  - holykeebs
+  - trackball
+  - touchpad
+  - open-source
 github: https://github.com/alliecatowo/allie-cat-keeb-vial
 slug: lily58-holy-keebs-qmk-fork
-title: "Lily58 HolyKeebs QMK Fork "
-description: "QMK Split Board With Modular Dual Pointer Support "
+title: 'Lily58 HolyKeebs QMK Fork '
+description: 'QMK Split Board With Modular Dual Pointer Support '
 image: /images/keyboards/keyboards-collection-1.jpg
 status: published
 date: 2025-08-30

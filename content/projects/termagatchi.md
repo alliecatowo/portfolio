@@ -1,5 +1,21 @@
 ---
-technologies: []
+technologies:
+  - Python
+  - Textual
+  - Google Gemini
+  - OpenAI
+  - Anthropic
+  - Ollama
+  - UV
+tags:
+  - ai
+  - terminal
+  - python
+  - llm
+  - cli
+  - game
+  - pet
+  - textual
 featured: false
 title: Termagatchi
 slug: termagatchi
@@ -17,7 +33,7 @@ You feed it, play with it, and chat like it’s your weird little coworker; exce
 
 ### Problem
 
-Most AI projects chase complexity with web dashboards, APIs, flashy front-ends. I wanted to do the opposite: build something *delightful* and *deeply technical* that lives where developers actually are: the command line.
+Most AI projects chase complexity with web dashboards, APIs, flashy front-ends. I wanted to do the opposite: build something _delightful_ and _deeply technical_ that lives where developers actually are: the command line.
 
 The goal was to combine:
 
@@ -41,7 +57,7 @@ The whole thing runs locally. No backend, no cloud dependency; just pure Python 
 
 ### Challenges
 
-The biggest challenge was balancing *game feel* with *AI performance*. LLMs are slow compared to a traditional game loop, so I built a hybrid tick system that keeps gameplay responsive while AI tasks run asynchronously. Designing believable personality states, ones that persist and evolve naturally, was another rabbit hole entirely.
+The biggest challenge was balancing _game feel_ with _AI performance_. LLMs are slow compared to a traditional game loop, so I built a hybrid tick system that keeps gameplay responsive while AI tasks run asynchronously. Designing believable personality states, ones that persist and evolve naturally, was another rabbit hole entirely.
 
 ### Impact
 
@@ -52,7 +68,7 @@ The biggest challenge was balancing *game feel* with *AI performance*. LLMs are 
 
 ### Reflection
 
-Termagatchi is a love letter to the terminal; proof that creativity and code can coexist in a text window. It’s whimsical, a little absurd, and deeply technical under the hood. It taught me a lot about threading, UI design, and how to make AI *feel alive* instead of just “smart.”
+Termagatchi is a love letter to the terminal; proof that creativity and code can coexist in a text window. It’s whimsical, a little absurd, and deeply technical under the hood. It taught me a lot about threading, UI design, and how to make AI _feel alive_ instead of just “smart.”
 
 ### Tech Stack
 

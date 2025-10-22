@@ -8,7 +8,6 @@
         </span>
         <div class="hidden sm:flex items-center gap-2">
           <UBadge color="primary" variant="soft" size="xs">5+ Years</UBadge>
-          <UBadge color="primary" variant="soft" size="xs">20+ Projects</UBadge>
         </div>
       </div>
     </template>

@@ -36,6 +36,7 @@ export default defineContentConfig({
         featured: z.boolean(),
         status: z.enum(['published', 'draft']).optional(),
         technologies: z.array(z.string()).optional(),
+        tags: z.array(z.string()).optional(),
         github: z.string().optional(),
         liveDemo: z.string().optional(),
         demo: z.string().optional(),

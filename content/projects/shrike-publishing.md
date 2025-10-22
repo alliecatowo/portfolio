@@ -1,5 +1,21 @@
 ---
-technologies: []
+technologies:
+  - Nuxt.js
+  - Vue.js
+  - TypeScript
+  - Tailwind CSS
+  - Nuxt Content
+  - Firebase Hosting
+tags:
+  - nuxt
+  - vue
+  - cms
+  - markdown
+  - publishing
+  - tabletop
+  - rpg
+  - static-site
+  - firebase
 featured: true
 github: https://github.com/alliecatowo/shrike-publishing
 liveDemo: https://shrike-publishing.com
@@ -14,7 +30,7 @@ status: published
 
 # Shrike Publishing
 
-*A lightweight, modern web platform for a small tabletop game studio.*
+_A lightweight, modern web platform for a small tabletop game studio._
 
 ### Overview
 

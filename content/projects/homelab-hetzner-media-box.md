@@ -15,6 +15,17 @@ technologies:
   - Lidarr
   - qBittorrent
   - ProtonVPN
+tags:
+  - homelab
+  - docker
+  - media
+  - self-hosted
+  - hetzner
+  - plex
+  - jellyfin
+  - automation
+  - torrent
+  - vpn
 slug: homelab-hetzner-media-box
 image: /images/homelab/screenshot-2025-10-16-at-13-07-11-jelly-seerr-allie-cat-cinema.png
 liveDemo: https://home.allisons.dev
@@ -22,7 +33,7 @@ liveDemo: https://home.allisons.dev
 
 ### Overview
 
-I’ve always liked owning my media *and* my infrastructure. Renting cloud space or relying on streaming never felt right.
+I’ve always liked owning my media _and_ my infrastructure. Renting cloud space or relying on streaming never felt right.
 So I built my own server: a **bare-metal Hetzner auction box** with 16 TB of storage and 64 GB RAM, running an orchestrated suite of self-hosted apps that power my family’s entire digital library — movies, books, automation, and more.
 
 It’s cost-effective, private, and surprisingly elegant.

@@ -20,8 +20,10 @@ hero:
   stats:
     - label: Years Experience
       value: 5+
-    - label: Redbull Consumed
+    - label: Coffee Consumed
       value: ∞
+    - label: Projects Completed
+      value: 20+
   body: |
     I'm a software engineer and tattoo artist living with my fiancé Violet and our two rescued chinchillas in a setup that perfectly blends code, creativity, and chaos. By day, I build web applications with Vue, Nuxt, TypeScript, and modern tooling. By evening, I translate ideas into permanent art on skin.
 
