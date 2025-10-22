@@ -12,7 +12,7 @@ seo:
     - portfolio
 hero:
   title: Hi, I'm Allison!
-  subtitle: Full-Stack Developer, Tinkerer, and AI Enthusiast
+  subtitle: Full-Stack Engineer, Tinkerer, and AI Enthusiast
   image:
     src: /images/ghibli-pfp.png
     alt: Full-Stack Developer, Tinkerer, and AI Enthusiast
@@ -25,13 +25,13 @@ hero:
     - label: Projects Completed
       value: 20+
   body: |
-    I'm a software engineer and tattoo artist living with my fiancé Violet and our two rescued chinchillas in a setup that perfectly blends code, creativity, and chaos. By day, I build web applications with Vue, Nuxt, TypeScript, and modern tooling. By evening, I translate ideas into permanent art on skin.
+    I'm a software engineer and tattoo artist living with my two rescued chinchillas in a setup that perfectly blends code, creativity, and chaos. By day, I build web applications with Vue, Nuxt, TypeScript, and modern tooling. By evening, I translate ideas into permanent art on skin.
 
-    My journey into tech started with teenage curiosity—customizing MySpace profiles and building terrible websites that somehow worked. What began as digital tinkering evolved into a career spanning startups, established companies, and everything in between. I've shipped applications for healthcare, e-commerce, education, and finance, always focusing on user experience and maintainable code.
+    My journey into tech started with teenage curiosity—buiding small games and cute websites. What began as digital tinkering evolved into a career spanning startups, established companies, small businesses and everything in between! I've shipped applications for e-commerce, education, AI, and law - always focusing on user experience and maintainable, scalable, code.
 
     Tattooing entered my life as a creative outlet that software couldn't provide. There's something profound about creating permanent art that becomes part of someone's story. The precision required, the collaboration with clients, the immediate tactile feedback—it complements coding in ways I never expected. Both crafts require patience, attention to detail, and the ability to bring someone's vision to life.
 
-    At home, our rescued chinchillas Ray and Paddy keep life interesting. Ray is our gentle giant who perfected the art of being a furry loaf, while Paddy brings endless energy and mischief. They're active during my late-night coding sessions, which works out perfectly. I also maintain a collection of split keyboards—my daily driver is a pink Sofle running my ZMK fork with OLED screens, and a Lily58 with an integrated trackpad for when precision cursor control matters.
+    At home, my rescued chinchillas Ray and Paddy keep life interesting. Ray is my gentle giant who perfected the art of being a furry loaf, while Paddy brings endless energy and mischief. They're active during my late-night coding sessions, which works out perfectly. I also maintain a collection of split keyboards - my daily driver is a pink Sofle running my ZMK fork with a 3d printed OLED desktop dongle, and a Lily58 with an integrated trackpad for when precision cursor control matters.
   buttons:
     - label: View My Work
       to: /projects
@@ -62,21 +62,31 @@ hero:
     badges: []
   note:
     keys: []
+  paragraphs: []
 journey:
   title: My Journey
   items:
-    - title: Teenage Tinkering
+    - title: Origins
       color: primary
-      description: It started with MySpace profile customization and terrible HTML experiments. I was that kid who viewed source on every website, trying to understand how digital things worked. Building my first "Hello World" page felt like magic—I could create something from nothing but text in a file.
-    - title: Formal Education & First Jobs
+      description: My passion for software, web design, and coding started when I was 11. I was so enamoured with computers, games; I wanted to know everything about how they worked. I was building my own small computers running Linux and small games. This passion only grew further when I joined a coding camp at the local college and tinkered with building a social networking site for my friends in middle school, and even launched my first apps on Android with Java!
+    - title: The Early Years
       color: purple-500
-      description: College gave me the theory—algorithms, data structures, software engineering principles. But the real learning happened during internships and first jobs, where I discovered that shipping working software requires much more than perfect code. Communication, collaboration, and understanding user needs became as important as technical skills.
-    - title: Professional Growth & Tattoo Discovery
+      description: Onto High School and the obsession only grew. I was an okay student, but the real passion was web design and I knew it even then! I worked hard on growing my skills so I could be accepted into the prestigious Center For Advanced Research and Technology’s web design course. After much effort, my time paid off and I was accepted; learning more languages and working on rigorous projects. Completion of the web design course allowed me to apply for and enter the Game Design course; further building my expertise. I built 2D, 3D and even AR games using Unity, C Sharp, and Maya 3D for the Microsoft HoloLens! At this time I had the wonderful opportunity to intern for a local tech program with a team of 4; together we helped revamp a small business’s website, all while gaining important skills and life lessons.
+    - title: The College Years
       color: pink-500
-      description: Years of startup life, scaling challenges, and diverse projects across healthcare, fintech, and e-commerce taught me that technology is only as good as the problems it solves. Around this time, I discovered tattooing—initially as stress relief, but it quickly became a parallel creative practice that informed my approach to software development.
-    - title: Present Day
+      description: Academia was exactly the rigor I had been searching for. I was so passionate about every project; assembling nand into tetris, using AWS and Hiroku, and so much more. My professors had so much knowledge to impart onto me, and I soaked it like a sponge! It was in college that I gained a deeper appreciation for the infrastructure behind web design. I learned that so many tools had already been created by the best of us - and the hardest thing in programming is finding the right tool for the job. I even had the opportunity to work on machine learning algorithms and data science well before the boom of Open AI, preparing me for a bright future!
+    - title: The Pandemic
       color: primary
-      description: Now I balance software engineering with tattoo artistry, finding that each practice strengthens the other. I maintain open-source keyboard firmware, write about technology and creativity, and continue building applications that solve real problems. Violet and our chinchillas keep me grounded, reminding me that the best work happens when you bring your whole self to it.
+      description: I finished my education in the height of the pandemic, and its brutal effects were visible everywhere. The pandemic was hurting my father’s law firm tremendously, so I decided to apply my newfound skills to helping my dad in this difficult time. I implemented OCR and scanned all his physical files into digital forms and built his firm an enterprise site to attract new clients! I even put in some leg work, running documents and other traditional law clerk tasks so the firm didn’t have to waste money hiring a new clerk. All this work helped foster an amazing relationship with my father after college, and was an amazing first work experience!
+    - title: The First Years at Parsec
+      color: magenta
+      description: Even though I could have worked for years at my father’s firm, I realized it was time for a change - to keep learning. On a whim I decided to apply to a small, 5 person startup as a data entry clerk. I wanted to see what impact I could have if I applied myself. Sure enough, there was a wealth of opportunities to flex the skills I spent my life building. Within a month I automated my own job away to improve the company’s output tenfold. This inspired the team to bring me on as a full-time software engineer, building our company from the ground up and preparing us for a bright, profitable future. For two years I helped lead the core development team and built the foundations of our company’s product that are still used today, allowing us to hire far more people and expand to levels beyond what had even been hoped for.
+    - title: Final Years at Parsec
+      color: primary
+      description: After two years of leading the core development team, I transitioned to our product research team; leading the company’s R&D and taking on a mentoring role. My main focus has been AI integrations and utilizing cutting edge tools to further improve our services and products. It has been a privilege to impart my knowledge on the next generation of engineers and developers, and an amazing learning opportunity. For the next two years I trained, onboarded, and mentored 5 spectacular interns - each with their own unique skillsets and work styles. I taught them - and they taught me; truly an honor and I will always have fond memories of my time on the research team!
+    - title: What's Happening Now?
+      color: secondary
+      description: Although Parsec and I may have parted ways, it has been a wonderful opportunity to have the time to work on personal projects! Much has changed in the four years I was working with Parsec; my father decided to start a private practice and I’ve been so proud to help him once again. This time though, I have more tools in my toolbox. My time on the research team exposed me to the incredible potential of AI tools, and I have implemented these tools for the legal field with Legalease! A service that allows attorneys to store the mountains of legal discovery they receive digitally with AI integrations that give a plethora of services not previously available to lawyers. I’ve done some more “fun” things as well, embracing my inner child and returning to game design with “Termigatchi”, a terminal pet! Returning to my small business roots, developing user-friendly websites with all the new tools I’ve gained since high school. I have never been more excited for the future than I am now!
 skills:
   title: Technical Arsenal
   categories:
@@ -84,7 +94,7 @@ skills:
       color: primary
       icon: i-lucide-monitor
       items:
-        - Vue.js / Nuxt 3
+        - Vue.js / Nuxt 4
         - React / Next.js
         - TypeScript
         - Tailwind CSS
@@ -94,9 +104,9 @@ skills:
       icon: i-lucide-server
       items:
         - Node.js / Express
-        - GraphQL / REST
+        - Python
         - PostgreSQL
-        - MongoDB
+        - GoLang
         - Redis
     - title: Cloud & DevOps
       color: pink-500
@@ -111,11 +121,11 @@ skills:
       color: yellow-500
       icon: i-lucide-wrench
       items:
+        - Claude Code!!!
         - Git / GitHub
         - Jest / Vitest
         - Cypress / Playwright
         - Figma
-        - AI Tools
   items: []
 life:
   title: Beyond the Code
@@ -123,21 +133,21 @@ life:
     - title: Split Keyboards
       color: primary
       icon: i-lucide-keyboard
-      image: /images/keyboards/sofle-pink-oled.jpg
+      image: /images/workspace/coding-setup-2.jpg
       alt: Pink Sofle keyboard with OLED screens
       description: 'Daily drivers: Lily58 with integrated trackpad, and a pink Sofle running my ZMK fork with OLED screens and wireless dongle setup. I maintain open-source firmware to help others get started with splits.'
     - title: Tattoo Artistry
       color: purple-500
       icon: i-lucide-pen-tool
-      image: /images/couple/allison-violet-beach.jpg
+      image: /images/personal/allison-tattooing.jpg
       alt: Allison and Violet at the beach, showing tattoo work
       description: Part-time tattoo artist specializing in linework, botanical designs, and collaborative custom pieces. I love the intersection of technical precision and creative expression—much like coding, but permanent.
-    - title: Chinchilla Parents
+    - title: Chinchilla Mom
       color: pink-500
       icon: i-lucide-heart
-      image: /images/couple/allison-violet-selfie.jpg
-      alt: Allison and Violet (chinchilla in background)
-      description: Ray and Paddy, our rescued chinchillas who keep life interesting. Ray is our gentle giant who perfected the loaf position, while Paddy brings chaos and endless energy. They're active during my late-night coding sessions.
+      image: /images/chinchillas/1d1239a1-1bd9-410a-8152-737a19353b7f.jpg
+      alt: Ray the Chinchilla
+      description: Ray and Paddy, our rescued chinchillas who keep life interesting. They like to hang around and watch my latenight coding sessions :3
 cta:
   title: Let's Create Something Amazing
   description: I'm always excited about new challenges and collaborations. Whether you have a project in mind or just want to connect, I'd love to hear from you.
