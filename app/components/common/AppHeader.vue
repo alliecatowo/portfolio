@@ -23,11 +23,13 @@
     <!-- Right side actions -->
     <template #right>
       <UContentSearchButton
+        data-search-trigger
         :collapsed="false"
         variant="ghost"
         color="primary"
         size="md"
         icon="i-lucide-search"
+        title="Search (⌘K)"
       />
 
       <UTooltip text="Accessibility Settings" :kbds="['meta', 'a']">
@@ -79,6 +81,7 @@
           </UButton>
 
           <UContentSearchButton
+            data-search-trigger
             :collapsed="false"
             variant="outline"
             color="primary"
@@ -126,8 +129,29 @@ const navigationItems = computed((): NavigationMenuItem[] => [
   { label: 'Contact', to: '/contact', icon: 'i-lucide-mail', active: route.path === '/contact' }
 ])
 
+// Enhanced shortcuts for better UX
 defineShortcuts({
   meta_a: () => { showAccessibilitySettings.value = true },
-  escape: () => { showAccessibilitySettings.value = false }
+  escape: () => { showAccessibilitySettings.value = false },
+  // Additional search shortcuts
+  meta_slash: () => {
+    // Focus search button or trigger search
+    const searchButton = document.querySelector('[data-search-trigger]') as HTMLElement
+    if (searchButton) {
+      searchButton.click()
+    }
+  },
+  meta_b: () => {
+    // Quick navigation to blog
+    navigateTo('/blog')
+  },
+  meta_p: () => {
+    // Quick navigation to projects
+    navigateTo('/projects')
+  },
+  meta_h: () => {
+    // Quick navigation to home
+    navigateTo('/')
+  }
 })
 </script>
