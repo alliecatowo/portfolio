@@ -67,15 +67,26 @@ export default defineNuxtConfig({
   features: {
     devLogs: process.env.NODE_ENV === 'development'
   },
+  // Hybrid rendering: pre-render content pages, keep Studio routes dynamic.
+  // `/_studio/**` is excluded from pre-rendering — it requires a live SSR server.
+  // In static `nuxt generate` mode (Firebase CI), /_studio is simply unavailable.
+  // For full production Studio access, deploy with `nuxt build` on an SSR host.
+  routeRules: {
+    // Studio admin — always SSR (never pre-render auth routes)
+    '/_studio/**': { ssr: true, prerender: false },
+    // Content API — SSR with short cache
+    '/api/_content/**': { ssr: true, prerender: false },
+    // All public pages — pre-render at build time
+    '/**': { prerender: true }
+  },
   nitro: {
-    // Removed preset:'static' to support hybrid rendering required by nuxt-studio.
-    // Studio needs an SSR server route for the /_studio auth endpoint.
-    // All content pages are still pre-rendered via crawlLinks below.
-    // For Firebase static hosting, run `nuxt generate` (fallback) or migrate
-    // to a Node.js host (Cloud Run / Railway / Hetzner) with `nuxt build`.
+    // No preset = node-server (SSR) by default.
+    // CI Firebase deploys override this by running `nuxt generate` directly.
     prerender: {
       crawlLinks: true,
-      failOnError: false
+      failOnError: false,
+      // Exclude Studio and API routes from crawl-based pre-rendering
+      ignore: ['/_studio', '/_studio/**', '/api/_content/**']
     }
   },
   ...({ image: {
