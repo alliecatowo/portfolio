@@ -1,0 +1,82 @@
+name: Deploy SSR (Hetzner)
+
+# Manual trigger only — SSR deployment to Hetzner for full Studio support.
+# The standard CI (production-deploy.yml) continues to deploy static HTML to Firebase.
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Git ref to deploy (defaults to main)'
+        required: false
+        default: main
+        type: string
+
+env:
+  FORCE_COLOR: 1
+  CI: true
+  # Set HETZNER_HOST, HETZNER_USER, HETZNER_SSH_KEY secrets in GitHub repo settings
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || 'main' }}
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest
+            type=sha,prefix=sha-
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    environment:
+      name: SSR Production
+      url: https://allisons.dev
+    steps:
+      - name: Deploy to Hetzner via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.HETZNER_HOST }}
+          username: ${{ secrets.HETZNER_USER }}
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          script: |
+            docker pull ghcr.io/${{ github.repository }}:latest
+            docker stop portfolio || true
+            docker rm portfolio || true
+            docker run -d \
+              --name portfolio \
+              --restart unless-stopped \
+              -p 3000:3000 \
+              --env-file /opt/portfolio/.env \
+              ghcr.io/${{ github.repository }}:latest
+            echo "Deployed portfolio SSR container"
