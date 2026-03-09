@@ -11,19 +11,23 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
     '@nuxt/content',
-    '@nuxt/image'
+    '@nuxt/image',
+    'nuxt-studio'
   ],
   content: {
     experimental: {
       sqliteConnector: 'native'
-    },
-    preview: {
-      api: 'https://api.nuxt.studio',
-      gitInfo: {
-        name: 'portfolio',
-        owner: 'alliecatowo',
-        url: 'https://github.com/alliecatowo/portfolio'
-      }
+    }
+    // Legacy cloud preview removed — now using self-hosted nuxt-studio module
+  },
+  // Nuxt Studio self-hosted configuration
+  // Docs: https://nuxt.studio/setup
+  studio: {
+    repository: {
+      provider: 'github',
+      owner: 'alliecatowo',
+      repo: 'portfolio',
+      branch: 'main'
     }
   },
   css: ['~/assets/css/main.css'],
@@ -64,7 +68,11 @@ export default defineNuxtConfig({
     devLogs: process.env.NODE_ENV === 'development'
   },
   nitro: {
-    preset: 'static',
+    // Removed preset:'static' to support hybrid rendering required by nuxt-studio.
+    // Studio needs an SSR server route for the /_studio auth endpoint.
+    // All content pages are still pre-rendered via crawlLinks below.
+    // For Firebase static hosting, run `nuxt generate` (fallback) or migrate
+    // to a Node.js host (Cloud Run / Railway / Hetzner) with `nuxt build`.
     prerender: {
       crawlLinks: true,
       failOnError: false
