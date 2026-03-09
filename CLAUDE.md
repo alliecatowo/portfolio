@@ -57,9 +57,10 @@ pnpm emulate
 
 Handled automatically via GitHub Actions:
 
-- **Production**: `https://allisons.dev` — deployed from `main` branch
+- **Production (static)**: `https://allisons.dev` — deployed from `main` branch to Firebase hosting via `pnpm generate`
 - **Staging**: Firebase preview channel — deployed from `main`
 - **PRs**: Temporary preview channels auto-deployed on open
+- **SSR (Studio prod)**: Manual trigger via `.github/workflows/ssr-deploy.yml` → Hetzner Docker container (requires `HETZNER_*` secrets)
 
 ## Architecture Overview
 
@@ -137,10 +138,31 @@ slug: string
 
 ### Key Configurations
 
-- **SQLite**: Uses Node.js native SQLite (`experimental.nativeSqlite: true`)
-- **Nuxt Studio preview**: Configured in `nuxt.config.ts` under `content.preview`
-- **Static preset**: Nitro renders to `.output/public/` for Firebase hosting
-- **ISR disabled**: Fully static generation (no edge functions)
+- **SQLite**: Uses Node.js native SQLite (`experimental.sqliteConnector: 'native'`)
+- **Nuxt Studio**: Self-hosted module (`nuxt-studio` 1.4.0), accessible at `/_studio` (dev) or via SSR host (prod)
+- **Hybrid rendering**: Content pages pre-rendered; `/_studio/**` stays SSR via `routeRules`
+- **ISR disabled**: All content pages are pre-rendered at build time
+
+## Nuxt Studio Usage
+
+### Development (no config needed)
+```bash
+pnpm dev
+# Visit http://localhost:3000 — floating Studio button bottom-left
+```
+
+Studio edits in dev mode write directly to local files. Use your normal git workflow to commit.
+
+### Production Studio Access (SSR only)
+Studio's `/_studio` auth route requires a running Node.js server — it cannot be served from Firebase static hosting.
+
+To enable production Studio:
+1. Set up a GitHub OAuth App (callback: `https://allisons.dev/_studio/api/auth/github`)
+2. Add env vars to Hetzner: `STUDIO_GITHUB_CLIENT_ID`, `STUDIO_GITHUB_CLIENT_SECRET`
+3. Trigger the SSR deploy workflow (manual) in GitHub Actions
+4. Visit `https://allisons.dev/_studio`
+
+See `docs/nuxt-content-migration.md` for full setup guide.
 
 ## Troubleshooting
 
