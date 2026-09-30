@@ -74,6 +74,11 @@ export default defineContentConfig({
           title: z.string(),
           subtitle: z.string().optional(),
           description: z.string().optional(),
+          // Small award/winner line under the hero description
+          award: z.object({
+            label: z.string(),
+            to: z.string()
+          }).optional(),
           note: z.object({
             prefix: z.string(),
             keys: z.array(z.string()),
@@ -107,6 +112,7 @@ export default defineContentConfig({
             description: z.string(),
             introduction: z.string().optional(),
             image: z.string().optional(),
+            imageAlt: z.string().optional(),
             badges: z.array(z.object({
               title: z.string(),
               items: z.array(z.string())

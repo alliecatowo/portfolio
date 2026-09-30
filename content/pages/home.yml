@@ -1,20 +1,14 @@
 slug: home
 layout: home
 seo:
-  title: Allison's Developer Portfolio - Full-Stack Web Development
-  description: Full-stack developer Specializing in leveraging AI to accelerate product cycle and developer velocity, and building scalable, robust, and human centric applications.
-  keywords:
-    - AI
-    - software engineer
-    - Full Stack
-    - Nuxt
-    - Vue.js
-    - React.js
-    - RAG
-    - Cloud Infrastructue
+  title: Allison Coleman — agent systems, developer tools, languages
+  description: Software engineer building agent systems, developer tools, and languages/runtimes. Creator of JupyterLite WebMCP, one of 10 winners of the 2026 OpenAI WebMCP Challenge.
 hero:
-  title: Allison's Developer Portfolio
-  description: Full-stack developer specializing in modern web technologies, creative problem solving, and building exceptional user experience
+  title: Allison Coleman
+  description: Software engineer building agent systems, developer tools, languages and runtimes — and the occasional weird computer.
+  award:
+    label: OpenAI WebMCP Challenge Winner — JupyterLite WebMCP
+    to: /projects/jupyterlite-webmcp/
   note:
     prefix: Press
     keys:
@@ -22,53 +16,48 @@ hero:
       - K
     suffix: to open quick search
   card:
-    title: Crafting Digital Experiences
-    description: Passionate about building scalable applications, elegant user interfaces, and solving complex technical challenges.
-    introduction: Specializing in leveraging AI to accelerate product cycle and developer velocity, and building scalable, robust, and human centric applications.
-    image: /images/homelab/screenshot-2025-10-16-at-13-06-43-jelly-seerr-allie-cat-cinema.png
+    title: JupyterLite WebMCP
+    description: Your notebook is already in the browser. Now your agent can be too.
+    introduction: A browser agent that works in the notebook you already have open (same unsaved cells, same selection, same kernel), with every change visible and reviewable in place. No server, no API key, no chatbot bolted on.
+    image: /images/projects/jupyterlite-webmcp/card.webp
+    imageAlt: JupyterLite notebook with the Agent panel in Propose mode. An agent's proposed edit is shown as a red and green diff under the cell, with Accept and Deny buttons, waiting for review.
     badges:
-      - title: Frontend Excellence
+      - title: Agent systems
         items:
-          - Vue.js
-          - Nuxt
-          - TypeScript
-          - Tailwind
-          - React.js
-          - Google GenKit
-      - title: Backend & Tools
+          - JupyterLite WebMCP
+          - Ticketmaster
+      - title: Languages & runtimes
         items:
-          - Python
-          - GoLang
-          - Postgres
-          - Docker
-          - Git/CI
-      - title: Cloud Native Expertise
+          - Lumen
+          - Shoal
+          - puml
+      - title: Developer tools
         items:
-          - Google Cloud Platform
-          - Firebase
-          - Supabase
-          - Kubernetes
-          - Vercel
-          - Fly.io
-          - Neon.tech
-      - title: AI Awesomeness
+          - Glassy
+          - Ticketmaster
+      - title: Social systems
         items:
-          - Vertex AI
-          - Un/Stuctured Data Extraction
-          - RAG
-          - Audio/Visual models
-          - Machine Learning
+          - Patches
+          - GitHub Stories
     buttons:
-      - label: View My Work
-        to: '#projects'
-        variant: magnet
+      - label: See the project
+        to: /projects/jupyterlite-webmcp/
+        variant: solid
         color: primary
         size: lg
-        icon: i-lucide-arrow-down
+        icon: i-lucide-arrow-right
         iconPosition: trailing
-      - label: About Me
-        to: /about
+      - label: Try the live demo
+        href: https://jupyterlite-web-mcp.vercel.app/lab/index.html
+        external: true
         variant: outline
+        color: primary
+        size: lg
+        icon: i-lucide-external-link
+        iconPosition: trailing
+      - label: All projects
+        to: /projects/
+        variant: ghost
         color: primary
         size: lg
   buttons: []
@@ -77,60 +66,62 @@ hero:
 quickLinks:
   links:
     - title: Projects
-      description: Explore my latest work and technical projects
+      description: Agents, terminals, languages, and other things I've shipped
       to: '#projects'
       icon: i-lucide-folder-code
-    - title: Blog
-      description: Technical insights and development thoughts
+    - title: Writing
+      description: Notes on agents, tools, and languages
       to: '#blog'
       icon: i-lucide-book-open
     - title: Contact
-      description: Let's discuss your next project
-      to: /contact
+      description: Say hi, or tell me about something weird you're building
+      to: /contact/
       icon: i-lucide-message-circle
 projects:
-  title: Featured Projects
-  description: Innovative solutions and technical showcases
+  title: Selected work
+  description: Recent things I've built and shipped.
   cta:
-    label: View All Projects
-    to: /projects
+    label: All projects
+    to: /projects/
 skills:
-  title: Technical Skills
-  description: Technologies and tools I use to build exceptional experiences
+  title: What I work on
   items:
-    - title: Frontend
-      description: Vue, Nuxt, React, TypeScript, Tailwind
-      icon: i-lucide-monitor
-    - title: Backend
-      description: Node.js, Express, PostgreSQL, MongoDB
-      icon: i-lucide-server
-    - title: Cloud & DevOps
-      description: Firebase, Docker, CI/CD, Git
-      icon: i-lucide-cloud
-    - title: Mobile & PWA
-      description: React Native, Progressive Web Apps
-      icon: i-lucide-smartphone
+    - title: Agent systems
+      description: Human-in-the-loop, inspectable agent workflows
+      icon: i-lucide-bot
+    - title: Developer tools
+      description: Terminals, runtimes, CLIs
+      icon: i-lucide-terminal
+    - title: Languages & runtimes
+      description: Typed shells, Markdown-native languages, diagram compilers
+      icon: i-lucide-braces
+    - title: Weird computers
+      description: Split keyboards, homelab, terminal social media
+      icon: i-lucide-keyboard
   categories: []
 blog:
-  title: Latest Insights
-  description: Thoughts on development, technology, and innovation
+  title: Writing
+  description: Notes on agents, tools, languages, and whatever I broke this week.
   cta:
-    label: View All Articles
-    to: /blog
+    label: All writing
+    to: /blog/
 cta:
-  title: Let's Build Something Amazing
-  description: Ready to bring your ideas to life? Let's discuss your next project.
+  title: Say hi
+  description: Questions about WebMCP, looking for a hackathon partner, or building something weird? My inbox is open, and I'm always up for interesting collaborations.
   buttons:
-    - label: Get In Touch
-      to: /contact
+    - label: Email me
+      href: mailto:me@allisons.dev
       color: primary
-      variant: magnet
+      variant: solid
       size: lg
       icon: i-lucide-mail
       iconPosition: leading
-    - label: Learn More About Me
-      to: /about
+    - label: '@AllieCatOwO on X'
+      href: https://x.com/AllieCatOwO
+      external: true
       color: primary
       variant: outline
       size: lg
+      icon: i-simple-icons-x
+      iconPosition: leading
   socials: []

@@ -1,6 +1,6 @@
 ---
 title: Modern Portfolio Website
-description: A full-stack portfolio website built with Nuxt.js, featuring dual
+description: A portfolio website built with Nuxt.js, featuring dual
   developer/tattoo artist sections, Nuxt Content CMS, and modern UI components.
 technologies:
   - Nuxt.js
@@ -19,7 +19,7 @@ tags:
   - cms
   - nuxt-content
   - nuxt-ui
-category: Full-Stack Development
+category: Web Development
 featured: false
 status: draft
 date: 2024-03-15
@@ -345,7 +345,7 @@ steps:
 
 ### Professional Benefits
 
-- Showcases full-stack development capabilities
+- Showcases web development capabilities
 - Demonstrates modern web development practices
 - Provides platform for thought leadership through blogging
 - Serves as a reference implementation for client projects

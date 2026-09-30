@@ -81,7 +81,7 @@
                 <span class="text-muted">•</span>
                 <span class="text-muted">{{ estimateReadTime(post as any).minutes }} min read</span>
               </div>
-              <div class="text-sm text-muted mt-1">Full-Stack Developer</div>
+              <div class="text-sm text-muted mt-1">Software Engineer</div>
             </div>
           </div>
 
@@ -148,8 +148,8 @@
             <div class="flex-1">
               <h3 class="font-semibold text-default mb-2">Written by Allison</h3>
               <p class="text-muted text-sm leading-relaxed mb-4">
-                Full-stack developer passionate about building exceptional web experiences. 
-                I write about modern web development, JavaScript, and the tools that make our work better.
+                Software engineer building agent systems, developer tools, and languages/runtimes.
+                I write about agents, tools, languages, and whatever I broke this week.
               </p>
               <div class="flex items-center gap-4">
                 <UButton variant="soft" color="primary" size="sm" to="/about">

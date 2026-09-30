@@ -6,9 +6,6 @@
         <span class="text-2xl sm:text-3xl font-bold text-primary select-none">
           ALLISONS<span class="text-pink-500">.dev</span>
         </span>
-        <div class="hidden sm:flex items-center gap-2">
-          <UBadge color="primary" variant="soft" size="xs">5+ Years</UBadge>
-        </div>
       </div>
     </template>
 
@@ -22,12 +19,15 @@
 
     <!-- Right side actions -->
     <template #right>
+      <!-- Search and accessibility also live in the mobile menu body, so they are
+           hidden below lg (where the menu toggle shows) to keep the bar within 375px. -->
       <UContentSearchButton
         :collapsed="false"
         variant="ghost"
         color="primary"
         size="md"
         icon="i-lucide-search"
+        class="hidden lg:inline-flex"
       />
 
       <UTooltip text="Accessibility Settings" :kbds="['meta', 'a']">
@@ -39,6 +39,7 @@
           square
           :ui="{ rounded: 'rounded-lg' }"
           aria-label="Open accessibility settings"
+          class="hidden lg:inline-flex"
           @click="showAccessibilitySettings = true"
         />
       </UTooltip>

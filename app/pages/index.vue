@@ -21,6 +21,15 @@
           <p v-if="hero.description" class="text-xl md:text-2xl text-default max-w-3xl mx-auto">
             {{ hero.description }}
           </p>
+          <p v-if="heroAward" class="mt-6">
+            <NuxtLink
+              :to="heroAward.to"
+              class="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm md:text-base font-semibold text-highlighted hover:bg-primary/20 transition-colors"
+            >
+              <span aria-hidden="true">🏆</span>
+              <span>{{ heroAward.label }}</span>
+            </NuxtLink>
+          </p>
           <aside v-if="heroNote?.keys?.length" class="mt-8 text-sm text-muted" role="note" aria-label="Keyboard shortcut">
             <span class="inline-flex items-center gap-2">
               <span v-if="heroNote.prefix">{{ heroNote.prefix }}</span>
@@ -45,28 +54,20 @@
                 <NuxtImg
                   v-if="heroCard.image"
                   :src="heroCard.image"
-                  :alt="heroCard.title"
-                  loading="lazy"
-                  preset="hero"
-                  sizes="100vw lg:1200px"
-                  class="object-cover w-full h-full mix-blend-overlay opacity-60"
+                  :alt="heroCard.imageAlt || ''"
+                  loading="eager"
+                  fetchpriority="high"
+                  sizes="sm:100vw md:900px"
+                  class="object-cover w-full h-full"
                 />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent flex items-end p-4 md:p-8">
                   <div class="w-full">
-                    <h3 v-if="heroCard.title" id="main-dev-title" class="text-3xl md:text-4xl font-bold text-white mb-4">
+                    <h3 v-if="heroCard.title" id="main-dev-title" class="text-2xl md:text-4xl font-bold text-white mb-1 md:mb-3 [text-shadow:0_1px_3px_rgb(0_0_0/0.6)]">
                       {{ heroCard.title }}
                     </h3>
-                    <p v-if="heroCard.description" class="text-white/90 text-lg md:text-xl max-w-2xl">
+                    <p v-if="heroCard.description" class="text-white text-sm md:text-xl max-w-2xl [text-shadow:0_1px_3px_rgb(0_0_0/0.6)]">
                       {{ heroCard.description }}
                     </p>
-                  </div>
-                </div>
-                <div class="absolute top-6 right-6 flex gap-3" aria-hidden="true">
-                  <div class="w-12 h-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full flex items-center justify-center float-animation shadow-lg">
-                    <UIcon name="i-lucide-code" class="w-6 h-6 text-primary" />
-                  </div>
-                  <div class="w-12 h-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full flex items-center justify-center float-animation shadow-lg" style="animation-delay: 0.5s;">
-                    <UIcon name="i-lucide-monitor" class="w-6 h-6 text-primary" />
                   </div>
                 </div>
               </div>
@@ -257,6 +258,7 @@
               orientation="vertical"
               class="glass-accent hover:scale-105 transition-transform"
             >
+              <template #date>{{ formatContentDate(post.date) }}</template>
               <template v-if="!post.featured_image" #header>
                 <CardImageFallback :title="post.title" icon="i-lucide-book-open" />
               </template>
@@ -319,6 +321,7 @@ import { computed } from 'vue'
 import { useContent } from '~/composables/useContent'
 import AwardBadge from '~/components/common/AwardBadge.vue'
 import CardImageFallback from '~/components/common/CardImageFallback.vue'
+import { formatContentDate } from '~/utils/formatContentDate'
 
 const { fetchProjects, fetchBlogPosts, fetchPage } = useContent()
 
@@ -340,6 +343,7 @@ const resolveDownloadAttr = (button: { download?: boolean | string; href?: strin
 const page = computed(() => homeContent.value ?? null)
 const seo = computed(() => page.value?.seo)
 const hero = computed(() => page.value?.hero ?? null)
+const heroAward = computed(() => hero.value?.award ?? null)
 const heroNote = computed(() => hero.value?.note ?? null)
 const heroCard = computed(() => hero.value?.card ?? null)
 const quickLinks = computed(() => page.value?.quickLinks?.links ?? [])
