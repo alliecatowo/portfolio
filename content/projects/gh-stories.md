@@ -47,8 +47,6 @@ A **`gh` CLI extension** written in Go with Bubble Tea shows the same Stories in
 
 Both talk to one **Go service** backed by PostgreSQL, S3-compatible storage and an ffmpeg media worker. It handles GitHub OAuth with PKCE, importing your GitHub follows, five audience levels, replies, reactions, viewer lists, moderation and per-item 24-hour expiry.
 
-![The extension composer: ramen photo preview with crop presets, caption, accessibility description and audience picker.](/images/projects/gh-stories/extension-composer.webp)
-
 ## The engineering behind a joke
 
 **One visibility rule, in one place.** Whether a viewer may see a Story is decided by a single SQL predicate: published, not expired, author not suspended, no block in either direction, and the audience checked against the _current_ follow graph. Every read path uses it: the feed, the rings, the media gateway, viewers, replies and reactions. As the code comment puts it, "A new route cannot accidentally skip a rule, because there is no second place to skip it in." Expiry is enforced on read, so a stalled cleanup job can't bring a Story back.

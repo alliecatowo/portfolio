@@ -31,11 +31,7 @@ imageAlt: 'The Glassy terminal showing a directory listing and syntax-highlighte
 
 **Small and quiet on purpose: a GPU terminal that only draws what changed.**
 
-Glassy is a GPU-accelerated terminal emulator written in Rust, and the repo describes it as "built to run Claude Code". The goal was a terminal that stays small and does nothing while nothing is happening, but keeps up when an agent streams thousands of tokens into it. Allison built it in about three weeks, from June 19 to July 9, 2026, much of it pair-programmed with Claude Code: 404 commits and 12 releases, shipped for macOS and Linux.
-
-![Glassy terminal window in the Tokyo Night theme showing syntax-highlighted Rust code with a starship prompt.](/images/projects/glassy/hero.webp)
-
-_The Rust file on screen is a demo file, not Glassy's source._
+Glassy is a GPU-accelerated terminal emulator written in Rust, and the repo describes it as "built to run Claude Code". The goal was a terminal that stays small and does nothing while nothing is happening, but keeps up when an agent streams tokens into it. Allison built it in about three weeks, from June 19 to July 9, 2026, much of it pair-programmed with Claude Code: 404 commits and 12 releases, shipped for macOS and Linux. (The Rust file in the screenshots is a demo file, not Glassy's source.)
 
 ## How it stays quiet
 
