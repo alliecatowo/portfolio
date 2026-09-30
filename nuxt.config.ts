@@ -120,6 +120,8 @@ export default defineNuxtConfig({
     }
   },
   ...({ image: {
+    // Default JPEG/WebP quality for every NuxtImg variant that doesn't set its own.
+    quality: 80,
     presets: {
       avatar: { 
         modifiers: { 

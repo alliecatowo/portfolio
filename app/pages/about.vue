@@ -179,6 +179,7 @@
                     :alt="card.alt"
                     class="w-full h-full object-cover mix-blend-overlay"
                     loading="lazy"
+                    sizes="100vw md:50vw lg:400px"
                   />
                   <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   <UIcon v-if="card.icon" :name="card.icon" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
