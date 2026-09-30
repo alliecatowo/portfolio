@@ -39,16 +39,20 @@
       
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <UBlogPost
-          v-for="(project, index) in projects"
+          v-for="project in projects"
           :key="project.slug || project.path || project.title"
           :title="project.title"
           :description="project.description"
-          :image="project.image || `https://picsum.photos/400/300?random=${index + 20}`"
+          :image="project.image ? { src: project.image, alt: project.imageAlt || project.title } : undefined"
           :to="`/projects/${project.slug}`"
           variant="soft"
           class="glass-accent hover:scale-105 transition-transform"
         >
+          <template v-if="!project.image" #header>
+            <CardImageFallback :title="project.title" icon="i-lucide-folder-code" />
+          </template>
           <template #footer>
+            <AwardBadge v-if="project.award" :award="project.award" class="mb-3" />
             <div v-if="project.technologies?.length" class="flex flex-wrap gap-2 mb-4">
               <UBadge
                 v-for="tech in project.technologies.slice(0, 4)"
@@ -135,14 +139,16 @@
 </template>
 
 <script setup lang="ts">
-// Fetch all projects
+import { useContent } from '~/composables/useContent'
+import AwardBadge from '~/components/common/AwardBadge.vue'
+import CardImageFallback from '~/components/common/CardImageFallback.vue'
+
+const { fetchProjects } = useContent()
+
+// Fetch all published projects, in display order
 const { data: projects, pending, error } = await useAsyncData(
   'all-projects',
-  () => queryCollection('projects')
-    .where('status', '<>', 'draft')
-    .order('featured', 'DESC')
-    .order('date', 'DESC')
-    .all()
+  () => fetchProjects()
 );
 
 // Meta tags

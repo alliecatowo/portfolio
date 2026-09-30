@@ -23,13 +23,14 @@ tags:
   - ocr
   - speech-to-text
 slug: legal-ease-ai
-image: /images/legalease/demo.gif
+image: /images/legalease/search-hero-pink-dark.png
+imageAlt: LegalEase AI search page in the dark pink theme, with the hybrid search box and filters for cases, types and levels
 title: LegalEase AI
 description: Self-hosted legal discovery platform for messy, sensitive data.
 date: 2025-08-30
 status: published
-featured: true
-github: https://github.com/alliecatowo/legalease
+featured: false
+github: https://github.com/alliecatowo/legalease-ai
 demo: https://legal-ease.app
 ---
 
@@ -38,6 +39,8 @@ demo: https://legal-ease.app
 LegalEase AI is a self-hosted workspace built for legal teams, investigators, and anyone who has to wrestle with massive piles of unstructured evidence like PDFs, videos, audio, and exports from forensic tools.
 
 It grew out of frustration with cloud-locked legal tech that trades privacy for convenience. I wanted something fast, local-first, and transparent. So I built it: a full end-to-end stack that turns terabytes of raw evidence into structured, searchable context all without data ever leaving your machine.
+
+![Animated walkthrough of the LegalEase AI dashboard: searching case documents and browsing the results](/images/legalease/demo.gif)
 
 ---
 

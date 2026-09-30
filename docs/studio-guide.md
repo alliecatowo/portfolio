@@ -15,13 +15,13 @@ A floating 🪄 button appears in the bottom-left of your browser. Click it to o
 
 ## What You Can Edit
 
-| Section | Files | Editor |
-|---------|-------|--------|
-| Blog posts | `content/blog/*.md` | TipTap visual + MDC |
-| Projects | `content/projects/*.md` | TipTap visual + MDC |
-| Home page | `content/pages/home.yml` | Form editor |
-| About page | `content/pages/about.yml` | Form editor |
-| Navigation / footer | `content/globals/main.yml` | Form editor |
+| Section             | Files                      | Editor              |
+| ------------------- | -------------------------- | ------------------- |
+| Blog posts          | `content/blog/*.md`        | TipTap visual + MDC |
+| Projects            | `content/projects/*.md`    | TipTap visual + MDC |
+| Home page           | `content/pages/home.yml`   | Form editor         |
+| About page          | `content/pages/about.yml`  | Form editor         |
+| Navigation / footer | `content/globals/main.yml` | Form editor         |
 
 ## Adding a New Blog Post
 
@@ -41,10 +41,15 @@ A floating 🪄 button appears in the bottom-left of your browser. Click it to o
 ## Adding a New Project
 
 Same as blog, but in `content/projects/`. Key frontmatter:
+
 - `status`: `published` | `draft`
 - `technologies`: array
 - `github`: URL (optional)
-- `demo` / `liveDemo`: URL (optional)
+- `demo`: URL (optional)
+- `devpost`: URL (optional)
+- `order`: number (optional; ascending, used for homepage ordering)
+- `award`: string (optional; rendered as a badge)
+- `image` / `imageAlt`: card image and its alt text (optional)
 
 ## Production Studio (SSR required)
 
@@ -53,6 +58,7 @@ Studio's `/_studio` route needs a running Node.js server.
 **Current status**: Firebase static hosting only — Studio available in dev mode only.
 
 **To enable production Studio**:
+
 1. Create GitHub OAuth App:
    - Callback: `https://allisons.dev/_studio/api/auth/github`
    - Save Client ID + Secret
@@ -66,21 +72,23 @@ Studio's `/_studio` route needs a running Node.js server.
 
 ## Keyboard Shortcuts (in Studio editor)
 
-| Action | Shortcut |
-|--------|----------|
-| Open Studio | `CMD + .` |
-| Bold | `CMD + B` |
-| Italic | `CMD + I` |
-| Heading | `#` + space |
-| Code block | ` ``` ` + Enter |
-| Component | `/` (slash command) |
+| Action      | Shortcut            |
+| ----------- | ------------------- |
+| Open Studio | `CMD + .`           |
+| Bold        | `CMD + B`           |
+| Italic      | `CMD + I`           |
+| Heading     | `#` + space         |
+| Code block  | ` ``` ` + Enter     |
+| Component   | `/` (slash command) |
 
 ## Troubleshooting
 
 **Studio button not showing?**
+
 - Make sure `pnpm dev` is running (not `pnpm preview`)
 - Studio only loads in dev mode by default
 
 **Content not updating?**
+
 - Run `pnpm db:clean` to clear the SQLite cache
 - Restart `pnpm dev`

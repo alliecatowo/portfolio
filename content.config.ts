@@ -42,11 +42,16 @@ export default defineContentConfig({
         technologies: z.array(z.string()).default([]),
         tags: z.array(z.string()).default([]),
         github: z.string().url().optional(),
-        liveDemo: z.string().url().optional(),
         demo: z.string().url().optional(),
+        devpost: z.string().url().optional(),
+        // Explicit ordering (ascending); projects without it sort after, by date
+        order: z.number().optional(),
+        award: z.string().optional(),
+        group: z.string().optional(),
         slug: z.string().optional(),
         images: z.any().optional(),
-        image: z.string().optional()
+        image: z.string().optional(),
+        imageAlt: z.string().optional()
       })
     })),
     pages: defineCollection({

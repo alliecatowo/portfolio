@@ -32,6 +32,26 @@
         "source": "/open-source/",
         "destination": "/projects/",
         "type": 301
+      },
+      {
+        "source": "/projects/minis",
+        "destination": "/projects/",
+        "type": 301
+      },
+      {
+        "source": "/projects/minis/",
+        "destination": "/projects/",
+        "type": 301
+      },
+      {
+        "source": "/projects/portfolio-website",
+        "destination": "/projects/",
+        "type": 301
+      },
+      {
+        "source": "/projects/portfolio-website/",
+        "destination": "/projects/",
+        "type": 301
       }
     ]
   },

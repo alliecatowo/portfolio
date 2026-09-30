@@ -21,7 +21,7 @@ tags:
   - nuxt-ui
 category: Full-Stack Development
 featured: false
-status: completed
+status: draft
 date: 2024-03-15
 github: https://github.com/allisons-dev/portfolio
 demo: https://allisons.dev
