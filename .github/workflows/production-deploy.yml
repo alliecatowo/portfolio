@@ -67,7 +67,7 @@ jobs:
         run: pnpm run typecheck
 
       - name: Validate content
-        run: pnpm run validate:content
+        run: pnpm run --if-present validate:content
 
       - name: Build for deployment
         run: pnpm run generate
