@@ -20,6 +20,7 @@ tags:
   - llm
   - open-source
 slug: assistarr
+group: earlier-work
 title: Assistarr
 description: AI-powered media server assistant for Jellyfin, Radarr, and Sonarr — natural language control for your self-hosted stack.
 date: 2025-10-01

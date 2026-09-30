@@ -23,6 +23,7 @@ tags:
   - ocr
   - speech-to-text
 slug: legal-ease-ai
+group: earlier-work
 image: /images/legalease/search-hero-pink-dark.png
 imageAlt: LegalEase AI search page in the dark pink theme, with the hybrid search box and filters for cases, types and levels
 title: LegalEase AI

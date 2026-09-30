@@ -27,6 +27,7 @@ tags:
   - torrent
   - vpn
 slug: homelab-hetzner-media-box
+group: hardware-homelab
 image: /images/homelab/screenshot-2025-10-16-at-13-07-11-jelly-seerr-allie-cat-cinema.png
 ---
 

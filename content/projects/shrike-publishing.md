@@ -20,6 +20,7 @@ featured: false
 github: https://github.com/alliecatowo/shrike-publishing
 demo: https://shrike-publishing.vercel.app
 slug: shrike-publishing
+group: earlier-work
 image: /images/shrike-publishing/screenshot-2025-10-21-at-00-02-30-blood-neon-shrike-publishing.png
 title: Shrike Publishing
 description: Cheap User Friendly CMS Solution

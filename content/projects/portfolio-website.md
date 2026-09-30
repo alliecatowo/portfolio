@@ -32,6 +32,7 @@ challenges:
   - Performance optimization for image-heavy portfolio
   - Responsive design across all device types
 slug: portfolio-website
+group: earlier-work
 ---
 
 # Modern Portfolio Website

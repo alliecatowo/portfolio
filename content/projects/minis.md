@@ -17,6 +17,7 @@ tags:
   - personalization
   - open-source
 slug: minis
+group: earlier-work
 title: Minis
 description: Lightweight neural artifacts generated via LoRA fine-tuning from GitHub profiles — distill a developer's coding style into a deployable mini-model.
 date: 2025-12-01
