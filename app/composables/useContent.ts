@@ -25,23 +25,23 @@ export function useContent() {
   }
 
   /**
-   * Fetch project items from content
+   * Fetch project items from content.
+   *
+   * Sorted by explicit `order` ascending (projects without one go last),
+   * then featured first, then newest first. Sorting happens in JS because
+   * the query builder can't express "nulls last"; the limit is applied
+   * after sorting.
    */
   async function fetchProjects(limit?: number, featured?: boolean) {
     const query = queryCollection('projects')
       .where('status', '<>', 'draft')
-      .order('featured', 'DESC')
-      .order('date', 'DESC')
-    
+
     if (featured) {
       query.where('featured', '=', true)
     }
-    
-    if (limit) {
-      query.limit(limit)
-    }
-    
-    return await query.all()
+
+    const projects = sortProjects(await query.all())
+    return limit ? projects.slice(0, limit) : projects
   }
 
   /**

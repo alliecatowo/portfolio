@@ -119,8 +119,12 @@ technologies: [list]
 tags: [list]
 github: URL (optional)
 demo: URL (optional)
-liveDemo: URL (optional)
+devpost: URL (optional)
+order: number (optional; ascending, unordered projects sort after by date)
+award: string (optional; shown as a badge)
+group: string (optional)
 image: /path/to/image (optional)
+imageAlt: string (optional; alt text for image)
 ```
 
 **Blog frontmatter schema** (`content/blog/*.md`):

@@ -10,6 +10,10 @@
     orientation="vertical"
     class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20"
   >
+    <template v-if="!image" #header>
+      <CardImageFallback :title="title" icon="i-lucide-book-open" />
+    </template>
+
     <!-- Custom body slot for tags -->
     <template #body>
       <div class="min-w-0 flex-1 flex flex-col">
@@ -46,11 +50,13 @@
 </template>
 
 <script setup lang="ts">
+import CardImageFallback from './CardImageFallback.vue'
+
 defineProps<{
   title: string
   description?: string
   date?: string
-  image: string
+  image?: string
   to: string
   readTime: string
   tags?: string[]

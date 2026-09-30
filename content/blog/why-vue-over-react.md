@@ -13,7 +13,6 @@ tags:
 author: Allie
 published: true
 featured: true
-featured_image: https://placehold.co/640x360?text=Blog
 slug: why-vue-over-react
 ---
 

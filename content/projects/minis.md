@@ -20,8 +20,8 @@ slug: minis
 title: Minis
 description: Lightweight neural artifacts generated via LoRA fine-tuning from GitHub profiles — distill a developer's coding style into a deployable mini-model.
 date: 2025-12-01
-status: published
-featured: true
+status: draft
+featured: false
 github: https://github.com/alliecatowo/minis-v2
 ---
 
@@ -35,7 +35,7 @@ The output: a lightweight neural artifact — a LoRA adapter — that can be loa
 
 ### Problem
 
-Fine-tuning large language models is expensive, slow, and requires significant data curation. Most personalization approaches assume you have a clean, curated dataset. GitHub profiles are the opposite: messy, varied, multilingual across programming languages — but *rich* with authentic developer signal.
+Fine-tuning large language models is expensive, slow, and requires significant data curation. Most personalization approaches assume you have a clean, curated dataset. GitHub profiles are the opposite: messy, varied, multilingual across programming languages — but _rich_ with authentic developer signal.
 
 The question: can you distill a developer's unique style into something small enough to run locally?
 
@@ -71,7 +71,7 @@ GitHub is not a clean dataset. Boilerplate, generated code, and dependency lock 
 
 ### Reflection
 
-Minis started as a weekend experiment: "can a model learn *me* from just my public GitHub?" The answer is a qualified yes — the adapter picks up vocabulary, commenting habits, and structural preferences reliably. The deeper question of what that *means* for identity, authorship, and AI attribution is still wide open, and that's what makes it interesting.
+Minis started as a weekend experiment: "can a model learn _me_ from just my public GitHub?" The answer is a qualified yes — the adapter picks up vocabulary, commenting habits, and structural preferences reliably. The deeper question of what that _means_ for identity, authorship, and AI attribution is still wide open, and that's what makes it interesting.
 
 ---
 

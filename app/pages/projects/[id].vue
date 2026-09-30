@@ -8,6 +8,7 @@
       
       <article v-if="project" class="glass-accent rounded-xl p-8">
         <header class="mb-8">
+          <AwardBadge v-if="project.award" :award="project.award" size="md" class="mb-4" />
           <h1 class="text-4xl font-bold mb-4 text-gradient-animated">{{ project.title }}</h1>
           <p class="text-xl text-default">{{ project.description }}</p>
           
@@ -25,7 +26,7 @@
         <div v-if="project.image" class="mb-8">
           <NuxtImg 
             :src="project.image" 
-            :alt="project.title"
+            :alt="project.imageAlt || project.title"
             class="w-full rounded-lg shadow-lg"
             loading="eager"
             preset="hero"
@@ -59,6 +60,17 @@
             <UIcon name="i-lucide-github" class="w-4 h-4 mr-2" />
             View on GitHub
           </a>
+
+          <a
+            v-if="project.devpost"
+            :href="project.devpost"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center px-6 py-3 text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 font-semibold transition-all"
+          >
+            <UIcon name="i-lucide-trophy" class="w-4 h-4 mr-2" />
+            Devpost
+          </a>
         </footer>
       </article>
       
@@ -70,6 +82,8 @@
 </template>
 
 <script setup lang="ts">
+import AwardBadge from '~/components/common/AwardBadge.vue'
+
 const route = useRoute();
 const projectId = route.params.id as string;
 

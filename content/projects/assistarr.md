@@ -24,7 +24,7 @@ title: Assistarr
 description: AI-powered media server assistant for Jellyfin, Radarr, and Sonarr — natural language control for your self-hosted stack.
 date: 2025-10-01
 status: published
-featured: true
+featured: false
 github: https://github.com/alliecatowo/assistarr
 ---
 

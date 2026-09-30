@@ -148,12 +148,16 @@
               v-for="(project, index) in featuredProjects"
               :key="project.path || index"
               :title="project.title"
-              :image="project.image || `https://picsum.photos/400/300?random=${index + 20}`"
+              :image="project.image ? { src: project.image, alt: project.imageAlt || project.title } : undefined"
               :to="`/projects/${project.slug}`"
               variant="soft"
               class="glass-accent hover:scale-105 transition-transform min-h-[400px]"
             >
+              <template v-if="!project.image" #header>
+                <CardImageFallback :title="project.title" icon="i-lucide-folder-code" />
+              </template>
               <template #description>
+                <AwardBadge v-if="project.award" :award="project.award" class="mb-3" />
                 <p class="text-base text-pretty text-muted mb-3">{{ project.description }}</p>
                 <div class="flex flex-wrap gap-2">
                   <UBadge
@@ -242,17 +246,21 @@
 
           <div v-if="recentPosts && recentPosts.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <UBlogPost
-              v-for="(post, index) in recentPosts"
+              v-for="post in recentPosts"
               :key="post.slug || post.path"
               :title="post.title"
               :description="post.description"
               :date="post.date"
-              :image="post.featured_image || `https://picsum.photos/400/300?random=${index + 30}`"
+              :image="post.featured_image || undefined"
               :to="`/blog/${post.slug || post.path?.split('/').pop()}`"
               variant="outline"
               orientation="vertical"
               class="glass-accent hover:scale-105 transition-transform"
-            />
+            >
+              <template v-if="!post.featured_image" #header>
+                <CardImageFallback :title="post.title" icon="i-lucide-book-open" />
+              </template>
+            </UBlogPost>
           </div>
 
           <div v-else class="py-12 text-center">
@@ -309,6 +317,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useContent } from '~/composables/useContent'
+import AwardBadge from '~/components/common/AwardBadge.vue'
+import CardImageFallback from '~/components/common/CardImageFallback.vue'
 
 const { fetchProjects, fetchBlogPosts, fetchPage } = useContent()
 
@@ -341,7 +351,7 @@ const ctaSection = computed(() => page.value?.cta ?? null)
 
 const { data: featuredProjects } = await useAsyncData(
   'home-featured-projects',
-  () => fetchProjects(undefined, true)
+  () => fetchProjects(6, true)
 )
 
 const { data: recentPosts } = await useAsyncData(
