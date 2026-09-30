@@ -1,8 +1,8 @@
 slug: footer
 brand:
-  title: "Allison's Portfolio"
-  tagline: 'Full-stack developer and creative problem solver'
-description: 'Full-stack developer and creative problem solver'
+  title: 'Allison Coleman'
+  tagline: 'Agent systems, developer tools, languages & weird computers'
+description: 'Agent systems, developer tools, languages & weird computers'
 socials:
   - label: GitHub
     href: 'https://github.com/alliecatowo'
@@ -38,5 +38,4 @@ contact:
   description: 'Feel free to reach out for collaborations or just a friendly hello.'
   email: 'me@allisons.dev'
 bottom:
-  text: 'All rights reserved.'
   subtext: 'Built with ❤️ using Nuxt, Nuxt UI, and Tailwind CSS.'

@@ -2,9 +2,9 @@ slug: about
 layout: about
 seo:
   title: About Me - Allison's Developer Portfolio
-  description: Learn about Allison - a passionate full-stack developer blending modern web development with tattoo artistry and creative projects.
+  description: Learn about Allison Coleman, a software engineer building agent systems, developer tools, and languages/runtimes.
   keywords:
-    - full-stack developer
+    - software engineer
     - web developer
     - Vue.js
     - TypeScript
@@ -12,10 +12,10 @@ seo:
     - portfolio
 hero:
   title: Hi, I'm Allison!
-  subtitle: Full-Stack Engineer, Tinkerer, and AI Enthusiast
+  subtitle: 'Software engineer: agent systems, developer tools, languages & runtimes'
   image:
     src: /images/ghibli-pfp.png
-    alt: Full-Stack Developer, Tinkerer, and AI Enthusiast
+    alt: Illustrated portrait of Allison Coleman
     status: Available for projects
   stats:
     - label: Years Experience

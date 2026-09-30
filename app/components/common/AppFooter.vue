@@ -61,7 +61,7 @@
 
       <div class="mt-12 pt-8 border-t border-gray-200/60 dark:border-gray-800/60 text-center text-gray-500 dark:text-gray-400">
         <p>
-          &copy; {{ currentYear }} {{ footer.brand.title }}. {{ footer.bottom?.text || fallbackFooter.bottom?.text }}
+          &copy; {{ currentYear }} {{ footer.brand.title }}<template v-if="footer.bottom?.text">. {{ footer.bottom.text }}</template>
         </p>
         <p v-if="footer.bottom?.subtext || fallbackFooter.bottom?.subtext" class="mt-2 text-sm">
           {{ footer.bottom?.subtext || fallbackFooter.bottom?.subtext }}
@@ -112,10 +112,10 @@ type FooterContent = {
 
 const fallbackFooter: FooterContent = {
   brand: {
-    title: "Allison's Portfolio",
-    tagline: 'Full-stack developer and creative problem solver'
+    title: 'Allison Coleman',
+    tagline: 'Agent systems, developer tools, languages & weird computers'
   },
-  description: 'Full-stack developer and creative problem solver',
+  description: 'Agent systems, developer tools, languages & weird computers',
   socials: [
     {
       label: 'GitHub',
@@ -157,7 +157,6 @@ const fallbackFooter: FooterContent = {
     email: 'me@allisons.dev'
   },
   bottom: {
-    text: 'All rights reserved.',
     subtext: 'Built with ❤️ using Nuxt, Nuxt UI, and Tailwind CSS.'
   }
 }
