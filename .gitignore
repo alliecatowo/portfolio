@@ -43,8 +43,12 @@ Thumbs.db
 .gemini/
 gha-creds-*.json
 
-# Claude Code local settings
-.claude/
+# Claude Code: commit the harness (.claude/skills/), keep local state and research out
+.claude/worktrees/
+.claude/settings.local.json
+.claude/project-dossiers/
+.claude/build-logs/
+.claude/site-launch-plan.md
 
 # Firebase (keep .firebaserc, ignore others)
 .firebase/

@@ -60,7 +60,7 @@ Handled automatically via GitHub Actions:
 - **Production (static)**: `https://allisons.dev` — deployed from `main` branch to Firebase hosting via `pnpm generate`
 - **Staging**: Firebase preview channel — deployed from `main`
 - **PRs**: Temporary preview channels auto-deployed on open
-- **SSR (Studio prod)**: Manual trigger via `.github/workflows/ssr-deploy.yml` → Hetzner Docker container (requires `HETZNER_*` secrets)
+- **SSR (Studio prod)**: Not yet set up. A `Dockerfile` exists for a future Hetzner Docker deploy, but there is no SSR deploy workflow in `.github/workflows/` yet
 
 ## Architecture Overview
 
@@ -108,6 +108,7 @@ portfolio/
 Content lives in `content/` as Markdown files with YAML frontmatter.
 
 **Project frontmatter schema** (`content/projects/*.md`):
+
 ```yaml
 title: string
 description: string
@@ -124,6 +125,7 @@ image: /path/to/image (optional)
 ```
 
 **Blog frontmatter schema** (`content/blog/*.md`):
+
 ```yaml
 title: string
 date: YYYY-MM-DD
@@ -146,6 +148,7 @@ slug: string
 ## Nuxt Studio Usage
 
 ### Development (no config needed)
+
 ```bash
 pnpm dev
 # Visit http://localhost:3000 — floating Studio button bottom-left
@@ -154,12 +157,14 @@ pnpm dev
 Studio edits in dev mode write directly to local files. Use your normal git workflow to commit.
 
 ### Production Studio Access (SSR only)
+
 Studio's `/_studio` auth route requires a running Node.js server — it cannot be served from Firebase static hosting.
 
 To enable production Studio:
+
 1. Set up a GitHub OAuth App (callback: `https://allisons.dev/_studio/api/auth/github`)
 2. Add env vars to Hetzner: `STUDIO_GITHUB_CLIENT_ID`, `STUDIO_GITHUB_CLIENT_SECRET`
-3. Trigger the SSR deploy workflow (manual) in GitHub Actions
+3. Build and deploy the SSR container from the `Dockerfile` (no SSR deploy workflow exists yet; one still needs to be written)
 4. Visit `https://allisons.dev/_studio`
 
 See `docs/nuxt-content-migration.md` for full setup guide.
@@ -171,6 +176,7 @@ See `docs/nuxt-content-migration.md` for full setup guide.
 **Problem**: `no such table: _content_blog` or similar errors during `pnpm dev`
 
 **Solution**:
+
 ```bash
 pnpm dev:clean   # wipes .data/content/contents.sqlite and restarts
 ```
@@ -203,32 +209,40 @@ rm pnpm-lock.yaml && pnpm install
 
 ### Workflow
 
-1. Create branch: `git checkout -b feat/your-feature`
-2. Make changes and commit (single-line messages)
-3. Push + open PR against `main`
-4. CI runs: typecheck, lint, build, commitlint
-5. On merge: auto-deploys to staging
+1. Create a worktree for the branch (see below); never work directly on `main`
+2. Make changes and commit (conventional subject + description body)
+3. Verify with the `verify-site` skill (`.claude/skills/verify-site/SKILL.md`): pnpm checks, build-output checks, and browser checks at 375/768/1440
+4. Push + open PR against `main`
+5. CI runs: setup/install, typecheck, lint, commitlint, Firebase preview channel
+6. On merge: auto-deploys to production (https://allisons.dev) and staging, then verify production
 
 ### Commit Message Style
 
-Single-line conventional commits only:
+Conventional-commit subject line, a blank line, then a short description body explaining what changed and why. Do not add AI co-author trailers (no `Co-Authored-By: Claude ...`).
 
 ```bash
-git commit -m "feat: add lumen project page"
-git commit -m "fix: correct image path in assistarr card"
-git commit -m "docs: update migration notes"
+git commit -m "fix: correct image path in assistarr card" \
+  -m "The card pointed at /images/assistar.png, which 404s on the static build. Point it at the real file."
 ```
 
-Multi-line commit bodies are not preferred.
+PRs: conventional title (checked by the Semantic PR Title workflow) and a real description (what, why, how verified). No "Generated with Claude Code" footer.
 
 ### Agent Workflow
 
+Implementation happens in git worktrees under `.claude/worktrees/<branch-with-dashes>` (gitignored), one per PR branch:
+
 ```bash
-git checkout -b feat/your-feature-name
-# make changes
-git commit -m "feat: description"
-git push -u origin feat/your-feature-name
-gh pr create --title "Title" --body "Brief description"
+git fetch origin
+git worktree add .claude/worktrees/feat-your-feature -b feat/your-feature origin/main
+cd .claude/worktrees/feat-your-feature && pnpm install --frozen-lockfile
+# make changes, run the verify-site skill
+git commit -m "feat: description" -m "Why and what changed."
+git push -u origin feat/your-feature
+gh pr create --title "feat: description" --body "What, why, how verified"
+gh pr checks --watch
+# after merge
+git worktree remove .claude/worktrees/feat-your-feature
 ```
 
-- Always use pnpm, never npm.
+- Always use pnpm, never npm. pnpm is pinned to 10 (`mise.toml`, `packageManager`); pnpm 11 ignores the `pnpm` field in package.json and breaks `--frozen-lockfile`.
+- `.claude/skills/` is committed; research artifacts (`.claude/project-dossiers/`, `.claude/build-logs/`, `.claude/site-launch-plan.md`) and `.claude/settings.local.json` stay local and are never committed.

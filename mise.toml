@@ -1,4 +1,4 @@
 [tools]
 node = "24"
-pnpm = "latest"
+pnpm = "10"
 python = "latest"
