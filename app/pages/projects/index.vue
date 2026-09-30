@@ -37,73 +37,84 @@
         <p class="text-muted">Check back soon for new projects!</p>
       </div>
       
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <UBlogPost
-          v-for="project in projects"
-          :key="project.slug || project.path || project.title"
-          :title="project.title"
-          :description="project.description"
-          :image="project.image ? { src: project.image, alt: project.imageAlt || project.title } : undefined"
-          :to="`/projects/${project.slug}`"
-          variant="soft"
-          class="glass-accent hover:scale-105 transition-transform"
+      <div v-else class="space-y-16">
+        <section
+          v-for="section in groupedProjects"
+          :key="section.key"
+          :aria-labelledby="`group-${section.key}`"
         >
-          <template v-if="!project.image" #header>
-            <CardImageFallback :title="project.title" icon="i-lucide-folder-code" />
-          </template>
-          <template #footer>
-            <AwardBadge v-if="project.award" :award="project.award" class="mb-3" />
-            <div v-if="project.technologies?.length" class="flex flex-wrap gap-2 mb-4">
-              <UBadge
-                v-for="tech in project.technologies.slice(0, 4)"
-                :key="tech"
-                variant="soft"
-                size="sm"
-                class="capitalize"
-              >
-                {{ tech }}
-              </UBadge>
-              <UBadge
-                v-if="project.technologies.length > 4"
-                variant="soft"
-                color="gray"
-                size="sm"
-              >
-                +{{ project.technologies.length - 4 }} more
-              </UBadge>
-            </div>
+          <h2 :id="`group-${section.key}`" class="text-2xl md:text-3xl font-bold mb-8 text-default">
+            {{ section.label }}
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <UBlogPost
+              v-for="project in section.items"
+              :key="project.slug || project.path || project.title"
+              :title="project.title"
+              :description="project.description"
+              :image="project.image ? { src: project.image, alt: project.imageAlt || project.title } : undefined"
+              :to="`/projects/${project.slug}`"
+              variant="soft"
+              class="glass-accent hover:scale-105 transition-transform"
+            >
+              <template v-if="!project.image" #header>
+                <CardImageFallback :title="project.title" icon="i-lucide-folder-code" />
+              </template>
+              <template #footer>
+                <AwardBadge v-if="project.award" :award="project.award" class="mb-3" />
+                <div v-if="project.technologies?.length" class="flex flex-wrap gap-2 mb-4">
+                  <UBadge
+                    v-for="tech in project.technologies.slice(0, 4)"
+                    :key="tech"
+                    variant="soft"
+                    size="sm"
+                    class="capitalize"
+                  >
+                    {{ tech }}
+                  </UBadge>
+                  <UBadge
+                    v-if="project.technologies.length > 4"
+                    variant="soft"
+                    color="gray"
+                    size="sm"
+                  >
+                    +{{ project.technologies.length - 4 }} more
+                  </UBadge>
+                </div>
 
-            <div class="flex items-center justify-end">
-              <div class="flex items-center gap-2">
-                <a
-                  v-if="project.demo"
-                  :href="project.demo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="p-2 text-muted hover:text-primary transition-colors"
-                  title="Live Demo"
-                  :aria-label="`View live demo of ${project.title}`"
-                >
-                  <UIcon name="i-lucide-external-link" class="w-4 h-4" />
-                </a>
+                <div class="flex items-center justify-end">
+                  <div class="flex items-center gap-2">
+                    <a
+                      v-if="project.demo"
+                      :href="project.demo"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="p-2 text-muted hover:text-primary transition-colors"
+                      title="Live Demo"
+                      :aria-label="`View live demo of ${project.title}`"
+                    >
+                      <UIcon name="i-lucide-external-link" class="w-4 h-4" />
+                    </a>
 
-                <a
-                  v-if="project.github"
-                  :href="project.github"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="p-2 text-muted hover:text-primary transition-colors"
-                  title="Source Code"
-                  :aria-label="`View source code of ${project.title}`"
-                >
-                  <UIcon name="i-lucide-github" class="w-4 h-4" />
-                </a>
-              </div>
-            </div>
-          </template>
-        </UBlogPost>
+                    <a
+                      v-if="project.github"
+                      :href="project.github"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="p-2 text-muted hover:text-primary transition-colors"
+                      title="Source Code"
+                      :aria-label="`View source code of ${project.title}`"
+                    >
+                      <UIcon name="i-lucide-github" class="w-4 h-4" />
+                    </a>
+                  </div>
+                </div>
+              </template>
+            </UBlogPost>
+          </div>
+        </section>
       </div>
-      
+
       <!-- Featured Call-to-Action -->
       <section class="mt-20 text-center">
         <div class="glass-accent rounded-2xl p-8 md:p-12 max-w-3xl mx-auto">
@@ -150,6 +161,32 @@ const { data: projects, pending, error } = await useAsyncData(
   'all-projects',
   () => fetchProjects()
 );
+
+// /projects is grouped by theme, in this order. Within a group, projects keep
+// the fetchProjects order. Missing or unknown groups land in a final bucket so
+// a typo can't silently drop a card.
+const PROJECT_GROUPS = [
+  { key: 'browser-agents', label: 'Browser agents & WebMCP' },
+  { key: 'agent-systems-devtools', label: 'Agent systems & developer tools' },
+  { key: 'languages-runtimes', label: 'Languages & runtimes' },
+  { key: 'social-systems', label: 'Social systems' },
+  { key: 'hardware-homelab', label: 'Hardware & homelab' },
+  { key: 'earlier-work', label: 'Earlier work' }
+]
+
+const groupedProjects = computed(() => {
+  const list = projects.value ?? []
+  const known = new Set(PROJECT_GROUPS.map(g => g.key))
+  const sections = PROJECT_GROUPS.map(g => ({
+    ...g,
+    items: list.filter(p => p.group === g.key)
+  }))
+  const other = list.filter(p => !p.group || !known.has(p.group))
+  if (other.length) {
+    sections.push({ key: 'other', label: 'Other projects', items: other })
+  }
+  return sections.filter(s => s.items.length > 0)
+})
 
 useSiteSeo({
   title: 'Projects',

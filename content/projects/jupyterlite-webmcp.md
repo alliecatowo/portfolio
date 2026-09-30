@@ -1,6 +1,7 @@
 ---
 title: JupyterLite WebMCP
 slug: jupyterlite-webmcp
+group: browser-agents
 description: 'Winning OpenAI WebMCP Challenge entry: a JupyterLab extension giving a browser agent 22 tools over your live notebook, kernel, selection and review threads.'
 date: 2026-09-03
 status: published

@@ -25,6 +25,7 @@ tags:
   - oled
   - open-source
 slug: zmk-sofle-hdock-fork
+group: hardware-homelab
 image: /images/keyboards/rainbow-rgb-split.jpg
 github: https://github.com/alliecatowo/zmk-sofle
 ---
