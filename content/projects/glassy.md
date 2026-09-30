@@ -1,7 +1,7 @@
 ---
 title: Glassy
 slug: glassy
-description: 'A lean GPU terminal emulator in Rust: wgpu instanced rendering, damage-only redraws, zero idle CPU, 60 themes, and CRT/glass effects. Built for Claude Code.'
+description: 'A lean GPU terminal emulator in Rust: wgpu instanced rendering, damage-only redraws, no idle frames, 60 themes, and CRT/glass effects. Built for Claude Code.'
 date: 2026-06-19
 status: published
 featured: true

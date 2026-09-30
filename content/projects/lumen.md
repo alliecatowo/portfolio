@@ -34,7 +34,7 @@ Lumen started from a question: what if an AI agent's program read like a design 
 
 The fastest way to get it is the [playground](https://alliecatowo.github.io/lumen/playground): pick an example and press Run. The real compiler and VM run in your browser as WebAssembly.
 
-![The Lumen browser playground running a pattern-matching program compiled to WebAssembly; the terminal prints "zero, one, many".](/images/projects/lumen/playground-pattern-matching.webp)
+![The Lumen playground running a factorial program; the terminal prints 720.](/images/projects/lumen/playground-factorial.webp)
 
 ## What it looks like
 
@@ -95,8 +95,6 @@ end
 ```
 
 Hot cells can be compiled to native code by a tiered Cranelift JIT, which falls back to the interpreter for anything it doesn't support. And the same VM compiles to WebAssembly, which is how the playground works.
-
-![The Lumen playground running a factorial program; the terminal prints 720.](/images/projects/lumen/playground-factorial.webp)
 
 ## The toolchain
 
