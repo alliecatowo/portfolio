@@ -29,6 +29,7 @@ demo: https://jupyterlite-web-mcp.vercel.app/lab/index.html
 devpost: https://devpost.com/software/jupyterlite-webmcp
 image: /images/projects/jupyterlite-webmcp/card.webp
 imageAlt: JupyterLite notebook with the Agent panel in Propose mode. An agent's proposed edit is shown as a red and green diff under the cell, with Accept and Deny buttons, waiting for review.
+ogImage: /images/og/jupyterlite-webmcp.png
 ---
 
 **Your notebook is already in the browser. Now your agent can be too.**

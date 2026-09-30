@@ -128,7 +128,10 @@ award: string (optional; shown as a badge)
 group: string (optional)
 image: /path/to/image (optional)
 imageAlt: string (optional; alt text for image)
+ogImage: /images/og/<slug>.png (optional; 1200x630 share image)
 ```
+
+**OG images**: `public/images/og/<slug>.png` (1200x630) is picked up by convention for a project whose `slug` matches, even without `ogImage` in frontmatter (`nuxt.config.ts` lists the directory at build time). Files there are referenced by convention, not by content, so don't delete them as "unreferenced". Pages without their own image use `/images/og/default.png` (the avatar card).
 
 **Blog frontmatter schema** (`content/blog/*.md`):
 
@@ -142,6 +145,8 @@ author: string
 published: true | false
 featured: true | false
 slug: string
+featured_image: /path/to/image (optional)
+ogImage: /path/to/image (optional; falls back to featured_image, then the default OG)
 ```
 
 ### Key Configurations
@@ -151,6 +156,7 @@ slug: string
 - **Hybrid rendering**: Content pages pre-rendered; `/_studio/**` stays SSR via `routeRules`
 - **ISR disabled**: All content pages are pre-rendered at build time
 - **SEO/crawl**: `@nuxtjs/robots` + `@nuxtjs/sitemap` generate `/robots.txt` and `/sitemap.xml` from `site` in `nuxt.config.ts` (trailing-slash URLs). Blog/projects are wrapped in `asSitemapCollection()`; drafts (`published: false`, `status: draft`) are excluded by a `content:file:afterParse` hook
+- **Page metadata**: every page calls `useSiteSeo()` (`app/composables/useSiteSeo.ts`) for title (`Page – Allison Coleman`), description, canonical (absolute, trailing slash), OpenGraph/Twitter tags and JSON-LD. Shared schema.org nodes (the Person) live in `app/utils/structuredData.ts`. Don't add ad-hoc `useHead` title/meta blocks
 - **404s**: Firebase serves the generated `404.html` (no SPA catch-all rewrite), so unknown and draft URLs return a real 404
 
 ## Nuxt Studio Usage

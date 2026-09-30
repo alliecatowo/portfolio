@@ -1,0 +1,11 @@
+{
+  "name": "Allison Coleman",
+  "short_name": "Allison",
+  "start_url": "/",
+  "display": "browser",
+  "theme_color": "#FF69B4",
+  "background_color": "#0b0a0f",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

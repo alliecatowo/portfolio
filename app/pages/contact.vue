@@ -403,14 +403,8 @@ const onError = (event: FormErrorEvent) => {
   }
 }
 
-// Meta tags
-useHead({
-  title: "Contact | Allison's Developer Portfolio",
-  meta: [
-    {
-      name: 'description',
-      content: 'Get in touch with Allison for web development projects, collaborations, or consultations.'
-    }
-  ]
+useSiteSeo({
+  title: 'Contact',
+  description: 'Get in touch with Allison Coleman about WebMCP, agent systems, developer tools, or a hackathon idea.'
 })
 </script>

@@ -20,6 +20,8 @@ export default defineContentConfig({
         featured: z.boolean().default(false),
         date_published: z.string().optional(),
         featured_image: z.string().optional(),
+        // 1200x630 share image; falls back to featured_image, then /images/og/default.png
+        ogImage: z.string().optional(),
         content: z.string().optional(),
         slug: z.string(),
         readingTime: z.object({
@@ -51,7 +53,9 @@ export default defineContentConfig({
         slug: z.string().optional(),
         images: z.any().optional(),
         image: z.string().optional(),
-        imageAlt: z.string().optional()
+        imageAlt: z.string().optional(),
+        // 1200x630 share image; falls back to /images/og/<slug>.png if present, then the default
+        ogImage: z.string().optional()
       })
     })),
     pages: defineCollection({
@@ -63,7 +67,8 @@ export default defineContentConfig({
         seo: z.object({
           title: z.string(),
           description: z.string(),
-          keywords: z.array(z.string())
+          // Legacy; no longer rendered (search engines ignore meta keywords)
+          keywords: z.array(z.string()).optional()
         }).optional(),
         hero: z.object({
           title: z.string(),

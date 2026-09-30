@@ -476,23 +476,17 @@ const skillGradientClass = (color?: string) => `bg-gradient-to-r ${getSkillStyle
 const lifeTextClass = (color?: string) =>
   lifeStyles[(color as LifeStyleKey) ?? 'default'] ?? lifeStyles.default
 
-useHead(() => {
-  if (!seo.value) {
-    return {}
+useSiteSeo(() => ({
+  title: 'About',
+  description: seo.value?.description
+    || 'About Allison Coleman: software engineer building agent systems, developer tools, and languages/runtimes.',
+  type: 'profile',
+  jsonLd: {
+    '@type': 'ProfilePage',
+    'url': absoluteSiteUrl('/about/'),
+    'mainEntity': personSchema()
   }
-
-  const meta = [
-    { name: 'description', content: seo.value.description },
-    { property: 'og:title', content: seo.value.title },
-    { property: 'og:description', content: seo.value.description }
-  ]
-
-  if (seo.value.keywords?.length) {
-    meta.splice(1, 0, { name: 'keywords', content: seo.value.keywords.join(', ') })
-  }
-
-  return { title: seo.value.title, meta }
-})
+}))
 </script>
 
 <style scoped>
