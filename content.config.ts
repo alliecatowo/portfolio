@@ -1,8 +1,10 @@
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
+import { asSitemapCollection } from '@nuxtjs/sitemap/content'
 
 export default defineContentConfig({
   collections: {
-    blog: defineCollection({
+    // Wrapped for @nuxtjs/sitemap; drafts are excluded via the afterParse hook in nuxt.config.ts
+    blog: defineCollection(asSitemapCollection({
       type: 'page',
       source: 'blog/**/*.md',
       schema: z.object({
@@ -27,8 +29,8 @@ export default defineContentConfig({
           words: z.number()
         }).optional()
       })
-    }),
-    projects: defineCollection({
+    })),
+    projects: defineCollection(asSitemapCollection({
       type: 'page',
       source: 'projects/**/*.md',
       schema: z.object({
@@ -46,7 +48,7 @@ export default defineContentConfig({
         images: z.any().optional(),
         image: z.string().optional()
       })
-    }),
+    })),
     pages: defineCollection({
       type: 'data',
       source: 'pages/**/*.{yml,yaml,json}',

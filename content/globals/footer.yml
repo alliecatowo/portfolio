@@ -14,6 +14,11 @@ socials:
     icon: 'i-lucide-linkedin'
     tooltip: 'Connect on LinkedIn'
     external: true
+  - label: X
+    href: 'https://x.com/AllieCatOwO'
+    icon: 'i-simple-icons-x'
+    tooltip: 'Follow me on X'
+    external: true
   - label: Email
     href: 'mailto:me@allisons.dev'
     icon: 'i-lucide-mail'

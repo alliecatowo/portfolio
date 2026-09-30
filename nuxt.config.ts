@@ -10,10 +10,35 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxt/ui',
+    // robots + sitemap must load before @nuxt/content for the Content v3 integration
+    '@nuxtjs/robots',
+    '@nuxtjs/sitemap',
     '@nuxt/content',
     '@nuxt/image',
     'nuxt-studio'
   ],
+  // Site config shared by robots/sitemap. Firebase redirects /about -> /about/,
+  // so every generated URL uses the trailing-slash form.
+  site: {
+    url: 'https://allisons.dev',
+    name: 'Allison Coleman',
+    trailingSlash: true
+  },
+  robots: {
+    disallow: ['/_studio']
+  },
+  hooks: {
+    // Keep drafts out of the sitemap: unpublished blog posts and draft projects.
+    // Runs before @nuxtjs/sitemap's own afterParse hook, which drops falsy `sitemap` values.
+    'content:file:afterParse'(ctx) {
+      const { collection, content } = ctx
+      const isDraftPost = collection.name === 'blog' && content.published !== true
+      const isDraftProject = collection.name === 'projects' && (content.status ?? 'draft') === 'draft'
+      if (isDraftPost || isDraftProject) {
+        content.sitemap = false
+      }
+    }
+  },
   content: {
     experimental: {
       sqliteConnector: 'native'
@@ -36,6 +61,8 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
+      // Default title; pages override it. Also gives the static 404.html/200.html shells a <title>.
+      title: 'Allison Coleman',
       htmlAttrs: {
         lang: 'en'
       },
@@ -44,7 +71,10 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'format-detection', content: 'telephone=no' },
         { name: 'theme-color', content: '#FF69B4' },
-        { name: 'description', content: 'Allison\'s dual portfolio for development and tattoo art' }
+        { name: 'description', content: 'Allison Coleman — software engineer building agent systems, developer tools, and languages/runtimes.' },
+        { property: 'og:site_name', content: 'Allison Coleman' },
+        { name: 'twitter:site', content: '@AllieCatOwO' },
+        { name: 'twitter:creator', content: '@AllieCatOwO' }
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },

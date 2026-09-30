@@ -22,10 +22,16 @@
         ]
       }
     ],
-    "rewrites": [
+    "redirects": [
       {
-        "source": "**",
-        "destination": "/200.html"
+        "source": "/open-source",
+        "destination": "/projects/",
+        "type": 301
+      },
+      {
+        "source": "/open-source/",
+        "destination": "/projects/",
+        "type": 301
       }
     ]
   },

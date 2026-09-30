@@ -85,7 +85,6 @@ portfolio/
 │   │   ├── index.vue           # Home
 │   │   ├── about.vue           # About
 │   │   ├── contact.vue         # Contact
-│   │   ├── open-source.vue     # Open source projects
 │   │   └── blog/               # Blog listing + posts
 │   ├── components/             # Vue components
 │   ├── composables/            # useContent, useReadTime, etc.
@@ -144,6 +143,8 @@ slug: string
 - **Nuxt Studio**: Self-hosted module (`nuxt-studio` 1.4.0), accessible at `/_studio` (dev) or via SSR host (prod)
 - **Hybrid rendering**: Content pages pre-rendered; `/_studio/**` stays SSR via `routeRules`
 - **ISR disabled**: All content pages are pre-rendered at build time
+- **SEO/crawl**: `@nuxtjs/robots` + `@nuxtjs/sitemap` generate `/robots.txt` and `/sitemap.xml` from `site` in `nuxt.config.ts` (trailing-slash URLs). Blog/projects are wrapped in `asSitemapCollection()`; drafts (`published: false`, `status: draft`) are excluded by a `content:file:afterParse` hook
+- **404s**: Firebase serves the generated `404.html` (no SPA catch-all rewrite), so unknown and draft URLs return a real 404
 
 ## Nuxt Studio Usage
 

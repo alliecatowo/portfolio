@@ -20,6 +20,7 @@ export function useContent() {
   async function fetchBlogPost(slug: string) {
     return await queryCollection('blog')
       .where('slug', '=', slug)
+      .where('published', '=', true)
       .first()
   }
 
