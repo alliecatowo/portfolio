@@ -35,6 +35,9 @@ pnpm typecheck
 pnpm lint
 pnpm lint:fix
 
+# Content validation (also runs in CI and before every deploy)
+pnpm validate:content  # scripts/validate-content.ts
+
 # Database Management (Nuxt Content SQLite)
 pnpm db:clean      # Remove corrupted SQLite database
 pnpm db:rebuild    # Clean + regenerate database
@@ -193,6 +196,7 @@ pnpm dev:clean   # wipes .data/content/contents.sqlite and restarts
 - **Port conflict**: Nuxt auto-selects next available port if 3000 is taken
 - **TypeScript errors after updates**: `pnpm typecheck`
 - **Lint failures**: `pnpm lint:fix` for auto-fixable issues
+- **`validate:content` fails**: Nuxt Content v3 turns the zod schemas into SQLite columns but never rejects bad frontmatter, so the validator is the only gate. It imports the schemas from `content.config.ts` (via `scripts/nuxt-content-shim.mjs`), `safeParse`s every file, and checks that local image paths exist under `public/`, URL fields have `http(s)://`, body links aren't bare domains, slugs are unique, and no `picsum.photos`/`placehold.co` appears in `content/` or `app/`. Fix the reported `file:field`. Studio can leave empty stubs (e.g. `card: {buttons: []}`) that fail required fields; delete them.
 - **Lockfile out of sync**: `pnpm lockfile:update` then commit both `package.json` and `pnpm-lock.yaml`
 
 ### pnpm Lockfile Issues

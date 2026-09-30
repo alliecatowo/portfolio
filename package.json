@@ -21,6 +21,7 @@
     "typecheck": "nuxi typecheck",
     "lint": "eslint . --cache --cache-location .eslintcache",
     "lint:fix": "eslint . --fix --cache --cache-location .eslintcache",
+    "validate:content": "node scripts/validate-content.ts",
     "lockfile:check": "pnpm install --frozen-lockfile --prefer-offline",
     "lockfile:update": "pnpm install && git add pnpm-lock.yaml",
     "db:clean": "rm -rf .data/content/contents.sqlite",
@@ -80,7 +81,8 @@
     "semantic-release": "^24.2.7",
     "tailwindcss": "^4.1.12",
     "typescript": "^5.9.2",
-    "vue-tsc": "^2.2.12"
+    "vue-tsc": "^2.2.12",
+    "yaml": "2.8.2"
   },
   "lint-staged": {
     "**/*.{js,ts,vue}": [

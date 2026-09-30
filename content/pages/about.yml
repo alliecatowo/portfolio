@@ -48,11 +48,6 @@ hero:
       icon: i-lucide-mail
       iconPosition: leading
   description: I love to build things, solve problems, and learn new things everyday!
-  card:
-    buttons: []
-    badges: []
-  note:
-    keys: []
   paragraphs: []
 journey:
   title: My Journey
