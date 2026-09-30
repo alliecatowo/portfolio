@@ -63,6 +63,19 @@ href="https://linkedin.com/in/allie-cat" target="_blank" rel="noopener noreferre
                 </div>
               </a>
 
+              <!-- X -->
+              <a
+href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
+                 class="flex items-center gap-4 group hover:translate-x-1 transition-transform">
+                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <UIcon name="i-simple-icons-x" class="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <p class="text-sm text-muted">X</p>
+                  <p class="text-default font-medium">@AllieCatOwO</p>
+                </div>
+              </a>
+
             </div>
           </UCard>
 

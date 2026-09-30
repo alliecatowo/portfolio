@@ -260,6 +260,10 @@ const { data: post, pending: loading, error } = await useAsyncData(
   () => fetchBlogPost(slug)
 );
 
+if (!post.value && !error.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Post not found', fatal: true });
+}
+
 // Fetch related posts
 const { data: relatedPosts } = await useAsyncData(
   `related-posts-${slug}`,

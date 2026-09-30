@@ -76,8 +76,15 @@ const projectId = route.params.id as string;
 // Fetch the project
 const { data: project } = await useAsyncData(
   `project-${projectId}`,
-  () => queryCollection('projects').where('slug', '=', projectId).first()
+  () => queryCollection('projects')
+    .where('slug', '=', projectId)
+    .where('status', '<>', 'draft')
+    .first()
 );
+
+if (!project.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Project not found', fatal: true });
+}
 
 // Meta tags
 useHead({

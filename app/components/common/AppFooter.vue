@@ -132,6 +132,13 @@ const fallbackFooter: FooterContent = {
       external: true
     },
     {
+      label: 'X',
+      href: 'https://x.com/AllieCatOwO',
+      icon: 'i-simple-icons-x',
+      tooltip: 'Follow me on X',
+      external: true
+    },
+    {
       label: 'Email',
       href: 'mailto:me@allisons.dev',
       icon: 'i-lucide-mail',
