@@ -48,7 +48,7 @@ export function useSiteSeo(input: MaybeRefOrGetter<SiteSeoInput>) {
     const isHome = path === '/'
     return {
       ...i,
-      fullTitle: isHome ? i.title : `${i.title} – ${SITE_NAME}`,
+      fullTitle: isHome ? i.title.trim() : `${i.title.trim()} – ${SITE_NAME}`,
       canonical: absolute(path),
       image: absolute(i.image || DEFAULT_OG_IMAGE),
       imageAlt: i.imageAlt || (i.image ? i.title : DEFAULT_OG_ALT)
