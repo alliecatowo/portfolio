@@ -460,13 +460,8 @@ function getTagColor(tag: string): 'primary'|'secondary'|'success'|'info'|'warni
 
 
 
-// Meta tags
-useHead({
-  title: `Blog - Allison's Portfolio`,
-  meta: [
-    { name: 'description', content: 'Articles about development, coding, and tech insights from Allison' },
-    { property: 'og:title', content: `Blog - Allison's Portfolio` },
-    { property: 'og:type', content: 'website' }
-  ]
-});
+useSiteSeo({
+  title: 'Blog',
+  description: 'Notes from Allison Coleman on agents, developer tools, languages, and the things she builds.'
+})
 </script>

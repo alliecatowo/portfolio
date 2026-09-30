@@ -1,4 +1,12 @@
+import { existsSync, readdirSync } from 'node:fs'
 import { defineNuxtConfig } from 'nuxt/config'
+
+// Per-page OG images live at public/images/og/<slug>.png. Project pages pick theirs up
+// by slug when no `ogImage` is set in frontmatter (see useSiteSeo/projectOgImage).
+const ogDir = new URL('./public/images/og', import.meta.url)
+const ogImages = existsSync(ogDir)
+  ? readdirSync(ogDir).filter(f => f.endsWith('.png')).map(f => f.slice(0, -4)).filter(s => s !== 'default')
+  : []
 
 export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
@@ -23,6 +31,11 @@ export default defineNuxtConfig({
     url: 'https://allisons.dev',
     name: 'Allison Coleman',
     trailingSlash: true
+  },
+  runtimeConfig: {
+    public: {
+      ogImages
+    }
   },
   robots: {
     disallow: ['/_studio']
@@ -78,6 +91,8 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+        { rel: 'manifest', href: '/site.webmanifest' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
         { rel: 'preconnect', href: 'https://cdn.jsdelivr.net' },

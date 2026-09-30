@@ -151,20 +151,10 @@ const { data: projects, pending, error } = await useAsyncData(
   () => fetchProjects()
 );
 
-// Meta tags
-useHead({
-  title: 'Projects | Allison\'s Developer Portfolio',
-  meta: [
-    { 
-      name: 'description', 
-      content: 'Browse through my development projects including web applications, open-source contributions, and creative technical solutions.' 
-    },
-    {
-      name: 'keywords',
-      content: 'projects, portfolio, web development, Vue.js, React, Node.js, open source'
-    }
-  ]
-});
+useSiteSeo({
+  title: 'Projects',
+  description: 'Projects by Allison Coleman: agent systems, developer tools, languages and runtimes, and a few weird computers.'
+})
 </script>
 
 <style scoped>

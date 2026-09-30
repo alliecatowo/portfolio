@@ -359,21 +359,11 @@ const { data: recentPosts } = await useAsyncData(
   () => fetchBlogPosts(3)
 )
 
-useHead(() => {
-  if (!seo.value) {
-    return {}
-  }
-
-  const meta = [
-    { name: 'description', content: seo.value.description },
-    { property: 'og:title', content: seo.value.title },
-    { property: 'og:description', content: seo.value.description }
-  ]
-
-  if (seo.value.keywords?.length) {
-    meta.splice(1, 0, { name: 'keywords', content: seo.value.keywords.join(', ') })
-  }
-
-  return { title: seo.value.title, meta }
-})
+useSiteSeo(() => ({
+  title: seo.value?.title || 'Allison Coleman — agent systems, developer tools, languages',
+  description: seo.value?.description
+    || 'Allison Coleman: software engineer building agent systems, developer tools, and languages/runtimes.',
+  path: '/',
+  jsonLd: [personSchema(), websiteSchema()]
+}))
 </script>

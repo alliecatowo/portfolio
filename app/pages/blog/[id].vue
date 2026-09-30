@@ -338,28 +338,31 @@ const getTagColor = (tag: string): 'primary'|'secondary'|'success'|'info'|'warni
   return colors[hash % colors.length] || 'neutral';
 };
 
-// Meta tags
-useHead(() => ({
-  title: post.value 
-    ? `${post.value.title} - Allison's Portfolio`
-    : `Blog - Allison's Portfolio`,
-  meta: [
-    { 
-      name: 'description', 
-      content: post.value?.description || 'Detailed article with insights and information.' 
-    },
-    {
-      property: 'og:title',
-      content: post.value?.title || 'Blog Post'
-    },
-    {
-      property: 'og:description', 
-      content: post.value?.description || 'Detailed article with insights and information.'
-    },
-    {
-      property: 'og:image',
-      content: post.value?.featured_image || ''
+useSiteSeo(() => {
+  const p = post.value
+  if (!p) return { title: 'Blog', description: 'Notes from Allison Coleman.' }
+  const image = p.ogImage || p.featured_image || DEFAULT_OG_IMAGE
+  const url = absoluteSiteUrl(`/blog/${p.slug || slug}/`)
+  const published = toIsoDate(p.date_published || p.date)
+  return {
+    title: p.title,
+    description: p.description,
+    image,
+    imageAlt: p.title,
+    type: 'article',
+    publishedTime: published,
+    jsonLd: {
+      '@type': 'BlogPosting',
+      'headline': p.title,
+      'description': p.description,
+      ...(published && { datePublished: published }),
+      'author': personRef(),
+      'publisher': personRef(),
+      'image': absoluteSiteUrl(image),
+      url,
+      'mainEntityOfPage': { '@type': 'WebPage', '@id': url },
+      ...(p.tags?.length && { keywords: p.tags.join(', ') })
     }
-  ]
-}));
+  }
+})
 </script> 

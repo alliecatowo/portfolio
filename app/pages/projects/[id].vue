@@ -100,11 +100,30 @@ if (!project.value) {
   throw createError({ statusCode: 404, statusMessage: 'Project not found', fatal: true });
 }
 
-// Meta tags
-useHead({
-  title: project.value?.title ? `${project.value.title} | Projects` : 'Project',
-  meta: [
-    { name: 'description', content: project.value?.description || 'Project details' }
-  ]
-});
+const ogImageForSlug = useOgImageForSlug()
+useSiteSeo(() => {
+  const p = project.value
+  if (!p) return { title: 'Project', description: 'Project details' }
+  const image = p.ogImage || ogImageForSlug(p.slug || projectId)
+  const url = absoluteSiteUrl(`/projects/${p.slug || projectId}/`)
+  const languages = programmingLanguages(p.technologies)
+  return {
+    title: p.title,
+    description: p.description,
+    image,
+    imageAlt: image ? `${p.title} screenshot` : undefined,
+    jsonLd: {
+      '@type': 'SoftwareSourceCode',
+      'name': p.title,
+      'description': p.description,
+      url,
+      ...(p.github && { codeRepository: p.github }),
+      ...(languages.length && { programmingLanguage: languages }),
+      ...(p.technologies?.length && { keywords: p.technologies.join(', ') }),
+      ...(p.award && { award: p.award }),
+      'author': personRef(),
+      'image': absoluteSiteUrl(image || DEFAULT_OG_IMAGE)
+    }
+  }
+})
 </script>
