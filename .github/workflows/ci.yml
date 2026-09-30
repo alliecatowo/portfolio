@@ -109,6 +109,30 @@ jobs:
         working-directory: .
         run: pnpm exec eslint . --ext .js,.ts,.vue --color --cache --cache-location .eslintcache
 
+  validate-content:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup mise (Node, pnpm)
+        uses: jdx/mise-action@v2
+        with:
+          cache: true
+
+      - name: Restore node_modules cache
+        uses: actions/cache/restore@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-pnpm10-node-modules-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm10-node-modules-
+
+      - name: Validate content frontmatter
+        working-directory: .
+        run: pnpm run validate:content
+
   commitlint:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
@@ -138,7 +162,7 @@ jobs:
 
   firebase-preview:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
-    needs: [setup, typecheck, lint] # Run after validation passes
+    needs: [setup, typecheck, lint, validate-content] # Run after validation passes
     runs-on: ubuntu-latest
     environment:
       name: Preview
@@ -179,7 +203,7 @@ jobs:
   # Summary job to report overall CI status
   ci-success:
     if: always()
-    needs: [setup, typecheck, lint, commitlint, firebase-preview]
+    needs: [setup, typecheck, lint, validate-content, commitlint, firebase-preview]
     runs-on: ubuntu-latest
     steps:
       - name: Check all jobs
@@ -188,6 +212,7 @@ jobs:
           if [[ "${{ needs.setup.result }}" == "failure" || 
                 "${{ needs.typecheck.result }}" == "failure" || 
                 "${{ needs.lint.result }}" == "failure" || 
+                "${{ needs.validate-content.result }}" == "failure" || 
                 ("${{ needs.commitlint.result }}" == "failure" && "${{ github.event_name }}" == "pull_request") ]]; then
             echo "::error::One or more required CI jobs failed"
             exit 1

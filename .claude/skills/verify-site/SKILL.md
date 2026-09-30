@@ -19,8 +19,11 @@ Every PR is verified locally, in a real browser, and again on production after m
 pnpm install --frozen-lockfile
 pnpm typecheck
 pnpm lint
+pnpm validate:content  # frontmatter vs content.config.ts schemas, image paths, URLs, slugs
 pnpm generate        # writes .output/public
 ```
+
+`validate:content` failing means real content is broken (Nuxt Content does not enforce the schemas at build time). Fix the file it names; don't loosen the validator.
 
 ## 2. Static output checks (`.output/public`)
 

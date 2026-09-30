@@ -26,10 +26,6 @@ date: 2024-03-15
 github: https://github.com/allisons-dev/portfolio
 demo: https://allisons.dev
 image: /screenshot-2025-10-20-at-23-49-08-nuxt-studio.png
-gallery:
-  - /images/projects/portfolio-1.jpg
-  - /images/projects/portfolio-2.jpg
-  - /images/projects/portfolio-3.jpg
 challenges:
   - Dual-purpose design for developer and tattoo artist personas
   - Complex content management with Nuxt Content

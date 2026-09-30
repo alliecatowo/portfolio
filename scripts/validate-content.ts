@@ -1,0 +1,196 @@
+/**
+ * Validate content/ against the zod schemas in content.config.ts.
+ *
+ * Nuxt Content v3 converts collection schemas to JSON Schema for its SQLite
+ * tables but never rejects bad frontmatter at build time, so typos like
+ * `status: completed` or `demo: example.com` ship silently. This script
+ * imports the collection definitions from content.config.ts (no duplicated
+ * schemas), parses every file matched by each collection's source glob,
+ * runs safeParse, and adds a few checks the schemas can't express.
+ *
+ * Run: pnpm validate:content   (Node >= 22.18 strips the TypeScript types)
+ * Exits 1 if anything is wrong, printing `file:field: message` per problem.
+ */
+import { existsSync, globSync, readFileSync, statSync } from 'node:fs'
+import { registerHooks } from 'node:module'
+import { basename, extname, join, relative, resolve } from 'node:path'
+import { fileURLToPath, pathToFileURL } from 'node:url'
+import { parse as parseYaml } from 'yaml'
+
+const root = resolve(fileURLToPath(new URL('.', import.meta.url)), '..')
+const contentDir = join(root, 'content')
+const publicDir = join(root, 'public')
+const shimUrl = new URL('./nuxt-content-shim.mjs', import.meta.url).href
+
+// Route `@nuxt/content` to the shim for everyone except the shim itself
+registerHooks({
+  resolve(specifier, context, nextResolve) {
+    if (specifier === '@nuxt/content' && context.parentURL !== shimUrl) {
+      return { url: shimUrl, shortCircuit: true }
+    }
+    return nextResolve(specifier, context)
+  }
+})
+
+interface SafeParseResult {
+  success: boolean
+  error?: { issues: { path: (string | number)[], message: string }[] }
+}
+interface Collection {
+  type?: 'page' | 'data'
+  source?: string | { include: string, exclude?: string[], cwd?: string }
+  schema?: { safeParse: (data: unknown) => SafeParseResult }
+}
+
+const config = (await import(pathToFileURL(join(root, 'content.config.ts')).href)).default as {
+  collections: Record<string, Collection>
+}
+
+const errors: string[] = []
+const report = (file: string, field: string, message: string) => {
+  errors.push(`${relative(root, file)}${field ? `:${field}` : ''}: ${message}`)
+}
+
+const IMAGE_EXT = /\.(?:png|jpe?g|webp|gif|svg|avif|ico)$/i
+const URL_KEYS = new Set(['github', 'demo', 'devpost', 'href', 'url', 'link', 'website'])
+const ALLOWED_LINK = /^(?:https?:\/\/|mailto:|tel:|\/|#|\.{1,2}\/)/
+const BARE_DOMAIN = /^(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,}(?:[/?#]|$)/i
+const PLACEHOLDER_HOSTS = /picsum\.photos|placehold\.co|via\.placeholder\.com/i
+
+function checkLocalAsset(file: string, field: string, value: string) {
+  const path = value.split(/[?#]/)[0]!
+  if (!existsSync(join(publicDir, decodeURIComponent(path)))) {
+    report(file, field, `${value} does not exist under public/`)
+  }
+}
+
+// Walk parsed frontmatter/data generically so new fields (ogImage, hero.award, ...) are covered
+function walk(file: string, value: unknown, path: string[]) {
+  if (Array.isArray(value)) {
+    value.forEach((item, i) => walk(file, item, [...path, String(i)]))
+    return
+  }
+  if (value && typeof value === 'object' && !(value instanceof Date)) {
+    for (const [key, child] of Object.entries(value)) walk(file, child, [...path, key])
+    return
+  }
+  if (typeof value !== 'string') return
+
+  const field = path.join('.')
+  const key = [...path].reverse().find(p => !/^\d+$/.test(p)) ?? ''
+  const v = value.trim()
+
+  if (URL_KEYS.has(key) && v && !ALLOWED_LINK.test(v)) {
+    report(file, field, `"${v}" is not a full URL (needs http:// or https://)`)
+  }
+  if (IMAGE_EXT.test(v) && !/\s/.test(v)) {
+    if (v.startsWith('/')) checkLocalAsset(file, field, v)
+    else if (!/^https?:\/\//.test(v)) report(file, field, `image path "${v}" must start with / (public/) or http(s)://`)
+  }
+}
+
+// Markdown body: bare-domain links and local images
+function checkBody(file: string, body: string) {
+  const lines = body.split('\n')
+  lines.forEach((line, i) => {
+    const where = `body line ${i + 1}`
+    for (const m of line.matchAll(/\]\(\s*<?([^)\s>]+)>?(?:\s+"[^"]*")?\s*\)/g)) {
+      const target = m[1]!
+      if (!ALLOWED_LINK.test(target) && BARE_DOMAIN.test(target)) {
+        report(file, where, `link "${target}" has no scheme; use https://${target}`)
+      }
+      if (target.startsWith('/') && IMAGE_EXT.test(target.split(/[?#]/)[0]!)) checkLocalAsset(file, where, target)
+    }
+    for (const m of line.matchAll(/\bsrc=["'](\/[^"']+)["']/g)) {
+      if (IMAGE_EXT.test(m[1]!.split(/[?#]/)[0]!)) checkLocalAsset(file, where, m[1]!)
+    }
+  })
+}
+
+function splitFrontmatter(raw: string): { data: unknown, body: string, bodyOffset: number } {
+  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---[ \t]*(?:\r?\n|$)/)
+  if (!m) return { data: {}, body: raw, bodyOffset: 0 }
+  return { data: parseYaml(m[1]!) ?? {}, body: raw.slice(m[0].length), bodyOffset: m[0].split('\n').length - 1 }
+}
+
+let fileCount = 0
+for (const [name, collection] of Object.entries(config.collections)) {
+  const sources = !collection.source
+    ? []
+    : typeof collection.source === 'string'
+      ? [{ include: collection.source }]
+      : Array.isArray(collection.source) ? collection.source : [collection.source]
+
+  const slugs = new Map<string, string>()
+  for (const source of sources) {
+    const cwd = source.cwd ? resolve(root, source.cwd) : contentDir
+    const files = globSync(source.include, { cwd, exclude: source.exclude ?? [] })
+      .map(f => join(cwd, f))
+      .filter(f => statSync(f).isFile())
+      .sort()
+
+    for (const file of files) {
+      fileCount++
+      const raw = readFileSync(file, 'utf8')
+      const ext = extname(file).toLowerCase()
+      let data: unknown
+      let body = ''
+      let bodyOffset = 0
+      try {
+        if (ext === '.md') ({ data, body, bodyOffset } = splitFrontmatter(raw))
+        else if (ext === '.json') data = JSON.parse(raw)
+        else if (ext === '.yml' || ext === '.yaml') data = parseYaml(raw) ?? {}
+        else continue
+      }
+      catch (e) {
+        report(file, '', `could not parse: ${(e as Error).message}`)
+        continue
+      }
+
+      const result = collection.schema?.safeParse(data)
+      if (result && !result.success) {
+        for (const issue of result.error!.issues) report(file, issue.path.join('.'), issue.message)
+      }
+
+      walk(file, data, [])
+      if (body) {
+        const before = errors.length
+        checkBody(file, body)
+        // Point body errors at real file line numbers
+        for (let i = before; i < errors.length; i++) {
+          errors[i] = errors[i]!.replace(/body line (\d+)/, (_, n) => `line ${Number(n) + bodyOffset}`)
+        }
+      }
+
+      const d = (data ?? {}) as Record<string, unknown>
+      const slug = typeof d.slug === 'string' && d.slug
+        ? d.slug
+        : collection.type === 'page' ? basename(file, ext) : undefined
+      if (slug) {
+        const other = slugs.get(slug)
+        if (other) report(file, 'slug', `"${slug}" is already used by ${relative(root, other)} in collection "${name}"`)
+        else slugs.set(slug, file)
+      }
+    }
+  }
+}
+
+// No random placeholder images anywhere in content or app code
+const TEXT_EXT = /\.(?:md|ya?ml|json|vue|ts|js|mjs|css)$/
+for (const dir of ['content', 'app']) {
+  for (const f of globSync('**/*', { cwd: join(root, dir) })) {
+    const file = join(root, dir, f)
+    if (!TEXT_EXT.test(f) || !statSync(file).isFile()) continue
+    readFileSync(file, 'utf8').split('\n').forEach((line, i) => {
+      const m = line.match(PLACEHOLDER_HOSTS)
+      if (m) report(file, `line ${i + 1}`, `placeholder image host "${m[0]}"; use a real image in public/`)
+    })
+  }
+}
+
+if (errors.length) {
+  console.error(`Content validation failed (${errors.length} problem${errors.length === 1 ? '' : 's'}):\n`)
+  for (const e of errors) console.error(`  ${e}`)
+  process.exit(1)
+}
+console.log(`Content OK: ${fileCount} files in ${Object.keys(config.collections).length} collections`)
