@@ -1,7 +1,7 @@
 ---
 title: Glassy
+description: "A lean GPU terminal emulator in Rust: wgpu instanced rendering, damage-only redraws, no idle frames, 60 themes, and CRT/glass effects. Built for Claude Code."
 slug: glassy
-description: 'A lean GPU terminal emulator in Rust: wgpu instanced rendering, damage-only redraws, no idle frames, 60 themes, and CRT/glass effects. Built for Claude Code.'
 date: 2026-06-19
 status: published
 featured: true
@@ -26,9 +26,10 @@ tags:
   - open-source
 github: https://github.com/alliecatowo/glassy
 image: /images/projects/glassy/card.webp
-imageAlt: 'The Glassy terminal showing a directory listing and syntax-highlighted Rust source.'
+imageAlt: The Glassy terminal showing a directory listing and syntax-highlighted Rust source.
 seo:
-  title: 'Glassy: a lean GPU terminal emulator in Rust'
+  title: "Glassy: a lean GPU terminal emulator in Rust"
+  description: "A lean GPU terminal emulator in Rust: wgpu instanced rendering, damage-only redraws, no idle frames, 60 themes, and CRT/glass effects. Built for Claude Code."
 ---
 
 **Small and quiet on purpose: a GPU terminal that only draws what changed.**

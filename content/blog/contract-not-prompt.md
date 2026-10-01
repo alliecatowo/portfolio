@@ -1,7 +1,7 @@
 ---
-title: 'Contract, Not Prompt: The Agent Workflow Behind Four Hackathon Submissions'
+title: "Contract, Not Prompt: The Agent Workflow Behind Four Hackathon Submissions"
+description: I argue with ChatGPT until my objections turn into a 45,000-character build contract, paste it into Claude Code with one line, and only steer for taste. Here is the method, the receipts, and where it broke.
 date: 2026-10-01
-description: 'I argue with ChatGPT until my objections turn into a 45,000-character build contract, paste it into Claude Code with one line, and only steer for taste. Here is the method, the receipts, and where it broke.'
 category: dev
 tags:
   - agents

@@ -1,7 +1,7 @@
 ---
 title: Strudel WebMCP
+description: "OpenAI WebMCP Challenge entry: the Strudel live-coding REPL with 13 WebMCP tools, so an agent can edit, propose and listen to the same buffer you perform from."
 slug: strudel-webmcp
-description: 'OpenAI WebMCP Challenge entry: the Strudel live-coding REPL with 13 WebMCP tools, so an agent can edit, propose and listen to the same buffer you perform from.'
 date: 2026-09-03
 status: published
 featured: false
@@ -26,9 +26,10 @@ github: https://github.com/alliecatowo/strudel-webmcp
 demo: https://strudel-webmcp.vercel.app
 devpost: https://devpost.com/software/strudel-webmcp
 image: /images/projects/strudel-webmcp/card.webp
-imageAlt: 'Video thumbnail reading "The agent proposes. You hit accept." over a Strudel editor showing an agent proposal diff.'
+imageAlt: Video thumbnail reading "The agent proposes. You hit accept." over a Strudel editor showing an agent proposal diff.
 seo:
-  title: 'Strudel WebMCP: agents in a live-coding REPL'
+  title: "Strudel WebMCP: agents in a live-coding REPL"
+  description: "OpenAI WebMCP Challenge entry: the Strudel live-coding REPL with 13 WebMCP tools, so an agent can edit, propose and listen to the same buffer you perform from."
 ---
 
 **Live-code together.**
@@ -56,6 +57,6 @@ The [live demo](https://strudel-webmcp.vercel.app) works as a plain Strudel REPL
 
 ![The live Strudel WebMCP editor with a drum, bass and lead pattern, and the Read, Review and Live dial in the header.](/images/projects/strudel-webmcp/live-editor.webp)
 
-_The live demo, captured September 2026._
+*The live demo, captured September 2026.*
 
 There's a [demo video](https://youtu.be/30XNqUlsY4o), with a music bed recorded from the app's own audio, and the [Devpost entry](https://devpost.com/software/strudel-webmcp). AGPL-3.0, because it embeds Strudel; credit for the REPL itself goes to the Strudel project.

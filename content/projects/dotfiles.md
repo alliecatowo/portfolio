@@ -1,9 +1,8 @@
 ---
 title: Dotfiles
-slug: dotfiles
 description: "Allison's Fedora workstation setup, managed with GNU Stow: mise for every toolchain, Zsh and Starship, Ghostty, and Neovim on LazyVim."
+slug: dotfiles
 date: 2025-06-16
-# Draft: not her current setup yet; publish once the repo catches up
 status: draft
 featured: false
 group: earlier-work

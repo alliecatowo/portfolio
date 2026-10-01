@@ -1,9 +1,9 @@
 ---
 title: JupyterLite WebMCP
+description: "Winning OpenAI WebMCP Challenge entry: a JupyterLab extension giving a browser agent 22 tools over your live notebook, kernel, selection and review threads."
 slug: jupyterlite-webmcp
 group: browser-agents
 groupOrder: 1
-description: 'Winning OpenAI WebMCP Challenge entry: a JupyterLab extension giving a browser agent 22 tools over your live notebook, kernel, selection and review threads.'
 date: 2026-09-03
 status: published
 featured: true
@@ -33,7 +33,8 @@ image: /images/projects/jupyterlite-webmcp/card.webp
 imageAlt: JupyterLite notebook with the Agent panel in Propose mode. An agent's proposed edit is shown as a red and green diff under the cell, with Accept and Deny buttons, waiting for review.
 ogImage: /images/og/jupyterlite-webmcp.png
 seo:
-  title: 'JupyterLite WebMCP: OpenAI WebMCP Challenge winner'
+  title: "JupyterLite WebMCP: OpenAI WebMCP Challenge winner"
+  description: "Winning OpenAI WebMCP Challenge entry: a JupyterLab extension giving a browser agent 22 tools over your live notebook, kernel, selection and review threads."
 ---
 
 **Your notebook is already in the browser. Now your agent can be too.**
@@ -44,13 +45,13 @@ JupyterLite WebMCP takes the other route. It's a frontend-only JupyterLab and Ju
 
 It was built for the OpenAI WebMCP Challenge (August 25 – September 3, 2026) and was selected as one of the challenge's [10 winning projects](https://webmcp.devpost.com/project-gallery).
 
-![In ChatGPT's in-app browser, an agent has edited a JupyterLite notebook cell. A '±2 changed' popover titled 'What the agent changed' shows converted / visitors replaced by converted / eligible_sessions.](/images/projects/jupyterlite-webmcp/hero.gif)
+![In ChatGPT's in-app browser, an agent has edited a JupyterLite notebook cell. A '±2 changed' popover titled 'What the agent changed' shows converted / visitors replaced by converted / eligible\_sessions.](/images/projects/jupyterlite-webmcp/hero.gif)
 
-_After a direct edit, the agent's change is marked on the cell. Clicking "±2 changed" opens a line diff of exactly what it replaced._
+*After a direct edit, the agent's change is marked on the cell. Clicking "±2 changed" opens a line diff of exactly what it replaced.*
 
 ## A second editor, not a chat window
 
-One question shaped every feature: _could this still make sense if the second participant were a human instead of an agent?_ A human collaborator wouldn't be handed a private copy, wouldn't silently overwrite your unsaved work, and wouldn't run code you can't see. Most of the design falls out of holding the agent to the same rules.
+One question shaped every feature: *could this still make sense if the second participant were a human instead of an agent?* A human collaborator wouldn't be handed a private copy, wouldn't silently overwrite your unsaved work, and wouldn't run code you can't see. Most of the design falls out of holding the agent to the same rules.
 
 - **The human always wins a conflict.** Every write has to present the `sourceHash` from an earlier read. If you've changed the cell since then, the write is refused with `STALE_CELL` and never merged.
 - **No hidden execution.** There's no "execute this string" tool and no kernel introspection. To compute something new, the agent inserts a visible cell and runs it in your notebook, on your kernel.
@@ -60,29 +61,29 @@ One question shaped every feature: _could this still make sense if the second pa
 
 ![The ChatGPT desktop app next to the JupyterLite demo: the agent is updating a notebook filter cell, the cell has a highlight ring, and the JupyterLab status bar reads 'Agent · running cell 5'.](/images/projects/jupyterlite-webmcp/screenshot-2-presence.webp)
 
-_Demoed in ChatGPT's in-app browser: while the agent works, the targeted cell is ringed and the status bar says what it's doing._
+*Demoed in ChatGPT's in-app browser: while the agent works, the targeted cell is ringed and the status bar says what it's doing.*
 
 ![Right-click menu on a notebook cell in the JupyterLite demo, showing 'Add Comment', 'Comment on Cell' and 'Agent Access: Editable' next to the standard cell actions.](/images/projects/jupyterlite-webmcp/screenshot-1-access-control.webp)
 
 ![Per-cell agent access: the funnel-definition cell is set to Hidden. The agent's read attempt failed, and the Access tab lists every cell's permission.](/images/projects/jupyterlite-webmcp/gallery-access-hidden.webp)
 
-_Access is set from the cell menu or the Agent panel's Access tab. With the funnel-definition cell hidden, the agent's read of it comes back `CELL_NOT_FOUND`._
+*Access is set from the cell menu or the Agent panel's Access tab. With the funnel-definition cell hidden, the agent's read of it comes back `CELL_NOT_FOUND`.*
 
 ![Review threads in the Agent panel: a comment anchored to a code range, with a human question and an agent reply, plus Reply and Resolve.](/images/projects/jupyterlite-webmcp/gallery-review-comments.webp)
 
-_A review thread anchored to a range of source, on one of the demo's seeded notebooks. The human and the agent reply in the same thread._
+*A review thread anchored to a range of source, on one of the demo's seeded notebooks. The human and the agent reply in the same thread.*
 
 ## Propose mode: review before it sticks
 
-By default an edit applies immediately, guarded by the source hash. Flip the Agent panel to **Propose mode** and `jupyter_update_cell` stops applying on call. It stages the change as an inline diff under the cell, with **Accept** and **Deny**, and the tool call genuinely doesn't resolve until you decide. Accept goes through the same code path as a direct edit, so there's exactly one place a cell's source is ever written. Deny comes back to the agent as a normal result coded `PROPOSAL_DENIED`, carrying the reason you typed, so its next turn knows _why_ instead of just retrying. Propose mode currently covers `jupyter_update_cell`; inserts, deletes and runs still apply directly.
+By default an edit applies immediately, guarded by the source hash. Flip the Agent panel to **Propose mode** and `jupyter_update_cell` stops applying on call. It stages the change as an inline diff under the cell, with **Accept** and **Deny**, and the tool call genuinely doesn't resolve until you decide. Accept goes through the same code path as a direct edit, so there's exactly one place a cell's source is ever written. Deny comes back to the agent as a normal result coded `PROPOSAL_DENIED`, carrying the reason you typed, so its next turn knows *why* instead of just retrying. Propose mode currently covers `jupyter_update_cell`; inserts, deletes and runs still apply directly.
 
 ![A reviewer types a reason before denying the agent's proposed notebook edit.](/images/projects/jupyterlite-webmcp/gallery-propose-deny-reason.webp)
 
-_A pending proposal with a reason typed in. Denying it resolves the agent's call as `PROPOSAL_DENIED`, reason included._
+*A pending proposal with a reason typed in. Denying it resolves the agent's call as `PROPOSAL_DENIED`, reason included.*
 
 ![After the agent's edit is accepted and run, the output shows a 2.9% conversion rate, labelled 'Run by Browser agent', with a '±2 changed' chip and an activity log.](/images/projects/jupyterlite-webmcp/gallery-accepted-provenance.webp)
 
-_Accepted and run: the output says who produced it, and "±2 changed" keeps the diff one click away._
+*Accepted and run: the output says who produced it, and "±2 changed" keeps the diff one click away.*
 
 ## Where it runs
 

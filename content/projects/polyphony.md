@@ -1,9 +1,8 @@
 ---
 title: Polyphony
-slug: polyphony
 description: "A GitHub-native port of OpenAI's Symphony: an Elixir/OTP orchestrator that turns GitHub Project issues into isolated Codex runs and PRs."
+slug: polyphony
 date: 2026-05-15
-# Draft until feat/patches-autonomous-runtime is merged and the README describes the GitHub runtime
 status: draft
 featured: false
 group: agent-systems-devtools

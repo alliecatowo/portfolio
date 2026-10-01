@@ -1,7 +1,7 @@
 ---
 title: GitHub Stories
+description: "24-hour Stories for GitHub: rings on avatars via a browser extension, and a gh CLI that draws them (video too) right in your terminal."
 slug: gh-stories
-description: '24-hour Stories for GitHub: rings on avatars via a browser extension, and a gh CLI that draws them (video too) right in your terminal.'
 date: 2026-09-13
 status: published
 featured: true
@@ -28,7 +28,8 @@ github: https://github.com/alliecatowo/gh-stories
 image: /images/projects/gh-stories/card.webp
 imageAlt: 'GitHub Stories landing page: "Stories for GitHub. Yes, those Stories.", with links to the demo, extension and CLI.'
 seo:
-  title: 'GitHub Stories: 24-hour Stories for GitHub'
+  title: "GitHub Stories: 24-hour Stories for GitHub"
+  description: "24-hour Stories for GitHub: rings on avatars via a browser extension, and a gh CLI that draws them (video too) right in your terminal."
 ---
 
 **Stories for GitHub. Yes, those Stories.**
@@ -39,7 +40,7 @@ GitHub already has avatars, follows and a dashboard. So why not a ring around yo
 
 ![The same kind of Story drawn as real pixels inside the kitty terminal by gh stories, with caption and key hints.](/images/projects/gh-stories/terminal-story.webp)
 
-_Real captures of the extension and the CLI. The pull request page and accounts are fictional fixtures, and the photos are generated artwork._
+*Real captures of the extension and the CLI. The pull request page and accounts are fictional fixtures, and the photos are generated artwork.*
 
 ## Three pieces, one Story
 
@@ -51,7 +52,7 @@ Both talk to one **Go service** backed by PostgreSQL, S3-compatible storage and 
 
 ## The engineering behind a joke
 
-**One visibility rule, in one place.** Whether a viewer may see a Story is decided by a single SQL predicate: published, not expired, author not suspended, no block in either direction, and the audience checked against the _current_ follow graph. Every read path uses it: the feed, the rings, the media gateway, viewers, replies and reactions. As the code comment puts it, "A new route cannot accidentally skip a rule, because there is no second place to skip it in." Expiry is enforced on read, so a stalled cleanup job can't bring a Story back.
+**One visibility rule, in one place.** Whether a viewer may see a Story is decided by a single SQL predicate: published, not expired, author not suspended, no block in either direction, and the audience checked against the *current* follow graph. Every read path uses it: the feed, the rings, the media gateway, viewers, replies and reactions. As the code comment puts it, "A new route cannot accidentally skip a rule, because there is no second place to skip it in." Expiry is enforced on read, so a stalled cleanup job can't bring a Story back.
 
 **Video in a terminal.** Getting kitty to animate frames took four fixes the spec doesn't spell out, and the working sequence was recovered by capturing what `kitty +kitten icat` itself emits for an animated GIF. Frames have to arrive as files, which is also why inline video can't work over SSH.
 

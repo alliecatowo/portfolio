@@ -1,7 +1,7 @@
 ---
 title: rssd
+description: "A file-based RSS daemon: feeds become a tree of atomically written XML entries with revision history, a tail-able JSONL event log, and a vim-style TUI."
 slug: rssd
-description: 'A file-based RSS daemon: feeds become a tree of atomically written XML entries with revision history, a tail-able JSONL event log, and a vim-style TUI.'
 date: 2026-09-15
 status: published
 featured: false
@@ -26,7 +26,8 @@ demo: https://alliecatowo.github.io/rssd/
 image: /images/projects/rssd/card.webp
 imageAlt: 'rssd docs site: "The filesystem is the API", a daemon that turns RSS and Atom feeds into a directory tree.'
 seo:
-  title: 'rssd: a file-based RSS daemon with a TUI'
+  title: "rssd: a file-based RSS daemon with a TUI"
+  description: "A file-based RSS daemon: feeds become a tree of atomically written XML entries with revision history, a tail-able JSONL event log, and a vim-style TUI."
 ---
 
 **The filesystem is the API.**

@@ -1,7 +1,7 @@
 ---
-title: 'Building an Agent-Native Notebook Without Adding a Chatbot'
+title: Building an Agent-Native Notebook Without Adding a Chatbot
+description: JupyterLite WebMCP gives a browser agent 22 tools over your live notebook and no chat box. How the write path, access control, presence UI and Propose/Deny actually work.
 date: 2026-10-01
-description: 'JupyterLite WebMCP gives a browser agent 22 tools over your live notebook and no chat box. How the write path, access control, presence UI and Propose/Deny actually work.'
 category: dev
 tags:
   - jupyter

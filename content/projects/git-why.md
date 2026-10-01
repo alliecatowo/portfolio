@@ -1,7 +1,7 @@
 ---
 title: Git Why
+description: git blame tells you who changed the code; git why finds the commit that explains it. Local hybrid search over Git history, benchmarked honestly.
 slug: git-why
-description: 'git blame tells you who changed the code; git why finds the commit that explains it. Local hybrid search over Git history, benchmarked honestly.'
 date: 2026-09-09
 status: published
 featured: false
@@ -27,7 +27,8 @@ demo: https://alliecatowo.github.io/git-why/
 image: /images/projects/git-why/card.webp
 imageAlt: 'Git Why docs site: "Finds the history that explains the code", with an orange magnifying glass over a line of commits.'
 seo:
-  title: 'Git Why: find the commit that explains the code'
+  title: "Git Why: find the commit that explains the code"
+  description: git blame tells you who changed the code; git why finds the commit that explains it. Local hybrid search over Git history, benchmarked honestly.
 ---
 
 **`git blame` tells you who changed the code. `git why` finds the history that explains it.**

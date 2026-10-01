@@ -1,7 +1,7 @@
 ---
 title: darwin
+description: "Work in progress: a self-improving layer for coding-agent harnesses (memory, dream, distill), shipped first as an opencode plugin, and benchmarked against itself on SWE-bench."
 slug: darwin
-description: 'Work in progress: a self-improving layer for coding-agent harnesses (memory, dream, distill), shipped first as an opencode plugin, and benchmarked against itself on SWE-bench.'
 date: 2026-08-29
 status: published
 featured: false
@@ -23,7 +23,8 @@ tags:
   - work-in-progress
 github: https://github.com/alliecatowo/claude-code-darwin
 seo:
-  description: 'A work-in-progress self-improving layer for coding-agent harnesses (memory, dream, distill), shipped as an opencode plugin and benchmarked on SWE-bench.'
+  description: A work-in-progress self-improving layer for coding-agent harnesses (memory, dream, distill), shipped as an opencode plugin and benchmarked on SWE-bench.
+  title: darwin
 ---
 
 **Can a coding agent get better at a codebase just by working in it?**

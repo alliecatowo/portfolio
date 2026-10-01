@@ -1,7 +1,7 @@
 ---
 title: puml
+description: "PlantUML-compatible diagrams without Java or Graphviz: a Rust compiler with its own layout engine, emitting SVG/PNG/PDF from a CLI, LSP and in-browser WASM."
 slug: puml
-description: 'PlantUML-compatible diagrams without Java or Graphviz: a Rust compiler with its own layout engine, emitting SVG/PNG/PDF from a CLI, LSP and in-browser WASM.'
 date: 2026-05-14
 status: published
 featured: true
@@ -28,9 +28,10 @@ tags:
 github: https://github.com/alliecatowo/puml
 demo: https://alliecatowo.github.io/puml/editor/
 image: /images/projects/puml/card.webp
-imageAlt: 'The puml studio editor with PlantUML class source on the left and the SVG class diagram, rendered by the in-browser WASM engine, on the right.'
+imageAlt: The puml studio editor with PlantUML class source on the left and the SVG class diagram, rendered by the in-browser WASM engine, on the right.
 seo:
-  title: 'puml: PlantUML-compatible diagrams in Rust'
+  title: "puml: PlantUML-compatible diagrams in Rust"
+  description: "PlantUML-compatible diagrams without Java or Graphviz: a Rust compiler with its own layout engine, emitting SVG/PNG/PDF from a CLI, LSP and in-browser WASM."
 ---
 
 **UML that compiles: PlantUML diagrams, no Java, no Graphviz.**

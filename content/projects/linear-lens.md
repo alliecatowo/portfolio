@@ -1,9 +1,8 @@
 ---
 title: Linear Lens
+description: "A VS Code and Cursor extension that makes Linear issue IDs like ENG-123 clickable and hoverable wherever they show up: comments, Markdown, commit messages and your branch name."
 slug: linear-lens
-description: 'A VS Code and Cursor extension that makes Linear issue IDs like ENG-123 clickable and hoverable wherever they show up: comments, Markdown, commit messages and your branch name.'
 date: 2026-06-03
-# Draft: publish once Allison records the demo (hover card, click-through, settings)
 status: draft
 featured: false
 group: agent-systems-devtools

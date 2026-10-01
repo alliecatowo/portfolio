@@ -1,7 +1,7 @@
 ---
 title: AFTERLIFE
-slug: afterlife
 description: "Conway's Life with a time machine: scrub history, fork alternate futures, sculpt time in 3D, and play in deterministic lockstep across tabs."
+slug: afterlife
 date: 2026-09-07
 status: published
 featured: true
@@ -28,6 +28,7 @@ image: /images/projects/afterlife/card.webp
 imageAlt: "AFTERLIFE's Time Sculpture: 165 recorded generations of the opening scene stacked in 3D, with each glider's path showing as an inclined beam."
 seo:
   title: "AFTERLIFE: Conway's Life with a time machine"
+  description: "Conway's Life with a time machine: scrub history, fork alternate futures, sculpt time in 3D, and play in deterministic lockstep across tabs."
 ---
 
 **Every future leaves a trace.**
@@ -38,7 +39,7 @@ It runs in the browser with no account and no install. [Open it and touch the wo
 
 ![AFTERLIFE in its dark theme with the Lineage lens: gliders streaming from the top left, multicoloured still lifes and oscillators on the right, and two populations meeting under a First contact annotation at generation 164.](/images/projects/afterlife/lineage-first-contact.webp)
 
-_The opening scene a few seconds in, captured from the live app. The two populations meet at generation 123, and the app marks the spot._
+*The opening scene a few seconds in, captured from the live app. The two populations meet at generation 123, and the app marks the spot.*
 
 ## Time as a material
 
@@ -50,7 +51,7 @@ Then there's the **Time Sculpture**. Select a stretch of the world and AFTERLIFE
 
 ![The Time Sculpture orbited to one side: glider paths cross as long diagonal beams through 165 stacked generations.](/images/projects/afterlife/time-sculpture-side.webp)
 
-_Captured from the live app: the same 165 generations as the image at the top of the page, orbited to the side._
+*Captured from the live app: the same 165 generations as the image at the top of the page, orbited to the side.*
 
 ## The rest of the observatory
 

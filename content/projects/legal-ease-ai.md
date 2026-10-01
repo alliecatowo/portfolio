@@ -1,4 +1,6 @@
 ---
+title: LegalEase AI
+description: "Self-hosted legal discovery for messy, sensitive evidence: Docling OCR, hybrid BM25 and vector search in Qdrant, WhisperX transcription, and local LLMs via Ollama."
 technologies:
   - Python
   - FastAPI
@@ -26,15 +28,14 @@ slug: legal-ease-ai
 group: earlier-work
 image: /images/legalease/search-hero-pink-dark.png
 imageAlt: LegalEase AI search page in the dark pink theme, with the hybrid search box and filters for cases, types and levels
-title: LegalEase AI
-description: 'Self-hosted legal discovery for messy, sensitive evidence: Docling OCR, hybrid BM25 and vector search in Qdrant, WhisperX transcription, and local LLMs via Ollama.'
 date: 2025-08-30
 status: published
 featured: false
 github: https://github.com/alliecatowo/legalease-ai
 demo: https://legal-ease.app
 seo:
-  title: 'LegalEase AI: self-hosted legal discovery'
+  title: "LegalEase AI: self-hosted legal discovery"
+  description: "Self-hosted legal discovery for messy, sensitive evidence: Docling OCR, hybrid BM25 and vector search in Qdrant, WhisperX transcription, and local LLMs via Ollama."
 ---
 
 ## Overview
@@ -84,7 +85,7 @@ It also taught me the value of “honest defaults” — shipping with good base
 
 - Processes **20 TB+ of discovery data** reliably on commodity hardware.
 - Reduces document-review time from **hours to minutes**.
-- Enables small legal teams to use advanced AI workflows _without_ cloud dependencies or subscription costs.
+- Enables small legal teams to use advanced AI workflows *without* cloud dependencies or subscription costs.
 - Inspired the foundation for my later R\&D into local retrieval and evidence intelligence.
 
 ---

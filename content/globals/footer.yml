@@ -1,41 +1,41 @@
 slug: footer
 brand:
-  title: 'Allison Coleman'
-  tagline: 'Agent systems, developer tools, languages & runtimes'
-description: 'Agent systems, developer tools, languages & runtimes'
+  title: Allison Coleman
+  tagline: Agent systems, developer tools, languages & runtimes
+description: Agent systems, developer tools, languages & runtimes
 socials:
   - label: GitHub
-    href: 'https://github.com/alliecatowo'
-    icon: 'i-lucide-github'
-    tooltip: 'View my GitHub profile'
+    href: https://github.com/alliecatowo
+    icon: i-lucide-github
+    tooltip: View my GitHub profile
     external: true
   - label: LinkedIn
-    href: 'https://linkedin.com/in/allie-cat'
-    icon: 'i-lucide-linkedin'
-    tooltip: 'Connect on LinkedIn'
+    href: https://linkedin.com/in/allie-cat
+    icon: i-lucide-linkedin
+    tooltip: Connect on LinkedIn
     external: true
   - label: X
-    href: 'https://x.com/AllieCatOwO'
-    icon: 'i-simple-icons-x'
-    tooltip: 'Follow me on X'
+    href: https://x.com/AllieCatOwO
+    icon: i-simple-icons-x
+    tooltip: Follow me on X
     external: true
   - label: Email
-    href: 'mailto:me@allisons.dev'
-    icon: 'i-lucide-mail'
-    tooltip: 'Send me an email'
+    href: mailto:me@allisons.dev
+    icon: i-lucide-mail
+    tooltip: Send me an email
 navigation:
   - label: Home
-    to: '/'
+    to: /
   - label: About
-    to: '/about/'
+    to: /about/
   - label: Projects
-    to: '/projects/'
+    to: /projects/
   - label: Blog
-    to: '/blog/'
+    to: /blog/
   - label: Contact
-    to: '/contact/'
+    to: /contact/
 contact:
-  description: 'Feel free to reach out for collaborations or just a friendly hello.'
-  email: 'me@allisons.dev'
+  description: Feel free to reach out for collaborations or just a friendly hello.
+  email: me@allisons.dev
 bottom:
-  subtext: 'Built with ❤️ using Nuxt, Nuxt UI, and Tailwind CSS.'
+  subtext: Built with ❤️ using Nuxt, Nuxt UI, and Tailwind CSS.

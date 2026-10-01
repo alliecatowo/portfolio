@@ -1,7 +1,7 @@
 ---
-title: 'The Browser Already Has the State Your Agent Needs'
+title: The Browser Already Has the State Your Agent Needs
+description: Screenshots, DOM scraping and backend MCP servers all hand your agent a copy. WebMCP lets the page itself offer tools over the live tab. What I learned building five of them in two days.
 date: 2026-10-01
-description: 'Screenshots, DOM scraping and backend MCP servers all hand your agent a copy. WebMCP lets the page itself offer tools over the live tab. What I learned building five of them in two days.'
 category: dev
 tags:
   - webmcp
@@ -60,7 +60,7 @@ During two days of OpenAI's WebMCP Challenge, I worked with ChatGPT on what is w
 
 1. **If a normal MCP server can do it, WebMCP is a wrapper.** The page has to own state that nothing else can reach.
 2. **It can't depend on AI.** "the app has ti have a normal interface for a user and full functionality without web mcp - web mcp just plugs in." ChatGPT's version: WebMCP is closer to ARIA, a semantic layer, than to a chatbot.
-3. **It has to beat chat on precision.** "its gotta be a task thats far easier visually and exposes _more minute conteol_ then chat interface would."
+3. **It has to beat chat on precision.** "its gotta be a task thats far easier visually and exposes *more minute conteol* then chat interface would."
 4. **The page can't summon the agent.** Selecting text, editing a cell or posting a comment doesn't call anyone. It changes the state the agent sees the next time you ask.
 5. **The human always wins.** If the human changed something since the agent last read it, the agent's write fails.
 6. **Hidden means nonexistent.** If a human hides something from the agent, the agent's lookup says "not found," not "access denied."
@@ -81,9 +81,9 @@ The repo is still public, with no license and no Devpost entry. It taught me wha
 
 ## JupyterLite: state only in the tab
 
-_"Your notebook is already in the browser. Now your agent can be too."_
+*"Your notebook is already in the browser. Now your agent can be too."*
 
-JupyterLite is Jupyter that runs entirely in the browser: Pyodide for the kernel, IndexedDB for files, no server. That makes it the clearest case for rule 1. The state the agent needs isn't just _also_ in the browser. It's _only_ in the browser.
+JupyterLite is Jupyter that runs entirely in the browser: Pyodide for the kernel, IndexedDB for files, no server. That makes it the clearest case for rule 1. The state the agent needs isn't just *also* in the browser. It's *only* in the browser.
 
 JupyterLite WebMCP is a JupyterLab extension that registers 22 tools over the open notebook: read the context and the exact selection, read and edit cells, run them, and post and answer review comments anchored to code or output. It has no chat panel and no model of its own. The agent is a second editor in your document, and it follows the rules you'd give a human collaborator:
 
@@ -149,7 +149,7 @@ The four projects that shipped fall into three shapes:
 | ------------------------------------- | ------------------- | ------------------------------------------------------------------------ |
 | **State only in the tab**             | JupyterLite         | Unsaved cells, selection, an in-browser kernel, IndexedDB files          |
 | **The page already has your session** | Swagger UI, Careers | Your selected server, your login, the site's own validation and pipeline |
-| **A live performance**                | Strudel             | The buffer you're playing _right now_, and what it sounds like           |
+| **A live performance**                | Strudel             | The buffer you're playing *right now*, and what it sounds like           |
 
 They also share one design question, the most useful thing I took away: **who gets to decide what the agent may do?** In each one, the answer ended up being people, never the agent. The publisher decides what's exposed. The person at the page can tighten it. Only a human can press Submit, accept a proposal or create an account.
 

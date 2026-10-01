@@ -23,6 +23,8 @@
     "lint": "eslint . --cache --cache-location .eslintcache",
     "lint:fix": "eslint . --fix --cache --cache-location .eslintcache",
     "validate:content": "node scripts/validate-content.ts",
+    "content:format": "node scripts/format-content.mjs",
+    "content:format:check": "node scripts/format-content.mjs --check",
     "lockfile:check": "pnpm install --frozen-lockfile --prefer-offline",
     "lockfile:update": "pnpm install && git add pnpm-lock.yaml",
     "db:clean": "rm -rf .data/content/contents.sqlite",
@@ -85,6 +87,9 @@
     "**/*.{css,scss,md,yml,yaml,json}": [
       "prettier --write"
     ],
+    "content/**/*.{md,yml,yaml}": [
+      "node scripts/format-content.mjs"
+    ],
     "package.json": [
       "bash -c 'pnpm lockfile:check'"
     ]
@@ -110,7 +115,8 @@
       "esbuild@>=0.27.3 <0.28.1": "^0.28.1",
       "@nuxtjs/mdc@<0.22.1": "^0.22.1",
       "uuid@<11.1.1": "^11.1.1",
-      "basic-ftp@<=6.2.0": "^6.2.1"
+      "basic-ftp@<=6.2.0": "^6.2.1",
+      "mdast-util-to-markdown": "2.1.2"
     },
     "ignoredBuiltDependencies": [
       "@parcel/watcher",

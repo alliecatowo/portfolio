@@ -1,7 +1,7 @@
 ---
 title: Storybook WebMCP
+description: A Storybook addon that compiles live stories, controls and globals into WebMCP tools. Built and deployed for the WebMCP Challenge, then deliberately not submitted.
 slug: storybook-webmcp
-description: 'A Storybook addon that compiles live stories, controls and globals into WebMCP tools. Built and deployed for the WebMCP Challenge, then deliberately not submitted.'
 date: 2026-09-01
 status: published
 featured: false
@@ -21,9 +21,10 @@ tags:
 github: https://github.com/alliecatowo/storybook-webmcp
 demo: https://storybook-web-mcp.vercel.app/storybook/
 image: /images/projects/storybook-webmcp/card.webp
-imageAlt: 'Storybook with a WebMCP panel listing the story tools an agent can call and its recent calls.'
+imageAlt: Storybook with a WebMCP panel listing the story tools an agent can call and its recent calls.
 seo:
-  title: 'Storybook WebMCP: stories as WebMCP tools'
+  title: "Storybook WebMCP: stories as WebMCP tools"
+  description: A Storybook addon that compiles live stories, controls and globals into WebMCP tools. Built and deployed for the WebMCP Challenge, then deliberately not submitted.
 ---
 
 **Built, deployed, and deliberately not submitted.**

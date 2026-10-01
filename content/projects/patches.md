@@ -1,7 +1,7 @@
 ---
 title: Patches
+description: "A chronological social network you use from the terminal: Ink/React TUI, web PWA peer, E2EE DMs, federation lab, and user-side moderation."
 slug: patches
-description: 'A chronological social network you use from the terminal: Ink/React TUI, web PWA peer, E2EE DMs, federation lab, and user-side moderation.'
 date: 2026-08-17
 status: published
 featured: true
@@ -26,9 +26,10 @@ tags:
   - full-stack
 github: https://github.com/alliecatowo/patches
 image: /images/projects/patches/card.webp
-imageAlt: 'The Patches terminal client: a chronological home feed of three posts, connected to patches-social.fly.dev, with keyboard hints.'
+imageAlt: "The Patches terminal client: a chronological home feed of three posts, connected to patches-social.fly.dev, with keyboard hints."
 seo:
-  title: 'Patches: a social network for your terminal'
+  title: "Patches: a social network for your terminal"
+  description: "A chronological social network you use from the terminal: Ink/React TUI, web PWA peer, E2EE DMs, federation lab, and user-side moderation."
 ---
 
 **Terminal-native social media: chronological, open source, and no ranking algorithm.**

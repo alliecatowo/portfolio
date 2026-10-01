@@ -1,7 +1,7 @@
 ---
 title: CouchCircle
+description: "A cozy real-time watch party: synced YouTube, direct video, and P2P screen share in a shared living room with a queue and one remote."
 slug: couchcircle
-description: 'A cozy real-time watch party: synced YouTube, direct video, and P2P screen share in a shared living room with a queue and one remote.'
 date: 2026-06-10
 status: published
 featured: false
@@ -25,16 +25,17 @@ tags:
 github: https://github.com/alliecatowo/couchcircle
 demo: https://couchcircle.vercel.app
 image: /images/projects/couchcircle/card.webp
-imageAlt: 'A CouchCircle room: a synced video on the stage and two avatars on a couch in an illustrated living room.'
+imageAlt: "A CouchCircle room: a synced video on the stage and two avatars on a couch in an illustrated living room."
 seo:
-  title: 'CouchCircle: a cozy real-time watch party'
+  title: "CouchCircle: a cozy real-time watch party"
+  description: "A cozy real-time watch party: synced YouTube, direct video, and P2P screen share in a shared living room with a queue and one remote."
 ---
 
 **watch together, actually together.**
 
 Most watch parties feel like a video with a chat box bolted on. CouchCircle puts the crew on a couch in an illustrated living room, hands exactly one person the remote, and keeps everyone on the same frame. Someone rolls up a couch, shares a couch code like `CANDLE-696`, and up to 12 people watch YouTube, a direct MP4, WebM or HLS link, or a peer-to-peer screen share together. There's a votable queue, chat with floating reactions, ready checks, and six illustrated avatars (cat, frog, chinchilla, goblin, sprout, blanket).
 
-_The video in these screenshots is Big Buck Bunny, © Blender Foundation, CC BY 3.0._
+*The video in these screenshots is Big Buck Bunny, © Blender Foundation, CC BY 3.0.*
 
 ## Keeping a room in sync
 

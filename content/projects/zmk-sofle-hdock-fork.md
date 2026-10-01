@@ -1,7 +1,7 @@
 ---
 title: AllieCatKeeb Sofle (ZMK Firmware)
+description: "ZMK firmware for my wireless Eyelash Sofle split: nice!nano controllers, OLED and RGB support, a dongle variant, and prebuilt firmware from GitHub Actions."
 date: 2025-08-30
-description: 'ZMK firmware for my wireless Eyelash Sofle split: nice!nano controllers, OLED and RGB support, a dongle variant, and prebuilt firmware from GitHub Actions.'
 featured: false
 status: published
 technologies:
@@ -27,9 +27,10 @@ slug: zmk-sofle-hdock-fork
 group: hardware-homelab
 image: /images/keyboards/rainbow-rgb-split.jpg
 github: https://github.com/alliecatowo/zmk-sofle
-imageAlt: 'A wireless Sofle split keyboard with rainbow RGB backlighting and a rotary knob, next to a small dongle screen showing battery levels for both halves'
+imageAlt: A wireless Sofle split keyboard with rainbow RGB backlighting and a rotary knob, next to a small dongle screen showing battery levels for both halves
 seo:
-  title: 'AllieCatKeeb Sofle: wireless ZMK split keyboard'
+  title: "AllieCatKeeb Sofle: wireless ZMK split keyboard"
+  description: "ZMK firmware for my wireless Eyelash Sofle split: nice!nano controllers, OLED and RGB support, a dongle variant, and prebuilt firmware from GitHub Actions."
 ---
 
 ## Overview

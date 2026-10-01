@@ -60,6 +60,10 @@ jobs:
       - name: Validate content frontmatter
         run: pnpm run validate:content
 
+      - name: Check content formatting (matches Nuxt Studio)
+        working-directory: .
+        run: pnpm run content:format:check
+
   commitlint:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest

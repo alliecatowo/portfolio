@@ -1,7 +1,7 @@
 ---
 title: Morbstack
+description: "A native macOS Docker Desktop replacement: stock upstream dockerd in one Virtualization.framework VM, a Rust PID 1, and a SwiftUI app. Pre-release."
 slug: morbstack
-description: 'A native macOS Docker Desktop replacement: stock upstream dockerd in one Virtualization.framework VM, a Rust PID 1, and a SwiftUI app. Pre-release.'
 date: 2026-08-02
 status: published
 featured: false
@@ -26,7 +26,8 @@ github: https://github.com/alliecatowo/morbstack
 image: /images/projects/morbstack/card.webp
 imageAlt: "Morbstack's native macOS Containers window: 38 containers, with a Compose project and the Kubernetes system containers each collapsed into one grouped row."
 seo:
-  title: 'Morbstack: a native macOS Docker Desktop alternative'
+  title: "Morbstack: a native macOS Docker Desktop alternative"
+  description: "A native macOS Docker Desktop replacement: stock upstream dockerd in one Virtualization.framework VM, a Rust PID 1, and a SwiftUI app. Pre-release."
 ---
 
 **The Docker you wish Docker shipped.**
@@ -47,7 +48,7 @@ The best story is port publishing. The first version shipped a 174-line patch to
 
 ![Morbstack Disk screen comparing the VM disk's 77 GB reserved size with the 6.6 GB it actually uses on APFS.](/images/projects/morbstack/disk.webp)
 
-_The Disk screen finally answers "why is Docker eating my disk": 77 GB reserved, 6.6 GB actually used._
+*The Disk screen finally answers "why is Docker eating my disk": 77 GB reserved, 6.6 GB actually used.*
 
 ## A way out, and a careful way in for agents
 

@@ -1,11 +1,11 @@
 slug: about
 layout: about
 seo:
-  title: 'About Allison Coleman: agent systems & developer tools'
+  title: "About Allison Coleman: agent systems & developer tools"
   description: Allison Coleman is a Bay Area software engineer at Hinge Health building agent systems and developer tools, and the creator of JupyterLite WebMCP.
 hero:
   title: Hi, I'm Allison!
-  subtitle: 'Software engineer: agent systems, developer tools, languages & runtimes'
+  subtitle: "Software engineer: agent systems, developer tools, languages & runtimes"
   image:
     src: /images/ghibli-pfp.png
     alt: Illustrated portrait of Allison Coleman
@@ -14,7 +14,7 @@ hero:
     - label: WebMCP Challenge winners
       value: 1 of 10
     - label: Rescued chinchillas
-      value: '2'
+      value: "2"
     - label: Red Bull consumed
       value: ∞
   body: |
@@ -53,7 +53,7 @@ journey:
       icon: i-lucide-graduation-cap
       description: Computer Science at Cal State Monterey Bay. Built Tetris up from NAND gates, shipped to AWS and Heroku, and did machine learning before OpenAI made it everyone's personality.
     - title: Dad's Law Firm
-      period: '2021'
+      period: "2021"
       color: pink-500
       icon: i-lucide-scale
       description: Graduated mid-pandemic and helped keep my dad's firm afloat. OCR'd every paper file, built the firm a new site, and ran documents like a law clerk.

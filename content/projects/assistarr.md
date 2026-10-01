@@ -1,4 +1,6 @@
 ---
+title: Assistarr
+description: "An AI assistant for a self-hosted media stack: ask in plain English and it drives Jellyfin, Radarr and Sonarr through their APIs, from a web chat UI."
 technologies:
   - TypeScript
   - Next.js
@@ -22,8 +24,6 @@ tags:
   - open-source
 slug: assistarr
 group: earlier-work
-title: Assistarr
-description: 'An AI assistant for a self-hosted media stack: ask in plain English and it drives Jellyfin, Radarr and Sonarr through their APIs, from a web chat UI.'
 date: 2025-10-01
 status: published
 featured: false
@@ -31,7 +31,8 @@ github: https://github.com/alliecatowo/assistarr
 image: /images/projects/assistarr/card.webp
 imageAlt: 'Assistarr home hero: "Your media, all in one place." with Start a chat, Discover and Monitor buttons, and four stat cards for services online, library size, active downloads and AI signals.'
 seo:
-  title: 'Assistarr: AI assistant for Jellyfin and *arr'
+  title: "Assistarr: AI assistant for Jellyfin and *arr"
+  description: "An AI assistant for a self-hosted media stack: ask in plain English and it drives Jellyfin, Radarr and Sonarr through their APIs, from a web chat UI."
 ---
 
 ## Overview
@@ -44,11 +45,11 @@ It talks to Radarr, Sonarr, Jellyfin, Jellyseerr and qBittorrent through their e
 
 ![The Assistarr home hero component: a greeting, the headline "Your media, all in one place.", Start a chat, Discover and Monitor buttons, and four stat cards showing services online, library footprint, active downloads and AI signals.](/images/projects/assistarr/hero-1600.webp)
 
-_The home hero, rendered from the repo's Ladle component stories with their built-in mock data, so the numbers (4/5 services, 128 items, 8 downloads) are sample values, not a real library._
+*The home hero, rendered from the repo's Ladle component stories with their built-in mock data, so the numbers (4/5 services, 128 items, 8 downloads) are sample values, not a real library.*
 
 ![The Assistarr downloads widget, titled "Pipelines & queue", listing three sample items with progress bars and the services they come from: Radarr, Sonarr and qBittorrent.](/images/projects/assistarr/downloads.webp)
 
-_The downloads widget from the same stories, with sample queue items._
+*The downloads widget from the same stories, with sample queue items.*
 
 ---
 

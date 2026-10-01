@@ -1,7 +1,7 @@
 ---
-title: 'I Had Claude Drive Codex to Film My Hackathon Demos'
+title: I Had Claude Drive Codex to Film My Hackathon Demos
+description: At 11 PM the night before the deadline I had four working projects and zero demo videos. By morning an agent on my Mac mini had filmed a different agent using all four.
 date: 2026-10-01
-description: 'At 11 PM the night before the deadline I had four working projects and zero demo videos. By morning an agent on my Mac mini had filmed a different agent using all four.'
 category: dev
 tags:
   - webmcp

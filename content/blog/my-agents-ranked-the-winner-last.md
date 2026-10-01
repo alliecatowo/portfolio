@@ -1,7 +1,7 @@
 ---
-title: 'My Agents Ranked the Winner Last'
+title: My Agents Ranked the Winner Last
+description: On submission day I had Claude score 541 competitor repos. It put JupyterLite lowest of my four and gave me 10–20% odds. Two other AI judges disagreed with each other. The humans picked it.
 date: 2026-10-01
-description: 'On submission day I had Claude score 541 competitor repos. It put JupyterLite lowest of my four and gave me 10–20% odds. Two other AI judges disagreed with each other. The humans picked it.'
 category: dev
 tags:
   - agents
@@ -126,8 +126,8 @@ The same fleet's ranks for my other three: Strudel #527, Swagger UI #873, Career
 | ------------------------------------------------- | --------------------------------------------- | -------------------------------------------- |
 | My Claude odds pass, Sep 3 (11 agents, 541 repos) | READMEs and code, rubric-scored               | 33/40, lowest-tied of my four; "incremental" |
 | HanClinto, Sep 5 (AI-assisted, unofficial)        | Descriptions, source inventory, live snapshot | #2 on a shortlist, then #9 of the full field |
-| NicholaiVogel fleet (1,035 AI agents)             | Submissions plus a live tester without WebMCP | #829 of ~2,500                               |
-| ChatGPT, Sep 28, blind (I already knew)           | My description of the project from memory     | "Win." (~60/40)                              |
+| NicholaiVogel fleet (1,035 AI agents)             | Submissions plus a live tester without WebMCP | #829 of \~2,500                              |
+| ChatGPT, Sep 28, blind (I already knew)           | My description of the project from memory     | "Win." (\~60/40)                             |
 | The judging panel                                 | The submission                                | One of 10 winners                            |
 
 The judging panel, per the challenge page, included people from OpenAI, Google Chrome, Vercel, Shopify, Cloudflare and Netlify, plus the creator of MCP-B. I don't know how they ran it. The panel may have been able to see things the automated passes could not, or may have weighed things differently.

@@ -1,4 +1,6 @@
 ---
+title: Shrike Publishing
+description: "A Nuxt 4 site for Shrike Publishing, a small tabletop RPG studio: Markdown pages anyone on the team can edit, moved off a paid WordPress plan onto free hosting."
 technologies:
   - Nuxt.js
   - Vue.js
@@ -22,16 +24,15 @@ demo: https://shrike-publishing.vercel.app
 slug: shrike-publishing
 group: earlier-work
 image: /images/shrike-publishing/screenshot-2025-10-21-at-00-02-30-blood-neon-shrike-publishing.png
-title: Shrike Publishing
-description: 'A Nuxt 4 site for Shrike Publishing, a small tabletop RPG studio: Markdown pages anyone on the team can edit, moved off a paid WordPress plan onto free hosting.'
 date: 2025-08-30
 status: published
-imageAlt: 'The Blood Neon game page on the Shrike Publishing site: cover art beside the title, with the game description, price and gallery links below'
+imageAlt: "The Blood Neon game page on the Shrike Publishing site: cover art beside the title, with the game description, price and gallery links below"
 seo:
-  title: 'Shrike Publishing: Nuxt site for an RPG studio'
+  title: "Shrike Publishing: Nuxt site for an RPG studio"
+  description: "A Nuxt 4 site for Shrike Publishing, a small tabletop RPG studio: Markdown pages anyone on the team can edit, moved off a paid WordPress plan onto free hosting."
 ---
 
-_A lightweight, modern web platform for a small tabletop game studio._
+*A lightweight, modern web platform for a small tabletop game studio.*
 
 ## Overview
 

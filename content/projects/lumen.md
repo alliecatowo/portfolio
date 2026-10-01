@@ -1,7 +1,7 @@
 ---
 title: Lumen
+description: "Markdown-native, statically typed language in Rust for AI agent workflows: typed tools, capability grants, effect rows, deterministic mode, WASM playground."
 slug: lumen
-description: 'Markdown-native, statically typed language in Rust for AI agent workflows: typed tools, capability grants, effect rows, deterministic mode, WASM playground.'
 date: 2026-02-12
 status: published
 featured: false
@@ -26,9 +26,10 @@ tags:
 github: https://github.com/alliecatowo/lumen
 demo: https://alliecatowo.github.io/lumen/playground
 image: /images/projects/lumen/card.webp
-imageAlt: 'The Lumen browser playground running a pattern-matching program compiled to WebAssembly; the terminal prints "zero, one, many".'
+imageAlt: The Lumen browser playground running a pattern-matching program compiled to WebAssembly; the terminal prints "zero, one, many".
 seo:
-  title: 'Lumen: a typed language for AI agent workflows'
+  title: "Lumen: a typed language for AI agent workflows"
+  description: "Markdown-native, statically typed language in Rust for AI agent workflows: typed tools, capability grants, effect rows, deterministic mode, WASM playground."
 ---
 
 **A programming language where the docs are the source, and every LLM call shows up in the type signature.**
