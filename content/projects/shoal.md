@@ -37,12 +37,19 @@ technologies:
 
 Shoal is a shell where command output stays typed, so neither a human nor an AI agent has to scrape terminal text to find out what happened. Commands and expressions produce values (tables, sizes, durations, paths, outcomes) instead of bytes. It's a 22-crate Rust workspace, built in an intense sprint in July 2026.
 
-<video class="w-full h-auto rounded-lg" width="978" height="560" autoplay muted loop playsinline poster="/images/projects/shoal/demo-poster.webp" aria-label="A real shoal terminal session using typed tables, dot-chain transforms, unit arithmetic, and functions as commands.">
-  <source src="/images/projects/shoal/demo.webm" type="video/webm">
-  <source src="/images/projects/shoal/demo.mp4" type="video/mp4">
-</video>
+::demo-video
+---
+height: 560
+width: 978
+alt: A real shoal terminal session using typed tables, dot-chain transforms,
+  unit arithmetic, and functions as commands.
+mp4: /images/projects/shoal/demo.mp4
+poster: /images/projects/shoal/demo-poster.webp
+webm: /images/projects/shoal/demo.webm
+---
+::
 
-_A real session: a typed `ls` table, a sort and map, `1.5gb + 500mb` coming out as `2gb`, a typed function called like a command, and what happens when you reach for a pipe._
+*A real session: a typed `ls` table, a sort and map, `1.5gb + 500mb` coming out as `2gb`, a typed function called like a command, and what happens when you reach for a pipe.*
 
 ## Past the pipe
 

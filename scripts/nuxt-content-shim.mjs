@@ -4,7 +4,7 @@
 // outside a running Nuxt (its zod converters are registered by the module
 // setup). The validator needs the raw zod schemas, so these two helpers become
 // identity functions. Everything else (z, property, ...) is the real export,
-// so content.config.ts and @nuxtjs/sitemap/content share one zod instance.
+// so content.config.ts and Nuxt Content share one zod instance.
 export * from '@nuxt/content'
 
 export const defineCollection = collection => collection

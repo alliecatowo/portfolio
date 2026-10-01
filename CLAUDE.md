@@ -40,7 +40,8 @@ pnpm validate:content  # scripts/validate-content.ts
 
 # Content formatting: serializes content/ exactly as Nuxt Studio does, so Studio edits never add noise
 pnpm content:format        # rewrite content/**/*.{md,yml} (scripts/format-content.mjs)
-pnpm content:format:check  # exit 1 on any diff (CI + lint-staged); Prettier ignores content/
+pnpm content:format:check  # exit 1 on any diff or non-round-tripping file (CI + lint-staged); Prettier ignores content/
+pnpm content:roundtrip     # after `pnpm generate`: Studio's save of every built DB row must equal the file (scripts/check-studio-roundtrip.mjs)
 
 # Database Management (Nuxt Content SQLite)
 pnpm db:clean      # Remove corrupted SQLite database
@@ -161,10 +162,11 @@ ogImage: /path/to/image (optional; falls back to featured_image, then the defaul
 - **Nuxt Studio**: Self-hosted module (`nuxt-studio` 1.7.0). In production, `firebase.json` rewrites `/_studio`, `/__nuxt_studio/**` and `/sw.js` to the `studio` Cloud Function (built with `NITRO_PRESET=firebase` into `.output-studio/`); everything else is static
 - **Pre-rendering**: every public page is pre-rendered (`routeRules '/**'`); Studio routes never are
 - **ISR disabled**: All content pages are pre-rendered at build time
-- **SEO/crawl**: `@nuxtjs/robots` + `@nuxtjs/sitemap` generate `/robots.txt` and `/sitemap.xml` from `site` in `nuxt.config.ts` (trailing-slash URLs). Blog/projects are wrapped in `asSitemapCollection()`; drafts (`published: false`, `status: draft`) are excluded by a `content:file:afterParse` hook, which also sets `lastmod` from the content date. `/llms.txt` is generated from content by `server/routes/llms.txt.ts`
+- **SEO/crawl**: `@nuxtjs/robots` + `@nuxtjs/sitemap` generate `/robots.txt` and `/sitemap.xml` from `site` in `nuxt.config.ts` (trailing-slash URLs). Blog and project URLs (published only, `lastmod` from the content date) come from the sitemap source `server/routes/__sitemap__/site-content-urls.json.ts`, not from a `sitemap` column on the collections. `/llms.txt` is generated from content by `server/routes/llms.txt.ts`
 - **Drafts never ship**: production builds drop draft posts and projects from their collections in `content.config.ts`, because every collection row (body included) is published in `/__nuxt_content/<collection>/sql_dump.txt`. Studio edits from those public dumps, so it can't see drafts; edit drafts locally. Never set `CONTENT_INCLUDE_DRAFTS=true` for the static build
 - **Internal links** use the trailing-slash form (`/about/`, `/projects/<slug>/`); Firebase redirects the bare form
 - **Page metadata**: every page calls `useSiteSeo()` (`app/composables/useSiteSeo.ts`) for title (`Page – Allison Coleman`, suffix skipped if the title already names her or would pass 65 chars), description, canonical (absolute, trailing slash), OpenGraph/Twitter tags and JSON-LD. Shared schema.org nodes (the Person) live in `app/utils/structuredData.ts`. Don't add ad-hoc `useHead` title/meta blocks
+- **Studio-safe content**: Studio writes the stored DB document back to the file, so (a) never mutate documents in build hooks (`content:file:afterParse`) or add `sitemap`-style columns filled at build time: it gets committed into the Markdown. Do such work at render time (`app/components/content/ProseImg.vue` adds image aspect-ratio/lazy loading from `modules/content-image-sizes.ts`). (b) No raw HTML with children in Markdown (a `<video><source>` is turned into a lossy `:video[]`): use an MDC component (`::demo-video{...}` / `app/components/content/DemoVideo.vue`). (c) Avoid `:xx:` in prose (a time like `6:32:` followed by text): Studio's editor parser hard-codes remark-emoji and eats the colons (Content's own emoji plugin is off). `content:format:check` and `content:roundtrip` catch these.
 - **404s**: Firebase serves the generated `404.html` (no SPA catch-all rewrite), so unknown and draft URLs return a real 404
 
 ## Nuxt Studio Usage

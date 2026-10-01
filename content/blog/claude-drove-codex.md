@@ -73,7 +73,7 @@ Juan's shooting script, `DEMO.md`, was already in the repo, with exact clips, ex
 
 This is one take from Codex's side. Claude typed the prompt, and Codex did the rest:
 
-```
+```text
 ### [09-02 23:39:40] PROMPT
 > This looks wrong. Fix just what I selected and rerun that cell.
 
@@ -97,7 +97,7 @@ From then on, Claude mostly wrote briefs and checked results. Subagents did the 
 
 The keynote cut was my idea, at 12:18 AM. I wanted "the video is in a quarter (notbwusrter but like 3/4 anchored on top right corner) and the framing has text in the left saying things maybe anthropic presentation style", zooming to full screen for the key moments. At 12:38 it reported that Keynote isn't installed on the Mac. So the subagent brief opened with: "Keynote.app is NOT installed on this Mac (checked already) — build this entirely with ffmpeg compositing, not the actual Keynote app."
 
-The brief is a good example of a clear spec. It names the input files and says not to modify them. It says to hard-cut between two static layouts instead of animating a zoom ("much more robust than trying to animate a zoom in ffmpeg"). It suggests which two or three moments deserve full screen ("the diff popover showing "What the agent changed"… and the "Failed" badge / CELL_NOT_FOUND popover"). It ends with what to verify before reporting back: extract frames from an inset moment, a full-screen moment and a transition, and check for black gaps, frame bleed and stretching.
+The brief is a good example of a clear spec. It names the input files and says not to modify them. It says to hard-cut between two static layouts instead of animating a zoom ("much more robust than trying to animate a zoom in ffmpeg"). It suggests which two or three moments deserve full screen ("the diff popover showing "What the agent changed"… and the "Failed" badge / CELL\_NOT\_FOUND popover"). It ends with what to verify before reporting back: extract frames from an inset moment, a full-screen moment and a transition, and check for black gaps, frame bleed and stretching.
 
 My review at 1:06 AM, from bed: "the random titles that blib inbetween keynote transitions gotta go… keynote actually looks fire if those jump scare titles weren't there".
 
@@ -185,7 +185,7 @@ The Devpost forms caused several problems:
 - On Careers, Claude navigated away before saving and had to redo the page.
 - The custom thumbnail needed phone verification, so it skipped it.
 
-At 11:40 I wrote: "we have fucking like 30 mins left. send it immediately. no more wait for confirmation." At 11:56: "dude ship it ship it ship it ship it fucking ASAP". The four went in at 11:43, 11:51, 12:09 and 12:16. Afterwards, four verification subagents checked every submission against a checklist and reported "32/32 checklist items pass".
+At 11:40 I wrote: "we have fucking like 30 mins left. send it immediately. no more wait for confirmation." At 11:56 I followed with: "dude ship it ship it ship it ship it fucking ASAP". The four went in at 11:43, 11:51, 12:09 and 12:16. Afterwards, four verification subagents checked every submission against a checklist and reported "32/32 checklist items pass".
 
 I had a meeting around 11:45 or 12:10, or lunch; I don't remember which. I kept telling it to ship. It was slow, and speed was the main constraint. I wish I could use fast mode without using up my usage limits. The agent can make a lot of progress quickly, but sometimes it gets stuck.
 

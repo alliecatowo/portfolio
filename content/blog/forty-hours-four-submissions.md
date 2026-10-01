@@ -52,11 +52,11 @@ Storybook already has an MCP server that can make edits. If a normal MCP server 
 
 The next ninety minutes were me rejecting ideas out loud:
 
-> "its something _collabrative_, that wouldnt make sense on a normal mcp. fuckkkkkk UGHHHH."
+> "its something *collabrative*, that wouldnt make sense on a normal mcp. fuckkkkkk UGHHHH."
 
 > "oh and it CANT be dependent on ai. thats a hig thing. the app has ti have a normal interface for a user and full functionality without web mcp - web mcp just plugs in."
 
-Then, at 6:32: "youre already logged in, and its useful when youre already on the site… I feel like notebooks though really do tell the cleanest colab story."
+Then, at 6:32, I said: "youre already logged in, and its useful when youre already on the site… I feel like notebooks though really do tell the cleanest colab story."
 
 A JupyterLite notebook runs entirely in the browser. The kernel is Pyodide in a web worker, and the files live in IndexedDB. Unsaved edits, the selection and the running kernel exist only in that tab, and there is no server for an MCP server to talk to. The state the agent needs lives in the browser, and WebMCP is the only way in.
 
@@ -64,7 +64,7 @@ At 7:01 PM: "OH WHAT IF YOU COULD JUET LIKE CLAUDES DIFF REVIEW. SO YOU CAN LEAV
 
 Notebooks fit what the challenge was about: the shared interaction between a human and an agent over client-side state. It was also a personal problem: when Claude edited a notebook file, I ended up rerunning the whole notebook because the kernel state no longer matched the new code. Multiplayer notebooks like Google Colab suggested the collaboration model, with review and a live loop an agent can join.
 
-I tell ChatGPT what I want and why things don't work. It turns each complaint into a rule, and the rules add up to a product. "it CANT be dependent on ai" became a contract section titled **THIS IS NOT AN AI APPLICATION**. "drop that then if web mcp cant _trigger_ the agent" became **CRITICAL WEBMCP LIMITATION**, which reads in part: "WebMCP cannot independently wake, summon, or notify an agent when something changes."
+I tell ChatGPT what I want and why things don't work. It turns each complaint into a rule, and the rules add up to a product. "it CANT be dependent on ai" became a contract section titled **THIS IS NOT AN AI APPLICATION**. "drop that then if web mcp cant *trigger* the agent" became **CRITICAL WEBMCP LIMITATION**, which reads in part: "WebMCP cannot independently wake, summon, or notify an agent when something changes."
 
 At 7:03 PM ChatGPT produced a 65-section, 45,000-character build contract. It covers the repo layout, a schema for every tool, test cases, an audit checklist and the submission copy. Its first instruction is "Build this project completely." Its last line is "Build the complete version."
 
@@ -188,7 +188,7 @@ That evening I tried to make better videos with ElevenLabs, and it went badly. T
 
 I also sent this, which I stand by: "i do not want to hear "and here's the honest part" in a fucking script."
 
-I was at a bar for most of that evening, steering the re-cut from my phone and watching the cuts come in, until I stopped steering. At 12:52 AM Claude sent: "It's 12:52 AM PT — 7 minutes to deadline. Not enough time to safely upload 4 new YouTube videos and swap Devpost links…" Its decision was not to swap. I replied at 12:56: "lets not do it idk." A complete, working submission beats a better video with a broken link.
+I was at a bar for most of that evening, steering the re-cut from my phone and watching the cuts come in, until I stopped steering. At 12:52 AM Claude sent: "It's 12:52 AM PT — 7 minutes to deadline. Not enough time to safely upload 4 new YouTube videos and swap Devpost links…" Its decision was not to swap. I replied at 12:56 with "lets not do it idk." A complete, working submission beats a better video with a broken link.
 
 That is the "minutes to spare" I remember. It wasn't the submission. It was the night after, deciding not to touch it. I had merged two days into one memory: the submissions happened from work, from a phone booth, with Violet at the Mac mini, and the bar was the following evening.
 

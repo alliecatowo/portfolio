@@ -1,6 +1,5 @@
 import { readdirSync, readFileSync } from 'node:fs'
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
-import { defineSitemapSchema } from '@nuxtjs/sitemap/content'
 
 // Drafts stay in content/ for dev preview, Studio and `validate:content`, but production
 // builds leave them out of their collection entirely. Filtering at query time isn't enough:
@@ -25,13 +24,13 @@ const projectDrafts = excludeDrafts ? draftFiles('projects', /^status:\s*['"]?pu
 
 export default defineContentConfig({
   collections: {
-    // Sitemap fields come from defineSitemapSchema (@nuxtjs/sitemap); drafts are excluded via the afterParse hook in nuxt.config.ts,
-    // and production builds drop them from the collection entirely (blogDrafts above)
+    // Blog and project URLs reach the sitemap through server/routes/__sitemap__/site-content-urls.json.ts,
+    // not a `sitemap` column on these collections: Nuxt Studio saves the stored document back to the
+    // file, so a column filled at build time would be committed into the Markdown.
     blog: defineCollection({
       type: 'page',
       source: { include: 'blog/**/*.md', exclude: blogDrafts },
       schema: z.object({
-        sitemap: defineSitemapSchema({ z }),
         title: z.string(),
         // Accept both string and Date — Nuxt Content may coerce YAML dates
         date: z.union([z.string(), z.date()]).transform(v => String(v)),
@@ -52,7 +51,6 @@ export default defineContentConfig({
       type: 'page',
       source: { include: 'projects/**/*.md', exclude: projectDrafts },
       schema: z.object({
-        sitemap: defineSitemapSchema({ z }),
         title: z.string(),
         date: z.union([z.string(), z.date()]).transform(v => String(v)),
         description: z.string(),

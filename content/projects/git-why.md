@@ -37,12 +37,21 @@ You remember what went wrong, not what the fix was called, so `git log --grep` c
 
 From the README: you ask about "reconnecting subscribed twice", and it finds the commit titled "Stop duplicate subscriptions after reconnect". The two share almost no words, and that mismatch is the whole idea.
 
-<video class="w-full h-auto rounded-lg" width="1200" height="1000" autoplay muted loop playsinline poster="/images/projects/git-why/demo-poster.webp" aria-label="A terminal recording: a five-commit sample history is listed, then git why answers 'why do we wait between retries?' with the commit that added the backoff, its message about getting rate limited, and the diff that added the delay, followed by the earlier retry commit.">
-  <source src="/images/projects/git-why/demo.webm" type="video/webm">
-  <source src="/images/projects/git-why/demo.mp4" type="video/mp4">
-</video>
+::demo-video
+---
+height: 1000
+width: 1200
+alt: "A terminal recording: a five-commit sample history is listed, then git why
+  answers 'why do we wait between retries?' with the commit that added the
+  backoff, its message about getting rate limited, and the diff that added the
+  delay, followed by the earlier retry commit."
+mp4: /images/projects/git-why/demo.mp4
+poster: /images/projects/git-why/demo-poster.webp
+webm: /images/projects/git-why/demo.webm
+---
+::
 
-_A real run of git why, built from source, against a small made-up repository. The question says "wait" and the top result's title says "back off"; it is the commit whose message explains the delay, shown with its diff. The second result is the earlier commit that added retries at all._
+*A real run of git why, built from source, against a small made-up repository. The question says "wait" and the top result's title says "back off"; it is the commit whose message explains the delay, shown with its diff. The second result is the earlier commit that added retries at all.*
 
 ## How it works
 
@@ -52,7 +61,7 @@ Every reachable commit becomes a record of its message, paths and a bounded slic
 
 The benchmark is built so keyword search can't win by construction: 174 questions derived from six pinned repos (curl, redis, requests, ripgrep, caddy and zod), each thrown out if `git log --grep` or `git log -S` could answer it from the question's own words. On those, git why gets the right commit in its top five 37.4% of the time. The README says it plainly: it's wrong most of the time, and it still beats every Git-native strategy on questions they can't answer.
 
-It also publishes where it loses. On cross-file causal questions, `git log -S` scores 0.950 Hit@10 against git why's 0.350. A decisions log records eight measured ideas for improving ranking: one shipped (+26% MRR on a held-out half), seven were rejected. Every number in the README is generated from raw benchmark data, and CI fails if one is edited by hand.
+It also publishes where it loses. On cross-file causal questions, `git log -S` scores 0.950 Hit\@10 against git why's 0.350. A decisions log records eight measured ideas for improving ranking: one shipped (+26% MRR on a held-out half), seven were rejected. Every number in the README is generated from raw benchmark data, and CI fails if one is edited by hand.
 
 ## For agents, including when not to use it
 

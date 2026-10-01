@@ -36,30 +36,54 @@ technologies:
 
 Most terminal coding agents are a chat window that forgets everything once you close it. Ticketmaster (`tm`) keeps the chat and adds a work queue. You talk to `tm` like any other terminal coding agent. When something should happen in the background, it becomes a **ticket**: a worker leases it, does the work and submits a result with evidence, and then you review it with a keypress. Reject it and your reason is stored on the ticket, so the next attempt sees why the last one failed. The commit that added the review flow puts the rule bluntly: "Human-only; an agent never certifies work."
 
-<video class="w-full h-auto rounded-lg" width="1028" height="804" autoplay muted loop playsinline poster="/images/projects/ticket-master/tui-accept-poster.webp" aria-label="Ticketmaster tickets screen showing ticket T-2 ready for review with Accept and Reject options and the worker's verified test results; pressing 1 accepts it and it moves to Completed.">
-  <source src="/images/projects/ticket-master/tui-accept.webm" type="video/webm">
-  <source src="/images/projects/ticket-master/tui-accept.mp4" type="video/mp4">
-</video>
+::demo-video
+---
+height: 804
+width: 1028
+alt: Ticketmaster tickets screen showing ticket T-2 ready for review with Accept
+  and Reject options and the worker's verified test results; pressing 1 accepts
+  it and it moves to Completed.
+mp4: /images/projects/ticket-master/tui-accept.mp4
+poster: /images/projects/ticket-master/tui-accept-poster.webp
+webm: /images/projects/ticket-master/tui-accept.webm
+---
+::
 
-_The tickets screen. T-2 is ready for review with the worker's passing tests. Pressing `1` accepts it, and it moves to Completed (`tm ticket reopen T-2` undoes that)._
+*The tickets screen. T-2 is ready for review with the worker's passing tests. Pressing `1` accepts it, and it moves to Completed (`tm ticket reopen T-2` undoes that).*
 
 ## Chat, then delegate
 
 Every clip on this page is the real `tm` v0.1.0 binary driving a live model on a scratch Python project, with no scripted turns. The repo's [showcase notes](https://github.com/alliecatowo/ticket-master/tree/main/docs/showcase) explain how they were recorded, friction log included.
 
-<video class="w-full h-auto rounded-lg" width="1028" height="804" autoplay muted loop playsinline poster="/images/projects/ticket-master/tui-live-poster.webp" aria-label="Ticketmaster terminal chat: the user asks what happens when calc.py divides by zero; the agent reads the file, runs a Python repro that raises ZeroDivisionError, and answers with a note about related tickets.">
-  <source src="/images/projects/ticket-master/tui-live.webm" type="video/webm">
-  <source src="/images/projects/ticket-master/tui-live.mp4" type="video/mp4">
-</video>
+::demo-video
+---
+height: 804
+width: 1028
+alt: "Ticketmaster terminal chat: the user asks what happens when calc.py
+  divides by zero; the agent reads the file, runs a Python repro that raises
+  ZeroDivisionError, and answers with a note about related tickets."
+mp4: /images/projects/ticket-master/tui-live.mp4
+poster: /images/projects/ticket-master/tui-live-poster.webp
+webm: /images/projects/ticket-master/tui-live.webm
+---
+::
 
-_A chat turn: `tm` reads `calc.py`, reproduces the divide-by-zero crash in a shell, and answers with a note about the related tickets._
+*A chat turn: `tm` reads `calc.py`, reproduces the divide-by-zero crash in a shell, and answers with a note about the related tickets.*
 
-<video class="w-full h-auto rounded-lg" width="1028" height="804" autoplay muted loop playsinline poster="/images/projects/ticket-master/tui-dispatch-poster.webp" aria-label="A new task typed into Ticketmaster's dispatch input becomes ticket T-3, which a background worker picks up and verifies with doctest and pytest while the user keeps chatting.">
-  <source src="/images/projects/ticket-master/tui-dispatch.webm" type="video/webm">
-  <source src="/images/projects/ticket-master/tui-dispatch.mp4" type="video/mp4">
-</video>
+::demo-video
+---
+height: 804
+width: 1028
+alt: A new task typed into Ticketmaster's dispatch input becomes ticket T-3,
+  which a background worker picks up and verifies with doctest and pytest while
+  the user keeps chatting.
+mp4: /images/projects/ticket-master/tui-dispatch.mp4
+poster: /images/projects/ticket-master/tui-dispatch-poster.webp
+webm: /images/projects/ticket-master/tui-dispatch.webm
+---
+::
 
-_A task typed into the dispatch input becomes T-3. A background worker picks it up and verifies it with doctest and pytest while the chat carries on._
+*A task typed into the dispatch input becomes T-3. A background worker picks it up and verifies it with doctest and pytest while the chat carries on.*
 
 ## The event log is the product
 

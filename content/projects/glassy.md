@@ -46,21 +46,35 @@ Text is drawn with wgpu in a single instanced draw call from a glyph atlas, and 
 
 A lot of the details exist because of Claude Code. Shift+Enter sends the sequence Claude Code reads as a newline instead of submitting. Kitty keyboard protocol negotiation works, so apps that ask for it get it. Hyperlinks stay clickable inside mouse-capturing apps while you hold the modifier. OSC 133 and 633 command blocks and OSC 9 and 777 desktop notifications are supported too.
 
-<video class="w-full h-auto rounded-lg" width="1100" height="702" autoplay muted loop playsinline poster="/images/projects/glassy/command-palette-poster.webp" aria-label="Opening Glassy's command palette, typing 'split' to filter actions, and choosing Split vertical.">
-  <source src="/images/projects/glassy/command-palette.webm" type="video/webm">
-  <source src="/images/projects/glassy/command-palette.mp4" type="video/mp4">
-</video>
+::demo-video
+---
+height: 702
+width: 1100
+alt: Opening Glassy's command palette, typing 'split' to filter actions, and
+  choosing Split vertical.
+mp4: /images/projects/glassy/command-palette.mp4
+poster: /images/projects/glassy/command-palette-poster.webp
+webm: /images/projects/glassy/command-palette.webm
+---
+::
 
 ## The fun layer
 
 Tabs, splits, a command palette, a live settings overlay, a quake-style drop-down mode and a `glassy @` control socket cover the serious parts. Then there are 60 built-in themes (plus Alacritty and base16 import), GPU post-process window effects (frosted, acrylic, CRT, scanlines, grain, vignette, bloom) that cost nothing when switched off, and Power Mode, which throws sparks behind your cursor while you type.
 
-<video class="w-full h-auto rounded-lg" width="720" height="130" autoplay muted loop playsinline poster="/images/projects/glassy/power-mode-poster.webp" aria-label="Glassy Power Mode: a particle trail sparks behind the cursor while typing quickly.">
-  <source src="/images/projects/glassy/power-mode.webm" type="video/webm">
-  <source src="/images/projects/glassy/power-mode.mp4" type="video/mp4">
-</video>
+::demo-video
+---
+height: 130
+width: 720
+alt: "Glassy Power Mode: a particle trail sparks behind the cursor while typing
+  quickly."
+mp4: /images/projects/glassy/power-mode.mp4
+poster: /images/projects/glassy/power-mode-poster.webp
+webm: /images/projects/glassy/power-mode.webm
+---
+::
 
-_Power Mode, cropped to the prompt._
+*Power Mode, cropped to the prompt.*
 
 ![Glassy with the CRT window effect, the prompt text bent by barrel distortion over faint scanlines.](/images/projects/glassy/effect-crt.webp)
 
