@@ -34,25 +34,32 @@
           </USelectMenu>
 
           <!-- Tags (Center) -->
-          <div v-if="allTags.length" class="flex-1 overflow-x-auto scrollbar-hide px-2" @wheel.prevent="handleHorizontalScroll">
-            <div class="flex items-center gap-3 justify-center pb-1" style="width: max-content; min-width: 100%;">
+          <div v-if="allTags.length" class="flex-1 overflow-x-auto scrollbar-hide px-2" @wheel="handleHorizontalScroll">
+            <div role="group" aria-label="Filter posts by tag" class="flex items-center gap-3 justify-center p-1" style="width: max-content; min-width: 100%;">
+              <!-- Real buttons: reachable by keyboard and announced as toggles -->
               <UBadge
+                as="button"
+                type="button"
+                :aria-pressed="activeTag === 'all'"
                 :label="`All (${total})`"
                 :variant="activeTag === 'all' ? 'solid' : 'outline'"
                 color="primary"
                 size="lg"
-                class="cursor-pointer hover:shadow-sm transition-shadow whitespace-nowrap"
+                class="cursor-pointer hover:shadow-sm transition-shadow whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 @click="activeTag = 'all'"
               />
-              
+
               <UBadge
                 v-for="tag in allTags"
                 :key="tag"
+                as="button"
+                type="button"
+                :aria-pressed="activeTag === tag"
                 :label="`${tag} (${getTagCount(tag)})`"
                 :variant="activeTag === tag ? 'solid' : 'outline'"
                 :color="getTagColor(tag)"
                 size="lg"
-                class="cursor-pointer hover:shadow-sm transition-shadow whitespace-nowrap"
+                class="cursor-pointer hover:shadow-sm transition-shadow whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 @click="activeTag = tag"
               />
             </div>
@@ -416,6 +423,9 @@ function clearFilters() {
 
 function handleHorizontalScroll(event: WheelEvent) {
   const container = event.currentTarget as HTMLElement
+  // Only turn the wheel sideways when the bar actually overflows; otherwise let the page scroll.
+  if (container.scrollWidth <= container.clientWidth || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return
+  event.preventDefault()
   container.scrollLeft += event.deltaY
 }
 

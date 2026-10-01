@@ -36,7 +36,9 @@
           />
         </div>
 
-        <ContentRenderer v-if="project.body" :value="project" />
+        <div v-if="project.body" class="max-w-[75ch]">
+          <ContentRenderer :value="project" />
+        </div>
         <div v-else class="prose prose-lg dark:prose-invert max-w-none mb-8">
           {{ project.description }}
         </div>
@@ -47,7 +49,7 @@
             :href="project.demo"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-600 font-semibold transition-all"
+            class="inline-flex items-center px-6 py-3 bg-primary text-inverted rounded-lg hover:bg-primary-600 font-semibold transition-all"
           >
             <UIcon name="i-lucide-external-link" class="w-4 h-4 mr-2" />
             Live Demo

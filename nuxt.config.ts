@@ -81,6 +81,17 @@ export default defineNuxtConfig({
     discoverImages: false
   },
   hooks: {
+    // Nuxt marks every dynamic-import chunk `prefetch: true`, so each public page's <head> listed
+    // ~10 prefetch links: the Nuxt Studio editor (Monaco + shiki, ~850 KB gz) and the SQLite WASM
+    // worker among them. None of that is needed to read the site. Studio loads those chunks itself
+    // (a plain dynamic import) once the `studio-session-check` cookie is set or ⌘. is pressed, so
+    // dropping the hints costs nothing there. Route chunks keep theirs: they're small and make
+    // in-site navigation instant.
+    'build:manifest'(manifest) {
+      for (const [key, item] of Object.entries(manifest)) {
+        if (!/(^|\/)(pages|layouts)\//.test(key)) item.prefetch = false
+      }
+    },
     'content:file:afterParse'(ctx) {
       const { collection, content } = ctx
       // Keep drafts out of the sitemap: unpublished blog posts and draft projects.
@@ -104,6 +115,15 @@ export default defineNuxtConfig({
   content: {
     experimental: {
       sqliteConnector: 'native'
+    },
+    build: {
+      markdown: {
+        // Nuxt UI's default light theme (material-theme-lighter) puts orange/green tokens at
+        // ~2.2:1 on the code block background. github-light passes AA; dark keeps palenight.
+        highlight: {
+          theme: { light: 'github-light', default: 'github-light', dark: 'material-theme-palenight' }
+        }
+      }
     }
     // Legacy cloud preview removed — now using self-hosted nuxt-studio module
   },
@@ -119,6 +139,18 @@ export default defineNuxtConfig({
       branch: 'main',
       // Public repo: ask GitHub for `public_repo` instead of full `repo` scope
       private: false
+    }
+  },
+  // The colour-mode button swaps sun/moon after hydration. Icons that aren't in the HTML
+  // are otherwise fetched from api.iconify.design at runtime (a third-party request on every page).
+  icon: {
+    clientBundle: {
+      icons: ['lucide:sun', 'lucide:moon', 'lucide:monitor']
+    }
+  },
+  mdc: {
+    highlight: {
+      theme: { light: 'github-light', default: 'github-light', dark: 'material-theme-palenight' }
     }
   },
   css: ['~/assets/css/main.css'],
@@ -145,13 +177,7 @@ export default defineNuxtConfig({
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
-        { rel: 'manifest', href: '/site.webmanifest' },
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' },
-        { rel: 'preconnect', href: 'https://cdn.jsdelivr.net' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap' },
-        { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' },
-        { rel: 'dns-prefetch', href: 'https://cdn.jsdelivr.net' }
+        { rel: 'manifest', href: '/site.webmanifest' }
       ]
     }
   },

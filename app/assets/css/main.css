@@ -687,3 +687,33 @@ body {
 :root:not(.dark) [class*='bg-warning/'].text-warning {
   color: var(--ui-color-warning-800);
 }
+
+/*
+ * Motion. The OS-level "reduce motion" setting is honoured everywhere (the in-page toggle in
+ * AccessibilitySettings adds the same rules through .reduced-motion). On phones the purely
+ * decorative loops (gradient drift, blurred blobs, spinning rings) are off as well: they keep the
+ * main thread and compositor busy for no gain on a small, slow screen. The gradients still show,
+ * just still.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media (max-width: 767.98px) {
+  .bg-gradient-animated,
+  .text-gradient-animated,
+  [class*='blur-'].animate-pulse,
+  .animate-spin-slow,
+  .animate-spin-reverse,
+  .float-animation,
+  .sparkle-element::before,
+  .pulse-glow {
+    animation: none;
+  }
+}
