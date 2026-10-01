@@ -91,6 +91,16 @@ It's on PyPI:
 pip install jupyterlite-webmcp
 ```
 
+## Built alongside three other entries
+
+JupyterLite WebMCP wasn't my only entry. It was one of four I submitted within about half an hour on the morning of 3 September, all built in under 48 hours from long written contracts handed to Claude Code and Codex agents. Each one gives a different kind of page its own WebMCP tools and asks who gets to decide what the agent may do:
+
+- [Swagger UI WebMCP](/projects/swagger-ui-webmcp/) turns any OpenAPI docs page into agent tools, with access the publisher, the page and the person can only tighten.
+- [Careers WebMCP](/projects/careers-webmcp/) lets an agent search jobs and fill in an application, but only you can press Submit.
+- [Strudel WebMCP](/projects/strudel-webmcp/) puts an agent in a live-coding music editor, proposing edits for you to audition.
+
+A fifth build, [Storybook WebMCP](/projects/storybook-webmcp/), came first and was never submitted. An ordinary MCP server could already do its job, and that's what pointed me at notebooks: state that only exists in the browser.
+
 ## Try it
 
 Open the [live demo](https://jupyterlite-web-mcp.vercel.app/lab/index.html) and wait for the status bar (bottom right) to read `WebMCP ready`. As of September 2026, WebMCP hasn't shipped in any stable browser. It was demoed in ChatGPT's in-app browser, and in Chrome you can turn it on with **Experimental Web Platform features** at `chrome://flags`. Without it, the demo still works as a plain notebook.

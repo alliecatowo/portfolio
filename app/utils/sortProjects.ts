@@ -1,5 +1,6 @@
 interface SortableProject {
   order?: number | null
+  groupOrder?: number | null
   featured?: boolean | null
   date?: string | null
 }
@@ -27,4 +28,19 @@ export function sortProjects<T extends SortableProject>(projects: T[]): T[] {
 
     return toTime(b.date) - toTime(a.date)
   })
+}
+
+/**
+ * Order projects inside one /projects group: explicit `groupOrder` ascending
+ * first (projects without one follow), then the normal `sortProjects` order.
+ * Lets a group pick its own lead without touching the global `order` that
+ * drives the homepage.
+ */
+export function sortProjectsInGroup<T extends SortableProject>(projects: T[]): T[] {
+  const base = sortProjects(projects)
+  const rank = (p: T) => (typeof p.groupOrder === 'number' ? p.groupOrder : Number.POSITIVE_INFINITY)
+  return base
+    .map((p, i) => ({ p, i }))
+    .sort((a, b) => (rank(a.p) - rank(b.p)) || (a.i - b.i))
+    .map(({ p }) => p)
 }
