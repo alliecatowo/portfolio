@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync } from 'node:fs'
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
-import { asSitemapCollection } from '@nuxtjs/sitemap/content'
+import { defineSitemapSchema } from '@nuxtjs/sitemap/content'
 
 // Drafts stay in content/ for dev preview, Studio and `validate:content`, but production
 // builds leave them out of their collection entirely. Filtering at query time isn't enough:
@@ -25,12 +25,13 @@ const projectDrafts = excludeDrafts ? draftFiles('projects', /^status:\s*['"]?pu
 
 export default defineContentConfig({
   collections: {
-    // Wrapped for @nuxtjs/sitemap; drafts are excluded via the afterParse hook in nuxt.config.ts,
+    // Sitemap fields come from defineSitemapSchema (@nuxtjs/sitemap); drafts are excluded via the afterParse hook in nuxt.config.ts,
     // and production builds drop them from the collection entirely (blogDrafts above)
-    blog: defineCollection(asSitemapCollection({
+    blog: defineCollection({
       type: 'page',
       source: { include: 'blog/**/*.md', exclude: blogDrafts },
       schema: z.object({
+        sitemap: defineSitemapSchema({ z }),
         title: z.string(),
         // Accept both string and Date — Nuxt Content may coerce YAML dates
         date: z.union([z.string(), z.date()]).transform(v => String(v)),
@@ -54,11 +55,12 @@ export default defineContentConfig({
           words: z.number()
         }).optional()
       })
-    })),
-    projects: defineCollection(asSitemapCollection({
+    }),
+    projects: defineCollection({
       type: 'page',
       source: { include: 'projects/**/*.md', exclude: projectDrafts },
       schema: z.object({
+        sitemap: defineSitemapSchema({ z }),
         title: z.string(),
         date: z.union([z.string(), z.date()]).transform(v => String(v)),
         description: z.string(),
@@ -82,7 +84,7 @@ export default defineContentConfig({
         // 1200x630 share image; falls back to /images/og/<slug>.png if present, then the default
         ogImage: z.string().optional()
       })
-    })),
+    }),
     pages: defineCollection({
       type: 'data',
       source: 'pages/**/*.{yml,yaml,json}',

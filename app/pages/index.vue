@@ -98,9 +98,9 @@
                   :target="button.external ? '_blank' : undefined"
                   :rel="button.external ? 'noopener noreferrer' : undefined"
                   :download="resolveDownloadAttr(button)"
-                  :color="button.color || 'primary'"
-                  :variant="button.variant || 'solid'"
-                  :size="button.size || 'md'"
+                  :color="(button.color || 'primary') as ButtonProps['color']"
+                  :variant="(button.variant || 'solid') as ButtonProps['variant']"
+                  :size="(button.size || 'md') as ButtonProps['size']"
                   :leading-icon="button.icon && button.iconPosition !== 'trailing' ? button.icon : undefined"
                   :trailing-icon="button.icon && button.iconPosition === 'trailing' ? button.icon : undefined"
                   block
@@ -300,9 +300,9 @@
                 :target="button.external ? '_blank' : undefined"
                 :rel="button.external ? 'noopener noreferrer' : undefined"
                 :download="resolveDownloadAttr(button)"
-                :color="button.color || 'primary'"
-                :variant="button.variant || 'solid'"
-                :size="button.size || 'md'"
+                :color="(button.color || 'primary') as ButtonProps['color']"
+                :variant="(button.variant || 'solid') as ButtonProps['variant']"
+                :size="(button.size || 'md') as ButtonProps['size']"
                 :leading-icon="button.icon && button.iconPosition !== 'trailing' ? button.icon : undefined"
                 :trailing-icon="button.icon && button.iconPosition === 'trailing' ? button.icon : undefined"
               >
@@ -318,6 +318,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import type { ButtonProps } from '@nuxt/ui'
 import { useContent } from '~/composables/useContent'
 import AwardBadge from '~/components/common/AwardBadge.vue'
 import CardImageFallback from '~/components/common/CardImageFallback.vue'

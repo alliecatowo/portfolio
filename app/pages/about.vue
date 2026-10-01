@@ -78,9 +78,9 @@
                   :href="button.href"
                   :target="button.external ? '_blank' : undefined"
                   :rel="button.external ? 'noopener noreferrer' : undefined"
-                  :variant="button.variant || 'solid'"
-                  :color="button.color || 'primary'"
-                  :size="button.size || 'md'"
+                  :variant="(button.variant || 'solid') as ButtonProps['variant']"
+                  :color="(button.color || 'primary') as ButtonProps['color']"
+                  :size="(button.size || 'md') as ButtonProps['size']"
                   :leading-icon="button.icon && button.iconPosition !== 'trailing' ? button.icon : undefined"
                   :trailing-icon="button.icon && button.iconPosition === 'trailing' ? button.icon : undefined"
                 >
@@ -281,9 +281,9 @@
                 :href="button.href"
                 :target="button.external ? '_blank' : undefined"
                 :rel="button.external ? 'noopener noreferrer' : undefined"
-                :variant="button.variant || 'solid'"
-                :color="button.color || 'primary'"
-                :size="button.size || 'md'"
+                :variant="(button.variant || 'solid') as ButtonProps['variant']"
+                :color="(button.color || 'primary') as ButtonProps['color']"
+                :size="(button.size || 'md') as ButtonProps['size']"
                 :leading-icon="button.icon && button.iconPosition !== 'trailing' ? button.icon : undefined"
                 :trailing-icon="button.icon && button.iconPosition === 'trailing' ? button.icon : undefined"
               >
@@ -313,6 +313,7 @@
 
 <script setup lang="ts">
 import { computed, resolveComponent } from 'vue'
+import type { ButtonProps } from '@nuxt/ui'
 import { useContent } from '~/composables/useContent'
 
 type ButtonLink = {

@@ -217,6 +217,11 @@ export default defineNuxtConfig({
       // it from the prerendered HTML when the emitted file really is empty.
       'prerender:generate'(route) {
         if (typeof route.contents !== 'string' || !route.fileName?.endsWith('.html')) return
+        // Vite 8 (rolldown) splits the app into ~55 small chunks, and Nuxt emits a modulepreload link for
+        // each one in every page's <head>. On a throttled mobile connection those ~250 KB of preloads fight
+        // the HTML, hero image and entry script (Lighthouse FCP +0.8 s, LCP +0.6 s). The pages are
+        // pre-rendered, so the content paints without JS; the entry module discovers its imports itself.
+        route.contents = route.contents.replace(/<link rel="modulepreload"[^>]*>/g, '')
         route.contents = route.contents.replace(/<link rel="stylesheet" href="(\/_nuxt\/[^"]+\.css)"[^>]*>/g, (tag, href: string) => {
           try {
             return statSync(`.output/public${href}`).size === 0 ? '' : tag
@@ -289,7 +294,5 @@ export default defineNuxtConfig({
     ssr: {
       external: ['lightningcss', '@tailwindcss/oxide']
     }
-  },
-  components: {
   }
 })
