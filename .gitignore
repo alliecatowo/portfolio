@@ -56,3 +56,5 @@ firebase-debug.log
 firestore-debug.log
 ui-debug.log
 .output-studio/
+.claude/*-audit-*.md
+.claude/nuxt-ui-migration-plan.md
