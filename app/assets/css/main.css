@@ -717,3 +717,8 @@ body {
     animation: none;
   }
 }
+
+/* Long inline code (paths, URLs, flags) must wrap instead of widening the page (WCAG 1.4.10 reflow). */
+main :not(pre) > code {
+  overflow-wrap: anywhere;
+}

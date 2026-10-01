@@ -16,7 +16,7 @@
             <span
               v-for="tech in project.technologies"
               :key="tech"
-              class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full"
+              class="px-3 py-1 bg-primary/10 text-primary-800 dark:text-primary text-sm rounded-full"
             >
               {{ tech }}
             </span>

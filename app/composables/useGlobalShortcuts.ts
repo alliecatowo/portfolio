@@ -34,11 +34,9 @@ export const useGlobalShortcuts = () => {
     },
     '?': () => {
       showShortcutsHelp.value = true
-    },
-    escape: {
-      usingInput: true,
-      handler: () => closeActiveModals()
     }
+    // No `escape` here: defineShortcuts preventDefault()s it, and Reka then ignores the Escape,
+    // so the mobile menu and the dialogs would never close on Esc. UModal closes itself.
   })
 
   return {

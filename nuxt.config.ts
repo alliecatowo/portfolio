@@ -1,4 +1,4 @@
-import { existsSync, readdirSync } from 'node:fs'
+import { existsSync, readdirSync, statSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { defineNuxtConfig } from 'nuxt/config'
 import { imageDimensions } from './scripts/image-dimensions'
@@ -85,12 +85,10 @@ export default defineNuxtConfig({
     // ~10 prefetch links: the Nuxt Studio editor (Monaco + shiki, ~850 KB gz) and the SQLite WASM
     // worker among them. None of that is needed to read the site. Studio loads those chunks itself
     // (a plain dynamic import) once the `studio-session-check` cookie is set or ⌘. is pressed, so
-    // dropping the hints costs nothing there. Route chunks keep theirs: they're small and make
-    // in-site navigation instant.
+    // dropping the hints costs nothing there. The build also leaves no page prefetch links, which
+    // is fine: route chunks are small.
     'build:manifest'(manifest) {
-      for (const [key, item] of Object.entries(manifest)) {
-        if (!/(^|\/)(pages|layouts)\//.test(key)) item.prefetch = false
-      }
+      for (const item of Object.values(manifest)) item.prefetch = false
     },
     'content:file:afterParse'(ctx) {
       const { collection, content } = ctx
@@ -190,6 +188,7 @@ export default defineNuxtConfig({
     }
   },
   features: {
+    inlineStyles: () => true,
     devLogs: process.env.NODE_ENV === 'development'
   },
   // Hybrid rendering: pre-render every public page. Studio's server routes (/_studio,
@@ -212,6 +211,21 @@ export default defineNuxtConfig({
         httpsOptions: { region: 'us-central1', memory: '512MiB', maxInstances: 2 }
       }
     }),
+    hooks: {
+      // The default layout's CSS chunk comes out empty (its styles live in the entry CSS, which is
+      // inlined). A render-blocking <link> to a 0-byte file still costs a full round trip, so drop
+      // it from the prerendered HTML when the emitted file really is empty.
+      'prerender:generate'(route) {
+        if (typeof route.contents !== 'string' || !route.fileName?.endsWith('.html')) return
+        route.contents = route.contents.replace(/<link rel="stylesheet" href="(\/_nuxt\/[^"]+\.css)"[^>]*>/g, (tag, href: string) => {
+          try {
+            return statSync(`.output/public${href}`).size === 0 ? '' : tag
+          } catch {
+            return tag
+          }
+        })
+      }
+    },
     prerender: {
       crawlLinks: !isStudioFunction,
       failOnError: false,

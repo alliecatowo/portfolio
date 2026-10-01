@@ -104,7 +104,7 @@
 
         <!-- Table of contents, built from the post's own headings -->
         <div v-if="tocLinks.length" class="mb-8 lg:mb-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
-          <UContentToc :links="tocLinks" title="On this page" highlight />
+          <LazyUContentToc :links="tocLinks" title="On this page" highlight :hydrate-on-interaction="['pointerenter', 'focusin', 'touchstart']" />
         </div>
 
         <div class="min-w-0 lg:col-start-1 lg:row-start-2">

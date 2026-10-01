@@ -24,7 +24,7 @@
 
     <!-- Enhanced Keyboard Shortcuts Help -->
     <ClientOnly>
-      <ShortcutsHelp />
+      <ShortcutsHelp v-if="helpLoaded" />
     </ClientOnly>
   </div>
 </template>
@@ -32,10 +32,15 @@
 <script setup lang="ts">
 import AppFooter from '~/components/common/AppFooter.vue'
 import AppHeader from '~/components/common/AppHeader.vue'
-import ShortcutsHelp from '~/components/common/ShortcutsHelp.vue'
 import { useGlobalShortcuts } from '~/composables/useGlobalShortcuts'
 
-// Layout setup
+// The help dialog only matters once someone presses "?", so its chunk loads on first use
+const ShortcutsHelp = defineAsyncComponent(() => import('~/components/common/ShortcutsHelp.vue'))
+const showShortcutsHelp = useState<boolean>('showShortcutsHelp', () => false)
+const helpLoaded = ref(false)
+watch(showShortcutsHelp, (open) => {
+  if (open) helpLoaded.value = true
+})
 
 // Register global keyboard shortcuts
 useGlobalShortcuts()
