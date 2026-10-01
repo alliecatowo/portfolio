@@ -18,7 +18,7 @@ export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
   ssr: true,
   experimental: {
-    payloadExtraction: false,
+    payloadExtraction: 'client',
     renderJsonPayloads: true,
     viewTransition: true
   },
@@ -31,6 +31,10 @@ export default defineNuxtConfig({
     '@nuxt/image',
     'nuxt-studio'
   ],
+  ui: {
+    // Only generate the theme CSS/JS for the Nuxt UI components the app actually uses
+    experimental: { componentDetection: true }
+  },
   // Site config shared by robots/sitemap. Firebase redirects /about -> /about/,
   // so every generated URL uses the trailing-slash form.
   site: {

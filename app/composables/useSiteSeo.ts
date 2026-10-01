@@ -50,10 +50,9 @@ const serializeJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, '\
 
 export function useSiteSeo(input: MaybeRefOrGetter<SiteSeoInput>) {
   const route = useRoute()
-  const site = useSiteConfig()
-  const siteUrl = withSlash(site.url || 'https://allisons.dev')
-
-  const absolute = (p: string) => (/^https?:\/\//.test(p) ? p : new URL(p, siteUrl).href)
+  // SITE_URL, not useSiteConfig(): the latter installs a client-side watcher that re-sorts the whole
+  // site config on every hydration, for a value that never changes.
+  const absolute = (p: string) => (/^https?:\/\//.test(p) ? p : new URL(p, SITE_URL).href)
 
   const seo = computed(() => {
     const i = toValue(input)

@@ -20,7 +20,7 @@
     <UMain id="main-content" class="flex-grow" aria-label="Main content">
       <slot />
     </UMain>
-    <AppFooter />
+    <LazyCommonAppFooter hydrate-on-visible />
 
     <!-- Enhanced Keyboard Shortcuts Help -->
     <ClientOnly>
@@ -30,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import AppFooter from '~/components/common/AppFooter.vue'
 import AppHeader from '~/components/common/AppHeader.vue'
 import { useGlobalShortcuts } from '~/composables/useGlobalShortcuts'
 

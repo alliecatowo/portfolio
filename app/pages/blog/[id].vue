@@ -123,7 +123,10 @@
           <!-- Article Body -->
           <!-- ~72ch keeps lines readable; the TOC column and wide images stay outside it -->
           <div class="max-w-[72ch]">
-            <ContentRenderer v-if="post.body" :value="post" />
+            <template v-if="post.body">
+              <ContentRenderer v-if="renderEagerly" :value="post" />
+              <LazyContentRenderer v-else :value="post" :hydrate-on-interaction="['click', 'focusin', 'keydown']" />
+            </template>
             <div v-else class="text-muted py-8">
               No content available for this post.
             </div>
@@ -230,6 +233,12 @@ const AUTHOR_X_URL = 'https://x.com/AllieCatOwO';
 // Get post slug from route
 const route = useRoute();
 const slug = route.params.id as string;
+
+// The article body is static prose, so it hydrates lazily (on the first click or focus inside it)
+// instead of on load. Nuxt Studio's live preview and dev-mode HMR re-render it, so those get the
+// eager renderer. Studio sets this state once an editor session is active.
+const studioSession = useState('studio-session', () => null);
+const renderEagerly = computed(() => import.meta.dev || !!studioSession.value);
 
 // Use content composable
 const { fetchBlogPost, fetchBlogPosts } = useContent();
