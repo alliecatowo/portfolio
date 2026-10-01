@@ -19,7 +19,7 @@ The public site stays a static `nuxt generate` build on Firebase Hosting. Studio
 | `/__nuxt_studio/**` | GitHub OAuth (`/auth/github`), session, editor meta, media/ipx                  |
 | `/sw.js`            | Studio's service worker                                                         |
 
-`pnpm build:studio` (`NITRO_PRESET=firebase nuxt build`) builds the function into `.output-studio/` with prerendering off. The Deploy to Production workflow builds it, writes its runtime `.env` from GitHub secrets, deploys it, then deploys Hosting. PR previews and staging deploy Hosting only; their Studio routes hit the live function.
+`pnpm build:studio` (`NITRO_PRESET=firebase nuxt build`) builds the function into `.output-studio/` with prerendering off. The Deploy to Production workflow deploys Hosting first, then builds the function, writes its runtime `.env` from GitHub secrets and deploys it. A function failure never blocks the site, and pushes that only touch `content/` (every Studio save) skip the function. PR previews and staging deploy Hosting only; their Studio routes hit the live function.
 
 ### The `__session` cookie workaround
 
@@ -35,7 +35,7 @@ GitHub Actions secrets (repo level):
 | `STUDIO_GITHUB_CLIENT_SECRET` | OAuth App client secret (build + runtime)                                        |
 | `STUDIO_GITHUB_MODERATORS`    | Comma-separated GitHub emails allowed to log in (Allison's primary GitHub email) |
 
-nuxt-studio reads `STUDIO_GITHUB_*` names, not the `NUXT_STUDIO_AUTH_GITHUB_*` names shown on nuxt.studio/setup. Each deploy also generates a random `NUXT_STUDIO_AUTH_SESSION_SECRET`, so you log in again after a deploy.
+nuxt-studio reads `STUDIO_GITHUB_*` names, not the `NUXT_STUDIO_AUTH_GITHUB_*` names shown on nuxt.studio/setup. The session-cookie secret is derived from the client ID and secret at build time, so both must be set when building (CI fails the step if they're missing). `NUXT_STUDIO_AUTH_SESSION_SECRET` overrides it at runtime.
 
 GitHub OAuth App (Settings → Developer settings → OAuth Apps):
 
@@ -52,16 +52,18 @@ Drafts (`published: false` posts, `status: draft` projects) stay out of producti
 
 ### One-time Google Cloud setup
 
-The project must be on Blaze. Before the first function deploy:
+The project must be on Blaze. Then:
 
-```bash
-# First deploy (enables Cloud Functions, Cloud Build, Artifact Registry, Run, Eventarc APIs)
-pnpm dlx firebase-tools deploy --only functions:studio --project allie-portfolio-project
-# Delete old function images after 1 day so Artifact Registry storage doesn't accrue
-pnpm dlx firebase-tools functions:artifacts:setpolicy --location us-central1 --days 1 --project allie-portfolio-project
-```
+1. Enable the Cloud Functions, Cloud Build, Artifact Registry, Cloud Run and Eventarc APIs (Google Cloud console → APIs & Services).
+2. Grant the CI service account behind `FIREBASE_SERVICE_ACCOUNT_ALLIE_PORTFOLIO_PROJECT` the `Cloud Functions Admin` role (needed to make the function publicly invokable) and `Service Account User` on the default compute service account, on top of its Hosting roles.
+3. Re-run **Deploy to Production** (Actions → Run workflow) so CI builds and deploys the function with the secrets. Don't deploy it from a laptop: a local build without `STUDIO_GITHUB_CLIENT_ID`/`SECRET` in the environment ships a function with no auth provider and a guessable session secret.
+4. Keep old function images from piling up in Artifact Registry:
+   ```bash
+   pnpm dlx firebase-tools functions:artifacts:setpolicy --location us-central1 --days 1 --project allie-portfolio-project
+   ```
+5. Optional: a $5 budget alert on the billing account (Billing → Budgets & alerts).
 
-The CI service account behind `FIREBASE_SERVICE_ACCOUNT_ALLIE_PORTFOLIO_PROJECT` needs `Cloud Functions Developer` and `Service Account User` (on the default compute service account) on top of its Hosting roles to deploy the function.
+After the first deploy, open `https://allisons.dev/_studio?redirect=/` and check the GitHub authorize URL's `redirect_uri` is `https://allisons.dev/__nuxt_studio/auth/github`. If it shows a `run.app`/`cloudfunctions.net` host, the `X-Forwarded-Host` restore isn't working; set `STUDIO_GITHUB_REDIRECT_URL` in the function env instead.
 
 ### Local emulation
 
@@ -71,6 +73,7 @@ pnpm generate && pnpm build:studio
 printf 'STUDIO_GITHUB_CLIENT_ID=...\nSTUDIO_GITHUB_CLIENT_SECRET=...\n' > .output-studio/server/.env
 pnpm dlx firebase-tools emulators:start --only hosting,functions --project demo-portfolio
 # http://127.0.0.1:5000/_studio?redirect=/
+# (Hosting emulation doesn't reproduce production's cookie stripping or Host header exactly)
 ```
 
 ### Costs
