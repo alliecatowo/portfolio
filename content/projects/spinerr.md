@@ -23,6 +23,8 @@ tags:
   - nextjs
   - prototype
 github: https://github.com/alliecatowo/spinerr
+seo:
+  description: 'An ambient music dashboard built around a generative vinyl record: p5.js grooves seeded per track that pulse with the bass. A one-night prototype.'
 ---
 
 **A record player for a second monitor.**

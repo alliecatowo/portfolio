@@ -21,6 +21,8 @@ tags:
   - swiftui
   - prototype
 github: https://github.com/alliecatowo/anvil
+seo:
+  description: 'A native SwiftUI workspace for agent-driven development on macOS: tickets, agent sessions, review and shipping in one app. Ambitious and mid-rebuild.'
 ---
 
 **What does a development environment look like if agents do most of the typing?**
