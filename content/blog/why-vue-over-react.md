@@ -10,7 +10,7 @@ tags:
   - dx
   - composition-api
   - opinion
-author: Allie
+author: Allison Coleman
 published: true
 featured: true
 slug: why-vue-over-react

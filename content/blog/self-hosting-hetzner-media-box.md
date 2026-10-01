@@ -12,7 +12,7 @@ tags:
   - portainer
   - caddy
   - homelab
-author: Allie
+author: Allison Coleman
 published: true
 featured: false
 featured_image: /images/homelab/screenshot-2025-10-16-at-13-03-45-homepage-allie-cat-cinema.png

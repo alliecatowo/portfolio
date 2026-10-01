@@ -14,7 +14,7 @@ tags:
   - ultrawide
   - tools
   - workflow
-author: Allie
+author: Allison Coleman
 published: false
 featured: false
 slug: my-setup-claude-zsh-os-ultrawide

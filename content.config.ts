@@ -7,8 +7,9 @@ import { asSitemapCollection } from '@nuxtjs/sitemap/content'
 // every collection row, body included, ships to the client in
 // /__nuxt_content/<collection>/sql_dump.txt.
 // Blog posts need `published: true`; projects need `status: published` (the schema default
-// is draft). Set CONTENT_INCLUDE_DRAFTS=true to keep drafts in a production build (e.g. a
-// Studio/SSR host).
+// is draft). CONTENT_INCLUDE_DRAFTS=true keeps drafts in a production build: only
+// `pnpm build:studio` sets it, for the Studio function, which serves that dump to logged-in
+// Studio users alone (server/studio/drafts-dump.ts). Never set it for the static build.
 function draftFiles(collection: string, isPublished: RegExp): string[] {
   const dir = new URL(`./content/${collection}/`, import.meta.url)
   return readdirSync(dir, { recursive: true, encoding: 'utf8' })
@@ -38,10 +39,9 @@ export default defineContentConfig({
         // Extend enum as new content categories are added
         category: z.enum(['dev', 'tattoo', 'life', 'project']).default('dev'),
         tags: z.array(z.string()).default([]),
-        author: z.string().default('Allie'),
+        author: z.string().default('Allison Coleman'),
         published: z.boolean().default(false),
         featured: z.boolean().default(false),
-        date_published: z.string().optional(),
         featured_image: z.string().optional(),
         // 1200x630 share image; falls back to featured_image, then /images/og/default.png
         ogImage: z.string().optional(),

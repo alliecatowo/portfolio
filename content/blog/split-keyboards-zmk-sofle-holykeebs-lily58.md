@@ -11,7 +11,7 @@ tags:
   - sofle
   - lily58
   - ergonomics
-author: Allie
+author: Allison Coleman
 published: true
 featured: false
 featured_image: /images/keyboards/keyboards-collection-1.jpg

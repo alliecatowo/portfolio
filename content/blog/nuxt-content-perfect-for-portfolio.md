@@ -10,7 +10,7 @@ tags:
   - portfolio
   - cms
   - dx
-author: Allie
+author: Allison Coleman
 published: true
 featured: true
 featured_image: /screenshot-2025-10-20-at-23-49-08-nuxt-studio.png
