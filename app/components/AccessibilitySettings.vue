@@ -17,7 +17,7 @@
             :max="500"
             :step="50"
             color="primary"
-            @update:model-value="updateReadingSpeed"
+            @update:model-value="(v) => v !== undefined && updateReadingSpeed(v)"
           />
           <div class="flex justify-between text-xs text-muted mt-1">
             <span>Very Slow (100)</span>

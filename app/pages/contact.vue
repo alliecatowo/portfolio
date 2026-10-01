@@ -312,9 +312,9 @@ const inputUi = {
 } as const
 
 const selectUi = {
-  trigger:
+  base:
     'rounded-xl border border-white/15 dark:border-white/10 bg-white/5 dark:bg-white/5 text-default placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/40 focus:bg-white/10 transition-all',
-  option: 'text-default'
+  item: 'text-default'
 } as const
 
 const textareaUi = {

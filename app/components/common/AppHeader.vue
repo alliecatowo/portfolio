@@ -12,6 +12,7 @@
     <!-- Main navigation -->
     <UNavigationMenu
       id="site-navigation"
+      aria-label="Main"
       :items="navigationItems"
       orientation="horizontal"
       variant="link"
@@ -38,7 +39,6 @@
           color="primary"
           size="md"
           square
-          :ui="{ rounded: 'rounded-lg' }"
           aria-label="Open accessibility settings"
           class="hidden lg:inline-flex"
           @click="showAccessibilitySettings = true"
@@ -51,7 +51,6 @@
           variant="ghost"
           color="primary"
           square
-          :ui="{ rounded: 'rounded-lg' }"
         />
       </UTooltip>
     </template>
@@ -74,7 +73,6 @@
             variant="outline"
             color="primary"
             size="md"
-            :ui="{ rounded: 'rounded-lg' }"
             @click="showAccessibilitySettings = true"
           >
             Accessibility
@@ -99,7 +97,6 @@
               size="md"
               variant="ghost"
               color="primary"
-              :ui="{ rounded: 'rounded-full' }"
             />
           </div>
         </UCard>
