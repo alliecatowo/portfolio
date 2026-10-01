@@ -45,14 +45,23 @@ demo/
 └── var/events.jsonl
 ```
 
-_Adapted from the README's example tree: you write `feeds.d/`, the daemon writes `store/`, each revision of an entry is its own file with the plain name pointing at the newest, and `var/events.jsonl` is there to `tail -F`._
+*Adapted from the README's example tree: you write `feeds.d/`, the daemon writes `store/`, each revision of an entry is its own file with the plain name pointing at the newest, and `var/events.jsonl` is there to `tail -F`.*
 
-<video class="w-full h-auto rounded-lg" width="1300" height="732" autoplay muted loop playsinline poster="/images/projects/rssd/demo-poster.webp" aria-label="A terminal recording: ls lists entry files in the rust-blog folder of the demo store, then the rss terminal reader opens with a feed list, an entry list and a reader pane. The cursor moves to the rust-blog feed, opens an entry and steps through two more entries.">
-  <source src="/images/projects/rssd/demo.webm" type="video/webm">
-  <source src="/images/projects/rssd/demo.mp4" type="video/mp4">
-</video>
+::demo-video
+---
+height: 732
+width: 1300
+alt: "A terminal recording: ls lists entry files in the rust-blog folder of the
+  demo store, then the rss terminal reader opens with a feed list, an entry list
+  and a reader pane. The cursor moves to the rust-blog feed, opens an entry and
+  steps through two more entries."
+mp4: /images/projects/rssd/demo.mp4
+poster: /images/projects/rssd/demo-poster.webp
+webm: /images/projects/rssd/demo.webm
+---
+::
 
-_Recorded in the offline fixture mode, so the feeds are the repo's committed fixtures rather than live fetches. First the files themselves (`ls` on one feed's `entries/` folder, including the `.r1.xml` revisions), then the `rss` reader walking the same folder._
+*Recorded in the offline fixture mode, so the feeds are the repo's committed fixtures rather than live fetches. First the files themselves (`ls` on one feed's `entries/` folder, including the `.r1.xml` revisions), then the `rss` reader walking the same folder.*
 
 ## Three invariants
 

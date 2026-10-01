@@ -37,16 +37,25 @@ Termagatchi started as a joke between productivity and nostalgia: “what if you
 
 You feed it, play with it, and chat with it like a tiny coworker who lives in your shell; except under the hood, it’s running an **AI-driven game engine**, persistent state management, and a **real-time Textual UI** that turns your terminal into a digital habitat.
 
-<video class="w-full h-auto rounded-lg" width="1300" height="900" autoplay muted loop playsinline poster="/images/projects/termagatchi/demo-poster.webp" aria-label="A terminal recording of Termagatchi in offline mode: an ASCII-dot pet sits in the left pane with a chat log on the right. The commands /feed, /play and /pet are typed in turn, and the log answers 'Fed Kibble!', 'Played with Ball!' and 'Pet loves the attention!'.">
-  <source src="/images/projects/termagatchi/demo.webm" type="video/webm">
-  <source src="/images/projects/termagatchi/demo.mp4" type="video/mp4">
-</video>
+::demo-video
+---
+height: 900
+width: 1300
+alt: "A terminal recording of Termagatchi in offline mode: an ASCII-dot pet sits
+  in the left pane with a chat log on the right. The commands /feed, /play and
+  /pet are typed in turn, and the log answers 'Fed Kibble!', 'Played with Ball!'
+  and 'Pet loves the attention!'."
+mp4: /images/projects/termagatchi/demo.mp4
+poster: /images/projects/termagatchi/demo-poster.webp
+webm: /images/projects/termagatchi/demo.webm
+---
+::
 
-_Run with no AI provider configured, so it starts in offline mode. The three commands are typed into the input bar and the pet's replies land in the chat log._
+*Run with no AI provider configured, so it starts in offline mode. The three commands are typed into the input bar and the pet's replies land in the chat log.*
 
 ## Problem
 
-Most AI projects chase complexity with web dashboards, APIs, flashy front-ends. I wanted to do the opposite: build something _delightful_ and _deeply technical_ that lives where developers actually are: the command line.
+Most AI projects chase complexity with web dashboards, APIs, flashy front-ends. I wanted to do the opposite: build something *delightful* and *deeply technical* that lives where developers actually are: the command line.
 
 The goal was to combine:
 
@@ -70,7 +79,7 @@ The whole thing runs locally. No backend, no cloud dependency; just pure Python 
 
 ## Challenges
 
-The biggest challenge was balancing _game feel_ with _AI performance_. LLMs are slow compared to a traditional game loop, so I built a hybrid tick system that keeps gameplay responsive while AI tasks run asynchronously. Designing believable personality states, ones that persist and evolve naturally, was another rabbit hole entirely.
+The biggest challenge was balancing *game feel* with *AI performance*. LLMs are slow compared to a traditional game loop, so I built a hybrid tick system that keeps gameplay responsive while AI tasks run asynchronously. Designing believable personality states, ones that persist and evolve naturally, was another rabbit hole entirely.
 
 ## Impact
 
@@ -81,7 +90,7 @@ The biggest challenge was balancing _game feel_ with _AI performance_. LLMs are 
 
 ## Reflection
 
-Termagatchi is a love letter to the terminal; proof that creativity and code can coexist in a text window. It’s whimsical, a little absurd, and deeply technical under the hood. It taught me a lot about threading, UI design, and how to make AI _feel alive_ instead of just “smart.”
+Termagatchi is a love letter to the terminal; proof that creativity and code can coexist in a text window. It’s whimsical, a little absurd, and deeply technical under the hood. It taught me a lot about threading, UI design, and how to make AI *feel alive* instead of just “smart.”
 
 ## Tech Stack
 

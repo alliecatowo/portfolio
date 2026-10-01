@@ -1,33 +1,5 @@
 import { existsSync, readdirSync, statSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
 import { defineNuxtConfig } from 'nuxt/config'
-import { imageDimensions } from './scripts/image-dimensions'
-
-const publicDir = fileURLToPath(new URL('./public', import.meta.url))
-
-// Walks a parsed Markdown body (minimark arrays or the full AST) and gives every local
-// <img> an `aspect-ratio: auto W / H` style plus lazy loading, so prose images don't
-// shift the layout. `auto` lets the real image ratio win once it has loaded.
-function addImageHints(node: unknown): void {
-  if (!node || typeof node !== 'object') return
-  if (Array.isArray(node)) {
-    if (node[0] === 'img' && node[1] && typeof node[1] === 'object') hintImage(node[1] as Record<string, unknown>)
-    node.forEach(addImageHints)
-    return
-  }
-  const n = node as { tag?: string, props?: Record<string, unknown>, children?: unknown, value?: unknown }
-  if (n.tag === 'img' && n.props) hintImage(n.props)
-  addImageHints(n.children)
-  addImageHints(n.value)
-}
-function hintImage(props: Record<string, unknown>) {
-  const src = props.src
-  if (typeof src !== 'string' || !src.startsWith('/') || src.startsWith('//')) return
-  const size = imageDimensions(`${publicDir}${decodeURI(src.split(/[?#]/)[0]!)}`)
-  if (size && !props.style) props.style = `aspect-ratio: auto ${size.width} / ${size.height}`
-  props.loading ??= 'lazy'
-  props.decoding ??= 'async'
-}
 
 // Per-page OG images live at public/images/og/<slug>.png. Project pages pick theirs up
 // by slug when no `ogImage` is set in frontmatter (see useSiteSeo/projectOgImage).
@@ -77,6 +49,10 @@ export default defineNuxtConfig({
     disallow: ['/_studio']
   },
   sitemap: {
+    // Blog and project URLs (with lastmod from each item's date) come from this route rather than a
+    // `sitemap` column on the collections, so nothing build-time is stored in the content documents
+    // that Nuxt Studio writes back to the Markdown files. See the route for the details.
+    sources: ['/__sitemap__/site-content-urls.json'],
     // Auto-discovered <image:loc> entries came out double-escaped (&amp;amp;) for /_ipx URLs
     discoverImages: false
   },
@@ -89,25 +65,6 @@ export default defineNuxtConfig({
     // is fine: route chunks are small.
     'build:manifest'(manifest) {
       for (const item of Object.values(manifest)) item.prefetch = false
-    },
-    'content:file:afterParse'(ctx) {
-      const { collection, content } = ctx
-      // Keep drafts out of the sitemap: unpublished blog posts and draft projects.
-      // Runs before @nuxtjs/sitemap's own afterParse hook, which drops falsy `sitemap` values.
-      const isDraftPost = collection.name === 'blog' && content.published !== true
-      const isDraftProject = collection.name === 'projects' && (content.status ?? 'draft') === 'draft'
-      if (isDraftPost || isDraftProject) {
-        content.sitemap = false
-      } else if (collection.name === 'blog' || collection.name === 'projects') {
-        // lastmod from the content date (YAML dates may arrive as Date objects)
-        const date = new Date(content.date as string)
-        if (!Number.isNaN(date.getTime())) {
-          const existing = typeof content.sitemap === 'object' && content.sitemap ? content.sitemap : {}
-          content.sitemap = { ...existing, lastmod: date.toISOString().slice(0, 10) }
-        }
-      }
-      // Markdown images: reserve their box (aspect-ratio from the file's real size) and lazy-load them.
-      if (content.body) addImageHints(content.body)
     }
   },
   content: {
@@ -116,6 +73,9 @@ export default defineNuxtConfig({
     },
     build: {
       markdown: {
+        // Turns :shortcodes: into emoji. The site uses none, and it eats the colons in times like
+        // 6:32: or 11:56: (Studio's own editor parser still has it on, so avoid `:xx:` in prose).
+        remarkPlugins: { 'remark-emoji': false },
         // Nuxt UI's default light theme (material-theme-lighter) puts orange/green tokens at
         // ~2.2:1 on the code block background. github-light passes AA; dark keeps palenight.
         highlight: {

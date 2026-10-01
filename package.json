@@ -25,6 +25,7 @@
     "validate:content": "node scripts/validate-content.ts",
     "content:format": "node scripts/format-content.mjs",
     "content:format:check": "node scripts/format-content.mjs --check",
+    "content:roundtrip": "node scripts/check-studio-roundtrip.mjs",
     "lockfile:check": "pnpm install --frozen-lockfile --prefer-offline",
     "lockfile:update": "pnpm install && git add pnpm-lock.yaml",
     "db:clean": "rm -rf .data/content/contents.sqlite",

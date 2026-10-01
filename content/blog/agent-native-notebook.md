@@ -15,7 +15,7 @@ tags:
   - typescript
 ---
 
-_JupyterLite WebMCP was one of the ten winners of OpenAI's WebMCP Challenge. I built it with Juan Mendoza and with a number of agents; the rest of this series covers that. This post covers the code._
+*JupyterLite WebMCP was one of the ten winners of OpenAI's WebMCP Challenge. I built it with Juan Mendoza and with a number of agents; the rest of this series covers that. This post covers the code.*
 
 The usual way to add AI to a notebook is a chat panel: a sidebar with a text box, a model picker and an API key field. JupyterLite WebMCP has none of those. It registers 22 typed tools on the page through WebMCP (`document.modelContext.registerTool`), and whatever agent your browser has calls them. The extension has no model, no server and no keys.
 
@@ -42,7 +42,7 @@ Every tool that changes a cell needs the `sourceHash` from a prior read. If the 
 
 The hash is two FNV-1a 32-bit passes with different offset bases, giving 16 hex characters, over `cellType + '\u0000' + source`. The NUL separator is there so a code cell and a markdown cell with adjacent text can't collide. That bug got fixed on the first night (`9f25cf9`). The notebook as a whole gets a revision string built the same way.
 
-I call this rule "the human always wins." It also covers a case I did not design for. Behind `jupyter-collaboration` (real-time multi-user Jupyter), the same check protects a _remote_ human's edits from the agent with no extra code, because the agent writes to the same shared model everyone else does.
+I call this rule "the human always wins." It also covers a case I did not design for. Behind `jupyter-collaboration` (real-time multi-user Jupyter), the same check protects a *remote* human's edits from the agent with no extra code, because the agent writes to the same shared model everyone else does.
 
 Results are bounded too. Every cap lives in one file (`src/limits.ts`): 50 KiB per result, 25 KiB of cell source per read, 10 KiB of text output, 100 cells. Oversized writes are rejected rather than truncated, so the agent never ends up with half a cell.
 
@@ -52,15 +52,15 @@ You can set any cell, or a whole notebook, to Editable, Read only or Hidden for 
 
 Hidden is the harder level. A hidden cell doesn't answer "access denied," because that tells the agent something is there. Looked up by id, it answers `CELL_NOT_FOUND`, exactly as if it didn't exist. That has to hold everywhere the agent could learn about a cell: listings, focus, export, output selection and review anchors. One checkpoint (`src/access/guard.ts`) enforces it.
 
-It leaked twice during the build, and both leaks were found and closed before submission: once through review-comment anchors (`97d266a`) and once through focus and selection (`6e639ff`). Range reads still report a `hiddenCellCount`, so the agent knows _something_ is hidden in a range without knowing what.
+It leaked twice during the build, and both leaks were found and closed before submission: once through review-comment anchors (`97d266a`) and once through focus and selection (`6e639ff`). Range reads still report a `hiddenCellCount`, so the agent knows *something* is hidden in a range without knowing what.
 
 The README states the limits, and they apply here too. This is a guardrail, not a sandbox. Code the agent runs in a visible cell can still read the workspace. The model fails open to Editable. Metadata can be edited by hand.
 
 ## Presence without lying
 
-When an agent works in your notebook, you should be able to see it. When a tool call starts, the cell gets a ring and an edge tint, and a badge walks through `Reading… → Applying… → Running… → Done` (or `Failed`). Outputs the agent ran say "Run by Browser agent · HH:MM:SS." A "±N changed" chip opens a line diff titled "What the agent changed." All of it uses `box-shadow: inset`, so nothing shifts the layout, and it respects `prefers-reduced-motion`.
+When an agent works in your notebook, you should be able to see it. When a tool call starts, the cell gets a ring and an edge tint, and a badge walks through `Reading… → Applying… → Running… → Done` (or `Failed`). Outputs the agent ran say "Run by Browser agent · `HH:MM:SS`." A "±N changed" chip opens a line diff titled "What the agent changed." All of it uses `box-shadow: inset`, so nothing shifts the layout, and it respects `prefers-reduced-motion`.
 
-What the UI never does is claim an agent is _connected_. A page can't know that. WebMCP has no "an agent is here" signal, only tool calls when they happen. On the second night, the status bar said an agent was connected when none was, and I objected: "i dont thinkt heres na agent connected it looks hideos". Claude called it "the one dishonest pixel" and removed it (`4b6ffe6`). The status bar now only ever reads `WebMCP ready`, `WebMCP unavailable` or `WebMCP error`. It mentions an agent only while a call is actually in flight or just finished (`Agent · running cell 5`). A unit test fails if an idle status string contains the word "agent."
+What the UI never does is claim an agent is *connected*. A page can't know that. WebMCP has no "an agent is here" signal, only tool calls when they happen. On the second night, the status bar said an agent was connected when none was, and I objected: "i dont thinkt heres na agent connected it looks hideos". Claude called it "the one dishonest pixel" and removed it (`4b6ffe6`). The status bar now only ever reads `WebMCP ready`, `WebMCP unavailable` or `WebMCP error`. It mentions an agent only while a call is actually in flight or just finished (`Agent · running cell 5`). A unit test fails if an idle status string contains the word "agent."
 
 That decision had later consequences, covered in post 4.
 
@@ -74,7 +74,7 @@ By default the agent edits directly, and you see the diff afterward. Propose mod
 
 When the agent calls it, the edit shows up as an inline banner under the cell with a red/green diff, **Accept**, **Deny** and a reason field. The tool call's `execute()` Promise does not resolve, so the agent waits for as long as the decision takes.
 
-- **Accept** runs the edit through the _same_ `updateCell` function Direct mode uses. There's "exactly one place a cell's source is ever written." It re-checks the hash, so if you edited the cell while deciding, Accept fails `STALE_CELL`. You still win.
+- **Accept** runs the edit through the *same* `updateCell` function Direct mode uses. There's "exactly one place a cell's source is ever written." It re-checks the hash, so if you edited the cell while deciding, Accept fails `STALE_CELL`. You still win.
 - **Deny** resolves the call with a normal, non-error result: code `PROPOSAL_DENIED` plus whatever reason you typed. The agent reads "denied, because…" and revises, instead of treating it as a failure and retrying.
 - Only one proposal can be pending per cell (`PROPOSAL_ALREADY_PENDING`), and an `AbortSignal` cancels one cleanly.
 - The banner is not a popover, because popovers close when you click outside them, and you shouldn't lose a pending decision by clicking somewhere else.
@@ -93,7 +93,7 @@ Threads live in the notebook's own metadata (`metadata.jupyterlite_webmcp_review
 
 Smaller design choices:
 
-- `jupyter_focus_cell`, `jupyter_focus_comment` and `jupyter_open_notebook` don't change any data, but they're marked `readOnlyHint: false`, because they move _your_ viewport. Scrolling someone's screen isn't read-only.
+- `jupyter_focus_cell`, `jupyter_focus_comment` and `jupyter_open_notebook` don't change any data, but they're marked `readOnlyHint: false`, because they move *your* viewport. Scrolling someone's screen isn't read-only.
 - Every tool that returns notebook content sets `untrustedContentHint: true`. A cell can contain anything, including instructions aimed at the agent.
 - The demo site sends `COOP: same-origin` and `COEP: credentialless`, so Pyodide gets a real `SharedArrayBuffer`. That's why the demo moved from GitHub Pages to Vercel.
 
@@ -101,7 +101,7 @@ Smaller design choices:
 
 The same wheel works in JupyterLite, JupyterLab 4.6 and Notebook 7 with no code changes. As of September 30 it's on PyPI:
 
-```
+```text
 pip install jupyterlite-webmcp
 ```
 
@@ -119,7 +119,7 @@ On the day I published it, a review agent noticed that the live demo had deploye
 The near-term roadmap is mostly the gaps:
 
 - Propose for insert, delete and run, not just update
-- Run a proposed cell _before_ you accept or deny it, so you can see what it does
+- Run a proposed cell *before* you accept or deny it, so you can see what it does
 - Show the agent in the Yjs awareness layer, so collaborators can see it like any other cursor
 - A 0.1.1 release (packaging is prepped)
 - Talk to Jupyter maintainers about what's worth upstreaming
