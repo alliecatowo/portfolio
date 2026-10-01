@@ -61,7 +61,7 @@ pnpm emulate
 Handled automatically via GitHub Actions:
 
 - **Production (static)**: `https://allisons.dev` — deployed from `main` branch to Firebase hosting via `pnpm generate`
-- **Staging**: Firebase preview channel — deployed from `main`
+- **Staging**: Firebase preview channel — manual `workflow_dispatch` only (production deploys on every push to `main`)
 - **PRs**: Temporary preview channels auto-deployed on open
 - **Studio function**: the production workflow also builds (`pnpm build:studio`) and deploys the `studio` 2nd-gen Cloud Function that serves Nuxt Studio's server routes. See `STUDIO.md`
 
@@ -224,7 +224,7 @@ rm pnpm-lock.yaml && pnpm install
 3. Verify with the `verify-site` skill (`.claude/skills/verify-site/SKILL.md`): pnpm checks, build-output checks, and browser checks at 375/768/1440
 4. Push + open PR against `main`
 5. CI runs: setup/install, typecheck, lint, commitlint, Firebase preview channel
-6. On merge: auto-deploys to production (https://allisons.dev) and staging, then verify production
+6. On merge: auto-deploys to production (https://allisons.dev), then verify production
 
 ### Commit Message Style
 

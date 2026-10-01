@@ -1,0 +1,30 @@
+name: Setup toolchain and dependencies
+description: Install Node and pnpm via mise, restore the pnpm store cache, and install with the frozen lockfile.
+
+runs:
+  using: composite
+  steps:
+    - name: Setup mise (Node, pnpm)
+      uses: jdx/mise-action@v2
+      with:
+        cache: true
+
+    - name: Get pnpm store directory
+      id: pnpm-cache
+      shell: bash
+      run: echo "pnpm-store-path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+    # The pnpm store is content-addressed, so a stale restore-key is safe: pnpm only fetches what
+    # the lockfile needs that the store lacks. node_modules itself is deliberately not cached;
+    # restoring it from a prefix match could hand back a tree that no longer matches the lockfile.
+    - name: Cache pnpm store
+      uses: actions/cache@v6
+      with:
+        path: ${{ steps.pnpm-cache.outputs.pnpm-store-path }}
+        key: ${{ runner.os }}-pnpm10-store-${{ hashFiles('pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm10-store-
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile --prefer-offline

@@ -1,0 +1,31 @@
+name: Prune Actions Caches
+
+# GitHub evicts caches after 7 days unused or when the repo passes 10 GB, but the pnpm store and
+# ESLint caches are re-created per lockfile/source hash, so superseded ones pile up. Delete any cache
+# not read in the last 3 days. Live caches are read on every CI run and so are never touched.
+
+on:
+  schedule:
+    - cron: '17 5 * * 1'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Delete caches unused for 3+ days
+        run: |
+          cutoff=$(date -u -d '3 days ago' +%Y-%m-%dT%H:%M:%SZ)
+          gh cache list --limit 100 --json id,key,lastAccessedAt \
+            --jq ".[] | select(.lastAccessedAt < \"$cutoff\") | .id" > stale.txt
+          echo "Stale caches: $(wc -l < stale.txt)"
+          while read -r id; do
+            gh cache delete "$id"
+          done < stale.txt

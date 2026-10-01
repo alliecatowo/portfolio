@@ -3,12 +3,28 @@ name: Deploy to Production
 on:
   push:
     branches: [main]
+    # Docs, agent notes and tooling config never change the site
+    paths-ignore:
+      - 'docs/**'
+      - '.claude/**'
+      - '.agents/**'
+      - '*.md'
+      - '.github/workflows/claude*.yml'
+      - '.github/workflows/semantic-pr.yml'
+      - '.github/workflows/dependabot-auto-merge.yml'
+      - '.github/workflows/pr-cleanup.yml'
+      - '.github/workflows/cache-prune.yml'
   workflow_dispatch:
     inputs:
       ref:
         description: 'Git ref to deploy (defaults to current main)'
         required: false
         type: string
+
+# Never cancel a deploy mid-flight; queue the next one behind it.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
 
 env:
   FORCE_COLOR: 1
@@ -33,36 +49,8 @@ jobs:
           ref: ${{ inputs.ref || github.sha }}
           fetch-depth: 2
 
-      - name: Setup mise (Node, pnpm)
-        uses: jdx/mise-action@v2
-        with:
-          cache: true
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: echo "pnpm-store-path=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v6
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm-store-path }}
-          key: ${{ runner.os }}-pnpm10-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm10-pnpm-store-
-
-      - name: Cache node_modules
-        id: cache-deps
-        uses: actions/cache@v6
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-pnpm10-node-modules-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm10-node-modules-
-
-      - name: Install dependencies
-        if: steps.cache-deps.outputs.cache-hit != 'true'
-        run: pnpm install --frozen-lockfile
+      - name: Setup toolchain and dependencies
+        uses: ./.github/actions/setup
 
       - name: Run typecheck
         run: pnpm run typecheck
@@ -83,14 +71,16 @@ jobs:
 
       # Nuxt Studio's auth/meta routes run in a 2nd-gen Cloud Function (`studio`) that
       # firebase.json rewrites /_studio, /__nuxt_studio/** and /sw.js to. It deploys after
-      # Hosting so a function failure never blocks the site, and is skipped for pushes that
-      # only touch content/ (every Studio save is one). See STUDIO.md.
+      # Hosting so a function failure never blocks the site. The function is ~3 min of build +
+      # deploy, so it only redeploys when something that can change it did: the Nuxt/content
+      # config, dependencies, Firebase config, the function prep script, or this workflow.
+      # Page, component and content edits don't touch it. See STUDIO.md.
       - name: Check whether the Studio function needs a deploy
         id: studio-changes
         run: |
           if [ "${{ github.event_name }}" != "push" ] || ! git rev-parse -q --verify HEAD~1 >/dev/null; then
             echo "deploy=true" >> "$GITHUB_OUTPUT"
-          elif git diff --name-only HEAD~1 HEAD | grep -qv '^content/'; then
+          elif git diff --name-only HEAD~1 HEAD | grep -qE '^(nuxt\.config\.ts|content\.config\.ts|package\.json|pnpm-lock\.yaml|firebase\.json|\.firebaserc|scripts/|\.github/(workflows/production-deploy\.yml|actions/))'; then
             echo "deploy=true" >> "$GITHUB_OUTPUT"
           else
             echo "deploy=false" >> "$GITHUB_OUTPUT"

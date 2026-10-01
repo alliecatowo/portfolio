@@ -19,7 +19,7 @@ The public site stays a static `nuxt generate` build on Firebase Hosting. Studio
 | `/__nuxt_studio/**` | GitHub OAuth (`/auth/github`), session, editor meta, media/ipx                  |
 | `/sw.js`            | Studio's service worker                                                         |
 
-`pnpm build:studio` (`NITRO_PRESET=firebase nuxt build`) builds the function into `.output-studio/` with prerendering off. The Deploy to Production workflow deploys Hosting first, then builds the function, writes its runtime `.env` from GitHub secrets and deploys it. A function failure never blocks the site, and pushes that only touch `content/` (every Studio save) skip the function. PR previews and staging deploy Hosting only; their Studio routes hit the live function.
+`pnpm build:studio` (`NITRO_PRESET=firebase nuxt build`) builds the function into `.output-studio/` with prerendering off. The Deploy to Production workflow deploys Hosting first, then builds the function, writes its runtime `.env` from GitHub secrets and deploys it. A function failure never blocks the site. The Studio function redeploys only when config, dependencies, Firebase config, `scripts/` or the deploy workflow change (not for page, component or content edits). PR previews and staging deploy Hosting only; their Studio routes hit the live function.
 
 ### The `__session` cookie workaround
 
