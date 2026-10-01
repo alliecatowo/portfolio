@@ -2,7 +2,7 @@
   <footer class="py-12 mt-16 border-t border-gray-200/60 dark:border-gray-800/60 bg-gray-50 dark:bg-gray-950" aria-label="Site footer">
     <UContainer>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <section aria-labelledby="footer-about">
+        <section aria-label="About this site">
           <h2 id="footer-about" class="font-bold text-xl mb-4 text-primary dark:text-primary-400">
             {{ footer.brand.title }}
           </h2>

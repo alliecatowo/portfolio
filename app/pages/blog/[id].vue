@@ -103,9 +103,9 @@
         </header>
 
         <!-- Table of contents, built from the post's own headings -->
-        <aside v-if="tocLinks.length" class="mb-8 lg:mb-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
-          <UContentToc :links="tocLinks" title="On this page" highlight />
-        </aside>
+        <div v-if="tocLinks.length" class="mb-8 lg:mb-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
+          <LazyUContentToc :links="tocLinks" title="On this page" highlight :hydrate-on-interaction="['pointerenter', 'focusin', 'touchstart']" />
+        </div>
 
         <div class="min-w-0 lg:col-start-1 lg:row-start-2">
           <!-- Featured Image -->
@@ -121,7 +121,8 @@
           </div>
 
           <!-- Article Body -->
-          <div class="max-w-none">
+          <!-- ~72ch keeps lines readable; the TOC column and wide images stay outside it -->
+          <div class="max-w-[72ch]">
             <ContentRenderer v-if="post.body" :value="post" />
             <div v-else class="text-muted py-8">
               No content available for this post.

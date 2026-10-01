@@ -16,7 +16,7 @@
             <span
               v-for="tech in project.technologies"
               :key="tech"
-              class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full"
+              class="px-3 py-1 bg-primary/10 text-primary-800 dark:text-primary text-sm rounded-full"
             >
               {{ tech }}
             </span>
@@ -36,7 +36,9 @@
           />
         </div>
 
-        <ContentRenderer v-if="project.body" :value="project" />
+        <div v-if="project.body" class="max-w-[75ch]">
+          <ContentRenderer :value="project" />
+        </div>
         <div v-else class="prose prose-lg dark:prose-invert max-w-none mb-8">
           {{ project.description }}
         </div>
@@ -47,7 +49,7 @@
             :href="project.demo"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-600 font-semibold transition-all"
+            class="inline-flex items-center px-6 py-3 bg-primary text-inverted rounded-lg hover:bg-primary-600 font-semibold transition-all"
           >
             <UIcon name="i-lucide-external-link" class="w-4 h-4 mr-2" />
             Live Demo
@@ -58,7 +60,7 @@
             :href="project.github"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center px-6 py-3 text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 font-semibold transition-all"
+            class="inline-flex items-center px-6 py-3 text-primary-800 dark:text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 font-semibold transition-all"
           >
             <UIcon name="i-lucide-github" class="w-4 h-4 mr-2" />
             View on GitHub
@@ -69,7 +71,7 @@
             :href="project.devpost"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center px-6 py-3 text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 font-semibold transition-all"
+            class="inline-flex items-center px-6 py-3 text-primary-800 dark:text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 font-semibold transition-all"
           >
             <UIcon name="i-lucide-trophy" class="w-4 h-4 mr-2" />
             Devpost

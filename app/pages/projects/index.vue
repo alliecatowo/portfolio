@@ -6,7 +6,7 @@
       <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl motion-safe:animate-pulse" style="animation-delay: 2s;"/>
     </div>
 
-    <UContainer class="relative z-10 pt-10 pb-16 md:pt-14">
+    <UContainer class="relative z-10 pt-10 pb-16 max-sm:px-6 md:pt-14">
       <header class="mb-5 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-8">
         <div>
           <h1 class="text-4xl md:text-5xl font-bold text-gradient-animated">Projects</h1>
@@ -96,7 +96,7 @@
             />
             <!-- Fills whatever is left of the last row (or a full row), so the
                  mosaic always ends flush instead of on a lonely card. -->
-            <aside class="grid-filler flex flex-col justify-between gap-4 rounded-xl border border-dashed border-primary/40 bg-elevated/30 p-5" aria-labelledby="projects-cta-title">
+            <section class="grid-filler flex flex-col justify-between gap-4 rounded-xl border border-dashed border-primary/40 bg-elevated/30 p-5" aria-labelledby="projects-cta-title">
               <div>
                 <h2 id="projects-cta-title" class="text-lg font-semibold text-highlighted">Got a project in mind?</h2>
                 <p class="mt-1 text-sm text-muted text-pretty">I'm always up for a good collaboration, a hackathon, or a long thread about agent tooling.</p>
@@ -105,7 +105,7 @@
                 <UButton to="/contact/" color="primary" size="sm" leading-icon="i-lucide-mail">Get in touch</UButton>
                 <UButton to="/about/" color="primary" variant="outline" size="sm" leading-icon="i-lucide-user">About me</UButton>
               </div>
-            </aside>
+            </section>
           </div>
         </div>
 

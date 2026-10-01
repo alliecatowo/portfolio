@@ -1,5 +1,5 @@
 <template>
-  <UHeader>
+  <UHeader v-model:open="menuOpen">
     <!-- Custom title with badges -->
     <template #title>
       <div class="flex items-center gap-3">
@@ -109,16 +109,28 @@
 
   <!-- Accessibility Settings Modal -->
   <ClientOnly>
-    <AccessibilitySettings v-if="showAccessibilitySettings" @close="showAccessibilitySettings = false" />
+    <LazyAccessibilitySettings v-if="showAccessibilitySettings" @close="showAccessibilitySettings = false" />
   </ClientOnly>
 </template>
 
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
-import AccessibilitySettings from '~/components/AccessibilitySettings.vue'
 
 const showAccessibilitySettings = useState<boolean>('showAccessibilitySettings', () => false)
 const route = useRoute()
+
+// Closing the mobile menu (Esc, backdrop, link) drops focus on <body>; hand it back to the toggle
+// so keyboard users keep their place.
+const menuOpen = ref(false)
+watch(menuOpen, (open) => {
+  if (open) return
+  // After the dialog's own focus scope has unmounted
+  setTimeout(() => {
+    if (document.activeElement === document.body || !document.activeElement) {
+      document.querySelector<HTMLElement>('header button[aria-label="Open menu"]')?.focus()
+    }
+  }, 150)
+})
 
 const navigationItems = computed((): NavigationMenuItem[] => [
   { label: 'Home', to: '/', icon: 'i-lucide-home', active: route.path === '/' },
@@ -129,7 +141,8 @@ const navigationItems = computed((): NavigationMenuItem[] => [
 ])
 
 defineShortcuts({
-  meta_a: () => { showAccessibilitySettings.value = true },
-  escape: () => { showAccessibilitySettings.value = false }
+  meta_a: () => { showAccessibilitySettings.value = true }
+  // No `escape` shortcut: defineShortcuts calls preventDefault(), and Reka ignores a prevented
+  // Escape, so it stopped the mobile menu and every modal closing on Esc. UModal handles Esc itself.
 })
 </script>

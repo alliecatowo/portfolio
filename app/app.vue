@@ -3,10 +3,12 @@
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
+    <!-- Mounted (and its content dump fetched) the first time search opens -->
     <ClientOnly>
       <LazyUContentSearch
+        v-if="searchReady"
         v-model:search-term="searchTerm"
-        :files="files"
+        :files="files ?? []"
         shortcut="meta_k"
         :navigation="navigation"
         :links="links"
@@ -40,22 +42,45 @@ const slashNav = (items: ContentNavigationItem[]): ContentNavigationItem[] =>
     ...(item.children && { children: slashNav(item.children) })
   }))
 
-const { data: navigation } = await useAsyncData('navigation', async () => {
+// Search is the only consumer of the content dump and the navigation tree, and fetching them
+// boots the SQLite WASM (~390 KB gz) plus the dump downloads. So none of it runs until search is
+// first opened (button or ⌘K); until then the page only pays for a keydown listener.
+const { open: searchOpen } = useContentSearch()
+const searchReady = ref(false)
+
+const { data: navigation, execute: loadNavigation } = useLazyAsyncData('navigation', async () => {
   const [blogNavigation, projectsNavigation] = await Promise.all([
     queryCollectionNavigation('blog').where('published', '=', true),
     queryCollectionNavigation('projects').where('status', '<>', 'draft')
   ])
   return slashNav([...blogNavigation, ...projectsNavigation])
-})
+}, { server: false, immediate: false })
 
-const { data: files } = useLazyAsyncData('content-search', async () => {
+const { data: files, execute: loadFiles } = useLazyAsyncData('content-search', async () => {
   const [blogSections, projectSections] = await Promise.all([
     queryCollectionSearchSections('blog').where('published', '=', true),
     queryCollectionSearchSections('projects').where('status', '<>', 'draft')
   ])
   return [...blogSections, ...projectSections].map(file => ({ ...file, id: withTrailingSlashPath(file.id) }))
-}, {
-  server: false
+}, { server: false, immediate: false })
+
+function prepareSearch() {
+  if (searchReady.value) return
+  searchReady.value = true
+  loadNavigation()
+  loadFiles()
+}
+watch(searchOpen, (isOpen) => {
+  if (isOpen) prepareSearch()
+})
+// UContentSearch registers ⌘K itself, but only once mounted. Until then, this opens it.
+defineShortcuts({
+  meta_k: {
+    usingInput: true,
+    handler: () => {
+      if (!searchReady.value) searchOpen.value = true
+    }
+  }
 })
 
 const links = [{

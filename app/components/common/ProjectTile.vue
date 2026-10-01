@@ -38,12 +38,13 @@
       </div>
     </div>
 
-    <div class="flex flex-1 flex-col gap-2 p-4" :class="layout.body">
+    <!-- Below 33rem (one column) the body matches BlogCard: roomier padding and gaps, larger type -->
+    <div class="flex flex-1 flex-col gap-2 p-4 @max-[33rem]:gap-3 @max-[33rem]:p-5" :class="layout.body">
       <p v-if="groupLabel" class="truncate text-[0.6875rem] font-medium uppercase tracking-wider text-primary/90">
         {{ groupLabel }}
       </p>
 
-      <h3 class="font-semibold leading-snug text-highlighted" :class="feature ? 'text-lg' : 'text-base'">
+      <h3 class="font-semibold leading-snug text-highlighted @max-[33rem]:text-xl" :class="feature ? 'text-lg' : 'text-base'">
         <NuxtLink :to="`/projects/${project.slug}/`" class="tile-link outline-none after:absolute after:inset-0 after:content-['']">
           {{ project.title }}
         </NuxtLink>
@@ -51,17 +52,21 @@
 
       <AwardBadge v-if="project.award" :award="project.award" class="self-start" />
 
-      <p class="text-sm text-muted text-pretty" :class="feature ? 'line-clamp-3' : 'line-clamp-2'">
+      <p class="text-sm text-muted text-pretty @max-[33rem]:text-base @max-[33rem]:line-clamp-3" :class="feature ? 'line-clamp-3' : 'line-clamp-2'">
         {{ project.description }}
       </p>
 
       <div class="mt-auto flex items-end justify-between gap-2 pt-2">
         <ul v-if="techs.length" class="flex min-w-0 flex-wrap gap-1" aria-label="Technologies">
-          <li v-for="tech in techs" :key="tech">
-            <UBadge variant="soft" size="sm" class="px-1.5 py-0 text-[0.6875rem]">{{ tech }}</UBadge>
+          <!-- One column shows 3 at most (a feature tile's 4th is hidden and counted in "+N") -->
+          <li v-for="(tech, i) in techs" :key="tech" :class="i >= 3 && '@max-[33rem]:hidden'">
+            <UBadge variant="soft" size="sm" class="px-1.5 py-0 text-[0.6875rem] @max-[33rem]:px-2 @max-[33rem]:py-0.5 @max-[33rem]:text-xs">{{ tech }}</UBadge>
           </li>
-          <li v-if="moreTechs > 0">
+          <li v-if="moreTechs > 0" class="@max-[33rem]:hidden">
             <UBadge variant="soft" color="neutral" size="sm" class="px-1.5 py-0 text-[0.6875rem]">+{{ moreTechs }}</UBadge>
+          </li>
+          <li v-if="moreTechs + extraTechs > 0" class="hidden @max-[33rem]:block">
+            <UBadge variant="soft" color="neutral" size="sm" class="px-2 py-0.5 text-xs">+{{ moreTechs + extraTechs }}</UBadge>
           </li>
         </ul>
         <span v-else />
@@ -179,5 +184,6 @@ const layout = computed(() => {
 
 const techLimit = computed(() => (props.feature ? 4 : 3))
 const techs = computed(() => (props.project.technologies ?? []).slice(0, techLimit.value))
+const extraTechs = computed(() => Math.max(0, techs.value.length - 3))
 const moreTechs = computed(() => Math.max(0, (props.project.technologies?.length ?? 0) - techLimit.value))
 </script>

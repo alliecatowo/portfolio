@@ -30,7 +30,7 @@
               <span>{{ heroAward.label }}</span>
             </NuxtLink>
           </p>
-          <aside v-if="heroNote?.keys?.length" class="mt-8 text-sm text-muted" role="note" aria-label="Keyboard shortcut">
+          <div v-if="heroNote?.keys?.length" class="mt-8 text-sm text-muted" role="note" aria-label="Keyboard shortcut">
             <span class="inline-flex items-center gap-2">
               <span v-if="heroNote.prefix">{{ heroNote.prefix }}</span>
               <kbd
@@ -42,7 +42,7 @@
               </kbd>
               <span v-if="heroNote.suffix">{{ heroNote.suffix }}</span>
             </span>
-          </aside>
+          </div>
         </header>
 
         <section class="max-w-4xl mx-auto" aria-labelledby="showcase-title">
@@ -283,7 +283,7 @@
           </div>
         </section>
 
-        <aside v-if="ctaSection" class="max-w-4xl mx-auto mt-24 mb-16">
+        <div v-if="ctaSection" class="max-w-4xl mx-auto mt-24 mb-16">
           <div class="glass-accent rounded-xl p-8 md:p-12 text-center hover-lift">
             <h2 v-if="ctaSection.title" class="text-4xl md:text-5xl font-bold mb-6 text-gradient-animated">
               {{ ctaSection.title }}
@@ -310,7 +310,7 @@
               </UButton>
             </div>
           </div>
-        </aside>
+        </div>
       </section>
     </div>
   </UPage>

@@ -283,6 +283,13 @@ const form = reactive<ContactForm>({
 // Honeypot for bots. FormSubmit drops any submission where `_honey` is filled.
 const honeypot = ref('')
 
+// USelectMenu renders a visually hidden native <input name="subject"> (Reka's form bridge) with no
+// label. The visible combobox is already labelled by "Subject", so hide the bridge from the
+// accessibility tree. This form submits from JS state, not from that input.
+onMounted(() => {
+  document.querySelectorAll('input[data-hidden]').forEach(el => el.setAttribute('aria-hidden', 'true'))
+})
+
 // Subject options for USelectMenu
 const subjectOptions = [
   { label: 'Collaboration / side project', value: 'collaboration', icon: 'i-lucide-users' },
