@@ -7,23 +7,28 @@
     </div>
 
     <UContainer class="relative z-10 pt-10 pb-16 md:pt-14">
-      <header class="mb-6 flex flex-col gap-2 md:mb-8 md:flex-row md:items-end md:justify-between md:gap-8">
+      <header class="mb-5 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-8">
         <div>
           <h1 class="text-4xl md:text-5xl font-bold text-gradient-animated">Projects</h1>
           <p class="mt-2 max-w-2xl text-base md:text-lg text-default text-pretty">
             Agent systems, developer tools, languages and runtimes, and a few weird computers.
+            <span v-if="projects?.length" class="text-muted">{{ projects.length }} projects in {{ groups.length }} groups.</span>
           </p>
         </div>
-        <p v-if="projects?.length" class="shrink-0 text-sm text-muted">
-          {{ projects.length }} projects in {{ groups.length }} groups
-        </p>
+        <UInput
+          v-if="projects?.length"
+          v-model="search"
+          type="search"
+          icon="i-lucide-search"
+          placeholder="Search name or tech"
+          aria-label="Search projects by name, description or technology"
+          size="md"
+          class="w-full md:w-72 shrink-0"
+        />
       </header>
 
-      <!-- Filters: group chips (All by default) + text search. Both sync to the URL. -->
-      <div
-        v-if="projects?.length"
-        class="mb-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"
-      >
+      <!-- Group chips (All by default). Chips and search both sync to the URL. -->
+      <div v-if="projects?.length" class="mb-6">
         <div
           role="group"
           aria-label="Filter projects by group"
@@ -48,15 +53,6 @@
           </button>
         </div>
 
-        <UInput
-          v-model="search"
-          type="search"
-          icon="i-lucide-search"
-          placeholder="Search name or tech"
-          aria-label="Search projects by name, description or technology"
-          size="md"
-          class="w-full lg:w-72 shrink-0"
-        />
       </div>
 
       <p class="sr-only" aria-live="polite">{{ resultsLabel }}</p>
@@ -202,18 +198,19 @@ onMounted(() => {
   watch(() => [route.query.group, route.query.q], readQuery)
 })
 
-// "All" interleaves groups in theme order so related work clusters together;
+// "All" lists groups in theme order so related work clusters together;
 // within a group, projects keep the fetchProjects order.
-const visibleProjects = computed<Project[]>(() => {
+const orderedProjects = computed<Project[]>(() => {
   const list = projects.value ?? []
+  return groups.value.flatMap(g => list.filter(p => projectGroupOf(p.group).key === g.key))
+})
+
+const visibleProjects = computed<Project[]>(() => {
   const q = search.value.trim().toLowerCase()
-  return list
-    .map((p, i) => ({ p, i }))
-    .filter(({ p }) => activeGroup.value === 'all' || projectGroupOf(p.group).key === activeGroup.value)
-    .filter(({ p }) => !q || [p.title, p.description, ...(p.technologies ?? []), ...(p.tags ?? [])]
+  return orderedProjects.value
+    .filter(p => activeGroup.value === 'all' || projectGroupOf(p.group).key === activeGroup.value)
+    .filter(p => !q || [p.title, p.description, ...(p.technologies ?? []), ...(p.tags ?? [])]
       .some(v => typeof v === 'string' && v.toLowerCase().includes(q)))
-    .sort((a, b) => projectGroupIndex(a.p.group) - projectGroupIndex(b.p.group) || a.i - b.i)
-    .map(({ p }) => p)
 })
 
 const resultsLabel = computed(() => {
