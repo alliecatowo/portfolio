@@ -1,4 +1,12 @@
 {
+  "functions": [
+    {
+      "source": ".output-studio/server",
+      "codebase": "studio",
+      "runtime": "nodejs22",
+      "ignore": ["node_modules", ".git", "*.log"]
+    }
+  ],
   "hosting": {
     "public": ".output/public",
     "ignore": ["**/.*", "**/node_modules/**"],
@@ -71,6 +79,29 @@
         "destination": "/projects/",
         "type": 301
       }
+    ],
+    "rewrites": [
+      {
+        "source": "/_studio",
+        "function": {
+          "functionId": "studio",
+          "region": "us-central1"
+        }
+      },
+      {
+        "source": "/__nuxt_studio/**",
+        "function": {
+          "functionId": "studio",
+          "region": "us-central1"
+        }
+      },
+      {
+        "source": "/sw.js",
+        "function": {
+          "functionId": "studio",
+          "region": "us-central1"
+        }
+      }
     ]
   },
   "emulators": {
@@ -81,6 +112,9 @@
       "enabled": true,
       "port": 4000
     },
-    "singleProjectMode": true
+    "singleProjectMode": true,
+    "functions": {
+      "port": 5001
+    }
   }
 }

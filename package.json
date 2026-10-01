@@ -12,6 +12,7 @@
     "lint-staged": "lint-staged",
     "build": "nuxt build",
     "build:static": "nuxt generate",
+    "build:studio": "NITRO_PRESET=firebase nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -28,7 +29,8 @@
     "db:rebuild": "pnpm db:clean && nuxt prepare",
     "dev:clean": "pnpm db:clean && pnpm dev",
     "emulators:build": "pnpm generate && firebase emulators:start --only hosting",
-    "emulate": "pnpm generate && firebase emulators:start --only hosting"
+    "emulate": "pnpm generate && firebase emulators:start --only hosting",
+    "emulate:studio": "pnpm generate && pnpm build:studio && firebase emulators:start --only hosting,functions"
   },
   "dependencies": {
     "@nuxt/content": "^3.12.0",
@@ -36,7 +38,7 @@
     "@nuxt/ui": "4.0.0",
     "@nuxtjs/robots": "^5.5.1",
     "@nuxtjs/sitemap": "^7.4.3",
-    "nuxt-studio": "^1.4.0",
+    "nuxt-studio": "^1.7.0",
     "sharp": "^0.34.3",
     "vue": "^3.5.21",
     "zod": "^4.1.11"
@@ -62,6 +64,8 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-vue": "^9.33.0",
     "eslint-plugin-vuejs-accessibility": "^2.4.1",
+    "firebase-admin": "^14.5.0",
+    "firebase-functions": "^7.4.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.2",
     "nuxi": "^3.28.0",

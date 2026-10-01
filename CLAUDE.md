@@ -63,7 +63,7 @@ Handled automatically via GitHub Actions:
 - **Production (static)**: `https://allisons.dev` — deployed from `main` branch to Firebase hosting via `pnpm generate`
 - **Staging**: Firebase preview channel — deployed from `main`
 - **PRs**: Temporary preview channels auto-deployed on open
-- **SSR (Studio prod)**: Not yet set up. A `Dockerfile` exists for a future Hetzner Docker deploy, but there is no SSR deploy workflow in `.github/workflows/` yet
+- **Studio function**: the production workflow also builds (`pnpm build:studio`) and deploys the `studio` 2nd-gen Cloud Function that serves Nuxt Studio's server routes. See `STUDIO.md`
 
 ## Architecture Overview
 
@@ -152,11 +152,11 @@ ogImage: /path/to/image (optional; falls back to featured_image, then the defaul
 ### Key Configurations
 
 - **SQLite**: Uses Node.js native SQLite (`experimental.sqliteConnector: 'native'`)
-- **Nuxt Studio**: Self-hosted module (`nuxt-studio` 1.4.0), accessible at `/_studio` (dev) or via SSR host (prod)
-- **Hybrid rendering**: Content pages pre-rendered; `/_studio/**` stays SSR via `routeRules`
+- **Nuxt Studio**: Self-hosted module (`nuxt-studio` 1.7.0). In production, `firebase.json` rewrites `/_studio`, `/__nuxt_studio/**` and `/sw.js` to the `studio` Cloud Function (built with `NITRO_PRESET=firebase` into `.output-studio/`); everything else is static
+- **Pre-rendering**: every public page is pre-rendered (`routeRules '/**'`); Studio routes never are
 - **ISR disabled**: All content pages are pre-rendered at build time
 - **SEO/crawl**: `@nuxtjs/robots` + `@nuxtjs/sitemap` generate `/robots.txt` and `/sitemap.xml` from `site` in `nuxt.config.ts` (trailing-slash URLs). Blog/projects are wrapped in `asSitemapCollection()`; drafts (`published: false`, `status: draft`) are excluded by a `content:file:afterParse` hook, which also sets `lastmod` from the content date. `/llms.txt` is generated from content by `server/routes/llms.txt.ts`
-- **Drafts never ship**: production builds drop draft posts and projects from their collections in `content.config.ts`, because every collection row (body included) is published in `/__nuxt_content/<collection>/sql_dump.txt`. An SSR/Studio deploy that needs drafts must set `CONTENT_INCLUDE_DRAFTS=true`
+- **Drafts never ship**: production builds drop draft posts and projects from their collections in `content.config.ts`, because every collection row (body included) is published in `/__nuxt_content/<collection>/sql_dump.txt`. Studio edits from those public dumps, so it can't see drafts; edit drafts locally. Never set `CONTENT_INCLUDE_DRAFTS=true` for the static build
 - **Internal links** use the trailing-slash form (`/about/`, `/projects/<slug>/`); Firebase redirects the bare form
 - **Page metadata**: every page calls `useSiteSeo()` (`app/composables/useSiteSeo.ts`) for title (`Page – Allison Coleman`, suffix skipped if the title already names her or would pass 65 chars), description, canonical (absolute, trailing slash), OpenGraph/Twitter tags and JSON-LD. Shared schema.org nodes (the Person) live in `app/utils/structuredData.ts`. Don't add ad-hoc `useHead` title/meta blocks
 - **404s**: Firebase serves the generated `404.html` (no SPA catch-all rewrite), so unknown and draft URLs return a real 404
@@ -172,18 +172,11 @@ pnpm dev
 
 Studio edits in dev mode write directly to local files. Use your normal git workflow to commit.
 
-### Production Studio Access (SSR only)
+### Production Studio
 
-Studio's `/_studio` auth route requires a running Node.js server — it cannot be served from Firebase static hosting.
+Visit `https://allisons.dev/_studio` (or press Cmd + `.` on any page) and log in with GitHub. Only emails in `STUDIO_GITHUB_MODERATORS` get in. Studio commits to `main` with your GitHub token, which redeploys the site.
 
-To enable production Studio:
-
-1. Set up a GitHub OAuth App (callback: `https://allisons.dev/_studio/api/auth/github`)
-2. Add env vars to Hetzner: `STUDIO_GITHUB_CLIENT_ID`, `STUDIO_GITHUB_CLIENT_SECRET`
-3. Build and deploy the SSR container from the `Dockerfile` (no SSR deploy workflow exists yet; one still needs to be written)
-4. Visit `https://allisons.dev/_studio`
-
-See `docs/nuxt-content-migration.md` for full setup guide.
+How it works on Firebase (the `__session` cookie workaround, secrets, OAuth callback, one-time GCP setup, costs): `STUDIO.md`.
 
 ## Troubleshooting
 

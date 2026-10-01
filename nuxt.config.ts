@@ -36,6 +36,12 @@ const ogImages = existsSync(ogDir)
   ? readdirSync(ogDir).filter(f => f.endsWith('.png')).map(f => f.slice(0, -4)).filter(s => s !== 'default')
   : []
 
+// The site itself is a static `nuxt generate` build on Firebase Hosting. Nuxt Studio's auth and
+// meta routes need a server, so `pnpm build:studio` (NITRO_PRESET=firebase) builds the same app
+// as a 2nd-gen Cloud Function named `studio` into .output-studio/; firebase.json rewrites only
+// /_studio, /__nuxt_studio/** and /sw.js to it. That build skips prerendering.
+const isStudioFunction = process.env.NITRO_PRESET === 'firebase'
+
 export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
   ssr: true,
@@ -61,6 +67,8 @@ export default defineNuxtConfig({
     trailingSlash: true
   },
   runtimeConfig: {
+    // Packs Studio's cookies into `__session` (server/middleware/studio-firebase-cookies.ts)
+    studioFirebaseCookies: isStudioFunction,
     public: {
       ogImages
     }
@@ -99,14 +107,18 @@ export default defineNuxtConfig({
     }
     // Legacy cloud preview removed — now using self-hosted nuxt-studio module
   },
-  // Nuxt Studio self-hosted configuration
-  // Docs: https://nuxt.studio/setup
+  // Nuxt Studio self-hosted configuration. Docs: https://nuxt.studio/setup
+  // Auth env (read by the `studio` function, see STUDIO.md): STUDIO_GITHUB_CLIENT_ID,
+  // STUDIO_GITHUB_CLIENT_SECRET, STUDIO_GITHUB_MODERATORS. The client ID and secret must
+  // also be set at build time: the session-cookie secret is derived from them.
   studio: {
     repository: {
       provider: 'github',
       owner: 'alliecatowo',
       repo: 'portfolio',
-      branch: 'main'
+      branch: 'main',
+      // Public repo: ask GitHub for `public_repo` instead of full `repo` scope
+      private: false
     }
   },
   css: ['~/assets/css/main.css'],
@@ -154,28 +166,32 @@ export default defineNuxtConfig({
   features: {
     devLogs: process.env.NODE_ENV === 'development'
   },
-  // Hybrid rendering: pre-render content pages, keep Studio routes dynamic.
-  // `/_studio/**` is excluded from pre-rendering — it requires a live SSR server.
-  // In static `nuxt generate` mode (Firebase CI), /_studio is simply unavailable.
-  // For full production Studio access, deploy with `nuxt build` on an SSR host.
+  // Hybrid rendering: pre-render every public page. Studio's server routes (/_studio,
+  // /__nuxt_studio/**, /sw.js) are never pre-rendered; on Firebase they're served by the
+  // `studio` Cloud Function (see isStudioFunction above).
   routeRules: {
-    // Studio admin — always SSR (never pre-render auth routes)
     '/_studio/**': { ssr: true, prerender: false },
-    // Content API — SSR with short cache
-    '/api/_content/**': { ssr: true, prerender: false },
-    // All public pages — pre-render at build time
-    '/**': { prerender: true }
+    '/__nuxt_studio/**': { prerender: false },
+    '/**': { prerender: !isStudioFunction }
   },
   nitro: {
-    // No preset = node-server (SSR) by default.
-    // CI Firebase deploys override this by running `nuxt generate` directly.
+    // No preset = node-server. CI Firebase deploys run `nuxt generate` for the site and
+    // `pnpm build:studio` (firebase preset) for the Studio function.
+    ...(isStudioFunction && {
+      output: { dir: '.output-studio' },
+      firebase: {
+        gen: 2,
+        nodeVersion: '22',
+        serverFunctionName: 'studio',
+        httpsOptions: { region: 'us-central1', memory: '512MiB', maxInstances: 2 }
+      }
+    }),
     prerender: {
-      crawlLinks: true,
+      crawlLinks: !isStudioFunction,
       failOnError: false,
-      // Exclude Studio and API routes from crawl-based pre-rendering
-      ignore: ['/_studio', '/_studio/**', '/api/_content/**'],
+      ignore: ['/_studio', '/_studio/**', '/__nuxt_studio/**', '/sw.js'],
       // Not linked from any page, so the crawler won't find it
-      routes: ['/llms.txt']
+      routes: isStudioFunction ? [] : ['/llms.txt']
     }
   },
   ...({ image: {

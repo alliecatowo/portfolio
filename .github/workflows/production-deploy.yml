@@ -67,10 +67,47 @@ jobs:
         run: pnpm run typecheck
 
       - name: Validate content
-        run: pnpm run --if-present validate:content
+        run: pnpm run validate:content
 
       - name: Build for deployment
         run: pnpm run generate
+
+      # Nuxt Studio's auth/meta routes run in a 2nd-gen Cloud Function (`studio`) that
+      # firebase.json rewrites /_studio, /__nuxt_studio/** and /sw.js to. Deploy it before
+      # Hosting so the rewrite target is current. See STUDIO.md.
+      - name: Build Studio function
+        env:
+          STUDIO_GITHUB_CLIENT_ID: ${{ secrets.STUDIO_GITHUB_CLIENT_ID }}
+          STUDIO_GITHUB_CLIENT_SECRET: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
+        run: |
+          if [ -z "$STUDIO_GITHUB_CLIENT_ID" ] || [ -z "$STUDIO_GITHUB_CLIENT_SECRET" ]; then
+            echo "::error::STUDIO_GITHUB_CLIENT_ID / STUDIO_GITHUB_CLIENT_SECRET secrets are missing"
+            exit 1
+          fi
+          pnpm run build:studio
+
+      - name: Write Studio function runtime env
+        env:
+          STUDIO_GITHUB_CLIENT_ID: ${{ secrets.STUDIO_GITHUB_CLIENT_ID }}
+          STUDIO_GITHUB_CLIENT_SECRET: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
+          STUDIO_GITHUB_MODERATORS: ${{ secrets.STUDIO_GITHUB_MODERATORS }}
+        run: |
+          # Firebase CLI deploys this .env as the function's environment. A fresh session
+          # secret per deploy just means logging in to Studio again after a deploy.
+          {
+            printf 'STUDIO_GITHUB_CLIENT_ID=%s\n' "$STUDIO_GITHUB_CLIENT_ID"
+            printf 'STUDIO_GITHUB_CLIENT_SECRET=%s\n' "$STUDIO_GITHUB_CLIENT_SECRET"
+            printf 'STUDIO_GITHUB_MODERATORS=%s\n' "$STUDIO_GITHUB_MODERATORS"
+            printf 'NUXT_STUDIO_AUTH_SESSION_SECRET=%s\n' "$(openssl rand -hex 32)"
+          } > .output-studio/server/.env
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ALLIE_PORTFOLIO_PROJECT }}
+
+      - name: Deploy Studio function
+        run: pnpm dlx firebase-tools@15 deploy --only functions:studio --project allie-portfolio-project --non-interactive --force
 
       - name: Deploy to Firebase Hosting Production
         uses: FirebaseExtended/action-hosting-deploy@v0
