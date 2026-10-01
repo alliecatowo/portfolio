@@ -80,13 +80,14 @@ jobs:
           }
 
   firebase-preview:
-    # Dependabot PRs only see Dependabot secrets (no Firebase credentials), so the deploy would always
-    # fail there. ci-success treats a skipped preview as fine.
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
+    # Optional preview environment: never gates merges (not in ci-success). Skipped for Dependabot PRs
+    # (keyed on the PR author, not whoever triggered the run) and forks, which get no Firebase secrets.
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'dependabot[bot]'
     needs: [typecheck, lint, validate-content] # Run after validation passes
     runs-on: ubuntu-latest
     environment:
       name: Preview
+      url: ${{ steps.deploy.outputs.details_url }}
     permissions:
       checks: write
       contents: read
@@ -103,6 +104,7 @@ jobs:
         run: pnpm run generate
 
       - name: Deploy to Firebase Hosting Preview
+        id: deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
@@ -113,7 +115,7 @@ jobs:
   # Summary job to report overall CI status
   ci-success:
     if: always()
-    needs: [typecheck, lint, validate-content, commitlint, firebase-preview]
+    needs: [typecheck, lint, validate-content, commitlint]
     runs-on: ubuntu-latest
     steps:
       - name: Check all jobs
@@ -127,5 +129,4 @@ jobs:
             exit 1
           fi
 
-          # Firebase jobs can be skipped, that's OK
           echo "All CI checks passed"
