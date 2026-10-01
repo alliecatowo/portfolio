@@ -2,192 +2,230 @@
   <main class="min-h-screen bg-gradient-animated bg-dots relative overflow-hidden">
     <!-- Decorative background -->
     <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
-      <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse"/>
-      <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"/>
+      <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl motion-safe:animate-pulse"/>
+      <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl motion-safe:animate-pulse" style="animation-delay: 2s;"/>
     </div>
 
-    <div class="relative z-10 container max-w-7xl mx-auto px-6 py-20">
-      <header class="text-center mb-16">
-        <h1 class="text-5xl md:text-6xl font-bold mb-6 text-gradient-animated">My Projects</h1>
-        <p class="text-xl md:text-2xl text-default max-w-3xl mx-auto">
-          A showcase of my development work, from web applications to open-source contributions
-        </p>
+    <UContainer class="relative z-10 pt-10 pb-16 md:pt-14">
+      <header class="mb-5 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-8">
+        <div>
+          <h1 class="text-4xl md:text-5xl font-bold text-gradient-animated">Projects</h1>
+          <p class="mt-2 max-w-2xl text-base md:text-lg text-default text-pretty">
+            Agent systems, developer tools, languages and runtimes, and a few weird computers.
+            <span v-if="projects?.length" class="text-muted">{{ projects.length }} projects in {{ groups.length }} groups.</span>
+          </p>
+        </div>
+        <UInput
+          v-if="projects?.length"
+          v-model="search"
+          type="search"
+          icon="i-lucide-search"
+          placeholder="Search name or tech"
+          aria-label="Search projects by name, description or technology"
+          size="md"
+          class="w-full md:w-72 shrink-0"
+        />
       </header>
-      
-      <div v-if="pending" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div v-for="n in 6" :key="n" class="glass-accent rounded-xl overflow-hidden animate-pulse">
-          <div class="aspect-video bg-gray-300 dark:bg-gray-600"/>
-          <div class="p-6">
-            <div class="h-6 bg-gray-300 dark:bg-gray-600 rounded mb-3"/>
-            <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded mb-2"/>
-            <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded w-2/3"/>
+
+      <!-- Group chips (All by default). Chips and search both sync to the URL. -->
+      <div v-if="projects?.length" class="mb-6">
+        <div
+          role="group"
+          aria-label="Filter projects by group"
+          class="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0 [scrollbar-width:thin]"
+        >
+          <button
+            v-for="chip in chips"
+            :key="chip.key"
+            type="button"
+            :aria-pressed="activeGroup === chip.key"
+            class="inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            :class="activeGroup === chip.key
+              ? 'border-primary bg-primary text-inverted'
+              : 'border-default bg-elevated/50 text-default hover:border-primary/60 hover:text-highlighted'"
+            @click="setGroup(chip.key)"
+          >
+            <span>{{ chip.label }}</span>
+            <span
+              class="rounded-full px-1.5 text-xs tabular-nums"
+              :class="activeGroup === chip.key ? 'bg-white/20' : 'bg-accented/60 text-muted'"
+            >{{ chip.count }}</span>
+          </button>
+        </div>
+
+      </div>
+
+      <p class="sr-only" aria-live="polite">{{ resultsLabel }}</p>
+
+      <div v-if="pending" class="project-grid grid gap-4">
+        <div v-for="n in 8" :key="n" class="rounded-xl overflow-hidden border border-default/60 motion-safe:animate-pulse">
+          <div class="aspect-video bg-accented"/>
+          <div class="p-4 space-y-2">
+            <div class="h-4 bg-accented rounded w-2/3"/>
+            <div class="h-3 bg-accented rounded"/>
           </div>
         </div>
       </div>
-      
+
       <div v-else-if="error" class="text-center py-12">
         <UIcon name="i-lucide-alert-circle" class="h-16 w-16 mx-auto text-red-500 mb-4" />
         <h2 class="text-2xl font-bold mb-2 text-default">Something went wrong</h2>
         <p class="text-muted">{{ error.message || 'Failed to load projects' }}</p>
       </div>
-      
+
       <div v-else-if="!projects?.length" class="text-center py-12">
-        <UIcon name="i-lucide-folder-open" class="h-16 w-16 mx-auto text-gray-300 dark:text-gray-700 mb-4" />
+        <UIcon name="i-lucide-folder-open" class="h-16 w-16 mx-auto text-muted mb-4" />
         <h2 class="text-2xl font-bold mb-2 text-default">No projects found</h2>
         <p class="text-muted">Check back soon for new projects!</p>
       </div>
-      
-      <div v-else class="space-y-16">
-        <section
-          v-for="section in groupedProjects"
-          :key="section.key"
-          :aria-labelledby="`group-${section.key}`"
-        >
-          <h2 :id="`group-${section.key}`" class="text-2xl md:text-3xl font-bold mb-8 text-default">
-            {{ section.label }}
-          </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <UBlogPost
-              v-for="project in section.items"
+
+      <section v-else aria-labelledby="project-list-title">
+        <h2 id="project-list-title" class="sr-only">{{ activeLabel }}</h2>
+
+        <div v-if="visibleProjects.length" class="@container">
+          <div class="project-grid grid gap-4" :style="{ '--fill-2': plan.fill[2], '--fill-3': plan.fill[3], '--fill-4': plan.fill[4] }">
+            <ProjectTile
+              v-for="(project, index) in visibleProjects"
               :key="project.slug || project.path || project.title"
-              :title="project.title"
-              :description="project.description"
-              :image="project.image ? { src: project.image, alt: project.imageAlt || project.title } : undefined"
-              :to="`/projects/${project.slug}`"
-              variant="soft"
-              class="glass-accent hover:scale-105 transition-transform"
-            >
-              <template v-if="!project.image" #header>
-                <CardImageFallback :title="project.title" icon="i-lucide-folder-code" />
-              </template>
-              <template #footer>
-                <AwardBadge v-if="project.award" :award="project.award" class="mb-3" />
-                <div v-if="project.technologies?.length" class="flex flex-wrap gap-2 mb-4">
-                  <UBadge
-                    v-for="tech in project.technologies.slice(0, 4)"
-                    :key="tech"
-                    variant="soft"
-                    size="sm"
-                    class="capitalize"
-                  >
-                    {{ tech }}
-                  </UBadge>
-                  <UBadge
-                    v-if="project.technologies.length > 4"
-                    variant="soft"
-                    color="gray"
-                    size="sm"
-                  >
-                    +{{ project.technologies.length - 4 }} more
-                  </UBadge>
-                </div>
-
-                <div class="flex items-center justify-end">
-                  <div class="flex items-center gap-2">
-                    <a
-                      v-if="project.demo"
-                      :href="project.demo"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="p-2 text-muted hover:text-primary transition-colors"
-                      title="Live Demo"
-                      :aria-label="`View live demo of ${project.title}`"
-                    >
-                      <UIcon name="i-lucide-external-link" class="w-4 h-4" />
-                    </a>
-
-                    <a
-                      v-if="project.github"
-                      :href="project.github"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="p-2 text-muted hover:text-primary transition-colors"
-                      title="Source Code"
-                      :aria-label="`View source code of ${project.title}`"
-                    >
-                      <UIcon name="i-lucide-github" class="w-4 h-4" />
-                    </a>
-                  </div>
-                </div>
-              </template>
-            </UBlogPost>
-          </div>
-        </section>
-      </div>
-
-      <!-- Featured Call-to-Action -->
-      <section class="mt-20 text-center">
-        <div class="glass-accent rounded-2xl p-8 md:p-12 max-w-3xl mx-auto">
-          <h2 class="text-3xl font-bold mb-4 text-gradient-animated">Interested in Working Together?</h2>
-          <p class="text-xl text-default mb-6">
-            These projects showcase my skills and passion for creating exceptional digital experiences. 
-            Let's discuss your next project.
-          </p>
-          <div class="flex flex-wrap gap-4 justify-center">
-            <UButton
-              to="/contact"
-              color="primary"
-              variant="magnet"
-              size="lg"
-              leading-icon="i-lucide-mail"
-            >
-              Get In Touch
-            </UButton>
-            <UButton
-              to="/about"
-              color="primary"
-              variant="outline"
-              size="lg"
-              leading-icon="i-lucide-user"
-            >
-              About Me
-            </UButton>
+              :project="project"
+              :feature="isFeature(project)"
+              :sizes="plan.sizes[index]"
+              :group-label="activeGroup === 'all' ? projectGroupOf(project.group).label : undefined"
+              :eager="index < 4"
+            />
+            <!-- Fills whatever is left of the last row (or a full row), so the
+                 mosaic always ends flush instead of on a lonely card. -->
+            <aside class="grid-filler flex flex-col justify-between gap-4 rounded-xl border border-dashed border-primary/40 bg-elevated/30 p-5" aria-labelledby="projects-cta-title">
+              <div>
+                <h2 id="projects-cta-title" class="text-lg font-semibold text-highlighted">Building something weird?</h2>
+                <p class="mt-1 text-sm text-muted text-pretty">I'm always up for a good collaboration, a hackathon, or a long thread about agent tooling.</p>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <UButton to="/contact" color="primary" size="sm" leading-icon="i-lucide-mail">Get in touch</UButton>
+                <UButton to="/about" color="primary" variant="outline" size="sm" leading-icon="i-lucide-user">About me</UButton>
+              </div>
+            </aside>
           </div>
         </div>
+
+        <div v-else class="rounded-xl border border-dashed border-default py-12 text-center">
+          <p class="text-default mb-3">Nothing matches “{{ search }}”{{ activeGroup !== 'all' ? ` in ${activeLabel}` : '' }}.</p>
+          <UButton variant="outline" size="sm" icon="i-lucide-x" @click="clearFilters">Clear filters</UButton>
+        </div>
       </section>
-    </div>
+
+    </UContainer>
   </main>
 </template>
 
 <script setup lang="ts">
 import { useContent } from '~/composables/useContent'
-import AwardBadge from '~/components/common/AwardBadge.vue'
-import CardImageFallback from '~/components/common/CardImageFallback.vue'
+import ProjectTile from '~/components/common/ProjectTile.vue'
 
 const { fetchProjects } = useContent()
+const route = useRoute()
+const router = useRouter()
 
 // Fetch all published projects, in display order
 const { data: projects, pending, error } = await useAsyncData(
   'all-projects',
   () => fetchProjects()
-);
+)
 
-// /projects is grouped by theme, in this order. Within a group, projects keep
-// the fetchProjects order. Missing or unknown groups land in a final bucket so
-// a typo can't silently drop a card.
-const PROJECT_GROUPS = [
-  { key: 'browser-agents', label: 'Browser agents & WebMCP' },
-  { key: 'agent-systems-devtools', label: 'Agent systems & developer tools' },
-  { key: 'languages-runtimes', label: 'Languages & runtimes' },
-  { key: 'creative-coding', label: 'Simulations & creative coding' },
-  { key: 'social-systems', label: 'Social systems' },
-  { key: 'hardware-homelab', label: 'Hardware & homelab' },
-  { key: 'earlier-work', label: 'Earlier work' }
-]
+type Project = NonNullable<typeof projects.value>[number]
 
-const groupedProjects = computed(() => {
+// Groups present in the data, in PROJECT_GROUPS order (unknown keys -> "Other").
+const groups = computed(() => {
   const list = projects.value ?? []
-  const known = new Set(PROJECT_GROUPS.map(g => g.key))
-  const sections = PROJECT_GROUPS.map(g => ({
+  const present = [...PROJECT_GROUPS, OTHER_GROUP].map(g => ({
     ...g,
-    items: sortProjectsInGroup(list.filter(p => p.group === g.key))
+    count: list.filter(p => projectGroupOf(p.group).key === g.key).length
   }))
-  const other = list.filter(p => !p.group || !known.has(p.group))
-  if (other.length) {
-    sections.push({ key: 'other', label: 'Other projects', items: other })
-  }
-  return sections.filter(s => s.items.length > 0)
+  return present.filter(g => g.count > 0)
 })
+
+const chips = computed(() => [
+  { key: 'all', label: 'All', count: projects.value?.length ?? 0 },
+  ...groups.value.map(g => ({ key: g.key, label: g.short, count: g.count }))
+])
+
+// Filter state. It always starts as "All" so the prerendered HTML and the
+// first client render match (no hydration mismatch); a ?group= / ?q= deep
+// link is applied right after mount.
+const activeGroup = ref('all')
+const search = ref('')
+
+const activeLabel = computed(() =>
+  activeGroup.value === 'all'
+    ? 'All projects'
+    : groups.value.find(g => g.key === activeGroup.value)?.label ?? 'Projects'
+)
+
+function readQuery() {
+  const g = typeof route.query.group === 'string' ? route.query.group : 'all'
+  activeGroup.value = groups.value.some(x => x.key === g) ? g : 'all'
+  // writeQuery stores the trimmed text; don't echo that back over what is
+  // being typed (it would eat the space in "react native").
+  const q = typeof route.query.q === 'string' ? route.query.q : ''
+  if (q !== search.value.trim()) search.value = q
+}
+
+function writeQuery() {
+  const query = { ...route.query }
+  if (activeGroup.value === 'all') delete query.group
+  else query.group = activeGroup.value
+  const q = search.value.trim()
+  if (q) query.q = q
+  else delete query.q
+  if (query.group === route.query.group && query.q === route.query.q) return
+  // Keep the trailing slash: Firebase serves /projects/ and redirects /projects
+  router.replace({ path: '/projects/', query })
+}
+
+function setGroup(key: string) {
+  activeGroup.value = key
+}
+
+function clearFilters() {
+  activeGroup.value = 'all'
+  search.value = ''
+}
+
+onMounted(() => {
+  readQuery()
+  watch([activeGroup, search], writeQuery)
+  // Header nav to /projects/ (or back/forward) while already here
+  watch(() => [route.query.group, route.query.q], readQuery)
+})
+
+// "All" lists groups in theme order so related work clusters together;
+// within a group, `groupOrder` picks the lead, then the fetchProjects order.
+const orderedProjects = computed<Project[]>(() => {
+  const list = projects.value ?? []
+  return groups.value.flatMap(g => sortProjectsInGroup(list.filter(p => projectGroupOf(p.group).key === g.key)))
+})
+
+const visibleProjects = computed<Project[]>(() => {
+  const q = search.value.trim().toLowerCase()
+  return orderedProjects.value
+    .filter(p => activeGroup.value === 'all' || projectGroupOf(p.group).key === activeGroup.value)
+    .filter(p => !q || [p.title, p.description, ...(p.technologies ?? []), ...(p.tags ?? [])]
+      .some(v => typeof v === 'string' && v.toLowerCase().includes(q)))
+})
+
+const resultsLabel = computed(() => {
+  const n = visibleProjects.value.length
+  return `${n} ${n === 1 ? 'project' : 'projects'} shown: ${activeLabel.value}${search.value.trim() ? `, matching “${search.value.trim()}”` : ''}`
+})
+
+// Tile sizes per column count, shrunk where a big tile would leave a gap,
+// plus how wide the trailing CTA tile must be (see utils/packMosaic).
+const plan = computed(() => planMosaic(visibleProjects.value.map(isFeature)))
+
+// Award winners and featured projects get the big tiles.
+function isFeature(project: Project) {
+  return Boolean(project.award || project.featured)
+}
 
 useSiteSeo({
   title: 'Projects',
@@ -196,10 +234,30 @@ useSiteSeo({
 </script>
 
 <style scoped>
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+/*
+ * One dense mosaic for every filter. The column count is explicit (not
+ * auto-fill) so the layout can be planned ahead: one column per ~16rem of
+ * container width, at the same 33rem / 50rem / 67rem breakpoints that
+ * ProjectTile and utils/packMosaic use. The CTA tile spans the run of cells
+ * the plan says is left on the last row (or a full row).
+ */
+.project-grid {
+  --fill: 1;
+  grid-template-columns: repeat(var(--cols, 1), minmax(0, 1fr));
+  grid-auto-flow: row dense;
+}
+@container (width >= 33rem) { .project-grid { --cols: 2; --fill: var(--fill-2); } }
+@container (width >= 50rem) { .project-grid { --cols: 3; --fill: var(--fill-3); } }
+@container (width >= 67rem) { .project-grid { --cols: 4; --fill: var(--fill-4); } }
+
+.grid-filler {
+  grid-column: span var(--fill);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-gradient-animated,
+  .text-gradient-animated {
+    animation: none;
+  }
 }
 </style>
