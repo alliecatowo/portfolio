@@ -1,8 +1,9 @@
 name: Deploy to Staging
 
+# Manual only. Every push to main already deploys production, and a second identical build for the
+# `staging` channel added ~2 min of CI per push for no benefit. Run this to refresh the channel.
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 env:
   FORCE_COLOR: 1
@@ -24,36 +25,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v7
 
-      - name: Setup mise (Node, pnpm)
-        uses: jdx/mise-action@v2
-        with:
-          cache: true
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: echo "pnpm-store-path=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v6
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm-store-path }}
-          key: ${{ runner.os }}-pnpm10-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm10-pnpm-store-
-
-      - name: Cache node_modules
-        id: cache-deps
-        uses: actions/cache@v6
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-pnpm10-node-modules-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm10-node-modules-
-
-      - name: Install dependencies
-        if: steps.cache-deps.outputs.cache-hit != 'true'
-        run: pnpm install --frozen-lockfile
+      - name: Setup toolchain and dependencies
+        uses: ./.github/actions/setup
 
       - name: Run typecheck
         run: pnpm run typecheck
