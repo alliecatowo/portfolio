@@ -1,5 +1,5 @@
 <template>
-  <main class="min-h-screen bg-gradient-animated bg-dots relative overflow-hidden">
+  <div class="min-h-screen bg-gradient-animated bg-dots relative overflow-hidden">
     <!-- Decorative background -->
     <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
       <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse"/>
@@ -191,7 +191,7 @@
         </div>
       </section>
     </div>
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">

@@ -7,9 +7,7 @@ fi
 
 echo "🔍 Running lint-staged..."
 if command -v pnpm >/dev/null 2>&1; then
-  if pnpm run lint-staged >/dev/null 2>&1; then
-    pnpm run lint-staged
-  elif pnpm exec lint-staged --version >/dev/null 2>&1; then
+  if pnpm exec lint-staged --version >/dev/null 2>&1; then
     pnpm exec lint-staged
   elif command -v npx >/dev/null 2>&1; then
     echo "ℹ️ lint-staged not found for pnpm; trying npx --no-install"

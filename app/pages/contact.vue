@@ -1,5 +1,5 @@
 <template>
-  <main class="min-h-screen bg-gradient-animated bg-dots relative overflow-hidden">
+  <div class="min-h-screen bg-gradient-animated bg-dots relative overflow-hidden">
     <!-- Decorative background -->
     <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
       <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse"/>
@@ -191,7 +191,7 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
                 type="reset"
                 variant="outline"
                 size="lg"
-                color="gray"
+                color="neutral"
                 :ui="resetButtonUi"
                 :disabled="formSubmitting"
                 class="sm:w-auto"
@@ -206,7 +206,7 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
 
             <UAlert
               v-if="formSubmitSuccess"
-              color="green"
+              color="success"
               variant="soft"
               title="Message sent successfully!"
               description="I'll get back to you soon."
@@ -215,7 +215,7 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
 
             <UAlert
               v-if="formSubmitError"
-              color="red"
+              color="error"
               variant="soft"
               title="Error sending message"
               description="There was an error sending your message. Please try again."
@@ -248,7 +248,7 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
         </div>
       </section>
     </div>
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">

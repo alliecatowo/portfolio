@@ -1,6 +1,6 @@
 <template>
   <UPage>
-    <UMain class="min-h-screen bg-gradient-animated bg-dots flex items-center justify-center relative overflow-hidden">
+    <div class="min-h-screen bg-gradient-animated bg-dots flex items-center justify-center relative overflow-hidden">
       <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
         <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse pulse-glow" />
         <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl animate-pulse float-animation" style="animation-delay: 2s;" />
@@ -312,7 +312,7 @@
           </div>
         </aside>
       </section>
-    </UMain>
+    </div>
   </UPage>
 </template>
 

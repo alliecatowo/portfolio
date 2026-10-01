@@ -1,6 +1,6 @@
 <template>
   <div>
-    <main class="min-h-screen bg-white dark:bg-gray-950">
+    <div class="min-h-screen bg-white dark:bg-gray-950">
     <!-- Breadcrumb bar (not sticky: the site header and the mobile TOC already stick) -->
     <div class="border-b border-gray-100 dark:border-gray-800">
       <div class="container max-w-6xl mx-auto px-6 py-4">
@@ -204,7 +204,7 @@
         </div>
       </div>
     </section>
-  </main>
+  </div>
 
   <!-- Floating Progress Indicator -->
   <div
@@ -271,18 +271,19 @@ const { estimateReadTime } = useReadTime();
 // Reading progress
 const readingProgress = ref(0);
 
-onMounted(() => {
-  const updateProgress = () => {
-    const scrolled = window.scrollY;
-    const maxHeight = document.body.scrollHeight - window.innerHeight;
-    const progress = Math.min((scrolled / maxHeight) * 100, 100);
-    readingProgress.value = progress;
-  };
+const updateProgress = () => {
+  const scrolled = window.scrollY;
+  const maxHeight = document.body.scrollHeight - window.innerHeight;
+  readingProgress.value = maxHeight > 0 ? Math.min((scrolled / maxHeight) * 100, 100) : 0;
+};
 
+onMounted(() => {
   window.addEventListener('scroll', updateProgress, { passive: true });
-  onUnmounted(() => {
-    window.removeEventListener('scroll', updateProgress);
-  });
+  updateProgress();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', updateProgress);
 });
 
 const getTagColor = (tag: string): 'primary'|'secondary'|'success'|'info'|'warning'|'error'|'neutral' => {

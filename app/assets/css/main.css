@@ -1,6 +1,3 @@
-/* Custom Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
-
 @import 'tailwindcss';
 /* Import Nuxt UI runtime CSS explicitly to avoid bundling its JS module */
 @import '@nuxt/ui';
@@ -666,4 +663,27 @@ body {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* WCAG AA: coloured text on its own tinted background (soft badges, tag pills, link buttons).
+   The 500/600 shades fall below 4.5:1 on a 10-20% tint in light mode, so use a darker shade there.
+   Dark mode already passes and keeps the brighter shade. */
+:root:not(.dark)
+  :is([class*='bg-primary/'].text-primary, a.text-primary[class*='border-transparent']) {
+  color: var(--ui-color-primary-700);
+}
+:root:not(.dark) [class*='bg-secondary/'].text-secondary {
+  color: var(--ui-color-secondary-700);
+}
+:root:not(.dark) [class*='bg-success/'].text-success {
+  color: var(--ui-color-success-700);
+}
+:root:not(.dark) [class*='bg-info/'].text-info {
+  color: var(--ui-color-info-700);
+}
+:root:not(.dark) [class*='bg-error/'].text-error {
+  color: var(--ui-color-error-700);
+}
+:root:not(.dark) [class*='bg-warning/'].text-warning {
+  color: var(--ui-color-warning-800);
 }
