@@ -1,14 +1,15 @@
 ---
 technologies:
-  - Python
-  - FastAPI
+  - TypeScript
+  - Next.js
+  - React
+  - Vercel AI SDK
+  - PostgreSQL
+  - Drizzle ORM
+  - Docker
   - Jellyfin
   - Radarr
   - Sonarr
-  - OpenAI
-  - Ollama
-  - Docker
-  - TypeScript
 tags:
   - ai
   - media
@@ -22,7 +23,7 @@ tags:
 slug: assistarr
 group: earlier-work
 title: Assistarr
-description: 'An AI assistant for a self-hosted media stack: ask in plain English and it drives Jellyfin, Radarr and Sonarr through their APIs, from a chat UI, CLI or Telegram.'
+description: 'An AI assistant for a self-hosted media stack: ask in plain English and it drives Jellyfin, Radarr and Sonarr through their APIs, from a web chat UI.'
 date: 2025-10-01
 status: published
 featured: false
@@ -35,11 +36,11 @@ seo:
 
 ## Overview
 
-Assistarr is an AI assistant layer on top of your self-hosted media stack. Instead of navigating interfaces to add movies, check download queues, or manage libraries, you just ask:
+Assistarr is an AI assistant layer on top of a self-hosted media stack. Instead of navigating several interfaces to add movies, check download queues or browse libraries, you ask in plain English:
 
-> "Queue up everything Christopher Nolan directed after 2010" or "What's downloading right now? Cancel anything over 24 hours old."
+> "Queue up everything Christopher Nolan directed after 2010" or "What's downloading right now?"
 
-It talks to Jellyfin, Radarr, and Sonarr over their existing APIs and lets you drive the whole thing through natural language — via a chat UI, CLI, or Telegram bot.
+It talks to Radarr, Sonarr, Jellyfin, Jellyseerr and qBittorrent through their existing APIs, and you drive it from a chat UI in the browser.
 
 ![The Assistarr home hero component: a greeting, the headline "Your media, all in one place.", Start a chat, Discover and Monitor buttons, and four stat cards showing services online, library footprint, active downloads and AI signals.](/images/projects/assistarr/hero-1600.webp)
 
@@ -53,45 +54,35 @@ _The downloads widget from the same stories, with sample queue items._
 
 ## Problem
 
-Self-hosted media setups are powerful but clunky to operate. Adding a movie means jumping between Radarr UI, checking Sonarr for shows, then flipping to Jellyfin to verify. Power users manage this fine — but the interfaces are not intuitive for family members, and even for experts it's context-switching overhead for simple tasks.
-
-Adding AI narrows that gap dramatically.
+Self-hosted media setups are powerful but clunky to operate. Adding a movie means jumping between the Radarr UI, checking Sonarr for shows, then flipping to Jellyfin to verify. Power users manage this fine, but the interfaces are not intuitive for family members, and even for experts it's context-switching overhead for simple tasks.
 
 ---
 
 ## Solution
 
-Assistarr wraps a **FastAPI backend** with tool-calling LLM integration (OpenAI / local Ollama) and exposes a natural language interface:
+Assistarr is a **Next.js** (App Router) application written in **TypeScript**. Chat requests go to a route handler that uses the **Vercel AI SDK** to stream a tool-calling model's responses, and the tools are backed by a plugin layer for each media service.
 
-- **Tool-calling agent** — maps user intent to Radarr/Sonarr/Jellyfin API calls
-- **Multi-backend LLM support** — OpenAI, Anthropic, or local Ollama for privacy-first deployments
-- **Media library awareness** — queries Jellyfin for what's available before suggesting requests
-- **Telegram bot interface** — control your media server from your phone without touching any web UIs
-- **Smart queue management** — understands in-flight downloads, priorities, and queue state
-- **Docker-first** — one `docker-compose up` and it wires into your existing stack
+- **Tool-calling agent**: maps a request to Radarr, Sonarr, Jellyfin, Jellyseerr or qBittorrent API calls through a plugin per service
+- **Hosted model providers**: models are reached through OpenRouter or the Vercel AI Gateway (the repo also includes the AI SDK's Anthropic, Google and OpenAI provider packages); no Ollama or local-model path is wired in
+- **MCP client**: the repo includes an MCP client manager and tool adapter for extra tools
+- **Chat, Discover and Monitor views**: streaming chat, a discovery page and a service-status page, with per-user service settings behind a login (Auth.js)
+- **Storage**: PostgreSQL through Drizzle ORM, with optional Redis for resumable streams
+- **Docker-first**: a `docker-compose.yml` brings up the app and PostgreSQL, with Redis and a media-network profile optional
 
 ---
 
 ## Challenges
 
-The main challenge was designing the tool schema so the LLM reliably picks the right action without hallucinating API arguments. Radarr and Sonarr have overlapping concepts (quality profiles, tags, monitored status) that the agent needs to reason about correctly. Getting streaming output and async tool calls to feel responsive was also a non-trivial UX problem.
-
----
-
-## Impact
-
-- Reduces "how do I add X" friction to near-zero for non-technical household members
-- Enables complex batch operations via plain English ("add all top-rated horror films from 2024")
-- Fully local-LLM-capable — no cloud required if you run Ollama
+The main challenge was designing the tool schema so the model reliably picks the right action without inventing API arguments. Radarr and Sonarr have overlapping concepts (quality profiles, tags, monitored status) that the agent needs to reason about correctly, and getting streaming output and tool calls to feel responsive was a UX problem of its own.
 
 ---
 
 ## Reflection
 
-Assistarr scratches my own itch: I built it because I run the exact stack it targets and got tired of tab-switching. It also became a useful testbed for tool-calling agent design — specifically how to keep agents grounded when the action space has real consequences (like mass-downloading media or clearing queues). Good agent UX is hard; Assistarr is still teaching me.
+Assistarr scratches Allison's own itch: she runs the stack it targets and got tired of tab-switching. It also became a testbed for tool-calling agent design, specifically how to keep an agent grounded when its actions have real consequences, like adding media or touching download queues. Source is on GitHub under Apache-2.0.
 
 ---
 
 ## Tech Stack
 
-**Python**, **FastAPI**, **Jellyfin API**, **Radarr/Sonarr APIs**, **OpenAI / Ollama**, **Docker**, **Telegram Bot API**
+**TypeScript**, **Next.js**, **React**, **Vercel AI SDK**, **PostgreSQL / Drizzle ORM**, **Docker**, **Radarr / Sonarr / Jellyfin / Jellyseerr / qBittorrent APIs**
