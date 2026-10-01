@@ -27,6 +27,8 @@ demo: https://openapi-web-mcp.vercel.app
 devpost: https://devpost.com/software/swagger-ui-webmcp
 image: /images/projects/swagger-ui-webmcp/card.webp
 imageAlt: 'Video thumbnail reading "Your API docs are the connector" over Swagger UI with an agent chat beside it.'
+seo:
+  title: 'Swagger UI WebMCP: OpenAPI docs as agent tools'
 ---
 
 **If you can Try it out, your agent can too.**

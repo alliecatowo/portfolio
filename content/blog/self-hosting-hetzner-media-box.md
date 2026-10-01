@@ -19,8 +19,6 @@ featured_image: /images/homelab/screenshot-2025-10-16-at-13-03-45-homepage-allie
 slug: self-hosting-hetzner-media-box
 ---
 
-# My Self‑Hosted Stack on a 16TB Hetzner Box
-
 I like owning my media and my infrastructure. A bare‑metal Hetzner machine with 16TB gives me the flexibility and headroom I need—at a price that still feels unreal.
 
 ## What’s running

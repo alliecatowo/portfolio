@@ -11,7 +11,7 @@
         <div>
           <h1 class="text-4xl md:text-5xl font-bold text-gradient-animated">Projects</h1>
           <p class="mt-2 max-w-2xl text-base md:text-lg text-default text-pretty">
-            Agent systems, developer tools, languages and runtimes, and a few weird computers.
+            Agent systems, developer tools, languages and runtimes, plus keyboard firmware and a homelab.
             <span v-if="projects?.length" class="text-muted">{{ projects.length }} projects in {{ groups.length }} groups.</span>
           </p>
         </div>
@@ -92,17 +92,18 @@
               :sizes="plan.sizes[index]"
               :group-label="activeGroup === 'all' ? projectGroupOf(project.group).label : undefined"
               :eager="index < 4"
+              :priority="index === 0"
             />
             <!-- Fills whatever is left of the last row (or a full row), so the
                  mosaic always ends flush instead of on a lonely card. -->
             <aside class="grid-filler flex flex-col justify-between gap-4 rounded-xl border border-dashed border-primary/40 bg-elevated/30 p-5" aria-labelledby="projects-cta-title">
               <div>
-                <h2 id="projects-cta-title" class="text-lg font-semibold text-highlighted">Building something weird?</h2>
+                <h2 id="projects-cta-title" class="text-lg font-semibold text-highlighted">Got a project in mind?</h2>
                 <p class="mt-1 text-sm text-muted text-pretty">I'm always up for a good collaboration, a hackathon, or a long thread about agent tooling.</p>
               </div>
               <div class="flex flex-wrap gap-2">
-                <UButton to="/contact" color="primary" size="sm" leading-icon="i-lucide-mail">Get in touch</UButton>
-                <UButton to="/about" color="primary" variant="outline" size="sm" leading-icon="i-lucide-user">About me</UButton>
+                <UButton to="/contact/" color="primary" size="sm" leading-icon="i-lucide-mail">Get in touch</UButton>
+                <UButton to="/about/" color="primary" variant="outline" size="sm" leading-icon="i-lucide-user">About me</UButton>
               </div>
             </aside>
           </div>
@@ -227,10 +228,26 @@ function isFeature(project: Project) {
   return Boolean(project.award || project.featured)
 }
 
-useSiteSeo({
-  title: 'Projects',
-  description: 'Projects by Allison Coleman: agent systems, developer tools, languages and runtimes, and a few weird computers.'
-})
+useSiteSeo(() => ({
+  title: 'Projects by Allison Coleman: WebMCP, agents & dev tools',
+  description: 'Projects by Allison Coleman: JupyterLite WebMCP and her other OpenAI WebMCP Challenge entries, agent systems, developer tools, languages and runtimes.',
+  jsonLd: {
+    '@type': 'CollectionPage',
+    'name': 'Projects by Allison Coleman',
+    'url': absoluteSiteUrl('/projects/'),
+    'author': personRef(),
+    'mainEntity': {
+      '@type': 'ItemList',
+      'numberOfItems': orderedProjects.value.length,
+      'itemListElement': orderedProjects.value.map((p, index) => ({
+        '@type': 'ListItem',
+        'position': index + 1,
+        'name': p.title,
+        'url': absoluteSiteUrl(`/projects/${p.slug}/`)
+      }))
+    }
+  }
+}))
 </script>
 
 <style scoped>

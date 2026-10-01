@@ -10,8 +10,8 @@
       <header class="text-center mb-16">
         <h1 class="text-5xl md:text-6xl font-bold mb-6 text-gradient-animated">Say Hi</h1>
         <p class="text-xl md:text-2xl text-default max-w-3xl mx-auto">
-          Building something weird? Want a hackathon partner?
-          Thinking about starting something? Say hi.
+          Working on a browser agent, a dev tool or a language?
+          Need one more person for a hackathon? Tell me about it.
         </p>
       </header>
 
@@ -88,7 +88,7 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
               <div>
                 <p class="font-semibold text-default">Open to collaborations</p>
                 <p class="text-sm text-muted">
-                  Hackathon partners, interesting side projects, community things,
+                  Hackathon teams, side projects, community things,
                   and the occasional "what if we started something" conversation.
                 </p>
               </div>
@@ -231,7 +231,7 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
         <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
             <h3 class="font-semibold mb-2 text-primary">What should I message you about?</h3>
-            <p class="text-muted">Weird projects, hackathon invites, WebMCP and agent questions, start-something ideas, and pictures of your keyboard.</p>
+            <p class="text-muted">Side projects, hackathon invites, WebMCP and agent questions, start-something ideas, and pictures of your keyboard.</p>
           </UCard>
           <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
             <h3 class="font-semibold mb-2 text-primary">Want to team up for a hackathon?</h3>
@@ -286,7 +286,7 @@ const honeypot = ref('')
 // Subject options for USelectMenu
 const subjectOptions = [
   { label: 'Collaboration / side project', value: 'collaboration', icon: 'i-lucide-users' },
-  { label: 'Hackathon partner', value: 'hackathon', icon: 'i-lucide-trophy' },
+  { label: 'Hackathon team-up', value: 'hackathon', icon: 'i-lucide-trophy' },
   { label: 'Starting something', value: 'startup', icon: 'i-lucide-rocket' },
   { label: 'WebMCP / agents question', value: 'question', icon: 'i-lucide-message-circle' },
   { label: 'Just saying hi', value: 'other', icon: 'i-lucide-hand' }
@@ -417,7 +417,17 @@ const onError = (event: FormErrorEvent) => {
 }
 
 useSiteSeo({
-  title: 'Contact',
-  description: 'Get in touch with Allison Coleman about WebMCP, agent systems, developer tools, or a hackathon idea.'
+  title: 'Contact Allison Coleman: WebMCP, agents & hackathons',
+  description: 'Contact Allison Coleman about WebMCP, browser agents, developer tools or a hackathon idea. Email works best; GitHub, LinkedIn and X are linked here too.',
+  jsonLd: {
+    '@type': 'ContactPage',
+    'name': 'Contact Allison Coleman',
+    'url': absoluteSiteUrl('/contact/'),
+    'mainEntity': {
+      ...personRef(),
+      'email': 'me@allisons.dev',
+      'sameAs': personSchema().sameAs
+    }
+  }
 })
 </script>

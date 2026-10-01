@@ -430,8 +430,20 @@ function getTagColor(tag: string): 'primary'|'secondary'|'success'|'info'|'warni
 
 
 
-useSiteSeo({
-  title: 'Blog',
-  description: 'Notes from Allison Coleman on agents, developer tools, languages, and the things she builds.'
-})
+useSiteSeo(() => ({
+  title: 'Writing on agents, developer tools & WebMCP',
+  description: 'Notes from Allison Coleman on agent systems, developer tools and languages, plus the hardware on her desk: split keyboards, a homelab and her terminal setup.',
+  jsonLd: {
+    '@type': 'Blog',
+    'name': 'Allison Coleman: Writing',
+    'url': absoluteSiteUrl('/blog/'),
+    'author': personRef(),
+    'blogPost': (allPostsAll.value ?? []).map(post => ({
+      '@type': 'BlogPosting',
+      'headline': post.title,
+      'url': absoluteSiteUrl(`/blog/${post.slug}/`),
+      ...(toIsoDate(post.date) && { datePublished: toIsoDate(post.date) })
+    }))
+  }
+}))
 </script>

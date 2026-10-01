@@ -28,6 +28,8 @@ tags:
 github: https://github.com/alliecatowo/shoal
 image: /images/projects/shoal/card.webp
 imageAlt: 'Shoal landing page: "Structure all the way down", beside a terminal showing typed values, unit arithmetic and a structured git status table.'
+seo:
+  title: 'Shoal: an agent-first structured shell in Rust'
 ---
 
 **Structure all the way down.**

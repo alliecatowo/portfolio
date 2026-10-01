@@ -23,6 +23,8 @@ tags:
 github: https://github.com/alliecatowo/k9k
 image: /images/projects/k9k/card.webp
 imageAlt: "K9k inspector showing a Pod's raw JSON object with syntax highlighting beside the live resource table."
+seo:
+  title: 'K9k: a native macOS Kubernetes manager'
 ---
 
 **What if K9s were a real Mac app?**

@@ -149,8 +149,8 @@
               v-for="(project, index) in featuredProjects"
               :key="project.path || index"
               :title="project.title"
-              :image="project.image ? { src: project.image, alt: project.imageAlt || project.title } : undefined"
-              :to="`/projects/${project.slug}`"
+              :image="project.image ? { ...CARD_IMAGE, src: project.image, alt: project.imageAlt || project.title } : undefined"
+              :to="`/projects/${project.slug}/`"
               variant="soft"
               class="glass-accent hover:scale-105 transition-transform min-h-[400px]"
             >
@@ -252,8 +252,8 @@
               :title="post.title"
               :description="post.description"
               :date="post.date"
-              :image="post.featured_image || undefined"
-              :to="`/blog/${post.slug || post.path?.split('/').pop()}`"
+              :image="post.featured_image ? { ...CARD_IMAGE, src: post.featured_image, alt: post.title } : undefined"
+              :to="`/blog/${post.slug || post.path?.split('/').pop()}/`"
               variant="outline"
               orientation="vertical"
               class="glass-accent hover:scale-105 transition-transform"
@@ -325,6 +325,16 @@ import { formatContentDate } from '~/utils/formatContentDate'
 
 const { fetchProjects, fetchBlogPosts, fetchPage } = useContent()
 
+// Project and post cards below the fold: a 16:9 box (no layout shift), lazy, and
+// width-based srcset for the 1/2/3-column grids inside the max-w-6xl column.
+const CARD_IMAGE = {
+  width: 640,
+  height: 360,
+  sizes: 'xs:100vw sm:50vw lg:400px',
+  loading: 'lazy',
+  decoding: 'async'
+} as const
+
 const { data: homeContent } = await useAsyncData('home-page-content', () => fetchPage('home'))
 
 const resolveDownloadAttr = (button: { download?: boolean | string; href?: string }) => {
@@ -364,7 +374,7 @@ const { data: recentPosts } = await useAsyncData(
 )
 
 useSiteSeo(() => ({
-  title: seo.value?.title || 'Allison Coleman — agent systems, developer tools, languages',
+  title: seo.value?.title || 'Allison Coleman: agent systems, developer tools & WebMCP',
   description: seo.value?.description
     || 'Allison Coleman: software engineer building agent systems, developer tools, and languages/runtimes.',
   path: '/',

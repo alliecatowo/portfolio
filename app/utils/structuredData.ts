@@ -12,7 +12,7 @@ export const personSchema = () => ({
   'url': SITE_URL,
   'image': `${SITE_URL}images/ghibli-pfp.png`,
   'jobTitle': 'Software Engineer',
-  'worksFor': { '@type': 'Organization', 'name': 'Hinge Health' },
+  'worksFor': { '@type': 'Organization', 'name': 'Hinge Health', 'url': 'https://www.hingehealth.com/' },
   'homeLocation': { '@type': 'Place', 'name': 'Bay Area, California' },
   'sameAs': [
     'https://github.com/alliecatowo',

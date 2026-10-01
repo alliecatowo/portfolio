@@ -27,6 +27,8 @@ github: https://github.com/alliecatowo/lumen
 demo: https://alliecatowo.github.io/lumen/playground
 image: /images/projects/lumen/card.webp
 imageAlt: 'The Lumen browser playground running a pattern-matching program compiled to WebAssembly; the terminal prints "zero, one, many".'
+seo:
+  title: 'Lumen: a typed language for AI agent workflows'
 ---
 
 **A programming language where the docs are the source, and every LLM call shows up in the type signature.**

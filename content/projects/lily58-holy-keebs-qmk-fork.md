@@ -18,22 +18,25 @@ tags:
 github: https://github.com/alliecatowo/allie-cat-keeb-vial
 slug: lily58-holy-keebs-qmk-fork
 group: hardware-homelab
-title: 'Lily58 HolyKeebs QMK Fork '
-description: 'QMK Split Board With Modular Dual Pointer Support '
+title: 'Lily58 HolyKeebs QMK Fork'
+description: 'A QMK fork that brings Vial to the HolyKeebs Lily58 tree, keeps its trackball, touchpad and trackpoint drivers, and ships prebuilt firmware built in CI.'
 image: /images/keyboards/keyboards-collection-1.jpg
 status: published
 date: 2025-08-30
 featured: false
+imageAlt: 'A Lily58 split keyboard in a pink case with grey and navy keycaps, a red trackpoint on the left half and a square touchpad module between the halves'
+seo:
+  title: 'Lily58 HolyKeebs QMK fork with Vial support'
 ---
 
-### Overview
+## Overview
 
 I love split boards and pointing modules, but the Holykeebs QMK tree lagged behind on **Vial** support.
 So I forked it, integrated Vial cleanly, kept **all** of Holykeebs’ pointer drivers (trackball, touchpad, trackpoint), and layered on **automation**: CI builds, release artifacts, keymap diagrams, and versioned tags. The result is a keyboard firmware that **just works** for Lily58 (and friends), with real-time configuration and zero drama.
 
 ---
 
-### Problem
+## Problem
 
 - Holykeebs’ excellent pointer stack lived on an older QMK base → **no modern Vial**.
 - New users had to compile locally, pick flags, and hope nothing broke.
@@ -41,7 +44,7 @@ So I forked it, integrated Vial cleanly, kept **all** of Holykeebs’ pointer dr
 
 ---
 
-### Solution
+## Solution
 
 A maintained fork that backports and wires **Vial** into the Holykeebs tree while preserving device support, plus a production-style delivery pipeline.
 
@@ -55,7 +58,7 @@ A maintained fork that backports and wires **Vial** into the Holykeebs tree whil
 
 ---
 
-### Features
+## Features
 
 - ✅ **Full Vial** (real-time config, no reflashing)
 - ✅ **Holykeebs pointing devices**
@@ -70,7 +73,7 @@ A maintained fork that backports and wires **Vial** into the Holykeebs tree whil
 
 ---
 
-### Architecture
+## Architecture
 
 | Layer            | What it does                                               |
 | ---------------- | ---------------------------------------------------------- |
@@ -81,7 +84,7 @@ A maintained fork that backports and wires **Vial** into the Holykeebs tree whil
 
 ---
 
-### Developer UX (why this matters)
+## Developer UX (why this matters)
 
 - **One-click firmware**: grab the right `.uf2` from Releases and flash both halves.
 - **Real-time tuning**: open Vial → edit layers, macros, pointer settings live.
@@ -90,7 +93,7 @@ A maintained fork that backports and wires **Vial** into the Holykeebs tree whil
 
 ---
 
-### Impact
+## Impact
 
 - Made advanced **pointer + split** setups accessible to non-compilers.
 - Reduced “it doesn’t detect in Vial” support churn by shipping the **correct** images.
@@ -98,19 +101,19 @@ A maintained fork that backports and wires **Vial** into the Holykeebs tree whil
 
 ---
 
-### Reflection
+## Reflection
 
 Firmware should be **pleasant**. This project treats keyboard firmware like a real product: reproducible builds, versioned releases, crisp docs, and room to tinker. It’s also a fun intersection of embedded constraints, UX, and CI discipline.
 
 ---
 
-### Tech Stack
+## Tech Stack
 
 **QMK (forked), Vial, VIA, RP2040 targets, GitHub Actions, Python build scripts**
 
 ---
 
-### Links
+## Links
 
 - 🛍️ [Holykeebs Store](https://holykeebs.com)
 - 📖 [Holykeebs Docs](https://docs.holykeebs.com)

@@ -1,7 +1,7 @@
 ---
 title: Homelab Media Box on Hetzner (16TB)
 date: 2025-08-30
-description: A home away from home for my data, media, and privacy.
+description: "A 16TB Hetzner auction server running my family's media library: Jellyfin and Plex with Quick Sync transcoding, the *arr apps, Caddy and Portainer in Docker."
 featured: false
 status: published
 technologies:
@@ -29,9 +29,10 @@ tags:
 slug: homelab-hetzner-media-box
 group: hardware-homelab
 image: /images/homelab/screenshot-2025-10-16-at-13-07-11-jelly-seerr-allie-cat-cinema.png
+imageAlt: "Jellyseerr request page from Allison's self-hosted media server, Allie Cat Cinema"
 ---
 
-### Overview
+## Overview
 
 I’ve always liked owning my media _and_ my infrastructure. Renting cloud space or relying on streaming never felt right.
 So I built my own server: a **bare-metal Hetzner auction box** with 16 TB of storage and 64 GB RAM, running an orchestrated suite of self-hosted apps that power my family’s entire digital library — movies, books, automation, and more.
@@ -40,7 +41,7 @@ It’s cost-effective, private, and surprisingly elegant.
 
 ---
 
-### Why Hetzner
+## Why Hetzner
 
 Running this at home wasn’t realistic. My local ISP gives me gigabit down but only 40 Mbps up — perfect for gaming, terrible for hosting 4K streams.
 Hetzner’s auction servers offered the sweet spot:
@@ -53,11 +54,11 @@ That GPU alone can handle a dozen simultaneous 4K transcodes — better than my 
 
 ---
 
-![screenshot-2025-10-16-at-13-07-32-uptime-kuma.png](/images/homelab/screenshot-2025-10-16-at-13-07-32-uptime-kuma.png)
+![Uptime Kuma dashboard for the homelab: 13 monitors up and none down, covering Jellyfin, Jellyseerr, the *arr apps, Caddy, Portainer and qBittorrent](/images/homelab/screenshot-2025-10-16-at-13-07-32-uptime-kuma.png)
 
 ---
 
-### Stack Overview
+## Stack Overview
 
 | Layer                  | Tools & Services                         | Purpose                                                       |
 | ---------------------- | ---------------------------------------- | ------------------------------------------------------------- |
@@ -70,7 +71,7 @@ That GPU alone can handle a dozen simultaneous 4K transcodes — better than my 
 
 ---
 
-### Principles Behind the Stack
+## Principles Behind the Stack
 
 - 🧩 **Ownership + Convenience** – Control the stack end-to-end without friction.
 - 🔒 **Privacy First** – VPN-tunneled traffic and local user management.
@@ -80,7 +81,7 @@ That GPU alone can handle a dozen simultaneous 4K transcodes — better than my 
 
 ---
 
-### Challenges & Choices
+## Challenges & Choices
 
 - **Why not Proxmox?**
   Hetzner doesn’t offer it as a recovery image, and by the time the base stack was live, it wasn’t worth wiping everything. I plan to migrate on my next hardware refresh — but the current Docker/Portainer setup has been rock-solid.
@@ -89,7 +90,7 @@ That GPU alone can handle a dozen simultaneous 4K transcodes — better than my 
 
 ---
 
-### Impact
+## Impact
 
 - Hosts the entire family’s 4K media with zero buffering.
 - Serves multiple simultaneous remote streams effortlessly.
@@ -98,11 +99,11 @@ That GPU alone can handle a dozen simultaneous 4K transcodes — better than my 
 
 ---
 
-![screenshot-2025-10-16-at-13-03-58-jellyfin-allie-cat-cinema.png](/images/homelab/screenshot-2025-10-16-at-13-03-58-jellyfin-allie-cat-cinema.png)
+![An episode page in Jellyfin on Allie Cat Cinema, showing 4K HEVC Dolby Vision video with Dolby Atmos audio](/images/homelab/screenshot-2025-10-16-at-13-03-58-jellyfin-allie-cat-cinema.png)
 
 ---
 
-### Reflection
+## Reflection
 
 This isn’t just a server — it’s my **personal cloud**.
 It’s proof that with a bit of care, you can own your data, automate everything, and still give your family a Netflix-tier experience without surrendering privacy or paying the big guys.
@@ -111,6 +112,6 @@ Next stop: Proxmox and GPU passthrough. But for now, it just works — and that�
 
 ---
 
-### Tech Stack
+## Tech Stack
 
 **Docker / Portainer**, **Caddy**, **Plex**, **Jellyfin**, **Jellyseerr**, **Radarr/Sonarr/Lidarr**, **qBittorrent**, **ProtonVPN**, **Hetzner Dedicated**, **Intel Quick Sync**

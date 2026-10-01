@@ -26,10 +26,11 @@
         :alt="project.imageAlt || project.title"
         :width="720"
         :height="405"
+        :sizes="imageSizes"
         fit="cover"
         format="webp"
         :loading="eager ? 'eager' : 'lazy'"
-        :fetchpriority="eager ? 'high' : 'auto'"
+        :fetchpriority="priority ? 'high' : 'auto'"
         class="absolute inset-0 h-full w-full object-cover object-top motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover/tile:scale-[1.03]"
       />
       <div v-else class="absolute inset-0">
@@ -117,11 +118,25 @@ const props = withDefaults(defineProps<{
   sizes?: Record<MosaicColumns, TileSize>
   groupLabel?: string
   eager?: boolean
+  /** fetchpriority=high; only the likely LCP tile should get it. */
+  priority?: boolean
 }>(), {
   feature: false,
   sizes: () => ({ 2: 'single', 3: 'single', 4: 'single' }),
   groupLabel: undefined,
-  eager: false
+  eager: false,
+  priority: false
+})
+
+// Rendered image width at each column count, for a width-based srcset. A "wide"
+// tile puts its image in the left half, so the image is one column wide; only the
+// four-column bento shows it two columns wide. Viewport breakpoints approximate the
+// grid's container breakpoints (2 cols from ~sm, 3 from ~lg, 4 from ~xl, where the
+// 80rem container caps a column at ~300px).
+const imageSizes = computed(() => {
+  const span = (cols: MosaicColumns) => (props.sizes[cols] === 'bento' && cols === 4 ? 2 : 1)
+  const vw = (cols: MosaicColumns) => `${Math.round((100 * span(cols)) / cols)}vw`
+  return `xs:100vw sm:${vw(2)} lg:${vw(3)} xl:${300 * span(4)}px`
 })
 
 // Container-range classes per column count. Spelled out in full so Tailwind

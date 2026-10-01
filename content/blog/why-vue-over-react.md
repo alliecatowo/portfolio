@@ -16,8 +16,6 @@ featured: true
 slug: why-vue-over-react
 ---
 
-# Why I Reach for Vue Over React
-
 I’ve written a lot of React. It pays the bills, has a huge ecosystem, and there’s almost always a job posting asking for it. But when it’s my call—when I care about how the code reads, how quickly I can build something beautiful, and how calm I feel inside the codebase—I reach for Vue.
 
 ## What makes Vue feel better

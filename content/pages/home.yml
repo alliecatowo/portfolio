@@ -1,13 +1,13 @@
 slug: home
 layout: home
 seo:
-  title: Allison Coleman — agent systems, developer tools, languages
-  description: Software engineer building agent systems, developer tools, and languages/runtimes. Creator of JupyterLite WebMCP, one of 10 winners of the 2026 OpenAI WebMCP Challenge.
+  title: 'Allison Coleman: agent systems, developer tools & WebMCP'
+  description: Allison Coleman builds agent systems and developer tools. Creator of JupyterLite WebMCP, one of 10 winners of the 2026 OpenAI WebMCP Challenge.
 hero:
   title: Allison Coleman
-  description: Software engineer building agent systems, developer tools, languages and runtimes — and the occasional weird computer.
+  description: Software engineer building agent systems, developer tools, and languages & runtimes. After hours, I maintain the firmware for my own split keyboards.
   award:
-    label: OpenAI WebMCP Challenge Winner — JupyterLite WebMCP
+    label: 'OpenAI WebMCP Challenge winner: JupyterLite WebMCP'
     to: /projects/jupyterlite-webmcp/
   note:
     prefix: Press
@@ -74,7 +74,7 @@ quickLinks:
       to: '#blog'
       icon: i-lucide-book-open
     - title: Contact
-      description: Say hi, or tell me about something weird you're building
+      description: Email, X or the contact form. Tell me what you're working on
       to: /contact/
       icon: i-lucide-message-circle
 projects:
@@ -95,8 +95,8 @@ skills:
     - title: Languages & runtimes
       description: Typed shells, Markdown-native languages, diagram compilers
       icon: i-lucide-braces
-    - title: Weird computers
-      description: Split keyboards, homelab, terminal social media
+    - title: Hardware & homelab
+      description: Split keyboards, ZMK/QMK firmware, a self-hosted media server
       icon: i-lucide-keyboard
   categories: []
 blog:
@@ -106,8 +106,8 @@ blog:
     label: All writing
     to: /blog/
 cta:
-  title: Say hi
-  description: Questions about WebMCP, looking for a hackathon partner, or building something weird? My inbox is open, and I'm always up for interesting collaborations.
+  title: Get in touch
+  description: Questions about WebMCP or browser agents, a hackathon team with a free seat, or a tool you wish existed? Email is the fastest way to reach me.
   buttons:
     - label: Email me
       href: mailto:me@allisons.dev

@@ -25,6 +25,8 @@ github: https://github.com/alliecatowo/rssd
 demo: https://alliecatowo.github.io/rssd/
 image: /images/projects/rssd/card.webp
 imageAlt: 'rssd docs site: "The filesystem is the API", a daemon that turns RSS and Atom feeds into a directory tree.'
+seo:
+  title: 'rssd: a file-based RSS daemon with a TUI'
 ---
 
 **The filesystem is the API.**

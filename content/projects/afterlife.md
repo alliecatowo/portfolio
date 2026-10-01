@@ -26,6 +26,8 @@ github: https://github.com/alliecatowo/afterlife
 demo: https://alliecatowo.github.io/afterlife/
 image: /images/projects/afterlife/card.webp
 imageAlt: "AFTERLIFE's Time Sculpture: 165 recorded generations of the opening scene stacked in 3D, with each glider's path showing as an inclined beam."
+seo:
+  title: "AFTERLIFE: Conway's Life with a time machine"
 ---
 
 **Every future leaves a trace.**

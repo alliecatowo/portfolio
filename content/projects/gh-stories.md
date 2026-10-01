@@ -27,6 +27,8 @@ tags:
 github: https://github.com/alliecatowo/gh-stories
 image: /images/projects/gh-stories/card.webp
 imageAlt: 'GitHub Stories landing page: "Stories for GitHub. Yes, those Stories.", with links to the demo, extension and CLI.'
+seo:
+  title: 'GitHub Stories: 24-hour Stories for GitHub'
 ---
 
 **Stories for GitHub. Yes, those Stories.**

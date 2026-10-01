@@ -27,6 +27,8 @@ tags:
 github: https://github.com/alliecatowo/glassy
 image: /images/projects/glassy/card.webp
 imageAlt: 'The Glassy terminal showing a directory listing and syntax-highlighted Rust source.'
+seo:
+  title: 'Glassy: a lean GPU terminal emulator in Rust'
 ---
 
 **Small and quiet on purpose: a GPU terminal that only draws what changed.**

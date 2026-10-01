@@ -115,6 +115,7 @@
               :alt="post.title"
               class="w-full rounded-lg"
               loading="eager"
+              fetchpriority="high"
               sizes="lg:100vw xl:850px"
             />
           </div>
@@ -299,13 +300,16 @@ useSiteSeo(() => {
   const image = p.ogImage || p.featured_image || DEFAULT_OG_IMAGE
   const url = absoluteSiteUrl(`/blog/${p.slug || slug}/`)
   const published = toIsoDate(p.date_published || p.date)
+  // Content v3 fills seo.title from title; a different value is a shorter, hand-written override
+  const title = p.seo?.title || p.title
   return {
-    title: p.title,
-    description: p.description,
+    title,
+    description: p.seo?.description || p.description,
     image,
     imageAlt: p.title,
     type: 'article',
     publishedTime: published,
+    breadcrumbs: [{ name: 'Blog', path: '/blog/' }, { name: p.title }],
     jsonLd: {
       '@type': 'BlogPosting',
       'headline': p.title,

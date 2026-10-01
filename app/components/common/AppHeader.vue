@@ -121,10 +121,10 @@ const route = useRoute()
 
 const navigationItems = computed((): NavigationMenuItem[] => [
   { label: 'Home', to: '/', icon: 'i-lucide-home', active: route.path === '/' },
-  { label: 'About', to: '/about', icon: 'i-lucide-user', active: route.path === '/about' },
-  { label: 'Projects', to: '/projects', icon: 'i-lucide-folder', active: route.path.startsWith('/projects') },
-  { label: 'Blog', to: '/blog', icon: 'i-lucide-pen-tool', active: route.path.startsWith('/blog') },
-  { label: 'Contact', to: '/contact', icon: 'i-lucide-mail', active: route.path === '/contact' }
+  { label: 'About', to: '/about/', icon: 'i-lucide-user', active: route.path.startsWith('/about') },
+  { label: 'Projects', to: '/projects/', icon: 'i-lucide-folder', active: route.path.startsWith('/projects') },
+  { label: 'Blog', to: '/blog/', icon: 'i-lucide-pen-tool', active: route.path.startsWith('/blog') },
+  { label: 'Contact', to: '/contact/', icon: 'i-lucide-mail', active: route.path.startsWith('/contact') }
 ])
 
 defineShortcuts({

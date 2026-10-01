@@ -27,6 +27,8 @@ tags:
 github: https://github.com/alliecatowo/ticket-master
 image: /images/projects/ticket-master/card.webp
 imageAlt: "The Ticketmaster terminal UI showing a ticket ready for review, with Accept and Reject options and the worker's verified test result."
+seo:
+  title: 'Ticketmaster: a Rust coding-agent runtime'
 ---
 
 **An interactive coding agent with a ticket-powered background crew.**

@@ -23,22 +23,23 @@ slug: shrike-publishing
 group: earlier-work
 image: /images/shrike-publishing/screenshot-2025-10-21-at-00-02-30-blood-neon-shrike-publishing.png
 title: Shrike Publishing
-description: Cheap User Friendly CMS Solution
+description: 'A Nuxt 4 site for Shrike Publishing, a small tabletop RPG studio: Markdown pages anyone on the team can edit, moved off a paid WordPress plan onto free hosting.'
 date: 2025-08-30
 status: published
+imageAlt: 'The Blood Neon game page on the Shrike Publishing site: cover art beside the title, with the game description, price and gallery links below'
+seo:
+  title: 'Shrike Publishing: Nuxt site for an RPG studio'
 ---
-
-# Shrike Publishing
 
 _A lightweight, modern web platform for a small tabletop game studio._
 
-### Overview
+## Overview
 
 Shrike Publishing needed a professional, low-maintenance home for their tabletop RPG catalog. Something that looked great, loaded fast, and didn’t bury them in hosting or CMS fees.
 
 So I designed and built a clean static site using **Nuxt 4**, **Vue 3**, and **TailwindCSS**, integrated with Nuxt Content for an editor-friendly publishing flow. The result: a website that anyone on their team can update using Markdown, deployed as a zero-cost static site.
 
-### Problem
+## Problem
 
 The original website was built on a paid WordPress plan that limited embeds, plugins, and admin control. It was overkill for a small creative studio; they needed something leaner, easier to maintain, and **free** to host.
 
@@ -48,7 +49,7 @@ The main goals were:
 - Allow non-technical contributors to update pages easily.
 - Preserve fast performance and good SEO for product visibility.
 
-### Solution
+## Solution
 
 Shrike Publishing was rebuilt from the ground up with **Nuxt Content Studio** as the headless CMS.
 
@@ -59,17 +60,17 @@ Shrike Publishing was rebuilt from the ground up with **Nuxt Content Studio** as
 
 I built the entire platform as a static Nuxt site. That means no backend, no database, no monthly bill; all while keeping the same editorial flexibility as a CMS.
 
-### Impact
+## Impact
 
 - Reduced hosting costs from **$45/month → $0**.
 - Enabled non-technical staff to manage and publish updates directly via Markdown.
 - Improved SEO and loading speeds across all devices.
 - Simplified long-term maintenance — no databases, plugins, or updates to babysit.
 
-### Reflection
+## Reflection
 
 Shrike was a reminder that simple tech, done well, can be transformative. It doesn’t take a complicated stack to deliver real value — just clean design, predictable tooling, and empathy for the people who’ll maintain it later.
 
-### Tech Stack
+## Tech Stack
 
 **Nuxt 4**, **Vue 3**, **TypeScript**, **TailwindCSS**, **pnpm**, **Nuxt Content Studio**, **GitHub Pages**

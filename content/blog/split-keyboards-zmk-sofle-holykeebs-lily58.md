@@ -16,9 +16,9 @@ published: true
 featured: false
 featured_image: /images/keyboards/keyboards-collection-1.jpg
 slug: split-keyboards-zmk-sofle-holykeebs-lily58
+seo:
+  title: 'Falling for Split Keyboards: Sofle, Lily58, HolyKeebs'
 ---
-
-# Falling for Split Keyboards: Sofle ZMK, Lily58, and HolyKeebs Peripherals
 
 Split keyboards changed how I work. My hands relax and my shoulders drop. With ZMK on a Sofle and a QMK Lily58 nearby, I can mold input to the way my brain actually thinks.
 

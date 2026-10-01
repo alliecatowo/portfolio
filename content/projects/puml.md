@@ -29,6 +29,8 @@ github: https://github.com/alliecatowo/puml
 demo: https://alliecatowo.github.io/puml/editor/
 image: /images/projects/puml/card.webp
 imageAlt: 'The puml studio editor with PlantUML class source on the left and the SVG class diagram, rendered by the in-browser WASM engine, on the right.'
+seo:
+  title: 'puml: PlantUML-compatible diagrams in Rust'
 ---
 
 **UML that compiles: PlantUML diagrams, no Java, no Graphviz.**

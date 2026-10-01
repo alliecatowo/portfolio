@@ -26,6 +26,8 @@ github: https://github.com/alliecatowo/git-why
 demo: https://alliecatowo.github.io/git-why/
 image: /images/projects/git-why/card.webp
 imageAlt: 'Git Why docs site: "Finds the history that explains the code", with an orange magnifying glass over a line of commits.'
+seo:
+  title: 'Git Why: find the commit that explains the code'
 ---
 
 **`git blame` tells you who changed the code. `git why` finds the history that explains it.**
