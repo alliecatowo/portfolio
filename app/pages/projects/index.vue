@@ -199,10 +199,10 @@ onMounted(() => {
 })
 
 // "All" lists groups in theme order so related work clusters together;
-// within a group, projects keep the fetchProjects order.
+// within a group, `groupOrder` picks the lead, then the fetchProjects order.
 const orderedProjects = computed<Project[]>(() => {
   const list = projects.value ?? []
-  return groups.value.flatMap(g => list.filter(p => projectGroupOf(p.group).key === g.key))
+  return groups.value.flatMap(g => sortProjectsInGroup(list.filter(p => projectGroupOf(p.group).key === g.key)))
 })
 
 const visibleProjects = computed<Project[]>(() => {
