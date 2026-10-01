@@ -87,13 +87,13 @@
         <h2 id="project-list-title" class="sr-only">{{ activeLabel }}</h2>
 
         <div v-if="visibleProjects.length" class="@container">
-          <div class="project-grid grid gap-4" :style="{ '--cells-wide': cellCount.wide, '--cells-bento': cellCount.bento }">
+          <div class="project-grid grid gap-4" :style="{ '--fill-2': plan.fill[2], '--fill-3': plan.fill[3], '--fill-4': plan.fill[4] }">
             <ProjectTile
               v-for="(project, index) in visibleProjects"
               :key="project.slug || project.path || project.title"
               :project="project"
               :feature="isFeature(project)"
-              :bento="bento"
+              :sizes="plan.sizes[index]"
               :group-label="activeGroup === 'all' ? projectGroupOf(project.group).label : undefined"
               :eager="index < 4"
             />
@@ -168,7 +168,10 @@ const activeLabel = computed(() =>
 function readQuery() {
   const g = typeof route.query.group === 'string' ? route.query.group : 'all'
   activeGroup.value = groups.value.some(x => x.key === g) ? g : 'all'
-  search.value = typeof route.query.q === 'string' ? route.query.q : ''
+  // writeQuery stores the trimmed text; don't echo that back over what is
+  // being typed (it would eat the space in "react native").
+  const q = typeof route.query.q === 'string' ? route.query.q : ''
+  if (q !== search.value.trim()) search.value = q
 }
 
 function writeQuery() {
@@ -218,20 +221,11 @@ const resultsLabel = computed(() => {
   return `${n} ${n === 1 ? 'project' : 'projects'} shown: ${activeLabel.value}${search.value.trim() ? `, matching “${search.value.trim()}”` : ''}`
 })
 
-// 2x2 feature tiles only in the unfiltered view: there are enough 1x1 tiles
-// after them to pack around. A filtered set can be one or two projects, where
-// a 2x2 tile would strand a 2x2 hole the one-row filler can't cover.
-const bento = computed(() => activeGroup.value === 'all' && !search.value.trim())
+// Tile sizes per column count, shrunk where a big tile would leave a gap,
+// plus how wide the trailing CTA tile must be (see utils/packMosaic).
+const plan = computed(() => planMosaic(visibleProjects.value.map(isFeature)))
 
-// Grid cells the visible tiles occupy, so the CSS can size the trailing
-// filler tile. A feature tile is 2x1, or 2x2 in bento mode from four columns.
-const cellCount = computed(() => {
-  const features = visibleProjects.value.filter(isFeature).length
-  const n = visibleProjects.value.length
-  return { wide: n + features, bento: n + (bento.value ? 3 : 1) * features }
-})
-
-// Award winners and featured projects get the wide tile.
+// Award winners and featured projects get the big tiles.
 function isFeature(project: Project) {
   return Boolean(project.award || project.featured)
 }
@@ -244,29 +238,23 @@ useSiteSeo({
 
 <style scoped>
 /*
- * One dense mosaic for every filter. Column count is explicit (not
- * auto-fill) so CSS knows it: one column per ~16rem of container width.
- * Feature tiles are 2x1 at 2-3 columns and 2x2 at 4 (ProjectTile uses the
- * same 33rem / 67rem container breakpoints), and `dense` backfills any cell a
- * big tile would strand.
+ * One dense mosaic for every filter. The column count is explicit (not
+ * auto-fill) so the layout can be planned ahead: one column per ~16rem of
+ * container width, at the same 33rem / 50rem / 67rem breakpoints that
+ * ProjectTile and utils/packMosaic use. The CTA tile spans the run of cells
+ * the plan says is left on the last row (or a full row).
  */
 .project-grid {
-  --cols: 1;
-  --cells: var(--cells-wide);
-  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  --fill: 1;
+  grid-template-columns: repeat(var(--cols, 1), minmax(0, 1fr));
   grid-auto-flow: row dense;
 }
-@container (width >= 33rem) { .project-grid { --cols: 2; } }
-@container (width >= 50rem) { .project-grid { --cols: 3; } }
-@container (width >= 67rem) { .project-grid { --cols: 4; --cells: var(--cells-bento); } }
+@container (width >= 33rem) { .project-grid { --cols: 2; --fill: var(--fill-2); } }
+@container (width >= 50rem) { .project-grid { --cols: 3; --fill: var(--fill-3); } }
+@container (width >= 67rem) { .project-grid { --cols: 4; --fill: var(--fill-4); } }
 
-/*
- * The CTA tile spans the cells left on the last row, or a full row when the
- * tiles fill it exactly: ((cols - cells % cols - 1) mod cols) + 1.
- * Browsers without CSS mod() ignore this and give it one cell.
- */
 .grid-filler {
-  grid-column: span calc(mod(var(--cols) - mod(var(--cells), var(--cols)) - 1, var(--cols)) + 1);
+  grid-column: span var(--fill);
 }
 
 @media (prefers-reduced-motion: reduce) {

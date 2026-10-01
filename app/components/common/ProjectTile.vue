@@ -4,25 +4,21 @@
     stretched title link; the repo/demo icons sit above it (z-10) so they stay
     separate targets without nesting links.
 
-    `feature` tiles follow the grid (the nearest @container): at two and three
-    columns (>= 33rem) they span two, image-left / text-right, one row tall;
-    from four columns (>= 67rem), when `bento` is set, they become 2x2 tiles
-    whose image grows to fill the height. pages/projects/index.vue counts cells with the same
-    breakpoints.
+    `sizes` (from utils/packMosaic) says how big the tile is at each column
+    count of the grid, which is the nearest @container: 2 columns from 33rem,
+    3 from 50rem, 4 from 67rem. "wide" is 2x1, image left and text right;
+    "bento" is 2x2 with the image growing to fill the height.
   -->
   <article
     class="group/tile relative flex flex-col overflow-hidden rounded-xl border border-default/60 bg-elevated/40 backdrop-blur-sm transition-[border-color] duration-200 hover:border-primary/60 has-[.tile-link:focus-visible]:ring-2 has-[.tile-link:focus-visible]:ring-primary motion-safe:transition-[transform,border-color] motion-safe:hover:-translate-y-0.5"
     :class="[
-      feature && 'tile-feature @min-[33rem]:col-span-2 @min-[33rem]:flex-row border-primary/40 shadow-[0_10px_36px_rgba(236,72,153,0.12)]',
-      feature && bento && '@min-[67rem]:row-span-2 @min-[67rem]:flex-col'
+      feature && 'border-primary/40 shadow-[0_10px_36px_rgba(236,72,153,0.12)]',
+      layout.root
     ]"
   >
     <div
       class="relative aspect-video shrink-0 overflow-hidden bg-default"
-      :class="[
-        feature && '@min-[33rem]:aspect-auto @min-[33rem]:w-1/2 @min-[33rem]:min-h-48',
-        feature && bento && '@min-[67rem]:w-full @min-[67rem]:flex-1 @min-[67rem]:min-h-56'
-      ]"
+      :class="layout.media"
     >
       <NuxtImg
         v-if="project.image"
@@ -41,7 +37,7 @@
       </div>
     </div>
 
-    <div class="flex flex-1 flex-col gap-2 p-4" :class="[feature && '@min-[33rem]:p-5', feature && bento && '@min-[67rem]:flex-none']">
+    <div class="flex flex-1 flex-col gap-2 p-4" :class="layout.body">
       <p v-if="groupLabel" class="truncate text-[0.6875rem] font-medium uppercase tracking-wider text-primary/90">
         {{ groupLabel }}
       </p>
@@ -101,6 +97,7 @@
 <script setup lang="ts">
 import AwardBadge from '~/components/common/AwardBadge.vue'
 import CardImageFallback from '~/components/common/CardImageFallback.vue'
+import type { MosaicColumns, TileSize } from '~/utils/packMosaic'
 
 interface TileProject {
   title: string
@@ -117,14 +114,52 @@ interface TileProject {
 const props = withDefaults(defineProps<{
   project: TileProject
   feature?: boolean
-  bento?: boolean
+  sizes?: Record<MosaicColumns, TileSize>
   groupLabel?: string
   eager?: boolean
 }>(), {
   feature: false,
-  bento: false,
+  sizes: () => ({ 2: 'single', 3: 'single', 4: 'single' }),
   groupLabel: undefined,
   eager: false
+})
+
+// Container-range classes per column count. Spelled out in full so Tailwind
+// can see every one of them.
+const WIDE = {
+  2: {
+    root: '@min-[33rem]:@max-[50rem]:col-span-2 @min-[33rem]:@max-[50rem]:flex-row',
+    media: '@min-[33rem]:@max-[50rem]:aspect-auto @min-[33rem]:@max-[50rem]:w-1/2 @min-[33rem]:@max-[50rem]:min-h-48',
+    body: '@min-[33rem]:@max-[50rem]:p-5'
+  },
+  3: {
+    root: '@min-[50rem]:@max-[67rem]:col-span-2 @min-[50rem]:@max-[67rem]:flex-row',
+    media: '@min-[50rem]:@max-[67rem]:aspect-auto @min-[50rem]:@max-[67rem]:w-1/2 @min-[50rem]:@max-[67rem]:min-h-48',
+    body: '@min-[50rem]:@max-[67rem]:p-5'
+  },
+  4: {
+    root: '@min-[67rem]:col-span-2 @min-[67rem]:flex-row',
+    media: '@min-[67rem]:aspect-auto @min-[67rem]:w-1/2 @min-[67rem]:min-h-48',
+    body: '@min-[67rem]:p-5'
+  }
+} as const
+const BENTO_4 = {
+  root: '@min-[67rem]:col-span-2 @min-[67rem]:row-span-2',
+  media: '@min-[67rem]:aspect-auto @min-[67rem]:flex-1 @min-[67rem]:min-h-56',
+  body: '@min-[67rem]:p-5 @min-[67rem]:flex-none'
+} as const
+
+const layout = computed(() => {
+  const parts = { root: [] as string[], media: [] as string[], body: [] as string[] }
+  for (const cols of [2, 3, 4] as const) {
+    const size = props.sizes[cols]
+    const cls = size === 'bento' && cols === 4 ? BENTO_4 : size !== 'single' ? WIDE[cols] : null
+    if (!cls) continue
+    parts.root.push(cls.root)
+    parts.media.push(cls.media)
+    parts.body.push(cls.body)
+  }
+  return { root: parts.root.join(' '), media: parts.media.join(' '), body: parts.body.join(' ') }
 })
 
 const techLimit = computed(() => (props.feature ? 4 : 3))
