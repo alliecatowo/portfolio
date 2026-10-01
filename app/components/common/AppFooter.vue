@@ -113,9 +113,9 @@ type FooterContent = {
 const fallbackFooter: FooterContent = {
   brand: {
     title: 'Allison Coleman',
-    tagline: 'Agent systems, developer tools, languages & weird computers'
+    tagline: 'Agent systems, developer tools, languages & runtimes'
   },
-  description: 'Agent systems, developer tools, languages & weird computers',
+  description: 'Agent systems, developer tools, languages & runtimes',
   socials: [
     {
       label: 'GitHub',
@@ -147,10 +147,10 @@ const fallbackFooter: FooterContent = {
   ],
   navigation: [
     { label: 'Home', to: '/' },
-    { label: 'About', to: '/about' },
-    { label: 'Projects', to: '/projects' },
-    { label: 'Blog', to: '/blog' },
-    { label: 'Contact', to: '/contact' }
+    { label: 'About', to: '/about/' },
+    { label: 'Projects', to: '/projects/' },
+    { label: 'Blog', to: '/blog/' },
+    { label: 'Contact', to: '/contact/' }
   ],
   contact: {
     description: 'Feel free to reach out for collaborations or just a friendly hello.',

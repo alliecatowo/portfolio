@@ -26,6 +26,8 @@ github: https://github.com/alliecatowo/couchcircle
 demo: https://couchcircle.vercel.app
 image: /images/projects/couchcircle/card.webp
 imageAlt: 'A CouchCircle room: a synced video on the stage and two avatars on a couch in an illustrated living room.'
+seo:
+  title: 'CouchCircle: a cozy real-time watch party'
 ---
 
 **watch together, actually together.**

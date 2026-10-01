@@ -22,6 +22,9 @@ tags:
   - transcription
   - recipes
 github: https://github.com/alliecatowo/recipe-bot
+seo:
+  title: 'Recipe Bot: Instagram cooking videos to recipes'
+  description: 'A 2024 CLI that turns Instagram cooking videos into Markdown recipes: download, transcribe with Whisper, check it is a recipe, then write it up with GPT.'
 ---
 
 **The recipe is in the video. Nobody wrote it down.**

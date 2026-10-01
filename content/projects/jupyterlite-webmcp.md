@@ -32,6 +32,8 @@ devpost: https://devpost.com/software/jupyterlite-webmcp
 image: /images/projects/jupyterlite-webmcp/card.webp
 imageAlt: JupyterLite notebook with the Agent panel in Propose mode. An agent's proposed edit is shown as a red and green diff under the cell, with Accept and Deny buttons, waiting for review.
 ogImage: /images/og/jupyterlite-webmcp.png
+seo:
+  title: 'JupyterLite WebMCP: OpenAI WebMCP Challenge winner'
 ---
 
 **Your notebook is already in the browser. Now your agent can be too.**

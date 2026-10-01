@@ -1,15 +1,15 @@
 slug: about
 layout: about
 seo:
-  title: About Allison Coleman
-  description: Allison Coleman is a software engineer at Hinge Health in the Bay Area, building agent systems, developer tools, and languages/runtimes. Creator of JupyterLite WebMCP, an OpenAI WebMCP Challenge winner.
+  title: 'About Allison Coleman: agent systems & developer tools'
+  description: Allison Coleman is a Bay Area software engineer at Hinge Health building agent systems and developer tools, and the creator of JupyterLite WebMCP.
 hero:
   title: Hi, I'm Allison!
   subtitle: 'Software engineer: agent systems, developer tools, languages & runtimes'
   image:
     src: /images/ghibli-pfp.png
     alt: Illustrated portrait of Allison Coleman
-    status: Open to hackathon partners & weird collaborations
+    status: Open to hackathons & side-project collabs
   stats:
     - label: WebMCP Challenge winners
       value: 1 of 10
@@ -18,7 +18,7 @@ hero:
     - label: Red Bull consumed
       value: ∞
   body: |
-    I'm a software engineer at Hinge Health, living in the Bay Area. I build agent systems, developer tools, languages and runtimes, and the occasional weird computer. Mostly I yell at robots and occasionally program things.
+    I'm a software engineer at Hinge Health, living in the Bay Area. I build agent systems, developer tools, and languages and runtimes, and after hours I keep the firmware for my split keyboards and a homelab running. Mostly I yell at robots and occasionally program things.
 
     Lately that means agents that work inside the tools you already have open instead of a chatbot bolted on the side, typed shells and languages for agent workflows, and terminals that don't waste your GPU.
   award:
@@ -32,7 +32,7 @@ hero:
       size: lg
       icon: i-lucide-folder
       iconPosition: leading
-    - label: Say Hi
+    - label: Contact Me
       to: /contact/
       variant: outline
       color: primary
@@ -173,8 +173,8 @@ life:
       to: /projects/termagatchi/
       description: Where it started. These days it's things like Termagatchi, an AI pet that lives in your terminal.
 cta:
-  title: Say Hi
-  description: Building something weird? Want a hackathon partner? Thinking about starting something? My inbox is open.
+  title: Got an Idea?
+  description: Hackathon invites, side projects, WebMCP questions and keyboard photos are all welcome. My inbox is open.
   buttons:
     - label: Get In Touch
       to: /contact/

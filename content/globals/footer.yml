@@ -1,8 +1,8 @@
 slug: footer
 brand:
   title: 'Allison Coleman'
-  tagline: 'Agent systems, developer tools, languages & weird computers'
-description: 'Agent systems, developer tools, languages & weird computers'
+  tagline: 'Agent systems, developer tools, languages & runtimes'
+description: 'Agent systems, developer tools, languages & runtimes'
 socials:
   - label: GitHub
     href: 'https://github.com/alliecatowo'
@@ -27,13 +27,13 @@ navigation:
   - label: Home
     to: '/'
   - label: About
-    to: '/about'
+    to: '/about/'
   - label: Projects
-    to: '/projects'
+    to: '/projects/'
   - label: Blog
-    to: '/blog'
+    to: '/blog/'
   - label: Contact
-    to: '/contact'
+    to: '/contact/'
 contact:
   description: 'Feel free to reach out for collaborations or just a friendly hello.'
   email: 'me@allisons.dev'

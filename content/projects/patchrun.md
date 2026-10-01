@@ -18,6 +18,8 @@ tags:
   - agents
   - dry-run
 github: https://github.com/alliecatowo/patchrun
+seo:
+  title: 'patchrun: run commands in a disposable worktree'
 ---
 
 **Command in, patch out.**

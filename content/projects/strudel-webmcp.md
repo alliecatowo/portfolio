@@ -27,6 +27,8 @@ demo: https://strudel-webmcp.vercel.app
 devpost: https://devpost.com/software/strudel-webmcp
 image: /images/projects/strudel-webmcp/card.webp
 imageAlt: 'Video thumbnail reading "The agent proposes. You hit accept." over a Strudel editor showing an agent proposal diff.'
+seo:
+  title: 'Strudel WebMCP: agents in a live-coding REPL'
 ---
 
 **Live-code together.**

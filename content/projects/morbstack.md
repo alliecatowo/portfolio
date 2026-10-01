@@ -25,6 +25,8 @@ tags:
 github: https://github.com/alliecatowo/morbstack
 image: /images/projects/morbstack/card.webp
 imageAlt: "Morbstack's native macOS Containers window: 38 containers, with a Compose project and the Kubernetes system containers each collapsed into one grouped row."
+seo:
+  title: 'Morbstack: a native macOS Docker Desktop alternative'
 ---
 
 **The Docker you wish Docker shipped.**

@@ -22,6 +22,8 @@ github: https://github.com/alliecatowo/storybook-webmcp
 demo: https://storybook-web-mcp.vercel.app/storybook/
 image: /images/projects/storybook-webmcp/card.webp
 imageAlt: 'Storybook with a WebMCP panel listing the story tools an agent can call and its recent calls.'
+seo:
+  title: 'Storybook WebMCP: stories as WebMCP tools'
 ---
 
 **Built, deployed, and deliberately not submitted.**

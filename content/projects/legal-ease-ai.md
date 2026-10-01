@@ -27,15 +27,17 @@ group: earlier-work
 image: /images/legalease/search-hero-pink-dark.png
 imageAlt: LegalEase AI search page in the dark pink theme, with the hybrid search box and filters for cases, types and levels
 title: LegalEase AI
-description: Self-hosted legal discovery platform for messy, sensitive data.
+description: 'Self-hosted legal discovery for messy, sensitive evidence: Docling OCR, hybrid BM25 and vector search in Qdrant, WhisperX transcription, and local LLMs via Ollama.'
 date: 2025-08-30
 status: published
 featured: false
 github: https://github.com/alliecatowo/legalease-ai
 demo: https://legal-ease.app
+seo:
+  title: 'LegalEase AI: self-hosted legal discovery'
 ---
 
-# Overview
+## Overview
 
 LegalEase AI is a self-hosted workspace built for legal teams, investigators, and anyone who has to wrestle with massive piles of unstructured evidence like PDFs, videos, audio, and exports from forensic tools.
 
@@ -51,7 +53,7 @@ Legal discovery is chaos: mixed file formats, poor metadata, and sensitive mater
 
 ---
 
-![transcription-speaker-diarization.png](/images/legalease/transcription-speaker-diarization.png)
+![LegalEase transcript view: a two-speaker conversation split into timestamped, speaker-labelled segments, with per-speaker word counts and speaking time](/images/legalease/transcription-speaker-diarization.png)
 
 ---
 

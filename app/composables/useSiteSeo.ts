@@ -14,6 +14,8 @@ export interface SiteSeoInput {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[] | null
   publishedTime?: string
   modifiedTime?: string
+  /** Trail after Home, e.g. [{ name: 'Projects', path: '/projects/' }, { name: 'Glassy' }]; adds a BreadcrumbList. */
+  breadcrumbs?: { name: string, path?: string }[]
 }
 
 export const DEFAULT_OG_IMAGE = '/images/og/default.png'
@@ -21,7 +23,18 @@ const DEFAULT_OG_ALT = 'Allison Coleman: agent systems, developer tools, languag
 const SITE_NAME = 'Allison Coleman'
 const TWITTER = '@AllieCatOwO'
 
+const TITLE_SUFFIX = ` – ${SITE_NAME}`
+// Titles longer than this get no " – Allison Coleman" suffix (search results cut off around 60).
+const MAX_TITLE = 65
+
 const withSlash = (p: string) => (p.endsWith('/') ? p : `${p}/`)
+
+/** "Page – Allison Coleman", unless the title already names her or the suffix would push it past MAX_TITLE. */
+export const siteTitle = (title: string, isHome = false) => {
+  const t = title.trim()
+  if (isHome || t.includes(SITE_NAME) || t.length + TITLE_SUFFIX.length > MAX_TITLE) return t
+  return `${t}${TITLE_SUFFIX}`
+}
 
 /**
  * Returns a lookup for /images/og/<slug>.png, resolved against the files present at build time.
@@ -48,7 +61,7 @@ export function useSiteSeo(input: MaybeRefOrGetter<SiteSeoInput>) {
     const isHome = path === '/'
     return {
       ...i,
-      fullTitle: isHome ? i.title.trim() : `${i.title.trim()} – ${SITE_NAME}`,
+      fullTitle: siteTitle(i.title, isHome),
       canonical: absolute(path),
       image: absolute(i.image || DEFAULT_OG_IMAGE),
       imageAlt: i.imageAlt || (i.image ? i.title : DEFAULT_OG_ALT)
@@ -77,8 +90,21 @@ export function useSiteSeo(input: MaybeRefOrGetter<SiteSeoInput>) {
   })
 
   useHead(() => {
-    const { canonical, jsonLd } = seo.value
-    const nodes = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []
+    const { canonical, jsonLd, breadcrumbs } = seo.value
+    const nodes = Array.isArray(jsonLd) ? [...jsonLd] : jsonLd ? [jsonLd] : []
+    if (breadcrumbs?.length) {
+      const trail = [{ name: 'Home', path: '/' }, ...breadcrumbs]
+      nodes.push({
+        '@type': 'BreadcrumbList',
+        'itemListElement': trail.map((crumb, index) => ({
+          '@type': 'ListItem',
+          'position': index + 1,
+          'name': crumb.name,
+          // The last crumb is the current page
+          'item': crumb.path ? absolute(withSlash(crumb.path)) : canonical
+        }))
+      })
+    }
     const data = nodes.length === 1
       ? { '@context': 'https://schema.org', ...nodes[0] }
       : { '@context': 'https://schema.org', '@graph': nodes }

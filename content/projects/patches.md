@@ -27,6 +27,8 @@ tags:
 github: https://github.com/alliecatowo/patches
 image: /images/projects/patches/card.webp
 imageAlt: 'The Patches terminal client: a chronological home feed of three posts, connected to patches-social.fly.dev, with keyboard hints.'
+seo:
+  title: 'Patches: a social network for your terminal'
 ---
 
 **Terminal-native social media: chronological, open source, and no ranking algorithm.**

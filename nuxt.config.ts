@@ -1,5 +1,33 @@
 import { existsSync, readdirSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { defineNuxtConfig } from 'nuxt/config'
+import { imageDimensions } from './scripts/image-dimensions'
+
+const publicDir = fileURLToPath(new URL('./public', import.meta.url))
+
+// Walks a parsed Markdown body (minimark arrays or the full AST) and gives every local
+// <img> an `aspect-ratio: auto W / H` style plus lazy loading, so prose images don't
+// shift the layout. `auto` lets the real image ratio win once it has loaded.
+function addImageHints(node: unknown): void {
+  if (!node || typeof node !== 'object') return
+  if (Array.isArray(node)) {
+    if (node[0] === 'img' && node[1] && typeof node[1] === 'object') hintImage(node[1] as Record<string, unknown>)
+    node.forEach(addImageHints)
+    return
+  }
+  const n = node as { tag?: string, props?: Record<string, unknown>, children?: unknown, value?: unknown }
+  if (n.tag === 'img' && n.props) hintImage(n.props)
+  addImageHints(n.children)
+  addImageHints(n.value)
+}
+function hintImage(props: Record<string, unknown>) {
+  const src = props.src
+  if (typeof src !== 'string' || !src.startsWith('/') || src.startsWith('//')) return
+  const size = imageDimensions(`${publicDir}${decodeURI(src.split(/[?#]/)[0]!)}`)
+  if (size && !props.style) props.style = `aspect-ratio: auto ${size.width} / ${size.height}`
+  props.loading ??= 'lazy'
+  props.decoding ??= 'async'
+}
 
 // Per-page OG images live at public/images/og/<slug>.png. Project pages pick theirs up
 // by slug when no `ogImage` is set in frontmatter (see useSiteSeo/projectOgImage).
@@ -40,16 +68,29 @@ export default defineNuxtConfig({
   robots: {
     disallow: ['/_studio']
   },
+  sitemap: {
+    // Auto-discovered <image:loc> entries came out double-escaped (&amp;amp;) for /_ipx URLs
+    discoverImages: false
+  },
   hooks: {
-    // Keep drafts out of the sitemap: unpublished blog posts and draft projects.
-    // Runs before @nuxtjs/sitemap's own afterParse hook, which drops falsy `sitemap` values.
     'content:file:afterParse'(ctx) {
       const { collection, content } = ctx
+      // Keep drafts out of the sitemap: unpublished blog posts and draft projects.
+      // Runs before @nuxtjs/sitemap's own afterParse hook, which drops falsy `sitemap` values.
       const isDraftPost = collection.name === 'blog' && content.published !== true
       const isDraftProject = collection.name === 'projects' && (content.status ?? 'draft') === 'draft'
       if (isDraftPost || isDraftProject) {
         content.sitemap = false
+      } else if (collection.name === 'blog' || collection.name === 'projects') {
+        // lastmod from the content date (YAML dates may arrive as Date objects)
+        const date = new Date(content.date as string)
+        if (!Number.isNaN(date.getTime())) {
+          const existing = typeof content.sitemap === 'object' && content.sitemap ? content.sitemap : {}
+          content.sitemap = { ...existing, lastmod: date.toISOString().slice(0, 10) }
+        }
       }
+      // Markdown images: reserve their box (aspect-ratio from the file's real size) and lazy-load them.
+      if (content.body) addImageHints(content.body)
     }
   },
   content: {
@@ -84,7 +125,7 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'format-detection', content: 'telephone=no' },
         { name: 'theme-color', content: '#FF69B4' },
-        { name: 'description', content: 'Allison Coleman — software engineer building agent systems, developer tools, and languages/runtimes.' },
+        { name: 'description', content: 'Allison Coleman, software engineer: agent systems, developer tools, and languages & runtimes.' },
         { property: 'og:site_name', content: 'Allison Coleman' },
         { name: 'twitter:site', content: '@AllieCatOwO' },
         { name: 'twitter:creator', content: '@AllieCatOwO' }
@@ -131,7 +172,9 @@ export default defineNuxtConfig({
       crawlLinks: true,
       failOnError: false,
       // Exclude Studio and API routes from crawl-based pre-rendering
-      ignore: ['/_studio', '/_studio/**', '/api/_content/**']
+      ignore: ['/_studio', '/_studio/**', '/api/_content/**'],
+      // Not linked from any page, so the crawler won't find it
+      routes: ['/llms.txt']
     }
   },
   ...({ image: {

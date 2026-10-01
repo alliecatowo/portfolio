@@ -24,6 +24,8 @@ tags:
 github: https://github.com/alliecatowo/daggler
 image: /images/projects/daggler/card.webp
 imageAlt: "Daggler grading an AI triage-agent workflow F for security, flagging untrusted issue text passed into the agent's prompt and agent output being executed."
+seo:
+  title: 'Daggler: a semantic IDE for GitHub Actions'
 ---
 
 **The semantic workbench for GitHub Actions.**

@@ -2,23 +2,26 @@ import { readdirSync, readFileSync } from 'node:fs'
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
 import { asSitemapCollection } from '@nuxtjs/sitemap/content'
 
-// Unpublished blog posts (anything without `published: true`) stay in content/blog for
-// dev preview, Studio and `validate:content`, but production builds leave them out of the
-// collection entirely. Filtering `published` at query time isn't enough: every collection
-// row, body included, ships to the client in /__nuxt_content/blog/sql_dump.txt.
-// Set CONTENT_INCLUDE_DRAFTS=true to keep them in a production build (e.g. a Studio host).
-function unpublishedBlogPosts(): string[] {
-  const dir = new URL('./content/blog/', import.meta.url)
+// Drafts stay in content/ for dev preview, Studio and `validate:content`, but production
+// builds leave them out of their collection entirely. Filtering at query time isn't enough:
+// every collection row, body included, ships to the client in
+// /__nuxt_content/<collection>/sql_dump.txt.
+// Blog posts need `published: true`; projects need `status: published` (the schema default
+// is draft). Set CONTENT_INCLUDE_DRAFTS=true to keep drafts in a production build (e.g. a
+// Studio/SSR host).
+function draftFiles(collection: string, isPublished: RegExp): string[] {
+  const dir = new URL(`./content/${collection}/`, import.meta.url)
   return readdirSync(dir, { recursive: true, encoding: 'utf8' })
     .filter(file => file.endsWith('.md'))
     .filter((file) => {
       const frontmatter = readFileSync(new URL(file, dir), 'utf8').match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? ''
-      return !/^published:\s*true\s*$/m.test(frontmatter)
+      return !isPublished.test(frontmatter)
     })
-    .map(file => `blog/${file}`)
+    .map(file => `${collection}/${file}`)
 }
 const excludeDrafts = process.env.NODE_ENV === 'production' && process.env.CONTENT_INCLUDE_DRAFTS !== 'true'
-const blogDrafts = excludeDrafts ? unpublishedBlogPosts() : []
+const blogDrafts = excludeDrafts ? draftFiles('blog', /^published:\s*true\s*$/m) : []
+const projectDrafts = excludeDrafts ? draftFiles('projects', /^status:\s*['"]?published['"]?\s*$/m) : []
 
 export default defineContentConfig({
   collections: {
@@ -54,7 +57,7 @@ export default defineContentConfig({
     })),
     projects: defineCollection(asSitemapCollection({
       type: 'page',
-      source: 'projects/**/*.md',
+      source: { include: 'projects/**/*.md', exclude: projectDrafts },
       schema: z.object({
         title: z.string(),
         date: z.union([z.string(), z.date()]).transform(v => String(v)),

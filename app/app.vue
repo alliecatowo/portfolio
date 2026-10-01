@@ -1,5 +1,5 @@
 <template>
-  <UApp>
+  <UApp :locale="locale">
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
@@ -18,12 +18,34 @@
 </template>
 
 <script setup lang="ts">
+import { en } from '@nuxt/ui/locale'
+import type { ContentNavigationItem } from '@nuxt/content'
+
+// Nuxt UI 4.0's English locale has no contentSearch.title/description, so the
+// search dialog's (screen-reader) title and description showed the raw keys.
+// Patch the shared `en` object itself: useLocale() is a shared composable on the
+// client, so a locale passed only to <UApp> can lose to the first caller's default
+// (`en`), and the dialog kept showing the keys.
+Object.assign(en.messages.contentSearch, {
+  title: 'Search the site',
+  description: 'Search projects, posts and pages'
+})
+const locale = en
+
+// Content paths have no trailing slash; link to the canonical /path/ form instead.
+const slashNav = (items: ContentNavigationItem[]): ContentNavigationItem[] =>
+  items.map(item => ({
+    ...item,
+    path: withTrailingSlashPath(item.path),
+    ...(item.children && { children: slashNav(item.children) })
+  }))
+
 const { data: navigation } = await useAsyncData('navigation', async () => {
   const [blogNavigation, projectsNavigation] = await Promise.all([
     queryCollectionNavigation('blog').where('published', '=', true),
     queryCollectionNavigation('projects').where('status', '<>', 'draft')
   ])
-  return [...blogNavigation, ...projectsNavigation]
+  return slashNav([...blogNavigation, ...projectsNavigation])
 })
 
 const { data: files } = useLazyAsyncData('content-search', async () => {
@@ -31,7 +53,7 @@ const { data: files } = useLazyAsyncData('content-search', async () => {
     queryCollectionSearchSections('blog').where('published', '=', true),
     queryCollectionSearchSections('projects').where('status', '<>', 'draft')
   ])
-  return [...blogSections, ...projectSections]
+  return [...blogSections, ...projectSections].map(file => ({ ...file, id: withTrailingSlashPath(file.id) }))
 }, {
   server: false
 })
@@ -39,15 +61,15 @@ const { data: files } = useLazyAsyncData('content-search', async () => {
 const links = [{
   label: 'Blog',
   icon: 'i-lucide-pen-tool',
-  to: '/blog'
+  to: '/blog/'
 }, {
   label: 'Projects',
   icon: 'i-lucide-folder',
-  to: '/projects'
+  to: '/projects/'
 }, {
   label: 'About',
   icon: 'i-lucide-user',
-  to: '/about'
+  to: '/about/'
 }]
 
 const groups = [{
@@ -56,7 +78,7 @@ const groups = [{
   items: [{
     label: 'Email Me',
     icon: 'i-lucide-mail',
-    to: '/contact'
+    to: '/contact/'
   }, {
     label: 'GitHub',
     icon: 'i-lucide-github',

@@ -495,7 +495,7 @@ const timelineTextClass = accentTextClass
 const timelineBulletClass = (color?: string) => getAccent(color).bullet
 
 useSiteSeo(() => ({
-  title: 'About',
+  title: seo.value?.title || 'About Allison Coleman',
   description: seo.value?.description
     || 'About Allison Coleman: software engineer building agent systems, developer tools, and languages/runtimes.',
   type: 'profile',

@@ -25,6 +25,8 @@ demo: https://careers-webmcp.vercel.app/careers/open-positions
 devpost: https://devpost.com/software/careers-webmcp
 image: /images/projects/careers-webmcp/card.webp
 imageAlt: 'Video thumbnail reading "The agent fills the form. You press the button." over a pre-filled candidate sign-up form.'
+seo:
+  title: 'Careers WebMCP: OpenAI WebMCP Challenge entry'
 ---
 
 **The careers page is the connector.**
