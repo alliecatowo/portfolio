@@ -1,12 +1,32 @@
+import { readdirSync, readFileSync } from 'node:fs'
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
 import { asSitemapCollection } from '@nuxtjs/sitemap/content'
 
+// Unpublished blog posts (anything without `published: true`) stay in content/blog for
+// dev preview, Studio and `validate:content`, but production builds leave them out of the
+// collection entirely. Filtering `published` at query time isn't enough: every collection
+// row, body included, ships to the client in /__nuxt_content/blog/sql_dump.txt.
+// Set CONTENT_INCLUDE_DRAFTS=true to keep them in a production build (e.g. a Studio host).
+function unpublishedBlogPosts(): string[] {
+  const dir = new URL('./content/blog/', import.meta.url)
+  return readdirSync(dir, { recursive: true, encoding: 'utf8' })
+    .filter(file => file.endsWith('.md'))
+    .filter((file) => {
+      const frontmatter = readFileSync(new URL(file, dir), 'utf8').match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? ''
+      return !/^published:\s*true\s*$/m.test(frontmatter)
+    })
+    .map(file => `blog/${file}`)
+}
+const excludeDrafts = process.env.NODE_ENV === 'production' && process.env.CONTENT_INCLUDE_DRAFTS !== 'true'
+const blogDrafts = excludeDrafts ? unpublishedBlogPosts() : []
+
 export default defineContentConfig({
   collections: {
-    // Wrapped for @nuxtjs/sitemap; drafts are excluded via the afterParse hook in nuxt.config.ts
+    // Wrapped for @nuxtjs/sitemap; drafts are excluded via the afterParse hook in nuxt.config.ts,
+    // and production builds drop them from the collection entirely (blogDrafts above)
     blog: defineCollection(asSitemapCollection({
       type: 'page',
-      source: 'blog/**/*.md',
+      source: { include: 'blog/**/*.md', exclude: blogDrafts },
       schema: z.object({
         title: z.string(),
         // Accept both string and Date — Nuxt Content may coerce YAML dates
