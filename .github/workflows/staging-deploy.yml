@@ -35,7 +35,7 @@ jobs:
         run: echo "pnpm-store-path=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
 
       - name: Setup pnpm cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ steps.pnpm-cache.outputs.pnpm-store-path }}
           key: ${{ runner.os }}-pnpm10-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
@@ -44,7 +44,7 @@ jobs:
 
       - name: Cache node_modules
         id: cache-deps
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: node_modules
           key: ${{ runner.os }}-pnpm10-node-modules-${{ hashFiles('pnpm-lock.yaml') }}
