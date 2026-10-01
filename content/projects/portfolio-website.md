@@ -7,6 +7,7 @@ featured: false
 github: https://github.com/allisons-dev/portfolio
 group: earlier-work
 image: /screenshot-2025-10-20-at-23-49-08-nuxt-studio.png
+imageAlt: Nuxt Studio open on the blog post Why Nuxt Content Is Perfect for My Portfolio, with the Markdown editor beside a live preview of the page.
 slug: portfolio-website
 status: draft
 tags:

@@ -1,6 +1,6 @@
 ---
 title: My Self‑Hosted Stack on a 16TB Hetzner Box
-author: Allie
+author: Allison Coleman
 category: dev
 date: 2025-08-29
 description: Plex, Jellyfin, Radarr/Sonarr/Lidarr/LazyLibrarian, qBittorrent, Jellyseerr, ProtonVPN, Portainer, and Caddy—running reliably and cheaply.
