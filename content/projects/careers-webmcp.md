@@ -29,7 +29,7 @@ imageAlt: 'Video thumbnail reading "The agent fills the form. You press the butt
 
 **The careers page is the connector.**
 
-One of four entries I submitted to OpenAI's WebMCP Challenge on 3 September 2026, alongside the winning [JupyterLite WebMCP](/projects/jupyterlite-webmcp/), [Swagger UI WebMCP](/projects/swagger-ui-webmcp/) and [Strudel WebMCP](/projects/strudel-webmcp/). All of them were built in under 48 hours from long written contracts handed to coding agents.
+One of four entries Allison submitted to OpenAI's WebMCP Challenge on 3 September 2026, alongside the winning [JupyterLite WebMCP](/projects/jupyterlite-webmcp/), [Swagger UI WebMCP](/projects/swagger-ui-webmcp/) and [Strudel WebMCP](/projects/strudel-webmcp/). All of them were built in under 48 hours from long written contracts handed to coding agents.
 
 Careers WebMCP is a normal careers site for a fictional employer, Northwind. When the browser supports [WebMCP](https://github.com/webmachinelearning/webmcp), the site registers 18 candidate-side tools. The agent can answer compound questions the filter UI can't ("staff or above, SF or remote, at least $220k"), type that query into the site's own search box, open real pages in your tab, co-edit an application draft with you, and pre-fill sign-up.
 

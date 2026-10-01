@@ -29,11 +29,11 @@ github: https://github.com/alliecatowo/allie-cat-corne
 
 **A Corne that said it was a Sofle, a touchpad that wouldn't talk, and the firmware that fixed both.**
 
-I bought a wireless Corne from AliExpress: a Nice!Nano v2 in each half and an Azoteq TPS43 touchpad on the right. The stock firmware called it "Sofle_RGB", and the PCB swaps rows and columns compared with the standard Corne shield, so stock ZMK didn't work.
+Allison bought a wireless Corne from AliExpress: a Nice!Nano v2 in each half and an Azoteq TPS43 touchpad on the right. The stock firmware called it "Sofle_RGB", and the PCB swaps rows and columns compared with the standard Corne shield, so stock ZMK didn't work.
 
 ## Reading the pins out of the factory firmware
 
-Zephyr compiles devicetree into C structs, so there's no pin map to decompile. I wrote `tools/extract_pins.py`, which rebuilds a flat image from the UF2 blocks, finds the GPIO port device structs, follows references to them back to `gpio_dt_spec` arrays, and maps the nRF pins to pro-micro numbers. Running it on the factory backups gave the real pin map, and the ZMK config is built around that.
+Zephyr compiles devicetree into C structs, so there's no pin map to decompile. She wrote `tools/extract_pins.py`, which rebuilds a flat image from the UF2 blocks, finds the GPIO port device structs, follows references to them back to `gpio_dt_spec` arrays, and maps the nRF pins to pro-micro numbers. Running it on the factory backups gave the real pin map, and the ZMK config is built around that.
 
 ## Five things wrong at once
 

@@ -48,9 +48,7 @@ Then there's the **Time Sculpture**. Select a stretch of the world and AFTERLIFE
 
 ![The Time Sculpture orbited to one side: glider paths cross as long diagonal beams through 165 stacked generations.](/images/projects/afterlife/time-sculpture-side.webp)
 
-![The Time Sculpture from a lower angle, showing the opening collision as a wide band of stacked cells with glider beams leaving it.](/images/projects/afterlife/time-sculpture.webp)
-
-_Both captured from the live app: the same 165 generations as the screenshot above, orbited to two angles._
+_Captured from the live app: the same 165 generations as the image at the top of the page, orbited to the side._
 
 ## The rest of the observatory
 

@@ -46,7 +46,7 @@ It also publishes where it loses. On cross-file causal questions, `git log -S` s
 
 ## For agents, including when not to use it
 
-Git Why ships an MCP server plus Claude Code and OpenCode plugins. The plugin's skill tells an agent when to reach for something else: if it can't name the term, use git why; if it can name the symbol, use `git log -S`. A paired agent benchmark is reported in the README as mixed and not significant, and I'm not going to pretend otherwise.
+Git Why ships an MCP server plus Claude Code and OpenCode plugins. The plugin's skill tells an agent when to reach for something else: if it can't name the term, use git why; if it can name the symbol, use `git log -S`. A paired agent benchmark is reported in the README as mixed and not significant, and the page isn't going to pretend otherwise.
 
 ## Status
 

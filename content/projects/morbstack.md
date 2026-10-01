@@ -33,8 +33,6 @@ Morbstack is a native Mac app for Apple silicon that runs the real Docker Engine
 
 It's pre-release (the project calls it milestone M0). There's no DMG yet, so you build it from source.
 
-![Morbstack's native macOS Containers window: 38 containers, with a Compose project and the Kubernetes system containers each collapsed into one grouped row.](/images/projects/morbstack/containers.webp)
-
 ## How it fits together
 
 The Swift daemon owns the VM and relays the Docker socket to the guest over vsock. Inside, `morbinit`, a static Rust PID 1, brings up networking, the data disk, VirtioFS mounts at the same paths as on your Mac, split DNS for `host.docker.internal`, and Rosetta for amd64 images, then supervises stock `dockerd`.

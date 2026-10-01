@@ -24,19 +24,17 @@ image: /images/projects/storybook-webmcp/card.webp
 imageAlt: 'Storybook with a WebMCP panel listing the story tools an agent can call and its recent calls.'
 ---
 
-**The one I built, deployed, and didn't submit.**
+**Built, deployed, and deliberately not submitted.**
 
-This was the first thing I built for OpenAI's WebMCP Challenge, on 1 September 2026, before [JupyterLite WebMCP](/projects/jupyterlite-webmcp/) (the winner), [Swagger UI WebMCP](/projects/swagger-ui-webmcp/), [Careers WebMCP](/projects/careers-webmcp/) and [Strudel WebMCP](/projects/strudel-webmcp/). It works, it's live, and it was never entered.
+This was the first thing Allison built for OpenAI's WebMCP Challenge, on 1 September 2026, before [JupyterLite WebMCP](/projects/jupyterlite-webmcp/) (the winner), [Swagger UI WebMCP](/projects/swagger-ui-webmcp/), [Careers WebMCP](/projects/careers-webmcp/) and [Strudel WebMCP](/projects/strudel-webmcp/). It works, it's live, and it was never entered.
 
 Storybook WebMCP is a Storybook addon that compiles the live stories, controls, globals and viewport state into versioned [WebMCP](https://github.com/webmachinelearning/webmcp) tools, so a browser agent can find a story, open it and change its controls. A "WebMCP" panel in the Storybook manager shows the current tool surface, the compiler state and the agent's recent calls. It demos against the Mealdrop example Storybook.
 
-![Storybook with a WebMCP panel listing the story tools an agent can call and its recent calls.](/images/projects/storybook-webmcp/review-panel.webp)
-
-_The Mealdrop Review story with the WebMCP panel: six tools, 16 capability changes this session, and its recent calls, one of which failed._
+The screenshot above shows the Mealdrop Review story with the WebMCP panel: six tools, 16 capability changes this session, and its recent calls, one of which failed.
 
 ## Why it wasn't submitted
 
-It took an afternoon: about an hour of Claude Code with up to 13 agents running at once, then mostly Codex. Once it worked, my verdict that afternoon was that I'd built basically the same thing as the Storybook MCP server, only less powerful. An ordinary MCP server can already drive Storybook, so putting the tools in the page added very little.
+It took an afternoon: about an hour of Claude Code with up to 13 agents running at once, then mostly Codex. Once it worked, her verdict that afternoon was that it was basically the Storybook MCP server again, only less powerful. An ordinary MCP server can already drive Storybook, so putting the tools in the page added very little.
 
 That turned into the rule for everything after it: use WebMCP for state that only exists in the browser. A notebook's unsaved cells and running kernel are exactly that, which is why JupyterLite came next.
 

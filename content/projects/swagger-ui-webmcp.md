@@ -31,7 +31,7 @@ imageAlt: 'Video thumbnail reading "Your API docs are the connector" over Swagge
 
 **If you can Try it out, your agent can too.**
 
-This is one of four entries I submitted to OpenAI's WebMCP Challenge on the morning of 3 September 2026. [JupyterLite WebMCP](/projects/jupyterlite-webmcp/) was the one that won. The other two were [Careers WebMCP](/projects/careers-webmcp/) and [Strudel WebMCP](/projects/strudel-webmcp/), and a fifth build, [Storybook WebMCP](/projects/storybook-webmcp/), never got submitted. All five went from first commit to the last Devpost submission in under 48 hours, each starting as a long written build contract handed to Claude Code or Codex agents.
+This is one of four entries Allison submitted to OpenAI's WebMCP Challenge on the morning of 3 September 2026. [JupyterLite WebMCP](/projects/jupyterlite-webmcp/) was the one that won. The other two were [Careers WebMCP](/projects/careers-webmcp/) and [Strudel WebMCP](/projects/strudel-webmcp/), and a fifth build, [Storybook WebMCP](/projects/storybook-webmcp/), never got submitted. All five went from first commit to the last Devpost submission in under 48 hours, each starting as a long written build contract handed to Claude Code or Codex agents.
 
 Swagger UI WebMCP is a plugin. Add `plugins: [SwaggerUIWebMCP]` to an existing Swagger UI config and every OpenAPI docs page becomes a set of [WebMCP](https://github.com/webmachinelearning/webmcp) tools a browser agent can call. It gets five core tools for finding, reading and running operations, plus one tool per exposed operation. The agent uses the environment, login and request pipeline the developer already has open in that tab.
 

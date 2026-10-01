@@ -33,21 +33,16 @@ rssd watches a folder of subscription files, polls the feeds, and writes every e
 
 ```text
 demo/
-├── feeds.d/                    you write these
-│   └── rust-blog.xml
-├── store/                      the daemon writes these
-│   └── rust-blog/
-│       ├── feed.xml
-│       ├── status.xml
-│       └── entries/
-│           ├── 20260907T000000Z-9f2c1a3b-crates-io-update.xml     → newest
-│           ├── 20260907T000000Z-9f2c1a3b-crates-io-update.r1.xml
-│           └── 20260907T000000Z-9f2c1a3b-crates-io-update.r2.xml
-└── var/
-    └── events.jsonl            tail -F this
+├── feeds.d/     you write
+├── store/       rssd writes
+│   └── rust-blog/entries/
+│       ├── …update.xml
+│       ├── …update.r1.xml
+│       └── …update.r2.xml
+└── var/events.jsonl
 ```
 
-_The example tree from the README._
+_Adapted from the README's example tree: you write `feeds.d/`, the daemon writes `store/`, each revision of an entry is its own file with the plain name pointing at the newest, and `var/events.jsonl` is there to `tail -F`._
 
 ## Three invariants
 

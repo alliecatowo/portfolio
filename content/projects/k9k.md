@@ -51,4 +51,4 @@ It covers live list and watch across built-in resources and CRDs, logs, a real S
 
 K9k was built over 7 and 8 August 2026: 90 commits, with CI (Go race tests on Linux and the macOS 26 app build) green on the last push. A parity ledger pins K9s to a specific commit and maps every capability against K9s source; all 30 rows are still marked Partial, because "Complete" requires the full workflow plus an automated test. It's pre-release, with no signed build. To try it you need macOS 26, Xcode 26 and mise, and the repo can stand up a disposable Kind cluster with seeded workloads.
 
-The [source is on GitHub](https://github.com/alliecatowo/k9k). There's no license for my code yet; the Xcode project was seeded from Apple's Landmarks sample, which carries Apple's sample-code license.
+The [source is on GitHub](https://github.com/alliecatowo/k9k). There's no license for Allison's code yet; the Xcode project was seeded from Apple's Landmarks sample, which carries Apple's sample-code license.

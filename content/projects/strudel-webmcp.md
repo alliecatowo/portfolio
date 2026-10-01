@@ -31,7 +31,7 @@ imageAlt: 'Video thumbnail reading "The agent proposes. You hit accept." over a 
 
 **Live-code together.**
 
-One of four entries I submitted to OpenAI's WebMCP Challenge on 3 September 2026, with the winning [JupyterLite WebMCP](/projects/jupyterlite-webmcp/), [Swagger UI WebMCP](/projects/swagger-ui-webmcp/) and [Careers WebMCP](/projects/careers-webmcp/). It was the last of the four to go in, about 45 minutes before the original deadline.
+One of four entries Allison submitted to OpenAI's WebMCP Challenge on 3 September 2026, with the winning [JupyterLite WebMCP](/projects/jupyterlite-webmcp/), [Swagger UI WebMCP](/projects/swagger-ui-webmcp/) and [Careers WebMCP](/projects/careers-webmcp/). It was the last of the four to go in, about 45 minutes before the original deadline.
 
 [Strudel](https://strudel.cc) is a live-coding environment for music in the browser. Strudel WebMCP wraps the official Strudel REPL and gives a browser agent 13 [WebMCP](https://github.com/webmachinelearning/webmcp) tools over the live, unsaved editor buffer and the running scheduler. You can drag an inline slider while the agent rewrites a different line.
 

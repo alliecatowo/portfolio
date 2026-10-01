@@ -32,9 +32,7 @@ imageAlt: 'A CouchCircle room: a synced video on the stage and two avatars on a 
 
 Most watch parties feel like a video with a chat box bolted on. CouchCircle puts the crew on a couch in an illustrated living room, hands exactly one person the remote, and keeps everyone on the same frame. Someone rolls up a couch, shares a couch code like `CANDLE-696`, and up to 12 people watch YouTube, a direct MP4, WebM or HLS link, or a peer-to-peer screen share together. There's a votable queue, chat with floating reactions, ready checks, and six illustrated avatars (cat, frog, chinchilla, goblin, sprout, blanket).
 
-![A CouchCircle room called movie night: a synced video on the stage, two avatars sitting on a couch in an illustrated living room, a queue and chat on the right, and remote controls along the bottom.](/images/projects/couchcircle/room.webp)
-
-_The video in the README screenshots is Big Buck Bunny, © Blender Foundation, CC BY 3.0._
+_The video in these screenshots is Big Buck Bunny, © Blender Foundation, CC BY 3.0._
 
 ## Keeping a room in sync
 
