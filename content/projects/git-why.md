@@ -36,6 +36,13 @@ You remember what went wrong, not what the fix was called, so `git log --grep` c
 
 From the README: you ask about "reconnecting subscribed twice", and it finds the commit titled "Stop duplicate subscriptions after reconnect". The two share almost no words, and that mismatch is the whole idea.
 
+<video class="w-full h-auto rounded-lg" width="1200" height="1000" autoplay muted loop playsinline poster="/images/projects/git-why/demo-poster.webp" aria-label="A terminal recording: a five-commit sample history is listed, then git why answers 'why do we wait between retries?' with the commit that added the backoff, its message about getting rate limited, and the diff that added the delay, followed by the earlier retry commit.">
+  <source src="/images/projects/git-why/demo.webm" type="video/webm">
+  <source src="/images/projects/git-why/demo.mp4" type="video/mp4">
+</video>
+
+_A real run of git why, built from source, against a small made-up repository. The question says "wait" and the top result's title says "back off"; it is the commit whose message explains the delay, shown with its diff. The second result is the earlier commit that added retries at all._
+
 ## How it works
 
 Every reachable commit becomes a record of its message, paths and a bounded slice of diff evidence. A full-text index and a small static embedding model (Model2Vec's `potion-code-16M-v2`, 256 dimensions) each retrieve candidates, Reciprocal Rank Fusion merges them, and a lexical-overlap reranker reorders the top. It all runs locally, and the index lives under the Git common directory, so every worktree shares one index. An optional warm daemon cuts a query on curl's 30,000-commit history from 569 ms to 286 ms, and if it's unreachable the query just runs directly.

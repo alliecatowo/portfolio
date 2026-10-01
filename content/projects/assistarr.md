@@ -27,6 +27,8 @@ date: 2025-10-01
 status: published
 featured: false
 github: https://github.com/alliecatowo/assistarr
+image: /images/projects/assistarr/card.webp
+imageAlt: 'Assistarr home hero: "Your media, all in one place." with Start a chat, Discover and Monitor buttons, and four stat cards for services online, library size, active downloads and AI signals.'
 seo:
   title: 'Assistarr: AI assistant for Jellyfin and *arr'
 ---
@@ -38,6 +40,14 @@ Assistarr is an AI assistant layer on top of your self-hosted media stack. Inste
 > "Queue up everything Christopher Nolan directed after 2010" or "What's downloading right now? Cancel anything over 24 hours old."
 
 It talks to Jellyfin, Radarr, and Sonarr over their existing APIs and lets you drive the whole thing through natural language — via a chat UI, CLI, or Telegram bot.
+
+![The Assistarr home hero component: a greeting, the headline "Your media, all in one place.", Start a chat, Discover and Monitor buttons, and four stat cards showing services online, library footprint, active downloads and AI signals.](/images/projects/assistarr/hero-1600.webp)
+
+_The home hero, rendered from the repo's Ladle component stories with their built-in mock data, so the numbers (4/5 services, 128 items, 8 downloads) are sample values, not a real library._
+
+![The Assistarr downloads widget, titled "Pipelines & queue", listing three sample items with progress bars and the services they come from: Radarr, Sonarr and qBittorrent.](/images/projects/assistarr/downloads.webp)
+
+_The downloads widget from the same stories, with sample queue items._
 
 ---
 
