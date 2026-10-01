@@ -46,6 +46,13 @@ demo/
 
 _Adapted from the README's example tree: you write `feeds.d/`, the daemon writes `store/`, each revision of an entry is its own file with the plain name pointing at the newest, and `var/events.jsonl` is there to `tail -F`._
 
+<video class="w-full h-auto rounded-lg" width="1300" height="732" autoplay muted loop playsinline poster="/images/projects/rssd/demo-poster.webp" aria-label="A terminal recording: ls lists entry files in the rust-blog folder of the demo store, then the rss terminal reader opens with a feed list, an entry list and a reader pane. The cursor moves to the rust-blog feed, opens an entry and steps through two more entries.">
+  <source src="/images/projects/rssd/demo.webm" type="video/webm">
+  <source src="/images/projects/rssd/demo.mp4" type="video/mp4">
+</video>
+
+_Recorded in the offline fixture mode, so the feeds are the repo's committed fixtures rather than live fetches. First the files themselves (`ls` on one feed's `entries/` folder, including the `.r1.xml` revisions), then the `rss` reader walking the same folder._
+
 ## Three invariants
 
 - **Writes are atomic.** Every file is written to a temp name in the same directory, fsynced, re-parsed with a strict XML parser, then renamed into place. A reader never sees half a file, and malformed XML never lands. A `SIGKILL` can only leave a temp file behind, which is swept on the next start.

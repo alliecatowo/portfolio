@@ -18,6 +18,8 @@ tags:
   - agents
   - dry-run
 github: https://github.com/alliecatowo/patchrun
+image: /images/projects/patchrun/card.webp
+imageAlt: 'Terminal running patchrun on a sample repo: the command exited 0, two files changed with 4 insertions and 4 deletions, and a menu offers apply, save, view, keep worktree or discard.'
 seo:
   title: 'patchrun: run commands in a disposable worktree'
 ---
@@ -31,6 +33,13 @@ patchrun -- npx shadcn@latest add button
 ```
 
 It runs the command in a throwaway copy of your repo and hands you back exactly what it changed, as a patch. Then you choose: apply, save, view, keep or discard.
+
+<video class="w-full h-auto rounded-lg" width="1200" height="800" autoplay muted loop playsinline poster="/images/projects/patchrun/demo-poster.webp" aria-label="A terminal recording of patchrun on a small sample repo. It runs a var-to-const codemod script in a disposable worktree and lists the two changed files, then I view the patch, apply it, and the sample repo's status shows both files modified.">
+  <source src="/images/projects/patchrun/demo.webm" type="video/webm">
+  <source src="/images/projects/patchrun/demo.mp4" type="video/mp4">
+</video>
+
+_Recorded against a throwaway sample repo: patchrun runs a `var` to `const` codemod in a worktree, shows the diffstat and the apply / save / view / keep / discard menu, then I view the patch and apply it. A status check afterwards lists the two modified files._
 
 ## How it works
 

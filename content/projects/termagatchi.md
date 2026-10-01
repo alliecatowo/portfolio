@@ -36,6 +36,13 @@ Termagatchi started as a joke between productivity and nostalgia: “what if you
 
 You feed it, play with it, and chat with it like a tiny coworker who lives in your shell; except under the hood, it’s running an **AI-driven game engine**, persistent state management, and a **real-time Textual UI** that turns your terminal into a digital habitat.
 
+<video class="w-full h-auto rounded-lg" width="1300" height="900" autoplay muted loop playsinline poster="/images/projects/termagatchi/demo-poster.webp" aria-label="A terminal recording of Termagatchi in offline mode: an ASCII-dot pet sits in the left pane with a chat log on the right. The commands /feed, /play and /pet are typed in turn, and the log answers 'Fed Kibble!', 'Played with Ball!' and 'Pet loves the attention!'.">
+  <source src="/images/projects/termagatchi/demo.webm" type="video/webm">
+  <source src="/images/projects/termagatchi/demo.mp4" type="video/mp4">
+</video>
+
+_Run with no AI provider configured, so it starts in offline mode. The three commands are typed into the input bar and the pet's replies land in the chat log._
+
 ## Problem
 
 Most AI projects chase complexity with web dashboards, APIs, flashy front-ends. I wanted to do the opposite: build something _delightful_ and _deeply technical_ that lives where developers actually are: the command line.
