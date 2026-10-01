@@ -38,6 +38,13 @@ Spinerr is an ambient dashboard: a spinning vinyl record and player controls on 
 
 The record is the interesting part. It's a p5.js sketch that draws concentric groove rings, each nudged in and out by Perlin noise. The noise and random seed come from a hash of the track ID, so every track gets its own consistent pattern and colour. The groove paths are computed once and cached, and then live audio moves them: a Web Audio analyser splits the signal into frequency bands, and a smoothed bass level makes the record swell and glow on kick drums. The tone arm swings in and out with spring animation when playback starts and stops.
 
+<video class="w-full h-auto rounded-lg" width="1200" height="750" autoplay muted loop playsinline poster="/images/projects/spinerr/demo-poster.webp" aria-label="An 8 second screen recording of the deployed Spinerr app playing a synthetic test track: the green generative vinyl record spins with the tone arm down and its grooves pulse on each bass kick, beside a clock, the track title and a progress bar.">
+  <source src="/images/projects/spinerr/demo.webm" type="video/webm">
+  <source src="/images/projects/spinerr/demo.mp4" type="video/mp4">
+</video>
+
+_Recorded on the live site with a generated test track (a 2 Hz sine kick plus a tone, cover art embedded) picked through "Play Local Files". The grooves swell on every kick. The calendar entries are sample data._
+
 ![Spinerr on a desktop screen: a sidebar with navigation, a green generative vinyl record with the tone arm resting on it, a large clock reading 10:24 PM, the now-playing title "test-beat" with a progress bar and player controls, and two sample calendar events.](/images/projects/spinerr/player-1440.webp)
 
 _The deployed app playing a short test file from disk. The calendar entries are sample data._
