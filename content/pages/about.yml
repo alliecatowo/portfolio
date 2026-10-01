@@ -63,6 +63,7 @@ journey:
       icon: i-lucide-rocket
       description: Joined a five-person startup as a data-entry clerk and automated my own job within a month. They made me an engineer; I left as Software Engineer III after building the core platform, leading AI R&D, and mentoring five interns.
     - title: Hinge Health & the Bay
+      period: Feb 2026
       color: purple-500
       icon: i-lucide-map-pin
       description: Got hired at Hinge Health and moved to the Bay Area. New job, new city, same robots to yell at.
