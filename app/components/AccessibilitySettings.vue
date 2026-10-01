@@ -74,7 +74,7 @@
 
     <template #footer>
       <div class="flex gap-3">
-        <UButton variant="outline" color="gray" @click="resetPreferences">
+        <UButton variant="outline" color="neutral" @click="resetPreferences">
           Reset
         </UButton>
         <UButton color="primary" @click="isOpen = false">

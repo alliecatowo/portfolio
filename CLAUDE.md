@@ -75,7 +75,6 @@ Single-site **developer portfolio** built with Nuxt 4 and deployed to Firebase s
 - **Content**: `@nuxt/content` v3 — file-based Markdown with native SQLite
 - **UI**: `@nuxt/ui` v4 + Tailwind CSS v4
 - **Images**: `@nuxt/image`
-- **State**: Pinia (minimal usage)
 - **Deploy**: Firebase static hosting via GitHub Actions
 - **Node.js**: 22.x (required for native SQLite)
 

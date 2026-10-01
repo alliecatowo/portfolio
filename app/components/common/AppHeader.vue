@@ -11,6 +11,7 @@
 
     <!-- Main navigation -->
     <UNavigationMenu
+      id="site-navigation"
       :items="navigationItems"
       orientation="horizontal"
       variant="link"
