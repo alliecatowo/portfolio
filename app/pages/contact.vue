@@ -8,10 +8,10 @@
 
     <div class="relative z-10 container max-w-6xl mx-auto px-6 py-20">
       <header class="text-center mb-16">
-        <h1 class="text-5xl md:text-6xl font-bold mb-6 text-gradient-animated">Get In Touch</h1>
+        <h1 class="text-5xl md:text-6xl font-bold mb-6 text-gradient-animated">Say Hi</h1>
         <p class="text-xl md:text-2xl text-default max-w-3xl mx-auto">
-          I'm always interested in new opportunities and collaborations. 
-          Let's discuss how we can work together.
+          Building something weird? Want a hackathon partner?
+          Thinking about starting something? Say hi.
         </p>
       </header>
 
@@ -21,8 +21,8 @@
           <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
             <h2 class="text-2xl font-bold mb-6 text-primary">Let's Connect</h2>
             <p class="text-default mb-8">
-              Whether you have a project in mind, need technical consultation, or just want to say hello, 
-              I'd love to hear from you. I typically respond within 24-48 hours.
+              Happy to talk WebMCP, agent systems, languages and runtimes, split keyboards,
+              or whatever strange thing you're working on. Email works best.
             </p>
 
             <div class="space-y-6">
@@ -79,16 +79,18 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
             </div>
           </UCard>
 
-          <!-- Availability Card -->
+          <!-- What I'm open to -->
           <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
-            <div class="flex items-center gap-4">
-              <div class="relative">
+            <div class="flex items-start gap-4">
+              <div class="relative mt-1.5 shrink-0" aria-hidden="true">
                 <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"/>
-                <div class="absolute inset-0 w-3 h-3 bg-green-500 rounded-full animate-ping"/>
               </div>
               <div>
-                <p class="font-semibold text-default">Currently Available</p>
-                <p class="text-sm text-muted">Open to new projects and opportunities</p>
+                <p class="font-semibold text-default">Open to collaborations</p>
+                <p class="text-sm text-muted">
+                  Hackathon partners, interesting side projects, community things,
+                  and the occasional "what if we started something" conversation.
+                </p>
               </div>
             </div>
           </UCard>
@@ -134,11 +136,11 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
               <USelectMenu
                 v-model="form.subject"
                 :items="subjectOptions"
-                searchable
+                :search-input="false"
                 size="lg"
                 placeholder="Select inquiry type"
-                value-attribute="value"
-                option-attribute="label"
+                value-key="value"
+                label-key="label"
                 :ui="selectUi"
                 class="w-full"
               >
@@ -148,11 +150,17 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
               </USelectMenu>
             </UFormField>
 
+            <!-- Honeypot: hidden from people and assistive tech, bots fill it in -->
+            <div class="hidden" aria-hidden="true">
+              <label for="contact-honey">Leave this empty</label>
+              <input id="contact-honey" v-model="honeypot" type="text" name="_honey" tabindex="-1" autocomplete="off">
+            </div>
+
             <UFormField label="Message" name="message" required :ui="formFieldUi">
               <UTextarea
                 v-model="form.message"
                 :rows="6"
-                placeholder="Tell me about your project or inquiry..."
+                placeholder="What are you building?"
                 size="lg"
                 :ui="textareaUi"
                 class="w-full"
@@ -222,20 +230,20 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
         <h2 class="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
         <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
-            <h3 class="font-semibold mb-2 text-primary">What's your typical response time?</h3>
-            <p class="text-muted">I usually respond within 24-48 hours during business days.</p>
+            <h3 class="font-semibold mb-2 text-primary">What should I message you about?</h3>
+            <p class="text-muted">Weird projects, hackathon invites, WebMCP and agent questions, start-something ideas, and pictures of your keyboard.</p>
           </UCard>
           <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
-            <h3 class="font-semibold mb-2 text-primary">Are you available for freelance work?</h3>
-            <p class="text-muted">Yes! I'm open to freelance projects and consultations.</p>
+            <h3 class="font-semibold mb-2 text-primary">Want to team up for a hackathon?</h3>
+            <p class="text-muted">Yes, especially if it involves agents in the browser or tools for developers. Send the link and your idea.</p>
           </UCard>
           <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
-            <h3 class="font-semibold mb-2 text-primary">What technologies do you work with?</h3>
-            <p class="text-muted">Vue.js, Nuxt, React, Node.js, TypeScript, and more. Check my About page for details.</p>
+            <h3 class="font-semibold mb-2 text-primary">Are you available for freelance work or a new role?</h3>
+            <p class="text-muted">Not right now. I'm happily at Hinge Health. Collaborations and side projects are a different story.</p>
           </UCard>
           <UCard variant="outline" class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20">
-            <h3 class="font-semibold mb-2 text-primary">Do you work remotely?</h3>
-            <p class="text-muted">Yes, I work with clients globally and am comfortable with remote collaboration.</p>
+            <h3 class="font-semibold mb-2 text-primary">What do you build with?</h3>
+            <p class="text-muted">TypeScript, Vue and Nuxt, Rust, Python and Go, mostly around agents, developer tools and languages. The About page has more.</p>
           </UCard>
         </div>
       </section>
@@ -254,7 +262,7 @@ const schema = z.object({
     .min(2, 'Name must be at least 2 characters')
     .max(50, 'Name must be less than 50 characters'),
   email: z.string({ message: 'Please enter your email address' }).email('Please enter a valid email address'),
-  subject: z.enum(['project', 'hiring', 'collaboration', 'consultation', 'other'], {
+  subject: z.enum(['hackathon', 'collaboration', 'startup', 'question', 'other'], {
     message: 'Please select a subject'
   }),
   message: z
@@ -268,17 +276,20 @@ type ContactForm = z.infer<typeof schema>
 const form = reactive<ContactForm>({
   name: '',
   email: '',
-  subject: 'project',
+  subject: 'collaboration',
   message: ''
 })
 
+// Honeypot for bots. FormSubmit drops any submission where `_honey` is filled.
+const honeypot = ref('')
+
 // Subject options for USelectMenu
 const subjectOptions = [
-  { label: 'Project Inquiry', value: 'project', icon: 'i-lucide-briefcase' },
-  { label: 'Full-Time Opportunity', value: 'hiring', icon: 'i-lucide-id-card' },
-  { label: 'Collaboration', value: 'collaboration', icon: 'i-lucide-users' },
-  { label: 'Consultation', value: 'consultation', icon: 'i-lucide-message-circle' },
-  { label: 'Other', value: 'other', icon: 'i-lucide-help-circle' }
+  { label: 'Collaboration / side project', value: 'collaboration', icon: 'i-lucide-users' },
+  { label: 'Hackathon partner', value: 'hackathon', icon: 'i-lucide-trophy' },
+  { label: 'Starting something', value: 'startup', icon: 'i-lucide-rocket' },
+  { label: 'WebMCP / agents question', value: 'question', icon: 'i-lucide-message-circle' },
+  { label: 'Just saying hi', value: 'other', icon: 'i-lucide-hand' }
 ]
 
 const subjectLabel = computed(() => subjectOptions.find((option) => option.value === form.subject)?.label ?? 'General Inquiry')
@@ -321,8 +332,9 @@ const formSubmitError = ref(false)
 const resetForm = (options: { clearStatus?: boolean } = {}) => {
   form.name = ''
   form.email = ''
-  form.subject = 'project'
+  form.subject = 'collaboration'
   form.message = ''
+  honeypot.value = ''
   if (options.clearStatus) {
     formSubmitSuccess.value = false
     formSubmitError.value = false
@@ -346,7 +358,8 @@ const onSubmit = async (_event: FormSubmitEvent<ContactForm>) => {
       _replyto: form.email,
       _subject: `Portfolio Contact: ${subjectLabel.value}`,
       _template: 'table',
-      _captcha: 'false'
+      _captcha: 'true',
+      _honey: honeypot.value
     }
 
     const response = await fetch(FORM_ENDPOINT, {

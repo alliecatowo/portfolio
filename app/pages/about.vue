@@ -3,82 +3,86 @@
     <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
       <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse" />
       <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;" />
-      <div class="absolute top-1/3 right-1/4 w-40 h-40 bg-purple-500/5 rounded-full blur-2xl float-animation" />
     </div>
 
     <div class="relative z-10">
-      <section v-if="hero" class="py-20 md:py-32">
+      <!-- Hero -->
+      <section v-if="hero" class="pt-16 pb-12 md:pt-24 md:pb-16">
         <div class="container max-w-7xl mx-auto px-6">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div class="relative">
-              <div class="relative z-10">
-                <div v-if="heroImage" class="relative mx-auto w-80 h-80 md:w-96 md:h-96">
-                  <div class="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-pink-500 to-purple-600 animate-spin-slow opacity-20" />
-                  <div class="absolute inset-4 rounded-full bg-gradient-to-l from-primary via-purple-600 to-pink-500 animate-spin-reverse opacity-20" />
-
+          <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16 items-center">
+            <div>
+              <div v-if="heroImage" class="relative mx-auto w-64 h-64 sm:w-72 sm:h-72 xl:w-80 xl:h-80">
+                <div class="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-pink-500 to-purple-600 animate-spin-slow opacity-20" />
+                <div class="absolute inset-4 rounded-full bg-gradient-to-l from-primary via-purple-600 to-pink-500 animate-spin-reverse opacity-20" />
                 <div class="relative w-full h-full rounded-full overflow-hidden glass-accent p-2">
                   <NuxtImg
                     :src="heroImage.src"
                     :alt="heroImage.alt || hero.title"
                     class="w-full h-full rounded-full object-cover"
                     loading="eager"
+                    fetchpriority="high"
                     preset="avatar"
                   />
                 </div>
+              </div>
 
-                <div
-                  v-if="heroImage.status"
-                  class="absolute bottom-4 right-4 glass-strong px-4 py-2 rounded-full flex items-center gap-2"
+              <p
+                v-if="heroImage?.status"
+                class="mt-6 mx-auto w-fit max-w-full glass-strong px-4 py-2 rounded-full flex items-center gap-2 text-sm font-medium text-center"
+              >
+                <span class="w-2.5 h-2.5 shrink-0 bg-green-500 rounded-full animate-pulse" aria-hidden="true" />
+                <span>{{ heroImage.status }}</span>
+              </p>
+
+              <ul v-if="heroStats.length" class="grid grid-cols-3 gap-3 mt-6 max-w-md mx-auto">
+                <li
+                  v-for="stat in heroStats"
+                  :key="stat.label"
+                  class="glass-accent rounded-xl px-2 py-3 text-center"
                 >
-                  <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                  <span class="text-sm font-medium">{{ heroImage.status }}</span>
-                </div>
-              </div>
-
-                <div v-if="heroStats.length" class="grid grid-cols-3 gap-4 mt-8">
-                  <UCard
-                    v-for="stat in heroStats"
-                    :key="stat.label"
-                    class="text-center glass-accent hover:scale-105 transition-transform"
-                  >
-                    <div class="text-2xl font-bold text-primary">{{ stat.value }}</div>
-                    <div class="text-sm text-muted">{{ stat.label }}</div>
-                  </UCard>
-                </div>
-              </div>
+                  <span class="block text-xl sm:text-2xl font-bold text-primary leading-tight">{{ stat.value }}</span>
+                  <span class="block text-xs sm:text-sm text-muted leading-snug mt-1">{{ stat.label }}</span>
+                </li>
+              </ul>
             </div>
 
-            <div class="space-y-6">
+            <div class="space-y-5">
               <h1 v-if="hero.title" class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gradient-animated leading-tight">
                 {{ hero.title }}
               </h1>
-              <p v-if="hero.subtitle" class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-default leading-relaxed">
+              <p v-if="hero.subtitle" class="text-lg sm:text-xl lg:text-2xl text-highlighted leading-snug">
                 {{ hero.subtitle }}
               </p>
-              <div v-if="heroParagraphs.length" class="prose prose-lg text-default max-w-none">
-                <p
-                  v-for="(paragraph, index) in heroParagraphs"
-                  :key="index"
-                  class="mb-6 text-base md:text-lg leading-relaxed"
+              <p
+                v-for="(paragraph, index) in heroParagraphs"
+                :key="index"
+                class="text-base md:text-lg text-default leading-relaxed max-w-prose"
+              >
+                {{ paragraph }}
+              </p>
+              <p v-if="heroAward">
+                <NuxtLink
+                  :to="heroAward.to"
+                  class="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm md:text-base font-semibold text-highlighted hover:bg-primary/20 transition-colors"
                 >
-                  {{ paragraph }}
-                </p>
-              </div>
+                  <span aria-hidden="true">🏆</span>
+                  <span>{{ heroAward.label }}</span>
+                </NuxtLink>
+              </p>
 
-              <div v-if="heroButtons.length" class="flex flex-wrap gap-4">
+              <div v-if="heroButtons.length" class="flex flex-wrap gap-4 pt-2">
                 <UButton
                   v-for="button in heroButtons"
                   :key="button.label"
                   :to="button.to"
-                :href="button.href"
-                :target="button.external ? '_blank' : undefined"
-                :rel="button.external ? 'noopener noreferrer' : undefined"
-                :download="resolveDownloadAttr(button)"
-                :variant="button.variant || 'solid'"
-                :color="button.color || 'primary'"
-                :size="button.size || 'md'"
-                :leading-icon="button.icon && button.iconPosition !== 'trailing' ? button.icon : undefined"
-                :trailing-icon="button.icon && button.iconPosition === 'trailing' ? button.icon : undefined"
+                  :href="button.href"
+                  :target="button.external ? '_blank' : undefined"
+                  :rel="button.external ? 'noopener noreferrer' : undefined"
+                  :variant="button.variant || 'solid'"
+                  :color="button.color || 'primary'"
+                  :size="button.size || 'md'"
+                  :leading-icon="button.icon && button.iconPosition !== 'trailing' ? button.icon : undefined"
+                  :trailing-icon="button.icon && button.iconPosition === 'trailing' ? button.icon : undefined"
                 >
                   {{ button.label }}
                 </UButton>
@@ -88,122 +92,184 @@
         </div>
       </section>
 
-      <section v-if="journey && journeyItems.length" class="py-20 relative">
-        <div class="container max-w-6xl mx-auto px-6">
-          <h2 v-if="journey.title" class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-16 text-center text-gradient-animated leading-tight px-4">
+      <!-- Journey: vertical on small screens, horizontal from xl. The dot sits
+           in the <li> (not the card), at the same offset as the line. -->
+      <section v-if="journey && journeyItems.length" class="py-12 md:py-16" aria-labelledby="journey-title">
+        <div class="container max-w-7xl mx-auto px-6">
+          <h2 id="journey-title" class="text-3xl sm:text-4xl font-bold mb-10 text-center text-gradient-animated leading-tight">
             {{ journey.title }}
           </h2>
 
-          <div class="relative">
-            <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary via-purple-500 to-pink-500 opacity-20" />
-
-            <div class="space-y-12">
-              <div v-for="item in journeyItems" :key="item.title" class="flex items-center justify-center">
-                <UCard class="relative glass-accent max-w-2xl hover:scale-105 transition-transform" :class="timelineCardClass(item.color)">
-                  <div
-                    class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-full border-4 border-white dark:border-gray-900"
-                    :class="timelineBulletClass(item.color)"
-                  />
-                  <h3 class="text-xl font-bold mb-3" :class="timelineTextClass(item.color)">
+          <div class="relative max-w-2xl mx-auto xl:max-w-none">
+            <div
+              data-timeline-line
+              aria-hidden="true"
+              class="absolute left-4 top-2 bottom-2 w-0.5 -translate-x-1/2 bg-gradient-to-b from-primary via-purple-500 to-pink-500 opacity-50 xl:left-0 xl:right-0 xl:top-4 xl:bottom-auto xl:h-0.5 xl:w-auto xl:translate-x-0 xl:-translate-y-1/2 xl:bg-gradient-to-r"
+            />
+            <ol class="relative grid gap-6 xl:gap-5 xl:grid-flow-col xl:auto-cols-fr">
+              <li
+                v-for="item in journeyItems"
+                :key="item.title"
+                class="relative pl-12 xl:pl-0 xl:pt-12"
+              >
+                <span
+                  data-timeline-dot
+                  aria-hidden="true"
+                  class="absolute left-4 top-6 -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full ring-4 ring-[var(--ui-bg)] xl:left-1/2 xl:top-4"
+                  :class="timelineBulletClass(item.color)"
+                />
+                <article class="glass-accent rounded-xl p-5 h-full">
+                  <p v-if="item.period" class="text-xs font-semibold uppercase tracking-wider text-muted mb-1">
+                    {{ item.period }}
+                  </p>
+                  <h3 class="flex items-center gap-2 text-lg font-bold mb-2" :class="timelineTextClass(item.color)">
+                    <UIcon v-if="item.icon" :name="item.icon" class="w-5 h-5 shrink-0" aria-hidden="true" />
                     {{ item.title }}
                   </h3>
-                  <p class="text-default leading-relaxed">
+                  <p class="text-sm md:text-base text-default leading-relaxed">
                     {{ item.description }}
                   </p>
-                </UCard>
-              </div>
-            </div>
+                </article>
+              </li>
+            </ol>
           </div>
         </div>
       </section>
 
-      <section v-if="skills && skillCategories.length" class="py-20 glass-accent">
+      <!-- Now -->
+      <section v-if="now" class="py-12 md:py-16" aria-labelledby="now-title">
         <div class="container max-w-7xl mx-auto px-6">
-          <h2 v-if="skills.title" class="text-4xl md:text-5xl font-bold mb-16 text-center text-gradient-animated">
+          <div class="glass-accent rounded-2xl p-6 md:p-10 grid gap-8 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-12">
+            <div class="space-y-4">
+              <h2 id="now-title" class="text-3xl sm:text-4xl font-bold text-gradient-animated leading-tight">
+                {{ now.title }}
+              </h2>
+              <p class="text-base md:text-lg text-default leading-relaxed">
+                {{ now.description }}
+              </p>
+              <p v-if="now.award">
+                <NuxtLink
+                  :to="now.award.to"
+                  class="inline-flex items-center gap-2 text-sm md:text-base font-semibold text-primary hover:underline"
+                >
+                  <span aria-hidden="true">🏆</span>
+                  {{ now.award.label }}
+                  <UIcon name="i-lucide-arrow-right" class="w-4 h-4" aria-hidden="true" />
+                </NuxtLink>
+              </p>
+            </div>
+
+            <ul v-if="nowProjects.length" class="grid gap-3 sm:grid-cols-2" aria-label="Current projects">
+              <li v-for="project in nowProjects" :key="project.to">
+                <NuxtLink
+                  :to="project.to"
+                  class="group block h-full rounded-xl glass-strong p-4 hover:ring-1 hover:ring-primary/50 transition"
+                >
+                  <span class="flex items-center justify-between gap-2 font-semibold text-highlighted group-hover:text-primary transition-colors">
+                    {{ project.title }}
+                    <UIcon name="i-lucide-arrow-right" class="w-4 h-4 shrink-0 opacity-60 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
+                  </span>
+                  <span class="block text-sm text-muted leading-snug mt-1">{{ project.description }}</span>
+                </NuxtLink>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section v-if="skills && skillCategories.length" class="py-12 md:py-16" aria-labelledby="skills-title">
+        <div class="container max-w-7xl mx-auto px-6">
+          <h2 id="skills-title" class="text-3xl sm:text-4xl font-bold mb-10 text-center text-gradient-animated">
             {{ skills.title }}
           </h2>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <div
               v-for="category in skillCategories"
               :key="category.title"
-              class="group relative"
+              class="glass-strong rounded-xl p-5 h-full"
             >
-              <div
-                class="absolute inset-0 bg-gradient-to-r rounded-xl blur opacity-25 group-hover:opacity-40 transition-opacity"
-                :class="skillGradientClass(category.color)"
-              />
-              <div class="relative glass-strong rounded-xl p-6 h-full hover-lift">
-                <div
-                  class="w-16 h-16 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"
-                  :class="skillIconBackgroundClass(category.color)"
+              <h3 class="flex items-center gap-3 text-lg font-bold mb-4" :class="accentTextClass(category.color)">
+                <span class="w-10 h-10 shrink-0 rounded-lg flex items-center justify-center" :class="accentBgClass(category.color)">
+                  <UIcon :name="category.icon || 'i-lucide-monitor'" class="w-5 h-5" aria-hidden="true" />
+                </span>
+                {{ category.title }}
+              </h3>
+              <ul class="flex flex-wrap gap-2">
+                <li
+                  v-for="item in category.items"
+                  :key="item"
+                  class="text-sm text-default rounded-full border border-default px-3 py-1"
                 >
-                  <UIcon :name="category.icon || 'i-lucide-monitor'" class="w-8 h-8" :class="skillTextClass(category.color)" />
-                </div>
-                <h3 class="text-xl font-bold mb-4" :class="skillTextClass(category.color)">
-                  {{ category.title }}
-                </h3>
-                <ul class="space-y-2 text-default">
-                  <li
-                    v-for="item in category.items"
-                    :key="item"
-                    class="flex items-center gap-2"
-                  >
-                    <UIcon name="i-lucide-check" class="w-4 h-4 text-green-500" />
-                    {{ item }}
-                  </li>
-                </ul>
-              </div>
+                  {{ item }}
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      <section v-if="life && lifeCards.length" class="py-20">
-        <div class="container max-w-6xl mx-auto px-6">
-          <h2 v-if="life.title" class="text-4xl md:text-5xl font-bold mb-16 text-center text-gradient-animated">
-            {{ life.title }}
-          </h2>
+      <!-- Outside of code -->
+      <section v-if="life && lifeCards.length" class="py-12 md:py-16" aria-labelledby="life-title">
+        <div class="container max-w-7xl mx-auto px-6">
+          <div class="text-center mb-10">
+            <h2 id="life-title" class="text-3xl sm:text-4xl font-bold text-gradient-animated">
+              {{ life.title }}
+            </h2>
+            <p v-if="life.description" class="mt-3 text-muted">{{ life.description }}</p>
+          </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <UCard
+          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <li
               v-for="card in lifeCards"
               :key="card.title"
-              class="glass-accent hover:scale-105 transition-transform overflow-hidden"
+              :class="card.featured ? 'sm:row-span-2' : ''"
             >
-              <template #header>
-                <div class="aspect-video bg-gradient-to-br relative overflow-hidden rounded-lg">
+              <component
+                :is="card.to ? NuxtLinkComponent : 'article'"
+                :to="card.to"
+                class="group glass-accent rounded-xl overflow-hidden flex flex-col h-full"
+                :class="card.to ? 'hover:ring-1 hover:ring-primary/50 transition' : ''"
+              >
+                <div
+                  v-if="card.image"
+                  class="relative overflow-hidden"
+                  :class="card.featured ? 'aspect-[4/5] sm:aspect-auto sm:flex-1 sm:min-h-72' : 'aspect-video'"
+                >
                   <NuxtImg
-                    v-if="card.image"
                     :src="card.image"
-                    :alt="card.alt"
-                    class="w-full h-full object-cover mix-blend-overlay"
+                    :alt="card.alt || ''"
+                    class="absolute inset-0 w-full h-full object-cover"
+                    :style="card.imagePosition ? { objectPosition: card.imagePosition } : undefined"
                     loading="lazy"
-                    sizes="md:100vw lg:50vw xl:400px"
+                    sizes="xs:100vw sm:50vw lg:420px"
                   />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  <UIcon v-if="card.icon" :name="card.icon" class="absolute bottom-4 right-4 w-8 h-8 text-white/80" />
                 </div>
-              </template>
-
-              <h3 class="text-xl font-bold mb-2" :class="lifeTextClass(card.color)">
-                {{ card.title }}
-              </h3>
-              <p class="text-muted">
-                {{ card.description }}
-              </p>
-            </UCard>
-          </div>
+                <div class="p-5">
+                  <h3 class="flex items-center gap-2 text-lg font-bold mb-1.5" :class="accentTextClass(card.color)">
+                    <UIcon v-if="card.icon" :name="card.icon" class="w-5 h-5 shrink-0" aria-hidden="true" />
+                    {{ card.title }}
+                    <UIcon v-if="card.to" name="i-lucide-arrow-right" class="w-4 h-4 ml-auto opacity-60 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
+                  </h3>
+                  <p class="text-sm md:text-base text-muted leading-relaxed">
+                    {{ card.description }}
+                  </p>
+                </div>
+              </component>
+            </li>
+          </ul>
         </div>
       </section>
 
-      <section v-if="cta" class="py-20">
+      <!-- CTA -->
+      <section v-if="cta" class="py-12 md:py-20">
         <div class="container max-w-4xl mx-auto px-6">
-          <UCard class="glass-accent text-center hover:scale-105 transition-transform">
-            <h2 v-if="cta.title" class="text-4xl md:text-5xl font-bold mb-6 text-gradient-animated">
+          <div class="glass-accent rounded-2xl text-center p-8 md:p-12">
+            <h2 v-if="cta.title" class="text-3xl sm:text-4xl font-bold mb-4 text-gradient-animated">
               {{ cta.title }}
             </h2>
-            <p v-if="cta.description" class="text-xl text-default mb-8 max-w-2xl mx-auto">
+            <p v-if="cta.description" class="text-lg md:text-xl text-default mb-8 max-w-2xl mx-auto">
               {{ cta.description }}
             </p>
 
@@ -215,7 +281,6 @@
                 :href="button.href"
                 :target="button.external ? '_blank' : undefined"
                 :rel="button.external ? 'noopener noreferrer' : undefined"
-                :download="resolveDownloadAttr(button)"
                 :variant="button.variant || 'solid'"
                 :color="button.color || 'primary'"
                 :size="button.size || 'md'"
@@ -226,20 +291,20 @@
               </UButton>
             </div>
 
-            <div v-if="ctaSocials.length" class="flex justify-center gap-6">
+            <div v-if="ctaSocials.length" class="flex justify-center gap-4">
               <a
                 v-for="social in ctaSocials"
                 :key="social.label"
                 :href="social.href"
-                target="_blank"
-                rel="noopener noreferrer"
+                :target="social.href.startsWith('http') ? '_blank' : undefined"
+                :rel="social.href.startsWith('http') ? 'noopener noreferrer' : undefined"
                 class="w-12 h-12 glass-strong rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors group"
                 :aria-label="social.label"
               >
-                <UIcon :name="social.icon" class="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
+                <UIcon :name="social.icon || 'i-lucide-link'" class="w-5 h-5 text-muted group-hover:text-primary transition-colors" />
               </a>
             </div>
-          </UCard>
+          </div>
         </div>
       </section>
     </div>
@@ -247,7 +312,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, resolveComponent } from 'vue'
 import { useContent } from '~/composables/useContent'
 
 type ButtonLink = {
@@ -260,13 +325,16 @@ type ButtonLink = {
   icon?: string
   iconPosition?: 'leading' | 'trailing'
   external?: boolean
-  download?: boolean | string
+}
+
+type AwardLink = {
+  label: string
+  to: string
 }
 
 type AboutSeo = {
   title: string
   description: string
-  keywords?: string[]
 }
 
 type HeroImage = {
@@ -287,12 +355,15 @@ type HeroSection = {
   stats?: HeroStat[]
   paragraphs?: string[]
   body?: string
+  award?: AwardLink
   buttons?: ButtonLink[]
 }
 
 type JourneyItem = {
   title: string
+  period?: string
   color?: string
+  icon?: string
   description: string
 }
 
@@ -301,10 +372,17 @@ type JourneySection = {
   items?: JourneyItem[]
 }
 
-type SkillItem = {
+type NowProject = {
+  title: string
+  to: string
+  description: string
+}
+
+type NowSection = {
   title: string
   description: string
-  icon?: string
+  award?: AwardLink
+  projects?: NowProject[]
 }
 
 type SkillCategory = {
@@ -316,8 +394,6 @@ type SkillCategory = {
 
 type SkillsSection = {
   title?: string
-  description?: string
-  items?: SkillItem[]
   categories?: SkillCategory[]
 }
 
@@ -327,11 +403,15 @@ type LifeCard = {
   icon?: string
   image?: string
   alt?: string
+  imagePosition?: string
+  to?: string
+  featured?: boolean
   description: string
 }
 
 type LifeSection = {
   title?: string
+  description?: string
   cards?: LifeCard[]
 }
 
@@ -352,10 +432,13 @@ type AboutPageContent = {
   seo?: AboutSeo
   hero?: HeroSection
   journey?: JourneySection
+  now?: NowSection
   skills?: SkillsSection
   life?: LifeSection
   cta?: CtaSection
 }
+
+const NuxtLinkComponent = resolveComponent('NuxtLink')
 
 const { fetchPage } = useContent()
 
@@ -378,21 +461,12 @@ const heroParagraphs = computed<string[]>(() => {
   }
   return hero.value?.paragraphs ?? []
 })
+const heroAward = computed<AwardLink | null>(() => hero.value?.award ?? null)
 const heroButtons = computed<ButtonLink[]>(() => hero.value?.buttons ?? [])
-const resolveDownloadAttr = (button: ButtonLink) => {
-  if (typeof button.download === 'string' && button.download.trim().length > 0) {
-    return button.download
-  }
-
-  if (button.download) {
-    const filename = button.href?.split('/').filter(Boolean).pop()
-    return filename || undefined
-  }
-
-  return undefined
-}
 const journey = computed<JourneySection | null>(() => page.value?.journey ?? null)
 const journeyItems = computed<JourneyItem[]>(() => journey.value?.items ?? [])
+const now = computed<NowSection | null>(() => page.value?.now ?? null)
+const nowProjects = computed<NowProject[]>(() => now.value?.projects ?? [])
 const skills = computed<SkillsSection | null>(() => page.value?.skills ?? null)
 const skillCategories = computed<SkillCategory[]>(() => skills.value?.categories ?? [])
 const life = computed<LifeSection | null>(() => page.value?.life ?? null)
@@ -401,80 +475,24 @@ const cta = computed<CtaSection | null>(() => page.value?.cta ?? null)
 const ctaButtons = computed<ButtonLink[]>(() => cta.value?.buttons ?? [])
 const ctaSocials = computed<CtaSocial[]>(() => cta.value?.socials ?? [])
 
-type TimelineStyleKey = 'default' | 'primary' | 'purple-500' | 'pink-500' | 'gradient'
+// Accent colors used by the YAML `color` fields. Full class names are listed so
+// Tailwind can see them.
+type AccentKey = 'primary' | 'purple-500' | 'pink-500' | 'yellow-500'
 
-const timelineStyles: Record<TimelineStyleKey, { text: string; bullet: string; card: string }> = {
-  default: { text: 'text-primary', bullet: 'bg-primary', card: '' },
-  primary: { text: 'text-primary', bullet: 'bg-primary', card: '' },
-  'purple-500': { text: 'text-purple-500', bullet: 'bg-purple-500', card: '' },
-  'pink-500': { text: 'text-pink-500', bullet: 'bg-pink-500', card: '' },
-  gradient: {
-    text: 'text-gradient',
-    bullet: 'bg-gradient-to-r from-primary to-pink-500 animate-pulse',
-    card: 'animate-pulse-subtle'
-  }
-} as const
+const accentStyles: Record<AccentKey, { text: string; bg: string; bullet: string }> = {
+  'primary': { text: 'text-primary', bg: 'bg-primary/10', bullet: 'bg-primary' },
+  'purple-500': { text: 'text-purple-500', bg: 'bg-purple-500/10', bullet: 'bg-purple-500' },
+  'pink-500': { text: 'text-pink-500', bg: 'bg-pink-500/10', bullet: 'bg-pink-500' },
+  'yellow-500': { text: 'text-yellow-500', bg: 'bg-yellow-500/10', bullet: 'bg-yellow-500' }
+}
 
-const getTimelineStyle = (color?: string) =>
-  timelineStyles[(color as TimelineStyleKey) ?? 'default'] ?? timelineStyles.default
+const getAccent = (color?: string) =>
+  accentStyles[(color ?? 'primary') as AccentKey] ?? accentStyles.primary
 
-type SkillStyleKey = 'default' | 'primary' | 'purple-500' | 'pink-500' | 'yellow-500'
-
-const skillStyles: Record<SkillStyleKey, { text: string; iconBg: string; gradient: string }> = {
-  default: {
-    text: 'text-primary',
-    iconBg: 'bg-primary/10',
-    gradient: 'from-primary to-purple-600'
-  },
-  primary: {
-    text: 'text-primary',
-    iconBg: 'bg-primary/10',
-    gradient: 'from-primary to-purple-600'
-  },
-  'purple-500': {
-    text: 'text-purple-500',
-    iconBg: 'bg-purple-500/10',
-    gradient: 'from-purple-600 to-pink-500'
-  },
-  'pink-500': {
-    text: 'text-pink-500',
-    iconBg: 'bg-pink-500/10',
-    gradient: 'from-pink-500 to-yellow-500'
-  },
-  'yellow-500': {
-    text: 'text-yellow-500',
-    iconBg: 'bg-yellow-500/10',
-    gradient: 'from-yellow-500 to-primary'
-  }
-} as const
-
-const getSkillStyle = (color?: string) =>
-  skillStyles[(color as SkillStyleKey) ?? 'default'] ?? skillStyles.default
-
-type LifeStyleKey = 'default' | 'primary' | 'purple-500' | 'pink-500' | 'yellow-500'
-
-const lifeStyles: Record<LifeStyleKey, string> = {
-  default: 'text-primary',
-  primary: 'text-primary',
-  'purple-500': 'text-purple-500',
-  'pink-500': 'text-pink-500',
-  'yellow-500': 'text-yellow-500'
-} as const
-
-const timelineTextClass = (color?: string) => getTimelineStyle(color).text
-
-const timelineBulletClass = (color?: string) => getTimelineStyle(color).bullet
-
-const timelineCardClass = (color?: string) => getTimelineStyle(color).card
-
-const skillTextClass = (color?: string) => getSkillStyle(color).text
-
-const skillIconBackgroundClass = (color?: string) => getSkillStyle(color).iconBg
-
-const skillGradientClass = (color?: string) => `bg-gradient-to-r ${getSkillStyle(color).gradient}`
-
-const lifeTextClass = (color?: string) =>
-  lifeStyles[(color as LifeStyleKey) ?? 'default'] ?? lifeStyles.default
+const accentTextClass = (color?: string) => getAccent(color).text
+const accentBgClass = (color?: string) => getAccent(color).bg
+const timelineTextClass = accentTextClass
+const timelineBulletClass = (color?: string) => getAccent(color).bullet
 
 useSiteSeo(() => ({
   title: 'About',
@@ -516,29 +534,10 @@ useSiteSeo(() => ({
   animation: spin-reverse 25s linear infinite;
 }
 
-@keyframes pulse-subtle {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
-
-.animate-pulse-subtle {
-  animation: pulse-subtle 3s ease-in-out infinite;
-}
-
-.float-animation {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin-slow,
+  .animate-spin-reverse {
+    animation: none;
   }
 }
 </style>

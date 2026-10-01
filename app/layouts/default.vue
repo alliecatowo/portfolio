@@ -26,9 +26,6 @@
     <ClientOnly>
       <ShortcutsHelp />
     </ClientOnly>
-
-    <!-- Global Toast Notifications -->
-    <UToast />
   </UApp>
 </template>
 

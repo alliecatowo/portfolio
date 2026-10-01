@@ -195,18 +195,42 @@ export default defineContentConfig({
           title: z.string(),
           items: z.array(z.object({
             title: z.string(),
+            // Short date label shown above the title, e.g. "2018–2021"
+            period: z.string().optional(),
             color: z.string().optional(),
+            icon: z.string().optional(),
             description: z.string()
           }))
         }).optional(),
+        // About page "Now" block: current role plus links to current projects
+        now: z.object({
+          title: z.string(),
+          description: z.string(),
+          award: z.object({
+            label: z.string(),
+            to: z.string()
+          }).optional(),
+          projects: z.array(z.object({
+            title: z.string(),
+            to: z.string(),
+            description: z.string()
+          })).optional()
+        }).optional(),
         life: z.object({
           title: z.string(),
+          description: z.string().optional(),
           cards: z.array(z.object({
             title: z.string(),
             color: z.string().optional(),
             icon: z.string().optional(),
             image: z.string().optional(),
             alt: z.string().optional(),
+            // CSS object-position for the cropped image, e.g. "50% 30%"
+            imagePosition: z.string().optional(),
+            // Optional internal link, e.g. a related project page
+            to: z.string().optional(),
+            // Render as a tall feature card on wide screens
+            featured: z.boolean().optional(),
             description: z.string()
           }))
         }).optional()
