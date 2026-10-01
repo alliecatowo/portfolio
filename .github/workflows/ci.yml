@@ -161,7 +161,9 @@ jobs:
           }
 
   firebase-preview:
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    # Dependabot PRs only see Dependabot secrets (no Firebase credentials), so the deploy would always
+    # fail there. ci-success treats a skipped preview as fine.
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
     needs: [setup, typecheck, lint, validate-content] # Run after validation passes
     runs-on: ubuntu-latest
     environment:
