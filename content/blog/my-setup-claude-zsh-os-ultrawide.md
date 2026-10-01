@@ -1,6 +1,6 @@
 ---
 title: 'My Everyday Setup: Claude Code, zsh, OS Choices, and Ultrawides'
-date: 2025-08-30
+date: 2025-08-29
 description: 'A practical tour of the tools that keep me fast and calm: AI as
   accelerator, clean shells, sane OS picks, and screens that let me breathe.'
 category: dev
