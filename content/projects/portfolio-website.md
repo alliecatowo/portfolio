@@ -1,13 +1,14 @@
 ---
 title: Modern Portfolio Website
+date: 2024-03-15
+demo: https://allisons.dev
 description: A portfolio website built with Nuxt.js, featuring dual developer/tattoo artist sections, Nuxt Content CMS, and modern UI components.
-technologies:
-  - Nuxt.js
-  - Vue.js
-  - TypeScript
-  - Tailwind CSS
-  - Nuxt UI
-  - Nuxt Content
+featured: false
+github: https://github.com/allisons-dev/portfolio
+group: earlier-work
+image: /screenshot-2025-10-20-at-23-49-08-nuxt-studio.png
+slug: portfolio-website
+status: draft
 tags:
   - portfolio
   - nuxt
@@ -18,14 +19,13 @@ tags:
   - cms
   - nuxt-content
   - nuxt-ui
-featured: false
-status: draft
-date: 2024-03-15
-github: https://github.com/allisons-dev/portfolio
-demo: https://allisons.dev
-image: /screenshot-2025-10-20-at-23-49-08-nuxt-studio.png
-slug: portfolio-website
-group: earlier-work
+technologies:
+  - Nuxt.js
+  - Vue.js
+  - TypeScript
+  - Tailwind CSS
+  - Nuxt UI
+  - Nuxt Content
 category: Web Development
 challenges:
   - Dual-purpose design for developer and tattoo artist personas

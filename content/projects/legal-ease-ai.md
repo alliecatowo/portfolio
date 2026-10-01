@@ -1,6 +1,29 @@
 ---
 title: LegalEase AI
+date: 2025-08-30
+demo: https://legal-ease.app
 description: "Self-hosted legal discovery for messy, sensitive evidence: Docling OCR, hybrid BM25 and vector search in Qdrant, WhisperX transcription, and local LLMs via Ollama."
+featured: false
+github: https://github.com/alliecatowo/legalease-ai
+group: earlier-work
+image: /images/legalease/search-hero-pink-dark.png
+imageAlt: LegalEase AI search page in the dark pink theme, with the hybrid search box and filters for cases, types and levels
+seo:
+  title: "LegalEase AI: self-hosted legal discovery"
+  description: "Self-hosted legal discovery for messy, sensitive evidence: Docling OCR, hybrid BM25 and vector search in Qdrant, WhisperX transcription, and local LLMs via Ollama."
+slug: legal-ease-ai
+status: published
+tags:
+  - ai
+  - legal
+  - discovery
+  - self-hosted
+  - privacy
+  - fastapi
+  - react
+  - vector-search
+  - ocr
+  - speech-to-text
 technologies:
   - Python
   - FastAPI
@@ -13,29 +36,6 @@ technologies:
   - Vector Search
   - OCR
   - Speech-to-Text
-tags:
-  - ai
-  - legal
-  - discovery
-  - self-hosted
-  - privacy
-  - fastapi
-  - react
-  - vector-search
-  - ocr
-  - speech-to-text
-slug: legal-ease-ai
-group: earlier-work
-image: /images/legalease/search-hero-pink-dark.png
-imageAlt: LegalEase AI search page in the dark pink theme, with the hybrid search box and filters for cases, types and levels
-date: 2025-08-30
-status: published
-featured: false
-github: https://github.com/alliecatowo/legalease-ai
-demo: https://legal-ease.app
-seo:
-  title: "LegalEase AI: self-hosted legal discovery"
-  description: "Self-hosted legal discovery for messy, sensitive evidence: Docling OCR, hybrid BM25 and vector search in Qdrant, WhisperX transcription, and local LLMs via Ollama."
 ---
 
 ## Overview

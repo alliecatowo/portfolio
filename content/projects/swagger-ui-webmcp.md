@@ -1,12 +1,27 @@
 ---
 title: Swagger UI WebMCP
-description: "OpenAI WebMCP Challenge entry: a Swagger UI plugin that turns any OpenAPI docs page into agent tools, with access the page and the person can only tighten."
-slug: swagger-ui-webmcp
 date: 2026-09-03
-status: published
+demo: https://openapi-web-mcp.vercel.app
+description: "OpenAI WebMCP Challenge entry: a Swagger UI plugin that turns any OpenAPI docs page into agent tools, with access the page and the person can only tighten."
+devpost: https://devpost.com/software/swagger-ui-webmcp
 featured: false
+github: https://github.com/alliecatowo/openapi-web-mcp
 group: browser-agents
 groupOrder: 2
+image: /images/projects/swagger-ui-webmcp/card.webp
+imageAlt: Video thumbnail reading "Your API docs are the connector" over Swagger UI with an agent chat beside it.
+seo:
+  title: "Swagger UI WebMCP: OpenAPI docs as agent tools"
+  description: "OpenAI WebMCP Challenge entry: a Swagger UI plugin that turns any OpenAPI docs page into agent tools, with access the page and the person can only tighten."
+slug: swagger-ui-webmcp
+status: published
+tags:
+  - ai-agents
+  - webmcp
+  - mcp
+  - hackathon
+  - developer-tools
+  - browser
 technologies:
   - WebMCP
   - TypeScript
@@ -15,21 +30,6 @@ technologies:
   - Vite
   - Playwright
   - Vercel
-tags:
-  - ai-agents
-  - webmcp
-  - mcp
-  - hackathon
-  - developer-tools
-  - browser
-github: https://github.com/alliecatowo/openapi-web-mcp
-demo: https://openapi-web-mcp.vercel.app
-devpost: https://devpost.com/software/swagger-ui-webmcp
-image: /images/projects/swagger-ui-webmcp/card.webp
-imageAlt: Video thumbnail reading "Your API docs are the connector" over Swagger UI with an agent chat beside it.
-seo:
-  title: "Swagger UI WebMCP: OpenAPI docs as agent tools"
-  description: "OpenAI WebMCP Challenge entry: a Swagger UI plugin that turns any OpenAPI docs page into agent tools, with access the page and the person can only tighten."
 ---
 
 **If you can Try it out, your agent can too.**

@@ -1,14 +1,31 @@
 ---
 title: JupyterLite WebMCP
+award: OpenAI WebMCP Challenge Winner
+date: 2026-09-03
+demo: https://jupyterlite-web-mcp.vercel.app/lab/index.html
 description: "Winning OpenAI WebMCP Challenge entry: a JupyterLab extension giving a browser agent 22 tools over your live notebook, kernel, selection and review threads."
-slug: jupyterlite-webmcp
+devpost: https://devpost.com/software/jupyterlite-webmcp
+featured: true
+github: https://github.com/alliecatowo/jupyterlite-web-mcp
 group: browser-agents
 groupOrder: 1
-date: 2026-09-03
-status: published
-featured: true
+image: /images/projects/jupyterlite-webmcp/card.webp
+imageAlt: JupyterLite notebook with the Agent panel in Propose mode. An agent's proposed edit is shown as a red and green diff under the cell, with Accept and Deny buttons, waiting for review.
+ogImage: /images/og/jupyterlite-webmcp.png
 order: 1
-award: OpenAI WebMCP Challenge Winner
+seo:
+  title: "JupyterLite WebMCP: OpenAI WebMCP Challenge winner"
+  description: "Winning OpenAI WebMCP Challenge entry: a JupyterLab extension giving a browser agent 22 tools over your live notebook, kernel, selection and review threads."
+slug: jupyterlite-webmcp
+status: published
+tags:
+  - ai-agents
+  - webmcp
+  - mcp
+  - jupyter
+  - notebooks
+  - browser
+  - open-source
 technologies:
   - WebMCP
   - JupyterLab
@@ -18,23 +35,6 @@ technologies:
   - Yjs
   - Playwright
   - Jest
-tags:
-  - ai-agents
-  - webmcp
-  - mcp
-  - jupyter
-  - notebooks
-  - browser
-  - open-source
-github: https://github.com/alliecatowo/jupyterlite-web-mcp
-demo: https://jupyterlite-web-mcp.vercel.app/lab/index.html
-devpost: https://devpost.com/software/jupyterlite-webmcp
-image: /images/projects/jupyterlite-webmcp/card.webp
-imageAlt: JupyterLite notebook with the Agent panel in Propose mode. An agent's proposed edit is shown as a red and green diff under the cell, with Accept and Deny buttons, waiting for review.
-ogImage: /images/og/jupyterlite-webmcp.png
-seo:
-  title: "JupyterLite WebMCP: OpenAI WebMCP Challenge winner"
-  description: "Winning OpenAI WebMCP Challenge entry: a JupyterLab extension giving a browser agent 22 tools over your live notebook, kernel, selection and review threads."
 ---
 
 **Your notebook is already in the browser. Now your agent can be too.**

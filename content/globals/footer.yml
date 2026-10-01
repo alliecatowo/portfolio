@@ -1,8 +1,24 @@
-slug: footer
+bottom:
+  subtext: Built with ❤️ using Nuxt, Nuxt UI, and Tailwind CSS.
 brand:
   title: Allison Coleman
   tagline: Agent systems, developer tools, languages & runtimes
+contact:
+  description: Feel free to reach out for collaborations or just a friendly hello.
+  email: me@allisons.dev
 description: Agent systems, developer tools, languages & runtimes
+navigation:
+  - label: Home
+    to: /
+  - label: About
+    to: /about/
+  - label: Projects
+    to: /projects/
+  - label: Blog
+    to: /blog/
+  - label: Contact
+    to: /contact/
+slug: footer
 socials:
   - label: GitHub
     href: https://github.com/alliecatowo
@@ -23,19 +39,3 @@ socials:
     href: mailto:me@allisons.dev
     icon: i-lucide-mail
     tooltip: Send me an email
-navigation:
-  - label: Home
-    to: /
-  - label: About
-    to: /about/
-  - label: Projects
-    to: /projects/
-  - label: Blog
-    to: /blog/
-  - label: Contact
-    to: /contact/
-contact:
-  description: Feel free to reach out for collaborations or just a friendly hello.
-  email: me@allisons.dev
-bottom:
-  subtext: Built with ❤️ using Nuxt, Nuxt UI, and Tailwind CSS.

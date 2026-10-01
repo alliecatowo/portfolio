@@ -1,8 +1,29 @@
-slug: home
-layout: home
-seo:
-  title: "Allison Coleman: agent systems, developer tools & WebMCP"
-  description: Allison Coleman builds agent systems and developer tools. Creator of JupyterLite WebMCP, one of 10 winners of the 2026 OpenAI WebMCP Challenge.
+blog:
+  title: Writing
+  description: Notes on agents, tools, languages, and whatever I broke this week.
+  cta:
+    label: All writing
+    to: /blog/
+cta:
+  title: Get in touch
+  description: Questions about WebMCP or browser agents, a hackathon team with a free seat, or a tool you wish existed? Email is the fastest way to reach me.
+  buttons:
+    - label: Email me
+      href: mailto:me@allisons.dev
+      color: primary
+      variant: solid
+      size: lg
+      icon: i-lucide-mail
+      iconPosition: leading
+    - label: "@AllieCatOwO on X"
+      href: https://x.com/AllieCatOwO
+      external: true
+      color: primary
+      variant: outline
+      size: lg
+      icon: i-simple-icons-x
+      iconPosition: leading
+  socials: []
 hero:
   title: Allison Coleman
   description: Software engineer building agent systems, developer tools, and languages & runtimes. After hours, I maintain the firmware for my own split keyboards.
@@ -63,6 +84,13 @@ hero:
   buttons: []
   paragraphs: []
   stats: []
+layout: home
+projects:
+  title: Selected work
+  description: Recent things I've built and shipped.
+  cta:
+    label: All projects
+    to: /projects/
 quickLinks:
   links:
     - title: Projects
@@ -77,12 +105,9 @@ quickLinks:
       description: Email, X or the contact form. Tell me what you're working on
       to: /contact/
       icon: i-lucide-message-circle
-projects:
-  title: Selected work
-  description: Recent things I've built and shipped.
-  cta:
-    label: All projects
-    to: /projects/
+seo:
+  title: "Allison Coleman: agent systems, developer tools & WebMCP"
+  description: Allison Coleman builds agent systems and developer tools. Creator of JupyterLite WebMCP, one of 10 winners of the 2026 OpenAI WebMCP Challenge.
 skills:
   title: What I work on
   items:
@@ -99,29 +124,4 @@ skills:
       description: Split keyboards, ZMK/QMK firmware, a self-hosted media server
       icon: i-lucide-keyboard
   categories: []
-blog:
-  title: Writing
-  description: Notes on agents, tools, languages, and whatever I broke this week.
-  cta:
-    label: All writing
-    to: /blog/
-cta:
-  title: Get in touch
-  description: Questions about WebMCP or browser agents, a hackathon team with a free seat, or a tool you wish existed? Email is the fastest way to reach me.
-  buttons:
-    - label: Email me
-      href: mailto:me@allisons.dev
-      color: primary
-      variant: solid
-      size: lg
-      icon: i-lucide-mail
-      iconPosition: leading
-    - label: "@AllieCatOwO on X"
-      href: https://x.com/AllieCatOwO
-      external: true
-      color: primary
-      variant: outline
-      size: lg
-      icon: i-simple-icons-x
-      iconPosition: leading
-  socials: []
+slug: home

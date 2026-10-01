@@ -1,11 +1,21 @@
 ---
 title: Recipe Bot
-description: "A 2024 command-line MVP that turns Instagram cooking videos into Markdown recipes: download, transcribe with Whisper, check it is actually a recipe, then write it up with GPT."
-slug: recipe-bot
 date: 2024-11-16
-status: published
+description: "A 2024 command-line MVP that turns Instagram cooking videos into Markdown recipes: download, transcribe with Whisper, check it is actually a recipe, then write it up with GPT."
 featured: false
+github: https://github.com/alliecatowo/recipe-bot
 group: earlier-work
+seo:
+  title: "Recipe Bot: Instagram cooking videos to recipes"
+  description: "A 2024 CLI that turns Instagram cooking videos into Markdown recipes: download, transcribe with Whisper, check it is a recipe, then write it up with GPT."
+slug: recipe-bot
+status: published
+tags:
+  - python
+  - cli
+  - llm
+  - transcription
+  - recipes
 technologies:
   - Python
   - Instaloader
@@ -15,16 +25,6 @@ technologies:
   - Firebase
   - prompt_toolkit
   - PDM
-tags:
-  - python
-  - cli
-  - llm
-  - transcription
-  - recipes
-github: https://github.com/alliecatowo/recipe-bot
-seo:
-  title: "Recipe Bot: Instagram cooking videos to recipes"
-  description: "A 2024 CLI that turns Instagram cooking videos into Markdown recipes: download, transcribe with Whisper, check it is a recipe, then write it up with GPT."
 ---
 
 **The recipe is in the video. Nobody wrote it down.**

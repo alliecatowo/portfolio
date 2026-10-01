@@ -1,18 +1,15 @@
 ---
 title: Anvil
-description: "A native SwiftUI workspace for agent-driven development on macOS: tickets, agent sessions, review and shipping in one app. Ambitious, mid-rebuild, and in need of some TLC."
-slug: anvil
 date: 2026-03-27
-status: published
+description: "A native SwiftUI workspace for agent-driven development on macOS: tickets, agent sessions, review and shipping in one app. Ambitious, mid-rebuild, and in need of some TLC."
 featured: false
+github: https://github.com/alliecatowo/anvil
 group: agent-systems-devtools
-technologies:
-  - Swift
-  - SwiftUI
-  - Swift Packages
-  - XcodeGen
-  - JSON-RPC
-  - XCTest
+seo:
+  description: "A native SwiftUI workspace for agent-driven development on macOS: tickets, agent sessions, review and shipping in one app. Ambitious and mid-rebuild."
+  title: Anvil
+slug: anvil
+status: published
 tags:
   - macos
   - native-app
@@ -20,10 +17,13 @@ tags:
   - developer-tools
   - swiftui
   - prototype
-github: https://github.com/alliecatowo/anvil
-seo:
-  description: "A native SwiftUI workspace for agent-driven development on macOS: tickets, agent sessions, review and shipping in one app. Ambitious and mid-rebuild."
-  title: Anvil
+technologies:
+  - Swift
+  - SwiftUI
+  - Swift Packages
+  - XcodeGen
+  - JSON-RPC
+  - XCTest
 ---
 
 **What does a development environment look like if agents do most of the typing?**

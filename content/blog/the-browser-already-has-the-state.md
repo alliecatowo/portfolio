@@ -1,17 +1,17 @@
 ---
 title: The Browser Already Has the State Your Agent Needs
-description: Screenshots, DOM scraping and backend MCP servers all hand your agent a copy. WebMCP lets the page itself offer tools over the live tab. What I learned building five of them in two days.
-date: 2026-10-01
+author: Allison Coleman
 category: dev
+date: 2026-10-01
+description: Screenshots, DOM scraping and backend MCP servers all hand your agent a copy. WebMCP lets the page itself offer tools over the live tab. What I learned building five of them in two days.
+featured: false
+published: false
+slug: the-browser-already-has-the-state
 tags:
   - webmcp
   - mcp
   - agents
   - web-platform
-author: Allison Coleman
-published: false
-featured: false
-slug: the-browser-already-has-the-state
 ---
 
 ## WebMCP as an alternative to driving the page with clicks

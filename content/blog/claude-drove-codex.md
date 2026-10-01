@@ -1,8 +1,12 @@
 ---
 title: I Had Claude Drive Codex to Film My Hackathon Demos
-description: At 11 PM the night before the deadline I had four working projects and zero demo videos. By morning an agent on my Mac mini had filmed a different agent using all four.
-date: 2026-10-01
+author: Allison Coleman
 category: dev
+date: 2026-10-01
+description: At 11 PM the night before the deadline I had four working projects and zero demo videos. By morning an agent on my Mac mini had filmed a different agent using all four.
+featured: false
+published: false
+slug: claude-drove-codex
 tags:
   - webmcp
   - agents
@@ -10,10 +14,6 @@ tags:
   - codex
   - computer-use
   - hackathon
-author: Allison Coleman
-published: false
-featured: false
-slug: claude-drove-codex
 ---
 
 At 10:54 PM on September 2, about fourteen hours before the deadline, I had four working WebMCP projects and no demo videos. The rules wanted a public video with audio narration for each one. I had spent the evening with my friend Juan trying to record the JupyterLite one without success.

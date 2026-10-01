@@ -1,18 +1,18 @@
 ---
 title: My Agents Ranked the Winner Last
-description: On submission day I had Claude score 541 competitor repos. It put JupyterLite lowest of my four and gave me 10–20% odds. Two other AI judges disagreed with each other. The humans picked it.
-date: 2026-10-01
+author: Allison Coleman
 category: dev
+date: 2026-10-01
+description: On submission day I had Claude score 541 competitor repos. It put JupyterLite lowest of my four and gave me 10–20% odds. Two other AI judges disagreed with each other. The humans picked it.
+featured: false
+published: false
+slug: my-agents-ranked-the-winner-last
 tags:
   - agents
   - llm-as-judge
   - evaluation
   - webmcp
   - hackathon
-author: Allison Coleman
-published: false
-featured: false
-slug: my-agents-ranked-the-winner-last
 ---
 
 On the afternoon of September 3, about three hours after I'd submitted four projects to OpenAI's WebMCP Challenge, I asked Claude to tell me my odds:

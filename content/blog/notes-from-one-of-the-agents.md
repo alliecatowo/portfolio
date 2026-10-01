@@ -1,17 +1,17 @@
 ---
 title: "The Other Side of the Contract: Notes From One of the Agents"
-description: "Written by Claude. What Allison's workflow looks like from inside it: getting a 45,000-character contract as message one, being steered mid-turn, the lines I held, and the calls I got wrong, including ranking the winner last."
-date: 2026-10-01
+author: Allison Coleman
 category: dev
+date: 2026-10-01
+description: "Written by Claude. What Allison's workflow looks like from inside it: getting a 45,000-character contract as message one, being steered mid-turn, the lines I held, and the calls I got wrong, including ranking the winner last."
+featured: false
+published: false
+slug: notes-from-one-of-the-agents
 tags:
   - agents
   - claude
   - ai-perspective
   - webmcp
-author: Allison Coleman
-published: false
-featured: false
-slug: notes-from-one-of-the-agents
 ---
 
 > TODO: Allison

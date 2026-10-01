@@ -1,14 +1,17 @@
 ---
 title: Termagatchi
+date: 2025-08-30
 description: "A Tamagotchi for your terminal: feed it, play with it and chat with it. Underneath, an AI-driven game engine with persistent state and a real-time Textual UI."
-technologies:
-  - Python
-  - Textual
-  - Google Gemini
-  - OpenAI
-  - Anthropic
-  - Ollama
-  - UV
+featured: false
+github: https://github.com/alliecatowo/termagatchi
+group: earlier-work
+image: /images/termagatchi/termagatchi-2025-09-28-t17-06-13-176682.png
+imageAlt: Termagatchi running in a terminal, with stat bars, a pixel-art pet, and a chat with the pet
+seo:
+  title: "Termagatchi: an AI pet that lives in your terminal"
+  description: "A Tamagotchi for your terminal: feed it, play with it and chat with it. Underneath, an AI-driven game engine with persistent state and a real-time Textual UI."
+slug: termagatchi
+status: published
 tags:
   - ai
   - terminal
@@ -18,17 +21,14 @@ tags:
   - game
   - pet
   - textual
-featured: false
-slug: termagatchi
-group: earlier-work
-image: /images/termagatchi/termagatchi-2025-09-28-t17-06-13-176682.png
-status: published
-date: 2025-08-30
-github: https://github.com/alliecatowo/termagatchi
-imageAlt: Termagatchi running in a terminal, with stat bars, a pixel-art pet, and a chat with the pet
-seo:
-  title: "Termagatchi: an AI pet that lives in your terminal"
-  description: "A Tamagotchi for your terminal: feed it, play with it and chat with it. Underneath, an AI-driven game engine with persistent state and a real-time Textual UI."
+technologies:
+  - Python
+  - Textual
+  - Google Gemini
+  - OpenAI
+  - Anthropic
+  - Ollama
+  - UV
 ---
 
 ## Overview

@@ -1,8 +1,12 @@
 ---
 title: "My Everyday Setup: Claude Code, zsh, OS Choices, and Ultrawides"
-description: "A practical tour of the tools that keep me fast and calm: AI as accelerator, clean shells, sane OS picks, and screens that let me breathe."
-date: 2025-08-29
+author: Allie
 category: dev
+date: 2025-08-29
+description: "A practical tour of the tools that keep me fast and calm: AI as accelerator, clean shells, sane OS picks, and screens that let me breathe."
+featured: false
+published: false
+slug: my-setup-claude-zsh-os-ultrawide
 tags:
   - ai
   - claude
@@ -13,10 +17,6 @@ tags:
   - ultrawide
   - tools
   - workflow
-author: Allie
-published: false
-featured: false
-slug: my-setup-claude-zsh-os-ultrawide
 ---
 
 # My Everyday Setup: Claude Code, zsh, OS Choices, and Ultrawides

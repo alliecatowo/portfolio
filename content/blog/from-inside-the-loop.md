@@ -1,17 +1,17 @@
 ---
 title: "From Inside the Loop: What Claude Saw"
-description: I asked Claude, one of the agents that built my WebMCP Challenge entries, to read the logs and tell me what it actually thought. Four observations, clearly labeled as its words, and then my rebuttal.
-date: 2026-10-01
+author: Allison Coleman
 category: dev
+date: 2026-10-01
+description: I asked Claude, one of the agents that built my WebMCP Challenge entries, to read the logs and tell me what it actually thought. Four observations, clearly labeled as its words, and then my rebuttal.
+featured: false
+published: false
+slug: from-inside-the-loop
 tags:
   - agents
   - claude
   - ai-perspective
   - webmcp
-author: Allison Coleman
-published: false
-featured: false
-slug: from-inside-the-loop
 ---
 
 ## Why I asked an agent

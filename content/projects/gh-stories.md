@@ -1,12 +1,26 @@
 ---
 title: GitHub Stories
-description: "24-hour Stories for GitHub: rings on avatars via a browser extension, and a gh CLI that draws them (video too) right in your terminal."
-slug: gh-stories
 date: 2026-09-13
-status: published
+description: "24-hour Stories for GitHub: rings on avatars via a browser extension, and a gh CLI that draws them (video too) right in your terminal."
 featured: true
-order: 6
+github: https://github.com/alliecatowo/gh-stories
 group: social-systems
+image: /images/projects/gh-stories/card.webp
+imageAlt: 'GitHub Stories landing page: "Stories for GitHub. Yes, those Stories.", with links to the demo, extension and CLI.'
+order: 6
+seo:
+  title: "GitHub Stories: 24-hour Stories for GitHub"
+  description: "24-hour Stories for GitHub: rings on avatars via a browser extension, and a gh CLI that draws them (video too) right in your terminal."
+slug: gh-stories
+status: published
+tags:
+  - browser-extension
+  - github-cli
+  - tui
+  - terminal-graphics
+  - social
+  - go
+  - open-source
 technologies:
   - Go
   - Bubble Tea
@@ -16,20 +30,6 @@ technologies:
   - PostgreSQL
   - ffmpeg
   - Kitty graphics protocol
-tags:
-  - browser-extension
-  - github-cli
-  - tui
-  - terminal-graphics
-  - social
-  - go
-  - open-source
-github: https://github.com/alliecatowo/gh-stories
-image: /images/projects/gh-stories/card.webp
-imageAlt: 'GitHub Stories landing page: "Stories for GitHub. Yes, those Stories.", with links to the demo, extension and CLI.'
-seo:
-  title: "GitHub Stories: 24-hour Stories for GitHub"
-  description: "24-hour Stories for GitHub: rings on avatars via a browser extension, and a gh CLI that draws them (video too) right in your terminal."
 ---
 
 **Stories for GitHub. Yes, those Stories.**

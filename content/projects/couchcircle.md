@@ -1,11 +1,25 @@
 ---
 title: CouchCircle
-description: "A cozy real-time watch party: synced YouTube, direct video, and P2P screen share in a shared living room with a queue and one remote."
-slug: couchcircle
 date: 2026-06-10
-status: published
+demo: https://couchcircle.vercel.app
+description: "A cozy real-time watch party: synced YouTube, direct video, and P2P screen share in a shared living room with a queue and one remote."
 featured: false
+github: https://github.com/alliecatowo/couchcircle
 group: social-systems
+image: /images/projects/couchcircle/card.webp
+imageAlt: "A CouchCircle room: a synced video on the stage and two avatars on a couch in an illustrated living room."
+seo:
+  title: "CouchCircle: a cozy real-time watch party"
+  description: "A cozy real-time watch party: synced YouTube, direct video, and P2P screen share in a shared living room with a queue and one remote."
+slug: couchcircle
+status: published
+tags:
+  - social
+  - realtime
+  - watch-party
+  - sync
+  - webrtc
+  - pwa
 technologies:
   - TypeScript
   - Next.js
@@ -15,20 +29,6 @@ technologies:
   - WebRTC
   - hls.js
   - Tailwind CSS
-tags:
-  - social
-  - realtime
-  - watch-party
-  - sync
-  - webrtc
-  - pwa
-github: https://github.com/alliecatowo/couchcircle
-demo: https://couchcircle.vercel.app
-image: /images/projects/couchcircle/card.webp
-imageAlt: "A CouchCircle room: a synced video on the stage and two avatars on a couch in an illustrated living room."
-seo:
-  title: "CouchCircle: a cozy real-time watch party"
-  description: "A cozy real-time watch party: synced YouTube, direct video, and P2P screen share in a shared living room with a queue and one remote."
 ---
 
 **watch together, actually together.**

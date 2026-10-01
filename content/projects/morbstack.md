@@ -1,11 +1,24 @@
 ---
 title: Morbstack
-description: "A native macOS Docker Desktop replacement: stock upstream dockerd in one Virtualization.framework VM, a Rust PID 1, and a SwiftUI app. Pre-release."
-slug: morbstack
 date: 2026-08-02
-status: published
+description: "A native macOS Docker Desktop replacement: stock upstream dockerd in one Virtualization.framework VM, a Rust PID 1, and a SwiftUI app. Pre-release."
 featured: false
+github: https://github.com/alliecatowo/morbstack
 group: agent-systems-devtools
+image: /images/projects/morbstack/card.webp
+imageAlt: "Morbstack's native macOS Containers window: 38 containers, with a Compose project and the Kubernetes system containers each collapsed into one grouped row."
+seo:
+  title: "Morbstack: a native macOS Docker Desktop alternative"
+  description: "A native macOS Docker Desktop replacement: stock upstream dockerd in one Virtualization.framework VM, a Rust PID 1, and a SwiftUI app. Pre-release."
+slug: morbstack
+status: published
+tags:
+  - developer-tools
+  - macos
+  - containers
+  - docker
+  - virtualization
+  - mcp
 technologies:
   - Swift
   - SwiftUI
@@ -15,19 +28,6 @@ technologies:
   - vsock
   - MCP
   - Kubernetes
-tags:
-  - developer-tools
-  - macos
-  - containers
-  - docker
-  - virtualization
-  - mcp
-github: https://github.com/alliecatowo/morbstack
-image: /images/projects/morbstack/card.webp
-imageAlt: "Morbstack's native macOS Containers window: 38 containers, with a Compose project and the Kubernetes system containers each collapsed into one grouped row."
-seo:
-  title: "Morbstack: a native macOS Docker Desktop alternative"
-  description: "A native macOS Docker Desktop replacement: stock upstream dockerd in one Virtualization.framework VM, a Rust PID 1, and a SwiftUI app. Pre-release."
 ---
 
 **The Docker you wish Docker shipped.**

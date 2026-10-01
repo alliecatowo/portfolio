@@ -1,11 +1,17 @@
 ---
 title: Lily58 HolyKeebs QMK Fork
+date: 2025-08-30
 description: A QMK fork that brings Vial to the HolyKeebs Lily58 tree, keeps its trackball, touchpad and trackpoint drivers, and ships prebuilt firmware built in CI.
-technologies:
-  - C
-  - QMK
-  - Vial
-  - GitHub Actions
+featured: false
+github: https://github.com/alliecatowo/allie-cat-keeb-vial
+group: hardware-homelab
+image: /images/keyboards/keyboards-collection-1.jpg
+imageAlt: A Lily58 split keyboard in a pink case with grey and navy keycaps, a red trackpoint on the left half and a square touchpad module between the halves
+seo:
+  title: Lily58 HolyKeebs QMK fork with Vial support
+  description: A QMK fork that brings Vial to the HolyKeebs Lily58 tree, keeps its trackball, touchpad and trackpoint drivers, and ships prebuilt firmware built in CI.
+slug: lily58-holy-keebs-qmk-fork
+status: published
 tags:
   - keyboard
   - firmware
@@ -17,17 +23,11 @@ tags:
   - trackball
   - touchpad
   - open-source
-github: https://github.com/alliecatowo/allie-cat-keeb-vial
-slug: lily58-holy-keebs-qmk-fork
-group: hardware-homelab
-image: /images/keyboards/keyboards-collection-1.jpg
-status: published
-date: 2025-08-30
-featured: false
-imageAlt: A Lily58 split keyboard in a pink case with grey and navy keycaps, a red trackpoint on the left half and a square touchpad module between the halves
-seo:
-  title: Lily58 HolyKeebs QMK fork with Vial support
-  description: A QMK fork that brings Vial to the HolyKeebs Lily58 tree, keeps its trackball, touchpad and trackpoint drivers, and ships prebuilt firmware built in CI.
+technologies:
+  - C
+  - QMK
+  - Vial
+  - GitHub Actions
 ---
 
 ## Overview

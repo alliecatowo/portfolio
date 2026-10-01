@@ -1,11 +1,24 @@
 ---
 title: Daggler
-description: "A semantic IDE for GitHub Actions: typed IR, live job graph, five validation layers, and rules that catch prompt injection into AI agents."
-slug: daggler
 date: 2026-06-03
-status: published
+description: "A semantic IDE for GitHub Actions: typed IR, live job graph, five validation layers, and rules that catch prompt injection into AI agents."
 featured: false
+github: https://github.com/alliecatowo/daggler
 group: agent-systems-devtools
+image: /images/projects/daggler/card.webp
+imageAlt: Daggler grading an AI triage-agent workflow F for security, flagging untrusted issue text passed into the agent's prompt and agent output being executed.
+seo:
+  title: "Daggler: a semantic IDE for GitHub Actions"
+  description: "A semantic IDE for GitHub Actions: typed IR, live job graph, five validation layers, and rules that catch prompt injection into AI agents."
+slug: daggler
+status: published
+tags:
+  - developer-tools
+  - ci-cd
+  - github-actions
+  - security
+  - agents
+  - static-analysis
 technologies:
   - TypeScript
   - Next.js
@@ -14,19 +27,6 @@ technologies:
   - GitHub Actions
   - nektos/act
   - Drizzle ORM
-tags:
-  - developer-tools
-  - ci-cd
-  - github-actions
-  - security
-  - agents
-  - static-analysis
-github: https://github.com/alliecatowo/daggler
-image: /images/projects/daggler/card.webp
-imageAlt: Daggler grading an AI triage-agent workflow F for security, flagging untrusted issue text passed into the agent's prompt and agent output being executed.
-seo:
-  title: "Daggler: a semantic IDE for GitHub Actions"
-  description: "A semantic IDE for GitHub Actions: typed IR, live job graph, five validation layers, and rules that catch prompt injection into AI agents."
 ---
 
 **The semantic workbench for GitHub Actions.**

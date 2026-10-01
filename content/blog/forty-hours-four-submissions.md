@@ -1,8 +1,12 @@
 ---
 title: "Four Submissions in 40 Hours: How I Won OpenAI's WebMCP Challenge by Managing Agents"
-description: I found the WebMCP Challenge with two days left, shipped four entries, and one of them won. The logs remember it differently than I do.
-date: 2026-10-01
+author: Allison Coleman
 category: dev
+date: 2026-10-01
+description: I found the WebMCP Challenge with two days left, shipped four entries, and one of them won. The logs remember it differently than I do.
+featured: false
+published: false
+slug: forty-hours-four-submissions
 tags:
   - webmcp
   - agents
@@ -10,10 +14,6 @@ tags:
   - codex
   - hackathon
   - jupyterlite
-author: Allison Coleman
-published: false
-featured: false
-slug: forty-hours-four-submissions
 ---
 
 ## The result

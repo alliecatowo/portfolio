@@ -1,12 +1,27 @@
 ---
 title: Strudel WebMCP
-description: "OpenAI WebMCP Challenge entry: the Strudel live-coding REPL with 13 WebMCP tools, so an agent can edit, propose and listen to the same buffer you perform from."
-slug: strudel-webmcp
 date: 2026-09-03
-status: published
+demo: https://strudel-webmcp.vercel.app
+description: "OpenAI WebMCP Challenge entry: the Strudel live-coding REPL with 13 WebMCP tools, so an agent can edit, propose and listen to the same buffer you perform from."
+devpost: https://devpost.com/software/strudel-webmcp
 featured: false
+github: https://github.com/alliecatowo/strudel-webmcp
 group: browser-agents
 groupOrder: 4
+image: /images/projects/strudel-webmcp/card.webp
+imageAlt: Video thumbnail reading "The agent proposes. You hit accept." over a Strudel editor showing an agent proposal diff.
+seo:
+  title: "Strudel WebMCP: agents in a live-coding REPL"
+  description: "OpenAI WebMCP Challenge entry: the Strudel live-coding REPL with 13 WebMCP tools, so an agent can edit, propose and listen to the same buffer you perform from."
+slug: strudel-webmcp
+status: published
+tags:
+  - ai-agents
+  - webmcp
+  - mcp
+  - hackathon
+  - live-coding
+  - music
 technologies:
   - WebMCP
   - TypeScript
@@ -15,21 +30,6 @@ technologies:
   - Web Audio
   - Vite
   - Playwright
-tags:
-  - ai-agents
-  - webmcp
-  - mcp
-  - hackathon
-  - live-coding
-  - music
-github: https://github.com/alliecatowo/strudel-webmcp
-demo: https://strudel-webmcp.vercel.app
-devpost: https://devpost.com/software/strudel-webmcp
-image: /images/projects/strudel-webmcp/card.webp
-imageAlt: Video thumbnail reading "The agent proposes. You hit accept." over a Strudel editor showing an agent proposal diff.
-seo:
-  title: "Strudel WebMCP: agents in a live-coding REPL"
-  description: "OpenAI WebMCP Challenge entry: the Strudel live-coding REPL with 13 WebMCP tools, so an agent can edit, propose and listen to the same buffer you perform from."
 ---
 
 **Live-code together.**

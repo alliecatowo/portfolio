@@ -1,8 +1,13 @@
 ---
 title: My Self‑Hosted Stack on a 16TB Hetzner Box
-description: Plex, Jellyfin, Radarr/Sonarr/Lidarr/LazyLibrarian, qBittorrent, Jellyseerr, ProtonVPN, Portainer, and Caddy—running reliably and cheaply.
-date: 2025-08-29
+author: Allie
 category: dev
+date: 2025-08-29
+description: Plex, Jellyfin, Radarr/Sonarr/Lidarr/LazyLibrarian, qBittorrent, Jellyseerr, ProtonVPN, Portainer, and Caddy—running reliably and cheaply.
+featured: false
+featured_image: /images/homelab/screenshot-2025-10-16-at-13-03-45-homepage-allie-cat-cinema.png
+published: true
+slug: self-hosting-hetzner-media-box
 tags:
   - self-hosting
   - hetzner
@@ -11,11 +16,6 @@ tags:
   - portainer
   - caddy
   - homelab
-author: Allie
-published: true
-featured: false
-featured_image: /images/homelab/screenshot-2025-10-16-at-13-03-45-homepage-allie-cat-cinema.png
-slug: self-hosting-hetzner-media-box
 ---
 
 I like owning my media and my infrastructure. A bare‑metal Hetzner machine with 16TB gives me the flexibility and headroom I need—at a price that still feels unreal.

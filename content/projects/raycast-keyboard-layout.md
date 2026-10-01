@@ -1,19 +1,14 @@
 ---
 title: Keyboard Layout Visualizer
-description: A Raycast extension that reads QMK/Vial and ZMK keymaps straight off the board over USB and draws every layer as SVG, with reverse key search.
-slug: raycast-keyboard-layout
 date: 2026-03-25
-status: published
+description: A Raycast extension that reads QMK/Vial and ZMK keymaps straight off the board over USB and draws every layer as SVG, with reverse key search.
 featured: false
+github: https://github.com/alliecatowo/raycast-keyboard-layout
 group: hardware-homelab
-technologies:
-  - TypeScript
-  - React
-  - Raycast API
-  - node-hid
-  - serialport
-  - Protocol Buffers
-  - SVG
+image: /images/projects/raycast-keyboard-layout/card.webp
+imageAlt: "A dark SVG drawing of the navigation layer of a split keyboard: number keys across the top, Home, Page Down, Page Up and End on the left, arrow keys on the right, and faded ghost keys where the layer is transparent."
+slug: raycast-keyboard-layout
+status: published
 tags:
   - keyboard
   - qmk
@@ -22,9 +17,14 @@ tags:
   - raycast
   - macos
   - developer-tools
-github: https://github.com/alliecatowo/raycast-keyboard-layout
-image: /images/projects/raycast-keyboard-layout/card.webp
-imageAlt: "A dark SVG drawing of the navigation layer of a split keyboard: number keys across the top, Home, Page Down, Page Up and End on the left, arrow keys on the right, and faded ghost keys where the layer is transparent."
+technologies:
+  - TypeScript
+  - React
+  - Raycast API
+  - node-hid
+  - serialport
+  - Protocol Buffers
+  - SVG
 ---
 
 **Which layer was the arrow keys on again?**

@@ -1,11 +1,20 @@
 ---
 title: Allie Cat Corne (ZMK Firmware)
-description: "ZMK firmware for a mislabeled AliExpress Corne: pins recovered from the factory UF2, and a TPS43 touchpad brought up over a BLE split."
-slug: allie-cat-corne
 date: 2026-04-16
-status: draft
+description: "ZMK firmware for a mislabeled AliExpress Corne: pins recovered from the factory UF2, and a TPS43 touchpad brought up over a BLE split."
 featured: false
+github: https://github.com/alliecatowo/allie-cat-corne
 group: hardware-homelab
+slug: allie-cat-corne
+status: draft
+tags:
+  - keyboard
+  - firmware
+  - zmk
+  - split-keyboard
+  - corne
+  - touchpad
+  - reverse-engineering
 technologies:
   - ZMK
   - Zephyr RTOS
@@ -15,15 +24,6 @@ technologies:
   - Bluetooth LE
   - Python
   - GitHub Actions
-tags:
-  - keyboard
-  - firmware
-  - zmk
-  - split-keyboard
-  - corne
-  - touchpad
-  - reverse-engineering
-github: https://github.com/alliecatowo/allie-cat-corne
 ---
 
 **A Corne that said it was a Sofle, a touchpad that wouldn't talk, and the firmware that fixed both.**

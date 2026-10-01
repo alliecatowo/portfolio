@@ -97,11 +97,35 @@ async function parseDocument(id, content, type) {
   return { tree: document.body, document }
 }
 
+// A fenced block re-parsed from its own output gains an empty `meta: ""` prop; it renders the same
+function comparableTree(tree) {
+  return JSON.parse(JSON.stringify(tree, (key, value) => (key === 'meta' && value === '' ? undefined : value)))
+}
+
 const FRONTMATTER = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/
+
+const RESERVED = ['id', 'fsPath', 'stem', 'extension', '__hash__', 'path', 'body', 'meta', 'rawbody']
+
+// The document as Studio holds it after loading it from the content database: schema defaults
+// filled in (featured: false, category: dev, ...), keys in column order (id, title, then
+// alphabetical; see getOrderedSchemaKeys in Studio's runtime/utils/collection.js), and keys
+// outside the schema moved to `meta` (applyCollectionSchema).
+function studioDocument(info, id, document) {
+  const draft = structuredClone(document)
+  const parsed = config.collections[info.name].schema.safeParse(Object.fromEntries(Object.entries(draft).filter(([k]) => !RESERVED.includes(k))))
+  if (parsed.success) {
+    for (const [k, v] of Object.entries(parsed.data)) if (draft[k] === undefined && v !== undefined) draft[k] = v
+  }
+  const applied = applyCollectionSchema(id, info, draft)
+  const ordered = { id: applied.id }
+  if (applied.title !== undefined) ordered.title = applied.title
+  for (const k of Object.keys(applied).sort()) if (!(k in ordered)) ordered[k] = applied[k]
+  return ordered
+}
 
 // What Studio would write for the frontmatter-bearing document, as an object (for equality checks)
 function cleanedData(info, document) {
-  return JSON.parse(JSON.stringify(cleanDataKeys(applyCollectionSchema(document.id, info, structuredClone(document)))))
+  return JSON.parse(JSON.stringify(cleanDataKeys(studioDocument(info, document.id, document))))
 }
 function sortKeys(v) {
   if (Array.isArray(v)) return v.map(sortKeys)
@@ -113,14 +137,14 @@ async function formatMarkdown({ collection, rel }, src) {
   const info = infoByName[collection]
   const id = `${collection}/${rel.replace(/^content\//, '')}`
   const before = await parseDocument(id, src, info.type)
-  const normalized = applyCollectionSchema(id, info, structuredClone(before.document))
+  const normalized = studioDocument(info, id, before.document)
   const full = await generateContentFromDocument(normalized)
   const out = full.endsWith('\n') ? full : full + '\n'
 
   const after = await parseDocument(id, out, info.type)
   const sameData = isDeepStrictEqual(sortKeys(cleanedData(info, before.document)), sortKeys(cleanedData(info, after.document)))
   if (!sameData) return { status: 'skipped', reason: 'frontmatter data would change meaning', out: src }
-  if (isDeepStrictEqual(before.tree, after.tree)) return { status: 'full', out }
+  if (isDeepStrictEqual(comparableTree(before.tree), comparableTree(after.tree))) return { status: 'full', out }
 
   // Body would not survive the round trip (e.g. raw <video><source> HTML): keep the body verbatim
   // and apply Studio's frontmatter formatting only.
@@ -134,7 +158,7 @@ async function formatYaml({ collection, rel }, src) {
   const info = infoByName[collection]
   const id = `${collection}/${rel.replace(/^content\//, '')}`
   const document = await generateDocumentFromContent(id, src)
-  const normalized = applyCollectionSchema(id, info, structuredClone(document))
+  const normalized = studioDocument(info, id, document)
   const full = await generateContentFromDocument(normalized)
   const out = full.endsWith('\n') ? full : full + '\n'
   const again = await generateDocumentFromContent(id, out)

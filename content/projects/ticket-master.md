@@ -1,12 +1,26 @@
 ---
 title: Ticketmaster
-description: "Rust coding-agent runtime: chat in the terminal, hand work to background workers as tickets, review and accept it. State is an append-only event log."
-slug: ticket-master
 date: 2026-09-15
-status: published
+description: "Rust coding-agent runtime: chat in the terminal, hand work to background workers as tickets, review and accept it. State is an append-only event log."
 featured: true
-order: 2
+github: https://github.com/alliecatowo/ticket-master
 group: agent-systems-devtools
+image: /images/projects/ticket-master/card.webp
+imageAlt: The Ticketmaster terminal UI showing a ticket ready for review, with Accept and Reject options and the worker's verified test result.
+order: 2
+seo:
+  title: "Ticketmaster: a Rust coding-agent runtime"
+  description: "Rust coding-agent runtime: chat in the terminal, hand work to background workers as tickets, review and accept it. State is an append-only event log."
+slug: ticket-master
+status: published
+tags:
+  - ai-agents
+  - developer-tools
+  - cli
+  - tui
+  - event-sourcing
+  - rust
+  - llm
 technologies:
   - Rust
   - Tokio
@@ -16,20 +30,6 @@ technologies:
   - React
   - TypeScript
   - Vite
-tags:
-  - ai-agents
-  - developer-tools
-  - cli
-  - tui
-  - event-sourcing
-  - rust
-  - llm
-github: https://github.com/alliecatowo/ticket-master
-image: /images/projects/ticket-master/card.webp
-imageAlt: The Ticketmaster terminal UI showing a ticket ready for review, with Accept and Reject options and the worker's verified test result.
-seo:
-  title: "Ticketmaster: a Rust coding-agent runtime"
-  description: "Rust coding-agent runtime: chat in the terminal, hand work to background workers as tickets, review and accept it. State is an append-only event log."
 ---
 
 **An interactive coding agent with a ticket-powered background crew.**

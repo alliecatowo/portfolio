@@ -1,20 +1,13 @@
 ---
 title: Homelab Media Box on Hetzner (16TB)
-description: "A 16TB Hetzner auction server running my family's media library: Jellyfin and Plex with Quick Sync transcoding, the *arr apps, Caddy and Portainer in Docker."
 date: 2025-08-30
+description: "A 16TB Hetzner auction server running my family's media library: Jellyfin and Plex with Quick Sync transcoding, the *arr apps, Caddy and Portainer in Docker."
 featured: false
+group: hardware-homelab
+image: /images/homelab/screenshot-2025-10-16-at-13-07-11-jelly-seerr-allie-cat-cinema.png
+imageAlt: Jellyseerr request page from Allison's self-hosted media server, Allie Cat Cinema
+slug: homelab-hetzner-media-box
 status: published
-technologies:
-  - Docker
-  - Portainer
-  - Caddy
-  - Plex
-  - Jellyfin
-  - Radarr
-  - Sonarr
-  - Lidarr
-  - qBittorrent
-  - ProtonVPN
 tags:
   - homelab
   - docker
@@ -26,10 +19,17 @@ tags:
   - automation
   - torrent
   - vpn
-slug: homelab-hetzner-media-box
-group: hardware-homelab
-image: /images/homelab/screenshot-2025-10-16-at-13-07-11-jelly-seerr-allie-cat-cinema.png
-imageAlt: Jellyseerr request page from Allison's self-hosted media server, Allie Cat Cinema
+technologies:
+  - Docker
+  - Portainer
+  - Caddy
+  - Plex
+  - Jellyfin
+  - Radarr
+  - Sonarr
+  - Lidarr
+  - qBittorrent
+  - ProtonVPN
 ---
 
 ## Overview

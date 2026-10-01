@@ -1,11 +1,25 @@
 ---
 title: AFTERLIFE
-description: "Conway's Life with a time machine: scrub history, fork alternate futures, sculpt time in 3D, and play in deterministic lockstep across tabs."
-slug: afterlife
 date: 2026-09-07
-status: published
+demo: https://alliecatowo.github.io/afterlife/
+description: "Conway's Life with a time machine: scrub history, fork alternate futures, sculpt time in 3D, and play in deterministic lockstep across tabs."
 featured: true
+github: https://github.com/alliecatowo/afterlife
 group: creative-coding
+image: /images/projects/afterlife/card.webp
+imageAlt: "AFTERLIFE's Time Sculpture: 165 recorded generations of the opening scene stacked in 3D, with each glider's path showing as an inclined beam."
+seo:
+  title: "AFTERLIFE: Conway's Life with a time machine"
+  description: "Conway's Life with a time machine: scrub history, fork alternate futures, sculpt time in 3D, and play in deterministic lockstep across tabs."
+slug: afterlife
+status: published
+tags:
+  - simulation
+  - cellular-automata
+  - game-of-life
+  - generative-art
+  - multiplayer
+  - browser
 technologies:
   - TypeScript
   - React
@@ -15,20 +29,6 @@ technologies:
   - Web MIDI
   - Vite
   - Playwright
-tags:
-  - simulation
-  - cellular-automata
-  - game-of-life
-  - generative-art
-  - multiplayer
-  - browser
-github: https://github.com/alliecatowo/afterlife
-demo: https://alliecatowo.github.io/afterlife/
-image: /images/projects/afterlife/card.webp
-imageAlt: "AFTERLIFE's Time Sculpture: 165 recorded generations of the opening scene stacked in 3D, with each glider's path showing as an inclined beam."
-seo:
-  title: "AFTERLIFE: Conway's Life with a time machine"
-  description: "Conway's Life with a time machine: scrub history, fork alternate futures, sculpt time in 3D, and play in deterministic lockstep across tabs."
 ---
 
 **Every future leaves a trace.**
