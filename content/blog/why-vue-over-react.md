@@ -1,6 +1,6 @@
 ---
 title: Why I Reach for Vue Over React
-author: Allie
+author: Allison Coleman
 category: dev
 date: 2025-08-29
 description: A DX-first take on why Vue’s clarity, SFCs, and composables help me ship faster and feel happier than React’s ever-shifting conventions.

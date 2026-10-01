@@ -1,6 +1,6 @@
 ---
 title: Why Nuxt Content Is Perfect for My Portfolio
-author: Allie
+author: Allison Coleman
 category: dev
 date: 2025-08-29
 description: Git-first publishing, zero external CMS, and a workflow that keeps writing and shipping right next to the code.

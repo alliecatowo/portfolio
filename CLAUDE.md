@@ -145,13 +145,15 @@ date: YYYY-MM-DD
 description: string
 category: dev
 tags: [list]
-author: string
+author: Allison Coleman
 published: true | false
 featured: true | false
 slug: string
 featured_image: /path/to/image (optional)
 ogImage: /path/to/image (optional; falls back to featured_image, then the default OG)
 ```
+
+**Required for published items** (enforced by `pnpm validate:content`, not the zod schemas, so drafts stay flexible): projects need `description`, `date`, `image` + `imageAlt`; blog posts need `description`, `date`, `author`; the shipped description (`seo.description`, else `description`) must be 120-165 characters. Projects with no real capture yet are listed in `IMAGE_EXEMPT` in `scripts/validate-content.ts`; remove a slug there once it has an image.
 
 ### Key Configurations
 

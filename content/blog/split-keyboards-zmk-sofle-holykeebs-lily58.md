@@ -1,6 +1,6 @@
 ---
 title: "Falling for Split Keyboards: Sofle ZMK, Lily58, and HolyKeebs Peripherals"
-author: Allie
+author: Allison Coleman
 category: dev
 date: 2025-08-29
 description: How splits rewired my ergonomics, why I maintain a Sofle ZMK fork, and why more people would love them if setup weren’t so intimidating.

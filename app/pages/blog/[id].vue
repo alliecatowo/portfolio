@@ -301,7 +301,7 @@ useSiteSeo(() => {
   if (!p) return { title: 'Blog', description: 'Notes from Allison Coleman.' }
   const image = p.ogImage || p.featured_image || DEFAULT_OG_IMAGE
   const url = absoluteSiteUrl(`/blog/${p.slug || slug}/`)
-  const published = toIsoDate(p.date_published || p.date)
+  const published = toIsoDate(p.date)
   // Content v3 fills seo.title from title; a different value is a shorter, hand-written override
   const title = p.seo?.title || p.title
   return {

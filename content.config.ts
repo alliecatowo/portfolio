@@ -39,21 +39,13 @@ export default defineContentConfig({
         // Extend enum as new content categories are added
         category: z.enum(['dev', 'tattoo', 'life', 'project']).default('dev'),
         tags: z.array(z.string()).default([]),
-        author: z.string().default('Allie'),
+        author: z.string().default('Allison Coleman'),
         published: z.boolean().default(false),
         featured: z.boolean().default(false),
-        date_published: z.string().optional(),
         featured_image: z.string().optional(),
         // 1200x630 share image; falls back to featured_image, then /images/og/default.png
         ogImage: z.string().optional(),
-        content: z.string().optional(),
-        slug: z.string(),
-        readingTime: z.object({
-          text: z.string(),
-          minutes: z.number(),
-          time: z.number(),
-          words: z.number()
-        }).optional()
+        slug: z.string()
       })
     }),
     projects: defineCollection({
@@ -78,7 +70,6 @@ export default defineContentConfig({
         // Position within its /projects group (ascending); falls back to the normal order
         groupOrder: z.number().optional(),
         slug: z.string().optional(),
-        images: z.any().optional(),
         image: z.string().optional(),
         imageAlt: z.string().optional(),
         // 1200x630 share image; falls back to /images/og/<slug>.png if present, then the default

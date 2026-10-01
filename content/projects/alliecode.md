@@ -7,7 +7,7 @@ github: https://github.com/alliecatowo/alliecode
 group: agent-systems-devtools
 seo:
   title: "AllieCode: a Go port of a coding-agent CLI"
-  description: AllieCode is a Go port of a TypeScript coding-agent CLI with provider routing for Anthropic, OpenAI, Gemini and Ollama. Its parity matrix marks most subsystems partial.
+  description: AllieCode is a Go port of a TypeScript coding-agent CLI with Anthropic, OpenAI, Gemini and Ollama providers. Its parity matrix marks most subsystems partial.
 slug: alliecode
 status: published
 tags:

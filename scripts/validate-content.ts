@@ -113,6 +113,39 @@ function splitFrontmatter(raw: string): { data: unknown, body: string, bodyOffse
   return { data: parseYaml(m[1]!) ?? {}, body: raw.slice(m[0].length), bodyOffset: m[0].split('\n').length - 1 }
 }
 
+// Published items must carry what the site renders and shares from. Drafts stay flexible: the Content
+// schemas keep these fields optional (a refinement would break their JSON-schema conversion), so the
+// requirement lives here, where CI and `pnpm validate:content` enforce it.
+const PUBLISHED_RULES: Record<string, { isPublished: (d: Record<string, unknown>) => boolean, required: string[] }> = {
+  projects: { isPublished: d => d.status === 'published', required: ['description', 'date', 'image', 'imageAlt'] },
+  blog: { isPublished: d => d.published === true, required: ['description', 'date', 'author'] }
+}
+// Published projects with no real screenshot or capture yet (a CLI or an unbuilt app). Remove a slug
+// from this list as soon as it gets an image; never fill the gap with a placeholder.
+const IMAGE_EXEMPT = new Set(['alliecode', 'anvil', 'darwin', 'recipe-bot'])
+// The description that ships in <meta> and share cards (seo.description wins over description)
+const DESCRIPTION_MIN = 120
+const DESCRIPTION_MAX = 165
+
+function checkPublished(file: string, collection: string, d: Record<string, unknown>) {
+  const rule = PUBLISHED_RULES[collection]
+  if (!rule || !rule.isPublished(d)) return
+  const slug = typeof d.slug === 'string' ? d.slug : basename(file, extname(file))
+  for (const field of rule.required) {
+    if (IMAGE_EXEMPT.has(slug) && collection === 'projects' && (field === 'image' || field === 'imageAlt')) continue
+    const v = d[field]
+    if (v === undefined || v === null || (typeof v === 'string' && !v.trim())) report(file, field, 'required for published items')
+  }
+  if (!rule.required.includes('imageAlt') && typeof d.image === 'string' && d.image && !(typeof d.imageAlt === 'string' && d.imageAlt.trim())) {
+    report(file, 'imageAlt', 'required when image is set')
+  }
+  const seo = (d.seo ?? {}) as Record<string, unknown>
+  const description = String((typeof seo.description === 'string' && seo.description) || d.description || '')
+  if (description && (description.length < DESCRIPTION_MIN || description.length > DESCRIPTION_MAX)) {
+    report(file, typeof seo.description === 'string' && seo.description ? 'seo.description' : 'description', `${description.length} characters; published pages need ${DESCRIPTION_MIN}-${DESCRIPTION_MAX} for search and share cards`)
+  }
+}
+
 let fileCount = 0
 for (const [name, collection] of Object.entries(config.collections)) {
   const sources = !collection.source
@@ -153,6 +186,7 @@ for (const [name, collection] of Object.entries(config.collections)) {
       }
 
       walk(file, data, [])
+      if (ext === '.md') checkPublished(file, name, (data ?? {}) as Record<string, unknown>)
       if (body) {
         const before = errors.length
         checkBody(file, body)
