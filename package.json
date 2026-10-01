@@ -118,7 +118,14 @@
       "unrs-resolver",
       "vue-demi"
     ],
-    "onlyBuiltDependencies": []
+    "onlyBuiltDependencies": [],
+    "packageExtensions": {
+      "nuxt-studio": {
+        "dependencies": {
+          "ufo": "^1.6.1"
+        }
+      }
+    }
   },
   "pnpmConfig": {
     "enable-pre-post-scripts": true,
