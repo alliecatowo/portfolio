@@ -1,0 +1,63 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    # chore(deps): ... / chore(deps-dev): ... passes commitlint and the semantic PR title check
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      # Minor and patch updates only. Majors are never grouped, so each one gets its own PR
+      # for review. A dependency joins the first group whose patterns match it.
+      nuxt-ecosystem:
+        update-types: [minor, patch]
+        patterns:
+          - nuxt
+          - nuxt-*
+          - nuxi
+          - '@nuxt/*'
+          - '@nuxtjs/*'
+          - vue
+          - vue-router
+          - '@vue/*'
+          - h3
+          - ufo
+          - zod
+          - sharp
+          - tailwindcss
+          - '@tailwindcss/*'
+          - '@iconify-json/*'
+          - firebase-admin
+          - firebase-functions
+      dev-tooling:
+        update-types: [minor, patch]
+        patterns:
+          - eslint
+          - eslint-*
+          - '@eslint/*'
+          - '@typescript-eslint/*'
+          - prettier
+          - typescript
+          - vue-tsc
+          - husky
+          - lint-staged
+          - '@commitlint/*'
+          - '@axe-core/*'
+          - pa11y
+          - '@types/*'
+      minor-and-patch:
+        update-types: [minor, patch]
+        patterns:
+          - '*'
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: ci
+      include: scope
