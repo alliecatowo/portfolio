@@ -39,7 +39,7 @@
     "@nuxtjs/robots": "^6.2.4",
     "@nuxtjs/sitemap": "^8.6.1",
     "nuxt-studio": "^1.7.0",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.4",
     "vue": "^3.5.43",
     "zod": "^4.6.5"
   },
