@@ -50,6 +50,8 @@ export default defineContentConfig({
         order: z.number().optional(),
         award: z.string().optional(),
         group: z.string().optional(),
+        // Position within its /projects group (ascending); falls back to the normal order
+        groupOrder: z.number().optional(),
         slug: z.string().optional(),
         images: z.any().optional(),
         image: z.string().optional(),

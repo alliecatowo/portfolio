@@ -2,6 +2,7 @@
 title: JupyterLite WebMCP
 slug: jupyterlite-webmcp
 group: browser-agents
+groupOrder: 1
 description: 'Winning OpenAI WebMCP Challenge entry: a JupyterLab extension giving a browser agent 22 tools over your live notebook, kernel, selection and review threads.'
 date: 2026-09-03
 status: published
@@ -90,6 +91,16 @@ It's on PyPI:
 ```bash
 pip install jupyterlite-webmcp
 ```
+
+## Built alongside three other entries
+
+JupyterLite WebMCP wasn't Allison's only entry. It was one of four she submitted within about half an hour on the morning of 3 September, all built in under 48 hours from long written contracts handed to Claude Code and Codex agents. Each one gives a different kind of page its own WebMCP tools and asks who gets to decide what the agent may do:
+
+- [Swagger UI WebMCP](/projects/swagger-ui-webmcp/) turns any OpenAPI docs page into agent tools, with access the publisher, the page and the person can only tighten.
+- [Careers WebMCP](/projects/careers-webmcp/) lets an agent search jobs and fill in an application, but only you can press Submit.
+- [Strudel WebMCP](/projects/strudel-webmcp/) puts an agent in a live-coding music editor, proposing edits for you to audition.
+
+A fifth build, [Storybook WebMCP](/projects/storybook-webmcp/), came first and was never submitted. An ordinary MCP server could already do its job, and that's what pointed her at notebooks: state that only exists in the browser.
 
 ## Try it
 

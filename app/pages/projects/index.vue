@@ -169,6 +169,7 @@ const PROJECT_GROUPS = [
   { key: 'browser-agents', label: 'Browser agents & WebMCP' },
   { key: 'agent-systems-devtools', label: 'Agent systems & developer tools' },
   { key: 'languages-runtimes', label: 'Languages & runtimes' },
+  { key: 'creative-coding', label: 'Simulations & creative coding' },
   { key: 'social-systems', label: 'Social systems' },
   { key: 'hardware-homelab', label: 'Hardware & homelab' },
   { key: 'earlier-work', label: 'Earlier work' }
@@ -179,7 +180,7 @@ const groupedProjects = computed(() => {
   const known = new Set(PROJECT_GROUPS.map(g => g.key))
   const sections = PROJECT_GROUPS.map(g => ({
     ...g,
-    items: list.filter(p => p.group === g.key)
+    items: sortProjectsInGroup(list.filter(p => p.group === g.key))
   }))
   const other = list.filter(p => !p.group || !known.has(p.group))
   if (other.length) {

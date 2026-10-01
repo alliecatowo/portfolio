@@ -6,6 +6,7 @@ date: 2026-02-12
 status: published
 featured: false
 group: languages-runtimes
+groupOrder: 2
 technologies:
   - Rust
   - Cranelift
