@@ -10,7 +10,7 @@
       <header class="text-center mb-16">
         <h1 class="text-5xl md:text-6xl font-bold mb-6 text-default">Blog</h1>
         <p class="text-xl md:text-2xl text-muted max-w-3xl mx-auto mb-8">
-          Development insights, tutorials, and thoughts on building the web
+          Notes on agents, developer tools, languages, and whatever I broke this week.
         </p>
       </header>
 
@@ -60,34 +60,6 @@
 
           <!-- Right Controls -->
           <div class="flex items-center justify-between lg:justify-end gap-3">
-            <!-- View Toggle -->
-            <div class="flex items-center border border-gray-200 dark:border-gray-700 rounded-lg p-1">
-              <button
-                :class="[
-                  'p-1.5 rounded transition-all',
-                  blogView === 'grid' 
-                    ? 'bg-primary text-white' 
-                    : 'text-muted hover:text-default'
-                ]"
-                title="Grid view"
-                @click="blogView = 'grid'"
-              >
-                <UIcon name="i-lucide-grid-3x3" class="w-3.5 h-3.5" />
-              </button>
-              <button
-                :class="[
-                  'p-1.5 rounded transition-all',
-                  blogView === 'rows' 
-                    ? 'bg-primary text-white' 
-                    : 'text-muted hover:text-default'
-                ]"
-                title="List view"
-                @click="blogView = 'rows'"
-              >
-                <UIcon name="i-lucide-list" class="w-3.5 h-3.5" />
-              </button>
-            </div>
-
             <!-- Clear Filters -->
             <UButton
               v-if="activeTag !== 'all' || sort !== 'newest'"
@@ -127,36 +99,26 @@
         </div>
       </section>
     
-    <!-- Blog posts -->
-    <section v-else-if="posts && posts.length > 0" aria-labelledby="posts-heading">
-      <h2 id="posts-heading" class="sr-only">Blog posts</h2>
-      <div v-if="blogView === 'rows'" class="grid grid-cols-1 gap-8">
+      <!--
+        Blog posts. The newest post leads as a wide card; the rest pick a column
+        count that fills their rows, so wide screens don't end on one lonely card.
+      -->
+      <section v-else-if="posts && posts.length > 0" aria-labelledby="posts-heading" class="space-y-8">
+        <h2 id="posts-heading" class="sr-only">Blog posts</h2>
         <BlogCard
-          v-for="post in posts"
-          :key="post.slug || post.path || ''"
-          :title="post.title || ''"
-          :description="post.description || ''"
-          :date="post.date || ''"
-          :image="post.featured_image || undefined"
-          :read-time="formatReadTime(estimateReadTime(post as any).minutes)"
-          :to="`/blog/${post.slug || post.path?.split('/').pop()}`"
-          :tags="post.tags || []"
+          v-if="leadPost"
+          v-bind="cardProps(leadPost)"
+          orientation="horizontal"
         />
-      </div>
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <BlogCard
-          v-for="post in posts"
-          :key="post.slug || post.path || ''"
-          :title="post.title || ''"
-          :description="post.description || ''"
-          :date="post.date || ''"
-          :image="post.featured_image || undefined"
-          :read-time="formatReadTime(estimateReadTime(post as any).minutes)"
-          :to="`/blog/${post.slug || post.path?.split('/').pop()}`"
-          :tags="post.tags || []"
-        />
-      </div>
-    </section>
+        <div v-if="restPosts.length" class="grid grid-cols-1 gap-8" :class="restGridClass">
+          <BlogCard
+            v-for="post in restPosts"
+            :key="post.slug || post.path || ''"
+            v-bind="cardProps(post)"
+            :orientation="restPosts.length === 1 ? 'horizontal' : 'vertical'"
+          />
+        </div>
+      </section>
     
       <!-- Pagination -->
       <section v-if="total > pageSize" class="mt-16 flex justify-center" aria-label="Blog post pagination">
@@ -247,8 +209,7 @@ interface BlogDoc {
 
 // Content fetched via queryCollection with limit/skip
 
-// View + pagination state
-const blogView = useState<'grid' | 'rows'>('blogView', () => 'grid')
+// Pagination state
 const route = useRoute()
 const page = ref(Number(route.query.page as string) || 1)
 watch(() => route.query.page, (val) => {
@@ -293,7 +254,7 @@ const getTagCount = (tag: string): number => {
 }
 
 const activeTag = ref((route.query.tag as string) || 'all')
-const sort = ref<'newest'|'oldest'|'popular'|'alphabetical'|'reverse-alphabetical'>('newest')
+const sort = ref<'newest'|'oldest'|'alphabetical'|'reverse-alphabetical'>('newest')
 watch(activeTag, (val) => {
   if (!import.meta.client) return
   const q = { ...route.query }
@@ -330,29 +291,20 @@ const { data: pageItems, pending, error } = await useAsyncData<BlogDoc[]>(
 
       // Apply sorting
       if (sort.value === 'newest') {
-        base = base.order('date', 'DESC')
+        base = base.order('date', 'DESC').order('featured', 'DESC').order('title', 'ASC')
       } else if (sort.value === 'oldest') {
-        base = base.order('date', 'ASC')
+        base = base.order('date', 'ASC').order('title', 'ASC')
       } else if (sort.value === 'alphabetical') {
         base = base.order('title', 'ASC')
       } else if (sort.value === 'reverse-alphabetical') {
         base = base.order('title', 'DESC')
-      } else {
-        // For 'popular' or default, use date desc for now
-        base = base.order('date', 'DESC')
       }
 
       if (activeTag.value === 'all') {
         return base.limit(pageSize).skip((page.value - 1) * pageSize).all()
       }
       const all = await base.all()
-      let filtered = all.filter((p: BlogDoc) => Array.isArray(p.tags) && p.tags!.includes(activeTag.value))
-
-      // Apply client-side sorting for filtered results if needed
-      if (sort.value === 'popular') {
-        // Sort by number of tags as a popularity proxy
-        filtered = filtered.sort((a, b) => (b.tags?.length || 0) - (a.tags?.length || 0))
-      }
+      const filtered = all.filter((p: BlogDoc) => Array.isArray(p.tags) && p.tags!.includes(activeTag.value))
 
       const start = (page.value - 1) * pageSize
       return filtered.slice(start, start + pageSize)
@@ -407,8 +359,28 @@ const paginationPages = computed(() => {
   return pages
 })
 
-// Map to @nuxt/ui UBlogPosts props shape
 const { estimateReadTime, formatReadTime } = useReadTime();
+
+// Lead card + the rest. The rest use 3 columns when they fill rows of three,
+// 2 otherwise, and a single wide card when only one is left.
+const leadPost = computed(() => posts.value[0])
+const restPosts = computed(() => posts.value.slice(1))
+const restGridClass = computed(() => {
+  const n = restPosts.value.length
+  if (n <= 1) return ''
+  return n % 3 === 0 ? 'md:grid-cols-2 lg:grid-cols-3' : 'md:grid-cols-2'
+})
+
+const cardProps = (post: BlogDoc) => ({
+  title: post.title || '',
+  description: post.description || '',
+  date: post.date || '',
+  image: post.featured_image || undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readTime: formatReadTime(estimateReadTime(post as any).minutes),
+  to: `/blog/${post.slug || post.path?.split('/').pop()}/`,
+  tags: post.tags || []
+})
 
 const paginationLink = (p: number) => ({ query: { ...route.query, page: p } })
 
@@ -423,7 +395,6 @@ const refreshPage = () => {
 const sortOptions = [
   { label: 'Newest First', value: 'newest' },
   { label: 'Oldest First', value: 'oldest' },
-  { label: 'Most Popular', value: 'popular' },
   { label: 'A-Z', value: 'alphabetical' },
   { label: 'Z-A', value: 'reverse-alphabetical' }
 ]
@@ -432,7 +403,6 @@ function getSortIcon(sortValue: string): string {
   const iconMap: Record<string, string> = {
     newest: 'i-lucide-arrow-down',
     oldest: 'i-lucide-arrow-up', 
-    popular: 'i-lucide-trending-up',
     alphabetical: 'i-lucide-arrow-up-a-z',
     'reverse-alphabetical': 'i-lucide-arrow-down-z-a'
   }

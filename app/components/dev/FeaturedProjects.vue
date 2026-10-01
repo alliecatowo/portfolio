@@ -64,7 +64,7 @@
                 loading="lazy"
                 :width="400"
                 :height="200"
-                sizes="100vw sm:50vw md:33vw lg:400px"
+                sizes="sm:100vw md:50vw lg:33vw xl:400px"
                 format="webp"
                 :quality="80"
                 class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
