@@ -51,24 +51,11 @@ Same as blog, but in `content/projects/`. Key frontmatter:
 - `award`: string (optional; rendered as a badge)
 - `image` / `imageAlt`: card image and its alt text (optional)
 
-## Production Studio (SSR required)
+## Production Studio
 
-Studio's `/_studio` route needs a running Node.js server.
+Go to `https://allisons.dev/_studio` (or press `CMD + .` on any page) and sign in with GitHub. Only the emails in the `STUDIO_GITHUB_MODERATORS` secret can log in. Saving commits to `main`, which redeploys the site in a few minutes.
 
-**Current status**: Firebase static hosting only — Studio available in dev mode only.
-
-**To enable production Studio**:
-
-1. Create GitHub OAuth App:
-   - Callback: `https://allisons.dev/_studio/api/auth/github`
-   - Save Client ID + Secret
-2. Add to Hetzner server's `/opt/portfolio/.env`:
-   ```env
-   STUDIO_GITHUB_CLIENT_ID=...
-   STUDIO_GITHUB_CLIENT_SECRET=...
-   ```
-3. Run the SSR deploy workflow in GitHub Actions
-4. Visit `https://allisons.dev/_studio`
+Studio's server routes run in the `studio` Cloud Function behind Firebase Hosting; see [`STUDIO.md`](../STUDIO.md) for setup. Drafts aren't visible in production Studio (they're kept out of the public content dumps); edit them locally.
 
 ## Keyboard Shortcuts (in Studio editor)
 

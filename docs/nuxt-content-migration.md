@@ -2,13 +2,13 @@
 
 ## Current State
 
-| Item | Value |
-|------|-------|
-| Installed version | `@nuxt/content ^3.12.0` ✅ (upgraded from 3.6.3) |
-| `better-sqlite3` | `^12.6.2` ✅ (upgraded from 12.2.0) |
-| Database backend | Node.js native SQLite (`experimental.sqliteConnector: 'native'`) |
-| Content preview | `nuxt-studio` 1.4.0 ✅ (self-hosted, replaces cloud `api.nuxt.studio`) |
-| Studio route | `/_studio` (requires SSR host in production) |
+| Item              | Value                                                                             |
+| ----------------- | --------------------------------------------------------------------------------- |
+| Installed version | `@nuxt/content ^3.12.0` ✅ (upgraded from 3.6.3)                                  |
+| `better-sqlite3`  | `^12.6.2` ✅ (upgraded from 12.2.0)                                               |
+| Database backend  | Node.js native SQLite (`experimental.sqliteConnector: 'native'`)                  |
+| Content preview   | `nuxt-studio` 1.7.0 ✅ (self-hosted, replaces cloud `api.nuxt.studio`)            |
+| Studio route      | `/_studio` (served by the `studio` Cloud Function in production; see `STUDIO.md`) |
 
 ## Upgrade History
 
@@ -74,8 +74,8 @@ nitro: {
 Studio requires OAuth to protect `/_studio`. Set up a GitHub OAuth app:
 
 1. Go to GitHub → Settings → Developer settings → OAuth Apps → New OAuth App
-2. **Authorization callback URL:** `https://allisons.dev/_studio/api/auth/github`
-3. Add to `.env` (never commit):
+2. **Authorization callback URL:** `https://allisons.dev/__nuxt_studio/auth/github`
+3. For local SSR testing add to `.env` (never commit); production reads them from GitHub Actions secrets:
    ```env
    STUDIO_GITHUB_CLIENT_ID=<your_client_id>
    STUDIO_GITHUB_CLIENT_SECRET=<your_client_secret>
@@ -86,22 +86,15 @@ See [nuxt.studio/auth-providers](https://nuxt.studio/auth-providers) for full op
 ## Deployment Notes
 
 ### Development (works today)
+
 ```bash
 pnpm dev
 # Visit http://localhost:3000 — floating Studio button appears bottom-left
 ```
 
-### Production — SSR required
-The `/_studio` route is a server-side endpoint and requires a platform that runs `nuxt build` (not `nuxt generate`). Firebase static hosting alone is **not sufficient** for Studio production access.
+### Production
 
-Options:
-| Platform | Approach |
-|----------|----------|
-| **Hetzner VPS** (current server) | `nuxt build` + PM2/systemd — simplest path |
-| **Firebase** | Cloud Run + Hosting rewrite (future PR) |
-| **Railway / Render** | One-click Node.js deploy |
-
-The static `nuxt generate` command still works for Firebase-only deploys — Studio is simply unavailable at `/_studio` in that mode.
+The site is a static `nuxt generate` build on Firebase Hosting. Studio's server routes (`/_studio`, `/__nuxt_studio/**`, `/sw.js`) are rewritten to a 2nd-gen Cloud Function built with `pnpm build:studio`. See `STUDIO.md`.
 
 ## Future Upgrades
 
@@ -114,7 +107,6 @@ The static `nuxt generate` command still works for Firebase-only deploys — Stu
 - **Low risk** — module addition only, no content schema changes
 - Legacy `preview` block removal has zero production impact (it was cloud-only)
 - Studio in dev mode works without any env vars
-- Static generate still works for Firebase CI — Studio just requires SSR for prod auth
 
 ## References
 
