@@ -1,152 +1,189 @@
 slug: about
 layout: about
 seo:
-  title: About Me - Allison's Developer Portfolio
-  description: Learn about Allison Coleman, a software engineer building agent systems, developer tools, and languages/runtimes.
-  keywords:
-    - software engineer
-    - web developer
-    - Vue.js
-    - TypeScript
-    - Nuxt
-    - portfolio
+  title: About Allison Coleman
+  description: Allison Coleman is a software engineer at Hinge Health in the Bay Area, building agent systems, developer tools, and languages/runtimes. Creator of JupyterLite WebMCP, an OpenAI WebMCP Challenge winner.
 hero:
   title: Hi, I'm Allison!
   subtitle: 'Software engineer: agent systems, developer tools, languages & runtimes'
   image:
     src: /images/ghibli-pfp.png
     alt: Illustrated portrait of Allison Coleman
-    status: Available for projects
+    status: Open to hackathon partners & weird collaborations
   stats:
-    - label: Years Experience
-      value: 5+
-    - label: Redbull Consumed
+    - label: WebMCP Challenge winners
+      value: 1 of 10
+    - label: Rescued chinchillas
+      value: '2'
+    - label: Red Bull consumed
       value: ∞
-    - label: Projects Completed
-      value: 20+
   body: |
-    I'm a software engineer and tattoo artist living with my two rescued chinchillas in a setup that perfectly blends code, creativity, and chaos. By day, I build web applications with Vue, Nuxt, TypeScript, and modern tooling. By evening, I translate ideas into permanent art on skin.
+    I'm a software engineer at Hinge Health, living in the Bay Area. I build agent systems, developer tools, languages and runtimes, and the occasional weird computer. Mostly I yell at robots and occasionally program things.
 
-    My journey into tech started with teenage curiosity—buiding small games and cute websites. What began as digital tinkering evolved into a career spanning startups, established companies, small businesses and everything in between! I've shipped applications for e-commerce, education, AI, and law - always focusing on user experience and maintainable, scalable, code.
-
-    Tattooing entered my life as a creative outlet that software couldn't provide. There's something profound about creating permanent art that becomes part of someone's story. The precision required, the collaboration with clients, the immediate tactile feedback—it complements coding in ways I never expected. Both crafts require patience, attention to detail, and the ability to bring someone's vision to life.
-
-    At home, my rescued chinchillas Ray and Paddy keep life interesting. Ray is my gentle giant who perfected the art of being a furry loaf, while Paddy brings endless energy and mischief. They're active during my late-night coding sessions, which works out perfectly. I also maintain a collection of split keyboards - my daily driver is a pink Sofle running my ZMK fork with a 3d printed OLED desktop dongle, and a Lily58 with an integrated trackpad for when precision cursor control matters.
+    Lately that means agents that work inside the tools you already have open instead of a chatbot bolted on the side, typed shells and languages for agent workflows, and terminals that don't waste your GPU.
+  award:
+    label: OpenAI WebMCP Challenge winner · JupyterLite WebMCP
+    to: /projects/jupyterlite-webmcp/
   buttons:
     - label: View My Work
-      to: /projects
+      to: /projects/
       variant: magnet
       color: primary
       size: lg
       icon: i-lucide-folder
       iconPosition: leading
-    - label: Get In Touch
-      to: /contact
+    - label: Say Hi
+      to: /contact/
       variant: outline
       color: primary
       size: lg
       icon: i-lucide-mail
       iconPosition: leading
-  description: I love to build things, solve problems, and learn new things everyday!
-  paragraphs: []
 journey:
-  title: My Journey
+  title: How I Got Here
   items:
     - title: Origins
+      period: Age 11
       color: primary
-      description: My passion for software, web design, and coding started when I was 11. I was so enamoured with computers, games; I wanted to know everything about how they worked. I was building my own small computers running Linux and small games. This passion only grew further when I joined a coding camp at the local college and tinkered with building a social networking site for my friends in middle school, and even launched my first apps on Android with Java!
-    - title: The Early Years
+      icon: i-lucide-joystick
+      description: I needed to know how computers worked, so I built little Linux boxes and small games. Then a social network for my middle-school friends, Android apps in Java, and Unity games for the HoloLens at CART.
+    - title: CS at CSUMB
+      period: 2018–2021
       color: purple-500
-      description: Onto High School and the obsession only grew. I was an okay student, but the real passion was web design and I knew it even then! I worked hard on growing my skills so I could be accepted into the prestigious Center For Advanced Research and Technology’s web design course. After much effort, my time paid off and I was accepted; learning more languages and working on rigorous projects. Completion of the web design course allowed me to apply for and enter the Game Design course; further building my expertise. I built 2D, 3D and even AR games using Unity, C Sharp, and Maya 3D for the Microsoft HoloLens! At this time I had the wonderful opportunity to intern for a local tech program with a team of 4; together we helped revamp a small business’s website, all while gaining important skills and life lessons.
-    - title: The College Years
+      icon: i-lucide-graduation-cap
+      description: Computer Science at Cal State Monterey Bay. Built Tetris up from NAND gates, shipped to AWS and Heroku, and did machine learning before OpenAI made it everyone's personality.
+    - title: Dad's Law Firm
+      period: '2021'
       color: pink-500
-      description: Academia was exactly the rigor I had been searching for. I was so passionate about every project; assembling nand into tetris, using AWS and Hiroku, and so much more. My professors had so much knowledge to impart onto me, and I soaked it like a sponge! It was in college that I gained a deeper appreciation for the infrastructure behind web design. I learned that so many tools had already been created by the best of us - and the hardest thing in programming is finding the right tool for the job. I even had the opportunity to work on machine learning algorithms and data science well before the boom of Open AI, preparing me for a bright future!
-    - title: The Pandemic
+      icon: i-lucide-scale
+      description: Graduated mid-pandemic and helped keep my dad's firm afloat. OCR'd every paper file, built the firm a new site, and ran documents like a law clerk.
+    - title: Parsec Education
+      period: 2021–2025
       color: primary
-      description: I finished my education in the height of the pandemic, and its brutal effects were visible everywhere. The pandemic was hurting my father’s law firm tremendously, so I decided to apply my newfound skills to helping my dad in this difficult time. I implemented OCR and scanned all his physical files into digital forms and built his firm an enterprise site to attract new clients! I even put in some leg work, running documents and other traditional law clerk tasks so the firm didn’t have to waste money hiring a new clerk. All this work helped foster an amazing relationship with my father after college, and was an amazing first work experience!
-    - title: The First Years at Parsec
-      color: magenta
-      description: Even though I could have worked for years at my father’s firm, I realized it was time for a change - to keep learning. On a whim I decided to apply to a small, 5 person startup as a data entry clerk. I wanted to see what impact I could have if I applied myself. Sure enough, there was a wealth of opportunities to flex the skills I spent my life building. Within a month I automated my own job away to improve the company’s output tenfold. This inspired the team to bring me on as a full-time software engineer, building our company from the ground up and preparing us for a bright, profitable future. For two years I helped lead the core development team and built the foundations of our company’s product that are still used today, allowing us to hire far more people and expand to levels beyond what had even been hoped for.
-    - title: Final Years at Parsec
-      color: primary
-      description: After two years of leading the core development team, I transitioned to our product research team; leading the company’s R&D and taking on a mentoring role. My main focus has been AI integrations and utilizing cutting edge tools to further improve our services and products. It has been a privilege to impart my knowledge on the next generation of engineers and developers, and an amazing learning opportunity. For the next two years I trained, onboarded, and mentored 5 spectacular interns - each with their own unique skillsets and work styles. I taught them - and they taught me; truly an honor and I will always have fond memories of my time on the research team!
-    - title: What's Happening Now?
-      color: secondary
-      description: Although Parsec and I may have parted ways, it has been a wonderful opportunity to have the time to work on personal projects! Much has changed in the four years I was working with Parsec; my father decided to start a private practice and I’ve been so proud to help him once again. This time though, I have more tools in my toolbox. My time on the research team exposed me to the incredible potential of AI tools, and I have implemented these tools for the legal field with Legalease! A service that allows attorneys to store the mountains of legal discovery they receive digitally with AI integrations that give a plethora of services not previously available to lawyers. I’ve done some more “fun” things as well, embracing my inner child and returning to game design with “Termigatchi”, a terminal pet! Returning to my small business roots, developing user-friendly websites with all the new tools I’ve gained since high school. I have never been more excited for the future than I am now!
+      icon: i-lucide-rocket
+      description: Joined a five-person startup as a data-entry clerk and automated my own job within a month. They made me an engineer; I left as Software Engineer III after building the core platform, leading AI R&D, and mentoring five interns.
+    - title: Hinge Health & the Bay
+      color: purple-500
+      icon: i-lucide-map-pin
+      description: Got hired at Hinge Health and moved to the Bay Area. New job, new city, same robots to yell at.
+now:
+  title: Now
+  description: Software engineer at Hinge Health by day. After hours I build agent systems, developer tools and languages, mostly in public and mostly in Rust and TypeScript. My JupyterLite WebMCP was one of 10 winners of the 2026 OpenAI WebMCP Challenge.
+  award:
+    label: Read about the winning project
+    to: /projects/jupyterlite-webmcp/
+  projects:
+    - title: Ticketmaster
+      to: /projects/ticket-master/
+      description: A Rust coding-agent runtime where background workers take tickets and you review the result.
+    - title: Patches
+      to: /projects/patches/
+      description: A chronological social network you use from the terminal.
+    - title: Glassy
+      to: /projects/glassy/
+      description: A lean GPU terminal emulator in Rust, built for Claude Code.
+    - title: puml
+      to: /projects/puml/
+      description: PlantUML-compatible diagrams without Java, compiled in Rust.
+    - title: Lumen
+      to: /projects/lumen/
+      description: A Markdown-native, statically typed language for agent workflows.
+    - title: Shoal
+      to: /projects/shoal/
+      description: An agent-first structured shell with typed values instead of pipes.
 skills:
-  title: Technical Arsenal
+  title: What I Work With
   categories:
-    - title: Frontend Magic
+    - title: Languages
       color: primary
+      icon: i-lucide-code
+      items:
+        - TypeScript
+        - Rust
+        - Python
+        - Go
+        - SQL
+    - title: Agents & AI
+      color: purple-500
+      icon: i-lucide-bot
+      items:
+        - WebMCP / MCP
+        - Claude Code
+        - RAG & vector search
+        - LangGraph / LlamaIndex
+    - title: Web & UI
+      color: pink-500
       icon: i-lucide-monitor
       items:
-        - Vue.js / Nuxt 4
+        - Vue / Nuxt
         - React / Next.js
-        - TypeScript
         - Tailwind CSS
         - Three.js / WebGL
-    - title: Backend Power
-      color: purple-500
-      icon: i-lucide-server
-      items:
-        - Node.js / Express
-        - Python
-        - PostgreSQL
-        - GoLang
-        - Redis
-    - title: Cloud & DevOps
-      color: pink-500
-      icon: i-lucide-cloud
-      items:
-        - Docker / K8s
-        - AWS / GCP
-        - CI/CD Pipelines
-        - Firebase
-        - Vercel / Netlify
-    - title: Tools & More
+    - title: Infra & Tooling
       color: yellow-500
       icon: i-lucide-wrench
       items:
-        - Claude Code!!!
-        - Git / GitHub
-        - Jest / Vitest
-        - Cypress / Playwright
-        - Figma
-  items: []
+        - Docker / Kubernetes
+        - AWS / GCP / Firebase
+        - PostgreSQL / Redis
+        - Vitest / Playwright
+        - GitHub Actions
 life:
-  title: Beyond the Code
+  title: Outside of Code
+  description: The parts of my life that don't compile.
   cards:
+    - title: Tattooing
+      color: pink-500
+      icon: i-lucide-pen-tool
+      image: /images/personal/allison-tattooing.jpg
+      alt: Allison in a tattoo studio wearing a headlamp and holding a pink tattoo machine, next to a client's forearm with a fresh line-work frog tattoo
+      imagePosition: 50% 35%
+      featured: true
+      description: I tattoo, mostly linework, botanicals and custom pieces drawn with the client. It scratches the same itch as code (precision, patience, someone else's vision) except there's no undo.
+    - title: Chinchilla Mom
+      color: purple-500
+      icon: i-lucide-heart
+      image: /images/chinchillas/1d1239a1-1bd9-410a-8152-737a19353b7f.jpg
+      alt: Ray, a grey chinchilla, eating from a metal bowl in a hay-filled cage
+      imagePosition: 50% 30%
+      description: Ray (gentle giant, professional loaf) and Paddy (pure mischief) are rescues. They're nocturnal, so they supervise my late-night coding.
     - title: Split Keyboards
       color: primary
       icon: i-lucide-keyboard
       image: /images/workspace/coding-setup-2.jpg
-      alt: Pink Sofle keyboard with OLED screens
-      description: 'Daily drivers: Lily58 with integrated trackpad, and a pink Sofle running my ZMK fork with OLED screens and wireless dongle setup. I maintain open-source firmware to help others get started with splits.'
-    - title: Tattoo Artistry
-      color: purple-500
-      icon: i-lucide-pen-tool
-      image: /images/personal/allison-tattooing.jpg
-      alt: Allison and Violet at the beach, showing tattoo work
-      description: Part-time tattoo artist specializing in linework, botanical designs, and collaborative custom pieces. I love the intersection of technical precision and creative expression—much like coding, but permanent.
-    - title: Chinchilla Mom
+      alt: Allison's desk with a laptop and two monitors above a pink split keyboard on a pink desk mat, next to a Hello Kitty figure
+      imagePosition: 50% 80%
+      to: /projects/zmk-sofle-hdock-fork/
+      description: A pink Sofle on my own ZMK fork with an OLED dongle, plus a Lily58 with a trackpad. I maintain the firmware so other people can start with splits too.
+    - title: Homelab
+      color: yellow-500
+      icon: i-lucide-server
+      image: /images/homelab/screenshot-2025-10-16-at-13-07-11-jelly-seerr-allie-cat-cinema.png
+      alt: Jellyseerr request page from Allison's self-hosted media server
+      imagePosition: 50% 0%
+      to: /projects/homelab-hetzner-media-box/
+      description: A 16TB Hetzner auction box running my family's media library and a pile of self-hosted apps. I like owning my data.
+    - title: Small Games
       color: pink-500
-      icon: i-lucide-heart
-      image: /images/chinchillas/1d1239a1-1bd9-410a-8152-737a19353b7f.jpg
-      alt: Ray the Chinchilla
-      description: Ray and Paddy, our rescued chinchillas who keep life interesting. They like to hang around and watch my latenight coding sessions :3
+      icon: i-lucide-gamepad-2
+      image: /images/termagatchi/termagatchi-2025-09-28-t17-06-13-176682.png
+      alt: Termagatchi running in a terminal, with stat bars, a pixel-art pet, and a chat with the pet
+      imagePosition: 50% 50%
+      to: /projects/termagatchi/
+      description: Where it started. These days it's things like Termagatchi, an AI pet that lives in your terminal.
 cta:
-  title: Let's Create Something Amazing
-  description: I'm always excited about new challenges and collaborations. Whether you have a project in mind or just want to connect, I'd love to hear from you.
+  title: Say Hi
+  description: Building something weird? Want a hackathon partner? Thinking about starting something? My inbox is open.
   buttons:
     - label: Get In Touch
-      to: /contact
+      to: /contact/
       color: primary
       variant: solid
       size: lg
       icon: i-lucide-mail
       iconPosition: leading
     - label: View Projects
-      to: /projects
+      to: /projects/
       color: primary
       variant: outline
       size: lg
@@ -159,8 +196,9 @@ cta:
     - label: LinkedIn
       href: https://linkedin.com/in/allie-cat
       icon: i-lucide-linkedin
+    - label: X
+      href: https://x.com/AllieCatOwO
+      icon: i-simple-icons-x
     - label: Email
       href: mailto:me@allisons.dev
       icon: i-lucide-mail
-quickLinks:
-  links: []
