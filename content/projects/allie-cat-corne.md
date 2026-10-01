@@ -1,12 +1,20 @@
 ---
 title: Allie Cat Corne (ZMK Firmware)
-slug: allie-cat-corne
-description: 'ZMK firmware for a mislabeled AliExpress Corne: pins recovered from the factory UF2, and a TPS43 touchpad brought up over a BLE split.'
 date: 2026-04-16
-# Draft until there's a photo of the actual Corne
-status: draft
+description: "ZMK firmware for a mislabeled AliExpress Corne: pins recovered from the factory UF2, and a TPS43 touchpad brought up over a BLE split."
 featured: false
+github: https://github.com/alliecatowo/allie-cat-corne
 group: hardware-homelab
+slug: allie-cat-corne
+status: draft
+tags:
+  - keyboard
+  - firmware
+  - zmk
+  - split-keyboard
+  - corne
+  - touchpad
+  - reverse-engineering
 technologies:
   - ZMK
   - Zephyr RTOS
@@ -16,20 +24,11 @@ technologies:
   - Bluetooth LE
   - Python
   - GitHub Actions
-tags:
-  - keyboard
-  - firmware
-  - zmk
-  - split-keyboard
-  - corne
-  - touchpad
-  - reverse-engineering
-github: https://github.com/alliecatowo/allie-cat-corne
 ---
 
 **A Corne that said it was a Sofle, a touchpad that wouldn't talk, and the firmware that fixed both.**
 
-Allison bought a wireless Corne from AliExpress: a Nice!Nano v2 in each half and an Azoteq TPS43 touchpad on the right. The stock firmware called it "Sofle_RGB", and the PCB swaps rows and columns compared with the standard Corne shield, so stock ZMK didn't work.
+Allison bought a wireless Corne from AliExpress: a Nice!Nano v2 in each half and an Azoteq TPS43 touchpad on the right. The stock firmware called it "Sofle\_RGB", and the PCB swaps rows and columns compared with the standard Corne shield, so stock ZMK didn't work.
 
 ## Reading the pins out of the factory firmware
 

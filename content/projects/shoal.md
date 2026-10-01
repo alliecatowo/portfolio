@@ -1,21 +1,18 @@
 ---
 title: Shoal
-slug: shoal
-description: 'Agent-first structured shell in Rust: typed values and dot-chains instead of pipes, hash-locked tool resolution, OS sandboxing, and an MCP agent surface.'
 date: 2026-07-09
-status: published
+description: "Agent-first structured shell in Rust: typed values and dot-chains instead of pipes, hash-locked tool resolution, OS sandboxing, and an MCP agent surface."
 featured: false
+github: https://github.com/alliecatowo/shoal
 group: languages-runtimes
 groupOrder: 1
-technologies:
-  - Rust
-  - SQLite
-  - BLAKE3
-  - Landlock
-  - Seatbelt
-  - MCP
-  - JSON-RPC
-  - Zola
+image: /images/projects/shoal/card.webp
+imageAlt: 'Shoal landing page: "Structure all the way down", beside a terminal showing typed values, unit arithmetic and a structured git status table.'
+seo:
+  title: "Shoal: an agent-first structured shell in Rust"
+  description: "Agent-first structured shell in Rust: typed values and dot-chains instead of pipes, hash-locked tool resolution, OS sandboxing, and an MCP agent surface."
+slug: shoal
+status: published
 tags:
   - rust
   - shell
@@ -25,11 +22,15 @@ tags:
   - sandboxing
   - developer-tools
   - open-source
-github: https://github.com/alliecatowo/shoal
-image: /images/projects/shoal/card.webp
-imageAlt: 'Shoal landing page: "Structure all the way down", beside a terminal showing typed values, unit arithmetic and a structured git status table.'
-seo:
-  title: 'Shoal: an agent-first structured shell in Rust'
+technologies:
+  - Rust
+  - SQLite
+  - BLAKE3
+  - Landlock
+  - Seatbelt
+  - MCP
+  - JSON-RPC
+  - Zola
 ---
 
 **Structure all the way down.**

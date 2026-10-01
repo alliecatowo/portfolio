@@ -1,12 +1,17 @@
 ---
 title: Dotfiles
-slug: dotfiles
-description: "Allison's Fedora workstation setup, managed with GNU Stow: mise for every toolchain, Zsh and Starship, Ghostty, and Neovim on LazyVim."
 date: 2025-06-16
-# Draft: not her current setup yet; publish once the repo catches up
-status: draft
+description: "Allison's Fedora workstation setup, managed with GNU Stow: mise for every toolchain, Zsh and Starship, Ghostty, and Neovim on LazyVim."
 featured: false
+github: https://github.com/alliecatowo/dotfiles
 group: earlier-work
+slug: dotfiles
+status: draft
+tags:
+  - dotfiles
+  - linux
+  - fedora
+  - developer-environment
 technologies:
   - GNU Stow
   - mise
@@ -15,12 +20,6 @@ technologies:
   - Ghostty
   - Neovim
   - Lua
-tags:
-  - dotfiles
-  - linux
-  - fedora
-  - developer-environment
-github: https://github.com/alliecatowo/dotfiles
 ---
 
 **A development machine you can rebuild from one repo.**

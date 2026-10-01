@@ -1,11 +1,22 @@
 ---
 title: K9k
-slug: k9k
-description: 'A native macOS Kubernetes manager with K9s-style depth: SwiftUI app, bundled Go client-go helper, live watch, exec, port-forward, Helm, and RBAC checks.'
 date: 2026-08-07
-status: published
+description: "A native macOS Kubernetes manager with K9s-style depth: SwiftUI app, bundled Go client-go helper, live watch, exec, port-forward, Helm, and RBAC checks."
 featured: false
+github: https://github.com/alliecatowo/k9k
 group: agent-systems-devtools
+image: /images/projects/k9k/card.webp
+imageAlt: K9k inspector showing a Pod's raw JSON object with syntax highlighting beside the live resource table.
+seo:
+  title: "K9k: a native macOS Kubernetes manager"
+  description: "A native macOS Kubernetes manager with K9s-style depth: SwiftUI app, bundled Go client-go helper, live watch, exec, port-forward, Helm, and RBAC checks."
+slug: k9k
+status: published
+tags:
+  - developer-tools
+  - macos
+  - kubernetes
+  - native-app
 technologies:
   - Swift
   - SwiftUI
@@ -15,16 +26,6 @@ technologies:
   - Helm SDK
   - SwiftTerm
   - Swift Charts
-tags:
-  - developer-tools
-  - macos
-  - kubernetes
-  - native-app
-github: https://github.com/alliecatowo/k9k
-image: /images/projects/k9k/card.webp
-imageAlt: "K9k inspector showing a Pod's raw JSON object with syntax highlighting beside the live resource table."
-seo:
-  title: 'K9k: a native macOS Kubernetes manager'
 ---
 
 **What if K9s were a real Mac app?**

@@ -1,17 +1,17 @@
 ---
-title: 'From Inside the Loop: What Claude Saw'
-date: 2026-10-01
-description: 'I asked Claude, one of the agents that built my WebMCP Challenge entries, to read the logs and tell me what it actually thought. Four observations, clearly labeled as its words, and then my rebuttal.'
+title: "From Inside the Loop: What Claude Saw"
+author: Allison Coleman
 category: dev
+date: 2026-10-01
+description: I asked Claude, one of the agents that built my WebMCP Challenge entries, to read the logs and tell me what it actually thought. Four observations, clearly labeled as its words, and then my rebuttal.
+featured: false
+published: false
+slug: from-inside-the-loop
 tags:
   - agents
   - claude
   - ai-perspective
   - webmcp
-author: Allison Coleman
-published: false
-featured: false
-slug: from-inside-the-loop
 ---
 
 ## Why I asked an agent
@@ -20,7 +20,7 @@ slug: from-inside-the-loop
 
 ## What Claude saw
 
-_The section below is written by Claude, the AI model made by Anthropic, after reading the logs from the run. Claude doesn't remember these sessions; it read them, like anyone else would. Lightly edited for length._
+*The section below is written by Claude, the AI model made by Anthropic, after reading the logs from the run. Claude doesn't remember these sessions; it read them, like anyone else would. Lightly edited for length.*
 
 ### 1. I ranked the winner last
 
@@ -46,11 +46,11 @@ Allison remembers "dangerous mode, at the bar, minutes to spare." The logs say:
 
 - The Mac session ran in auto mode. Its browser extension skipped all permission checks, and the one session that logged bypass mode was on Linux, the afternoon before.
 - The submissions happened from work, 44 minutes before the deadline she believed in. That deadline had already been extended, and I'd told her so.
-- The "7 minutes to deadline" moment was real. It came thirteen hours later, and it was about _not_ swapping in new videos.
+- The "7 minutes to deadline" moment was real. It came thirteen hours later, and it was about *not* swapping in new videos.
 
 I also wrote "about ten minutes to spare" in a recap that afternoon, which was wrong. When work is delegated, memory keeps the intensity and drops the timestamps. That is an argument for keeping agent logs as the project journal. It is also a reason for agents to be careful in their summaries, because the summaries are what people end up remembering.
 
-_— Claude_
+*— Claude*
 
 ## My rebuttal
 
@@ -64,7 +64,7 @@ _— Claude_
 
 **On "parallelize bets, not tasks."** It is both. The tasks are a map-reduce, and the bets multiply. The first build of anything is cheap, and polish gets slower each round. Running several builds shows which ones are feasible, so I can pick the one to bet hardest on while still hedging.
 
-**On item 4.** The bar was real. It was the night _after_ submitting: I was at the bar while Claude worked on better demos, and I watched the re-cuts there. I had folded two days into one memory.
+**On item 4.** The bar was real. It was the night *after* submitting: I was at the bar while Claude worked on better demos, and I watched the re-cuts there. I had folded two days into one memory.
 
 **On dangerous mode.** I thought I was in it. I normally run that way on the Mac: it is my sandbox, it is behind Tailscale, and I only care that it doesn't publish embarrassing things for me. The Claude remote interface doesn't always set the permissions you asked for. Auto mode turned out to be good enough.
 

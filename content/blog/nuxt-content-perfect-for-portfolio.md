@@ -1,22 +1,22 @@
 ---
 title: Why Nuxt Content Is Perfect for My Portfolio
-date: 2025-08-29
-description: Git-first publishing, zero external CMS, and a workflow that keeps
-  writing and shipping right next to the code.
+author: Allie
 category: dev
+date: 2025-08-29
+description: Git-first publishing, zero external CMS, and a workflow that keeps writing and shipping right next to the code.
+featured: true
+featured_image: /screenshot-2025-10-20-at-23-49-08-nuxt-studio.png
+published: true
+seo:
+  description: "Why I moved my portfolio off a headless CMS to Nuxt Content: Markdown in Git, no external dashboards, and a publishing flow as fast as my dev workflow."
+  title: Why Nuxt Content Is Perfect for My Portfolio
+slug: nuxt-content-perfect-for-portfolio
 tags:
   - nuxt
   - nuxt-content
   - portfolio
   - cms
   - dx
-author: Allie
-published: true
-featured: true
-featured_image: /screenshot-2025-10-20-at-23-49-08-nuxt-studio.png
-slug: nuxt-content-perfect-for-portfolio
-seo:
-  description: 'Why I moved my portfolio off a headless CMS to Nuxt Content: Markdown in Git, no external dashboards, and a publishing flow as fast as my dev workflow.'
 ---
 
 I migrated away from a headless CMS because I wanted fewer moving parts, more reliability, and a writing workflow as fast as my dev workflow. Nuxt Content nails it.

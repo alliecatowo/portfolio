@@ -1,11 +1,21 @@
 ---
 title: Recipe Bot
-slug: recipe-bot
-description: 'A 2024 command-line MVP that turns Instagram cooking videos into Markdown recipes: download, transcribe with Whisper, check it is actually a recipe, then write it up with GPT.'
 date: 2024-11-16
-status: published
+description: "A 2024 command-line MVP that turns Instagram cooking videos into Markdown recipes: download, transcribe with Whisper, check it is actually a recipe, then write it up with GPT."
 featured: false
+github: https://github.com/alliecatowo/recipe-bot
 group: earlier-work
+seo:
+  title: "Recipe Bot: Instagram cooking videos to recipes"
+  description: "A 2024 CLI that turns Instagram cooking videos into Markdown recipes: download, transcribe with Whisper, check it is a recipe, then write it up with GPT."
+slug: recipe-bot
+status: published
+tags:
+  - python
+  - cli
+  - llm
+  - transcription
+  - recipes
 technologies:
   - Python
   - Instaloader
@@ -15,16 +25,6 @@ technologies:
   - Firebase
   - prompt_toolkit
   - PDM
-tags:
-  - python
-  - cli
-  - llm
-  - transcription
-  - recipes
-github: https://github.com/alliecatowo/recipe-bot
-seo:
-  title: 'Recipe Bot: Instagram cooking videos to recipes'
-  description: 'A 2024 CLI that turns Instagram cooking videos into Markdown recipes: download, transcribe with Whisper, check it is a recipe, then write it up with GPT.'
 ---
 
 **The recipe is in the video. Nobody wrote it down.**
@@ -38,7 +38,7 @@ Cooking reels say the quantities out loud and leave them out of the caption. Rec
 3. **Check**: before writing anything, `gpt-4o-mini` reads the transcript and caption and estimates how likely it is that the post contains a recipe at all. Below 85% it stops, so a dance video doesn't come back as a casserole.
 4. **Write**: the same model turns transcript plus caption into a structured recipe, saved as Markdown.
 
-Audio and recipes are cached in Firebase Storage with metadata in Firestore, so a post is only downloaded and transcribed once, and there's a small terminal viewer built with prompt_toolkit for browsing saved recipes and opening them in an editor.
+Audio and recipes are cached in Firebase Storage with metadata in Firestore, so a post is only downloaded and transcribed once, and there's a small terminal viewer built with prompt\_toolkit for browsing saved recipes and opening them in an editor.
 
 ## Status
 

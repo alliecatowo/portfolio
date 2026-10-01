@@ -1,19 +1,18 @@
 ---
 title: Git Why
-slug: git-why
-description: 'git blame tells you who changed the code; git why finds the commit that explains it. Local hybrid search over Git history, benchmarked honestly.'
 date: 2026-09-09
-status: published
+demo: https://alliecatowo.github.io/git-why/
+description: git blame tells you who changed the code; git why finds the commit that explains it. Local hybrid search over Git history, benchmarked honestly.
 featured: false
+github: https://github.com/alliecatowo/git-why
 group: agent-systems-devtools
-technologies:
-  - TypeScript
-  - Node.js
-  - Git
-  - Zvec
-  - Model2Vec
-  - MCP
-  - VitePress
+image: /images/projects/git-why/card.webp
+imageAlt: 'Git Why docs site: "Finds the history that explains the code", with an orange magnifying glass over a line of commits.'
+seo:
+  title: "Git Why: find the commit that explains the code"
+  description: git blame tells you who changed the code; git why finds the commit that explains it. Local hybrid search over Git history, benchmarked honestly.
+slug: git-why
+status: published
 tags:
   - developer-tools
   - git
@@ -22,12 +21,14 @@ tags:
   - agents
   - mcp
   - benchmarks
-github: https://github.com/alliecatowo/git-why
-demo: https://alliecatowo.github.io/git-why/
-image: /images/projects/git-why/card.webp
-imageAlt: 'Git Why docs site: "Finds the history that explains the code", with an orange magnifying glass over a line of commits.'
-seo:
-  title: 'Git Why: find the commit that explains the code'
+technologies:
+  - TypeScript
+  - Node.js
+  - Git
+  - Zvec
+  - Model2Vec
+  - MCP
+  - VitePress
 ---
 
 **`git blame` tells you who changed the code. `git why` finds the history that explains it.**

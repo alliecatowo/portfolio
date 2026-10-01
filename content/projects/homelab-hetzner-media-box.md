@@ -3,18 +3,11 @@ title: Homelab Media Box on Hetzner (16TB)
 date: 2025-08-30
 description: "A 16TB Hetzner auction server running my family's media library: Jellyfin and Plex with Quick Sync transcoding, the *arr apps, Caddy and Portainer in Docker."
 featured: false
+group: hardware-homelab
+image: /images/homelab/screenshot-2025-10-16-at-13-07-11-jelly-seerr-allie-cat-cinema.png
+imageAlt: Jellyseerr request page from Allison's self-hosted media server, Allie Cat Cinema
+slug: homelab-hetzner-media-box
 status: published
-technologies:
-  - Docker
-  - Portainer
-  - Caddy
-  - Plex
-  - Jellyfin
-  - Radarr
-  - Sonarr
-  - Lidarr
-  - qBittorrent
-  - ProtonVPN
 tags:
   - homelab
   - docker
@@ -26,15 +19,22 @@ tags:
   - automation
   - torrent
   - vpn
-slug: homelab-hetzner-media-box
-group: hardware-homelab
-image: /images/homelab/screenshot-2025-10-16-at-13-07-11-jelly-seerr-allie-cat-cinema.png
-imageAlt: "Jellyseerr request page from Allison's self-hosted media server, Allie Cat Cinema"
+technologies:
+  - Docker
+  - Portainer
+  - Caddy
+  - Plex
+  - Jellyfin
+  - Radarr
+  - Sonarr
+  - Lidarr
+  - qBittorrent
+  - ProtonVPN
 ---
 
 ## Overview
 
-I’ve always liked owning my media _and_ my infrastructure. Renting cloud space or relying on streaming never felt right.
+I’ve always liked owning my media *and* my infrastructure. Renting cloud space or relying on streaming never felt right.
 So I built my own server: a **bare-metal Hetzner auction box** with 16 TB of storage and 64 GB RAM, running an orchestrated suite of self-hosted apps that power my family’s entire digital library — movies, books, automation, and more.
 
 It’s cost-effective, private, and surprisingly elegant.
@@ -54,7 +54,7 @@ That GPU alone can handle a dozen simultaneous 4K transcodes — better than my 
 
 ---
 
-![Uptime Kuma dashboard for the homelab: 13 monitors up and none down, covering Jellyfin, Jellyseerr, the *arr apps, Caddy, Portainer and qBittorrent](/images/homelab/screenshot-2025-10-16-at-13-07-32-uptime-kuma.png)
+![Uptime Kuma dashboard for the homelab: 13 monitors up and none down, covering Jellyfin, Jellyseerr, the \*arr apps, Caddy, Portainer and qBittorrent](/images/homelab/screenshot-2025-10-16-at-13-07-32-uptime-kuma.png)
 
 ---
 

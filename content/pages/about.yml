@@ -1,11 +1,37 @@
-slug: about
-layout: about
-seo:
-  title: 'About Allison Coleman: agent systems & developer tools'
-  description: Allison Coleman is a Bay Area software engineer at Hinge Health building agent systems and developer tools, and the creator of JupyterLite WebMCP.
+cta:
+  title: Got an Idea?
+  description: Hackathon invites, side projects, WebMCP questions and keyboard photos are all welcome. My inbox is open.
+  buttons:
+    - label: Get In Touch
+      to: /contact/
+      color: primary
+      variant: solid
+      size: lg
+      icon: i-lucide-mail
+      iconPosition: leading
+    - label: View Projects
+      to: /projects/
+      color: primary
+      variant: outline
+      size: lg
+      icon: i-lucide-folder
+      iconPosition: leading
+  socials:
+    - label: GitHub
+      href: https://github.com/alliecatowo
+      icon: i-lucide-github
+    - label: LinkedIn
+      href: https://linkedin.com/in/allie-cat
+      icon: i-lucide-linkedin
+    - label: X
+      href: https://x.com/AllieCatOwO
+      icon: i-simple-icons-x
+    - label: Email
+      href: mailto:me@allisons.dev
+      icon: i-lucide-mail
 hero:
   title: Hi, I'm Allison!
-  subtitle: 'Software engineer: agent systems, developer tools, languages & runtimes'
+  subtitle: "Software engineer: agent systems, developer tools, languages & runtimes"
   image:
     src: /images/ghibli-pfp.png
     alt: Illustrated portrait of Allison Coleman
@@ -14,7 +40,7 @@ hero:
     - label: WebMCP Challenge winners
       value: 1 of 10
     - label: Rescued chinchillas
-      value: '2'
+      value: "2"
     - label: Red Bull consumed
       value: ∞
   body: |
@@ -53,7 +79,7 @@ journey:
       icon: i-lucide-graduation-cap
       description: Computer Science at Cal State Monterey Bay. Built Tetris up from NAND gates, shipped to AWS and Heroku, and did machine learning before OpenAI made it everyone's personality.
     - title: Dad's Law Firm
-      period: '2021'
+      period: "2021"
       color: pink-500
       icon: i-lucide-scale
       description: Graduated mid-pandemic and helped keep my dad's firm afloat. OCR'd every paper file, built the firm a new site, and ran documents like a law clerk.
@@ -67,68 +93,7 @@ journey:
       color: purple-500
       icon: i-lucide-map-pin
       description: Got hired at Hinge Health and moved to the Bay Area. New job, new city, same robots to yell at.
-now:
-  title: Now
-  description: Software engineer at Hinge Health by day. After hours I build agent systems, developer tools and languages, mostly in public and mostly in Rust and TypeScript. My JupyterLite WebMCP was one of 10 winners of the 2026 OpenAI WebMCP Challenge.
-  award:
-    label: Read about the winning project
-    to: /projects/jupyterlite-webmcp/
-  projects:
-    - title: Ticketmaster
-      to: /projects/ticket-master/
-      description: A Rust coding-agent runtime where background workers take tickets and you review the result.
-    - title: Patches
-      to: /projects/patches/
-      description: A chronological social network you use from the terminal.
-    - title: Glassy
-      to: /projects/glassy/
-      description: A lean GPU terminal emulator in Rust, built for Claude Code.
-    - title: puml
-      to: /projects/puml/
-      description: PlantUML-compatible diagrams without Java, compiled in Rust.
-    - title: Lumen
-      to: /projects/lumen/
-      description: A Markdown-native, statically typed language for agent workflows.
-    - title: Shoal
-      to: /projects/shoal/
-      description: An agent-first structured shell with typed values instead of pipes.
-skills:
-  title: What I Work With
-  categories:
-    - title: Languages
-      color: primary
-      icon: i-lucide-code
-      items:
-        - TypeScript
-        - Rust
-        - Python
-        - Go
-        - SQL
-    - title: Agents & AI
-      color: purple-500
-      icon: i-lucide-bot
-      items:
-        - WebMCP / MCP
-        - Claude Code
-        - RAG & vector search
-        - LangGraph / LlamaIndex
-    - title: Web & UI
-      color: pink-500
-      icon: i-lucide-monitor
-      items:
-        - Vue / Nuxt
-        - React / Next.js
-        - Tailwind CSS
-        - Three.js / WebGL
-    - title: Infra & Tooling
-      color: yellow-500
-      icon: i-lucide-wrench
-      items:
-        - Docker / Kubernetes
-        - AWS / GCP / Firebase
-        - PostgreSQL / Redis
-        - Vitest / Playwright
-        - GitHub Actions
+layout: about
 life:
   title: Outside of Code
   description: The parts of my life that don't compile.
@@ -172,34 +137,69 @@ life:
       imagePosition: 50% 50%
       to: /projects/termagatchi/
       description: Where it started. These days it's things like Termagatchi, an AI pet that lives in your terminal.
-cta:
-  title: Got an Idea?
-  description: Hackathon invites, side projects, WebMCP questions and keyboard photos are all welcome. My inbox is open.
-  buttons:
-    - label: Get In Touch
-      to: /contact/
+now:
+  title: Now
+  description: Software engineer at Hinge Health by day. After hours I build agent systems, developer tools and languages, mostly in public and mostly in Rust and TypeScript. My JupyterLite WebMCP was one of 10 winners of the 2026 OpenAI WebMCP Challenge.
+  award:
+    label: Read about the winning project
+    to: /projects/jupyterlite-webmcp/
+  projects:
+    - title: Ticketmaster
+      to: /projects/ticket-master/
+      description: A Rust coding-agent runtime where background workers take tickets and you review the result.
+    - title: Patches
+      to: /projects/patches/
+      description: A chronological social network you use from the terminal.
+    - title: Glassy
+      to: /projects/glassy/
+      description: A lean GPU terminal emulator in Rust, built for Claude Code.
+    - title: puml
+      to: /projects/puml/
+      description: PlantUML-compatible diagrams without Java, compiled in Rust.
+    - title: Lumen
+      to: /projects/lumen/
+      description: A Markdown-native, statically typed language for agent workflows.
+    - title: Shoal
+      to: /projects/shoal/
+      description: An agent-first structured shell with typed values instead of pipes.
+seo:
+  title: "About Allison Coleman: agent systems & developer tools"
+  description: Allison Coleman is a Bay Area software engineer at Hinge Health building agent systems and developer tools, and the creator of JupyterLite WebMCP.
+skills:
+  title: What I Work With
+  categories:
+    - title: Languages
       color: primary
-      variant: solid
-      size: lg
-      icon: i-lucide-mail
-      iconPosition: leading
-    - label: View Projects
-      to: /projects/
-      color: primary
-      variant: outline
-      size: lg
-      icon: i-lucide-folder
-      iconPosition: leading
-  socials:
-    - label: GitHub
-      href: https://github.com/alliecatowo
-      icon: i-lucide-github
-    - label: LinkedIn
-      href: https://linkedin.com/in/allie-cat
-      icon: i-lucide-linkedin
-    - label: X
-      href: https://x.com/AllieCatOwO
-      icon: i-simple-icons-x
-    - label: Email
-      href: mailto:me@allisons.dev
-      icon: i-lucide-mail
+      icon: i-lucide-code
+      items:
+        - TypeScript
+        - Rust
+        - Python
+        - Go
+        - SQL
+    - title: Agents & AI
+      color: purple-500
+      icon: i-lucide-bot
+      items:
+        - WebMCP / MCP
+        - Claude Code
+        - RAG & vector search
+        - LangGraph / LlamaIndex
+    - title: Web & UI
+      color: pink-500
+      icon: i-lucide-monitor
+      items:
+        - Vue / Nuxt
+        - React / Next.js
+        - Tailwind CSS
+        - Three.js / WebGL
+    - title: Infra & Tooling
+      color: yellow-500
+      icon: i-lucide-wrench
+      items:
+        - Docker / Kubernetes
+        - AWS / GCP / Firebase
+        - PostgreSQL / Redis
+        - Vitest / Playwright
+        - GitHub Actions
+slug: about

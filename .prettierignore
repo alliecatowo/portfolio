@@ -1,0 +1,6 @@
+# content/ is formatted the way Nuxt Studio serializes it (pnpm content:format), not by Prettier.
+# Prettier's style (single quotes, _emphasis_) differs and the two would fight on every commit.
+content/**/*.md
+content/**/*.yml
+content/**/*.yaml
+content/**/*.json

@@ -1,18 +1,18 @@
 ---
-title: 'Freeze the Winning Version'
-date: 2026-10-01
-description: 'The week after the win I had a moment of attention, a project that needed to stop being a hackathon artifact, and very little of myself to spare. The same split as the build: agents did the hands, I did the calls.'
+title: Freeze the Winning Version
+author: Allison Coleman
 category: dev
+date: 2026-10-01
+description: "The week after the win I had a moment of attention, a project that needed to stop being a hackathon artifact, and very little of myself to spare. The same split as the build: agents did the hands, I did the calls."
+featured: false
+published: false
+slug: freeze-the-winning-version
 tags:
   - agents
   - open-source
   - hackathon
   - pypi
   - webmcp
-author: Allison Coleman
-published: false
-featured: false
-slug: freeze-the-winning-version
 ---
 
 ## The day of the announcement

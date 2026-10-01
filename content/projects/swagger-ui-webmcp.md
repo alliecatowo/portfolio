@@ -1,12 +1,27 @@
 ---
 title: Swagger UI WebMCP
-slug: swagger-ui-webmcp
-description: 'OpenAI WebMCP Challenge entry: a Swagger UI plugin that turns any OpenAPI docs page into agent tools, with access the page and the person can only tighten.'
 date: 2026-09-03
-status: published
+demo: https://openapi-web-mcp.vercel.app
+description: "OpenAI WebMCP Challenge entry: a Swagger UI plugin that turns any OpenAPI docs page into agent tools, with access the page and the person can only tighten."
+devpost: https://devpost.com/software/swagger-ui-webmcp
 featured: false
+github: https://github.com/alliecatowo/openapi-web-mcp
 group: browser-agents
 groupOrder: 2
+image: /images/projects/swagger-ui-webmcp/card.webp
+imageAlt: Video thumbnail reading "Your API docs are the connector" over Swagger UI with an agent chat beside it.
+seo:
+  title: "Swagger UI WebMCP: OpenAPI docs as agent tools"
+  description: "OpenAI WebMCP Challenge entry: a Swagger UI plugin that turns any OpenAPI docs page into agent tools, with access the page and the person can only tighten."
+slug: swagger-ui-webmcp
+status: published
+tags:
+  - ai-agents
+  - webmcp
+  - mcp
+  - hackathon
+  - developer-tools
+  - browser
 technologies:
   - WebMCP
   - TypeScript
@@ -15,20 +30,6 @@ technologies:
   - Vite
   - Playwright
   - Vercel
-tags:
-  - ai-agents
-  - webmcp
-  - mcp
-  - hackathon
-  - developer-tools
-  - browser
-github: https://github.com/alliecatowo/openapi-web-mcp
-demo: https://openapi-web-mcp.vercel.app
-devpost: https://devpost.com/software/swagger-ui-webmcp
-image: /images/projects/swagger-ui-webmcp/card.webp
-imageAlt: 'Video thumbnail reading "Your API docs are the connector" over Swagger UI with an agent chat beside it.'
-seo:
-  title: 'Swagger UI WebMCP: OpenAPI docs as agent tools'
 ---
 
 **If you can Try it out, your agent can too.**
@@ -64,7 +65,7 @@ The [live demo](https://openapi-web-mcp.vercel.app) opens on a fictional "Waypoi
 
 ![The live demo with the Open-Meteo spec loaded: real weather endpoints, each with an Agent access dropdown set to Full access.](/images/projects/swagger-ui-webmcp/open-meteo.webp)
 
-_The live demo with Open-Meteo selected, captured September 2026._
+*The live demo with Open-Meteo selected, captured September 2026.*
 
 Without a WebMCP-capable browser it still works as normal Swagger UI. The agent side needs ChatGPT's in-app browser or Chrome with experimental web platform features turned on. The plugin isn't published to npm yet, so for now it's the repo and the demo.
 

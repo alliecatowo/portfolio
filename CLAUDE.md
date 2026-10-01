@@ -38,6 +38,10 @@ pnpm lint:fix
 # Content validation (also runs in CI and before every deploy)
 pnpm validate:content  # scripts/validate-content.ts
 
+# Content formatting: serializes content/ exactly as Nuxt Studio does, so Studio edits never add noise
+pnpm content:format        # rewrite content/**/*.{md,yml} (scripts/format-content.mjs)
+pnpm content:format:check  # exit 1 on any diff (CI + lint-staged); Prettier ignores content/
+
 # Database Management (Nuxt Content SQLite)
 pnpm db:clean      # Remove corrupted SQLite database
 pnpm db:rebuild    # Clean + regenerate database

@@ -1,21 +1,19 @@
 ---
 title: puml
-slug: puml
-description: 'PlantUML-compatible diagrams without Java or Graphviz: a Rust compiler with its own layout engine, emitting SVG/PNG/PDF from a CLI, LSP and in-browser WASM.'
 date: 2026-05-14
-status: published
+demo: https://alliecatowo.github.io/puml/editor/
+description: "PlantUML-compatible diagrams without Java or Graphviz: a Rust compiler with its own layout engine, emitting SVG/PNG/PDF from a CLI, LSP and in-browser WASM."
 featured: true
-order: 5
+github: https://github.com/alliecatowo/puml
 group: languages-runtimes
-technologies:
-  - Rust
-  - WebAssembly
-  - winnow
-  - resvg
-  - svg2pdf
-  - LSP
-  - Zola
-  - CodeMirror
+image: /images/projects/puml/card.webp
+imageAlt: The puml studio editor with PlantUML class source on the left and the SVG class diagram, rendered by the in-browser WASM engine, on the right.
+order: 5
+seo:
+  title: "puml: PlantUML-compatible diagrams in Rust"
+  description: "PlantUML-compatible diagrams without Java or Graphviz: a Rust compiler with its own layout engine, emitting SVG/PNG/PDF from a CLI, LSP and in-browser WASM."
+slug: puml
+status: published
 tags:
   - rust
   - diagrams
@@ -25,12 +23,15 @@ tags:
   - webassembly
   - lsp
   - developer-tools
-github: https://github.com/alliecatowo/puml
-demo: https://alliecatowo.github.io/puml/editor/
-image: /images/projects/puml/card.webp
-imageAlt: 'The puml studio editor with PlantUML class source on the left and the SVG class diagram, rendered by the in-browser WASM engine, on the right.'
-seo:
-  title: 'puml: PlantUML-compatible diagrams in Rust'
+technologies:
+  - Rust
+  - WebAssembly
+  - winnow
+  - resvg
+  - svg2pdf
+  - LSP
+  - Zola
+  - CodeMirror
 ---
 
 **UML that compiles: PlantUML diagrams, no Java, no Graphviz.**

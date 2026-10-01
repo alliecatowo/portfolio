@@ -1,11 +1,22 @@
 ---
 title: darwin
-slug: darwin
-description: 'Work in progress: a self-improving layer for coding-agent harnesses (memory, dream, distill), shipped first as an opencode plugin, and benchmarked against itself on SWE-bench.'
 date: 2026-08-29
-status: published
+description: "Work in progress: a self-improving layer for coding-agent harnesses (memory, dream, distill), shipped first as an opencode plugin, and benchmarked against itself on SWE-bench."
 featured: false
+github: https://github.com/alliecatowo/claude-code-darwin
 group: agent-systems-devtools
+seo:
+  description: A work-in-progress self-improving layer for coding-agent harnesses (memory, dream, distill), shipped as an opencode plugin and benchmarked on SWE-bench.
+  title: darwin
+slug: darwin
+status: published
+tags:
+  - ai-agents
+  - coding-agents
+  - memory
+  - evaluation
+  - plugin
+  - work-in-progress
 technologies:
   - TypeScript
   - Bun
@@ -14,16 +25,6 @@ technologies:
   - opencode
   - SWE-bench
   - Podman
-tags:
-  - ai-agents
-  - coding-agents
-  - memory
-  - evaluation
-  - plugin
-  - work-in-progress
-github: https://github.com/alliecatowo/claude-code-darwin
-seo:
-  description: 'A work-in-progress self-improving layer for coding-agent harnesses (memory, dream, distill), shipped as an opencode plugin and benchmarked on SWE-bench.'
 ---
 
 **Can a coding agent get better at a codebase just by working in it?**

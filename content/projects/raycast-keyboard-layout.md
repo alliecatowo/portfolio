@@ -1,19 +1,14 @@
 ---
 title: Keyboard Layout Visualizer
-slug: raycast-keyboard-layout
-description: 'A Raycast extension that reads QMK/Vial and ZMK keymaps straight off the board over USB and draws every layer as SVG, with reverse key search.'
 date: 2026-03-25
-status: published
+description: A Raycast extension that reads QMK/Vial and ZMK keymaps straight off the board over USB and draws every layer as SVG, with reverse key search.
 featured: false
+github: https://github.com/alliecatowo/raycast-keyboard-layout
 group: hardware-homelab
-technologies:
-  - TypeScript
-  - React
-  - Raycast API
-  - node-hid
-  - serialport
-  - Protocol Buffers
-  - SVG
+image: /images/projects/raycast-keyboard-layout/card.webp
+imageAlt: "A dark SVG drawing of the navigation layer of a split keyboard: number keys across the top, Home, Page Down, Page Up and End on the left, arrow keys on the right, and faded ghost keys where the layer is transparent."
+slug: raycast-keyboard-layout
+status: published
 tags:
   - keyboard
   - qmk
@@ -22,9 +17,14 @@ tags:
   - raycast
   - macos
   - developer-tools
-github: https://github.com/alliecatowo/raycast-keyboard-layout
-image: /images/projects/raycast-keyboard-layout/card.webp
-imageAlt: 'A dark SVG drawing of the navigation layer of a split keyboard: number keys across the top, Home, Page Down, Page Up and End on the left, arrow keys on the right, and faded ghost keys where the layer is transparent.'
+technologies:
+  - TypeScript
+  - React
+  - Raycast API
+  - node-hid
+  - serialport
+  - Protocol Buffers
+  - SVG
 ---
 
 **Which layer was the arrow keys on again?**
@@ -46,11 +46,11 @@ Keymaps are rendered to SVG by the extension's own renderer: keycaps with a slig
 
 ![The base layer of a sample split keyboard drawn by the extension's SVG renderer in dark mode: QWERTY with home-row mod-taps labelled Cmd, Alt, Ctrl and Shift under their letters, and MO(1) and MO(2) layer keys labelled L1 and L2.](/images/projects/raycast-keyboard-layout/base-layer.webp)
 
-_The extension's own renderer, run in Node outside Raycast on a keymap I wrote for the occasion: a Corne-style 3x6 split with home-row mod-taps. Mod-taps show the tap key with the modifier underneath, and layer keys show their target layer._
+*The extension's own renderer, run in Node outside Raycast on a keymap I wrote for the occasion: a Corne-style 3x6 split with home-row mod-taps. Mod-taps show the tap key with the modifier underneath, and layer keys show their target layer.*
 
 ![The navigation layer of the same sample keyboard in light mode. Keys inherited from the base layer are drawn faded as ghost keys; the number row, Home/End cluster, arrow keys, media keys and function keys are coloured by category.](/images/projects/raycast-keyboard-layout/nav-layer-light.webp)
 
-_The same renderer's light theme on the navigation layer. Transparent keys fall through to the base layer and are drawn at low opacity; the rest are coloured by category. This is the SVG the extension shows inside Raycast, not a screenshot of Raycast itself._
+*The same renderer's light theme on the navigation layer. Transparent keys fall through to the base layer and are drawn at low opacity; the rest are coloured by category. This is the SVG the extension shows inside Raycast, not a screenshot of Raycast itself.*
 
 Beyond viewing, there are nine commands in all, including a hotkey-friendly quick layer peek, a menu-bar layer indicator that polls the board, a keypress tester that tracks coverage, and a Board Settings screen that reads and writes QMK settings, RGB lighting and layer names over USB.
 

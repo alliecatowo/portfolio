@@ -1,18 +1,18 @@
 ---
-title: 'Contract, Not Prompt: The Agent Workflow Behind Four Hackathon Submissions'
-date: 2026-10-01
-description: 'I argue with ChatGPT until my objections turn into a 45,000-character build contract, paste it into Claude Code with one line, and only steer for taste. Here is the method, the receipts, and where it broke.'
+title: "Contract, Not Prompt: The Agent Workflow Behind Four Hackathon Submissions"
+author: Allison Coleman
 category: dev
+date: 2026-10-01
+description: I argue with ChatGPT until my objections turn into a 45,000-character build contract, paste it into Claude Code with one line, and only steer for taste. Here is the method, the receipts, and where it broke.
+featured: false
+published: false
+slug: contract-not-prompt
 tags:
   - agents
   - claude-code
   - codex
   - workflow
   - webmcp
-author: Allison Coleman
-published: false
-featured: false
-slug: contract-not-prompt
 ---
 
 ## The prompt was one line
@@ -43,16 +43,16 @@ Here is how it goes in practice. I start by saying what I want, all at once and 
 In the WebMCP ideation chat (40 of my turns over about 30 hours, roughly 25 ideas parked), the key messages are all objections:
 
 - "if a normal MCP server can do it, WebMCP is a wrapper" (ChatGPT's restatement of me killing Storybook)
-- "its gotta be a task thats far easier visually and exposes _more minute conteol_ then chat interface would."
+- "its gotta be a task thats far easier visually and exposes *more minute conteol* then chat interface would."
 - "oh and it CANT be dependent on ai."
-- "oh drop that then if web mcp cant _trigger_ the agent on state changes"
+- "oh drop that then if web mcp cant *trigger* the agent on state changes"
 
 ChatGPT acts as a stenographer. It turns each rant into a principle, and each principle into a named contract section:
 
 | What I said                                                                | What it became                                                                                             |
 | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | "it CANT be dependent on ai"                                               | §2 THIS IS NOT AN AI APPLICATION, and §63 PRODUCT BOUNDARY TEST                                            |
-| "drop that then if web mcp cant _trigger_ the agent"                       | §10 CRITICAL WEBMCP LIMITATION, plus a hostile-audit item for "unsupported claims about triggering agents" |
+| "drop that then if web mcp cant *trigger* the agent"                       | §10 CRITICAL WEBMCP LIMITATION, plus a hostile-audit item for "unsupported claims about triggering agents" |
 | "google doc style comments on selections of cells"                         | §33–47 threaded review, including "COMMENTS ARE NOT 'AI COMMENTS'"                                         |
 | "cargo cults"                                                              | §5 REFERENCE IMPLEMENTATIONS TO STUDY / CARGO-CULT CAREFULLY                                               |
 | "the more exactly laid out the spec the less time his agents will … drift" | vendor the contract, "Do not re-ideate", "SHIP, DO NOT KEEP IDEATING"                                      |
@@ -113,7 +113,7 @@ The **JupyterLite** contract, the one that won, does not specify which models to
 
 By the time I wrote the next three contracts that night (Swagger UI, Strudel, Careers), I had moved that into the document itself. From the Swagger UI contract:
 
-```
+```text
 11. MODEL / AGENT BUDGET STRATEGY
 This project is token constrained.
 USE THE CHEAPEST MODEL CAPABLE OF THE TASK.
@@ -199,13 +199,13 @@ Here is the case for the repo as the state machine.
 
 ## Verify on the real surface, with a second vendor
 
-The contracts ask for a test-only WebMCP shim so Playwright can drive the tools. That works for unit coverage, but it is not proof. Claude put this better than I did, in the Careers session at 8:28 PM on Sep 2: "**The shim is still the shim.** Everything above proves the _tools and the site_ are correct. It does not prove ChatGPT's in-app browser or Chrome-with-WebMCP will discover them."
+The contracts ask for a test-only WebMCP shim so Playwright can drive the tools. That works for unit coverage, but it is not proof. Claude put this better than I did, in the Careers session at 8:28 PM on Sep 2: "**The shim is still the shim.** Everything above proves the *tools and the site* are correct. It does not prove ChatGPT's in-app browser or Chrome-with-WebMCP will discover them."
 
 The first night I was more direct: "I DONT WANT FUCKING PLAYWRIGHT SURE YOU CAN USE THAT BUT I WANT YOU TO FUCING DRIVE WITH THE FUCKING MCP." Once Claude was driving Chrome 150 with the experimental flag on, it reported: "Real bugs found by driving the browser, not by reading code." The most significant was a race where `jupyter_open_notebook` could fire about 575 ms before JupyterLite had registered its kernels.
 
 Then I added a second vendor. Codex Desktop has a browser that could see WebMCP, so I had Codex drive the live sites as an outside user. The repos ship a `CODEX_DRIVER.md` that starts: "You are an external agent (Codex) with a WebMCP-capable browser. Verify this site from the flows, not the code." Codex's verdicts looked like this:
 
-```
+```text
 ## NOT READY TO RECORD
 
 ## BLOCKERS

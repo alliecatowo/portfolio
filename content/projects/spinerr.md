@@ -1,11 +1,25 @@
 ---
 title: Spinerr
-slug: spinerr
-description: 'An ambient music dashboard built around a generative vinyl record: p5.js grooves seeded per track that pulse with the bass. A one-night prototype that needs some TLC.'
 date: 2025-11-04
-status: published
+demo: https://spinerr-app.web.app
+description: "An ambient music dashboard built around a generative vinyl record: p5.js grooves seeded per track that pulse with the bass. A one-night prototype that needs some TLC."
 featured: false
+github: https://github.com/alliecatowo/spinerr
 group: creative-coding
+image: /images/projects/spinerr/card.webp
+imageAlt: "Spinerr playing a local test track: a green generative vinyl record with the tone arm down, a large clock, the track title and progress bar, and two sample calendar events."
+seo:
+  description: "An ambient music dashboard built around a generative vinyl record: p5.js grooves seeded per track that pulse with the bass. A one-night prototype."
+  title: Spinerr
+slug: spinerr
+status: published
+tags:
+  - music
+  - generative-art
+  - p5js
+  - audio-visualization
+  - nextjs
+  - prototype
 technologies:
   - Next.js
   - React
@@ -15,19 +29,6 @@ technologies:
   - Framer Motion
   - Tailwind CSS
   - Firebase
-tags:
-  - music
-  - generative-art
-  - p5js
-  - audio-visualization
-  - nextjs
-  - prototype
-github: https://github.com/alliecatowo/spinerr
-demo: https://spinerr-app.web.app
-image: /images/projects/spinerr/card.webp
-imageAlt: 'Spinerr playing a local test track: a green generative vinyl record with the tone arm down, a large clock, the track title and progress bar, and two sample calendar events.'
-seo:
-  description: 'An ambient music dashboard built around a generative vinyl record: p5.js grooves seeded per track that pulse with the bass. A one-night prototype.'
 ---
 
 **A record player for a second monitor.**

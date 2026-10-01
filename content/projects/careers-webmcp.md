@@ -1,12 +1,26 @@
 ---
 title: Careers WebMCP
-slug: careers-webmcp
-description: 'OpenAI WebMCP Challenge entry: a careers site with 18 WebMCP tools. The agent searches, navigates and fills in your application; only you can press Submit.'
 date: 2026-09-03
-status: published
+demo: https://careers-webmcp.vercel.app/careers/open-positions
+description: "OpenAI WebMCP Challenge entry: a careers site with 18 WebMCP tools. The agent searches, navigates and fills in your application; only you can press Submit."
+devpost: https://devpost.com/software/careers-webmcp
 featured: false
+github: https://github.com/alliecatowo/careers-webmcp
 group: browser-agents
 groupOrder: 3
+image: /images/projects/careers-webmcp/card.webp
+imageAlt: Video thumbnail reading "The agent fills the form. You press the button." over a pre-filled candidate sign-up form.
+seo:
+  title: "Careers WebMCP: OpenAI WebMCP Challenge entry"
+  description: "OpenAI WebMCP Challenge entry: a careers site with 18 WebMCP tools. The agent searches, navigates and fills in your application; only you can press Submit."
+slug: careers-webmcp
+status: published
+tags:
+  - ai-agents
+  - webmcp
+  - mcp
+  - hackathon
+  - browser
 technologies:
   - WebMCP
   - TypeScript
@@ -14,19 +28,6 @@ technologies:
   - React
   - Playwright
   - Vercel
-tags:
-  - ai-agents
-  - webmcp
-  - mcp
-  - hackathon
-  - browser
-github: https://github.com/alliecatowo/careers-webmcp
-demo: https://careers-webmcp.vercel.app/careers/open-positions
-devpost: https://devpost.com/software/careers-webmcp
-image: /images/projects/careers-webmcp/card.webp
-imageAlt: 'Video thumbnail reading "The agent fills the form. You press the button." over a pre-filled candidate sign-up form.'
-seo:
-  title: 'Careers WebMCP: OpenAI WebMCP Challenge entry'
 ---
 
 **The careers page is the connector.**
@@ -55,6 +56,6 @@ The [live site](https://careers-webmcp.vercel.app/careers/open-positions) works 
 
 ![The live Northwind careers site: Open Positions Worldwide, with search, filters and 20 open positions.](/images/projects/careers-webmcp/open-positions.webp)
 
-_The live site, captured September 2026._
+*The live site, captured September 2026.*
 
 The careers UI is built on the MIT-licensed Baalvion Jobs Portal (provenance is in the repo's `NOTICE`); the WebMCP layer is what this project adds. There's a [demo video](https://youtu.be/Rqt9sBN__6E) and the [Devpost entry](https://devpost.com/software/careers-webmcp). MIT.

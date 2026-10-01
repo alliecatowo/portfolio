@@ -1,12 +1,18 @@
 ---
 title: Polyphony
-slug: polyphony
-description: "A GitHub-native port of OpenAI's Symphony: an Elixir/OTP orchestrator that turns GitHub Project issues into isolated Codex runs and PRs."
 date: 2026-05-15
-# Draft until feat/patches-autonomous-runtime is merged and the README describes the GitHub runtime
-status: draft
+description: "A GitHub-native port of OpenAI's Symphony: an Elixir/OTP orchestrator that turns GitHub Project issues into isolated Codex runs and PRs."
 featured: false
+github: https://github.com/alliecatowo/polyphony
 group: agent-systems-devtools
+slug: polyphony
+status: draft
+tags:
+  - agents
+  - orchestration
+  - github
+  - developer-tools
+  - automation
 technologies:
   - Elixir
   - OTP
@@ -15,13 +21,6 @@ technologies:
   - GitHub Apps
   - Codex App Server
   - systemd
-tags:
-  - agents
-  - orchestration
-  - github
-  - developer-tools
-  - automation
-github: https://github.com/alliecatowo/polyphony
 ---
 
 **Symphony, but the tracker is GitHub.**

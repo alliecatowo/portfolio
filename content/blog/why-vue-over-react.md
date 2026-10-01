@@ -1,19 +1,18 @@
 ---
 title: Why I Reach for Vue Over React
-date: 2025-08-29
-description: A DX-first take on why Vue’s clarity, SFCs, and composables help me
-  ship faster and feel happier than React’s ever-shifting conventions.
+author: Allie
 category: dev
+date: 2025-08-29
+description: A DX-first take on why Vue’s clarity, SFCs, and composables help me ship faster and feel happier than React’s ever-shifting conventions.
+featured: true
+published: true
+slug: why-vue-over-react
 tags:
   - vue
   - react
   - dx
   - composition-api
   - opinion
-author: Allie
-published: true
-featured: true
-slug: why-vue-over-react
 ---
 
 I’ve written a lot of React. It pays the bills, has a huge ecosystem, and there’s almost always a job posting asking for it. But when it’s my call—when I care about how the code reads, how quickly I can build something beautiful, and how calm I feel inside the codebase—I reach for Vue.

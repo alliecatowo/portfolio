@@ -1,19 +1,19 @@
 ---
 title: Lumen
-slug: lumen
-description: 'Markdown-native, statically typed language in Rust for AI agent workflows: typed tools, capability grants, effect rows, deterministic mode, WASM playground.'
 date: 2026-02-12
-status: published
+demo: https://alliecatowo.github.io/lumen/playground
+description: "Markdown-native, statically typed language in Rust for AI agent workflows: typed tools, capability grants, effect rows, deterministic mode, WASM playground."
 featured: false
+github: https://github.com/alliecatowo/lumen
 group: languages-runtimes
 groupOrder: 2
-technologies:
-  - Rust
-  - Cranelift
-  - WebAssembly
-  - LSP
-  - Tree-sitter
-  - VitePress
+image: /images/projects/lumen/card.webp
+imageAlt: The Lumen browser playground running a pattern-matching program compiled to WebAssembly; the terminal prints "zero, one, many".
+seo:
+  title: "Lumen: a typed language for AI agent workflows"
+  description: "Markdown-native, statically typed language in Rust for AI agent workflows: typed tools, capability grants, effect rows, deterministic mode, WASM playground."
+slug: lumen
+status: published
 tags:
   - programming-language
   - compiler
@@ -23,12 +23,13 @@ tags:
   - webassembly
   - developer-tools
   - open-source
-github: https://github.com/alliecatowo/lumen
-demo: https://alliecatowo.github.io/lumen/playground
-image: /images/projects/lumen/card.webp
-imageAlt: 'The Lumen browser playground running a pattern-matching program compiled to WebAssembly; the terminal prints "zero, one, many".'
-seo:
-  title: 'Lumen: a typed language for AI agent workflows'
+technologies:
+  - Rust
+  - Cranelift
+  - WebAssembly
+  - LSP
+  - Tree-sitter
+  - VitePress
 ---
 
 **A programming language where the docs are the source, and every LLM call shows up in the type signature.**

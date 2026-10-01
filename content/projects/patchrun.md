@@ -1,27 +1,28 @@
 ---
 title: patchrun
-slug: patchrun
-description: 'Run any command in a disposable Git worktree and get back the patch it would have made, then apply, save, or discard it. A small Go CLI.'
 date: 2026-05-14
-status: published
+description: Run any command in a disposable Git worktree and get back the patch it would have made, then apply, save, or discard it. A small Go CLI.
 featured: false
+github: https://github.com/alliecatowo/patchrun
 group: agent-systems-devtools
-technologies:
-  - Go
-  - Git
-  - PTY
-  - GoReleaser
+image: /images/projects/patchrun/card.webp
+imageAlt: "Terminal running patchrun on a sample repo: the command exited 0, two files changed with 4 insertions and 4 deletions, and a menu offers apply, save, view, keep worktree or discard."
+seo:
+  title: "patchrun: run commands in a disposable worktree"
+  description: Run any command in a disposable Git worktree and get back the patch it would have made, then apply, save, or discard it. A small Go CLI.
+slug: patchrun
+status: published
 tags:
   - developer-tools
   - git
   - cli
   - agents
   - dry-run
-github: https://github.com/alliecatowo/patchrun
-image: /images/projects/patchrun/card.webp
-imageAlt: 'Terminal running patchrun on a sample repo: the command exited 0, two files changed with 4 insertions and 4 deletions, and a menu offers apply, save, view, keep worktree or discard.'
-seo:
-  title: 'patchrun: run commands in a disposable worktree'
+technologies:
+  - Go
+  - Git
+  - PTY
+  - GoReleaser
 ---
 
 **Command in, patch out.**
