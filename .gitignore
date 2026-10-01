@@ -56,3 +56,5 @@ firebase-debug.log
 firestore-debug.log
 ui-debug.log
 .output-studio/
+# pnpm patch edit dir (see STUDIO.md "Drafts")
+.patch-content/

@@ -14,6 +14,14 @@ env:
   FORCE_COLOR: 1
   CI: true
 
+# One production deploy at a time. Every push (each Studio save included) redeploys the Studio
+# function, and two overlapping `firebase deploy --only functions:studio` runs fail. A queued run
+# waits for the one in progress; if several queue up, GitHub keeps only the newest, which
+# deploys the latest main anyway.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
 jobs:
   deploy-production:
     runs-on: ubuntu-latest
@@ -81,23 +89,12 @@ jobs:
           channelId: live
           projectId: allie-portfolio-project
 
-      # Nuxt Studio's auth/meta routes run in a 2nd-gen Cloud Function (`studio`) that
-      # firebase.json rewrites /_studio, /__nuxt_studio/** and /sw.js to. It deploys after
-      # Hosting so a function failure never blocks the site, and is skipped for pushes that
-      # only touch content/ (every Studio save is one). See STUDIO.md.
-      - name: Check whether the Studio function needs a deploy
-        id: studio-changes
-        run: |
-          if [ "${{ github.event_name }}" != "push" ] || ! git rev-parse -q --verify HEAD~1 >/dev/null; then
-            echo "deploy=true" >> "$GITHUB_OUTPUT"
-          elif git diff --name-only HEAD~1 HEAD | grep -qv '^content/'; then
-            echo "deploy=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "deploy=false" >> "$GITHUB_OUTPUT"
-          fi
-
+      # Nuxt Studio's routes run in a 2nd-gen Cloud Function (`studio`) that firebase.json
+      # rewrites /_studio, /__nuxt_studio/** and /sw.js to. It deploys after Hosting so a function
+      # failure never blocks the site. It deploys on every push, content-only ones included: the
+      # function bundles the draft-including content dump Studio edits from, so a Studio save
+      # (a content-only push) would otherwise leave Studio showing stale content. See STUDIO.md.
       - name: Build Studio function
-        if: steps.studio-changes.outputs.deploy == 'true'
         env:
           STUDIO_GITHUB_CLIENT_ID: ${{ secrets.STUDIO_GITHUB_CLIENT_ID }}
           STUDIO_GITHUB_CLIENT_SECRET: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
@@ -110,7 +107,6 @@ jobs:
           pnpm run build:studio
 
       - name: Write Studio function runtime env
-        if: steps.studio-changes.outputs.deploy == 'true'
         env:
           STUDIO_GITHUB_CLIENT_ID: ${{ secrets.STUDIO_GITHUB_CLIENT_ID }}
           STUDIO_GITHUB_CLIENT_SECRET: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
@@ -124,11 +120,9 @@ jobs:
           } > .output-studio/server/.env
 
       - name: Authenticate to Google Cloud
-        if: steps.studio-changes.outputs.deploy == 'true'
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ALLIE_PORTFOLIO_PROJECT }}
 
       - name: Deploy Studio function
-        if: steps.studio-changes.outputs.deploy == 'true'
         run: pnpm dlx firebase-tools@15 deploy --only functions:studio --project allie-portfolio-project --non-interactive --force

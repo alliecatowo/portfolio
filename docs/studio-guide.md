@@ -55,7 +55,7 @@ Same as blog, but in `content/projects/`. Key frontmatter:
 
 Go to `https://allisons.dev/_studio` (or press `CMD + .` on any page) and sign in with GitHub. Only the emails in the `STUDIO_GITHUB_MODERATORS` secret can log in. Saving commits to `main`, which redeploys the site in a few minutes.
 
-Studio's server routes run in the `studio` Cloud Function behind Firebase Hosting; see [`STUDIO.md`](../STUDIO.md) for setup. Drafts aren't visible in production Studio (they're kept out of the public content dumps); edit them locally.
+Studio's server routes run in the `studio` Cloud Function behind Firebase Hosting; see [`STUDIO.md`](../STUDIO.md) for setup. Drafts (`published: false`, `status: draft`) show up in production Studio once you're logged in; they stay out of the public site. A save takes a few minutes to show up in Studio, since every push redeploys the Studio function.
 
 ## Keyboard Shortcuts (in Studio editor)
 

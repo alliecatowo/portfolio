@@ -39,6 +39,15 @@
         ]
       },
       {
+        "source": "/__nuxt_studio/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "private, no-store"
+          }
+        ]
+      },
+      {
         "source": "_ipx/**",
         "headers": [
           {

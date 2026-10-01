@@ -174,6 +174,16 @@ export default defineNuxtConfig({
     '/__nuxt_studio/**': { prerender: false },
     '/**': { prerender: !isStudioFunction }
   },
+  // Studio function build only. The function is built with drafts (CONTENT_INCLUDE_DRAFTS=true
+  // in `build:studio`): one route hands the draft-including content dump to a logged-in Studio
+  // user, and a guard 404s every path Hosting doesn't rewrite to the function, so its own
+  // public URL can't serve drafts. See STUDIO.md "Drafts".
+  serverHandlers: isStudioFunction
+    ? [
+        { middleware: true, handler: './server/studio/only-studio-routes.ts' },
+        { route: '/__nuxt_studio/content/:collection/sql_dump.txt', method: 'get', handler: './server/studio/drafts-dump.ts' }
+      ]
+    : [],
   nitro: {
     // No preset = node-server. CI Firebase deploys run `nuxt generate` for the site and
     // `pnpm build:studio` (firebase preset) for the Studio function.

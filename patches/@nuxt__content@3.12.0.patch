@@ -1,0 +1,54 @@
+diff --git a/dist/runtime/internal/database.client.js b/dist/runtime/internal/database.client.js
+index deeb56132000a83f093493713d75856538863a3e..dab27329b273f36e7a5f50a135e5b292b290fc1f 100644
+--- a/dist/runtime/internal/database.client.js
++++ b/dist/runtime/internal/database.client.js
+@@ -65,10 +65,49 @@ async function initializeDatabase() {
+   }
+   return db;
+ }
++// allisons.dev patch: a logged-in Nuxt Studio user (studio-session-check cookie) loads the
++// draft-including dump from the Studio function (server/studio/drafts-dump.ts) instead of the
++// public, draft-free /__nuxt_content/<collection>/sql_dump.txt. Any failure falls back to the
++// public dump. The Studio dump is never written to localStorage, so drafts are never cached
++// under the public checksum keys. Re-check this patch on every @nuxt/content upgrade.
++async function loadStudioDump(collection) {
++  try {
++    const compressed = await $fetch(`/__nuxt_studio/content/${collection}/sql_dump.txt`, {
++      responseType: "text",
++      credentials: "same-origin",
++      cache: "no-store",
++      query: { t: Date.now() }
++    });
++    if (typeof compressed !== "string" || !compressed) {
++      return null;
++    }
++    return await decompressSQLDump(compressed);
++  } catch {
++    return null;
++  }
++}
+ async function loadCollectionDatabase(collection) {
+   if (window.sessionStorage.getItem("previewToken")) {
+     return db;
+   }
++  if (!import.meta.dev && document.cookie.split(/;\s*/).some((c) => c.startsWith("studio-session-check="))) {
++    const studioDump = await loadStudioDump(String(collection));
++    if (studioDump) {
++      await db.exec({ sql: `DROP TABLE IF EXISTS ${tables[String(collection)]}` });
++      try {
++        await db.exec({ sql: `DELETE FROM ${tables.info} WHERE id = 'checksum_${collection}'` });
++      } catch {
++      }
++      for (const command of studioDump) {
++        try {
++          await db.exec(command);
++        } catch (error) {
++          console.error("Error executing command", error);
++        }
++      }
++      return db;
++    }
++  }
+   let compressedDump = null;
+   const checksumId = `checksum_${collection}`;
+   const dumpId = `collection_${collection}`;

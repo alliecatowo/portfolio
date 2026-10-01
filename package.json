@@ -12,7 +12,7 @@
     "lint-staged": "lint-staged",
     "build": "nuxt build",
     "build:static": "nuxt generate",
-    "build:studio": "NITRO_PRESET=firebase nuxt build && node scripts/prepare-studio-function.mjs",
+    "build:studio": "NITRO_PRESET=firebase CONTENT_INCLUDE_DRAFTS=true nuxt build && node scripts/prepare-studio-function.mjs",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -117,7 +117,10 @@
       "unrs-resolver",
       "vue-demi"
     ],
-    "onlyBuiltDependencies": []
+    "onlyBuiltDependencies": [],
+    "patchedDependencies": {
+      "@nuxt/content@3.12.0": "patches/@nuxt__content@3.12.0.patch"
+    }
   },
   "pnpmConfig": {
     "enable-pre-post-scripts": true,
