@@ -36,7 +36,10 @@ export default defineEventHandler(async (event) => {
   if (!session.data?.user) throw notFound()
 
   // Same source as @nuxt/content's node preset dump handler (presets/node/database-handler.js)
-  // @ts-expect-error virtual module aliased by @nuxt/content in the Nitro build
+  // `#content/dump` is a Nitro alias; whether its types exist depends on which .nuxt was
+  // generated last, so neither @ts-expect-error nor no directive works in every checkout.
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const dumps = await import('#content/dump') as Record<string, string | undefined>
   const dump = dumps[collection]
   if (!dump) throw notFound()
