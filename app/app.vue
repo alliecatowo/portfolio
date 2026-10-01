@@ -23,11 +23,14 @@ import type { ContentNavigationItem } from '@nuxt/content'
 
 // Nuxt UI 4.0's English locale has no contentSearch.title/description, so the
 // search dialog's (screen-reader) title and description showed the raw keys.
-const locale = extendLocale(en, {
-  messages: {
-    contentSearch: { title: 'Search the site', description: 'Search projects, posts and pages' }
-  } as Record<string, unknown>
+// Patch the shared `en` object itself: useLocale() is a shared composable on the
+// client, so a locale passed only to <UApp> can lose to the first caller's default
+// (`en`), and the dialog kept showing the keys.
+Object.assign(en.messages.contentSearch, {
+  title: 'Search the site',
+  description: 'Search projects, posts and pages'
 })
+const locale = en
 
 // Content paths have no trailing slash; link to the canonical /path/ form instead.
 const slashNav = (items: ContentNavigationItem[]): ContentNavigationItem[] =>
