@@ -78,11 +78,6 @@ journey:
       color: purple-500
       icon: i-lucide-graduation-cap
       description: Computer Science at Cal State Monterey Bay. Built Tetris up from NAND gates, shipped to AWS and Heroku, and did machine learning before OpenAI made it everyone's personality.
-    - title: Dad's Law Firm
-      period: "2021"
-      color: pink-500
-      icon: i-lucide-scale
-      description: Graduated mid-pandemic and helped keep my dad's firm afloat. OCR'd every paper file, built the firm a new site, and ran documents like a law clerk.
     - title: Parsec Education
       period: 2021–2025
       color: primary
