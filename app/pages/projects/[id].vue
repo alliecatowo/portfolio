@@ -172,7 +172,7 @@ useSiteSeo(() => {
     image,
     imageAlt: ogImage ? `${p.title}, a project by Allison Coleman` : p.imageAlt,
     breadcrumbs: [{ name: 'Projects', path: '/projects/' }, { name: p.title }],
-    jsonLd: {
+    jsonLd: [{
       '@type': 'SoftwareSourceCode',
       'name': p.title,
       description,
@@ -184,7 +184,7 @@ useSiteSeo(() => {
       ...(created && { dateCreated: created }),
       'author': personRef(),
       'image': absoluteSiteUrl(image || DEFAULT_OG_IMAGE)
-    }
+    }, ...(p.video ? [videoSchema(p.video, description)] : [])]
   }
 })
 </script>

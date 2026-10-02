@@ -66,3 +66,24 @@ export const toIsoDate = (value?: string | Date | null) => {
 /** Absolute https://allisons.dev URL for a site-relative path; absolute URLs pass through. */
 export const absoluteSiteUrl = (path: string) =>
   /^https?:\/\//.test(path) ? path : new URL(path, SITE_URL).href
+
+export interface ProjectVideo {
+  /** YouTube video ID */
+  youtube: string
+  title: string
+  /** YYYY-MM-DD */
+  uploadDate: string | Date
+}
+
+/** schema.org VideoObject for a project's demo video. */
+export const videoSchema = (video: ProjectVideo, description: string) => ({
+  '@type': 'VideoObject',
+  'name': video.title,
+  description,
+  'thumbnailUrl': [youtubeThumbnail(video.youtube)],
+  'uploadDate': toIsoDate(video.uploadDate)?.slice(0, 10) ?? video.uploadDate,
+  'embedUrl': youtubeEmbedUrl(video.youtube),
+  'contentUrl': youtubeWatchUrl(video.youtube),
+  'url': youtubeWatchUrl(video.youtube),
+  'author': personRef()
+})

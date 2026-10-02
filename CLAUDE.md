@@ -133,6 +133,7 @@ group: string (optional)
 image: /path/to/image (optional)
 imageAlt: string (optional; alt text for image)
 ogImage: /images/og/<slug>.png (optional; 1200x630 share image)
+video: {youtube: <id>, title, uploadDate} (optional; a YouTube demo. Drives the VideoObject JSON-LD and the sitemap video entry. Embed it in the body with `::youtube-video{id title}`, a wrapper around @nuxt/scripts ScriptYouTubePlayer that loads nothing from YouTube until click)
 seo: { title, description } (optional; search title/description override, aim for ~50-60 / 140-160 chars)
 ```
 

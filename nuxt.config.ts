@@ -29,6 +29,7 @@ export default defineNuxtConfig({
     '@nuxtjs/sitemap',
     '@nuxt/content',
     '@nuxt/image',
+    '@nuxt/scripts',
     'nuxt-studio'
   ],
   ui: {
