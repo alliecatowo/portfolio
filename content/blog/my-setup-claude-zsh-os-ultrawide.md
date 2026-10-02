@@ -29,7 +29,7 @@ I use Claude Code as a thinking partner and a friction reducer. It helps me synt
 
 ## Shell and ergonomics
 
-zsh with a minimal prompt, fast history search, and a handful of aliases. I prefer clean, predictable shells over kitchen‑sink frameworks. Keyboard layers do the rest.
+zsh with a minimal prompt, fast history search, and a handful of aliases. I prefer clean, predictable shells over kitchen-sink frameworks. Keyboard layers do the rest.
 
 ## Operating systems
 
@@ -44,7 +44,7 @@ The theme across all of this: fewer obstacles, more flow.
 
 ## A few tiny things that matter
 
-- Caps as Ctrl/Escape with tap‑dance
+- Caps as Ctrl/Escape with tap-dance
 - Key repeat tuned for editing
 - Minimal notifications; ambient music
 - Night light and softer contrasts in the evening

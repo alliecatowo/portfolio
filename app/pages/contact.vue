@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-dots relative overflow-hidden">
+  <div class="min-h-screen bg-gradient-animated bg-dots relative overflow-hidden">
     <!-- Decorative background -->
     <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
       <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse"/>
@@ -110,6 +110,8 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
             tooldescription="Fill in the contact form to send Allison Coleman a message. The form is only filled in, not sent: the person using the page reviews it and presses Send Message."
             :state="form"
             :schema="schema"
+            :action="FORM_NOJS_ACTION"
+            method="post"
             class="space-y-8"
             @submit="onSubmit"
             @error="onError"
@@ -364,6 +366,9 @@ const resetForm = (options: { clearStatus?: boolean } = {}) => {
 
 // Handle form submission
 const FORM_ENDPOINT = 'https://formsubmit.co/ajax/me@allisons.dev'
+// Without JavaScript the form posts here (the same inbox, the non-AJAX endpoint). With JavaScript,
+// UForm cancels the native submit and onSubmit sends it through FORM_ENDPOINT instead.
+const FORM_NOJS_ACTION = 'https://formsubmit.co/me@allisons.dev'
 
 const onSubmit = async (_event: FormSubmitEvent<ContactForm>) => {
   formSubmitting.value = true

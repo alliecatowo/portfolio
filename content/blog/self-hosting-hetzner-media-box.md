@@ -1,5 +1,5 @@
 ---
-title: My Self‑Hosted Stack on a 16TB Hetzner Box
+title: My Self-Hosted Stack on a 16TB Hetzner Box
 author: Allison Coleman
 category: dev
 date: 2025-08-29
@@ -18,7 +18,7 @@ tags:
   - homelab
 ---
 
-I like owning my media and my infrastructure. A bare‑metal Hetzner machine with 16TB gives me the flexibility and headroom I need—at a price that still feels unreal.
+I like owning my media and my infrastructure. A bare-metal Hetzner machine with 16TB gives me the flexibility and headroom I need—at a price that still feels unreal.
 
 ## What’s running
 
@@ -46,6 +46,6 @@ Hetzner has "server auctions", where you can essentially lease a bare metal refu
 
 - Ownership AND convenience
 - Privacy first
-- family‑friendly
-- Documented setup so future‑me thanks past‑me
+- family-friendly
+- Documented setup so future-me thanks past-me
 - Cost effective

@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { existsSync, readdirSync, statSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { defineNuxtConfig } from 'nuxt/config'
 
 // Per-page OG images live at public/images/og/<slug>.png. Project pages pick theirs up
@@ -97,6 +97,7 @@ export default defineNuxtConfig({
     disallow: ['/_studio']
   },
   sitemap: {
+    exclude: ['/not-found-shell', '/not-found-shell/**'],
     // Blog and project URLs (with lastmod from each item's date) come from this route rather than a
     // `sitemap` column on the collections, so nothing build-time is stored in the content documents
     // that Nuxt Studio writes back to the Markdown files. See the route for the details.
@@ -225,6 +226,19 @@ export default defineNuxtConfig({
       }
     }),
     hooks: {
+      // Nuxt renders /404.html itself with SSR off, so the file Firebase serves for every unknown URL was
+      // an empty shell that only filled in after hydration (nothing for visitors without JavaScript or for
+      // crawlers, and a NUXT_E1005 hydration warning). The hidden /not-found-shell/ page renders the same
+      // error content with SSR; its HTML replaces 404.html (hash CSP already added by the hook below), and
+      // the shell's own folder is removed so it never ships as a page.
+      'prerender:done'() {
+        const shellDir = '.output/public/not-found-shell'
+        const shell = `${shellDir}/index.html`
+        if (!existsSync(shell)) return
+        const html = readFileSync(shell, 'utf8').replace(/<link[^>]*not-found-shell\/_payload\.json[^>]*>/g, '')
+        writeFileSync('.output/public/404.html', html)
+        rmSync(shellDir, { recursive: true, force: true })
+      },
       // The default layout's CSS chunk comes out empty (its styles live in the entry CSS, which is
       // inlined). A render-blocking <link> to a 0-byte file still costs a full round trip, so drop
       // it from the prerendered HTML when the emitted file really is empty.
@@ -250,7 +264,7 @@ export default defineNuxtConfig({
       failOnError: false,
       ignore: ['/_studio', '/_studio/**', '/__nuxt_studio/**', '/sw.js'],
       // Not linked from any page, so the crawler won't find it
-      routes: isStudioFunction ? [] : ['/llms.txt', '/webmcp/catalog.json']
+      routes: isStudioFunction ? [] : ['/llms.txt', '/webmcp/catalog.json', '/not-found-shell/']
     }
   },
   ...({ image: {
