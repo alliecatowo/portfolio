@@ -3,7 +3,6 @@ title: Minis
 date: 2025-12-01
 description: Lightweight neural artifacts generated via LoRA fine-tuning from GitHub profiles — distill a developer's coding style into a deployable mini-model.
 featured: false
-github: https://github.com/alliecatowo/minis-v2
 group: earlier-work
 slug: minis
 status: draft
@@ -15,7 +14,6 @@ tags:
   - github
   - neural-networks
   - personalization
-  - open-source
 technologies:
   - Python
   - PyTorch
