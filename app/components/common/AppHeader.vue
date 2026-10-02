@@ -23,13 +23,14 @@
     <template #right>
       <!-- Search and accessibility also live in the mobile menu body, so they are
            hidden below lg (where the menu toggle shows) to keep the bar within 375px. -->
-      <UContentSearchButton
+      <LazyUContentSearchButton
+        hydrate-on-idle
         :collapsed="false"
         variant="ghost"
         color="primary"
         size="md"
         icon="i-lucide-search"
-        class="hidden lg:inline-flex"
+        class="hidden lg:inline-flex min-w-[10.3rem]"
       />
 
       <UTooltip text="Accessibility Settings" :kbds="['meta', 'a']">

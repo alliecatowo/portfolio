@@ -114,6 +114,7 @@
               :src="post.featured_image"
               :alt="post.title"
               class="w-full rounded-lg"
+              :style="featuredImageSize ? { aspectRatio: `auto ${featuredImageSize[0]} / ${featuredImageSize[1]}` } : undefined"
               loading="eager"
               fetchpriority="high"
               sizes="lg:100vw xl:850px"
@@ -225,6 +226,7 @@
 
 <script setup lang="ts">
 import { useContent } from '../../composables/useContent';
+import imageSizes from '#build/content-image-sizes.mjs';
 
 const AUTHOR_NAME = 'Allison Coleman';
 const AUTHOR_ROLE = 'Software engineer: agent systems, developer tools, languages & runtimes';
@@ -272,6 +274,12 @@ const breadcrumbs = computed(() => [
   { label: 'Blog', to: '/blog/' },
   { label: post.value?.title || 'Loading...' }
 ]);
+
+// Reserve the featured image's box (its real ratio, from the build-time size map) so the article
+// body doesn't jump down when the image arrives.
+const featuredImageSize = computed(() =>
+  (imageSizes as Record<string, number[] | undefined>)[post.value?.featured_image ?? '']
+);
 
 // Table of contents from the post's own headings (Content v3 builds it at parse time).
 const tocLinks = computed(() => post.value?.body?.toc?.links ?? []);

@@ -11,8 +11,9 @@ import { join } from 'node:path'
 import { defineNuxtModule, addTemplate, createResolver } from 'nuxt/kit'
 import { imageDimensions } from '../scripts/image-dimensions'
 
-// Markdown image destinations and raw src="..." attributes that point at the site's own files
-const LOCAL_IMAGE = /(?:!\[[^\]]*\]\(\s*|\bsrc=["'])(\/[^\s)"']+)/g
+// Markdown image destinations, raw src="..." attributes and the `image`/`featured_image`
+// frontmatter fields (page heroes reserve their box from these) that point at the site's own files
+const LOCAL_IMAGE = /(?:!\[[^\]]*\]\(\s*|\bsrc=["']|^(?:featured_image|image):\s*["']?)(\/[^\s)"']+)/gm
 
 export default defineNuxtModule({
   meta: { name: 'content-image-sizes' },
