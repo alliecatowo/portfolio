@@ -156,7 +156,8 @@ const { fetchProjects, fetchBlogPosts, fetchPage } = useContent()
 // Slot width of the hero image: the viewport minus the section padding (24px a side) and the card
 // (1px border + 16px padding below 640px, 24px from 640px), capped at the 896px section width.
 const HERO_SIZES = '(max-width: 639px) calc(100vw - 82px), (max-width: 943px) calc(100vw - 98px), 846px'
-const HERO_WIDTHS = [480, 640, 846, 1200]
+// 580w matches a ~330px mobile slot at Lighthouse's 1.75 DPR; 720w covers 360-412px phones at 2x.
+const HERO_WIDTHS = [480, 580, 720, 846, 1200]
 
 const { data: homeContent } = await useAsyncData('home-page-content', () => fetchPage('home'))
 
