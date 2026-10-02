@@ -57,15 +57,9 @@
 
       <p class="sr-only" aria-live="polite">{{ resultsLabel }}</p>
 
-      <div v-if="pending" class="project-grid grid gap-4">
-        <div v-for="n in 8" :key="n" class="rounded-xl overflow-hidden border border-default/60 motion-safe:animate-pulse">
-          <div class="aspect-video bg-accented"/>
-          <div class="p-4 space-y-2">
-            <div class="h-4 bg-accented rounded w-2/3"/>
-            <div class="h-3 bg-accented rounded"/>
-          </div>
-        </div>
-      </div>
+      <UPageGrid v-if="pending" class="gap-4 xl:grid-cols-4">
+        <USkeleton v-for="n in 8" :key="n" class="aspect-[4/3] rounded-lg" />
+      </UPageGrid>
 
       <div v-else-if="error" class="text-center py-12">
         <UIcon name="i-lucide-alert-circle" class="h-16 w-16 mx-auto text-red-500 mb-4" />
@@ -82,32 +76,38 @@
       <section v-else aria-labelledby="project-list-title">
         <h2 id="project-list-title" class="sr-only">{{ activeLabel }}</h2>
 
-        <div v-if="visibleProjects.length" class="@container">
-          <div class="project-grid grid gap-4" :style="{ '--fill-2': plan.fill[2], '--fill-3': plan.fill[3], '--fill-4': plan.fill[4] }">
-            <ProjectTile
-              v-for="(project, index) in visibleProjects"
-              :key="project.slug || project.path || project.title"
-              :project="project"
-              :feature="isFeature(project)"
-              :sizes="plan.sizes[index]"
-              :group-label="activeGroup === 'all' ? projectGroupOf(project.group).label : undefined"
-              :eager="index < 4"
-              :priority="index === 0"
-            />
-            <!-- Fills whatever is left of the last row (or a full row), so the
-                 mosaic always ends flush instead of on a lonely card. -->
-            <section class="grid-filler flex flex-col justify-between gap-4 rounded-xl border border-dashed border-primary/40 bg-elevated/30 p-5" aria-labelledby="projects-cta-title">
-              <div>
-                <h2 id="projects-cta-title" class="text-lg font-semibold text-highlighted">Got a project in mind?</h2>
-                <p class="mt-1 text-sm text-muted text-pretty">I'm always up for a good collaboration, a hackathon, or a long thread about agent tooling.</p>
-              </div>
-              <div class="flex flex-wrap gap-2">
-                <UButton to="/contact/" color="primary" size="sm" leading-icon="i-lucide-mail">Get in touch</UButton>
-                <UButton to="/about/" color="primary" variant="outline" size="sm" leading-icon="i-lucide-user">About me</UButton>
-              </div>
-            </section>
-          </div>
-        </div>
+        <!-- Bento grid: tiles span columns/rows per the plan; dense flow back-fills any gaps. -->
+        <UPageGrid
+          v-if="visibleProjects.length"
+          class="grid-flow-row-dense gap-4 xl:grid-cols-4"
+          :style="{ '--fill-2': plan.fill[2], '--fill-3': plan.fill[3], '--fill-4': plan.fill[4] }"
+        >
+          <ProjectTile
+            v-for="(project, index) in visibleProjects"
+            :key="project.slug || project.path || project.title"
+            :project="project"
+            :feature="isFeature(project)"
+            :sizes="plan.sizes[index]"
+            :group-label="activeGroup === 'all' ? projectGroupOf(project.group).label : undefined"
+            :eager="index < 4"
+            :priority="index === 0"
+          />
+          <!-- Fills whatever is left of the last row (or a full row), so the
+               grid always ends flush instead of on a lonely card. -->
+          <section
+            class="flex flex-col justify-between gap-4 rounded-lg border border-dashed border-primary/40 bg-elevated/30 p-5 sm:max-lg:col-span-(--fill-2) lg:max-xl:col-span-(--fill-3) xl:col-span-(--fill-4)"
+            aria-labelledby="projects-cta-title"
+          >
+            <div>
+              <h2 id="projects-cta-title" class="text-lg font-semibold text-highlighted">Got a project in mind?</h2>
+              <p class="mt-1 text-sm text-muted text-pretty">I'm always up for a good collaboration, a hackathon, or a long thread about agent tooling.</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <UButton to="/contact/" color="primary" size="sm" leading-icon="i-lucide-mail">Get in touch</UButton>
+              <UButton to="/about/" color="primary" variant="outline" size="sm" leading-icon="i-lucide-user">About me</UButton>
+            </div>
+          </section>
+        </UPageGrid>
 
         <div v-else class="rounded-xl border border-dashed border-default py-12 text-center">
           <p class="text-default mb-3">Nothing matches “{{ search }}”{{ activeGroup !== 'all' ? ` in ${activeLabel}` : '' }}.</p>
@@ -251,26 +251,6 @@ useSiteSeo(() => ({
 </script>
 
 <style scoped>
-/*
- * One dense mosaic for every filter. The column count is explicit (not
- * auto-fill) so the layout can be planned ahead: one column per ~16rem of
- * container width, at the same 33rem / 50rem / 67rem breakpoints that
- * ProjectTile and utils/packMosaic use. The CTA tile spans the run of cells
- * the plan says is left on the last row (or a full row).
- */
-.project-grid {
-  --fill: 1;
-  grid-template-columns: repeat(var(--cols, 1), minmax(0, 1fr));
-  grid-auto-flow: row dense;
-}
-@container (width >= 33rem) { .project-grid { --cols: 2; --fill: var(--fill-2); } }
-@container (width >= 50rem) { .project-grid { --cols: 3; --fill: var(--fill-3); } }
-@container (width >= 67rem) { .project-grid { --cols: 4; --fill: var(--fill-4); } }
-
-.grid-filler {
-  grid-column: span var(--fill);
-}
-
 @media (prefers-reduced-motion: reduce) {
   .bg-gradient-animated,
   .text-gradient-animated {
