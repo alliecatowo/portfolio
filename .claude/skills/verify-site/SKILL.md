@@ -1,88 +1,67 @@
 ---
 name: verify-site
-description: Verify any allisons.dev portfolio change before merge and after deploy. Use whenever a PR in this repo touches pages, components, content, config, or the build, or when asked to check the site, a preview channel, or production. Covers pnpm checks, static-output checks, local Firebase emulation, and mandatory Claude in Chrome browser checks.
+description: Verify any allisons.dev portfolio change before merge and after deploy. Use whenever a PR in this repo touches pages, components, content, config, or the build, or when asked to check the site, a preview channel, or production. Covers pnpm checks, static-output checks, serving a build, navigation measurements, and mandatory Claude in Chrome browser checks.
 ---
 
 # verify-site
 
-Every PR is verified locally, in a real browser, and again on production after merge. Run from the PR's worktree. If verification is delegated, use a subagent so screenshots and logs stay out of the main context.
-
-## 0. Worktree and toolchain
-
-- One worktree per branch under `.claude/worktrees/<branch-with-dashes>` (gitignored):
-  `git fetch origin && git worktree add .claude/worktrees/<branch-with-dashes> -b <branch> origin/main`
-- Always pnpm, never npm. pnpm is pinned to 10 (`mise.toml`, `packageManager`). If `pnpm --version` reports 11, stop and fix the toolchain (`mise install`).
+Verify locally, in a real browser, and again on production after merge. Run from the PR's worktree (`pnpm worktree <branch>`). If delegated, use a subagent so screenshots and logs stay out of the main context. Workflow rules (preview first, merge policy) are in CLAUDE.md.
 
 ## 1. pnpm checks (all must pass)
 
 ```bash
 pnpm install --frozen-lockfile
-pnpm typecheck
-pnpm lint
-pnpm validate:content  # frontmatter vs content.config.ts schemas, image paths, URLs, slugs
-pnpm generate        # writes .output/public
+pnpm typecheck && pnpm lint
+pnpm validate:content && pnpm content:format:check
+pnpm generate            # writes .output/public
+pnpm check:images        # every pre-rendered /_ipx/ URL exists in the build
 ```
 
-`validate:content` failing means real content is broken (Nuxt Content does not enforce the schemas at build time). Fix the file it names; don't loosen the validator.
+If content changed, also `pnpm content:roundtrip`; if WebMCP changed, `pnpm test:webmcp`. A failing `validate:content` means real content is broken: fix the file it names, don't loosen the validator.
 
-## 2. Static output checks (`.output/public`)
+## 2. Static output (`.output/public`)
 
-```bash
-cd .output/public
-# crawl files (once they exist; after the SEO PR they are required)
-ls robots.txt sitemap.xml 404.html 2>&1
-# no remote placeholder images anywhere
-grep -rln "picsum.photos\|placehold.co" . ../../app ../../content && echo "FAIL: placeholder hosts"
-# head metadata per page: expect exactly 1 canonical, og:image absolute, twitter tags, parseable JSON-LD
-for f in $(find . -name index.html); do
-  printf '%s canonical=%s og=%s twitter=%s ld=%s\n' "$f" \
-    "$(grep -o 'rel="canonical"' "$f" | wc -l)" \
-    "$(grep -o 'property="og:image"' "$f" | wc -l)" \
-    "$(grep -o 'name="twitter:' "$f" | wc -l)" \
-    "$(grep -o 'application/ld+json' "$f" | wc -l)"
-done
-```
+- `ls robots.txt sitemap.xml llms.txt 404.html`.
+- No placeholder hosts: `grep -rln "picsum.photos\|placehold.co" .output/public app content` must be empty.
+- Per page: exactly one canonical, an absolute `og:image`, twitter tags, and parseable JSON-LD.
+- Internal links: every `href="/..."` in the HTML resolves to a file in `.output/public`. External links on changed pages: `curl -sIL -o /dev/null -w '%{http_code} %{url_effective}\n' <url>`; anything but 2xx/3xx is a finding (note bot-blocking 403/429 rather than failing on it).
 
-- Internal links: extract every `href="/..."` from the HTML files and confirm each resolves to a file in `.output/public` (`<path>/index.html`, `<path>.html`, or a static asset). Report any that do not.
-- External links on changed pages: `curl -sIL -o /dev/null -w '%{http_code} %{url_effective}\n' <url>` (fall back to GET when HEAD is rejected). Anything other than 2xx/3xx is a finding; note sites that block bots (403/429) rather than failing on them.
-- Validate any JSON-LD block with `python3 -m json.tool` or `node -e 'JSON.parse(...)'`.
+(CI also runs Lighthouse and the SEO gate when that workflow is on `main`; don't reimplement them here.)
 
 ## 3. Serve like production
 
 ```bash
-pnpm emulate          # generate + Firebase hosting emulator at http://127.0.0.1:5000
-# fallback if the emulator is unavailable (no Firebase rewrites/headers; less faithful)
-pnpm dlx serve .output/public -l 5000
+pnpm serve:static &  echo $!    # Firebase behaviour on :5000 (trailing-slash 301s, redirects, headers, 404); kill by that PID
+pnpm emulate                    # the real Firebase emulator, when you need rewrites too
+curl -sI http://127.0.0.1:5000/<route>/        # each changed route; /nope/ must be 404
 ```
 
-Quick HTTP checks: `curl -sI http://127.0.0.1:5000/<route>/` for each changed route; `curl -sI http://127.0.0.1:5000/nope/` should be 404 once real 404 handling exists.
+## 4. Navigation and perf measurements (UI or routing changes)
 
-## 4. Browser checks with Claude in Chrome (mandatory)
+```bash
+pnpm measure:nav                            # starts its own server on .output/public
+pnpm measure:nav --url <preview-or-prod>    # same against a deployed URL
+```
 
-Load the `claude-in-chrome` skill first, and load the Chrome tools in one ToolSearch call (navigate, computer, resize_window, read_page, read_console_messages, read_network_requests, gif_creator, tabs_create_mcp, tabs_context_mcp).
+Read the `gap ms` column (positive means the old page sat at the top before the new one painted), `CLS`, and `footer pos` (above 1 means still reflowing). Back navigation should end at its start scroll (`endY`), not 0. Paste the table in the PR. For perf claims add one Lighthouse run, not three.
 
-For every changed route, against http://127.0.0.1:5000 and then the PR's Firebase preview channel URL (posted on the PR by CI):
+## 5. Browser checks with Claude in Chrome (mandatory)
 
-1. **Screenshots at 375, 768 and 1440 widths** (`resize_window`, then a screenshot). Attach or describe them in the PR description.
-2. **Console:** `read_console_messages` must show no errors and no hydration mismatch warnings.
-3. **Network:** `read_network_requests` must show no requests to `picsum.photos` or `placehold.co`, no 404s, and the LCP hero image loading eagerly.
-4. **Click-through:** header nav, the ⌘K search (social links present, drafts absent), each project card on changed pages, and the external links on changed pages.
-5. **GIF:** record a `gif_creator` capture for any visible flow change (for example the homepage 30-second read).
+Load the `claude-in-chrome` skill, then the tools in one ToolSearch call; open your own tab and close it when done. For every changed route, on the local server and then the PR's preview URL:
 
-## 5. After merge (production)
+1. Screenshots at 375, 768 and 1440 (`resize_window`). If resizing fails, use a headless playwright-core capture with the system Chrome, or iframes at 375 and 768.
+2. `read_console_messages`: no errors, no hydration mismatch warnings.
+3. `read_network_requests`: no placeholder hosts, no 404s, the LCP hero loads eagerly.
+4. Click through: header nav, the Cmd+K search (social links present, drafts absent), changed cards and external links.
+5. `gif_creator` for any visible flow change.
 
-1. `gh run list --branch main --limit 5` and `gh run watch <id>` for "Deploy to Production"; it must succeed.
-2. `curl -sI https://allisons.dev/<changed-route>/` for each changed route: 200 and a fresh `last-modified`.
-3. Repeat the browser checks (section 4, steps 1 to 4) on https://allisons.dev for the changed routes.
-4. Remove the worktree: `git worktree remove .claude/worktrees/<branch-with-dashes>`, then `git pull` on main.
+## 6. After merge (production)
 
-## Commit and PR conventions
-
-- Commits: conventional-commit subject + blank line + a short description body. No `Co-Authored-By` trailer.
-- PRs: conventional title and a real description (what, why, how verified, screenshots). No "Generated with Claude Code" footer.
-- Never commit research artifacts: `.claude/project-dossiers/`, `.claude/build-logs/`, `.claude/site-launch-plan.md`, `.claude/settings.local.json`. Only `.claude/skills/` is committed.
-- Do not merge without green CI. `gh pr checks --watch`, then `gh pr merge --squash --delete-branch`.
+1. `gh run list --branch main --limit 5`, then `gh run watch <id>` on "Deploy to Production".
+2. `curl -sI "https://allisons.dev/<route>/?v=<sha>"` for each changed route: 200 and a fresh `last-modified` (HTML is cached for an hour, hence the query).
+3. Repeat the browser checks (section 5, steps 1 to 4) on https://allisons.dev, and `pnpm measure:nav --url https://allisons.dev` for UI changes.
+4. `pnpm worktree --remove <branch>`.
 
 ## Reporting
 
-Report per check: pass/fail, the evidence (command output line, screenshot, console or network entry), and anything fixed along the way.
+Per check: pass or fail, the evidence (output line, screenshot, console or network entry), and anything fixed along the way.
