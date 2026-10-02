@@ -22,7 +22,7 @@ pnpm lighthouse          # Lighthouse CI (lighthouserc.json; also in CI)
 
 # Content formatting: serializes content/ exactly as Nuxt Studio does, so Studio edits never add noise
 pnpm content:format        # rewrite content/**/*.{md,yml}
-pnpm content:format:check  # exit 1 on any diff or non-round-tripping file (CI + lint-staged); Prettier ignores content/
+pnpm content:format:check  # exit 1 on any diff or non-round-tripping file (CI + the lefthook pre-commit hook); Prettier ignores content/
 pnpm content:roundtrip     # after `pnpm generate`: Studio's save of every built DB row must equal the file
 
 # Database (Nuxt Content SQLite)

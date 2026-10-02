@@ -278,7 +278,7 @@ utils/             # Pure utility functions
 
 ### Pre-commit Hooks
 
-The project uses Husky and lint-staged to ensure code quality:
+The project uses Lefthook (`lefthook.yml`) to ensure code quality:
 
 - **TypeScript checking** on relevant files
 - **ESLint** with auto-fix for JS/TS/Vue files
