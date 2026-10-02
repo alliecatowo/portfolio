@@ -1,30 +1,31 @@
 <template>
   <UHeader v-model:open="menuOpen">
-    <!-- Custom title with badges -->
     <template #title>
-      <div class="flex items-center gap-3">
-        <span class="text-2xl sm:text-3xl font-bold text-primary select-none">
-          ALLISONS<span class="text-pink-500">.dev</span>
-        </span>
-      </div>
+      <span class="text-2xl sm:text-3xl font-bold text-primary select-none">
+        ALLISONS<span class="text-pink-500">.dev</span>
+      </span>
     </template>
 
-    <!-- Main navigation -->
-    <UNavigationMenu
-      id="site-navigation"
-      aria-label="Main"
-      :items="navigationItems"
-      orientation="horizontal"
-      variant="link"
-      color="primary"
-    />
+    <!-- Plain links: the bar only needs hover/active styling, not a Reka menu per item -->
+    <nav id="site-navigation" aria-label="Main" class="flex items-center gap-1.5">
+      <NuxtLink
+        v-for="item in navigationItems"
+        :key="item.to"
+        :to="item.to"
+        :active-class="item.exact ? '' : 'is-active'"
+        :exact-active-class="item.exact ? 'is-active' : ''"
+        :class="linkClass"
+      >
+        <UIcon :name="item.icon" class="size-5 shrink-0" />
+        {{ item.label }}
+      </NuxtLink>
+    </nav>
 
-    <!-- Right side actions -->
     <template #right>
-      <!-- Search and accessibility also live in the mobile menu body, so they are
-           hidden below lg (where the menu toggle shows) to keep the bar within 375px. -->
+      <!-- Search and accessibility also live in the mobile menu body, so they only
+           render from lg up (where the menu toggle is hidden). -->
       <LazyUContentSearchButton
-        hydrate-on-idle
+        hydrate-on-media-query="(min-width: 1024px)"
         :collapsed="false"
         variant="ghost"
         color="primary"
@@ -33,89 +34,69 @@
         class="hidden lg:inline-flex min-w-[10.3rem]"
       />
 
-      <UTooltip text="Accessibility Settings" :kbds="['meta', 'a']">
-        <UButton
-          icon="i-lucide-accessibility"
-          variant="ghost"
-          color="primary"
-          size="md"
-          square
-          aria-label="Open accessibility settings"
-          class="hidden lg:inline-flex"
-          @click="showAccessibilitySettings = true"
-        />
-      </UTooltip>
+      <button
+        type="button"
+        class="hidden lg:inline-flex items-center justify-center rounded-md p-2 text-primary hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-primary transition-colors"
+        aria-label="Open accessibility settings"
+        @click="showAccessibilitySettings = true"
+      >
+        <UIcon name="i-lucide-accessibility" class="size-5" />
+      </button>
 
-      <UTooltip text="Toggle theme" :kbds="['meta','t']">
-        <UColorModeButton
-          size="md"
-          variant="ghost"
-          color="primary"
-          square
-        />
-      </UTooltip>
+      <UColorModeButton
+        size="md"
+        variant="ghost"
+        color="primary"
+        square
+      />
     </template>
 
-    <!-- Mobile menu body -->
+    <!-- Mobile menu body: only rendered while the menu is open -->
     <template #body>
-      <UNavigationMenu
-        :items="navigationItems"
-        orientation="vertical"
-        variant="pill"
-        color="primary"
-        class="-mx-2.5"
-      />
+      <nav aria-label="Mobile" class="-mx-2.5 flex flex-col">
+        <NuxtLink
+          v-for="item in navigationItems"
+          :key="item.to"
+          :to="item.to"
+          :active-class="item.exact ? '' : 'is-active'"
+          :exact-active-class="item.exact ? 'is-active' : ''"
+          :class="mobileLinkClass"
+        >
+          <UIcon :name="item.icon" class="size-5 shrink-0" />
+          {{ item.label }}
+        </NuxtLink>
+      </nav>
 
-      <!-- Mobile actions -->
-      <div class="pt-6 mt-6 border-t border-default space-y-4">
-        <div class="grid grid-cols-2 gap-3">
-          <UButton
-            icon="i-lucide-accessibility"
-            variant="outline"
-            color="primary"
-            size="md"
-            @click="showAccessibilitySettings = true"
-          >
-            Accessibility
-          </UButton>
+      <div class="pt-6 mt-6 border-t border-default grid grid-cols-2 gap-3">
+        <UButton
+          icon="i-lucide-accessibility"
+          variant="outline"
+          color="primary"
+          size="md"
+          @click="showAccessibilitySettings = true"
+        >
+          Accessibility
+        </UButton>
 
-          <UContentSearchButton
-            :collapsed="false"
-            variant="outline"
-            color="primary"
-            size="md"
-            icon="i-lucide-search"
-          />
-        </div>
-
-        <UCard variant="outline" class="p-4">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <UIcon name="i-lucide-palette" class="w-5 h-5 text-primary" />
-              <span class="text-sm font-medium">Theme</span>
-            </div>
-            <UColorModeButton
-              size="md"
-              variant="ghost"
-              color="primary"
-            />
-          </div>
-        </UCard>
+        <LazyUContentSearchButton
+          :collapsed="false"
+          variant="outline"
+          color="primary"
+          size="md"
+          icon="i-lucide-search"
+        />
       </div>
     </template>
   </UHeader>
 
-  <!-- Accessibility Settings Modal -->
   <ClientOnly>
     <LazyAccessibilitySettings v-if="showAccessibilitySettings" @close="showAccessibilitySettings = false" />
   </ClientOnly>
 </template>
 
 <script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui'
-
+// The ⌘A shortcut that opens the accessibility dialog lives in useGlobalShortcuts.
 const showAccessibilitySettings = useState<boolean>('showAccessibilitySettings', () => false)
-const route = useRoute()
 
 // Closing the mobile menu (Esc, backdrop, link) drops focus on <body>; hand it back to the toggle
 // so keyboard users keep their place.
@@ -130,17 +111,16 @@ watch(menuOpen, (open) => {
   }, 150)
 })
 
-const navigationItems = computed((): NavigationMenuItem[] => [
-  { label: 'Home', to: '/', icon: 'i-lucide-home', active: route.path === '/' },
-  { label: 'About', to: '/about/', icon: 'i-lucide-user', active: route.path.startsWith('/about') },
-  { label: 'Projects', to: '/projects/', icon: 'i-lucide-folder', active: route.path.startsWith('/projects') },
-  { label: 'Blog', to: '/blog/', icon: 'i-lucide-pen-tool', active: route.path.startsWith('/blog') },
-  { label: 'Contact', to: '/contact/', icon: 'i-lucide-mail', active: route.path.startsWith('/contact') }
-])
+const navigationItems = [
+  { label: 'Home', to: '/', icon: 'i-lucide-home', exact: true },
+  { label: 'About', to: '/about/', icon: 'i-lucide-user', exact: false },
+  { label: 'Projects', to: '/projects/', icon: 'i-lucide-folder', exact: false },
+  { label: 'Blog', to: '/blog/', icon: 'i-lucide-pen-tool', exact: false },
+  { label: 'Contact', to: '/contact/', icon: 'i-lucide-mail', exact: false }
+]
 
-defineShortcuts({
-  meta_a: () => { showAccessibilitySettings.value = true }
-  // No `escape` shortcut: defineShortcuts calls preventDefault(), and Reka ignores a prevented
-  // Escape, so it stopped the mobile menu and every modal closing on Esc. UModal handles Esc itself.
-})
+// `is-active` is set by NuxtLink (aria-current="page" on exact matches). The muted colour is
+// conditional because Nuxt UI's `text-muted` utility would otherwise win over the active colour.
+const linkClass = 'flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-primary [&:not(.is-active)]:text-muted [&:not(.is-active)]:hover:text-highlighted [&.is-active]:text-primary'
+const mobileLinkClass = 'flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-primary [&:not(.is-active)]:text-muted [&:not(.is-active)]:hover:bg-elevated/50 [&:not(.is-active)]:hover:text-highlighted [&.is-active]:bg-elevated [&.is-active]:text-primary'
 </script>
