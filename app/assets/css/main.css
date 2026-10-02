@@ -272,18 +272,155 @@ body {
 }
 
 /*
- * Gradient heading text. This used to drift its background-position (and the page backdrop did the
- * same), but animating background-position repaints on the main thread every frame, one animation per
- * heading. It is a static gradient now: same palette, no per-frame paint.
+ * Gradient heading text with a moving pink / purple / blue sweep, all on the compositor.
+ *
+ * Animating background-position repaints on the main thread every frame, and `background-clip: text`
+ * can't be combined with a transformed child. So the text is the *mask* instead: the heading is clipped
+ * to its own glyphs with -webkit-mask-clip: text, and a ::before layer three times as wide, holding the
+ * gradient, slides underneath with transform: translateX (compositor-only, no per-frame paint, no layout).
+ * The static gradient below is the fallback for browsers without mask-clip: text and for forced-colors.
  */
 .text-gradient-animated {
   background: linear-gradient(-45deg, #ec4899, #a855f7, #3b82f6);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: contrast(1.2) brightness(1.1);
   position: relative;
   z-index: 50;
+}
+
+@supports (-webkit-mask-clip: text) {
+  .text-gradient-animated {
+    background: none;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -webkit-mask-image: linear-gradient(#000, #000);
+    -webkit-mask-clip: text;
+    /* The sweep layer is wider than the heading: clip it sideways so it adds no scroll width. `clip`
+       (unlike `hidden`) makes no scroll container, and leaves the vertical axis alone for descenders. */
+    overflow-x: clip;
+  }
+
+  .text-gradient-animated::before {
+    content: '';
+    position: absolute;
+    /* A little taller than the line box, so descenders in tight line heights still get colour */
+    top: -0.2em;
+    bottom: -0.2em;
+    left: 0;
+    width: 300%;
+    background: linear-gradient(
+      90deg,
+      #ec4899,
+      #a855f7,
+      #3b82f6,
+      #a855f7,
+      #ec4899,
+      #a855f7,
+      #3b82f6,
+      #a855f7,
+      #ec4899
+    );
+    /* Resting position: also what shows with reduced motion */
+    transform: translate3d(-33%, 0, 0);
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .text-gradient-animated::before {
+      animation: gradient-sweep 10s ease-in-out infinite alternate;
+      /* Only promoted to its own layer while it moves */
+      will-change: transform;
+    }
+  }
+}
+
+@media (forced-colors: active) {
+  .text-gradient-animated {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: currentcolor;
+    -webkit-mask-image: none;
+  }
+  .text-gradient-animated::before {
+    display: none;
+  }
+}
+
+@keyframes gradient-sweep {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-66.6667%, 0, 0);
+  }
+}
+
+/*
+ * Page backdrop: a soft pink / purple / blue wash that drifts behind the page. Same trick, a layer
+ * twice as wide as the page, slid with transform. The dots sit on a second layer above it, so they stay
+ * crisp. Page content (z-index auto) paints above both. Motion is off on phones and with reduced
+ * motion; the wash still shows, just still.
+ */
+.bg-gradient-animated {
+  isolation: isolate;
+}
+
+.bg-gradient-animated.bg-dots {
+  background-image: none;
+}
+
+.bg-gradient-animated::before,
+.bg-gradient-animated::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.bg-gradient-animated::before {
+  width: 200%;
+  background: linear-gradient(
+    115deg,
+    #ec4899,
+    #a855f7,
+    #3b82f6,
+    #06b6d4,
+    #3b82f6,
+    #a855f7,
+    #ec4899
+  );
+  opacity: 0.1;
+  transform: translate3d(-25%, 0, 0);
+}
+
+.dark .bg-gradient-animated::before {
+  opacity: 0.14;
+}
+
+.bg-gradient-animated::after {
+  right: 0;
+  background-image: radial-gradient(circle, rgba(236, 72, 153, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .bg-gradient-animated::before {
+    animation: backdrop-drift 28s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+}
+
+@keyframes backdrop-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 /* Creative utility classes for visual appeal */
@@ -389,6 +526,11 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+.reduced-motion .text-gradient-animated::before,
+.reduced-motion .bg-gradient-animated::before {
+  animation: none;
+  will-change: auto;
 }
 @media (max-width: 767.98px) {
   [class*='blur-'].animate-pulse,

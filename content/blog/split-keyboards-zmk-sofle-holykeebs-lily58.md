@@ -34,7 +34,7 @@ The pink Sofle above runs my ZMK fork and has been my daily driver for over a ye
 
 ## About the Sofle ZMK fork
 
-I maintain a fork of the Sofle ZMK firmware (especially for hdock/dongle pairings). It's translated, documented, and maintained so others can get up and running without falling into a weekend of yak‑shaving. Community work should feel welcoming.
+I maintain a fork of the Sofle ZMK firmware (especially for hdock/dongle pairings). It's translated, documented, and maintained so others can get up and running without falling into a weekend of yak-shaving. Community work should feel welcoming.
 
 ![OLED screen close-up showing layer status](/images/keyboards/oled-screen-closeup.jpg "Close-up of OLED display showing current layer and WPM")
 
@@ -44,7 +44,7 @@ The OLED screens aren't just pretty—they're functional. Layer indicators, WPM 
 
 The Lily58 above features an integrated trackpad module - perfect for those moments when you need precise cursor control but don't want to reach for a mouse. It sits beautifully on my space-themed desk mat alongside other keyboards in my collection.
 
-I believe a lot more people would love splits if the first‑run experience were better. That's what my fork tries to provide.
+I believe a lot more people would love splits if the first-run experience were better. That's what my fork tries to provide.
 
 ## Tools that help
 
@@ -59,7 +59,7 @@ Anyone who types a lot and feels the tension at the end of a day. With good defa
 
 ## My layers, in practice
 
-- Base: home‑row mods (caps as Ctrl/Esc via tap‑dance), symbols on a near layer
+- Base: home-row mods (caps as Ctrl/Esc via tap-dance), symbols on a near layer
 - Nav/Edit: HJKL arrows, word/line jumps, select/expand, common IDE chords
 - Numbers: numpad cluster on the right with calc shortcuts
 - Media/Mouse: volume, brightness, and a small cursor layer for laptop sessions

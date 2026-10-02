@@ -23,8 +23,8 @@ I migrated away from a headless CMS because I wanted fewer moving parts, more re
 
 ## What I get
 
-- Git‑based content: My posts, projects, and updates live in the repo. Branch, PR, review, merge, publish. No fragile dashboards, no vendor downtime.
-- Local-first speed: No network calls to fetch my own words. Content ships pre‑processed and SEO‑friendly.
+- Git-based content: My posts, projects, and updates live in the repo. Branch, PR, review, merge, publish. No fragile dashboards, no vendor downtime.
+- Local-first speed: No network calls to fetch my own words. Content ships pre-processed and SEO-friendly.
 - One stack to rule it: Same tooling, same deployments, fewer “where did that setting live?” moments.
 
 ## Why it fits a portfolio site
@@ -72,7 +72,7 @@ Because content lives alongside routing, URL structures are transparent. Slugs e
 
 ## When I still reach for external services
 
-I’ll happily use a hosted image CDN if I’m shipping lots of large art assets, or a headless CMS if a team with non‑technical contributors needs to move quickly. The point isn’t to avoid tools—it’s to pick the simplest thing that preserves momentum and reduces failure modes. For a personal site, Nuxt Content is the sweet spot.
+I’ll happily use a hosted image CDN if I’m shipping lots of large art assets, or a headless CMS if a team with non-technical contributors needs to move quickly. The point isn’t to avoid tools—it’s to pick the simplest thing that preserves momentum and reduces failure modes. For a personal site, Nuxt Content is the sweet spot.
 
 ## A few gotchas (and how I handle them)
 
@@ -86,10 +86,10 @@ Q: What about drafts?
 A: I use a `published: false` flag and preview them locally. When ready, flip the switch.
 
 Q: What about backups?
-A: Git. Everything is versioned. If I need off‑site backups, my Git provider already does that.
+A: Git. Everything is versioned. If I need off-site backups, my Git provider already does that.
 
 Q: What about search?
-A: The content query layer is enough for scope and tags. If I ever need full‑text search across thousands of posts, I can add an index later without changing how I write.
+A: The content query layer is enough for scope and tags. If I ever need full-text search across thousands of posts, I can add an index later without changing how I write.
 
 In short: Nuxt Content keeps the creative loop short and the surface area small. That’s perfect for a portfolio where the point is the work, not the plumbing.
 
@@ -102,7 +102,7 @@ Day 1 — Inventory and intent
 
 Day 2 — Skeleton and routes
 
-- Laid out `/dev`, `/tattoo`, and shared blog routes. Nuxt’s file‑based routing made the site feel tangible quickly.
+- Laid out `/dev`, `/tattoo`, and shared blog routes. Nuxt’s file-based routing made the site feel tangible quickly.
 - Dropped in a few list views that query content by category. I care about stories; the UI should reflect that.
 
 Day 3 — Content shape and taxonomy
@@ -117,7 +117,7 @@ Day 4 — Details that compound
 
 Day 5 — Performance and polish
 
-- Trimmed images, lazy‑loaded lists, and let ISR handle the rest. The trick is to be boring and predictable; the site gets fast as a side effect.
+- Trimmed images, lazy-loaded lists, and let ISR handle the rest. The trick is to be boring and predictable; the site gets fast as a side effect.
 
 ## Governance without paperwork
 
@@ -134,7 +134,7 @@ It’s enough structure to keep quality high without turning a portfolio into a 
 I use three layers of “don’t think about it” performance:
 
 - Static generation/ISR for content routes so posts stay quick even under load.
-- Browser‑level caching for images and assets with sane headers.
+- Browser-level caching for images and assets with sane headers.
 - Minimal JavaScript on content pages; let the story load before any flourish does.
 
 The experience should feel instant even on a weak connection. That’s the bar.

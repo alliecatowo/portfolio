@@ -1,25 +1,11 @@
 <template>
   <UApp>
     <NuxtLayout>
-      <div class="mx-auto max-w-2xl px-6 py-24 text-center">
-        <p class="text-sm font-semibold text-primary">
-          {{ error.statusCode }}
-        </p>
-        <h1 class="mt-3 text-4xl font-bold text-highlighted md:text-5xl">
-          {{ notFound ? 'Page not found' : 'Something went wrong' }}
-        </h1>
-        <p class="mt-4 text-lg text-muted">
-          {{ notFound ? 'That page does not exist, or it moved.' : 'An error got in the way of this page.' }}
-        </p>
-        <div class="mt-8 flex justify-center gap-3">
-          <UButton to="/" size="lg" @click.prevent="clearError({ redirect: '/' })">
-            Back to the home page
-          </UButton>
-          <UButton to="/projects/" size="lg" variant="outline" @click.prevent="clearError({ redirect: '/projects/' })">
-            Browse projects
-          </UButton>
-        </div>
-      </div>
+      <CommonErrorState
+        :status-code="error.statusCode"
+        :not-found="notFound"
+        @navigate="(path: string) => clearError({ redirect: path })"
+      />
     </NuxtLayout>
   </UApp>
 </template>

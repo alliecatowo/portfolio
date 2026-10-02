@@ -19,13 +19,13 @@ I’ve written a lot of React. It pays the bills, has a huge ecosystem, and ther
 
 ## What makes Vue feel better
 
-- Single‑File Components: Templates, logic, and styles living together as a unit fits the way my brain organizes UI. I can jump between parts of a component without losing the thread.
+- Single-File Components: Templates, logic, and styles living together as a unit fits the way my brain organizes UI. I can jump between parts of a component without losing the thread.
 - Composition API: Composables let me model thoughts, not just implementation details. It’s easy to extract logic without turning everything into prop pyramids.
 - Clear Conventions: Vue’s defaults are opinionated enough to keep teams aligned, but not stifling. It feels designed rather than assembled.
 
 ## Tradeoffs I accept
 
-- React’s ecosystem is bigger and has more hiring demand, that matters. Still, I choose Vue because the day‑to‑day developer experience is smoother, my components stay smaller, and I make fewer “framework decisions” per file.
+- React’s ecosystem is bigger and has more hiring demand, that matters. Still, I choose Vue because the day-to-day developer experience is smoother, my components stay smaller, and I make fewer “framework decisions” per file.
 - Some React patterns are genuinely great—hooks changed how we think about state. Vue just took that evolution, removed the footguns, and made it ergonomic.
 
 ## The outcome
@@ -59,23 +59,23 @@ Snapshot tests on templates + unit tests on composables keep me honest. The ment
 
 ## State management that scales with intention
 
-Pinia (and even the Vue reactivity primitives alone) gives me an incremental path. I can start with a local `ref`, lift it into a composable when two components need it, then promote it to a Pinia store when the surface area justifies the extra ceremony. I don’t have to pre‑decide my architecture on day one. The framework lets me right‑size the solution, and that keeps teams moving without ritualistic rewrites.
+Pinia (and even the Vue reactivity primitives alone) gives me an incremental path. I can start with a local `ref`, lift it into a composable when two components need it, then promote it to a Pinia store when the surface area justifies the extra ceremony. I don’t have to pre-decide my architecture on day one. The framework lets me right-size the solution, and that keeps teams moving without ritualistic rewrites.
 
 What I appreciate most: the state reads like data, not magic. When I open a composable, I see a small cluster of signals and derived values—no implicit renders, no invisible subscriptions. That transparency is part of the “calm codebase” feeling that keeps me productive.
 
 ## SSR, routing, and the Nuxt effect
 
-Vue on its own is lovely; pairing it with Nuxt turns it into a batteries‑included environment that stays out of the way. File‑based routing, server/data fetching conventions, meta management, and the content module give me the right defaults. I can still drop down to custom endpoints and head tags when I need to, but I rarely do. The combination produces a UX I like building and a codebase I like living in.
+Vue on its own is lovely; pairing it with Nuxt turns it into a batteries-included environment that stays out of the way. File-based routing, server/data fetching conventions, meta management, and the content module give me the right defaults. I can still drop down to custom endpoints and head tags when I need to, but I rarely do. The combination produces a UX I like building and a codebase I like living in.
 
 When I compare this to React’s shifting ground—RSC debates, data fetching patterns that change every season—it’s clear why I reach for Vue+Nuxt for projects that should stay stable for years. I want dependencies to make my life easier, not add new decisions to every page.
 
 ## Migration and team onboarding
 
-Onboarding people to Vue tends to be quick: the template syntax is readable, the component boundaries are obvious, and the Composition API feels like a gentle on‑ramp to functional patterns. In migration projects, we often start by wrapping legacy logic into composables and replacing leaf components first. The payoff is immediate: smaller components, clearer responsibilities, fewer “why is this re‑rendering?” conversations.
+Onboarding people to Vue tends to be quick: the template syntax is readable, the component boundaries are obvious, and the Composition API feels like a gentle on-ramp to functional patterns. In migration projects, we often start by wrapping legacy logic into composables and replacing leaf components first. The payoff is immediate: smaller components, clearer responsibilities, fewer “why is this re-rendering?” conversations.
 
 ## Pitfalls I still watch for
 
-- Over‑using global stores when a composable would do.
+- Over-using global stores when a composable would do.
 - Packing too much into a single component because SFCs are convenient.
 - Ignoring accessibility just because the component library looks good (design still needs intent).
 
@@ -83,17 +83,17 @@ None of these are unique to Vue, but naming them helps me keep quality high.
 
 ## A tiny case study: making content feel alive
 
-This site is a good example of Vue’s ergonomics in the real world. I can express ideas quickly—new sections are folders, metadata is frontmatter, and the UI is a handful of well‑factored components. When I wanted reading time on posts, it was a single remark plugin + a few labels. When I wanted to switch focus from code‑heavy tutorials to narrative writing, I didn’t need to rip anything out—I just changed the content and the page components did the rest.
+This site is a good example of Vue’s ergonomics in the real world. I can express ideas quickly—new sections are folders, metadata is frontmatter, and the UI is a handful of well-factored components. When I wanted reading time on posts, it was a single remark plugin + a few labels. When I wanted to switch focus from code-heavy tutorials to narrative writing, I didn’t need to rip anything out—I just changed the content and the page components did the rest.
 
 That’s the kind of developer experience that keeps me coming back to Vue.
 
 ## From idea to deploy in 48 hours (a real sprint)
 
-I like stress‑testing frameworks by giving myself a ruthless constraint: two days to take a rough idea to something I can share. The brief: a narrative‑first personal site that feels like me, not a theme. Day 1 was structure and bones; day 2 was polish and details.
+I like stress-testing frameworks by giving myself a ruthless constraint: two days to take a rough idea to something I can share. The brief: a narrative-first personal site that feels like me, not a theme. Day 1 was structure and bones; day 2 was polish and details.
 
 What made it work:
 
-- File‑based routing: I sculpted the site by moving files and folders, not wiring configs.
+- File-based routing: I sculpted the site by moving files and folders, not wiring configs.
 - Nuxt Content: Writing in Markdown kept me in flow. I could sketch, cut, and move sections like sticky notes.
 - Composables: I extracted small pieces of logic (site config, reading time, filters) and reused them without pulling in a global store too early.
 - Nuxt UI: It gave me accessible components that looked good out of the box without feeling generic.
@@ -102,10 +102,10 @@ The result wasn’t perfect—but it was alive. Vue didn’t ask me to argue wit
 
 ## Complex forms, calm state
 
-Every stack can build forms. Not every stack stays pleasant when the form has real rules: conditional sections, server‑side validation, optimistic UI, and partial saves. My approach in Vue is composable‑first:
+Every stack can build forms. Not every stack stays pleasant when the form has real rules: conditional sections, server-side validation, optimistic UI, and partial saves. My approach in Vue is composable-first:
 
 - Use local `ref`s for field state and validation messages.
-- Lift cross‑field relationships into a composable (`useFormModel`) where I can test them in isolation.
+- Lift cross-field relationships into a composable (`useFormModel`) where I can test them in isolation.
 - Keep server interaction in a tiny service layer—no component imports `fetch`.
 - When multiple pages need the same form state (wizard flows), promote to a Pinia store that mirrors the composable’s API.
 
@@ -122,8 +122,8 @@ Vue’s clarity bleeds into team habits:
 We keep a few lightweight rules:
 
 - One responsibility per component—or name the exceptions.
-- If a component grows past 150–200 lines of non‑template code, a composable probably wants to be born.
-- Snapshots for templates, targeted tests for logic; no golden‑file churn.
+- If a component grows past 150–200 lines of non-template code, a composable probably wants to be born.
+- Snapshots for templates, targeted tests for logic; no golden-file churn.
 
 ## What a day in the editor feels like
 
