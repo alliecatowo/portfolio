@@ -270,6 +270,15 @@ export default defineNuxtConfig({
   ...({ image: {
     // Default JPEG/WebP quality for every NuxtImg variant that doesn't set its own.
     quality: 80,
+    // Breakpoints that `sizes` keys (xs:, sm:, ...) refer to. A key's candidate widths are
+    // screen * size * densities, so the screens are tuned to land on real slot widths:
+    // - xs (380) is the mobile anchor, not a Tailwind breakpoint. Its 2x variant for a ~88vw slot is
+    //   ~670px, just over the 637px a 412px, 1.75-DPR phone (Moto G Power, Lighthouse's mobile profile)
+    //   needs; a 412 anchor would make that 726px and trip "properly size images".
+    // - sm..xl match the layout's breakpoints; the px sizes at lg/xl are the real desktop slots.
+    // Without `xs`, `xs:` keys were silently dropped and phones got the sm candidates.
+    screens: { xs: 380, sm: 640, md: 768, lg: 1024, xl: 1280, '2xl': 1536 },
+    densities: [1, 2],
     // Every ipx image (NuxtImg, UBlogPost, Markdown images) is re-encoded to WebP, PNG and JPEG
     // sources included. NuxtImg ignores a top-level `format`; the provider's default modifiers apply.
     ipx: { modifiers: { format: 'webp' } },

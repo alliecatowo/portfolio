@@ -32,7 +32,7 @@ const hints = computed<{ style?: string, sizes?: string, loading?: string, decod
   return {
     ...(size && !attrs.style ? { style: `aspect-ratio: auto ${size[0]} / ${size[1]}` } : {}),
     // The prose column is at most 75ch (~686px) and a little narrower than the viewport on phones
-    sizes: 'sm:92vw md:686px',
+    sizes: 'xs:72vw sm:85vw md:686px',
     loading: 'lazy',
     decoding: 'async'
   }
