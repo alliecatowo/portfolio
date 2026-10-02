@@ -132,7 +132,10 @@ All PRs are automatically validated with typecheck, linting, and preview deploym
 
 ## 📄 License
 
-This project is licensed under the GPL-3.0 License - see the [LICENSE](./LICENSE) file for details.
+This repository is dual-licensed:
+
+- **Source code** is licensed under the [MIT License](./LICENSE).
+- **Content** (`content/` blog posts, project write-ups and page copy, plus personal images and media in `public/` such as photos, the avatar, project captures and OG images) is licensed under [CC BY-NC-ND 4.0](./LICENSE-CONTENT). Please don't republish or adapt the writing.
 
 ## 🙏 Acknowledgments
 
