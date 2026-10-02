@@ -56,11 +56,9 @@ export default defineNuxtConfig({
     payloadExtraction: 'client',
     renderJsonPayloads: true,
     viewTransition: false,
-    // The app manifest (builds/meta/<id>.json) powers client-side routeRules, the "is this route
-    // prerendered?" check behind payload loading, and outdated-build polling. Every page here is
-    // prerendered with `routeRules['/**'].prerender`, which Nuxt reads directly, and nothing uses the
-    // other two, so the manifest was an extra request at the end of the critical chain (~2 s on slow 4G).
-    appManifest: false,
+    // appManifest stays on: Nuxt Studio's activation calls getAppManifest() (nuxt-studio's
+    // utils/activation.js) once an editing session exists, so with it off Studio would throw on the
+    // public pages. The cost is one 640-byte builds/meta/<id>.json fetch ~1 s after the page is ready.
     defaults: {
       // A visible NuxtLink used to prefetch that page's chunks and payload while the first page was
       // still loading. Prefetch on hover/focus instead; the route chunk is a few KB over HTTP/2.

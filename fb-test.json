@@ -1,12 +1,4 @@
 {
-  "functions": [
-    {
-      "source": ".output-studio/server",
-      "codebase": "studio",
-      "runtime": "nodejs22",
-      "ignore": ["node_modules", ".git", "*.log"]
-    }
-  ],
   "hosting": {
     "public": ".output/public",
     "ignore": ["**/.!(well-known)", "**/node_modules/**"],
@@ -17,6 +9,43 @@
           {
             "key": "Cache-Control",
             "value": "no-cache"
+          },
+          {
+            "key": "Strict-Transport-Security",
+            "value": "max-age=63072000; includeSubDomains; preload"
+          },
+          {
+            "key": "Cross-Origin-Opener-Policy",
+            "value": "same-origin"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "DENY"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "accelerometer=(self \"https://www.youtube-nocookie.com\"), autoplay=(self \"https://www.youtube-nocookie.com\"), camera=(), compute-pressure=(self \"https://www.youtube-nocookie.com\"), display-capture=(), encrypted-media=(self \"https://www.youtube-nocookie.com\"), fullscreen=(self \"https://www.youtube-nocookie.com\"), geolocation=(), gyroscope=(self \"https://www.youtube-nocookie.com\"), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(self \"https://www.youtube-nocookie.com\"), usb=(), clipboard-write=(self \"https://www.youtube-nocookie.com\")"
+          },
+          {
+            "key": "Content-Security-Policy",
+            "value": "base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://formsubmit.co; img-src 'self' data: blob: https:; media-src 'self' data: blob:; font-src 'self' data: https://cdn.jsdelivr.net https://esm.sh; style-src 'self' 'unsafe-inline' https://esm.sh; connect-src 'self' https://formsubmit.co https://api.github.com https://*.githubusercontent.com https://esm.sh https://cdn.jsdelivr.net https://api.iconify.design; frame-src https://www.youtube-nocookie.com https://www.youtube.com; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests"
+          }
+        ]
+      },
+      {
+        "source": "/",
+        "headers": [
+          {
+            "key": "X-Test",
+            "value": "root"
           }
         ]
       },
@@ -24,28 +53,8 @@
         "source": "**/",
         "headers": [
           {
-            "key": "Strict-Transport-Security",
-            "value": "max-age=63072000; includeSubDomains; preload"
-          },
-          {
-            "key": "X-Frame-Options",
-            "value": "DENY"
-          },
-          {
-            "key": "X-Content-Type-Options",
-            "value": "nosniff"
-          },
-          {
-            "key": "Referrer-Policy",
-            "value": "strict-origin-when-cross-origin"
-          },
-          {
-            "key": "Permissions-Policy",
-            "value": "accelerometer=(self \"https://www.youtube-nocookie.com\"), autoplay=(self \"https://www.youtube-nocookie.com\"), camera=(), compute-pressure=(self \"https://www.youtube-nocookie.com\"), display-capture=(), encrypted-media=(self \"https://www.youtube-nocookie.com\"), fullscreen=(self \"https://www.youtube-nocookie.com\"), geolocation=(), gyroscope=(self \"https://www.youtube-nocookie.com\"), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(self \"https://www.youtube-nocookie.com\"), usb=(), clipboard-write=(self \"https://www.youtube-nocookie.com\")"
-          },
-          {
-            "key": "Content-Security-Policy",
-            "value": "base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://formsubmit.co; img-src 'self' data: blob: https:; media-src 'self' data: blob:; font-src 'self' data: https://cdn.jsdelivr.net https://esm.sh; style-src 'self' 'unsafe-inline' https://esm.sh; connect-src 'self' https://formsubmit.co https://api.github.com https://*.githubusercontent.com https://esm.sh https://cdn.jsdelivr.net https://api.iconify.design; frame-src https://www.youtube-nocookie.com https://www.youtube.com; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests"
+            "key": "X-Test",
+            "value": "dir"
           }
         ]
       },
@@ -53,28 +62,8 @@
         "source": "**/*.html",
         "headers": [
           {
-            "key": "Strict-Transport-Security",
-            "value": "max-age=63072000; includeSubDomains; preload"
-          },
-          {
-            "key": "X-Frame-Options",
-            "value": "DENY"
-          },
-          {
-            "key": "X-Content-Type-Options",
-            "value": "nosniff"
-          },
-          {
-            "key": "Referrer-Policy",
-            "value": "strict-origin-when-cross-origin"
-          },
-          {
-            "key": "Permissions-Policy",
-            "value": "accelerometer=(self \"https://www.youtube-nocookie.com\"), autoplay=(self \"https://www.youtube-nocookie.com\"), camera=(), compute-pressure=(self \"https://www.youtube-nocookie.com\"), display-capture=(), encrypted-media=(self \"https://www.youtube-nocookie.com\"), fullscreen=(self \"https://www.youtube-nocookie.com\"), geolocation=(), gyroscope=(self \"https://www.youtube-nocookie.com\"), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(self \"https://www.youtube-nocookie.com\"), usb=(), clipboard-write=(self \"https://www.youtube-nocookie.com\")"
-          },
-          {
-            "key": "Content-Security-Policy",
-            "value": "base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://formsubmit.co; img-src 'self' data: blob: https:; media-src 'self' data: blob:; font-src 'self' data: https://cdn.jsdelivr.net https://esm.sh; style-src 'self' 'unsafe-inline' https://esm.sh; connect-src 'self' https://formsubmit.co https://api.github.com https://*.githubusercontent.com https://esm.sh https://cdn.jsdelivr.net https://api.iconify.design; frame-src https://www.youtube-nocookie.com https://www.youtube.com; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests"
+            "key": "X-Test",
+            "value": "html"
           }
         ]
       },
@@ -147,41 +136,16 @@
         "type": 301
       }
     ],
-    "rewrites": [
-      {
-        "source": "/_studio",
-        "function": {
-          "functionId": "studio",
-          "region": "us-central1"
-        }
-      },
-      {
-        "source": "/__nuxt_studio/**",
-        "function": {
-          "functionId": "studio",
-          "region": "us-central1"
-        }
-      },
-      {
-        "source": "/sw.js",
-        "function": {
-          "functionId": "studio",
-          "region": "us-central1"
-        }
-      }
-    ]
+    "rewrites": []
   },
   "emulators": {
     "hosting": {
-      "port": 5000
+      "port": 5009
     },
     "ui": {
-      "enabled": true,
+      "enabled": false,
       "port": 4000
     },
-    "singleProjectMode": true,
-    "functions": {
-      "port": 5001
-    }
+    "singleProjectMode": true
   }
 }
