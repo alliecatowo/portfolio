@@ -15,18 +15,18 @@ pnpm typecheck && pnpm lint
 pnpm validate:content && pnpm content:format:check
 pnpm generate            # writes .output/public
 pnpm check:images        # every pre-rendered /_ipx/ URL exists in the build
+pnpm check:seo           # canonical, titles, OG/Twitter, JSON-LD, h1, sitemap and robots against the build
 ```
 
 If content changed, also `pnpm content:roundtrip`; if WebMCP changed, `pnpm test:webmcp`. A failing `validate:content` means real content is broken: fix the file it names, don't loosen the validator.
 
 ## 2. Static output (`.output/public`)
 
-- `ls robots.txt sitemap.xml llms.txt 404.html`.
+- `check:seo` covers per-page head metadata, JSON-LD, sitemap and robots; also `ls llms.txt 404.html`.
 - No placeholder hosts: `grep -rln "picsum.photos\|placehold.co" .output/public app content` must be empty.
-- Per page: exactly one canonical, an absolute `og:image`, twitter tags, and parseable JSON-LD.
 - Internal links: every `href="/..."` in the HTML resolves to a file in `.output/public`. External links on changed pages: `curl -sIL -o /dev/null -w '%{http_code} %{url_effective}\n' <url>`; anything but 2xx/3xx is a finding (note bot-blocking 403/429 rather than failing on it).
 
-(CI also runs Lighthouse and the SEO gate when that workflow is on `main`; don't reimplement them here.)
+(CI also runs `check:seo` and Lighthouse CI on every PR; `pnpm lighthouse` runs the latter locally.)
 
 ## 3. Serve like production
 

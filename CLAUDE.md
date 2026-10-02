@@ -17,6 +17,8 @@ pnpm lint                # pnpm lint:fix to auto-fix
 pnpm validate:content    # scripts/validate-content.ts (also CI and every deploy)
 pnpm test:webmcp         # end-to-end WebMCP check: needs a prior `pnpm generate` and Chrome 149+ (CHROME_PATH to override)
 pnpm check:images        # every pre-rendered /_ipx/ image URL exists in the build (after generate)
+pnpm check:seo           # SEO gate on the static build (after generate; also in CI)
+pnpm lighthouse          # Lighthouse CI (lighthouserc.json; also in CI)
 
 # Content formatting: serializes content/ exactly as Nuxt Studio does, so Studio edits never add noise
 pnpm content:format        # rewrite content/**/*.{md,yml}
