@@ -164,8 +164,9 @@ jobs:
   # generated .output/public (no dependency on the optional Preview environment). Every step runs
   # even if an earlier check failed so the PR comment is always posted; the last step fails the job.
   lighthouse:
-    if: github.event_name == 'pull_request'
-    needs: [typecheck, lint, validate-content]
+    # Skipped on content-only PRs (explicit; it would also skip implicitly because typecheck/lint are skipped).
+    if: github.event_name == 'pull_request' && needs.changes.outputs.content_only != 'true'
+    needs: [changes, typecheck, lint, validate-content]
     runs-on: ubuntu-latest
     permissions:
       contents: read
