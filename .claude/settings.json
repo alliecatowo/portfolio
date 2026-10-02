@@ -8,6 +8,6 @@
       "Bash(killall *)",
       "Bash(fuser -k *)"
     ],
-    "ask": ["Bash(gh pr merge *)"]
+    "allow": ["Bash(gh pr merge *)"]
   }
 }
