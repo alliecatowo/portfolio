@@ -4,7 +4,7 @@ date: 2024-03-15
 demo: https://allisons.dev
 description: A portfolio website built with Nuxt.js, featuring dual developer/tattoo artist sections, Nuxt Content CMS, and modern UI components.
 featured: false
-github: https://github.com/allisons-dev/portfolio
+github: https://github.com/alliecatowo/portfolio
 group: earlier-work
 image: /screenshot-2025-10-20-at-23-49-08-nuxt-studio.png
 imageAlt: Nuxt Studio open on the blog post Why Nuxt Content Is Perfect for My Portfolio, with the Markdown editor beside a live preview of the page.
@@ -370,4 +370,4 @@ The project serves not just as a portfolio, but as a living example of the techn
 
 **Technologies Used**: Nuxt.js, Vue.js, TypeScript, Tailwind CSS, Nuxt UI, Nuxt Content, Vercel
 
-**View Project**: [Live Site](https://allisons.dev) | [GitHub Repository](https://github.com/allisons-dev/portfolio)
+**View Project**: [Live Site](https://allisons.dev) | [GitHub Repository](https://github.com/alliecatowo/portfolio)

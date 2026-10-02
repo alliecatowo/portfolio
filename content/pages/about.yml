@@ -127,11 +127,11 @@ life:
     - title: Small Games
       color: pink-500
       icon: i-lucide-gamepad-2
-      image: /images/termagatchi/termagatchi-2025-09-28-t17-06-13-176682.png
-      alt: Termagatchi running in a terminal, with stat bars, a pixel-art pet, and a chat with the pet
+      image: /images/projects/afterlife/card.webp
+      alt: "AFTERLIFE's Time Sculpture: 165 recorded generations of the opening scene stacked in 3D, with each glider's path showing as an inclined beam."
       imagePosition: 50% 50%
-      to: /projects/termagatchi/
-      description: Where it started. These days it's things like Termagatchi, an AI pet that lives in your terminal.
+      to: /projects/afterlife/
+      description: Where it started. These days it's things like AFTERLIFE, Conway's Life with a time machine that you can play in the browser.
 now:
   title: Now
   description: Software engineer at Hinge Health by day. After hours I build agent systems, developer tools and languages, mostly in public and mostly in Rust and TypeScript. My JupyterLite WebMCP was one of 10 winners of the 2026 OpenAI WebMCP Challenge.
