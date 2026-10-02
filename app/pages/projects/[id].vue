@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-animated">
+  <div class="min-h-screen">
     <div class="container max-w-4xl mx-auto px-6 py-12">
       <NuxtLink to="/projects/" class="inline-flex items-center text-primary hover:text-primary-600 mb-6">
         <UIcon name="i-lucide-arrow-left" class="w-4 h-4 mr-2" />

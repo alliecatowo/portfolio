@@ -104,7 +104,7 @@
 
         <!-- Table of contents, built from the post's own headings -->
         <div v-if="tocLinks.length" class="mb-8 lg:mb-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
-          <LazyUContentToc :links="tocLinks" title="On this page" highlight :hydrate-on-interaction="['pointerenter', 'focusin', 'touchstart']" />
+          <LazyUContentToc :links="tocLinks" title="On this page" aria-label="Table of contents" highlight :hydrate-on-interaction="['pointerenter', 'focusin', 'touchstart']" />
         </div>
 
         <div class="min-w-0 lg:col-start-1 lg:row-start-2">
@@ -117,7 +117,7 @@
               :style="featuredImageSize ? { aspectRatio: `auto ${featuredImageSize[0]} / ${featuredImageSize[1]}` } : undefined"
               loading="eager"
               fetchpriority="high"
-              sizes="lg:100vw xl:850px"
+              sizes="sm:92vw md:704px xl:850px"
             />
           </div>
 

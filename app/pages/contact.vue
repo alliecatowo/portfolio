@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-animated bg-dots relative overflow-hidden">
+  <div class="min-h-screen bg-dots relative overflow-hidden">
     <!-- Decorative background -->
     <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
       <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse"/>
@@ -264,6 +264,11 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
 import { computed, reactive, ref } from 'vue'
 import type { FormErrorEvent, FormSubmitEvent } from '@nuxt/ui'
 import { z } from 'zod'
+
+// Zod probes `new Function` to JIT-compile object parsers; under the site's CSP (no 'unsafe-eval')
+// that probe is reported as a violation even though zod catches it. A form this small gains nothing
+// from the JIT anyway.
+z.config({ jitless: true })
 
 const schema = z.object({
   name: z

@@ -83,6 +83,6 @@ const props = withDefaults(defineProps<{
 // on lg; a grid card is one of up to three columns. Every key is a breakpoint
 // (an unprefixed value would become a bogus 1px candidate in @nuxt/image).
 const imageSizes = computed(() =>
-  props.orientation === 'horizontal' ? 'lg:100vw xl:640px' : 'md:100vw lg:50vw xl:420px'
+  props.orientation === 'horizontal' ? 'sm:92vw lg:50vw xl:560px' : 'sm:92vw md:50vw lg:34vw xl:362px'
 )
 </script>

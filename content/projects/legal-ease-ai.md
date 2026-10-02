@@ -44,7 +44,17 @@ LegalEase AI is a self-hosted workspace built for legal teams, investigators, an
 
 It grew out of frustration with cloud-locked legal tech that trades privacy for convenience. I wanted something fast, local-first, and transparent. So I built it: a full end-to-end stack that turns terabytes of raw evidence into structured, searchable context all without data ever leaving your machine.
 
-![Animated walkthrough of the LegalEase AI dashboard: searching case documents and browsing the results](/images/legalease/demo.gif)
+::demo-video
+---
+height: 514
+width: 800
+alt: Animated walkthrough of the LegalEase AI dashboard, searching case
+  documents and browsing the results.
+mp4: /images/legalease/demo.mp4
+poster: /images/legalease/demo-poster.webp
+webm: /images/legalease/demo.webm
+---
+::
 
 ---
 

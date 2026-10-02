@@ -1,11 +1,11 @@
 <template>
   <UPage>
-    <div class="min-h-screen bg-gradient-animated bg-dots flex items-center justify-center relative overflow-hidden">
+    <div class="min-h-screen bg-dots flex items-center justify-center relative overflow-hidden">
       <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
-        <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse pulse-glow" />
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl pulse-glow" />
         <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl animate-pulse float-animation" style="animation-delay: 2s;" />
-        <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-purple-500/5 rounded-full blur-2xl float-animation" style="animation-delay: 4s;" />
-        <div class="absolute bottom-1/3 right-1/3 w-24 h-24 bg-cyan-500/5 rounded-full blur-xl sparkle-element" style="animation-delay: 1s;" />
+        <div class="absolute top-72 left-1/4 w-32 h-32 bg-purple-500/5 rounded-full blur-2xl float-animation" style="animation-delay: 4s;" />
+        <div class="absolute top-[44rem] right-1/3 w-24 h-24 bg-cyan-500/5 rounded-full blur-xl sparkle-element" style="animation-delay: 1s;" />
       </div>
 
       <section class="container max-w-5xl px-6 py-20 relative z-20" aria-labelledby="page-title">
@@ -51,15 +51,24 @@
           <UCard v-if="heroCard" class="glass-accent mb-12">
             <template #header>
               <div class="aspect-[16/9] md:aspect-[21/9] bg-gradient-dev relative overflow-hidden rounded-lg">
-                <NuxtImg
+                <!--
+                  The LCP image. NuxtImg's `sizes` can't express "the viewport minus the page and card
+                  padding", so it picked a 900w file for a 330 px slot. The srcset is built by hand
+                  from the same ipx provider and `sizes` states the real slot widths (see heroSrcset).
+                -->
+                <img
                   v-if="heroCard.image"
-                  :src="heroCard.image"
+                  :src="heroSrcset.src"
+                  :srcset="heroSrcset.srcset"
+                  :sizes="HERO_SIZES"
+                  width="1200"
+                  height="675"
                   :alt="heroCard.imageAlt || ''"
                   loading="eager"
                   fetchpriority="high"
-                  sizes="sm:100vw md:900px"
+                  decoding="async"
                   class="object-cover w-full h-full"
-                />
+                >
                 <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent flex items-end p-4 md:p-8">
                   <div class="w-full">
                     <h3 v-if="heroCard.title" id="main-dev-title" class="text-2xl md:text-4xl font-bold text-white mb-1 md:mb-3 [text-shadow:0_1px_3px_rgb(0_0_0/0.6)]">
@@ -331,10 +340,15 @@ const { fetchProjects, fetchBlogPosts, fetchPage } = useContent()
 const CARD_IMAGE = {
   width: 640,
   height: 360,
-  sizes: 'xs:100vw sm:50vw lg:400px',
+  sizes: 'xs:92vw sm:48vw lg:368px',
   loading: 'lazy',
   decoding: 'async'
 } as const
+
+// Slot width of the hero image: the viewport minus the section padding (24px a side) and the card
+// (1px border + 16px padding below 640px, 24px from 640px), capped at the 896px section width.
+const HERO_SIZES = '(max-width: 639px) calc(100vw - 82px), (max-width: 943px) calc(100vw - 98px), 846px'
+const HERO_WIDTHS = [480, 640, 846, 1200]
 
 const { data: homeContent } = await useAsyncData('home-page-content', () => fetchPage('home'))
 
@@ -357,6 +371,15 @@ const hero = computed(() => page.value?.hero ?? null)
 const heroAward = computed(() => hero.value?.award ?? null)
 const heroNote = computed(() => hero.value?.note ?? null)
 const heroCard = computed(() => hero.value?.card ?? null)
+const $img = useImage()
+const heroSrcset = computed(() => {
+  const src = heroCard.value?.image
+  if (!src) return { src: undefined, srcset: undefined }
+  return {
+    src: $img(src, { width: 846, quality: 80 }),
+    srcset: HERO_WIDTHS.map(w => `${$img(src, { width: w, quality: 80 })} ${w}w`).join(', ')
+  }
+})
 const quickLinks = computed(() => page.value?.quickLinks?.links ?? [])
 const projectsSection = computed(() => page.value?.projects ?? null)
 const skillsSection = computed(() => page.value?.skills ?? null)

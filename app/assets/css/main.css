@@ -32,17 +32,6 @@
     color-mix(in oklab, var(--ui-bg-muted) 80%, var(--ui-color-primary-500) 20%) 100%
   );
 
-  /* More dynamic animated gradient */
-  --gradient-animated: linear-gradient(
-    -45deg,
-    var(--ui-color-primary-400),
-    var(--ui-color-pink-500),
-    var(--ui-color-purple-500),
-    var(--ui-color-cyan-400),
-    var(--ui-color-primary-600),
-    var(--ui-color-rose-400)
-  );
-
   /* Enhanced glassmorphic effects */
   --glass-bg: color-mix(in oklab, var(--ui-bg) 80%, transparent);
   --glass-bg-strong: color-mix(in oklab, var(--ui-bg) 90%, transparent);
@@ -182,8 +171,10 @@ body {
 }
 
 .glass-accent {
+  /* 80%+ opaque over a near-flat background, so there is nothing for a backdrop blur to show. It is
+     left off on purpose: every card with one is its own compositor layer that has to read back what is
+     behind it, which delayed the hero card (and the LCP image in it) on slow devices. */
   background: color-mix(in oklab, var(--glass-bg) 90%, var(--ui-color-primary-500) 10%);
-  backdrop-filter: blur(16px) saturate(190%);
   border: 1px solid var(--glass-border-accent);
   box-shadow:
     0 10px 36px rgba(236, 72, 153, 0.1),
@@ -195,23 +186,7 @@ body {
   background: var(--gradient-dev);
 }
 
-.bg-gradient-animated {
-  background: var(--gradient-animated);
-  background-size: 400% 400%;
-  animation: gradient-shift 15s ease infinite;
-}
-
 /* Animation keyframes */
-@keyframes gradient-shift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
 @keyframes float {
   0%,
   100% {
@@ -237,15 +212,13 @@ body {
   }
 }
 
+/* Opacity-only, so it runs on the compositor (see .pulse-glow) */
 @keyframes pulse-glow {
-  0%,
-  100% {
-    box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
+  from {
+    opacity: 0;
   }
-  50% {
-    box-shadow:
-      0 0 40px rgba(236, 72, 153, 0.6),
-      0 0 60px rgba(147, 51, 234, 0.3);
+  to {
+    opacity: 1;
   }
 }
 
@@ -298,13 +271,16 @@ body {
   }
 }
 
+/*
+ * Gradient heading text. This used to drift its background-position (and the page backdrop did the
+ * same), but animating background-position repaints on the main thread every frame, one animation per
+ * heading. It is a static gradient now: same palette, no per-frame paint.
+ */
 .text-gradient-animated {
-  background: linear-gradient(-45deg, #ec4899, #a855f7, #3b82f6, #06b6d4, #ec4899, #f43f5e);
-  background-size: 400% 400%;
+  background: linear-gradient(-45deg, #ec4899, #a855f7, #3b82f6);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient-shift 8s ease infinite;
   filter: contrast(1.2) brightness(1.1);
   position: relative;
   z-index: 50;
@@ -328,7 +304,24 @@ body {
   font-size: 1.2rem;
 }
 
+/*
+ * A soft glow that breathes. box-shadow can't be animated on the compositor, so the resting glow is
+ * static and the stronger one sits on a ::after layer whose opacity fades in and out. The element
+ * is already positioned (it's an absolutely placed blob), so the layer can anchor to it.
+ */
 .pulse-glow {
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
+}
+
+.pulse-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow:
+    0 0 40px rgba(236, 72, 153, 0.6),
+    0 0 60px rgba(147, 51, 234, 0.3);
+  opacity: 0;
   animation: pulse-glow 3s ease-in-out infinite alternate;
 }
 
@@ -398,14 +391,12 @@ body {
   }
 }
 @media (max-width: 767.98px) {
-  .bg-gradient-animated,
-  .text-gradient-animated,
   [class*='blur-'].animate-pulse,
   .animate-spin-slow,
   .animate-spin-reverse,
   .float-animation,
   .sparkle-element::before,
-  .pulse-glow {
+  .pulse-glow::after {
     animation: none;
   }
 }

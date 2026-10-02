@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto'
 import { existsSync, readdirSync, statSync } from 'node:fs'
 import { defineNuxtConfig } from 'nuxt/config'
 
@@ -7,6 +8,40 @@ const ogDir = new URL('./public/images/og', import.meta.url)
 const ogImages = existsSync(ogDir)
   ? readdirSync(ogDir).filter(f => f.endsWith('.png')).map(f => f.slice(0, -4)).filter(s => s !== 'default')
   : []
+
+// Script policy for the pre-rendered HTML. Nuxt inlines a handful of executable scripts into every
+// page (the import map, the colour-mode bootstrap, the site and app config objects). Their text
+// changes with each build (the entry file name, the build id), so instead of 'unsafe-inline' each
+// page gets a <meta http-equiv="Content-Security-Policy"> carrying the SHA-256 of exactly the inline
+// scripts it contains. A meta policy can't carry frame-ancestors and friends, so the rest of the CSP
+// is a header in firebase.json, which deliberately has no script-src or default-src of its own: the
+// two policies are intersected, and a header script-src would block the hashed inline scripts.
+// 'wasm-unsafe-eval' is for the SQLite WASM behind the search dialog and Nuxt Studio's editor
+// (shiki). The YouTube hosts are for the click-to-play facade; Nuxt Studio imports its code editor
+// from esm.sh.
+const SCRIPT_SRC_HOSTS = ['https://www.youtube.com', 'https://s.ytimg.com', 'https://esm.sh']
+function addScriptCsp(html: string): string {
+  const hashes = new Set<string>()
+  for (const [, attrs = '', body = ''] of html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)) {
+    if (/\ssrc=/.test(attrs) || !body.trim()) continue
+    // JSON data blocks (the payload, JSON-LD) are never executed, so they need no hash
+    if (/type="application\/(ld\+)?json"/.test(attrs)) continue
+    hashes.add(`'sha256-${createHash('sha256').update(body).digest('base64')}'`)
+  }
+  // NuxtImg's server-rendered `onerror="this.setAttribute('data-error', 1)"` is an inline event
+  // handler, which script-src doesn't cover. Allow that exact text (and any other handler in the page)
+  // through script-src-attr with 'unsafe-hashes'.
+  const handlerHashes = new Set<string>()
+  for (const [, , raw = ''] of html.matchAll(/\son[a-z]+=(["'])(.*?)\1/g)) {
+    const code = raw.replace(/&#39;/g, `'`).replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
+    handlerHashes.add(`'sha256-${createHash('sha256').update(code).digest('base64')}'`)
+  }
+  const policy = [
+    ['script-src', `'self'`, `'wasm-unsafe-eval'`, ...hashes, ...SCRIPT_SRC_HOSTS].join(' '),
+    ...(handlerHashes.size ? [['script-src-attr', `'unsafe-hashes'`, ...handlerHashes].join(' ')] : [])
+  ].join('; ')
+  return html.replace(/<head([^>]*)>/, `<head$1><meta http-equiv="Content-Security-Policy" content="${policy}">`)
+}
 
 // The site itself is a static `nuxt generate` build on Firebase Hosting. Nuxt Studio's auth and
 // meta routes need a server, so `pnpm build:studio` (NITRO_PRESET=firebase) builds the same app
@@ -20,7 +55,15 @@ export default defineNuxtConfig({
   experimental: {
     payloadExtraction: 'client',
     renderJsonPayloads: true,
-    viewTransition: false
+    viewTransition: false,
+    // appManifest stays on: Nuxt Studio's activation calls getAppManifest() (nuxt-studio's
+    // utils/activation.js) once an editing session exists, so with it off Studio would throw on the
+    // public pages. The cost is one 640-byte builds/meta/<id>.json fetch ~1 s after the page is ready.
+    defaults: {
+      // A visible NuxtLink used to prefetch that page's chunks and payload while the first page was
+      // still loading. Prefetch on hover/focus instead; the route chunk is a few KB over HTTP/2.
+      nuxtLink: { prefetchOn: { visibility: false, interaction: true } }
+    }
   },
   modules: [
     '@nuxt/ui',
@@ -192,6 +235,7 @@ export default defineNuxtConfig({
         // the HTML, hero image and entry script (Lighthouse FCP +0.8 s, LCP +0.6 s). The pages are
         // pre-rendered, so the content paints without JS; the entry module discovers its imports itself.
         route.contents = route.contents.replace(/<link rel="modulepreload"[^>]*>/g, '')
+        route.contents = addScriptCsp(route.contents)
         route.contents = route.contents.replace(/<link rel="stylesheet" href="(\/_nuxt\/[^"]+\.css)"[^>]*>/g, (tag, href: string) => {
           try {
             return statSync(`.output/public${href}`).size === 0 ? '' : tag
@@ -212,6 +256,9 @@ export default defineNuxtConfig({
   ...({ image: {
     // Default JPEG/WebP quality for every NuxtImg variant that doesn't set its own.
     quality: 80,
+    // Every ipx image (NuxtImg, UBlogPost, Markdown images) is re-encoded to WebP, PNG and JPEG
+    // sources included. NuxtImg ignores a top-level `format`; the provider's default modifiers apply.
+    ipx: { modifiers: { format: 'webp' } },
     presets: {
       avatar: { 
         modifiers: { 
