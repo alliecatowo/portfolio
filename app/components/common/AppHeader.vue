@@ -30,7 +30,7 @@
         color="primary"
         size="md"
         icon="i-lucide-search"
-        class="hidden lg:inline-flex"
+        class="hidden lg:inline-flex min-w-[10.3rem]"
       />
 
       <UTooltip text="Accessibility Settings" :kbds="['meta', 'a']">
