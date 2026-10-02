@@ -24,6 +24,7 @@ const playerVars = computed(() => {
 <template>
   <ScriptYouTubePlayer
     :video-id="id"
+    thumbnail-size="hqdefault"
     trigger="mousedown"
     :player-vars="playerVars"
     :root-attrs="{

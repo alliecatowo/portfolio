@@ -216,10 +216,7 @@
     v-if="!loading && post"
     class="fixed top-0 left-0 w-full h-1 bg-gray-200 dark:bg-gray-800 z-50"
   >
-    <div
-      class="h-full bg-primary transition-all duration-300 ease-out"
-      :style="{ width: `${readingProgress}%` }"
-    />
+    <div class="reading-progress h-full w-full bg-primary" />
   </div>
   </div>
 </template>
@@ -285,24 +282,6 @@ const featuredImageSize = computed(() =>
 const tocLinks = computed(() => post.value?.body?.toc?.links ?? []);
 
 const { estimateReadTime } = useReadTime();
-
-// Reading progress
-const readingProgress = ref(0);
-
-const updateProgress = () => {
-  const scrolled = window.scrollY;
-  const maxHeight = document.body.scrollHeight - window.innerHeight;
-  readingProgress.value = maxHeight > 0 ? Math.min((scrolled / maxHeight) * 100, 100) : 0;
-};
-
-onMounted(() => {
-  window.addEventListener('scroll', updateProgress, { passive: true });
-  updateProgress();
-});
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', updateProgress);
-});
 
 const getTagColor = (tag: string): 'primary'|'secondary'|'success'|'info'|'warning'|'error'|'neutral' => {
   const colors = ['primary','secondary','success','info','warning','error'] as const;

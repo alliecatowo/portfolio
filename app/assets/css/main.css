@@ -547,3 +547,21 @@ body {
 main :not(pre) > code {
   overflow-wrap: anywhere;
 }
+
+/* Blog reading-progress bar: a scroll-driven animation on the compositor, so no scroll listener and
+   no layout reads. Browsers without animation-timeline just show the empty track. */
+.reading-progress {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+@supports (animation-timeline: scroll()) {
+  .reading-progress {
+    animation: reading-progress linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+@keyframes reading-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
