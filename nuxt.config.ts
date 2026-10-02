@@ -18,7 +18,7 @@ export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
   ssr: true,
   experimental: {
-    payloadExtraction: false,
+    payloadExtraction: 'client',
     renderJsonPayloads: true,
     viewTransition: true
   },
@@ -31,6 +31,10 @@ export default defineNuxtConfig({
     '@nuxt/image',
     'nuxt-studio'
   ],
+  ui: {
+    // Only generate the theme CSS/JS for the Nuxt UI components the app actually uses
+    experimental: { componentDetection: true }
+  },
   // Site config shared by robots/sitemap. Firebase redirects /about -> /about/,
   // so every generated URL uses the trailing-slash form.
   site: {
@@ -59,10 +63,11 @@ export default defineNuxtConfig({
   hooks: {
     // Nuxt marks every dynamic-import chunk `prefetch: true`, so each public page's <head> listed
     // ~10 prefetch links: the Nuxt Studio editor (Monaco + shiki, ~850 KB gz) and the SQLite WASM
-    // worker among them. None of that is needed to read the site. Studio loads those chunks itself
-    // (a plain dynamic import) once the `studio-session-check` cookie is set or ⌘. is pressed, so
-    // dropping the hints costs nothing there. The build also leaves no page prefetch links, which
-    // is fine: route chunks are small.
+    // worker among them, and the rest competing with the page for bandwidth on a slow connection
+    // (Lighthouse LCP +0.4 s with the route chunks left in). Studio loads its own chunks itself (a
+    // plain dynamic import) once the `studio-session-check` cookie is set or ⌘. is pressed. This only
+    // removes the <link rel="prefetch"> tags from the HTML: NuxtLink still prefetches a visible link's
+    // route chunk and payload at runtime, which is what makes client navigations fast.
     'build:manifest'(manifest) {
       for (const item of Object.values(manifest)) item.prefetch = false
     }
@@ -99,10 +104,12 @@ export default defineNuxtConfig({
       private: false
     }
   },
-  // The colour-mode button swaps sun/moon after hydration. Icons that aren't in the HTML
-  // are otherwise fetched from api.iconify.design at runtime (a third-party request on every page).
+  // Icons that aren't in a page's HTML (the colour-mode button swaps sun/moon after hydration, and a
+  // client navigation renders whatever the next page uses) are otherwise fetched from
+  // api.iconify.design at runtime. `scan` bundles every icon the app names, so none of that happens.
   icon: {
     clientBundle: {
+      scan: true,
       icons: ['lucide:sun', 'lucide:moon', 'lucide:monitor']
     }
   },

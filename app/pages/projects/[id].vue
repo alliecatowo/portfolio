@@ -37,7 +37,8 @@
         </div>
 
         <div v-if="project.body" class="max-w-[75ch]">
-          <ContentRenderer :value="project" />
+          <ContentRenderer v-if="renderEagerly" :value="project" />
+          <LazyContentRenderer v-else :value="project" :hydrate-on-interaction="['click', 'focusin', 'keydown']" />
         </div>
         <div v-else class="prose prose-lg dark:prose-invert max-w-none mb-8">
           {{ project.description }}
@@ -110,6 +111,12 @@ import { sortProjectsInGroup } from '~/utils/sortProjects'
 
 const route = useRoute();
 const projectId = route.params.id as string;
+
+// The article body is static prose, so it hydrates lazily (on the first click or focus inside it)
+// instead of on load. Nuxt Studio's live preview and dev-mode HMR re-render it, so those get the
+// eager renderer. Studio sets this state once an editor session is active.
+const studioSession = useState('studio-session', () => null)
+const renderEagerly = computed(() => import.meta.dev || !!studioSession.value)
 
 // Fetch the project
 const { data: project } = await useAsyncData(

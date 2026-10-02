@@ -230,7 +230,7 @@ const { data: allPostsAll } = await useAsyncData<BlogDoc[]>(
   'blog-all-dev',
   async () => {
     try {
-      return await queryCollection('blog').where('category', '=', 'dev').where('published', '=', true).order('date', 'DESC').all()
+      return await queryCollection('blog').where('category', '=', 'dev').where('published', '=', true).order('date', 'DESC').select('tags').all()
     } catch {
       return []
     }
@@ -277,9 +277,9 @@ const { data: totalCount } = await useAsyncData<number>(
   async () => {
     try {
       if (activeTag.value === 'all') {
-        return (await queryCollection('blog').where('category', '=', 'dev').where('published', '=', true).all()).length
+        return await queryCollection('blog').where('category', '=', 'dev').where('published', '=', true).count()
       }
-      const all = await queryCollection('blog').where('category', '=', 'dev').where('published', '=', true).all()
+      const all = await queryCollection('blog').where('category', '=', 'dev').where('published', '=', true).select('tags').all()
       return all.filter((p: BlogDoc) => Array.isArray(p.tags) && p.tags!.includes(activeTag.value)).length
     } catch {
       return 0
@@ -292,9 +292,11 @@ const { data: pageItems, pending, error } = await useAsyncData<BlogDoc[]>(
   () => `blog-page-${activeTag.value}-${page.value}-${sort.value}`,
   async () => {
     try {
+      // The body stays: the cards show a read time estimated from it
       let base = queryCollection('blog')
         .where('category', '=', 'dev')
         .where('published', '=', true)
+        .select('title', 'description', 'date', 'slug', 'path', 'featured_image', 'tags', 'featured', 'body')
 
       // Apply sorting
       if (sort.value === 'newest') {
