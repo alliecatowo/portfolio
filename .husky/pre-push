@@ -1,9 +1,0 @@
-echo "🧪 Type checking before push..."
-if command -v pnpm >/dev/null 2>&1; then
-  pnpm run typecheck
-elif command -v npx >/dev/null 2>&1; then
-  npx --no-install nuxi typecheck
-else
-  echo "⚠️ Neither pnpm nor npx found; skipping typecheck"
-  exit 0
-fi

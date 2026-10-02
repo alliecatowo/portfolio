@@ -43,8 +43,7 @@ updates:
           - prettier
           - typescript
           - vue-tsc
-          - husky
-          - lint-staged
+          - lefthook
           - '@commitlint/*'
           - '@axe-core/*'
           - pa11y

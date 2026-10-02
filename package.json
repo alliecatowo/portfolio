@@ -9,8 +9,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "prepare": "husky",
-    "lint-staged": "lint-staged",
+    "prepare": "lefthook install --reset-hooks-path",
     "build": "nuxt build",
     "build:static": "nuxt generate",
     "build:studio": "NITRO_PRESET=firebase nuxt build && node scripts/prepare-studio-function.mjs",
@@ -82,8 +81,7 @@
     "firebase-admin": "^14.5.0",
     "firebase-functions": "^7.4.0",
     "h3": "^1.15.11",
-    "husky": "^9.1.7",
-    "lint-staged": "^15.5.2",
+    "lefthook": "^2.1.16",
     "nuxi": "^3.37.0",
     "nuxt": "^4.5.2",
     "pa11y": "^9.1.1",
@@ -93,20 +91,6 @@
     "typescript": "^5.9.3",
     "vue-tsc": "^2.2.12",
     "yaml": "2.9.1"
-  },
-  "lint-staged": {
-    "**/*.{js,ts,vue}": [
-      "eslint --fix"
-    ],
-    "**/*.{css,scss,md,yml,yaml,json}": [
-      "prettier --write"
-    ],
-    "content/**/*.{md,yml,yaml}": [
-      "node scripts/format-content.mjs"
-    ],
-    "package.json": [
-      "bash -c 'pnpm lockfile:check'"
-    ]
   },
   "pnpm": {
     "supportedArchitectures": {
