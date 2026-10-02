@@ -118,7 +118,9 @@ const projectId = route.params.id as string;
 // instead of on load. Nuxt Studio's live preview and dev-mode HMR re-render it, so those get the
 // eager renderer. Studio sets this state once an editor session is active.
 const studioSession = useState('studio-session', () => null)
-const renderEagerly = computed(() => import.meta.dev || !!studioSession.value)
+// Also eager on client navigations (see useHydrateLazily): lazy hydration is for server HTML only.
+const hydrateLazily = useHydrateLazily()
+const renderEagerly = computed(() => import.meta.dev || !!studioSession.value || !hydrateLazily)
 
 // Fetch the project
 const { data: project } = await useAsyncData(

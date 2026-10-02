@@ -60,9 +60,10 @@ export default defineNuxtConfig({
     // utils/activation.js) once an editing session exists, so with it off Studio would throw on the
     // public pages. The cost is one 640-byte builds/meta/<id>.json fetch ~1 s after the page is ready.
     defaults: {
-      // A visible NuxtLink used to prefetch that page's chunks and payload while the first page was
-      // still loading. Prefetch on hover/focus instead; the route chunk is a few KB over HTTP/2.
-      nuxtLink: { prefetchOn: { visibility: false, interaction: true } }
+      // Prefetch a link's route chunk and payload as soon as it scrolls into view (plus on hover/focus).
+      // Phones have no hover, so without visibility prefetch the first tap on a link waits for the
+      // chunk and payload over the network before the page can swap.
+      nuxtLink: { prefetchOn: { visibility: true, interaction: true } }
     }
   },
   modules: [

@@ -105,7 +105,8 @@
 
         <!-- Table of contents, built from the post's own headings -->
         <div v-if="tocLinks.length" class="mb-8 lg:mb-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
-          <LazyUContentToc :links="tocLinks" title="On this page" aria-label="Table of contents" highlight :hydrate-on-interaction="['pointerenter', 'focusin', 'touchstart']" />
+          <LazyUContentToc v-if="hydrateLazily" :links="tocLinks" title="On this page" aria-label="Table of contents" highlight :hydrate-on-interaction="['pointerenter', 'focusin', 'touchstart']" />
+          <LazyUContentToc v-else :links="tocLinks" title="On this page" aria-label="Table of contents" highlight />
         </div>
 
         <div class="min-w-0 lg:col-start-1 lg:row-start-2">
@@ -239,7 +240,9 @@ const slug = route.params.id as string;
 // instead of on load. Nuxt Studio's live preview and dev-mode HMR re-render it, so those get the
 // eager renderer. Studio sets this state once an editor session is active.
 const studioSession = useState('studio-session', () => null);
-const renderEagerly = computed(() => import.meta.dev || !!studioSession.value);
+// Also eager on client navigations (see useHydrateLazily): lazy hydration is for server HTML only.
+const hydrateLazily = useHydrateLazily()
+const renderEagerly = computed(() => import.meta.dev || !!studioSession.value || !hydrateLazily);
 
 // Use content composable
 const { fetchBlogPost, fetchBlogPosts } = useContent();

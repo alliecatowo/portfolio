@@ -195,9 +195,9 @@ import AwardBadge from '~/components/common/AwardBadge.vue'
 import CardImageFallback from '~/components/common/CardImageFallback.vue'
 import { formatContentDate } from '~/utils/formatContentDate'
 
-// Everything under the hero card. The home page mounts this with `hydrate-on-visible`: it is
-// server-rendered like the rest, but its component tree (cards, buttons, links) only hydrates when
-// it scrolls near the viewport, which keeps the first hydration task short.
+// Everything under the hero card, split into its own chunk. It must hydrate with the page, not
+// lazily (`hydrate-on-visible`): its cards and buttons are links, and an unhydrated link is a native
+// navigation, i.e. a full page reload with a flash, instead of a client-side route change.
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const props = defineProps<{
   page: Record<string, any> | null
