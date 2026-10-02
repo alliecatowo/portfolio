@@ -206,7 +206,7 @@ export default defineNuxtConfig({
       failOnError: false,
       ignore: ['/_studio', '/_studio/**', '/__nuxt_studio/**', '/sw.js'],
       // Not linked from any page, so the crawler won't find it
-      routes: isStudioFunction ? [] : ['/llms.txt']
+      routes: isStudioFunction ? [] : ['/llms.txt', '/webmcp/catalog.json']
     }
   },
   ...({ image: {

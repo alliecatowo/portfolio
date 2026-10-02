@@ -1,0 +1,71 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Allison Coleman",
+    "documentationUrl": "https://allisons.dev/llms.txt"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:allisons.dev:site:webmcp-tools",
+      "displayName": "allisons.dev WebMCP tools",
+      "type": "application/webmcp-tools+json",
+      "description": "Read-only WebMCP tools registered in the browser on allisons.dev (document.modelContext.registerTool) for exploring Allison Coleman's projects and writing, plus a declaratively annotated contact form. They only exist in a browser with WebMCP enabled; there is no server endpoint.",
+      "tags": ["webmcp", "portfolio", "browser-agents"],
+      "capabilities": [
+        "search_projects",
+        "get_project",
+        "list_blog_posts",
+        "navigate",
+        "get_contact_info",
+        "send_message"
+      ],
+      "representativeQueries": [
+        "What has Allison Coleman built?",
+        "Find Allison's WebMCP projects",
+        "How do I contact Allison Coleman?",
+        "List Allison's blog posts about agents"
+      ],
+      "data": {
+        "origin": "https://allisons.dev",
+        "api": "document.modelContext.registerTool",
+        "specification": "https://webmachinelearning.github.io/webmcp/",
+        "tools": [
+          {
+            "name": "search_projects",
+            "description": "Search published projects by keyword and optional group.",
+            "readOnly": true
+          },
+          {
+            "name": "get_project",
+            "description": "Get one project's summary and links by slug.",
+            "readOnly": true
+          },
+          {
+            "name": "list_blog_posts",
+            "description": "List published blog posts, newest first.",
+            "readOnly": true
+          },
+          {
+            "name": "navigate",
+            "description": "Open a same-site page in the current tab.",
+            "readOnly": false
+          },
+          {
+            "name": "get_contact_info",
+            "description": "Email link, GitHub, LinkedIn and X.",
+            "readOnly": true
+          }
+        ],
+        "forms": [
+          {
+            "toolname": "send_message",
+            "page": "https://allisons.dev/contact/",
+            "autosubmit": false
+          }
+        ],
+        "dataSnapshot": "https://allisons.dev/webmcp/catalog.json"
+      },
+      "version": "1.0.0"
+    }
+  ]
+}

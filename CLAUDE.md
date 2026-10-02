@@ -38,6 +38,9 @@ pnpm lint:fix
 # Content validation (also runs in CI and before every deploy)
 pnpm validate:content  # scripts/validate-content.ts
 
+# WebMCP end-to-end check: needs a prior `pnpm generate` and Chrome 149+ (CHROME_PATH to override)
+pnpm test:webmcp       # scripts/test-webmcp.mjs
+
 # Content formatting: serializes content/ exactly as Nuxt Studio does, so Studio edits never add noise
 pnpm content:format        # rewrite content/**/*.{md,yml} (scripts/format-content.mjs)
 pnpm content:format:check  # exit 1 on any diff or non-round-tripping file (CI + lint-staged); Prettier ignores content/
@@ -168,6 +171,7 @@ ogImage: /path/to/image (optional; falls back to featured_image, then the defaul
 - **Internal links** use the trailing-slash form (`/about/`, `/projects/<slug>/`); Firebase redirects the bare form
 - **Page metadata**: every page calls `useSiteSeo()` (`app/composables/useSiteSeo.ts`) for title (`Page – Allison Coleman`, suffix skipped if the title already names her or would pass 65 chars), description, canonical (absolute, trailing slash), OpenGraph/Twitter tags and JSON-LD. Shared schema.org nodes (the Person) live in `app/utils/structuredData.ts`. Don't add ad-hoc `useHead` title/meta blocks
 - **Studio-safe content**: Studio writes the stored DB document back to the file, so (a) never mutate documents in build hooks (`content:file:afterParse`) or add `sitemap`-style columns filled at build time: it gets committed into the Markdown. Do such work at render time (`app/components/content/ProseImg.vue` adds image aspect-ratio/lazy loading from `modules/content-image-sizes.ts`). (b) No raw HTML with children in Markdown (a `<video><source>` is turned into a lossy `:video[]`): use an MDC component (`::demo-video{...}` / `app/components/content/DemoVideo.vue`). (c) Avoid `:xx:` in prose (a time like `6:32:` followed by text): Studio's editor parser hard-codes remark-emoji and eats the colons (Content's own emoji plugin is off). `content:format:check` and `content:roundtrip` catch these.
+- **WebMCP**: `app/plugins/webmcp.client.ts` feature-detects `document.modelContext` and registers read-only tools at idle (`app/utils/webmcpTools.ts`), reading the prerendered `/webmcp/catalog.json` (`server/routes/webmcp/`) rather than Content's SQLite WASM. The contact `<form>` is a declarative tool (`toolname`/`tooldescription`, no `toolautosubmit`). `public/.well-known/ai-catalog.json` follows the ARD spec (Lighthouse's `ard-schema` audit); `firebase.json` hosting `ignore` must keep allowing `.well-known`. Keep these, `/llms.txt` and `pnpm test:webmcp` in sync when tools change
 - **404s**: Firebase serves the generated `404.html` (no SPA catch-all rewrite), so unknown and draft URLs return a real 404
 
 ## Nuxt Studio Usage
