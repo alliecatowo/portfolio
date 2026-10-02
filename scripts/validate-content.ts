@@ -196,7 +196,14 @@ for (const [name, collection] of Object.entries(config.collections)) {
         }
       }
 
+      // The frontmatter `video` feeds the JSON-LD and sitemap; the body embed must show the same video
       const d = (data ?? {}) as Record<string, unknown>
+      const embedded = [...body.matchAll(/:youtube-video\{[^}]*?#([\w-]{11})\b|^id:\s*([\w-]{11})\s*$/gm)].map(m => m[1] ?? m[2])
+      const frontmatterVideo = (d.video as { youtube?: string } | undefined)?.youtube
+      if (frontmatterVideo && embedded.length && !embedded.includes(frontmatterVideo)) {
+        report(file, 'video.youtube', `"${frontmatterVideo}" is not the video embedded in the body (${embedded.join(', ')})`)
+      }
+      if (frontmatterVideo && !embedded.length) report(file, 'video.youtube', 'set in frontmatter but no ::youtube-video embed in the body')
       const slug = typeof d.slug === 'string' && d.slug
         ? d.slug
         : collection.type === 'page' ? basename(file, ext) : undefined

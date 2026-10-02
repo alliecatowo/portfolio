@@ -35,6 +35,10 @@ technologies:
   - Yjs
   - Playwright
   - Jest
+video:
+  youtube: B_7dSo4hH0k
+  title: JupyterLite WebMCP — OpenAI WebMCP Challenge Demo
+  uploadDate: 2026-09-03
 ---
 
 **Your notebook is already in the browser. Now your agent can be too.**
@@ -44,6 +48,10 @@ A working notebook mostly lives in a browser tab, not on disk: the cell you just
 JupyterLite WebMCP takes the other route. It's a frontend-only JupyterLab and JupyterLite extension that hands the notebook you already have open to a browser agent through [WebMCP](https://github.com/webmachinelearning/webmcp) (`document.modelContext.registerTool`). It registers 22 tools for reading, navigating, editing, running and reviewing, and it brings no server, no API key, no chat UI and no model of its own. The agent sees the same unsaved edits, the same selection, the same kernel and the same outputs you do.
 
 It was built for the OpenAI WebMCP Challenge (August 25 – September 3, 2026) and was selected as one of the challenge's [10 winning projects](https://webmcp.devpost.com/project-gallery).
+
+## Demo
+
+:youtube-video{#B_7dSo4hH0k title="JupyterLite WebMCP — OpenAI WebMCP Challenge Demo"}
 
 ![In ChatGPT's in-app browser, an agent has edited a JupyterLite notebook cell. A '±2 changed' popover titled 'What the agent changed' shows converted / visitors replaced by converted / eligible\_sessions.](/images/projects/jupyterlite-webmcp/hero.gif)
 

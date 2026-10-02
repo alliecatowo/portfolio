@@ -30,6 +30,10 @@ technologies:
   - Web Audio
   - Vite
   - Playwright
+video:
+  youtube: 30XNqUlsY4o
+  title: Strudel WebMCP — OpenAI WebMCP Challenge Demo
+  uploadDate: 2026-09-03
 ---
 
 **Live-code together.**
@@ -37,6 +41,10 @@ technologies:
 One of four entries Allison submitted to OpenAI's WebMCP Challenge on 3 September 2026, with the winning [JupyterLite WebMCP](/projects/jupyterlite-webmcp/), [Swagger UI WebMCP](/projects/swagger-ui-webmcp/) and [Careers WebMCP](/projects/careers-webmcp/). It was the last of the four to go in, about 45 minutes before the original deadline.
 
 [Strudel](https://strudel.cc) is a live-coding environment for music in the browser. Strudel WebMCP wraps the official Strudel REPL and gives a browser agent 13 [WebMCP](https://github.com/webmachinelearning/webmcp) tools over the live, unsaved editor buffer and the running scheduler. You can drag an inline slider while the agent rewrites a different line.
+
+## Demo
+
+:youtube-video{#30XNqUlsY4o title="Strudel WebMCP — OpenAI WebMCP Challenge Demo"}
 
 ![Strudel live-coding editor after agent edits, with Read, Review and Live permission modes in the header and a recorded audio take below the code.](/images/projects/strudel-webmcp/takes.webp)
 

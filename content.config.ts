@@ -71,7 +71,14 @@ export default defineContentConfig({
         image: z.string().optional(),
         imageAlt: z.string().optional(),
         // 1200x630 share image; falls back to /images/og/<slug>.png if present, then the default
-        ogImage: z.string().optional()
+        ogImage: z.string().optional(),
+        // A YouTube demo of the project, embedded in the body with ::youtube-video. This is where the
+        // VideoObject JSON-LD and the sitemap video entry come from.
+        video: z.object({
+          youtube: z.string(),
+          title: z.string(),
+          uploadDate: z.union([z.string(), z.date()])
+        }).optional()
       })
     }),
     pages: defineCollection({
