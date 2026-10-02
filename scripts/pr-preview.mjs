@@ -53,7 +53,7 @@ process.stdout.write('Waiting for the preview channel (needs typecheck, lint, va
 while (Date.now() < deadline) {
   const comments = JSON.parse(run('gh', ['pr', 'view', String(pr.number), '--json', 'comments', '-q', '.comments'])) || []
   const hit = comments.map(c => c.body).reverse().find(b => /\.web\.app/.test(b) && b.includes(sha))
-  if (hit) { console.log(`\nPreview: ${hit.match(/https:\/\/[^\s)]+\.web\.app[^\s)]*/)[0]}`); process.exit(0) }
+  if (hit) { console.log(`\nPreview: ${hit.match(/https:\/\/[^\s)\]]+\.web\.app[^\s)\]]*/)[0]}`); process.exit(0) }
   process.stdout.write('.')
   await new Promise(r => setTimeout(r, 15_000))
 }
