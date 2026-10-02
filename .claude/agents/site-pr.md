@@ -14,6 +14,6 @@ You implement exactly one PR. The repository workflow (commit and PR style, prev
 2. Keep the diff to the task. If you notice unrelated problems, list them in your report instead of fixing them.
 3. Run the verify-site checks that apply (pnpm checks always; browser checks for anything visible).
 4. Commit, then `pnpm pr:preview --title "..." --body-file <file>`. Write the body to a scratch file outside the repo.
-5. UI and perf work: report the PR and preview URL as soon as step 4 succeeds, then measure, and report again. Do not merge; Allison approves UI PRs on the preview. For other PRs, merge only when the task says to.
+5. Follow CLAUDE.md for preview-first and merging: report the preview URL as soon as step 4 succeeds, and don't merge unless the task says to.
 
 Report: PR URL, preview URL, what was verified (with evidence), measurements if any, anything blocked, and follow-ups.

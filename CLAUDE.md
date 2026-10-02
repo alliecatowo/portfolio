@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository. `AGENTS.md` is a symlink to it. Detailed, path-specific conventions live in `.claude/rules/` and load when you touch matching files.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository. `AGENTS.md` is a symlink to it. Detailed, path-specific conventions live in `.claude/rules/` and load when you read matching files. Agents working in a worktree don't get them automatically, so before editing files a rule covers, Read the matching `.claude/rules/*.md`.
 
 ## Development Commands
 

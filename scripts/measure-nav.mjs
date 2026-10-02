@@ -102,8 +102,19 @@ async function scenario(name, { from, scrollY: y = 0, action, afterLoad }) {
   }
 }
 
+// Tap the first matching link that is already on screen at the scrolled position (don't scroll back to it).
+const visibleLink = async (page, selector) => {
+  const links = page.locator(selector)
+  const count = await links.count()
+  for (let i = 0; i < count; i++) {
+    const top = await links.nth(i).evaluate(el => el.getBoundingClientRect().top)
+    const height = await page.evaluate(() => innerHeight)
+    if (top > 80 && top < height - 80) return links.nth(i)
+  }
+  return links.first()
+}
 const tapLink = selector => ({
-  prepare: async page => { const link = page.locator(selector).first(); await link.scrollIntoViewIfNeeded(); await page.waitForTimeout(500); return link },
+  prepare: page => visibleLink(page, selector),
   run: (_page, link) => link.tap()
 })
 const POST = 'main a[href^="/blog/"][href$="/"]:not([href="/blog/"])'
@@ -116,7 +127,7 @@ rows.push(await scenario('projects (scrolled) -> project', { from: '/projects/',
 rows.push(await scenario('post -> back to blog list', {
   from: '/blog/', scrollY: 1200,
   action: {
-    prepare: async page => { const link = page.locator(POST).first(); await link.scrollIntoViewIfNeeded(); await link.tap(); await page.waitForURL(/\/blog\/.+\//); await page.waitForTimeout(3000) },
+    prepare: async page => { const link = await visibleLink(page, POST); await link.tap(); await page.waitForURL(/\/blog\/.+\//); await page.waitForTimeout(3000) },
     run: page => page.goBack()
   }
 }))

@@ -79,6 +79,6 @@ Production builds drop draft posts and projects from their collections in `conte
 
 ## Writing project pages
 
-- Only verified facts from the project's repo, README, releases and live demo (local clones are in `/home/allie/develop/<repo>`, and per-project dossiers may exist under `.claude/project-dossiers/`, which is local and never committed). No invented metrics, and no "AI thought leader" tone. Voice: grounded, specific, a little funny.
+- Only verified facts from the project's repo, README, releases and live demo (local clones sit next to this repo, and per-project dossiers may exist under `.claude/project-dossiers/`, which is local and never committed). No invented metrics, and no "AI thought leader" tone. Voice: grounded, specific, a little funny.
 - Real media only: actual captures of the project, with alt text that describes them.
 - Explore the project properly before writing: use the `project-explorer` agent, one per project.

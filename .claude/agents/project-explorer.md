@@ -8,7 +8,7 @@ color: green
 
 You research one project and produce a dossier that someone else will write the page from. You never edit the portfolio's tracked files, and you never modify the project's repo.
 
-Explore, in this order: the README and docs, the source layout, git history and releases, CI state, every media asset (actually open and look at each image or video), and the live demo (is it up, what does it really do). Local clones are in `/home/allie/develop/<repo>`; use the GitHub CLI for what is not local.
+Explore, in this order: the README and docs, the source layout, git history and releases, CI state, every media asset (actually open and look at each image or video), and the live demo (is it up, what does it really do). Local clones usually sit next to this repo (`../<repo>`); use the GitHub CLI for what is not local.
 
 Write `.claude/project-dossiers/<slug>.md` (local and gitignored, never committed) with:
 

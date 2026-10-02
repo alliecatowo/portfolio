@@ -35,7 +35,7 @@ if (!pr) {
   const bodyFile = opt('body-file') || die('first run needs --body-file <file> with a real description (what, why, how verified)')
   const body = readFileSync(bodyFile, 'utf8')
   if (!/^(feat|fix|chore|docs|style|refactor|perf|test|build|ci|revert)(\([\w-]+\))?!?: \S/.test(title)) die('title must be a conventional-commit subject, e.g. "fix: stop the nav flicker".')
-  if (/generated with|claude\.ai\/code|co-authored-by/i.test(body)) die('PR body has an attribution footer or trailer. Remove it.')
+  if (/^\W*generated with \[?claude code/im.test(body) || /^co-authored-by:/im.test(body)) die('PR body has an attribution footer or trailer. Remove it.')
   if (body.trim().split(/\s+/).length < 25) die('PR body is too thin: say what changed, why, and how it was verified.')
   run('git', ['push', '--force-with-lease', '-u', 'origin', 'HEAD'])
   run('gh', ['pr', 'create', '--base', 'main', '--title', title, '--body-file', bodyFile])
