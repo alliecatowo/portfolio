@@ -9,7 +9,7 @@
   ],
   "hosting": {
     "public": ".output/public",
-    "ignore": ["**/.*", "**/node_modules/**"],
+    "ignore": ["**/.!(well-known)", "**/node_modules/**"],
     "headers": [
       {
         "source": "**",

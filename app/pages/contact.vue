@@ -102,7 +102,12 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
             <h2 class="text-2xl font-bold">Send a Message</h2>
           </template>
 
+          <!-- Declarative WebMCP: an agent can fill this in. No `toolautosubmit`, so sending stays a human click.
+               The Subject combobox has `name=""` so Reka skips its nameless hidden bridge input, which would
+               otherwise show up to agents as an undescribed parameter. Subject is optional; agents put it in the message. -->
           <UForm
+            toolname="send_message"
+            tooldescription="Fill in the contact form to send Allison Coleman a message. The form is only filled in, not sent: the person using the page reviews it and presses Send Message."
             :state="form"
             :schema="schema"
             class="space-y-8"
@@ -117,6 +122,7 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
                 :ui="inputUi"
                 class="w-full"
                 autocomplete="name"
+                toolparamdescription="The sender's full name"
               />
             </UFormField>
 
@@ -129,6 +135,7 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
                 :ui="inputUi"
                 class="w-full"
                 autocomplete="email"
+                toolparamdescription="The sender's email address, so Allison can reply"
               />
             </UFormField>
 
@@ -141,6 +148,7 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
                 placeholder="Select inquiry type"
                 value-key="value"
                 label-key="label"
+                name=""
                 :ui="selectUi"
                 class="w-full"
               >
@@ -153,7 +161,7 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
             <!-- Honeypot: hidden from people and assistive tech, bots fill it in -->
             <div class="hidden" aria-hidden="true">
               <label for="contact-honey">Leave this empty</label>
-              <input id="contact-honey" v-model="honeypot" type="text" name="_honey" tabindex="-1" autocomplete="off">
+              <input id="contact-honey" v-model="honeypot" type="text" name="_honey" tabindex="-1" autocomplete="off" toolparamdescription="Spam trap. Always leave empty.">
             </div>
 
             <UFormField label="Message" name="message" required :ui="formFieldUi">
@@ -165,6 +173,7 @@ href="https://x.com/AllieCatOwO" target="_blank" rel="noopener noreferrer"
                 :ui="textareaUi"
                 class="w-full"
                 :resize="true"
+                toolparamdescription="The message itself: what the sender is building or wants to talk about"
               />
             </UFormField>
 
