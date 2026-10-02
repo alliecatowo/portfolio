@@ -140,7 +140,9 @@ export default defineNuxtConfig({
         { name: 'twitter:creator', content: '@AllieCatOwO' }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        // Heart icon: Fluent Emoji Flat "pink-heart" (Microsoft, MIT). See public/ICONS.md.
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        { rel: 'icon', type: 'image/x-icon', sizes: '48x48', href: '/favicon.ico' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
         { rel: 'manifest', href: '/site.webmanifest' }
       ]
