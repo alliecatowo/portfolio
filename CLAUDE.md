@@ -1,273 +1,114 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository. `AGENTS.md` is a symlink to it. Detailed, path-specific conventions live in `.claude/rules/` and load when you read matching files. Agents working in a worktree don't get them automatically, so before editing files a rule covers, Read the matching `.claude/rules/*.md`.
 
 ## Development Commands
 
-### Local Development
+**IMPORTANT: Always use pnpm 10, never npm or yarn** (pinned in `mise.toml` and `packageManager`; pnpm 11 ignores the `pnpm` field in package.json and breaks `--frozen-lockfile`).
 
 ```bash
-# Start development server
-pnpm dev
-
-# Start with a clean database (fixes SQLite corruption)
-pnpm dev:clean
-```
-
-### Build Commands
-
-**IMPORTANT: Always use pnpm, not npm**
-
-```bash
-# Build for production
-pnpm build
-
-# Generate static site
-pnpm generate
-
-# Preview production build
-pnpm preview
-
-# Type checking
+pnpm dev                 # dev server (http://localhost:3000, floating Studio button bottom-left)
+pnpm dev:clean           # wipe the SQLite DB first (fixes corruption)
+pnpm build               # production build
+pnpm generate            # static site into .output/public
+pnpm preview             # preview a production build
 pnpm typecheck
-
-# Linting
-pnpm lint
-pnpm lint:fix
-
-# Content validation (also runs in CI and before every deploy)
-pnpm validate:content  # scripts/validate-content.ts
-
-# WebMCP end-to-end check: needs a prior `pnpm generate` and Chrome 149+ (CHROME_PATH to override)
-pnpm test:webmcp       # scripts/test-webmcp.mjs
+pnpm lint                # pnpm lint:fix to auto-fix
+pnpm validate:content    # scripts/validate-content.ts (also CI and every deploy)
+pnpm test:webmcp         # end-to-end WebMCP check: needs a prior `pnpm generate` and Chrome 149+ (CHROME_PATH to override)
+pnpm check:images        # every pre-rendered /_ipx/ image URL exists in the build (after generate)
+pnpm check:seo           # SEO gate on the static build (after generate; also in CI)
+pnpm lighthouse          # Lighthouse CI (lighthouserc.json; also in CI)
 
 # Content formatting: serializes content/ exactly as Nuxt Studio does, so Studio edits never add noise
-pnpm content:format        # rewrite content/**/*.{md,yml} (scripts/format-content.mjs)
+pnpm content:format        # rewrite content/**/*.{md,yml}
 pnpm content:format:check  # exit 1 on any diff or non-round-tripping file (CI + lint-staged); Prettier ignores content/
-pnpm content:roundtrip     # after `pnpm generate`: Studio's save of every built DB row must equal the file (scripts/check-studio-roundtrip.mjs)
+pnpm content:roundtrip     # after `pnpm generate`: Studio's save of every built DB row must equal the file
 
-# Database Management (Nuxt Content SQLite)
-pnpm db:clean      # Remove corrupted SQLite database
-pnpm db:rebuild    # Clean + regenerate database
+# Database (Nuxt Content SQLite)
+pnpm db:clean      # remove corrupted SQLite database
+pnpm db:rebuild    # clean + regenerate
 
-# Lockfile Management
-pnpm lockfile:check   # Check lockfile vs package.json
-pnpm lockfile:update  # Sync lockfile and stage for commit
-pnpm install --frozen-lockfile  # CI-strict install
+# Lockfile
+pnpm lockfile:check            # lockfile vs package.json
+pnpm lockfile:update           # sync and stage
+pnpm install --frozen-lockfile # CI-strict install
 ```
 
-### Firebase Emulation
+### Serving and measuring a build
 
 ```bash
-# Build static site and serve via Firebase emulator
-pnpm emulate
-# Serves at http://127.0.0.1:5000 — mirrors production Firebase hosting exactly
+pnpm serve:static     # serves .output/public like Firebase Hosting (trailing-slash 301s, redirects, headers, 404.html, gzip/br) on :5000
+pnpm emulate          # generate + the real Firebase hosting emulator at http://127.0.0.1:5000
+pnpm measure:nav      # Pixel 7 + Fast 3G + 4x CPU navigation timing (DOM swap vs scroll reset gap, CLS, footer movement)
+pnpm measure:nav --url https://allisons.dev   # same against a preview channel or production
 ```
+
+`measure:nav` uses playwright-core with the system Chrome (`CHROME_PATH` overrides `/usr/bin/google-chrome`) and serves `.output/public` itself unless given `--url`. Run `pnpm generate` first.
 
 ### Deployment
 
-Handled automatically via GitHub Actions:
-
-- **Production (static)**: `https://allisons.dev` — deployed from `main` branch to Firebase hosting via `pnpm generate`
-- **Staging**: Firebase preview channel — manual `workflow_dispatch` only (production deploys on every push to `main`)
-- **PRs**: Temporary preview channels auto-deployed on open
-- **Studio function**: the production workflow also builds (`pnpm build:studio`) and deploys the `studio` 2nd-gen Cloud Function that serves Nuxt Studio's server routes. See `STUDIO.md`
+Handled by GitHub Actions: production (`https://allisons.dev`) deploys from `main` to Firebase hosting via `pnpm generate`, plus the `studio` 2nd-gen Cloud Function (`pnpm build:studio`, see `STUDIO.md`); staging is a manual `workflow_dispatch`; PRs get a temporary preview channel.
 
 ## Architecture Overview
 
 Single-site **developer portfolio** built with Nuxt 4 and deployed to Firebase static hosting.
 
-### Core Stack
-
-- **Framework**: Nuxt 4 (SSR with static preset for Firebase)
-- **Content**: `@nuxt/content` v3 — file-based Markdown with native SQLite
-- **UI**: `@nuxt/ui` v4 + Tailwind CSS v4
-- **Images**: `@nuxt/image`
+- **Framework**: Nuxt 4 (SSR with static preset for Firebase) on Node.js 22.x (native SQLite)
+- **Content**: `@nuxt/content` v3, file-based Markdown + SQLite
+- **UI**: `@nuxt/ui` v4 + Tailwind CSS v4; **Images**: `@nuxt/image`
 - **Deploy**: Firebase static hosting via GitHub Actions
-- **Node.js**: 22.x (required for native SQLite)
-
-### Directory Structure
 
 ```
 portfolio/
-├── app/                        # Nuxt application root
-│   ├── pages/                  # File-based routes
-│   │   ├── index.vue           # Home
-│   │   ├── about.vue           # About
-│   │   ├── contact.vue         # Contact
-│   │   └── blog/               # Blog listing + posts
-│   ├── components/             # Vue components
-│   ├── composables/            # useContent, useReadTime, etc.
-│   ├── layouts/                # Default layout
-│   └── utils/                  # Color utils, etc.
-├── content/                    # Markdown + data content
-│   ├── blog/                   # Blog post .md files
-│   ├── projects/               # Project .md files
-│   ├── pages/                  # Home/about page data (.yml)
-│   └── globals/                # Footer, nav data (.yml)
-├── docs/                       # Developer docs
-├── public/                     # Static assets
-├── content.config.ts           # Content collection schemas
-├── nuxt.config.ts              # Nuxt configuration
-└── package.json
+├── app/                  # pages/, components/, composables/, layouts/, utils/, assets/css/
+├── content/              # blog/, projects/ (.md), pages/ and globals/ (.yml)
+├── server/               # sitemap source, llms.txt, WebMCP catalog routes
+├── modules/              # Nuxt modules (content image sizes)
+├── scripts/              # validation, formatting, serve/measure tooling
+├── docs/                 # developer docs
+├── public/               # static assets (images/og/<slug>.png by convention)
+├── .claude/              # rules/, agents/, skills/, settings.json (committed)
+├── content.config.ts     # collection schemas
+├── nuxt.config.ts
+└── firebase.json
 ```
 
-### Content Management
+### Constraints that must not regress
 
-Content lives in `content/` as Markdown files with YAML frontmatter.
+Full detail is in the path-scoped rules; this is the checklist.
 
-**Project frontmatter schema** (`content/projects/*.md`):
+- **Content** (`.claude/rules/content.md`): schemas and required fields are enforced only by `pnpm validate:content`. Published items need description (120-165 chars), date, image + imageAlt (projects) or author (posts). `public/images/og/<slug>.png` is referenced by convention: don't delete it as unreferenced.
+- **Studio-safe content**: Studio writes the stored DB document back to the file, so never mutate documents in build hooks or add build-time-filled columns; no raw HTML with children in Markdown (use MDC components); avoid `:xx:` in prose. `content:format:check` and `content:roundtrip` catch these.
+- **Drafts never ship**: production builds drop drafts from the collections because every row is published in `/__nuxt_content/<collection>/sql_dump.txt`. Edit drafts locally; never set `CONTENT_INCLUDE_DRAFTS=true` for the static build.
+- **Hosting, CSP, 404s** (`.claude/rules/hosting-and-build.md`): headers go on documents only; the header CSP has no `script-src` because a per-page `<meta>` CSP carries script hashes (new third-party hosts go in the header or `SCRIPT_SRC_HOSTS`); Firebase serves a generated `404.html`; `experimental.appManifest` must stay on; hosting `ignore` must allow `.well-known`; internal links use the trailing-slash form.
+- **SEO and WebMCP** (`.claude/rules/seo-and-webmcp.md`): every page calls `useSiteSeo()` (no ad-hoc `useHead` title/meta); sitemap URLs come from a server source, not collection columns; keep WebMCP tools, `/llms.txt` and `pnpm test:webmcp` in sync.
+- **Motion** (`.claude/rules/motion-and-ui.md`): decorative animation is compositor-only (`transform`/`opacity`), and stops under `prefers-reduced-motion` and the in-page toggle.
+- **Nuxt Studio**: `https://allisons.dev/_studio` (or Cmd + `.`), GitHub login, only emails in `STUDIO_GITHUB_MODERATORS`; it commits to `main` with your token, which redeploys. In dev, Studio edits write straight to local files. How it works on Firebase: `STUDIO.md`.
 
-```yaml
-title: string
-description: string
-date: YYYY-MM-DD
-slug: string
-status: published | draft
-featured: true | false
-technologies: [list]
-tags: [list]
-github: URL (optional)
-demo: URL (optional)
-devpost: URL (optional)
-order: number (optional; ascending, unordered projects sort after by date)
-award: string (optional; shown as a badge)
-group: string (optional)
-image: /path/to/image (optional)
-imageAlt: string (optional; alt text for image)
-ogImage: /images/og/<slug>.png (optional; 1200x630 share image)
-video: {youtube: <id>, title, uploadDate} (optional; a YouTube demo. Drives the VideoObject JSON-LD and the sitemap video entry. Embed it in the body with `::youtube-video{id title}`, a wrapper around @nuxt/scripts ScriptYouTubePlayer that loads nothing from YouTube until click)
-seo: { title, description } (optional; search title/description override, aim for ~50-60 / 140-160 chars)
-```
+## Agent workflow
 
-**OG images**: `public/images/og/<slug>.png` (1200x630) is picked up by convention for a project whose `slug` matches, even without `ogImage` in frontmatter (`nuxt.config.ts` lists the directory at build time). Files there are referenced by convention, not by content, so don't delete them as "unreferenced". Pages without their own image use `/images/og/default.png` (the avatar card).
+Rules here are backed by tooling where possible; the tool is named next to the rule.
 
-**Blog frontmatter schema** (`content/blog/*.md`):
-
-```yaml
-title: string
-date: YYYY-MM-DD
-description: string
-category: dev
-tags: [list]
-author: Allison Coleman
-published: true | false
-featured: true | false
-slug: string
-featured_image: /path/to/image (optional)
-ogImage: /path/to/image (optional; falls back to featured_image, then the default OG)
-```
-
-**Required for published items** (enforced by `pnpm validate:content`, not the zod schemas, so drafts stay flexible): projects need `description`, `date`, `image` + `imageAlt`; blog posts need `description`, `date`, `author`; the shipped description (`seo.description`, else `description`) must be 120-165 characters. Projects with no real capture yet are listed in `IMAGE_EXEMPT` in `scripts/validate-content.ts`; remove a slug there once it has an image.
-
-### Key Configurations
-
-- **SQLite**: Uses Node.js native SQLite (`experimental.sqliteConnector: 'native'`)
-- **Nuxt Studio**: Self-hosted module (`nuxt-studio` 1.7.0). In production, `firebase.json` rewrites `/_studio`, `/__nuxt_studio/**` and `/sw.js` to the `studio` Cloud Function (built with `NITRO_PRESET=firebase` into `.output-studio/`); everything else is static
-- **Pre-rendering**: every public page is pre-rendered (`routeRules '/**'`); Studio routes never are
-- **ISR disabled**: All content pages are pre-rendered at build time
-- **SEO/crawl**: `@nuxtjs/robots` + `@nuxtjs/sitemap` generate `/robots.txt` and `/sitemap.xml` from `site` in `nuxt.config.ts` (trailing-slash URLs). Blog and project URLs (published only, `lastmod` from the content date) come from the sitemap source `server/routes/__sitemap__/site-content-urls.json.ts`, not from a `sitemap` column on the collections. `/llms.txt` is generated from content by `server/routes/llms.txt.ts`
-- **Drafts never ship**: production builds drop draft posts and projects from their collections in `content.config.ts`, because every collection row (body included) is published in `/__nuxt_content/<collection>/sql_dump.txt`. Studio edits from those public dumps, so it can't see drafts; edit drafts locally. Never set `CONTENT_INCLUDE_DRAFTS=true` for the static build
-- **Internal links** use the trailing-slash form (`/about/`, `/projects/<slug>/`); Firebase redirects the bare form
-- **Page metadata**: every page calls `useSiteSeo()` (`app/composables/useSiteSeo.ts`) for title (`Page – Allison Coleman`, suffix skipped if the title already names her or would pass 65 chars), description, canonical (absolute, trailing slash), OpenGraph/Twitter tags and JSON-LD. Shared schema.org nodes (the Person) live in `app/utils/structuredData.ts`. Don't add ad-hoc `useHead` title/meta blocks
-- **Studio-safe content**: Studio writes the stored DB document back to the file, so (a) never mutate documents in build hooks (`content:file:afterParse`) or add `sitemap`-style columns filled at build time: it gets committed into the Markdown. Do such work at render time (`app/components/content/ProseImg.vue` adds image aspect-ratio/lazy loading from `modules/content-image-sizes.ts`). (b) No raw HTML with children in Markdown (a `<video><source>` is turned into a lossy `:video[]`): use an MDC component (`::demo-video{...}` / `app/components/content/DemoVideo.vue`). (c) Avoid `:xx:` in prose (a time like `6:32:` followed by text): Studio's editor parser hard-codes remark-emoji and eats the colons (Content's own emoji plugin is off). `content:format:check` and `content:roundtrip` catch these.
-- **WebMCP**: `app/plugins/webmcp.client.ts` feature-detects `document.modelContext` and registers read-only tools at idle (`app/utils/webmcpTools.ts`), reading the prerendered `/webmcp/catalog.json` (`server/routes/webmcp/`) rather than Content's SQLite WASM. The contact `<form>` is a declarative tool (`toolname`/`tooldescription`, no `toolautosubmit`). `public/.well-known/ai-catalog.json` follows the ARD spec (Lighthouse's `ard-schema` audit); `firebase.json` hosting `ignore` must keep allowing `.well-known`. Keep these, `/llms.txt` and `pnpm test:webmcp` in sync when tools change
-- **404s**: Firebase serves the generated `404.html` (no SPA catch-all rewrite), so unknown and draft URLs return a real 404. Nuxt renders `/404.html` itself with SSR off (an empty shell), so the hidden `/not-found-shell/` page is prerendered with the real error content and a `prerender:done` hook in `nuxt.config.ts` copies its HTML over `404.html` and deletes the shell folder
-- **Motion**: decorative animation is compositor-only (`transform`/`opacity`, never `background-position` or `box-shadow`; Lighthouse flags those as non-composited). `.text-gradient-animated` clips text with `-webkit-mask-clip: text` and slides a `::before` gradient layer; `.bg-gradient-animated` slides an oversized `::before` wash under a `::after` dots layer. Both stop under `prefers-reduced-motion` and the in-page reduced-motion toggle
-- **Security headers / CSP**: `firebase.json` sends HSTS, COOP, `X-Frame-Options`, nosniff, Referrer-Policy, Permissions-Policy and a Content-Security-Policy on documents only (`**/` and `**/*.html`; sending them on every asset costs ~1.4 KB per response). The header CSP deliberately has no `script-src`/`default-src`: the inline scripts Nuxt emits change every build, so the `prerender:generate` hook in `nuxt.config.ts` adds a `<meta http-equiv="Content-Security-Policy">` to each page with `script-src` plus the SHA-256 of that page's inline scripts (and `script-src-attr 'unsafe-hashes'` for NuxtImg's `onerror`). The two policies are intersected, so a header `script-src` would block the hashed scripts. New third-party hosts (scripts, frames, images, `connect-src`) must be added to the header or `SCRIPT_SRC_HOSTS`. Nuxt Studio's editor mounts on the public pages once you are signed in (it imports its code editor from `esm.sh` and calls `api.github.com`), so those hosts are allowed site-wide. `experimental.appManifest` must stay on: Studio's activation calls `getAppManifest()`.
-
-## Nuxt Studio Usage
-
-### Development (no config needed)
-
-```bash
-pnpm dev
-# Visit http://localhost:3000 — floating Studio button bottom-left
-```
-
-Studio edits in dev mode write directly to local files. Use your normal git workflow to commit.
-
-### Production Studio
-
-Visit `https://allisons.dev/_studio` (or press Cmd + `.` on any page) and log in with GitHub. Only emails in `STUDIO_GITHUB_MODERATORS` get in. Studio commits to `main` with your GitHub token, which redeploys the site.
-
-How it works on Firebase (the `__session` cookie workaround, secrets, OAuth callback, one-time GCP setup, costs): `STUDIO.md`.
+- **Worktrees**: one per PR branch, always in `.claude/worktrees/<branch-with-dashes>` (gitignored), never in `/tmp` or the scratchpad (no installs or builds there either). `pnpm worktree <branch>` creates one from `origin/main` with dependencies installed (and reuses an existing one); `pnpm worktree --remove <branch>` when merged or abandoned. Never work on `main`. Subagents that write code use `isolation: worktree` (the `site-pr` agent does).
+- **pnpm only**: never npm or yarn (denied in `.claude/settings.json`).
+- **Commits**: conventional subject, blank line, short description body (what and why). **No `Co-Authored-By` trailer** (commitlint rejects it, locally via the `commit-msg` hook and in CI).
+- **PRs**: conventional title, a real description (what, why, how verified, old to new location for moves), **no "Generated with Claude Code" footer**. `pnpm pr:preview --title "..." --body-file body.md` rebases-check, lints the commits, pushes, opens the PR and prints the preview URL.
+- **Perf and UI fixes**: preview first, measure after. As soon as the code compiles and the basic checks pass (about 15 minutes), run `pnpm pr:preview` and report the URL; then measure (`pnpm measure:nav`, one Lighthouse run, not three; CI Lighthouse covers the rest). One variant per PR: for alternatives, open separate quick previews instead of comparing locally.
+- **Merging**: UI PRs wait for Allison's OK on the preview. Before any merge: `git fetch && git rebase origin/main` (`pr:preview` refuses a branch that is behind), re-run typecheck, lint and generate, push with `--force-with-lease`, `gh pr checks --watch` until green, then `gh pr merge --squash`. Don't merge with red CI.
+- **After merge**: watch "Deploy to Production" (`gh run list --branch main`, `gh run watch <id>`), then verify production per the `verify-site` skill, with a cache-busting `?v=<sha>` since HTML is cached for an hour. Remove the worktree.
+- **Processes**: start servers so you know the PID (`cmd & echo $!`) and kill by PID only (`kill <pid>`). Never `pkill`, `killall` or `fuser -k` (denied in `.claude/settings.json`); other agents' servers are running too. `pnpm serve:static` and `pnpm measure:nav` clean up after themselves.
+- **Research artifacts are never committed**: `.claude/project-dossiers/`, `.claude/build-logs/`, `.claude/site-launch-plan.md`, `.claude/settings.local.json` (gitignored). Committed under `.claude/`: `rules/`, `agents/`, `skills/`, `settings.json`.
+- **Blocked by the permission classifier**: stop and report what was blocked and why it mattered. Don't try another route around it.
+- **Parallel agents**: other agents work other PRs at the same time. Keep your diff scoped to your PR; resolve rebase conflicts keeping both sides' intent. Claude in Chrome is shared: open your own tab and close it when done; never trigger alert/confirm dialogs.
+- **Delegation**: orchestrate with subagents to keep the main context for decisions. Subagents default to Sonnet (set `model` explicitly); Opus only for genuinely hard investigation or architecture calls. Agents in `.claude/agents/`: `site-pr` (implement and open one PR) and `project-explorer` (deep-dive one project before writing its page; one per project).
+- **Verify**: every site change goes through the `verify-site` skill, including the real-browser checks (Claude in Chrome); that step is not optional.
+- Lint-staged's Prettier hook reformats `pnpm-lock.yaml`; if you change deps, regenerate with pnpm and make sure the committed lockfile passes `--frozen-lockfile`.
 
 ## Troubleshooting
 
-### Nuxt Content SQLite Issues
-
-**Problem**: `no such table: _content_blog` or similar errors during `pnpm dev`
-
-**Solution**:
-
-```bash
-pnpm dev:clean   # wipes .data/content/contents.sqlite and restarts
-```
-
-**Root cause**: SQLite database corruption during HMR. The `.data/` directory is gitignored and regenerated automatically.
-
-### Common Issues
-
-- **Port conflict**: Nuxt auto-selects next available port if 3000 is taken
-- **TypeScript errors after updates**: `pnpm typecheck`
-- **Lint failures**: `pnpm lint:fix` for auto-fixable issues
-- **`validate:content` fails**: Nuxt Content v3 turns the zod schemas into SQLite columns but never rejects bad frontmatter, so the validator is the only gate. It imports the schemas from `content.config.ts` (via `scripts/nuxt-content-shim.mjs`), `safeParse`s every file, and checks that local image paths exist under `public/`, URL fields have `http(s)://`, body links aren't bare domains, slugs are unique, and no `picsum.photos`/`placehold.co` appears in `content/` or `app/`. Fix the reported `file:field`. Studio can leave empty stubs (e.g. `card: {buttons: []}`) that fail required fields; delete them.
-- **Lockfile out of sync**: `pnpm lockfile:update` then commit both `package.json` and `pnpm-lock.yaml`
-
-### pnpm Lockfile Issues
-
-**Problem**: Firebase deploy fails with "lockfile is out of sync"
-
-```bash
-pnpm lockfile:update   # fix and stage
-# or from scratch:
-rm pnpm-lock.yaml && pnpm install
-```
-
-## Git Workflow & CI/CD
-
-### Branch Structure
-
-- **main**: Integration branch (protected, requires PR + CI)
-- **feature branches**: Branch from main, open PR to merge back
-
-### Workflow
-
-1. Create a worktree for the branch (see below); never work directly on `main`
-2. Make changes and commit (conventional subject + description body)
-3. Verify with the `verify-site` skill (`.claude/skills/verify-site/SKILL.md`): pnpm checks, build-output checks, and browser checks at 375/768/1440
-4. Push + open PR against `main`
-5. CI runs: setup/install, typecheck, lint, commitlint, Firebase preview channel
-6. On merge: auto-deploys to production (https://allisons.dev), then verify production
-
-### Commit Message Style
-
-Conventional-commit subject line, a blank line, then a short description body explaining what changed and why. Do not add AI co-author trailers (no `Co-Authored-By: Claude ...`).
-
-```bash
-git commit -m "fix: correct image path in assistarr card" \
-  -m "The card pointed at /images/assistar.png, which 404s on the static build. Point it at the real file."
-```
-
-PRs: conventional title (checked by the Semantic PR Title workflow) and a real description (what, why, how verified). No "Generated with Claude Code" footer.
-
-### Agent Workflow
-
-Implementation happens in git worktrees under `.claude/worktrees/<branch-with-dashes>` (gitignored), one per PR branch:
-
-```bash
-git fetch origin
-git worktree add .claude/worktrees/feat-your-feature -b feat/your-feature origin/main
-cd .claude/worktrees/feat-your-feature && pnpm install --frozen-lockfile
-# make changes, run the verify-site skill
-git commit -m "feat: description" -m "Why and what changed."
-git push -u origin feat/your-feature
-gh pr create --title "feat: description" --body "What, why, how verified"
-gh pr checks --watch
-# after merge
-git worktree remove .claude/worktrees/feat-your-feature
-```
-
-- Always use pnpm, never npm. pnpm is pinned to 10 (`mise.toml`, `packageManager`); pnpm 11 ignores the `pnpm` field in package.json and breaks `--frozen-lockfile`.
-- `.claude/skills/` is committed; research artifacts (`.claude/project-dossiers/`, `.claude/build-logs/`, `.claude/site-launch-plan.md`) and `.claude/settings.local.json` stay local and are never committed.
+- **`no such table: _content_blog` or similar in `pnpm dev`**: SQLite corruption during HMR. `pnpm dev:clean` (`.data/` is gitignored and regenerated).
+- **Port conflict**: Nuxt auto-selects the next free port.
+- **TypeScript errors after updates**: `pnpm typecheck`. **Lint failures**: `pnpm lint:fix`.
+- **`validate:content` fails**: fix the reported `file:field` (see `.claude/rules/content.md`).
+- **Lockfile out of sync / Firebase deploy fails with "lockfile is out of sync"**: `pnpm lockfile:update`, then commit `package.json` and `pnpm-lock.yaml`; or from scratch `rm pnpm-lock.yaml && pnpm install`.
