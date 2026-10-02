@@ -52,7 +52,7 @@ href="https://github.com/alliecatowo" target="_blank" rel="noopener noreferrer"
 
               <!-- LinkedIn -->
               <a
-href="https://linkedin.com/in/allie-cat" target="_blank" rel="noopener noreferrer"
+href="https://linkedin.com/in/alliecat" target="_blank" rel="noopener noreferrer"
                  class="flex items-center gap-4 group hover:translate-x-1 transition-transform">
                 <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                   <UIcon name="i-lucide-linkedin" class="w-6 h-6 text-primary" />

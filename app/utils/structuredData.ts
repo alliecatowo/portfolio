@@ -16,7 +16,7 @@ export const personSchema = () => ({
   'homeLocation': { '@type': 'Place', 'name': 'Bay Area, California' },
   'sameAs': [
     'https://github.com/alliecatowo',
-    'https://linkedin.com/in/allie-cat',
+    'https://linkedin.com/in/alliecat',
     'https://x.com/AllieCatOwO',
     'https://devpost.com/alliecatowo'
   ],
