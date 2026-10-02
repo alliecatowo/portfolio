@@ -1,10 +1,10 @@
 /**
  * Layout planning for the /projects mosaic.
  *
- * The grid has a known column count per container width (1-4, see the CSS in
- * pages/projects/index.vue), so every layout can be worked out ahead of time
- * and baked into classes: no measuring, no layout shift, same result on the
- * server and the client.
+ * The UPageGrid in pages/projects/index.vue has a known column count per
+ * viewport breakpoint (1 below sm, 2 from sm, 3 from lg, 4 from xl), so every
+ * layout can be worked out ahead of time and baked into classes: no
+ * measuring, no layout shift, same result on the server and the client.
  *
  * For each column count we simulate CSS `grid-auto-flow: row dense` with the
  * preferred tile sizes (features 2x2 "bento" at four columns, 2x1 "wide" at
