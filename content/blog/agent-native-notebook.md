@@ -29,7 +29,7 @@ One design question shaped everything: **would this still make sense if the seco
 
 The extension is seven JupyterLab plugins. **Only one of them, `tools`, touches WebMCP.** The other six (review threads, access levels, activity markers, Propose mode, a side panel, output selection) are ordinary notebook features that work fine without an agent.
 
-That's deliberate. The app has to be fully useful on its own, and the agent layer is a thin adapter over the same operations the UI uses. If WebMCP isn't available, the status bar says `WebMCP unavailable` and everything else keeps working.
+That is deliberate. The app has to be fully useful on its own, and the agent layer is a thin adapter over the same operations the UI uses. If WebMCP isn't available, the status bar says `WebMCP unavailable` and everything else keeps working.
 
 The 22 tools fall into four groups:
 
