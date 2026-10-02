@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen">
     <div class="container max-w-4xl mx-auto px-6 py-12">
-      <NuxtLink to="/projects/" class="inline-flex items-center text-primary hover:text-primary-600 mb-6">
+      <NuxtLink to="/projects/" class="inline-flex items-center text-primary hover:text-primary-600 mb-6" @click="backToProjects">
         <UIcon name="i-lucide-arrow-left" class="w-4 h-4 mr-2" />
         Back to Projects
       </NuxtLink>
@@ -111,6 +111,7 @@ import { projectGroupOf } from '~/utils/projectGroups'
 import { sortProjectsInGroup } from '~/utils/sortProjects'
 
 const route = useRoute();
+const backToProjects = useBackToList('/projects/');
 const projectId = route.params.id as string;
 
 // The article body is static prose, so it hydrates lazily (on the first click or focus inside it)

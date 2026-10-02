@@ -167,6 +167,10 @@ export default defineNuxtConfig({
   imports: {
     autoImport: true
   },
+  // Nuxt's default scrollBehavior waits for page:loading:end before scrolling, so the outgoing page is never
+  // yanked to the top before the new one is in place. Smooth only affects in-page anchors (blog TOC).
+  router: { options: { scrollBehaviorType: 'smooth' } },
+
   app: {
     head: {
       // Default title; pages override it. Also gives the static 404.html/200.html shells a <title>.
@@ -183,6 +187,15 @@ export default defineNuxtConfig({
         { property: 'og:site_name', content: 'Allison Coleman' },
         { name: 'twitter:site', content: '@AllieCatOwO' },
         { name: 'twitter:creator', content: '@AllieCatOwO' }
+      ],
+      script: [
+        // Applies stored accessibility preferences before first paint (mirrors applyStyles in
+        // useAccessibility, whose dialog is lazy and only mounts on demand). Hashed by addScriptCsp.
+        {
+          innerHTML:
+            "try{var p=JSON.parse(localStorage.getItem('accessibility-preferences')||'null');if(p){var r=document.documentElement,c=r.classList;c.toggle('dyslexia-font',!!p.dyslexiaFont);c.toggle('high-contrast',!!p.highContrast);c.toggle('reduced-motion',!!p.reducedMotion);if(p.fontSize)r.setAttribute('data-font-size',p.fontSize);if(p.lineSpacing)r.setAttribute('data-line-spacing',p.lineSpacing);if(p.colorBlindMode)r.setAttribute('data-color-blind-mode',p.colorBlindMode)}}catch(e){}",
+          tagPosition: 'head'
+        }
       ],
       link: [
         // Heart icon: Fluent Emoji Flat "pink-heart" (Microsoft, MIT). See public/ICONS.md.

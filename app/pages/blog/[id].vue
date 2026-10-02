@@ -13,6 +13,7 @@
             size="sm"
             icon="i-lucide-arrow-left"
             class="text-muted hover:text-default shrink-0 ml-auto"
+            @click="backToBlog"
           >
             Back to Blog
           </UButton>
@@ -231,6 +232,7 @@ const AUTHOR_X_URL = 'https://x.com/AllieCatOwO';
 
 // Get post slug from route
 const route = useRoute();
+const backToBlog = useBackToList('/blog/');
 const slug = route.params.id as string;
 
 // The article body is static prose, so it hydrates lazily (on the first click or focus inside it)

@@ -286,7 +286,6 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   position: relative;
-  z-index: 50;
 }
 
 @supports (-webkit-mask-clip: text) {
