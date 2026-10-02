@@ -52,15 +52,14 @@
             <template #header>
               <div class="aspect-[16/9] md:aspect-[21/9] bg-gradient-dev relative overflow-hidden rounded-lg">
                 <!--
-                  The LCP image. NuxtImg's `sizes` can't express "the viewport minus the page and card
-                  padding", so it picked a 900w file for a 330 px slot. The srcset is built by hand
-                  from the same ipx provider and `sizes` states the real slot widths (see heroSrcset).
+                  The LCP image. NuxtImg builds the srcset from `sizes` and image.screens/densities in
+                  nuxt.config.ts: the slot is the card, i.e. the viewport minus the page and card padding
+                  below 944px, and 846px (the section width minus the padding) above it.
                 -->
-                <img
+                <NuxtImg
                   v-if="heroCard.image"
-                  :src="heroSrcset.src"
-                  :srcset="heroSrcset.srcset"
-                  :sizes="HERO_SIZES"
+                  :src="heroCard.image"
+                  sizes="xs:80vw sm:88vw lg:846px"
                   width="1200"
                   height="675"
                   :alt="heroCard.imageAlt || ''"
@@ -68,7 +67,7 @@
                   fetchpriority="high"
                   decoding="async"
                   class="object-cover w-full h-full"
-                >
+                />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent flex items-end p-4 md:p-8">
                   <div class="w-full">
                     <h3 v-if="heroCard.title" id="main-dev-title" class="text-2xl md:text-4xl font-bold text-white mb-1 md:mb-3 [text-shadow:0_1px_3px_rgb(0_0_0/0.6)]">
@@ -153,12 +152,6 @@ import { useContent } from '~/composables/useContent'
 
 const { fetchProjects, fetchBlogPosts, fetchPage } = useContent()
 
-// Slot width of the hero image: the viewport minus the section padding (24px a side) and the card
-// (1px border + 16px padding below 640px, 24px from 640px), capped at the 896px section width.
-const HERO_SIZES = '(max-width: 639px) calc(100vw - 82px), (max-width: 943px) calc(100vw - 98px), 846px'
-// 580w matches a ~330px mobile slot at Lighthouse's 1.75 DPR; 720w covers 360-412px phones at 2x.
-const HERO_WIDTHS = [480, 580, 720, 846, 1200]
-
 const { data: homeContent } = await useAsyncData('home-page-content', () => fetchPage('home'))
 
 const resolveDownloadAttr = (button: { download?: boolean | string; href?: string }) => {
@@ -180,15 +173,6 @@ const hero = computed(() => page.value?.hero ?? null)
 const heroAward = computed(() => hero.value?.award ?? null)
 const heroNote = computed(() => hero.value?.note ?? null)
 const heroCard = computed(() => hero.value?.card ?? null)
-const $img = useImage()
-const heroSrcset = computed(() => {
-  const src = heroCard.value?.image
-  if (!src) return { src: undefined, srcset: undefined }
-  return {
-    src: $img(src, { width: 846, quality: 80 }),
-    srcset: HERO_WIDTHS.map(w => `${$img(src, { width: w, quality: 80 })} ${w}w`).join(', ')
-  }
-})
 const quickLinks = computed(() => page.value?.quickLinks?.links ?? [])
 
 const { data: featuredProjects } = await useAsyncData(

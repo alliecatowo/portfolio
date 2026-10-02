@@ -33,6 +33,7 @@
             loading="eager"
             fetchpriority="high"
             preset="hero"
+            sizes="xs:72vw sm:85vw lg:782px"
           />
         </div>
 

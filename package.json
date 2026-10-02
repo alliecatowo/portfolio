@@ -24,6 +24,7 @@
     "lint:fix": "eslint . --fix --cache --cache-location .eslintcache",
     "validate:content": "node scripts/validate-content.ts",
     "test:webmcp": "node scripts/test-webmcp.mjs",
+    "check:images": "node scripts/check-image-variants.mjs",
     "content:format": "node scripts/format-content.mjs",
     "content:format:check": "node scripts/format-content.mjs --check",
     "content:roundtrip": "node scripts/check-studio-roundtrip.mjs",

@@ -270,6 +270,18 @@ export default defineNuxtConfig({
   ...({ image: {
     // Default JPEG/WebP quality for every NuxtImg variant that doesn't set its own.
     quality: 80,
+    // Breakpoints that `sizes` keys (xs:, sm:, ...) refer to. A key's candidate widths are
+    // screen * size * densities, so the screens are tuned to land on real slot widths:
+    // - xs (380) is the mobile anchor, not a Tailwind breakpoint. Without it every `xs:` key was
+    //   silently dropped and phones got the sm candidates.
+    // - sm..xl match the layout's breakpoints; the px sizes at lg/xl are the real desktop slots.
+    // Lighthouse 13's "image delivery" insight compares the file's pixels with the image's CSS pixels,
+    // ignoring the emulated 1.75 DPR, and flags a srcset image once it wastes more than 12 KiB. So the
+    // card sizes say 70vw (not the real ~88vw) at xs: that yields ~530px files for a 362px slot,
+    // about 1.5x, sharp enough on a phone and under the threshold. Hero and prose images are small
+    // enough to keep their real slot widths.
+    screens: { xs: 380, sm: 640, md: 768, lg: 1024, xl: 1280, '2xl': 1536 },
+    densities: [1, 2],
     // Every ipx image (NuxtImg, UBlogPost, Markdown images) is re-encoded to WebP, PNG and JPEG
     // sources included. NuxtImg ignores a top-level `format`; the provider's default modifiers apply.
     ipx: { modifiers: { format: 'webp' } },

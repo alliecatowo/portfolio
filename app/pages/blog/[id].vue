@@ -117,7 +117,7 @@
               :style="featuredImageSize ? { aspectRatio: `auto ${featuredImageSize[0]} / ${featuredImageSize[1]}` } : undefined"
               loading="eager"
               fetchpriority="high"
-              sizes="sm:92vw md:704px xl:850px"
+              sizes="xs:88vw sm:92vw md:704px xl:850px"
             />
           </div>
 
