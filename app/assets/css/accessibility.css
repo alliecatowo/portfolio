@@ -1,8 +1,9 @@
-/* Dyslexia Font */
+/* Dyslexia Font: OpenDyslexic (SIL OFL 1.1, see /fonts/opendyslexic/OFL.txt), self-hosted.
+   Browsers fetch a face only once html.dyslexia-font makes text use it, so nothing
+   downloads on a normal page load. */
 @font-face {
   font-family: 'OpenDyslexic';
-  src: url('https://cdn.jsdelivr.net/npm/opendyslexic@0.91.12/compiled/OpenDyslexic-Regular.woff2')
-    format('woff2');
+  src: url('/fonts/opendyslexic/OpenDyslexic-Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -10,10 +11,25 @@
 
 @font-face {
   font-family: 'OpenDyslexic';
-  src: url('https://cdn.jsdelivr.net/npm/opendyslexic@0.91.12/compiled/OpenDyslexic-Bold.woff2')
-    format('woff2');
+  src: url('/fonts/opendyslexic/OpenDyslexic-Bold.woff2') format('woff2');
   font-weight: bold;
   font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('/fonts/opendyslexic/OpenDyslexic-Italic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('/fonts/opendyslexic/OpenDyslexic-BoldItalic.woff2') format('woff2');
+  font-weight: bold;
+  font-style: italic;
   font-display: swap;
 }
 
