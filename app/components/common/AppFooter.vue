@@ -66,6 +66,15 @@
         <p v-if="footer.bottom?.subtext || fallbackFooter.bottom?.subtext" class="mt-2 text-sm">
           {{ footer.bottom?.subtext || fallbackFooter.bottom?.subtext }}
         </p>
+        <p class="mt-2 text-xs">
+          Writing and images &copy; {{ footer.brand.title }},
+          <a
+            href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
+            target="_blank"
+            rel="license noopener noreferrer"
+            class="underline underline-offset-2 hover:text-primary dark:hover:text-primary-400"
+          >CC BY-NC-ND 4.0</a>
+        </p>
       </div>
     </UContainer>
   </footer>
