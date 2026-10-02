@@ -93,7 +93,7 @@ projects:
     to: /projects/
 quickLinks:
   links:
-    - title: Projects
+    - title: Selected work
       description: Agents, terminals, languages, and other things I've shipped
       to: "#projects"
       icon: i-lucide-folder-code

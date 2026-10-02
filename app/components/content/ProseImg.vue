@@ -26,28 +26,36 @@ const props = defineProps<{
 const attrs = useAttrs()
 
 // Only the site's own files have a known size; the attributes Markdown or Studio set win
-const hints = computed(() => {
+const hints = computed<{ style?: string, sizes?: string, loading?: string, decoding?: string }>(() => {
   if (!props.src.startsWith('/') || props.src.startsWith('//')) return {}
   const size = (imageSizes as Record<string, number[] | undefined>)[props.src]
   return {
     ...(size && !attrs.style ? { style: `aspect-ratio: auto ${size[0]} / ${size[1]}` } : {}),
+    // The prose column is at most 75ch (~686px) and a little narrower than the viewport on phones
+    sizes: 'sm:92vw md:686px',
     loading: 'lazy',
     decoding: 'async'
   }
 })
 
 const open = ref(false)
+const trigger = useTemplateRef<HTMLButtonElement>('trigger')
+const dialog = ref<HTMLElement | null>(null)
 const close = () => { open.value = false }
 const onKeydown = (e: KeyboardEvent) => {
   if (e.key === 'Escape') close()
 }
-watch(open, (isOpen) => {
+watch(open, async (isOpen) => {
   if (isOpen) {
+    // Move focus into the dialog, and give it back to the image when it closes
+    await nextTick()
+    dialog.value?.focus()
     window.addEventListener('scroll', close, { passive: true })
     window.addEventListener('keydown', onKeydown)
   } else {
     window.removeEventListener('scroll', close)
     window.removeEventListener('keydown', onKeydown)
+    trigger.value?.focus()
   }
 })
 onBeforeUnmount(() => {
@@ -58,30 +66,40 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <NuxtImg
-    v-bind="{ ...hints, ...attrs }"
-    :src="src"
-    :alt="alt"
-    :width="width"
-    :height="height"
-    :class="['rounded-md will-change-transform', width ? '' : 'w-full', 'cursor-zoom-in']"
+  <!-- A real <button> around the image: Enter and Space open it without any key handling here -->
+  <button
+    ref="trigger"
     type="button"
+    :class="[width ? 'inline-block' : 'block w-full', 'cursor-zoom-in rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary']"
+    :aria-label="`${alt} (open larger view)`"
     aria-haspopup="dialog"
     :aria-expanded="open"
     :data-state="open ? 'open' : 'closed'"
     @click="open = true"
-  />
+  >
+    <NuxtImg
+      v-bind="{ ...hints, ...attrs }"
+      :src="src"
+      :alt="alt"
+      :width="width"
+      :height="height"
+      :class="['rounded-md will-change-transform', width ? '' : 'w-full']"
+    />
+  </button>
   <Teleport v-if="open" to="body">
     <div class="fixed inset-0 z-[100] bg-default/75 backdrop-blur-sm" aria-hidden="true" />
     <div
+      ref="dialog"
+      tabindex="-1"
       class="fixed inset-0 z-[100] flex cursor-zoom-out items-center justify-center focus:outline-none"
       role="dialog"
       aria-modal="true"
       :aria-label="alt"
       @click="close"
     >
+      <!-- Same sizes as the inline image, so it reuses the variants the build already generated -->
       <NuxtImg
-        v-bind="attrs"
+        v-bind="{ sizes: hints.sizes, ...attrs }"
         :src="src"
         :alt="alt"
         class="h-auto max-h-[95vh] w-full max-w-[95vw] rounded-md object-contain"

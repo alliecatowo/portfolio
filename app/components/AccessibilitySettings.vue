@@ -8,11 +8,12 @@
       <div class="space-y-6">
         <!-- Reading Speed -->
         <div>
-          <label class="block text-sm font-medium mb-2">
+          <span id="reading-speed-label" class="block text-sm font-medium mb-2">
             Reading Speed: {{ preferences.readingSpeed }} WPM
-          </label>
+          </span>
           <USlider
             :model-value="preferences.readingSpeed"
+            aria-labelledby="reading-speed-label"
             :min="100"
             :max="500"
             :step="50"
@@ -30,9 +31,10 @@
 
         <!-- Font Size -->
         <div>
-          <label class="block text-sm font-medium mb-2">Font Size</label>
           <URadioGroup
             v-model="preferences.fontSize"
+            legend="Font Size"
+            :ui="{ legend: 'block text-sm font-medium mb-2' }"
             :items="[
               { label: 'Small', value: 'small' },
               { label: 'Medium', value: 'medium' },
@@ -49,6 +51,7 @@
             <span class="text-sm font-medium">Dyslexia Font</span>
             <USwitch
               :model-value="preferences.dyslexiaFont"
+              aria-label="Dyslexia Font"
               @update:model-value="updateDyslexiaFont"
             />
           </div>
@@ -57,6 +60,7 @@
             <span class="text-sm font-medium">High Contrast</span>
             <USwitch
               :model-value="preferences.highContrast"
+              aria-label="High Contrast"
               @update:model-value="updateHighContrast"
             />
           </div>
@@ -65,6 +69,7 @@
             <span class="text-sm font-medium">Reduced Motion</span>
             <USwitch
               :model-value="preferences.reducedMotion"
+              aria-label="Reduced Motion"
               @update:model-value="updateReducedMotion"
             />
           </div>

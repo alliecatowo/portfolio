@@ -53,7 +53,18 @@ It was built for the OpenAI WebMCP Challenge (August 25 – September 3, 2026) a
 
 :youtube-video{#B_7dSo4hH0k title="JupyterLite WebMCP — OpenAI WebMCP Challenge Demo"}
 
-![In ChatGPT's in-app browser, an agent has edited a JupyterLite notebook cell. A '±2 changed' popover titled 'What the agent changed' shows converted / visitors replaced by converted / eligible\_sessions.](/images/projects/jupyterlite-webmcp/hero.gif)
+::demo-video
+---
+height: 619
+width: 1100
+alt: In ChatGPT's in-app browser, an agent has edited a JupyterLite notebook
+  cell. A '±2 changed' popover titled 'What the agent changed' shows converted /
+  visitors replaced by converted / eligible_sessions.
+mp4: /images/projects/jupyterlite-webmcp/hero.mp4
+poster: /images/projects/jupyterlite-webmcp/hero-poster.webp
+webm: /images/projects/jupyterlite-webmcp/hero.webm
+---
+::
 
 *After a direct edit, the agent's change is marked on the cell. Clicking "±2 changed" opens a line diff of exactly what it replaced.*
 
