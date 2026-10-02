@@ -126,7 +126,7 @@ const fallbackFooter: FooterContent = {
     },
     {
       label: 'LinkedIn',
-      href: 'https://linkedin.com/in/alliecat',
+      href: 'https://linkedin.com/in/allie-cat',
       icon: 'i-lucide-linkedin',
       tooltip: 'Connect on LinkedIn',
       external: true

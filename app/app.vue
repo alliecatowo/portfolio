@@ -112,7 +112,7 @@ const groups = [{
   }, {
     label: 'LinkedIn',
     icon: 'i-lucide-linkedin',
-    to: 'https://linkedin.com/in/alliecat',
+    to: 'https://linkedin.com/in/allie-cat',
     target: '_blank'
   }, {
     label: 'X',
