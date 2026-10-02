@@ -1,6 +1,6 @@
-// NuxtLink no longer prefetches every visible link while the first page loads (that competed with the
-// LCP image and entry scripts). Once the page has been idle for a few seconds, warm the main nav routes
-// instead, so a click is still instant; hover/focus prefetch (nuxtLink defaults) covers everything else.
+// NuxtLink prefetches links as they scroll into view, but on a phone the main nav links sit inside the
+// closed menu and never become visible. Once the page has been idle for a few seconds, warm those
+// routes too, so the first tap on a nav link is still instant.
 const ROUTES = ['/about/', '/projects/', '/blog/', '/contact/']
 const DELAY_MS = 6000
 

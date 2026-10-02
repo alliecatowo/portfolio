@@ -16,11 +16,18 @@
       Skip to navigation
     </ULink>
 
+    <!-- Page backdrop: lives in the layout so it survives navigations instead of remounting (and
+         restarting its drift) with every page. Fixed, so it never changes the page's height. -->
+    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-gradient-animated bg-dots" aria-hidden="true" />
+
     <AppHeader />
-    <UMain id="main-content" class="flex-grow" aria-label="Main content">
+    <!-- Never shorter than the viewport below the header, so the footer cannot rise into view while a
+         page is still empty or swapping during a navigation. -->
+    <UMain id="main-content" class="flex-grow min-h-[calc(100dvh-var(--ui-header-height))]" aria-label="Main content">
       <slot />
     </UMain>
-    <LazyCommonAppFooter hydrate-on-visible />
+    <!-- Not lazily hydrated: its links would do full page loads until hydrated -->
+    <CommonAppFooter />
 
     <!-- Enhanced Keyboard Shortcuts Help -->
     <ClientOnly>
