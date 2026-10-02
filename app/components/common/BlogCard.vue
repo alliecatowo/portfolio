@@ -6,7 +6,7 @@
     :to="to"
     variant="outline"
     :orientation="orientation"
-    class="backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20 h-full"
+    class="bg-white/10 dark:bg-gray-900/10 border-white/20 dark:border-gray-700/20 h-full"
     :ui="orientation === 'horizontal' ? { header: 'lg:aspect-[16/10]' } : undefined"
   >
     <template v-if="!image" #header>
