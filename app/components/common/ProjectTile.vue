@@ -111,7 +111,7 @@ const image = computed(() => props.project.image
       width: 720,
       height: 405,
       // Same hints as before the refactor (a wide tile is hinted as one column below xl), to keep image bytes unchanged
-      sizes: `xs:88vw sm:50vw md:46vw lg:30vw xl:${props.sizes[4] === 'bento' ? 600 : 300}px`,
+      sizes: `xs:70vw sm:50vw md:46vw lg:30vw xl:${props.sizes[4] === 'bento' ? 600 : 300}px`,
       fit: 'cover' as const,
       format: 'webp' as const,
       loading: props.eager ? 'eager' as const : 'lazy' as const,

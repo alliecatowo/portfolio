@@ -211,7 +211,7 @@ const props = defineProps<{
 const CARD_IMAGE = {
   width: 640,
   height: 360,
-  sizes: 'xs:88vw sm:48vw lg:302px',
+  sizes: 'xs:70vw sm:48vw lg:302px',
   loading: 'lazy',
   decoding: 'async'
 } as const

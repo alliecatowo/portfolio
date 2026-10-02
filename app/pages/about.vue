@@ -22,7 +22,7 @@
                     loading="eager"
                     fetchpriority="high"
                     preset="avatar"
-                    sizes="xs:216px sm:272px xl:304px"
+                    sizes="xs:180px sm:272px xl:304px"
                   />
                 </div>
               </div>
@@ -244,7 +244,7 @@
                     class="absolute inset-0 w-full h-full object-cover"
                     :style="card.imagePosition ? { objectPosition: card.imagePosition } : undefined"
                     loading="lazy"
-                    sizes="xs:88vw sm:88vw md:45vw lg:30vw xl:395px"
+                    sizes="xs:70vw sm:88vw md:45vw lg:30vw xl:395px"
                   />
                 </div>
                 <div class="p-5">
