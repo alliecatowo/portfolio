@@ -7,6 +7,9 @@ github: https://github.com/alliecatowo/raycast-keyboard-layout
 group: hardware-homelab
 image: /images/projects/raycast-keyboard-layout/card.webp
 imageAlt: "A dark SVG drawing of the navigation layer of a split keyboard: number keys across the top, Home, Page Down, Page Up and End on the left, arrow keys on the right, and faded ghost keys where the layer is transparent."
+seo:
+  description: A Raycast extension that reads QMK/Vial and ZMK keymaps straight off the board over USB and draws every layer as SVG, with reverse key search.
+  title: "Keyboard Layout Visualizer: QMK/ZMK in Raycast"
 slug: raycast-keyboard-layout
 status: published
 tags:

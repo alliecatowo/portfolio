@@ -230,7 +230,7 @@ const { data: allPostsAll } = await useAsyncData<BlogDoc[]>(
   'blog-all-dev',
   async () => {
     try {
-      return await queryCollection('blog').where('category', '=', 'dev').where('published', '=', true).order('date', 'DESC').select('tags').all()
+      return await queryCollection('blog').where('category', '=', 'dev').where('published', '=', true).order('date', 'DESC').select('title', 'slug', 'path', 'date', 'tags').all()
     } catch {
       return []
     }
@@ -453,7 +453,7 @@ useSiteSeo(() => ({
     'blogPost': (allPostsAll.value ?? []).map(post => ({
       '@type': 'BlogPosting',
       'headline': post.title,
-      'url': absoluteSiteUrl(`/blog/${post.slug}/`),
+      'url': absoluteSiteUrl(`/blog/${post.slug || post.path?.split('/').pop()}/`),
       ...(toIsoDate(post.date) && { datePublished: toIsoDate(post.date) })
     }))
   }

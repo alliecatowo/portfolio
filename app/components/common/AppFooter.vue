@@ -143,6 +143,12 @@ const fallbackFooter: FooterContent = {
       href: 'mailto:me@allisons.dev',
       icon: 'i-lucide-mail',
       tooltip: 'Send me an email'
+    },
+    {
+      label: 'RSS',
+      href: '/feed.xml',
+      icon: 'i-lucide-rss',
+      tooltip: 'Subscribe to the blog'
     }
   ],
   navigation: [

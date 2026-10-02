@@ -7,7 +7,7 @@ github: https://github.com/alliecatowo/claude-code-darwin
 group: agent-systems-devtools
 seo:
   description: A work-in-progress self-improving layer for coding-agent harnesses (memory, dream, distill), shipped as an opencode plugin and benchmarked on SWE-bench.
-  title: darwin
+  title: "darwin: a self-improving layer for coding agents"
 slug: darwin
 status: published
 tags:

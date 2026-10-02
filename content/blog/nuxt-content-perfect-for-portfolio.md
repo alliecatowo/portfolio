@@ -6,6 +6,7 @@ date: 2025-08-29
 description: Git-first publishing, zero external CMS, and a workflow that keeps writing and shipping right next to the code.
 featured: true
 featured_image: /screenshot-2025-10-20-at-23-49-08-nuxt-studio.png
+ogImage: /images/og/nuxt-content-perfect-for-portfolio.png
 published: true
 seo:
   description: "Why I moved my portfolio off a headless CMS to Nuxt Content: Markdown in Git, no external dashboards, and a publishing flow as fast as my dev workflow."

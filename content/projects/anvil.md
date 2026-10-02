@@ -7,7 +7,7 @@ github: https://github.com/alliecatowo/anvil
 group: agent-systems-devtools
 seo:
   description: "A native SwiftUI workspace for agent-driven development on macOS: tickets, agent sessions, review and shipping in one app. Ambitious and mid-rebuild."
-  title: Anvil
+  title: "Anvil: a SwiftUI agent workspace for macOS"
 slug: anvil
 status: published
 tags:

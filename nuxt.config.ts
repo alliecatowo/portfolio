@@ -182,7 +182,10 @@ export default defineNuxtConfig({
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'format-detection', content: 'telephone=no' },
-        { name: 'theme-color', content: '#FF69B4' },
+        // Browser chrome colour follows the OS scheme: the page background (--ui-bg) is white in
+        // light mode and slate-900 in dark. The manifest keeps the brand pink for installed-app UI.
+        { name: 'theme-color', content: '#ffffff', media: '(prefers-color-scheme: light)' },
+        { name: 'theme-color', content: '#0f172a', media: '(prefers-color-scheme: dark)' },
         { name: 'description', content: 'Allison Coleman, software engineer: agent systems, developer tools, and languages & runtimes.' },
         { property: 'og:site_name', content: 'Allison Coleman' },
         { name: 'twitter:site', content: '@AllieCatOwO' },
@@ -202,7 +205,9 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'icon', type: 'image/x-icon', sizes: '48x48', href: '/favicon.ico' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
-        { rel: 'manifest', href: '/site.webmanifest' }
+        { rel: 'manifest', href: '/site.webmanifest' },
+        // Feed autodiscovery (server/routes/feed.xml.ts)
+        { rel: 'alternate', type: 'application/rss+xml', title: 'Allison Coleman: Writing', href: 'https://allisons.dev/feed.xml' }
       ]
     }
   },
@@ -277,7 +282,7 @@ export default defineNuxtConfig({
       failOnError: false,
       ignore: ['/_studio', '/_studio/**', '/__nuxt_studio/**', '/sw.js'],
       // Not linked from any page, so the crawler won't find it
-      routes: isStudioFunction ? [] : ['/llms.txt', '/webmcp/catalog.json', '/not-found-shell/']
+      routes: isStudioFunction ? [] : ['/llms.txt', '/webmcp/catalog.json', '/feed.xml', '/not-found-shell/']
     }
   },
   ...({ image: {
