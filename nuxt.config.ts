@@ -20,7 +20,7 @@ export default defineNuxtConfig({
   experimental: {
     payloadExtraction: 'client',
     renderJsonPayloads: true,
-    viewTransition: true
+    viewTransition: false
   },
   modules: [
     '@nuxt/ui',
