@@ -2,8 +2,8 @@
   <div class="min-h-screen bg-gradient-animated bg-dots relative overflow-hidden">
     <!-- Decorative background -->
     <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
-      <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl motion-safe:animate-pulse"/>
-      <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl motion-safe:animate-pulse" style="animation-delay: 2s;"/>
+      <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse"/>
+      <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"/>
     </div>
 
     <UContainer class="relative z-10 pt-10 pb-16 max-sm:px-6 md:pt-14">

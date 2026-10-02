@@ -11,7 +11,7 @@
     :image="image"
     :to="`/projects/${project.slug}/`"
     :class="[
-      'bg-elevated/40 backdrop-blur-sm ring-default/60 hover:bg-elevated/60 hover:ring-primary/60',
+      'bg-elevated/40 ring-default/60 hover:bg-elevated/60 hover:ring-primary/60',
       feature && 'ring-primary/40 shadow-[0_10px_36px_rgba(236,72,153,0.12)]'
     ]"
     :ui="ui"

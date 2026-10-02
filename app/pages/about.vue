@@ -536,7 +536,8 @@ useSiteSeo(() => ({
   animation: spin-reverse 25s linear infinite;
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* Scoped rules outrank the global phone kill-switch in main.css, so repeat it here */
+@media (prefers-reduced-motion: reduce), (max-width: 767.98px) {
   .animate-spin-slow,
   .animate-spin-reverse {
     animation: none;

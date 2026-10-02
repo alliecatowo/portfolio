@@ -24,7 +24,7 @@
     <template #right>
       <!-- Search and accessibility also live in the mobile menu body, so they only
            render from lg up (where the menu toggle is hidden). -->
-      <LazyUContentSearchButton
+      <UContentSearchButton
         hydrate-on-media-query="(min-width: 1024px)"
         :collapsed="false"
         variant="ghost"
@@ -78,7 +78,7 @@
           Accessibility
         </UButton>
 
-        <LazyUContentSearchButton
+        <UContentSearchButton
           :collapsed="false"
           variant="outline"
           color="primary"
