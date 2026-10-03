@@ -33,7 +33,8 @@ export default defineEventHandler(async (event) => {
     `- [About](${SITE}/about/): background, current work and what she builds with`,
     `- [Projects](${SITE}/projects/): every published project, grouped by theme`,
     `- [Blog](${SITE}/blog/): writing on agents, developer tools and hardware`,
-    `- [Contact](${SITE}/contact/): email me@allisons.dev, GitHub, LinkedIn and X (@AllieCatOwO)`
+    `- [Contact](${SITE}/contact/): email me@allisons.dev, GitHub, LinkedIn and X (@AllieCatOwO)`,
+    `- [RSS feed](${SITE}/feed.xml): the published blog posts, newest first`
   ]
 
   const groups = [...PROJECT_GROUPS.map(g => g.key), 'other']

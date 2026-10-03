@@ -9,7 +9,7 @@ image: /images/projects/darwin/card.webp
 imageAlt: "Terminal output of darwin's B1 benchmark table: vanilla and darwin both resolve 22 of 30 tasks, with darwin using 24% fewer tokens, 43% less time and 27% less cost."
 seo:
   description: A work-in-progress self-improving layer for coding-agent harnesses (memory, dream, distill), shipped as an opencode plugin and benchmarked on SWE-bench.
-  title: darwin
+  title: "darwin: a self-improving layer for coding agents"
 slug: darwin
 status: published
 tags:

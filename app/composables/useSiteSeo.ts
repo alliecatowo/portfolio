@@ -19,6 +19,9 @@ export interface SiteSeoInput {
 }
 
 export const DEFAULT_OG_IMAGE = '/images/og/default.png'
+/** Cards under /images/og/ are all 1200x630 PNGs (`pnpm check:seo` enforces it). */
+const OG_CARD_DIR = '/images/og/'
+const OG_CARD_SIZE = { width: 1200, height: 630 }
 const DEFAULT_OG_ALT = 'Allison Coleman: agent systems, developer tools, languages & runtimes'
 const SITE_NAME = 'Allison Coleman'
 const TWITTER = '@AllieCatOwO'
@@ -58,12 +61,17 @@ export function useSiteSeo(input: MaybeRefOrGetter<SiteSeoInput>) {
     const i = toValue(input)
     const path = withSlash(i.path ?? route.path)
     const isHome = path === '/'
+    const imagePath = i.image || DEFAULT_OG_IMAGE
+    // The avatar card keeps its own alt even when a page passes it explicitly (a post with no image)
+    const isDefaultCard = imagePath === DEFAULT_OG_IMAGE
     return {
       ...i,
       fullTitle: siteTitle(i.title, isHome),
       canonical: absolute(path),
-      image: absolute(i.image || DEFAULT_OG_IMAGE),
-      imageAlt: i.imageAlt || (i.image ? i.title : DEFAULT_OG_ALT)
+      image: absolute(imagePath),
+      // Only the cards we render ourselves have known dimensions; an arbitrary image gets no size tags
+      imageIsCard: new URL(absolute(imagePath)).pathname.startsWith(OG_CARD_DIR),
+      imageAlt: isDefaultCard ? DEFAULT_OG_ALT : (i.imageAlt || (i.image ? i.title : DEFAULT_OG_ALT))
     }
   })
 
@@ -74,6 +82,10 @@ export function useSiteSeo(input: MaybeRefOrGetter<SiteSeoInput>) {
     ogDescription: () => seo.value.description,
     ogImage: () => seo.value.image,
     ogImageAlt: () => seo.value.imageAlt,
+    ogImageType: () => (seo.value.imageIsCard ? 'image/png' : undefined),
+    ogImageWidth: () => (seo.value.imageIsCard ? OG_CARD_SIZE.width : undefined),
+    ogImageHeight: () => (seo.value.imageIsCard ? OG_CARD_SIZE.height : undefined),
+    ogLocale: 'en_US',
     ogUrl: () => seo.value.canonical,
     ogType: () => seo.value.type ?? 'website',
     ogSiteName: SITE_NAME,

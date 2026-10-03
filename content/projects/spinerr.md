@@ -10,7 +10,7 @@ image: /images/projects/spinerr/card.webp
 imageAlt: "Spinerr playing a local test track: a green generative vinyl record with the tone arm down, a large clock, the track title and progress bar, and two sample calendar events."
 seo:
   description: "An ambient music dashboard built around a generative vinyl record: p5.js grooves seeded per track that pulse with the bass. A one-night prototype."
-  title: Spinerr
+  title: "Spinerr: a generative vinyl music dashboard"
 slug: spinerr
 status: published
 tags:

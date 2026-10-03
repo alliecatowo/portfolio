@@ -61,7 +61,7 @@ ogImage: /path/to/image (optional; falls back to featured_image, then the defaul
 
 ## OG images
 
-`public/images/og/<slug>.png` (1200x630) is picked up by convention for a project whose `slug` matches, even without `ogImage` in frontmatter (`nuxt.config.ts` lists the directory at build time). Files there are referenced by convention, not by content, so don't delete them as "unreferenced". Pages without their own image use `/images/og/default.png` (the avatar card).
+`public/images/og/<slug>.png` (1200x630) is picked up by convention for a project whose `slug` matches, even without `ogImage` in frontmatter (`nuxt.config.ts` lists the directory at build time). Files there are referenced by convention, not by content, so don't delete them as "unreferenced". Pages without their own image use `/images/og/default.png` (the avatar card). Every card must be a real 1200x630 PNG (`useSiteSeo` emits `og:image:width/height/type` for anything under `/images/og/`, and `pnpm check:seo` fails otherwise). Make one from a screenshot with `node scripts/make-og-card.mjs <public-relative source> <slug> [cover|contain] [position]` (every card ends in the same 72px handles footer, drawn from simple-icons paths); a blog post points at its card with `ogImage:` in frontmatter, never at a raw screenshot. The feed is `/feed.xml` (`server/routes/feed.xml.ts`, linked site-wide and from the footer). `public/.well-known/security.txt` has an `Expires` date: renew it before it lapses (`check:seo` warns 30 days out).
 
 ## Studio-safe content
 

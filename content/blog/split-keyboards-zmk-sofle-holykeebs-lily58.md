@@ -6,6 +6,7 @@ date: 2025-08-29
 description: How splits rewired my ergonomics, why I maintain a Sofle ZMK fork, and why more people would love them if setup weren’t so intimidating.
 featured: false
 featured_image: /images/keyboards/keyboards-collection-1.jpg
+ogImage: /images/og/split-keyboards-zmk-sofle-holykeebs-lily58.png
 published: true
 seo:
   title: "Falling for Split Keyboards: Sofle, Lily58, HolyKeebs"
