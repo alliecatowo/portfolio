@@ -31,6 +31,7 @@ jobs:
       - name: Leave major updates for review
         if: steps.metadata.outputs.update-type == 'version-update:semver-major' && steps.metadata.outputs.alert-state == ''
         run: |
+          gh pr edit "$PR_URL" --add-label major-update
           gh pr comment "$PR_URL" --body "Major version update, so not auto-merged. Read the changelog for breaking changes, then merge by hand once CI is green."
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
