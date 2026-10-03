@@ -75,6 +75,12 @@ The [live demo](https://openapi-web-mcp.vercel.app) opens on a fictional "Waypoi
 
 *The live demo with Open-Meteo selected, captured September 2026.*
 
-Without a WebMCP-capable browser it still works as normal Swagger UI. The agent side needs ChatGPT's in-app browser or Chrome with experimental web platform features turned on. The plugin isn't published to npm yet, so for now it's the repo and the demo.
+Without a WebMCP-capable browser it still works as normal Swagger UI. The agent side needs ChatGPT's in-app browser or Chrome with experimental web platform features turned on. To add it to your own docs page, install [`swagger-ui-webmcp`](https://www.npmjs.com/package/swagger-ui-webmcp) from npm (0.1.0):
+
+```sh
+npm install swagger-ui-webmcp
+```
+
+The [README](https://github.com/alliecatowo/openapi-web-mcp#readme) shows how to register it as a Swagger UI plugin.
 
 There's a [demo video](https://youtu.be/BVMel5ppiGA) and the [Devpost entry](https://devpost.com/software/swagger-ui-webmcp). Apache-2.0.

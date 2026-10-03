@@ -1,7 +1,7 @@
 ---
 title: Assistarr
-date: 2025-10-01
-description: "An AI assistant for a self-hosted media stack: ask in plain English and it drives Jellyfin, Radarr and Sonarr through their APIs, from a web chat UI."
+date: 2026-01-19
+description: "An AI assistant for a self-hosted media stack: ask in plain English and it drives Jellyfin, Radarr, Sonarr, Jellyseerr and qBittorrent from a web chat UI."
 featured: false
 github: https://github.com/alliecatowo/assistarr
 group: earlier-work
@@ -9,7 +9,7 @@ image: /images/projects/assistarr/card.webp
 imageAlt: 'Assistarr home hero: "Your media, all in one place." with Start a chat, Discover and Monitor buttons, and four stat cards for services online, library size, active downloads and AI signals.'
 seo:
   title: "Assistarr: AI assistant for Jellyfin and *arr"
-  description: "An AI assistant for a self-hosted media stack: ask in plain English and it drives Jellyfin, Radarr and Sonarr through their APIs, from a web chat UI."
+  description: "An AI assistant for a self-hosted media stack: ask in plain English and it drives Jellyfin, Radarr, Sonarr, Jellyseerr and qBittorrent from a web chat UI."
 slug: assistarr
 status: published
 tags:
@@ -80,7 +80,7 @@ The main challenge was designing the tool schema so the model reliably picks the
 
 ## Reflection
 
-Assistarr scratches Allison's own itch: she runs the stack it targets and got tired of tab-switching. It also became a testbed for tool-calling agent design, specifically how to keep an agent grounded when its actions have real consequences, like adding media or touching download queues. Source is on GitHub under Apache-2.0.
+Assistarr scratches Allison's own itch: she runs the stack it targets and got tired of tab-switching. It also became a testbed for tool-calling agent design, specifically how to keep an agent grounded when its actions have real consequences, like adding media or touching download queues. Source is on GitHub under Apache-2.0. It started from Vercel's ai-chatbot template (Apache-2.0, Copyright 2024 Vercel, Inc.), and the media-stack plugins, agent tools and UI are Allison's additions on top.
 
 ---
 

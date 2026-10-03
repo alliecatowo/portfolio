@@ -130,4 +130,6 @@ Open the [live demo](https://jupyterlite-web-mcp.vercel.app/lab/index.html) and 
 
 The [demo video on YouTube](https://www.youtube.com/watch?v=B_7dSo4hH0k) walks through it end to end, and the [Devpost entry](https://devpost.com/software/jupyterlite-webmcp) has the challenge write-up.
 
+To use it in your own JupyterLab or Notebook 7, `pip install jupyterlite-webmcp` ([PyPI](https://pypi.org/project/jupyterlite-webmcp/), 0.1.1). For bundler-based builds the TypeScript library is on [npm](https://www.npmjs.com/package/jupyterlite-webmcp) as `jupyterlite-webmcp` too.
+
 Built by Allison Coleman, with contributions from Juan Mendoza. MIT licensed.

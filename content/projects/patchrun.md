@@ -74,9 +74,11 @@ That makes it a natural gate between an agent's proposed command and your workin
 
 ## Status
 
-Built over 14 and 15 May 2026: 12 commits, written with a coding agent and then hardened by hand. MIT. There are no releases yet, but it installs with Go:
+Built over 14 and 15 May 2026: 12 commits, written with a coding agent and then hardened by hand. MIT. v0.1.0 is out with prebuilt binaries for Linux and macOS, and a Homebrew formula:
 
 ```bash
+brew install alliecatowo/tap/patchrun
+# or, with Go:
 go install github.com/alliecatowo/patchrun/cmd/patchrun@latest
 ```
 

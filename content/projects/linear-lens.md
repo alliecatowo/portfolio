@@ -1,12 +1,15 @@
 ---
 title: Linear Lens
 date: 2026-06-03
-description: "A VS Code and Cursor extension that makes Linear issue IDs like ENG-123 clickable and hoverable wherever they show up: comments, Markdown, commit messages and your branch name."
+demo: https://alliecatowo.github.io/linear-lens/
+description: A VS Code and Cursor extension that makes Linear issue IDs like ENG-123 clickable and hoverable in comments, Markdown, commit messages and your branch name.
 featured: false
 github: https://github.com/alliecatowo/linear-lens
 group: agent-systems-devtools
+image: /images/projects/linear-lens/card.webp
+imageAlt: "The Linear Lens docs site: \"Linear issues, right in your editor\", with the extension's blue striped icon and four feature cards for links, live metadata, the Problems panel and opt-in editing."
 slug: linear-lens
-status: draft
+status: published
 tags:
   - developer-tools
   - vscode-extension
@@ -42,4 +45,4 @@ Auth is either a personal API key, kept in VS Code's encrypted SecretStorage and
 
 ## Status
 
-Built on 2 and 3 June 2026: 20 commits, 364 Vitest tests, MIT. It isn't on the VS Code Marketplace or Open VSX, so for now you build it from source and install the VSIX.
+Built on 2 and 3 June 2026: 20 commits, 364 Vitest tests, MIT. It's on [Open VSX](https://open-vsx.org/extension/alliecatowo/linear-lens) as `alliecatowo.linear-lens` (0.1.0), which is where Cursor and VSCodium install from; it isn't on the VS Code Marketplace yet. In Cursor, search "Linear Lens" in the Extensions view. For VS Code, download the VSIX from Open VSX and run **Extensions: Install from VSIX**. The [docs site](https://alliecatowo.github.io/linear-lens/) has the setup guide.

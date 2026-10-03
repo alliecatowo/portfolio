@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(yarn *)",
+      "Bash(pkill *)",
+      "Bash(killall *)",
+      "Bash(fuser -k *)"
+    ],
+    "allow": ["Bash(gh pr merge *)"]
+  }
+}

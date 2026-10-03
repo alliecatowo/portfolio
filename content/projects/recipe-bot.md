@@ -5,6 +5,8 @@ description: "A 2024 command-line MVP that turns Instagram cooking videos into M
 featured: false
 github: https://github.com/alliecatowo/recipe-bot
 group: earlier-work
+image: /images/projects/recipe-bot/card.webp
+imageAlt: "Terminal showing recipe-bot's --help output: it processes Instagram post URLs to generate recipes, with --debug and --local options."
 seo:
   title: "Recipe Bot: Instagram cooking videos to recipes"
   description: "A 2024 CLI that turns Instagram cooking videos into Markdown recipes: download, transcribe with Whisper, check it is a recipe, then write it up with GPT."

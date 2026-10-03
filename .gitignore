@@ -44,7 +44,7 @@ Thumbs.db
 .gemini/
 gha-creds-*.json
 
-# Claude Code: commit the harness (.claude/skills/), keep local state and research out
+# Claude Code: commit the harness (.claude/rules, agents, skills, settings.json), keep local state and research out
 .claude/worktrees/
 .claude/settings.local.json
 .claude/project-dossiers/

@@ -1,6 +1,7 @@
 ---
 title: Morbstack
 date: 2026-08-02
+demo: https://alliecatowo.github.io/morbstack/
 description: "A native macOS Docker Desktop replacement: stock upstream dockerd in one Virtualization.framework VM, a Rust PID 1, and a SwiftUI app. Pre-release."
 featured: false
 github: https://github.com/alliecatowo/morbstack

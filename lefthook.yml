@@ -1,0 +1,28 @@
+# Git hooks (replaces husky + lint-staged). Install: `pnpm install` runs `lefthook install`.
+pre-commit:
+  commands:
+    eslint:
+      glob: "**/*.{js,ts,vue}"
+      run: pnpm exec eslint --fix {staged_files}
+      stage_fixed: true
+    prettier:
+      glob: "**/*.{css,scss,md,yml,yaml,json}"
+      run: pnpm exec prettier --write {staged_files}
+      stage_fixed: true
+    content-format:
+      glob: "content/**/*.{md,yml,yaml}"
+      run: node scripts/format-content.mjs {staged_files}
+      stage_fixed: true
+    lockfile-check:
+      glob: "package.json"
+      run: pnpm lockfile:check
+
+commit-msg:
+  commands:
+    commitlint:
+      run: pnpm exec commitlint --edit {1}
+
+pre-push:
+  commands:
+    typecheck:
+      run: pnpm run typecheck

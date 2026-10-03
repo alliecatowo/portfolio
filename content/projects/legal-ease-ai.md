@@ -2,47 +2,43 @@
 title: LegalEase AI
 date: 2025-08-30
 demo: https://legal-ease.app
-description: "Self-hosted legal discovery for messy, sensitive evidence: Docling OCR, hybrid BM25 and vector search in Qdrant, WhisperX transcription, and local LLMs via Ollama."
+description: "Legal discovery search for messy evidence on Firebase: Nuxt 4 dashboard, Genkit flows, Gemini summaries, Chirp 3 transcription, and hybrid search in Qdrant Cloud."
 featured: false
 github: https://github.com/alliecatowo/legalease-ai
 group: earlier-work
 image: /images/legalease/search-hero-pink-dark.png
 imageAlt: LegalEase AI search page in the dark pink theme, with the hybrid search box and filters for cases, types and levels
 seo:
-  title: "LegalEase AI: self-hosted legal discovery"
-  description: "Self-hosted legal discovery for messy, sensitive evidence: Docling OCR, hybrid BM25 and vector search in Qdrant, WhisperX transcription, and local LLMs via Ollama."
+  title: "LegalEase AI: cloud-native legal discovery"
+  description: "Legal discovery search for messy evidence on Firebase: Nuxt 4 dashboard, Genkit flows, Gemini summaries, Chirp 3 transcription, and hybrid search in Qdrant Cloud."
 slug: legal-ease-ai
 status: published
 tags:
   - ai
   - legal
   - discovery
-  - self-hosted
-  - privacy
-  - fastapi
-  - react
+  - firebase
+  - genkit
+  - nuxt
   - vector-search
   - ocr
   - speech-to-text
 technologies:
-  - Python
-  - FastAPI
-  - React
+  - Nuxt
+  - Vue
   - TypeScript
-  - PostgreSQL
-  - Docker
-  - OpenAI
-  - Local AI Models
-  - Vector Search
-  - OCR
+  - Firebase
+  - Genkit
+  - Gemini
+  - Qdrant
   - Speech-to-Text
 ---
 
 ## Overview
 
-LegalEase AI is a self-hosted workspace built for legal teams, investigators, and anyone who has to wrestle with massive piles of unstructured evidence like PDFs, videos, audio, and exports from forensic tools.
+LegalEase AI is a workspace for legal teams, investigators, and anyone who has to wrestle with piles of unstructured evidence like PDFs, video and audio. It turns raw files into transcribed, summarized, searchable case material.
 
-It grew out of frustration with cloud-locked legal tech that trades privacy for convenience. I wanted something fast, local-first, and transparent. So I built it: a full end-to-end stack that turns terabytes of raw evidence into structured, searchable context all without data ever leaving your machine.
+The first version was self-hosted (FastAPI, Celery, Ollama, WhisperX); that design lives on the repo's `archive/self-hosted` branch. The current `main` is a cloud-native rewrite on Firebase.
 
 ::demo-video
 ---
@@ -60,7 +56,7 @@ webm: /images/legalease/demo.webm
 
 ## Problem
 
-Legal discovery is chaos: mixed file formats, poor metadata, and sensitive material that can’t legally be uploaded anywhere. Most tools either oversimplify or rely on expensive hosted APIs, which creates compliance and cost problems. I needed a way to **search, summarize, and reason across huge datasets** completely offline without losing modern AI capabilities.
+Legal discovery is chaos: mixed file formats, poor metadata, and a lot of audio and video nobody has time to listen to. I wanted a way to **search, summarize, and reason across a case's files** without reading every one.
 
 ---
 
@@ -70,42 +66,30 @@ Legal discovery is chaos: mixed file formats, poor metadata, and sensitive mater
 
 ## Solution
 
-LegalEase couples a **FastAPI + Celery backend** with a **Nuxt 4 dashboard**, shipping a fully-contained environment using Docker and mise. It automates everything from OCR to RAG-based search:
+The current app is a **Nuxt 4 dashboard** (Nuxt UI, Firebase Auth and Firestore) backed by **Firebase Cloud Functions (2nd gen) running Genkit flows**:
 
-- **Docling-based parsing and OCR** to turn thousands of PDFs and images into hierarchical chunks.
-- **Hybrid retrieval** combining BM25 + dense vectors in Qdrant for both keyword and semantic search.
-- **Audio/video transcription** via WhisperX with automatic fallbacks and diarization support.
-- **Local LLM analysis** through Ollama models for summaries, timelines, and speaker stats.
-- **Forensic export support** for Cellebrite / AXIOM evidence folders.
-- Entirely **air-gapped** operation — only the initial model/container pulls touch the network.
+- **Transcription** with Google Speech-to-Text v2 (Chirp 3), including speaker-labelled segments.
+- **Summaries** generated with Gemini 2.5 Flash.
+- **Hybrid retrieval** combining keyword and vector search in Qdrant Cloud.
+- **Document extraction** through a provider registry that includes a Docling service.
+- **A separate landing and docs site** (Nuxt Content on GitHub Pages) at legal-ease.app. The app itself is not hosted publicly; the demo link is the landing page.
 
-The result: a single command (`mise run up`) spins up a complete AI-ready research environment with databases, object storage, GPU-aware workers, and a clean dashboard for review.
+Because this version sends audio and text to Google Cloud services, it is not an air-gapped tool; the earlier self-hosted architecture is the one built for that.
 
 ---
 
 ## Challenges & Lessons
 
-Getting high-accuracy transcriptions and search performance at scale (while staying 100% local) was brutal. GPU scheduling, OCR throughput, and hybrid search indexing all needed to cooperate. I learned to balance **practical engineering** (async pipelines, caching, retry logic) with **research-grade experimentation** (RAG tuning, embedding hybrids).
-
-It also taught me the value of “honest defaults” — shipping with good baseline models and clear docs beats adding more knobs.
-
----
-
-## Impact
-
-- Processes **20 TB+ of discovery data** reliably on commodity hardware.
-- Reduces document-review time from **hours to minutes**.
-- Enables small legal teams to use advanced AI workflows *without* cloud dependencies or subscription costs.
-- Inspired the foundation for my later R\&D into local retrieval and evidence intelligence.
+Getting transcription and search to work together on long recordings meant treating each step as its own retryable flow. Swapping the stack also taught me to keep providers (transcription, storage, document parsing) behind small registries so the pipeline survives a rewrite of any one piece.
 
 ---
 
 ## Reflection
 
-LegalEase is what happens when you mix legal empathy with dev-ops stubbornness. It’s privacy-first, GPU-optional, and unapologetically local — built to prove that AI doesn’t have to live behind someone else’s API. It remains one of my proudest builds and the base for several spin-off tools in my stack.
+LegalEase started as a local-first experiment and was rebuilt around managed services to get to a working product faster. It remains a good example of choosing a stack on purpose, and the base for several spin-off tools in my stack.
 
 ---
 
 ## Tech Stack
 
-**Python**, **FastAPI**, **Celery**, **Nuxt 4**, **Vue 3**, **TypeScript**, **Docker**, **Qdrant**, **PostgreSQL**, **MinIO**, **Redis**, **Ollama**, **Docling**, **WhisperX**, **mise**
+**Nuxt 4**, **Vue 3**, **TypeScript**, **Firebase (Auth, Firestore, Cloud Functions)**, **Genkit**, **Gemini**, **Google Speech-to-Text v2**, **Qdrant Cloud**, **Docling**
