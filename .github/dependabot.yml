@@ -6,6 +6,14 @@ updates:
       interval: weekly
       day: monday
     open-pull-requests-limit: 5
+    ignore:
+      # Blocked upstream: vue-tsc 3.3.12 (used by `nuxi typecheck`) requires typescript/lib/tsc,
+      # which TypeScript 7 no longer exports. Re-enable once vue-tsc supports TS 7.
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
+      # Nuxt 4 runs on h3 1.x; h3 2 is still a release candidate.
+      - dependency-name: h3
+        update-types: ['version-update:semver-major']
     # chore(deps): ... / chore(deps-dev): ... passes commitlint and the semantic PR title check
     commit-message:
       prefix: chore
