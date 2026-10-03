@@ -72,7 +72,7 @@ puml was an experiment in fast, AI-assisted engineering, which the README says o
 
 ## Status
 
-It's an early v0.1, MIT licensed, and paused since June 2026. The [docs site](https://alliecatowo.github.io/puml/), [gallery](https://alliecatowo.github.io/puml/gallery/) and editor are live. There are no published packages yet, so the CLI and language server are built from source:
+It's an early v0.1, MIT licensed, and paused since June 2026. The [docs site](https://alliecatowo.github.io/puml/), [gallery](https://alliecatowo.github.io/puml/gallery/) and editor are live. There are no CLI packages or release binaries yet, so the CLI and language server are built from source. A VS Code extension, [`alliecatowo.puml-vscode`](https://open-vsx.org/extension/alliecatowo/puml-vscode), is on Open VSX and needs that `puml` binary on your PATH.
 
 ```sh
 git clone https://github.com/alliecatowo/puml.git && cd puml

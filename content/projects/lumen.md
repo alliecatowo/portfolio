@@ -102,7 +102,7 @@ Hot cells can be compiled to native code by a tiered Cranelift JIT, which falls 
 
 ## The toolchain
 
-A language only feels real once it's pleasant to use, so Lumen ships a CLI (`lumen run`, `check`, `fmt`, `repl` and `emit`), a language server with hover docs drawn from the Markdown around your code, a tree-sitter grammar, and an editor extension on [Open VSX](https://open-vsx.org/extension/lumen-lang/lumen-lang) with 2,356 downloads as of September 2026. The [docs site](https://alliecatowo.github.io/lumen/) has a language tour and reference.
+A language only feels real once it's pleasant to use, so Lumen ships a CLI (`lumen run`, `check`, `fmt`, `repl` and `emit`), a language server with hover docs drawn from the Markdown around your code, a tree-sitter grammar, and an editor extension on [Open VSX](https://open-vsx.org/extension/alliecatowo/lumen) (`alliecatowo.lumen`). The [docs site](https://alliecatowo.github.io/lumen/) has a language tour and reference.
 
 ![Lumen docs home: "The AI-Native Programming Language", with the pink LM document logo.](/images/projects/lumen/docs-home.webp)
 
@@ -118,4 +118,4 @@ The playground needs nothing installed. To install the CLI:
 cargo install lumen-cli
 ```
 
-That installs `lumen-cli` 0.1.1 from crates.io, which lags the 0.5.0 source; build from the [repo](https://github.com/alliecatowo/lumen) for the latest. MIT licensed.
+That installs [`lumen-cli`](https://crates.io/crates/lumen-cli) 0.5.0 from crates.io, which provides the `lumen` binary (and a `wares` package tool). Then `lumen run hello.lm.md`. The [repo](https://github.com/alliecatowo/lumen) has the source. MIT licensed.

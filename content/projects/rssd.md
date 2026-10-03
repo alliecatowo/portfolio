@@ -79,4 +79,13 @@ The `rss` reader addresses entries by ID prefix, position or path, and `rss tui`
 
 ## How it was built
 
-Spec first, then code, in one evening on 15 September 2026: a 587-line spec and nine commits. Byte-exact captures of seven real feeds (including the GitHub blog, go.dev, Hacker News and xkcd) plus a local fixture server mean the whole thing runs with no network. The README counts about 300 tests. It's a small, sharp design exercise rather than a daily-driver reader, and it isn't on PyPI (the `rssd` name there belongs to someone else), so run it from source with uv. [Docs](https://alliecatowo.github.io/rssd/), [spec](https://github.com/alliecatowo/rssd/blob/main/SPEC.md), MIT.
+Spec first, then code, in one evening on 15 September 2026: a 587-line spec and nine commits. Byte-exact captures of seven real feeds (including the GitHub blog, go.dev, Hacker News and xkcd) plus a local fixture server mean the whole thing runs with no network. The README counts about 300 tests. It's a small, sharp design exercise rather than a daily-driver reader, and it's on PyPI as [`rssd-fs`](https://pypi.org/project/rssd-fs/) (the `rssd` name there belongs to someone else). It needs Python 3.14:
+
+```sh
+uv tool install 'rssd-fs[tui]' --python 3.14
+rssd add https://go.dev/blog/feed.atom
+rssd once
+rss tui
+```
+
+The `rssd` and `rss` commands then keep their data in your user data directory by default. [Docs](https://alliecatowo.github.io/rssd/), [spec](https://github.com/alliecatowo/rssd/blob/main/SPEC.md), MIT.
