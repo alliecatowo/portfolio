@@ -86,11 +86,10 @@ Glassy has criterion micro-benchmarks for its hot paths and a scripted hyperfine
 
 ## Shipping it
 
-The repo is its own Homebrew tap. The release workflow renders the cask and formula from templates on every release, publishes GPG-signed apt and dnf repositories to GitHub Pages, and builds `.dmg`, `.deb` and `.rpm` packages. On macOS:
+Releases are published to the `alliecatowo/tap` Homebrew tap automatically: the release workflow renders the cask and formula from templates on every release, and it also publishes GPG-signed apt and dnf repositories to GitHub Pages, and builds `.dmg`, `.deb` and `.rpm` packages. On macOS:
 
 ```sh
-brew tap alliecatowo/glassy https://github.com/alliecatowo/glassy
-brew install --cask glassy
+brew install --cask alliecatowo/tap/glassy
 ```
 
-Linux install commands for Fedora and Debian/Ubuntu are on the [package repository page](https://alliecatowo.github.io/glassy/), and every build is on the [releases page](https://github.com/alliecatowo/glassy/releases). The latest release is v0.6.1 (July 9, 2026). MIT licensed.
+Linux users can `brew install alliecatowo/tap/glassy` (the formula builds from source) or use the packages; install commands for Fedora and Debian/Ubuntu are on the [package repository page](https://alliecatowo.github.io/glassy/), and every build is on the [releases page](https://github.com/alliecatowo/glassy/releases). The latest release is v0.6.1 (July 9, 2026). MIT licensed.

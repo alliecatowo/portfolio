@@ -122,7 +122,7 @@ const PUBLISHED_RULES: Record<string, { isPublished: (d: Record<string, unknown>
 }
 // Published projects with no real screenshot or capture yet (a CLI or an unbuilt app). Remove a slug
 // from this list as soon as it gets an image; never fill the gap with a placeholder.
-const IMAGE_EXEMPT = new Set(['alliecode', 'anvil', 'darwin', 'recipe-bot'])
+const IMAGE_EXEMPT = new Set(['alliecode', 'anvil'])
 // The description that ships in <meta> and share cards (seo.description wins over description)
 const DESCRIPTION_MIN = 120
 const DESCRIPTION_MAX = 165
