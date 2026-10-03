@@ -1,6 +1,7 @@
 ---
 title: Daggler
 date: 2026-06-03
+demo: https://alliecatowo.github.io/daggler/
 description: "A semantic IDE for GitHub Actions: typed IR, live job graph, five validation layers, and rules that catch prompt injection into AI agents."
 featured: false
 github: https://github.com/alliecatowo/daggler
@@ -63,4 +64,4 @@ There's also a `daggler` CLI: `lint`, `map`, `search`, and `logs`, which maps a 
 
 ## Status
 
-One overnight sprint on 3 and 4 June 2026: 16 commits, MIT, CI green. It's designed to be self-hosted, but there's no hosted instance. The CLI is on npm as [`daggler-cli`](https://www.npmjs.com/package/daggler-cli) (0.1.0, installs a `daggler` command; try `npx daggler-cli --help`), and the web editor runs from a clone. The AI assistant (explain, harden, generate) needs your own Anthropic API key, and the GitHub App and webhook layer landed in the last commit, so treat it as early. The [architecture doc](https://github.com/alliecatowo/daggler/blob/main/ARCHITECTURE.md) is the best place to start.
+One overnight sprint on 3 and 4 June 2026: 16 commits, MIT, CI green. It's designed to be self-hosted, but there's no hosted instance. The CLI is on npm as [`daggler-cli`](https://www.npmjs.com/package/daggler-cli) (0.1.0, installs a `daggler` command; try `npx daggler-cli --help`; also `brew install alliecatowo/tap/daggler`), and the web editor runs from a clone. The AI assistant (explain, harden, generate) needs your own Anthropic API key, and the GitHub App and webhook layer landed in the last commit, so treat it as early. The [architecture doc](https://github.com/alliecatowo/daggler/blob/main/ARCHITECTURE.md) is the best place to start.

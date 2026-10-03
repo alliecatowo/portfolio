@@ -1,6 +1,7 @@
 ---
 title: Assistarr
 date: 2026-01-19
+demo: https://assistarr.vercel.app
 description: "An AI assistant for a self-hosted media stack: ask in plain English and it drives Jellyfin, Radarr, Sonarr, Jellyseerr and qBittorrent from a web chat UI."
 featured: false
 github: https://github.com/alliecatowo/assistarr
@@ -68,6 +69,7 @@ Assistarr is a **Next.js** (App Router) application written in **TypeScript**. C
 - **MCP client**: the repo includes an MCP client manager and tool adapter for extra tools
 - **Chat, Discover and Monitor views**: streaming chat, a discovery page and a service-status page, with per-user service settings behind a login (Auth.js)
 - **Storage**: PostgreSQL through Drizzle ORM, with optional Redis for resumable streams
+- **A public demo**: [assistarr.vercel.app](https://assistarr.vercel.app) logs you in as a guest on a made-up library with a scripted assistant, and nothing you do is saved to a real server or can touch real services.
 - **Docker-first**: a `docker-compose.yml` brings up the app and PostgreSQL, with Redis and a media-network profile optional
 
 ---

@@ -43,7 +43,7 @@ That turned into the rule for everything after it: use WebMCP for state that onl
 
 ## Try it
 
-The [deployed Storybook](https://storybook-web-mcp.vercel.app/storybook/) is real and browsable; the agent tools need a WebMCP-capable browser. To use it in your own Storybook (10 or later), install [`storybook-addon-webmcp`](https://www.npmjs.com/package/storybook-addon-webmcp) from npm (0.1.0) and add it to the `addons` list in `.storybook/main`:
+The [deployed Storybook](https://storybook-web-mcp.vercel.app/storybook/) is real and browsable; the agent tools need a WebMCP-capable browser. To use it in your own Storybook (10 or later), install [`storybook-addon-webmcp`](https://www.npmjs.com/package/storybook-addon-webmcp) from npm (0.1.1) and add it to the `addons` list in `.storybook/main`:
 
 ```sh
 npm install --save-dev storybook-addon-webmcp

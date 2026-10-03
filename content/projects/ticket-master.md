@@ -1,6 +1,7 @@
 ---
 title: Ticketmaster
 date: 2026-09-15
+demo: https://alliecatowo.github.io/ticket-master/
 description: "Rust coding-agent runtime: chat in the terminal, hand work to background workers as tickets, review and accept it. State is an append-only event log."
 featured: true
 github: https://github.com/alliecatowo/ticket-master
@@ -53,7 +54,7 @@ webm: /images/projects/ticket-master/tui-accept.webm
 
 ## Chat, then delegate
 
-Every clip on this page is the real `tm` v0.1.0 binary driving a live model on a scratch Python project, with no scripted turns. The repo's [showcase notes](https://github.com/alliecatowo/ticket-master/tree/main/docs/showcase) explain how they were recorded, friction log included.
+Every clip on this page is the real `tm` binary (v0.1.0 at the time) driving a live model on a scratch Python project, with no scripted turns. The repo's [showcase notes](https://github.com/alliecatowo/ticket-master/tree/main/docs/showcase) explain how they were recorded, friction log included.
 
 ::demo-video
 ---
@@ -103,7 +104,14 @@ About 858 commits in two weeks (September 15 to 29, 2026), which Allison directe
 
 ## Status and trying it
 
-v0.1.0 shipped on September 23, 2026 with a prebuilt macOS arm64 binary on the [release page](https://github.com/alliecatowo/ticket-master/releases/tag/v0.1.0). On Linux, build from source:
+v0.1.1 is the current release, with prebuilt `tm` binaries for Linux and macOS (x86\_64 and arm64) on the [release page](https://github.com/alliecatowo/ticket-master/releases/tag/v0.1.1). It isn't on crates.io, because the workspace's internal crate names aren't free there. There's a [docs site](https://alliecatowo.github.io/ticket-master/) and a [browser demo](https://alliecatowo.github.io/ticket-master/demo/) of the accept and dispatch flow.
+
+```sh
+brew install alliecatowo/tap/ticket-master   # installs the tm CLI
+tm init
+```
+
+To build from source instead:
 
 ```sh
 git clone https://github.com/alliecatowo/ticket-master.git && cd ticket-master

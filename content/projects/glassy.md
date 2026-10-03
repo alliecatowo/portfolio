@@ -1,6 +1,7 @@
 ---
 title: Glassy
 date: 2026-06-19
+demo: https://alliecatowo.github.io/glassy/
 description: "A lean GPU terminal emulator in Rust: wgpu instanced rendering, damage-only redraws, no idle frames, 60 themes, and CRT/glass effects. Built for Claude Code."
 featured: true
 github: https://github.com/alliecatowo/glassy

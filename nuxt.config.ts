@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto'
 import { existsSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { defineNuxtConfig } from 'nuxt/config'
+import { emitMarkdownPages } from './build/markdown-pages'
 
 // Per-page OG images live at public/images/og/<slug>.png. Project pages pick theirs up
 // by slug when no `ogImage` is set in frontmatter (see useSiteSeo/projectOgImage).
@@ -250,6 +251,7 @@ export default defineNuxtConfig({
       // error content with SSR; its HTML replaces 404.html (hash CSP already added by the hook below), and
       // the shell's own folder is removed so it never ships as a page.
       'prerender:done'() {
+        if (existsSync('.output/public')) emitMarkdownPages('.output/public')
         const shellDir = '.output/public/not-found-shell'
         const shell = `${shellDir}/index.html`
         if (!existsSync(shell)) return

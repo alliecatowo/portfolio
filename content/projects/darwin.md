@@ -53,4 +53,4 @@ Most of the work is on the `harness-eval` branch, and it's mostly measurement: t
 
 ## Status
 
-Work in progress, built over three days at the end of August 2026 (25 commits, most of them on the evaluation branch). The Claude Code version hasn't been built. The [source is on GitHub](https://github.com/alliecatowo/claude-code-darwin), with no license for Allison's code yet.
+Work in progress, built over three days at the end of August 2026 (25 commits, most of them on the evaluation branch). The Claude Code version hasn't been built. The [source is on GitHub](https://github.com/alliecatowo/claude-code-darwin), under the MIT license. The skills install as a Claude Code plugin (skills only, the harness port isn't built): run `/plugin marketplace add alliecatowo/claude-code-darwin`, then `/plugin install darwin@darwin`.

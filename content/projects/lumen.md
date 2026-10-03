@@ -108,14 +108,18 @@ A language only feels real once it's pleasant to use, so Lumen ships a CLI (`lum
 
 ## How it was built
 
-About 350 commits, most of them in one intense agent-assisted week in February 2026, for roughly 210,000 lines of Rust across 16 crates. Work that's still on branches, like a hybrid JIT rework and a self-hosted lexer and parser, isn't part of the released language yet, and the package registry's backend isn't deployed.
+About 350 commits, most of them in one intense agent-assisted week in February 2026, for roughly 210,000 lines of Rust across a workspace that now publishes four crates (`lumen-cli`, `lumen-compiler`, `lumen-runtime` and `lumen-lsp`). Work that's still on branches, like a hybrid JIT rework and a self-hosted lexer and parser, isn't part of the released language yet, and the package registry's backend isn't deployed.
 
 ## Trying it
 
 The playground needs nothing installed. To install the CLI:
 
 ```sh
+brew install alliecatowo/tap/lumen
+# or the release binary
+curl -fsSL https://raw.githubusercontent.com/alliecatowo/lumen/main/scripts/install.sh | sh
+# or from crates.io
 cargo install lumen-cli
 ```
 
-That installs [`lumen-cli`](https://crates.io/crates/lumen-cli) 0.5.0 from crates.io, which provides the `lumen` binary (and a `wares` package tool). Then `lumen run hello.lm.md`. The [repo](https://github.com/alliecatowo/lumen) has the source. MIT licensed.
+Version 0.6.0 is current everywhere: the [`lumen-cli`](https://crates.io/crates/lumen-cli) crate provides the `lumen` binary (and a `wares` package tool), [`lumen-wasm`](https://www.npmjs.com/package/lumen-wasm) on npm (`npm install lumen-wasm`) is the browser and edge build, and the editor extension is `alliecatowo.lumen` on Open VSX (`code --install-extension alliecatowo.lumen` on VSCodium or code-server). Then `lumen run hello.lm.md`. The [repo](https://github.com/alliecatowo/lumen) has the source. MIT licensed.
