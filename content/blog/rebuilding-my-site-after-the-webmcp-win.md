@@ -34,17 +34,17 @@ Winners were announced on September 28. I wanted my public presence ready, and a
 
 I audited the site on September 30. It had not been deployed since March 9, and nothing on it mentioned the win.
 
-- The first three featured project cards were random stock photos, not my work.
+- The first three featured project cards still had placeholder photos instead of captures of the projects.
 - `/robots.txt` and `/sitemap.xml` returned the HTML homepage with a 200 status, and so did every missing URL. Google was seeing soft 404s.
-- No page had a canonical URL, JSON-LD or Twitter card.
-- An old resume PDF was still indexed. Its metadata title was "John Doe's CV", and it carried a phone number.
+- No page had a canonical URL, JSON-LD or share preview card.
+- An old resume PDF was still indexed. It came from a LaTeX sample template, so its metadata title was "John Doe's CV". I had not touched it during the job hunt, so it did not mention Hinge Health either, and it carried a phone number.
 - `/projects/jupyterlite-webmcp` did not exist.
 
-That was not a site I would post from. So I started fixing it.
+It had been sitting since before I got the job, and it needed a catch-up before I pointed anyone at it. So I started fixing it.
 
 ## A site people can find needs real SEO
 
-The first PRs on September 30 covered the basics. [PR #33](https://github.com/alliecatowo/portfolio/pull/33) turned on `@nuxtjs/robots` and `@nuxtjs/sitemap`, removed the catch-all rewrite so Firebase serves a real `404.html`, and deleted the resume. [PR #36](https://github.com/alliecatowo/portfolio/pull/36) added canonical URLs, Open Graph and Twitter cards, and JSON-LD.
+The first PRs on September 30 covered the basics. [PR #33](https://github.com/alliecatowo/portfolio/pull/33) turned on `@nuxtjs/robots` and `@nuxtjs/sitemap`, removed the catch-all rewrite so Firebase serves a real `404.html`, and deleted the resume. [PR #36](https://github.com/alliecatowo/portfolio/pull/36) added canonical URLs, Open Graph preview cards for sharing, and JSON-LD.
 
 Every page now calls one composable, `useSiteSeo`, which sets the title, description, canonical, social tags and structured data together. The sitemap includes published posts and projects only, plus four video entries for the projects with a YouTube demo. Draft posts and projects are dropped from the production build, so they never reach the public content dumps.
 
@@ -52,9 +52,13 @@ A later check against production found 42 sitemap URLs. All 42 returned 200 with
 
 I verified the domain in Google Search Console, and the sitemap now shows "Success". I set up Bing Webmaster Tools too and submitted URLs there.
 
+That matters for ChatGPT: OpenAI says [ChatGPT search uses third-party search providers](https://help.openai.com/en/articles/9237897-chatgpt-search), and Bing is the best known of them. A site that Bing has indexed is easier for ChatGPT to find and cite.
+
 ## A findable site needs to be editable from her phone
 
-I use Nuxt Studio to edit content in a browser, so I can fix a typo without opening a laptop. I self-host it on a Firebase Cloud Function next to the static site. [PR #54](https://github.com/alliecatowo/portfolio/pull/54) added a 2nd-generation function called `studio`. `firebase.json` rewrites only `/_studio`, `/__nuxt_studio/**` and `/sw.js` to it, and everything else stays static.
+The site is built on Nuxt, so Nuxt Content and Nuxt Studio are the natural way to edit it in a browser, and I can fix a typo from my phone.
+
+I had the original hosted Studio set up, then Nuxt deprecated the hosted version and released a self-hosted one. So I self-host it on a Firebase Cloud Function next to the static site. [PR #54](https://github.com/alliecatowo/portfolio/pull/54) added a 2nd-generation function called `studio`. `firebase.json` rewrites only `/_studio`, `/__nuxt_studio/**` and `/sw.js` to it, and everything else stays static.
 
 Firebase Hosting strips every request cookie except `__session`, which breaks Studio's GitHub login. A small middleware packs Studio's cookies into `__session` on the way out and unpacks them on the way in. When I save in Studio, it commits to `main` with my GitHub token, and the normal deploy runs.
 
@@ -96,15 +100,21 @@ Neither guess was the cause. A custom `scrollBehavior` in `app/router.options.ts
 
 ## A fast site should be easy for agents to use
 
-A winning WebMCP entry on a site with no WebMCP felt wrong. [WebMCP](https://github.com/webmachinelearning/webmcp) is a proposed web standard that lets a page register tools for an in-browser agent.
+A winning WebMCP entry on a site with no WebMCP felt wrong, and it turns out Google agrees: Lighthouse now scores WebMCP. Its Agentic Browsing checks are the 4 of 4 in the screenshot above.
+
+I read that as part of the accessibility push. A page that describes what it can do in a structured way helps agents the way good markup helps screen readers, and that is the same idea behind JupyterLite WebMCP, which exposes a notebook to an agent as tools instead of pixels.
+
+The site now does that too, which brings this post full circle. [WebMCP](https://github.com/webmachinelearning/webmcp) is a proposed web standard that lets a page register tools for an in-browser agent.
 
 [PR #82](https://github.com/alliecatowo/portfolio/pull/82) registers `search_projects`, `get_project`, `list_blog_posts`, `get_contact_info` and `navigate` when the browser supports `document.modelContext`. The contact form is a declarative tool, and an agent can fill it but a person has to press Send. The tools read a prerendered `/webmcp/catalog.json` rather than loading Content's SQLite in the browser.
 
-For agents that do not run in the page, there is a `/llms.txt` and an `ai-catalog.json` under `/.well-known/`. `pnpm test:webmcp` drives real Chrome through every tool and passes 23 checks.
+For agents that do not run in the page, there is a `/llms.txt` and an `ai-catalog.json` under `/.well-known/`. `/llms.txt` is generated from the content and is a map: it describes the site and links to each page, and the links point at the HTML. The site does not yet serve a Markdown copy of each page, and I think it should, so that is next. `pnpm test:webmcp` drives real Chrome through every tool and passes 23 checks.
 
 ## How did I work with Claude Code?
 
 Claude Code subagents did most of the typing, each in its own worktree, one per branch. That makes 61 merged pull requests since September 30, five of them Dependabot version bumps. PRs get a Firebase preview channel.
+
+I ran most of this remotely. I kept Claude Code sessions going from my phone while I went about my day, checked in on them, and opened each Firebase preview on the phone, which is where the flicker showed up. I also kept improving the setup around the agents: the repo's `CLAUDE.md`, a `verify-site` skill that every PR has to pass, and the CI checks.
 
 CI also runs Lighthouse CI and an SEO check against every PR ([PR #93](https://github.com/alliecatowo/portfolio/pull/93)). Accessibility, Best Practices and SEO below 0.95 fail the build, and Performance below 0.85 warns.
 
@@ -112,4 +122,4 @@ The agents were wrong sometimes, as the flicker shows. They also wrote the audit
 
 ## And then she writes the blog post
 
-Which brings this back around. The site is ready, and this post is the cookie I wanted in the first place. If you find a bug in it, open an issue on [the portfolio repo](https://github.com/alliecatowo/portfolio). Desktop PageSpeed is 92 and I am still working on it. You can see the rest of what I build on [the projects page](/projects/).
+Which brings this back around. The site is ready, and this post is the cookie I wanted in the first place. Thank you for reading it. Have a look through [the projects page](/projects/) and tell me which projects you like and which ones you want to hear about next, and I will write those up. If you find a bug on the site, open an issue on [the portfolio repo](https://github.com/alliecatowo/portfolio). Desktop PageSpeed is 92 and I am still working on it.
