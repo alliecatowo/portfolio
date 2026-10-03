@@ -1,6 +1,7 @@
 ---
 title: Patches
 date: 2026-08-17
+demo: https://patches-site.pages.dev
 description: "A chronological social network you use from the terminal: Ink/React TUI, web PWA peer, E2EE DMs, federation lab, and user-side moderation."
 featured: true
 github: https://github.com/alliecatowo/patches

@@ -1,6 +1,7 @@
 ---
 title: Shoal
 date: 2026-07-09
+demo: https://alliecatowo.github.io/shoal/
 description: "Agent-first structured shell in Rust: typed values and dot-chains instead of pipes, hash-locked tool resolution, OS sandboxing, and an MCP agent surface."
 featured: false
 github: https://github.com/alliecatowo/shoal
@@ -96,6 +97,6 @@ A long-lived kernel serves named sessions over JSON-RPC, and an MCP facade gives
 
 ## Status
 
-Shoal is a pre-release preview, in the project's own words "a substantial, working preview", not a login shell you'd switch to tomorrow. It's Unix-only and has been quiet since July 2026. v0.1.1 ships prebuilt Linux and macOS binaries on the [releases page](https://github.com/alliecatowo/shoal/releases) and in Homebrew (`brew install alliecatowo/tap/shoal`); it isn't on crates.io, since the `shoal` crate name belongs to an unrelated project. It also audited itself: the [status page](https://alliecatowo.github.io/shoal/docs/status-limits/) lists two open P0 findings on `main`, unauthenticated plan approval and plan-reference collisions. Fixes exist on an unmerged hardening branch but haven't shipped. Dual-licensed MIT or Apache-2.0.
+Shoal is a pre-release preview, in the project's own words "a substantial, working preview", not a login shell you'd switch to tomorrow. It's Unix-only and has been quiet since July 2026. v0.1.3 ships prebuilt Linux and macOS binaries on the [releases page](https://github.com/alliecatowo/shoal/releases) and in Homebrew (`brew install alliecatowo/tap/shoal`); it isn't on crates.io, since the `shoal` crate name belongs to an unrelated project. It also audited itself: the [status page](https://alliecatowo.github.io/shoal/docs/status-limits/) lists two open P0 findings on `main`, unauthenticated plan approval and plan-reference collisions. Fixes exist on an unmerged hardening branch but haven't shipped. Dual-licensed MIT or Apache-2.0.
 
 Shoal sits next to [Lumen](/projects/lumen/) and [puml](/projects/puml/) as part of a small run of Rust language and runtime projects: typed structure over text, parsers and compilers, and output agents can actually consume.

@@ -72,10 +72,13 @@ puml was an experiment in fast, AI-assisted engineering, which the README says o
 
 ## Status
 
-It's an early v0.1, MIT licensed, and paused since June 2026. The [docs site](https://alliecatowo.github.io/puml/), [gallery](https://alliecatowo.github.io/puml/gallery/) and editor are live. There are no CLI packages or release binaries yet, so the CLI and language server are built from source. A VS Code extension, [`alliecatowo.puml-vscode`](https://open-vsx.org/extension/alliecatowo/puml-vscode), is on Open VSX and needs that `puml` binary on your PATH.
+It's an early 0.x release, MIT licensed, and paused since June 2026. The [docs site](https://alliecatowo.github.io/puml/), [gallery](https://alliecatowo.github.io/puml/gallery/) and editor are live. v0.2.2 is out with release binaries (Linux and macOS, with cosign signatures and checksums), a Homebrew formula and a crates.io package. A VS Code extension, [`alliecatowo.puml-vscode`](https://open-vsx.org/extension/alliecatowo/puml-vscode) (0.2.2), is on Open VSX and needs the `puml` binary on your PATH.
 
 ```sh
-git clone https://github.com/alliecatowo/puml.git && cd puml
-cargo build --release
-./target/release/puml hello.puml
+brew install alliecatowo/tap/puml
+# or the release binary
+curl -fsSL https://raw.githubusercontent.com/alliecatowo/puml/main/scripts/install.sh | sh
+# or from crates.io
+cargo install puml
+puml hello.puml
 ```

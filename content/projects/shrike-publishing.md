@@ -12,7 +12,7 @@ seo:
   title: "Shrike Publishing: Nuxt site for an RPG studio"
   description: "A Nuxt 4 site for Shrike Publishing, a small tabletop RPG studio: Markdown pages anyone on the team can edit, moved off a paid WordPress plan onto Vercel hosting."
 slug: shrike-publishing
-status: published
+status: draft
 tags:
   - nuxt
   - vue

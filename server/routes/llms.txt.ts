@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
     for (const p of inGroup) {
       // The winner's description already says so
       const award = p.award && !/winning|winner/i.test(p.description ?? '') ? ` (${p.award})` : ''
-      lines.push(`- [${p.title}](${SITE}/projects/${p.slug}/)${award}: ${p.description}`)
+      lines.push(`- [${p.title}](${SITE}/projects/${p.slug}/index.md)${award}: ${p.description}`)
     }
   }
 
@@ -53,13 +53,14 @@ export default defineEventHandler(async (event) => {
     '',
     '## For agents',
     '',
+    `- Markdown versions: every project and blog post below links to its plain Markdown at /<section>/<slug>/index.md (the HTML page is at the same path without index.md).`,
     `- [WebMCP tools](${SITE}/.well-known/ai-catalog.json): in a browser with WebMCP enabled, the site registers read-only tools via document.modelContext: search_projects(query, group?), get_project(slug), list_blog_posts(), navigate(path) and get_contact_info(). The contact form is annotated as the declarative tool send_message; it is filled in for the person to review and send, never auto-submitted.`,
     `- [Catalog data](${SITE}/webmcp/catalog.json): the same published projects and posts as JSON, for agents without WebMCP.`
   )
 
   if (posts.length) {
     lines.push('', '## Blog', '')
-    for (const post of posts) lines.push(`- [${post.title}](${SITE}/blog/${post.slug}/): ${post.description}`)
+    for (const post of posts) lines.push(`- [${post.title}](${SITE}/blog/${post.slug}/index.md): ${post.description}`)
   }
 
   setHeader(event, 'content-type', 'text/plain; charset=utf-8')

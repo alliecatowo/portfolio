@@ -1,6 +1,7 @@
 ---
 title: GitHub Stories
 date: 2026-09-13
+demo: https://alliecatowo.github.io/gh-stories/demo/
 description: "24-hour Stories for GitHub: rings on avatars via a browser extension, and a gh CLI that draws them (video too) right in your terminal."
 featured: true
 github: https://github.com/alliecatowo/gh-stories
@@ -66,8 +67,8 @@ It also treats uploads and captions as hostile. Image dimensions are checked fro
 
 ## Status
 
-It went from first commit to v0.1.0 in a single day (September 13, 2026), and v0.5.3 shipped on September 16. MIT licensed. Both clients install today: the CLI with `gh extension install alliecatowo/gh-stories`, and the extension as a side-loaded build from the [releases page](https://github.com/alliecatowo/gh-stories/releases/latest), since it isn't in any extension store.
+It went from first commit to v0.1.0 in a single day (September 13, 2026), and v0.5.4 is the current release. MIT licensed. Both clients install today: the CLI with `gh extension install alliecatowo/gh-stories` (or `brew install alliecatowo/tap/gh-stories`), and the extension as a side-loaded build from the [releases page](https://github.com/alliecatowo/gh-stories/releases/latest), since it isn't in any extension store.
 
-**There's no public service running**, so real use means [self-hosting](https://alliecatowo.github.io/gh-stories/docs/self-hosting/) the backend: a container, PostgreSQL, an S3-compatible bucket and a GitHub OAuth app. To see it without any setup, open the [demo with sample data](https://alliecatowo.github.io/gh-stories/demo/), which runs entirely in the browser with fictional accounts.
+**The hosted service is experimental and lags the release** (it still runs v0.4.1), so for dependable use [self-host](https://alliecatowo.github.io/gh-stories/docs/self-hosting/) the backend: a container, PostgreSQL, an S3-compatible bucket and a GitHub OAuth app. To see it without any setup, open the [demo with sample data](https://alliecatowo.github.io/gh-stories/demo/), which runs entirely in the browser with fictional accounts.
 
 ![The GitHub Stories demo viewer playing a sample concert Story from the fictional account otterframes.](/images/projects/gh-stories/demo-viewer.webp)

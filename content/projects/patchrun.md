@@ -1,6 +1,7 @@
 ---
 title: patchrun
 date: 2026-05-14
+demo: https://alliecatowo.github.io/patchrun/
 description: Run any command in a disposable Git worktree and get back the patch it would have made, then apply, save, or discard it. A small Go CLI.
 featured: false
 github: https://github.com/alliecatowo/patchrun
