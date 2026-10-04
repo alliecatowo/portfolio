@@ -52,4 +52,14 @@ The docs also list the largest gaps: the original's very large UI component inve
 
 ## Status
 
-Source is on GitHub under Apache-2.0, as a single initial commit from April 2026. Two things are worth knowing. The `cmd/ac` entry point that the build scripts and CI refer to is not in the public repository (the repo's `.gitignore` excludes a path named `ac`), so the program cannot be built from a fresh checkout, and the one CI run on record failed. There is no demo media for the same reason.
+Source is on GitHub under Apache-2.0, started with a single initial commit in April 2026. The first public release, v0.1.0, came out on October 4, 2026. For months the `cmd/ac` entry point that the build scripts refer to was missing from the public repository, because a `.gitignore` rule excluded a path named `ac`, so it could not be built from a fresh checkout. That was fixed before the release, and the release workflow built it and passed.
+
+v0.1.0 has archives for Linux, macOS and Windows (amd64 and arm64), `.deb` and `.rpm` packages for Linux, and a Homebrew formula:
+
+```sh
+brew install alliecatowo/tap/alliecode
+# or
+go install github.com/alliecatowo/alliecode/cmd/ac@latest
+```
+
+The command is `ac`. The parity numbers above haven't changed, and there is still no demo media.

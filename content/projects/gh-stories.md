@@ -67,8 +67,12 @@ It also treats uploads and captions as hostile. Image dimensions are checked fro
 
 ## Status
 
-It went from first commit to v0.1.0 in a single day (September 13, 2026), and v0.5.4 is the current release. MIT licensed. Both clients install today: the CLI with `gh extension install alliecatowo/gh-stories` (or `brew install alliecatowo/tap/gh-stories`), and the extension as a side-loaded build from the [releases page](https://github.com/alliecatowo/gh-stories/releases/latest), since it isn't in any extension store.
+It went from first commit to v0.1.0 in a single day (September 13, 2026), and v0.5.6 (October 4, 2026) is the current release. MIT licensed. Both clients install today: the CLI with `gh extension install alliecatowo/gh-stories` (or `brew install alliecatowo/tap/gh-stories`), and the extension as a side-loaded build from the [releases page](https://github.com/alliecatowo/gh-stories/releases/latest), since it isn't in any extension store. The site has Chrome and Firefox install cards with "coming soon" store badges that link to the manual-install zips.
 
-**The hosted service is experimental and lags the release** (it still runs v0.4.1), so for dependable use [self-host](https://alliecatowo.github.io/gh-stories/docs/self-hosting/) the backend: a container, PostgreSQL, an S3-compatible bucket and a GitHub OAuth app. To see it without any setup, open the [demo with sample data](https://alliecatowo.github.io/gh-stories/demo/), which runs entirely in the browser with fictional accounts.
+**The hosted service is experimental and lags the release** (it was running v0.4.1 when last checked), so for dependable use [self-host](https://alliecatowo.github.io/gh-stories/docs/self-hosting/) the backend: a container, PostgreSQL, an S3-compatible bucket and a GitHub OAuth app. To see it without any setup, open the [demo with sample data](https://alliecatowo.github.io/gh-stories/demo/), which runs entirely in the browser with fictional accounts.
+
+The project site at [alliecatowo.github.io/gh-stories](https://alliecatowo.github.io/gh-stories/) was rebuilt in October with the project's own captures, and the docs and demo share its colours. Its hero image is from an older extension build, and the demo panel still uses some of the UI package's default blue and white.
+
+The extension was reworked for v0.5.6. The ring is now a sibling element measured over the avatar, so GitHub's own nodes are no longer moved and the page layout doesn't shift, and one shared React root draws every ring. Rings are re-applied when GitHub recycles an avatar image. A 401 on a sent token drops that account. The composer shows real upload progress and real error text. A new "following" lookup walks your GitHub follows, bounded, and is hidden on your own profile.
 
 ![The GitHub Stories demo viewer playing a sample concert Story from the fictional account otterframes.](/images/projects/gh-stories/demo-viewer.webp)
