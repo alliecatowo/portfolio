@@ -79,14 +79,16 @@ The `rss` reader addresses entries by ID prefix, position or path, and `rss tui`
 
 ## How it was built
 
-Spec first, then code, in one evening on 15 September 2026: a 587-line spec and nine commits. Byte-exact captures of seven real feeds (including the GitHub blog, go.dev, Hacker News and xkcd) plus a local fixture server mean the whole thing runs with no network. The README counts about 300 tests. It's a small, sharp design exercise rather than a daily-driver reader, and it's on PyPI as [`rssd-fs`](https://pypi.org/project/rssd-fs/) (the `rssd` name there belongs to someone else). It needs Python 3.14:
+Spec first, then code, in one evening on 15 September 2026: a 587-line spec and nine commits. Byte-exact captures of seven real feeds (including the GitHub blog, go.dev, Hacker News and xkcd) plus a local fixture server mean the whole thing runs with no network. The README counts about 300 tests. It's a small, sharp design exercise rather than a daily-driver reader, and it's on PyPI as [`rssd-fs`](https://pypi.org/project/rssd-fs/) (the `rssd` name there belongs to someone else). It needs Python 3.12 or later (v0.3.0 lowered that from 3.14 only), and v0.3.0 is the current release:
 
 ```sh
 brew install alliecatowo/tap/rssd     # macOS and Linux, or:
-uv tool install 'rssd-fs[tui]' --python 3.14
+uv tool install 'rssd-fs[tui]'
 rssd add https://go.dev/blog/feed.atom
 rssd once
 rss tui
 ```
+
+v0.3.0 (4 October 2026) added `rssd import` and `rssd export` for OPML, so subscriptions can move in and out of other readers. The rest of it is hardening: full-text fetching resolves a host once and connects to the checked address, which closes a DNS rebinding hole; XML entity resolution is off; and subscription URLs must be http or https. Fixes include duplicate polling chains, a 200 response that isn't a feed now counting as a failure, the daemon exiting non-zero if its scheduler dies, and entry files being fsynced. CI runs on Python 3.12 and 3.14. Perf work on the event loop and the TUI refresh is still open, and so is a retention limit for tracked entries.
 
 The `rssd` and `rss` commands then keep their data in your user data directory by default. [Docs](https://alliecatowo.github.io/rssd/), [spec](https://github.com/alliecatowo/rssd/blob/main/SPEC.md), MIT.

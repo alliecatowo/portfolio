@@ -93,4 +93,4 @@ Releases are published to the `alliecatowo/tap` Homebrew tap automatically: the 
 brew install --cask alliecatowo/tap/glassy
 ```
 
-Linux users can `brew install alliecatowo/tap/glassy` (the formula builds from source) or use the packages; install commands for Fedora and Debian/Ubuntu are on the [package repository page](https://alliecatowo.github.io/glassy/), and every build is on the [releases page](https://github.com/alliecatowo/glassy/releases). The latest release is v0.6.1 (July 9, 2026). MIT licensed.
+The CLI-only formula, `brew install alliecatowo/tap/glassy`, installs a prebuilt binary on macOS and on x86\_64 Linux; on aarch64 Linux it builds from source. Fedora and Debian/Ubuntu users can use the apt and dnf repositories, and every build is on the [releases page](https://github.com/alliecatowo/glassy/releases). Glassy now has a [landing page](https://alliecatowo.github.io/glassy) with install tabs for Homebrew, the install script, apt, dnf and a direct download, plus screenshots from the repo; the apt and dnf repositories are served from the same site. The latest release is v0.6.2 (October 4, 2026). MIT licensed.

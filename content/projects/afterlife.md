@@ -45,7 +45,7 @@ It runs in the browser with no account and no install. [Open it and touch the wo
 
 The history ribbon is the real record, not a recording. AFTERLIFE keeps a keyframe every 64 generations plus the edits you made, so jumping to any generation restores the nearest keyframe and replays forward bit-exactly. Generation 4,000 really is generation 4,000.
 
-Edit a cell in the past and the future **forks**. The original timeline keeps going on its own branch (up to eight branches, least recently used evicted first, except ones you've named), and a compare view diffs the two cell by cell. Branching only copies pointers to the parent's keyframes, so a "what if" is cheap. The "One Cell" experiment makes the point: flip one cell in the opening scene and the world is dead by generation 54, where the untouched timeline grows to a population of 221.
+Edit a cell in the past and the future **forks**. The original timeline keeps going on its own branch (up to eight branches, least recently used evicted first, except ones you've named), and a compare view diffs the two cell by cell. Saves now keep the forks and the Field Guide, so reopening a world brings the alternate futures back. The exception is a very long session whose history window has slid: then only the branch you were on is saved, as the root. Branching only copies pointers to the parent's keyframes, so a "what if" is cheap. The "One Cell" experiment makes the point: flip one cell in the opening scene and the world is dead by generation 54, where the untouched timeline grows to a population of 221.
 
 Then there's the **Time Sculpture**. Select a stretch of the world and AFTERLIFE lifts its recorded generations into a 3D stack you can orbit and slice. Time becomes the third axis, so still lifes turn into columns and gliders turn into inclined beams.
 
@@ -59,6 +59,7 @@ Then there's the **Time Sculpture**. Select a stretch of the world and AFTERLIFE
 - **Acid Art.** A glyph mode that draws cells as characters from a JetBrains Mono atlas, modulated by noise, plasma, an image, a video or your webcam.
 - **Rules and specimens.** Ten Life-like rule presets plus any custom B/S rulestring, RLE import, a Field Guide that recognises specimens as they appear, and three scored experiments.
 - **Sound.** A generative WebAudio soundscape driven by how much the world is changing, so it decays to real silence when the world is still, plus Web MIDI out with a panic button.
+- **Share links.** "Copy share link" in the Save panel puts the pattern and its rule in the URL hash (`#w=…`), and whoever opens the link lands on the same world. It shares your selection if you have one, otherwise the whole world, and links are capped at 6,000 characters; larger patterns are refused and have to go out as RLE or JSON.
 - **Export.** GIF, WebM, PNG and WAV, rendered from an independent offline replay rather than the live screen, so frame pacing is exact. The GIF encoder (median-cut quantiser, LZW and GIF89a writer) is hand-written and checked against Chromium's own decoder.
 
 ## Multiplayer with no server
@@ -70,6 +71,8 @@ Multiplayer is opt-in and works across browser tabs today. Each edit is stamped 
 AFTERLIFE went from first commit to v1.3.0 in about three days (7 to 9 September 2026): 68 commits and four releases. It was built by a parallel multi-agent harness, and the repo still has the append-only integration log the agents coordinated through.
 
 The docs only claim what was actually run. The opening encounter was found by simulation search. No puffer ships, because a search of more than 2,600 candidates didn't turn up one that verified cleanly. One rule preset was dropped because its advertised behaviour didn't reproduce. When Tailwind's production build quietly turned every colour lens white, the fix came with a Playwright project that builds for real and checks the canvas pixels. The README reports hundreds of unit tests and over a hundred Playwright specs, at desktop and phone sizes.
+
+The deploy is gated on the tests now: the workflow runs tests, builds, deploys, then a smoke check against the live site, and CI includes a production-build end-to-end project. The page also has link-preview metadata. Multiplayer across machines still needs a relay, and none is deployed.
 
 The Time Sculpture needs real WebGL, and it renders dark on software-only graphics.
 

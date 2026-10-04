@@ -104,14 +104,20 @@ About 858 commits in two weeks (September 15 to 29, 2026), which Allison directe
 
 ## Status and trying it
 
-v0.1.1 is the current release, with prebuilt `tm` binaries for Linux and macOS (x86\_64 and arm64) on the [release page](https://github.com/alliecatowo/ticket-master/releases/tag/v0.1.1). It isn't on crates.io, because the workspace's internal crate names aren't free there. There's a [docs site](https://alliecatowo.github.io/ticket-master/) and a [browser demo](https://alliecatowo.github.io/ticket-master/demo/) of the accept and dispatch flow.
+v0.1.4 (October 4, 2026) is the current release, with prebuilt `tm` binaries for Linux and macOS (x86\_64 and arm64), each with a checksum, on the [release page](https://github.com/alliecatowo/ticket-master/releases/tag/v0.1.4). The Homebrew formula tracks it. Since v0.1.1 the changes are small: under the conservative oversight setting, an agent running `sh -c` now needs approval, and the server's 60-second request timeout no longer applies to the event stream or to approvals. The default autonomous setting is unchanged. It isn't on crates.io, because the workspace's internal crate names aren't free there. There's a [docs site](https://alliecatowo.github.io/ticket-master/) and a [browser demo](https://alliecatowo.github.io/ticket-master/demo/) of the accept and dispatch flow.
 
 ```sh
 brew install alliecatowo/tap/ticket-master   # installs the tm CLI
 tm init
 ```
 
-To build from source instead:
+To install from source with cargo:
+
+```sh
+cargo install --git https://github.com/alliecatowo/ticket-master --locked tm-cli
+```
+
+That line is in the README and was checked by CI on Linux and macOS, not run on Allison's own machine. To build a checkout instead:
 
 ```sh
 git clone https://github.com/alliecatowo/ticket-master.git && cd ticket-master
