@@ -3,6 +3,7 @@ title: puml
 date: 2026-05-14
 demo: https://alliecatowo.github.io/puml/editor/
 description: "PlantUML-compatible diagrams without Java or Graphviz: a Rust compiler with its own layout engine, emitting SVG/PNG/PDF from a CLI, LSP and in-browser WASM."
+docs: https://alliecatowo.github.io/puml/
 featured: true
 github: https://github.com/alliecatowo/puml
 group: languages-runtimes

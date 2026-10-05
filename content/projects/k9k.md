@@ -1,8 +1,8 @@
 ---
 title: K9k
 date: 2026-08-07
-demo: https://alliecatowo.github.io/k9k/
 description: "A native macOS Kubernetes manager with K9s-style depth: SwiftUI app, bundled Go client-go helper, live watch, exec, port-forward, Helm, and RBAC checks."
+docs: https://alliecatowo.github.io/k9k/
 featured: false
 github: https://github.com/alliecatowo/k9k
 group: agent-systems-devtools

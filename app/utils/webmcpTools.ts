@@ -17,6 +17,7 @@ export interface CatalogProject {
   url: string
   github?: string
   demo?: string
+  docs?: string
   devpost?: string
 }
 
@@ -133,7 +134,7 @@ export function createWebmcpTools(deps: WebmcpToolDeps): WebmcpToolDefinition[] 
     {
       name: 'get_project',
       title: 'Get project details',
-      description: 'Get one project\'s summary and links (page, GitHub, demo, Devpost), plus technologies, tags and any award. Use a slug from search_projects.',
+      description: 'Get one project\'s summary and links (page, GitHub, demo, docs, Devpost), plus technologies, tags and any award. Use a slug from search_projects.',
       inputSchema: {
         type: 'object',
         properties: {

@@ -3,6 +3,7 @@ title: Lumen
 date: 2026-02-12
 demo: https://alliecatowo.github.io/lumen/playground
 description: "Markdown-native, statically typed language in Rust for AI agent workflows: typed tools, capability grants, effect rows, deterministic mode, WASM playground."
+docs: https://alliecatowo.github.io/lumen/
 featured: false
 github: https://github.com/alliecatowo/lumen
 group: languages-runtimes

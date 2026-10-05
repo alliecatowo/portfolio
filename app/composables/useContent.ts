@@ -3,7 +3,7 @@
 const BLOG_CARD_FIELDS = ['title', 'slug', 'path', 'description', 'date', 'featured_image', 'tags'] as const
 const PROJECT_CARD_FIELDS = [
   'title', 'slug', 'path', 'description', 'date', 'image', 'imageAlt', 'technologies', 'tags',
-  'award', 'group', 'groupOrder', 'order', 'featured', 'demo', 'github', 'status'
+  'award', 'group', 'groupOrder', 'order', 'featured', 'demo', 'docs', 'github', 'status'
 ] as const
 
 export function useContent() {

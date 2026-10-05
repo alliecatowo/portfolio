@@ -3,6 +3,7 @@ title: Storybook WebMCP
 date: 2026-09-01
 demo: https://storybook-web-mcp.vercel.app/storybook/
 description: A Storybook addon that compiles live stories, controls and globals into WebMCP tools. Built and deployed for the WebMCP Challenge, then deliberately not submitted.
+docs: https://alliecatowo.github.io/storybook-webmcp/
 featured: false
 github: https://github.com/alliecatowo/storybook-webmcp
 group: browser-agents

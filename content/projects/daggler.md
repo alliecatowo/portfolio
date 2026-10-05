@@ -1,8 +1,9 @@
 ---
 title: Daggler
 date: 2026-06-03
-demo: https://alliecatowo.github.io/daggler/
+demo: https://alliecatowo.github.io/daggler/app/editor/
 description: "A semantic IDE for GitHub Actions: typed IR, live job graph, five validation layers, and rules that catch prompt injection into AI agents."
+docs: https://alliecatowo.github.io/daggler/
 featured: false
 github: https://github.com/alliecatowo/daggler
 group: agent-systems-devtools

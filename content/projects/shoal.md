@@ -1,8 +1,8 @@
 ---
 title: Shoal
 date: 2026-07-09
-demo: https://alliecatowo.github.io/shoal/
 description: "Agent-first structured shell in Rust: typed values and dot-chains instead of pipes, hash-locked tool resolution, OS sandboxing, and an MCP agent surface."
+docs: https://alliecatowo.github.io/shoal/
 featured: false
 github: https://github.com/alliecatowo/shoal
 group: languages-runtimes

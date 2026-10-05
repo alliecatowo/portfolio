@@ -4,6 +4,7 @@ date: 2026-09-03
 demo: https://openapi-web-mcp.vercel.app
 description: "OpenAI WebMCP Challenge entry: a Swagger UI plugin that turns any OpenAPI docs page into agent tools, with access the page and the person can only tighten."
 devpost: https://devpost.com/software/swagger-ui-webmcp
+docs: https://alliecatowo.github.io/openapi-web-mcp/
 featured: false
 github: https://github.com/alliecatowo/openapi-web-mcp
 group: browser-agents

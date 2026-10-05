@@ -1,8 +1,8 @@
 ---
 title: Git Why
 date: 2026-09-09
-demo: https://alliecatowo.github.io/git-why/
 description: git blame tells you who changed the code; git why finds the commit that explains it. Local hybrid search over Git history, benchmarked honestly.
+docs: https://alliecatowo.github.io/git-why/
 featured: false
 github: https://github.com/alliecatowo/git-why
 group: agent-systems-devtools
