@@ -3,6 +3,7 @@ title: GitHub Stories
 date: 2026-09-13
 demo: https://alliecatowo.github.io/gh-stories/demo/
 description: "24-hour Stories for GitHub: rings on avatars via a browser extension, and a gh CLI that draws them (video too) right in your terminal."
+docs: https://alliecatowo.github.io/gh-stories/
 featured: true
 github: https://github.com/alliecatowo/gh-stories
 group: social-systems

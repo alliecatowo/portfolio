@@ -58,6 +58,17 @@
           </a>
 
           <a
+            v-if="project.docs"
+            :href="project.docs"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center px-6 py-3 text-primary-800 dark:text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary/20 font-semibold transition-all"
+          >
+            <UIcon name="i-lucide-book-open" class="w-4 h-4 mr-2" />
+            Docs
+          </a>
+
+          <a
             v-if="project.github"
             :href="project.github"
             target="_blank"

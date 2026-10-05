@@ -5,6 +5,7 @@ date: 2026-09-03
 demo: https://jupyterlite-web-mcp.vercel.app/lab/index.html
 description: "Winning OpenAI WebMCP Challenge entry: a JupyterLab extension giving a browser agent 22 tools over your live notebook, kernel, selection and review threads."
 devpost: https://devpost.com/software/jupyterlite-webmcp
+docs: https://alliecatowo.github.io/jupyterlite-web-mcp/
 featured: true
 github: https://github.com/alliecatowo/jupyterlite-web-mcp
 group: browser-agents

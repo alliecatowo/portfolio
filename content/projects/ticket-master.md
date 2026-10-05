@@ -1,8 +1,9 @@
 ---
 title: Ticketmaster
 date: 2026-09-15
-demo: https://alliecatowo.github.io/ticket-master/
+demo: https://alliecatowo.github.io/ticket-master/demo/
 description: "Rust coding-agent runtime: chat in the terminal, hand work to background workers as tickets, review and accept it. State is an append-only event log."
+docs: https://alliecatowo.github.io/ticket-master/
 featured: true
 github: https://github.com/alliecatowo/ticket-master
 group: agent-systems-devtools

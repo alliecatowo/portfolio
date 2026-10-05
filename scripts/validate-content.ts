@@ -52,7 +52,7 @@ const report = (file: string, field: string, message: string) => {
 }
 
 const IMAGE_EXT = /\.(?:png|jpe?g|webp|gif|svg|avif|ico)$/i
-const URL_KEYS = new Set(['github', 'demo', 'devpost', 'href', 'url', 'link', 'website'])
+const URL_KEYS = new Set(['github', 'demo', 'docs', 'devpost', 'href', 'url', 'link', 'website'])
 const ALLOWED_LINK = /^(?:https?:\/\/|mailto:|tel:|\/|#|\.{1,2}\/)/
 const BARE_DOMAIN = /^(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,}(?:[/?#]|$)/i
 const PLACEHOLDER_HOSTS = /picsum\.photos|placehold\.co|via\.placeholder\.com/i

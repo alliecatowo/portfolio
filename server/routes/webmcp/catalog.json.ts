@@ -13,7 +13,7 @@ export default defineEventHandler(async (event): Promise<WebmcpCatalog> => {
   const [projects, posts] = await Promise.all([
     queryCollection(event, 'projects')
       .where('status', '=', 'published')
-      .select('title', 'slug', 'description', 'group', 'order', 'groupOrder', 'featured', 'date', 'award', 'technologies', 'tags', 'github', 'demo', 'devpost')
+      .select('title', 'slug', 'description', 'group', 'order', 'groupOrder', 'featured', 'date', 'award', 'technologies', 'tags', 'github', 'demo', 'docs', 'devpost')
       .all(),
     queryCollection(event, 'blog')
       .where('published', '=', true)
@@ -40,6 +40,7 @@ export default defineEventHandler(async (event): Promise<WebmcpCatalog> => {
       url: `${SITE}/projects/${p.slug}/`,
       github: p.github || undefined,
       demo: p.demo || undefined,
+      docs: p.docs || undefined,
       devpost: p.devpost || undefined
     })),
     posts: posts.map(post => ({

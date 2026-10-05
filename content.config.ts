@@ -60,6 +60,7 @@ export default defineContentConfig({
         tags: z.array(z.string()).default([]),
         github: z.string().url().optional(),
         demo: z.string().url().optional(),
+        docs: z.string().url().optional(),
         devpost: z.string().url().optional(),
         // Explicit ordering (ascending); projects without it sort after, by date
         order: z.number().optional(),

@@ -3,6 +3,7 @@ title: Assistarr
 date: 2026-01-19
 demo: https://assistarr.vercel.app
 description: "An AI assistant for a self-hosted media stack: ask in plain English and it drives Jellyfin, Radarr, Sonarr, Jellyseerr and qBittorrent from a web chat UI."
+docs: https://alliecatowo.github.io/assistarr/
 featured: false
 github: https://github.com/alliecatowo/assistarr
 group: earlier-work

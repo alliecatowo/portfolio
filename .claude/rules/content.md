@@ -27,7 +27,8 @@ featured: true | false
 technologies: [list]
 tags: [list]
 github: URL (optional)
-demo: URL (optional)
+demo: URL (optional; a real interactive demo or app, not a docs page)
+docs: URL (optional; the docs or marketing site)
 devpost: URL (optional)
 order: number (optional; ascending, unordered projects sort after by date)
 award: string (optional; shown as a badge)

@@ -84,6 +84,7 @@ interface TileProject {
   award?: string
   github?: string
   demo?: string
+  docs?: string
   technologies?: string[]
 }
 
@@ -148,6 +149,7 @@ const ui = computed(() => {
 
 const links = computed(() => [
   props.project.demo && { label: 'Live demo', href: props.project.demo, icon: 'i-lucide-external-link' },
+  props.project.docs && { label: 'Docs', href: props.project.docs, icon: 'i-lucide-book-open' },
   props.project.github && { label: 'Source code', href: props.project.github, icon: 'i-lucide-github' }
 ].filter(Boolean) as { label: string, href: string, icon: string }[])
 

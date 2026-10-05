@@ -1,8 +1,8 @@
 ---
 title: rssd
 date: 2026-09-15
-demo: https://alliecatowo.github.io/rssd/
 description: "A file-based RSS daemon: feeds become a tree of atomically written XML entries with revision history, a tail-able JSONL event log, and a vim-style TUI."
+docs: https://alliecatowo.github.io/rssd/
 featured: false
 github: https://github.com/alliecatowo/rssd
 group: agent-systems-devtools
