@@ -1,7 +1,7 @@
 ---
 title: Patches
 date: 2026-08-17
-demo: https://patches-site.pages.dev
+demo: https://patches-web.pages.dev
 description: "A chronological social network you use from the terminal: Ink/React TUI, web PWA peer, E2EE DMs, federation lab, and user-side moderation."
 featured: true
 github: https://github.com/alliecatowo/patches
@@ -95,6 +95,6 @@ Allison built Patches solo, with a documented AI-agent harness, in about two wee
 
 ## Try it
 
-The live node on Fly.io is **invite-only**, so a visitor without a code only gets as far as the sign-in screen. The [docs site](https://patches-site.pages.dev) is open to everyone, and the MIT-licensed source runs locally with `mise run setup && mise run server && mise run tui`. Six alpha pre-releases of the terminal client are on the [releases page](https://github.com/alliecatowo/patches/releases).
+The [web app](https://patches-web.pages.dev) has a **Try the demo** button that opens a private sandbox account for an hour, with three fictional friends already messaging you; real accounts on the live node are still invite-only. The [docs site](https://patches-site.pages.dev) is open to everyone, and the MIT-licensed source runs locally with `mise run setup && mise run server && mise run tui`. Six alpha pre-releases of the terminal client are on the [releases page](https://github.com/alliecatowo/patches/releases).
 
 ![Patches web sign-in with password, passkey, GitHub, and approve-from-terminal options.](/images/projects/patches/web-login.webp)
