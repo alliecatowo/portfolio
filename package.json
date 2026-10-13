@@ -81,7 +81,7 @@
     "nuxi": "^3.37.0",
     "nuxt": "^4.5.2",
     "pa11y": "^10.0.0",
-    "playwright-core": "1.63.0",
+    "playwright-core": "1.64.0",
     "prettier": "^3.9.9",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
