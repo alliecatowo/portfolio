@@ -78,7 +78,7 @@
     "firebase-functions": "^7.4.0",
     "h3": "^1.15.11",
     "lefthook": "^2.1.16",
-    "nuxi": "^3.37.0",
+    "nuxi": "^4.0.1",
     "nuxt": "^4.6.1",
     "pa11y": "^10.0.0",
     "playwright-core": "1.64.1",
