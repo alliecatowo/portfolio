@@ -65,7 +65,7 @@
     "@iconify-json/lucide": "^1.2.142",
     "@iconify-json/simple-icons": "^1.2.99",
     "@lhci/cli": "^0.15.1",
-    "@nuxt/cli": "^3.37.0",
+    "@nuxt/cli": "^4.0.1",
     "@nuxt/devtools": "latest",
     "@nuxt/eslint-config": "^1.17.0",
     "@nuxt/schema": "^4.6.1",
