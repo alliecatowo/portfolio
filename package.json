@@ -45,16 +45,16 @@
     "emulate:studio": "pnpm generate && pnpm build:studio && firebase emulators:start --only hosting,functions"
   },
   "dependencies": {
-    "@nuxt/content": "^3.16.1",
-    "@nuxt/image": "^2.1.0",
+    "@nuxt/content": "^3.16.2",
+    "@nuxt/image": "^2.2.1",
     "@nuxt/scripts": "1.3.12",
-    "@nuxt/ui": "4.11.3",
+    "@nuxt/ui": "4.12.0",
     "@nuxtjs/robots": "^6.2.4",
     "@nuxtjs/sitemap": "^8.6.1",
-    "nuxt-studio": "^1.7.0",
+    "nuxt-studio": "^1.8.0",
     "sharp": "^0.35.4",
-    "vue": "^3.5.43",
-    "zod": "^4.6.6"
+    "vue": "^3.5.45",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@axe-core/cli": "^4.14.0",
@@ -62,8 +62,8 @@
     "@commitlint/config-conventional": "^21.2.4",
     "@eslint/js": "^10.0.1",
     "@iconify-json/heroicons": "^1.2.3",
-    "@iconify-json/lucide": "^1.2.142",
-    "@iconify-json/simple-icons": "^1.2.99",
+    "@iconify-json/lucide": "^1.2.153",
+    "@iconify-json/simple-icons": "^1.2.102",
     "@lhci/cli": "^0.15.1",
     "@nuxt/cli": "^3.37.0",
     "@nuxt/devtools": "latest",
@@ -79,11 +79,11 @@
     "h3": "^1.15.11",
     "lefthook": "^2.2.2",
     "nuxi": "^3.37.0",
-    "nuxt": "^4.6.2",
+    "nuxt": "^4.6.4",
     "pa11y": "^10.0.0",
     "playwright-core": "1.64.1",
     "prettier": "^3.9.10",
-    "tailwindcss": "^4.3.3",
+    "tailwindcss": "^4.3.5",
     "typescript": "^6.0.3",
     "vue-tsc": "^3.3.14",
     "yaml": "2.9.1"
