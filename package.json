@@ -68,7 +68,7 @@
     "@nuxt/cli": "^3.37.0",
     "@nuxt/devtools": "latest",
     "@nuxt/eslint-config": "^1.17.0",
-    "@nuxt/schema": "^4.6.1",
+    "@nuxt/schema": "^4.6.4",
     "@types/node": "^26.6.6",
     "@typescript-eslint/eslint-plugin": "^8.72.1",
     "@typescript-eslint/parser": "^8.72.1",
